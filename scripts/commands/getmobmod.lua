@@ -16,34 +16,33 @@ function error(player, msg)
 end
 
 function onTrigger(player, id)
-    -- invert xi.mobMod table
+    -- invert tpz.mobMod table
     local modNameByNum = {}
-    for k, v in pairs(xi.mobMod) do
-        modNameByNum[v] = k
+    for k, v in pairs(tpz.mobMod) do
+        modNameByNum[v]=k
     end
 
     -- validate modID
     id = string.upper(id)
     local modId = tonumber(id)
-    local modName
+    local modName = nil
 
-    if modId then
-        if modNameByNum[modId] then
+    if modId ~= nil then
+        if modNameByNum[modId] ~= nil then
             modName = modNameByNum[modId]
         end
-    elseif xi.mobMod[id] then
-        modId = xi.mobMod[id]
+    elseif tpz.mobMod[id] ~= nil then
+        modId = tpz.mobMod[id]
         modName = id
     end
-
-    if not modName or not modId then
+    if modName == nil or modId == nil then
         error(player, "Invalid modMobID.")
         return
     end
 
     -- validate target
     local effectTarget = player:getCursorTarget()
-    if not effectTarget or not effectTarget:isMob() then
+    if effectTarget == nil or effectTarget:isMob() == false then
         error(player, "Current target is not a MOB, which can not have mob mods.")
         return
     end

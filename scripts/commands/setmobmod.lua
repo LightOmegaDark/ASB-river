@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------------------------------
--- func: setmobmod
+-- func: semobtmod
 -- desc: Sets the specified mob modifier to the specified value on the cursor target mob
 ---------------------------------------------------------------------------------------------------
 
@@ -13,7 +13,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!setmod <modifier> <amount>")
+    player:PrintToPlayer("!setmod {modifier} {amount}")
 end
 
 function onTrigger(player, modifier, amount)
@@ -22,7 +22,7 @@ function onTrigger(player, modifier, amount)
         return
     end
 
-    local modID = tonumber(modifier) or xi.mobMod[string.upper(modifier)]
+    local modID = tonumber(modifier) or tpz.mobMod[string.upper(modifier)]
     if not modID then
         error(player, "No valid modifier found. ")
         return
@@ -35,7 +35,7 @@ function onTrigger(player, modifier, amount)
         return
     end
 
-    if not target:isMob() then
+    if target:isMob() == false then
         error(player, "No valid target found. Place cursor on a mob. ")
         return
     end
