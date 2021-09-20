@@ -562,19 +562,16 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
         }
         charutils::SendClearTimerPacket(PChar);
 
-        // Remove enmity from character and their pet with all mobs
-        auto func = [&](auto mob)
+        // Remove the player's pet as well
+        if (PChar->PPet)
         {
-            // Only remove enmity from pet if it is not charmed
-            if (PChar->PPet)
+            if (auto PBattleEntityPet = dynamic_cast<CBattleEntity*>(PChar->PPet))
             {
-                mob->PEnmityContainer->Clear(PChar->PPet->id);
+                PBattleEntityPet->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION, true);
+                PBattleEntityPet->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);
+                ClearEnmityForEntity(PBattleEntityPet);
             }
-            mob->PEnmityContainer->Clear(PChar->id);
-        };
-
-        ForEachRequiredEnemy(func);
-        ForEachAdditionalEnemy(func);
+        }
     }
     else
     {
