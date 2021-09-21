@@ -27,7 +27,6 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
             target:addStatusEffect(effect, 10, 0, 60)
         end
     end
-
     return 0
 end
 
