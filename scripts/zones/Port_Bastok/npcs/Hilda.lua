@@ -110,7 +110,8 @@ entity.onTrade = function(player, npc, trade)
     end
 end
 
-end
+entity.onTrigger = function(player, npc)
+    local wildcatBastok = player:getCharVar("WildcatBastok")
 
     if player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and not utils.mask.getBit(wildcatBastok, 3) then
         player:startEvent(356)
