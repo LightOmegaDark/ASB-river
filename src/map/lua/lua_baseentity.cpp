@@ -750,7 +750,36 @@ void CLuaBaseEntity::injectActionPacket(uint32 inTargetID, uint16 inCategory, ui
     target.speceffect      = speceffect;
     target.reaction        = reaction;
 
-    m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE_SELF, new CActionPacket(Action));
+    if (actiontype == ACTION_MAGIC_START)
+    {
+        SPELLGROUP castType = static_cast<SPELLGROUP>(anim);
+        uint16     castAnim = spec;
+
+        Action.spellgroup = castType;
+        Action.actiontype = actiontype;
+        target.reaction   = REACTION::NONE;
+        target.speceffect = SPECEFFECT::NONE;
+        if (!castAnim)
+        {
+            target.animation = 0;
+        }
+        else
+        {
+            target.animation = castAnim;
+        }
+        target.param     = message;
+        if (m_PBaseEntity->objtype == TYPE_MOB)
+        {
+            target.messageID = 3; // starts casting
+        }
+        else
+        {
+            target.messageID = 327; // starts casting on <target>
+        }
+        return;
+    }
+
+    PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CActionPacket(Action));
 }
 
 /************************************************************************
