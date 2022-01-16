@@ -767,7 +767,7 @@ void CLuaBaseEntity::injectActionPacket(uint32 inTargetID, uint16 inCategory, ui
         {
             target.animation = castAnim;
         }
-        target.param     = message;
+        target.param = message;
         if (m_PBaseEntity->objtype == TYPE_MOB)
         {
             target.messageID = 3; // starts casting

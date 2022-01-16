@@ -1163,7 +1163,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         PChar->PTreasurePool->AddItem(ItemID, this);
         // This used to cap the number of drops a mob can produce at 10, but
         // that's not the correct behavior.
-        return false; //dropCount >= TREASUREPOOL_SIZE;
+        return false; // dropCount >= TREASUREPOOL_SIZE;
     };
 
     // Limit number of items that can drop to the treasure pool size
