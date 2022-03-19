@@ -1847,6 +1847,11 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         actionTarget.reaction  = REACTION::EVADE;
         actionTarget.param     = shadowsTaken;
     }
+    // No hit, but unlimited shot is up, so don't consume ammo
+    else if (!hitOccured && this->StatusEffectContainer->HasStatusEffect(EFFECT_UNLIMITED_SHOT))
+    {
+        ammoConsumed = 0;  
+    }
 
     if (actionTarget.speceffect == SPECEFFECT::HIT && actionTarget.param > 0)
     {
@@ -1870,8 +1875,10 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 
         StatusEffectContainer->DelStatusEffect(EFFECT_SANGE);
     }
+
     battleutils::ClaimMob(PTarget, this);
     battleutils::RemoveAmmo(this, ammoConsumed);
+
     // only remove detectables
     StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
 }
