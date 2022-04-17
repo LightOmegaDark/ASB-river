@@ -278,64 +278,7 @@ int32 do_init(int32 argc, char** argv)
 
     moduleutils::OnInit();
 
-    luautils::OnServerStart();
-
     moduleutils::ReportLuaModuleUsage();
-
-    ShowInfo("The map-server is ready to work!");
-    ShowInfo("=======================================================================");
-
-    // clang-format off
-    gConsoleService = std::make_unique<ConsoleService>();
-
-    gConsoleService->RegisterCommand("crash", "Force-crash the process.",
-    [](std::vector<std::string> inputs)
-    {
-        crash();
-    });
-
-    gConsoleService->RegisterCommand("gm", "Change a character's GM level.",
-    [](std::vector<std::string> inputs)
-    {
-        if (inputs.size() != 3)
-        {
-            fmt::print("Usage: gm <char_name> <level>. example: gm Testo 1\n");
-            return;
-        }
-
-        auto  name  = inputs[1];
-        auto* PChar = zoneutils::GetCharByName(name);
-        if (!PChar)
-        {
-            fmt::print("Couldnt find character: {}\n", name);
-            return;
-        }
-
-        auto level = std::clamp<uint8>(static_cast<uint8>(stoi(inputs[2])), 0, 5);
-
-        PChar->m_GMlevel = level;
-        charutils::SaveCharGMLevel(PChar);
-
-        fmt::print("Promoting {} to GM level {}\n", PChar->name, level);
-        PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
-            fmt::format("You have been set to GM level {}.", level), ""));
-    });
-
-    gConsoleService->RegisterCommand("reload_settings", "Reload settings files.",
-    [&](std::vector<std::string> inputs)
-    {
-        fmt::print("Reloading settings files\n");
-        settings::init();
-    });
-
-    gConsoleService->RegisterCommand("exit", "Terminate the program.",
-    [&](std::vector<std::string> inputs)
-    {
-        fmt::print("> Goodbye!\n");
-        gConsoleService->stop();
-        gRunFlag = false;
-    });
-    // clang-format on
 
     return 0;
 }

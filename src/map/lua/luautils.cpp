@@ -728,6 +728,11 @@ namespace luautils
             out_str += "." + part;
         }
 
+        if (printOutput)
+        {
+            ShowInfo("[FileWatcher] %s -> %s", filename, out_str);
+        }
+
         moduleutils::TryApplyLuaModules();
     }
 
