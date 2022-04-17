@@ -22,67 +22,38 @@
 #ifndef _MODULEUTILS_H
 #define _MODULEUTILS_H
 
-#include "../lua/luautils.h"
-#include "common/logging.h"
-
 #include <memory>
-
-extern std::unique_ptr<SqlConnection> sql;
-
-// Forward declare
-class CPPModule;
-namespace moduleutils
-{
-    void RegisterCPPModule(CPPModule* ptr);
-}
 
 class CPPModule
 {
 public:
-    CPPModule()
-    : lua(luautils::lua)
-    , sql(::sql)
-    {
-        moduleutils::RegisterCPPModule(this);
-    }
-
-    virtual ~CPPModule() = default;
-
-    // Required
-    virtual void OnInit() = 0;
-
-    // Optional
-    virtual void OnZoneTick(CZone* PZone){};
-    virtual void OnTimeServerTick(){};
-    virtual void OnCharZoneIn(CCharEntity* PChar){};
-    virtual void OnCharZoneOut(CCharEntity* PChar){};
-    virtual void OnPushPacket(CBasicPacket* packet){};
-
-    template <typename T>
-    static T* Register()
-    {
-        return new T();
-    };
-
-protected:
-    sol::state&                     lua;
-    std::unique_ptr<SqlConnection>& sql;
+    // TODO: Handle virtual destructor properly
+    virtual void OnInit(){};
+    virtual void OnTick(){};
+    virtual void OnCharZoneIn(){};
+    virtual void OnCharZoneOut(){};
 };
 
+// TODO: I don't really like this
+// https://stackoverflow.com/questions/41367674/c-cpp-files-as-modules
+// TODO: Replace this with CMake in-file lists and voodoo
 #define REGISTER_CPP_MODULE(className) \
-    static CPPModule* classNamePtr = className::Register<className>();
+  static std::nullptr_t e = ([] () { moduleutils::RegisterCPPModule<className>(); return nullptr; }) ();
 
 namespace moduleutils
 {
-    void RegisterCPPModule(CPPModule* ptr);
+    // Internal
+    // TODO: Hide this
+    void _RegisterCPPModule(std::unique_ptr<CPPModule>&& module);
+
+    template <typename T>
+    static void RegisterCPPModule()
+    {
+        _RegisterCPPModule(std::make_unique<T>());
+    }
 
     // Hooks for calling modules
     void OnInit();
-    void OnZoneTick(CZone* PZone);
-    void OnTimeServerTick();
-    void OnCharZoneIn(CCharEntity* PChar);
-    void OnCharZoneOut(CCharEntity* PChar);
-    void OnPushPacket(CBasicPacket* packet);
 
     // The program has two "states":
     // - Load-time: As all data is being loaded and init'd

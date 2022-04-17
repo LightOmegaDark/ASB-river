@@ -31,76 +31,30 @@
 #include <regex>
 #include <string>
 #include <vector>
+#include <iostream>
 
 namespace
 {
     // static storage, init and access
-    std::vector<CPPModule*>& cppModules()
+    std::vector<std::unique_ptr<CPPModule>>& cppModules()
     {
-        static std::vector<CPPModule*> cppModules{};
+        static std::vector<std::unique_ptr<CPPModule>> cppModules{};
         return cppModules;
     }
 } // namespace
 
 namespace moduleutils
 {
-    void RegisterCPPModule(CPPModule* ptr)
+    void _RegisterCPPModule(std::unique_ptr<CPPModule>&& module)
     {
-        cppModules().emplace_back(ptr);
+        cppModules().emplace_back(std::move(module));
     }
 
-    // Hooks for calling modules
     void OnInit()
     {
-        TracyZoneScoped;
-        for (auto* module : cppModules())
+        for (auto& module : cppModules())
         {
             module->OnInit();
-        }
-    }
-
-    void OnZoneTick(CZone* PZone)
-    {
-        TracyZoneScoped;
-        for (auto* module : cppModules())
-        {
-            module->OnZoneTick(PZone);
-        }
-    }
-
-    void OnTimeServerTick()
-    {
-        TracyZoneScoped;
-        for (auto* module : cppModules())
-        {
-            module->OnTimeServerTick();
-        }
-    }
-
-    void OnCharZoneIn(CCharEntity* PChar)
-    {
-        TracyZoneScoped;
-        for (auto* module : cppModules())
-        {
-            module->OnCharZoneIn(PChar);
-        }
-    }
-
-    void OnCharZoneOut(CCharEntity* PChar)
-    {
-        TracyZoneScoped;
-        for (auto* module : cppModules())
-        {
-            module->OnCharZoneOut(PChar);
-        }
-    }
-
-    void OnPushPacket(CBasicPacket* packet)
-    {
-        TracyZoneScoped;
-        for (auto* module : cppModules())
-        {
-            module->OnPushPacket(packet);
         }
     }
 
