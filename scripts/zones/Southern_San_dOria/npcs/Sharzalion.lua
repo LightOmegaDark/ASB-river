@@ -38,7 +38,25 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 64 then
+
+    if (csid == 70 or csid == 71) then
+        if (csid == 70 and option == 0) then
+            player:setCharVar("has_seen_rdmaf1_quest_already", 1)
+        elseif (option == 1) then
+            player:addQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.THE_CRIMSON_TRIAL)
+            player:setCharVar("has_seen_rdmaf1_quest_already", 0)
+        end
+    elseif (csid == 75) then
+        if (player:getFreeSlotsCount() == 0) then
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 16829) -- Fencing Degen
+        else
+            player:delKeyItem(xi.ki.ORCISH_DRIED_FOOD)
+            player:addItem(16829)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 16829) -- Fencing Degen
+            player:addFame(xi.quest.fame_area.SANDORIA, 30)
+            player:completeQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.THE_CRIMSON_TRIAL)
+        end
+    elseif (csid == 64) then
         player:setCharVar("peaceForTheSpiritCS", 1)
     elseif csid == 66 then
         player:setCharVar("peaceForTheSpiritCS", 3)

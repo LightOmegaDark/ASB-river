@@ -24,7 +24,7 @@ quest.sections =
         {
             ['Glade_Wivre'] =
             {
-                onMobDeath = function(mob, player, optParams)
+                onMobDeath = function(mob, player, isKiller, noKiller)
                     xi.abyssea.dominionOnMobDeath(mob, player, 593)
                 end,
             },

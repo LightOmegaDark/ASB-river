@@ -24,7 +24,7 @@ quest.sections =
         {
             ['Goblin_Plunderer'] =
             {
-                onMobDeath = function(mob, player, optParams)
+                onMobDeath = function(mob, player, isKiller, noKiller)
                     xi.abyssea.dominionOnMobDeath(mob, player, 600)
                 end,
             },

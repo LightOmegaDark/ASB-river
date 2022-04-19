@@ -13,13 +13,12 @@ end
 
 entity.onTrigger = function(player, npc)
     -- Bastok Missions.
-    local bastokMissions = 0xFFFFFFFE
-    if player:hasCompletedMission(xi.mission.log_id.BASTOK, xi.mission.id.bastok.FETICHISM) then
-        bastokMissions = bastokMissions - 2 -- Fetichism.
+    local BastokMissions = 0xFFFFFFFE
+    if (player:hasCompletedMission(xi.mission.log_id.BASTOK, xi.mission.id.bastok.FETICHISM)) then
+        BastokMissions = BastokMissions - 2 -- Fetichism.
     end
-
-    if player:hasCompletedMission(xi.mission.log_id.BASTOK, xi.mission.id.bastok.TO_THE_FORSAKEN_MINES) then
-        bastokMissions = bastokMissions - 4 -- To the Forsaken Mines.
+    if (player:hasCompletedMission(xi.mission.log_id.BASTOK, xi.mission.id.bastok.TO_THE_FORSAKEN_MINES)) then
+        BastokMissions = BastokMissions - 4 -- To the Forsaken Mines.
     end
 
     -- Bastok Quests.
@@ -124,8 +123,8 @@ entity.onTrigger = function(player, npc)
     -- Seekers of Adoulin
     local seekersOfAdoulin = 0xFFFFFFFE
 -- *Need the correct csid
---    if player:hasCompletedMission (xi.mission.log_id.SOA, xi.mission.id.soa.RUMORS_FROM_THE_WEST) then
---        seekersOfAdoulin = seekersOfAdoulin - 2 -- Rumors from the West
+--    if (player:hasCompletedMission (xi.mission.log_id.SOA, xi.mission.id.soa.RUMORS_FROM_THE_WEST)) then
+--        SeekersOfAdoulin = SeekersOfAdoulin - 2 -- Rumors from the West
 --    end
 
     -- Determine if any cutscenes are available for the player.

@@ -94,9 +94,7 @@ entity.onTrigger = function(player, npc)
         player:startEvent(865, 0, 0, 0, trustMemory(player), 0, 0, 0, trustFlag)
 
     -- ROCK RACKETEER (Mihgo's Amigo follow-up)
-    elseif
-        mihgosAmigo == QUEST_COMPLETED and
-        rockRacketeer == QUEST_AVAILABLE and
+    elseif mihgosAmigo == QUEST_COMPLETED and rockRacketeer == QUEST_AVAILABLE and
         player:getFameLevel(xi.quest.fame_area.WINDURST) >= 3
     then
         if player:needToZone() then
@@ -154,13 +152,13 @@ entity.onEventFinish = function(player, csid, option)
         player:confirmTrade()
         player:completeQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.MIHGO_S_AMIGO)
         player:addTitle(xi.title.CAT_BURGLAR_GROUPIE)
-        player:addGil(xi.settings.main.GIL_RATE * 200)
+        player:addGil(xi.settings.GIL_RATE * 200)
         player:addFame(xi.quest.fame_area.NORG, 60)
         player:needToZone(true)
     elseif csid == 494 then
         player:confirmTrade()
         player:addTitle(xi.title.CAT_BURGLAR_GROUPIE)
-        player:addGil(xi.settings.main.GIL_RATE * 200)
+        player:addGil(xi.settings.GIL_RATE * 200)
         player:addFame(xi.quest.fame_area.NORG, 30)
     elseif csid == 865 and option == 2 then
         player:addSpell(901, true, true)

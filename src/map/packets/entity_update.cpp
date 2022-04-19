@@ -40,21 +40,8 @@ CEntityUpdatePacket::CEntityUpdatePacket(CBaseEntity* PEntity, ENTITYUPDATE type
     this->setSize(0x58);
 
     ref<uint32>(0x04) = PEntity->id;
-    updateWith(PEntity, type, updatemask);
-}
-
-void CEntityUpdatePacket::updateWith(CBaseEntity* PEntity, ENTITYUPDATE type, uint8 updatemask)
-{
-    uint32 currentId = ref<uint32>(0x04);
-    if (currentId != PEntity->id)
-    {
-        // Should only be able to update packets about the same character.
-        ShowError("Unable to update entity update packet for %d with data from %d", currentId, PEntity->id);
-        return;
-    }
-
     ref<uint16>(0x08) = PEntity->targid; // 0x0E entity updates are valid for 0 to 1023 and 1792 to 2303
-    ref<uint8>(0x0A) |= updatemask;
+    ref<uint8>(0x0A)  = updatemask;
 
     switch (type)
     {
@@ -253,8 +240,16 @@ void CEntityUpdatePacket::updateWith(CBaseEntity* PEntity, ENTITYUPDATE type, ui
         break;
     }
 
-    // Slightly bigger packet to encompass both name and model on first spawn, and only for dynamic entities.
-    if (type == ENTITY_SPAWN && PEntity->isRenamed && PEntity->look.size == MODEL_EQUIPPED && PEntity->targid >= 0x700)
+    // If the entity has been renamed, we have to re-send the name during every update.
+    // Otherwise it will revert to it's default name (if applicable).
+    if (PEntity->isRenamed)
+    {
+        updatemask       |= UPDATE_NAME;
+        ref<uint8>(0x0A) |= updatemask;
+    }
+
+    // Send name data
+    if (updatemask & UPDATE_NAME)
     {
         this->setSize(0x56);
 
@@ -285,12 +280,19 @@ void CEntityUpdatePacket::updateWith(CBaseEntity* PEntity, ENTITYUPDATE type, ui
 
         this->setSize(0x48);
 
-        auto name       = PEntity->packetName;
-        auto nameOffset = 0x34;
-        auto maxLength  = std::min<size_t>(name.size(), PacketNameLength);
+        auto name       = PEntity->name;
+        auto nameOffset = (PEntity->look.size == MODEL_EQUIPPED) ? 0x44 : 0x34;
 
         // Mobs and NPC's targid's live in the range 0-1023
-        if (PEntity->targid < 1024)
+        if (PEntity->targid < 1024 && PEntity->isRenamed)
+        {
+            ref<uint16>(0x34) = 0x01;
+            nameOffset        = 0x35;
+        }
+
+        if (PEntity->isRenamed ||
+            PEntity->objtype == TYPE_TRUST ||
+            PEntity->IsDynamicEntity())
         {
             ref<uint16>(0x34) = 0x01;
             nameOffset        = 0x35;
@@ -301,7 +303,18 @@ void CEntityUpdatePacket::updateWith(CBaseEntity* PEntity, ENTITYUPDATE type, ui
         auto size  = this->getSize();
         std::memset(start, 0U, size);
 
-        // Copy in name
-        std::memcpy(start, name.c_str(), maxLength);
+        if (PEntity->look.size == MODEL_DOOR ||
+            PEntity->look.size == MODEL_ELEVATOR ||
+            PEntity->look.size == MODEL_SHIP)
+        {
+            maxLength = 12;
+        }
+
+        std::memcpy(data + nameOffset, name.c_str(), maxLength);
+
+        // Make sure the rest of the packet is empty (or garbage might appear)
+        auto start = data + nameOffset + maxLength;
+        auto size = static_cast<std::size_t>(this->getSize());
+        std::memset(start, 0U, size);
     }
 }

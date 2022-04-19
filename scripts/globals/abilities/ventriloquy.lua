@@ -45,12 +45,8 @@ abilityObject.onUseAbility = function(player, target, ability)
             local petCE             = target:getCE(pet)
             local petVE             = target:getVE(pet)
             local playerEnmityBonus = 1
-            local petEnmityBonus    = 1
-
-            if
-                target:getTarget():getTargID() == player:getTargID() or
-                ((playerCE + playerVE) >= (petCE + petVE) and target:getTarget():getTargID() ~= pet:getTargID())
-            then
+            local petEnmityBonus = 1
+            if target:getTarget():getTargID() == player:getTargID() or ((playerCE + playerVE) >= (petCE + petVE) and target:getTarget():getTargID() ~= pet:getTargID()) then
                 playerEnmityBonus = playerEnmityBonus + bonus
                 petEnmityBonus    = petEnmityBonus - bonus
             else

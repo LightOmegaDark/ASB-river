@@ -9,12 +9,12 @@ local ID = require("scripts/zones/Periqia/IDs")
 -----------------------------------
 local instanceObject = {}
 
-instanceObject.registryRequirements = function(player)
+instance_object.registryRequirements = function(player)
     return player:getCurrentMission(xi.mission.log_id.TOAU) == xi.mission.id.toau.SHADES_OF_VENGEANCE and
         player:hasKeyItem(xi.ki.PERIQIA_ASSAULT_AREA_ENTRY_PERMIT)
 end
 
-instanceObject.entryRequirements = function(player)
+instance_object.entryRequirements = function(player)
     return player:getCurrentMission(xi.mission.log_id.TOAU) > xi.mission.id.toau.SHADES_OF_VENGEANCE or
         player:hasKeyItem(xi.ki.PERIQIA_ASSAULT_AREA_ENTRY_PERMIT)
 end

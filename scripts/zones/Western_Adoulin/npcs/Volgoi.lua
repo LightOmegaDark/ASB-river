@@ -11,12 +11,8 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local soaMission = player:getCurrentMission(xi.mission.log_id.SOA)
-
-    if
-        soaMission >= xi.mission.id.soa.BEAUTY_AND_THE_BEAST and
-        soaMission <= xi.mission.id.soa.SALVATION
-    then
+    local SOA_Mission = player:getCurrentMission(xi.mission.log_id.SOA)
+    if ((SOA_Mission >= xi.mission.id.soa.BEAUTY_AND_THE_BEAST) and (SOA_Mission <= xi.mission.id.soa.SALVATION)) then
         -- Speech while Arciela is 'kidnapped'
         player:startEvent(151)
     end

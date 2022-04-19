@@ -16,10 +16,7 @@ end
 
 entity.onTrigger = function(player, npc)
     local grimySignpost = player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.GRIMY_SIGNPOSTS)
-    if
-        grimySignpost == QUEST_AVAILABLE and
-        player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 2
-    then
+    if (grimySignpost == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 2) then
         player:startEvent(45)
     elseif grimySignpost == QUEST_ACCEPTED then
         if player:getCharVar("CleanSignPost") == 15 then
@@ -43,7 +40,8 @@ entity.onEventFinish = function(player, csid, option)
     elseif csid == 44 then
         player:setCharVar("CleanSignPost", 0)
         player:addFame(xi.quest.fame_area.SANDORIA, 30)
-        npcUtil.giveCurrency(player, 'gil', 1500)
+        player:addGil(xi.settings.GIL_RATE*1500)
+        player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE*1500)
         player:completeQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.GRIMY_SIGNPOSTS)
     end
 end

@@ -18,9 +18,9 @@ local totalHoursLeft = 0
 
 quest.reward =
 {
-    fame     = 120,
+    fame  = 120,
     fameArea = xi.quest.fame_area.WINDURST,
-    title    = xi.title.ONE_STAR_PURVEYOR,
+    title = xi.title.ONE_STAR_PURVEYOR,
 }
 
 quest.sections =
@@ -28,7 +28,7 @@ quest.sections =
     -- Section: Check if quest is available.
     {
         check = function(player, status, vars)
-            return status == QUEST_AVAILABLE and
+            return status == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) > 2 and
                 player:getQuestStatus(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.RYCHARDE_THE_CHEF) == QUEST_COMPLETED
         end,
 

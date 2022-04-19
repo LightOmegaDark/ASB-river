@@ -94,8 +94,9 @@ entity.onEventFinish = function(player, csid, option)
         player:addFame(xi.quest.fame_area.WINDURST, 100)
         player:addTitle(xi.title.CERTIFIED_RHINOSTERY_VENTURER)
         player:tradeComplete()
-    elseif csid == 791 and turmoil == 2 then -- Completes Toraimarai turmoil - repeats
-        npcUtil.giveCurrency(player, 'gil', 4500)
+    elseif (csid == 791 and turmoil == 2) then -- Completes Toraimarai turmoil - repeats
+        player:addGil(xi.settings.GIL_RATE*4500)
+        player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE*4500)
         player:addFame(xi.quest.fame_area.WINDURST, 50)
         player:tradeComplete()
     elseif csid == 516 then

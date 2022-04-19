@@ -18,11 +18,7 @@ end
 entity.onTrigger = function(player, npc)
     local ecoStatus = player:getCharVar("EcoStatus")
 
-    if
-        ecoStatus == 0 and
-        player:getFameLevel(xi.quest.fame_area.BASTOK) >= 1 and
-        player:getCharVar("EcoReset") < os.time()
-    then
+    if ecoStatus == 0 and player:getFameLevel(xi.quest.fame_area.BASTOK) >= 1 and player:getCharVar("EcoReset") < os.time() then
         player:startEvent(278) -- Offer Eco-Warrior quest
     elseif ecoStatus == 101 then
         player:startEvent(280) -- Reminder dialogue to talk to Degga
@@ -45,16 +41,13 @@ entity.onEventFinish = function(player, csid, option)
         end
 
         player:setCharVar("EcoStatus", 101) -- EcoStatus var:  1 to 3 for sandy // 101 to 103 for bastok // 201 to 203 for windurst
-    elseif
-        csid == 282 and
-        npcUtil.completeQuest(player, xi.quest.log_id.BASTOK, xi.quest.id.bastok.ECO_WARRIOR, {
-            gil = 5000,
-            item = 4198,
-            title = xi.title.CERULEAN_SOLDIER,
-            fame = 80,
-            var = "EcoStatus"
-        })
-    then
+    elseif csid == 282 and npcUtil.completeQuest(player, xi.quest.log_id.BASTOK, xi.quest.id.bastok.ECO_WARRIOR, {
+        gil = 5000,
+        item = 4198,
+        title = xi.title.CERULEAN_SOLDIER,
+        fame = 80,
+        var = "EcoStatus"
+    }) then
         player:delKeyItem(xi.ki.INDIGESTED_ORE)
         player:setCharVar("EcoReset", getConquestTally())
     end

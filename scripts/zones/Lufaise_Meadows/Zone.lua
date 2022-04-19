@@ -40,17 +40,16 @@ zoneObject.onZoneIn = function(player, prevZone)
         player:setPos(-475.825, -20.461, 281.149, 11)
     end
 
+    if player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.CHAINS_AND_BONDS and player:getCharVar("PromathiaStatus") == 0 then
+        cs = 111
+    end
+
     return cs
 end
 
-zoneObject.onTriggerAreaEnter = function(player, triggerArea)
-    local triggerAreaID = triggerArea:GetTriggerAreaID()
-
-    if
-        triggerAreaID == 1 and
-        player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.DAWN and
-        player:getCharVar("PromathiaStatus") == 6
-    then
+zone_object.onRegionEnter = function(player, region)
+    local regionID = region:GetRegionID()
+    if regionID == 1 and player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.DAWN and player:getCharVar("PromathiaStatus") == 6 then
         player:startEvent(116)
     end
 end

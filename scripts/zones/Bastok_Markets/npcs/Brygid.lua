@@ -121,7 +121,21 @@ end
 entity.onEventFinish = function(player, csid, option)
     local wantsSubligar = player:getCharVar("BrygidWantsSubligar")
 
-    if csid == 380 then
+    if csid == 310 and player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.BRYGID_THE_STYLIST) == QUEST_AVAILABLE then
+        player:addQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.BRYGID_THE_STYLIST)
+
+    elseif csid == 311 then
+        if player:getFreeSlotsCount() == 0 then
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 12720)
+        else
+            player:addTitle(xi.title.BRYGID_APPROVED)
+            player:addItem(12720)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 12720)
+            player:addFame(xi.quest.fame_area.BASTOK, 30)
+            player:completeQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.BRYGID_THE_STYLIST)
+        end
+
+    elseif csid == 380 then
         player:delQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.BRYGID_THE_STYLIST_RETURNS)
         player:addQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.BRYGID_THE_STYLIST_RETURNS)
 
@@ -133,8 +147,8 @@ entity.onEventFinish = function(player, csid, option)
         player:setCharVar("BrygidGetLegs", 0)
         player:setCharVar("BrygidWantsSubligar", 0)
         player:addTitle(xi.title.BASTOKS_SECOND_BEST_DRESSED)
-        player:addItem(14400 + wantsSubligar)
-        player:messageSpecial(ID.text.ITEM_OBTAINED, 14400 + wantsSubligar)
+        player:addItem(14400+wantsSubligar)
+        player:messageSpecial(ID.text.ITEM_OBTAINED, 14400+wantsSubligar)
         player:addFame(xi.quest.fame_area.BASTOK, 30)
         player:completeQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.BRYGID_THE_STYLIST_RETURNS)
     end

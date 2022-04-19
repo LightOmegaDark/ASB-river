@@ -13,13 +13,13 @@ local ID = require("scripts/zones/Port_Jeuno/IDs")
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    local count         = trade:getItemCount()
-    local sLux          = trade:hasItemQty(2740, 1)
-    local sLuna         = trade:hasItemQty(2741, 1)
-    local sAstrum       = trade:hasItemQty(2742, 1)
-    local acpMission    = player:getCurrentMission(xi.mission.log_id.ACP)
-    local hasCrimsonKey = player:hasKeyItem(xi.ki.CRIMSON_KEY)
-    local lastCrimson   = player:getCharVar("LastCrimsonKey") -- When last Crimson key was obtained
+    local count = trade:getItemCount()
+    local sLux = trade:hasItemQty(2740, 1)
+    local sLuna = trade:hasItemQty(2741, 1)
+    local sAstrum = trade:hasItemQty(2742, 1)
+    local ACPm = player:getCurrentMission(xi.mission.log_id.ACP)
+    local CrimsonKey = player:hasKeyItem(xi.ki.CRIMSON_KEY)
+    local LastCrimson = player:getCharVar("LastCrimsonKey") -- When last Crimson key was obtained
 
     if
         xi.settings.main.ENABLE_ACP == 0 and
@@ -77,12 +77,12 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    local acpMission     = player:getCurrentMission(xi.mission.log_id.ACP)
-    local salad          = player:hasKeyItem(xi.ki.BOWL_OF_BLAND_GOBLIN_SALAD)
-    local juice          = player:hasKeyItem(xi.ki.JUG_OF_GREASY_GOBLIN_JUICE)
-    local grub           = player:hasKeyItem(xi.ki.CHUNK_OF_SMOKED_GOBLIN_GRUB)
-    local hasViridianKey = player:hasKeyItem(xi.ki.VIRIDIAN_KEY)
-    local lastViridian   = player:getCharVar("LastViridianKey") -- When last Viridian key was obtained
+    local ACPm = player:getCurrentMission(xi.mission.log_id.ACP)
+    local salad = player:hasKeyItem(xi.ki.BOWL_OF_BLAND_GOBLIN_SALAD)
+    local juice = player:hasKeyItem(xi.ki.JUG_OF_GREASY_GOBLIN_JUICE)
+    local grub = player:hasKeyItem(xi.ki.CHUNK_OF_SMOKED_GOBLIN_GRUB)
+    local ViridianKey = player:hasKeyItem(xi.ki.VIRIDIAN_KEY)
+    local LastViridian = player:getCharVar("LastViridianKey") -- When last Viridian key was obtained
 
     if csid == 323 then
         if option == 1 then

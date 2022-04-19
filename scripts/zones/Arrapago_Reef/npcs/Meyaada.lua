@@ -20,7 +20,7 @@ entity.onTrigger = function(player, npc)
     local toauMission = player:getCurrentMission(xi.mission.log_id.TOAU)
 
     -- ASSAULT
-    if toauMission >= xi.mission.id.toau.PRESIDENT_SALAHEEM then
+    if (toauMission >= xi.mission.id.toau.PRESIDENT_SALAHEEM) then
         local IPpoint = player:getCurrency("imperial_standing")
         if
             player:hasKeyItem(xi.ki.ILRUSI_ASSAULT_ORDERS) and
@@ -43,7 +43,7 @@ end
 
 entity.onEventFinish = function(player, csid, option)
     -- ASSAULT
-    if csid == 223 and option == 1 then
+    if (csid == 223 and option == 1) then
         player:delCurrency("imperial_standing", 50)
         player:addKeyItem(xi.ki.ASSAULT_ARMBAND)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.ASSAULT_ARMBAND)

@@ -20,10 +20,10 @@ entity.onTrigger = function(player, npc)
     local trialByWater = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.TRIAL_BY_WATER)
     local hasWhisperOfTides = player:hasKeyItem(xi.ki.WHISPER_OF_TIDES)
 
-    if
-        (trialByWater == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.NORG) >= 4) or
-        (trialByWater == QUEST_COMPLETED and os.time() > player:getCharVar("TrialByWater_date"))
-    then
+    local TrialByWater = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.TRIAL_BY_WATER)
+    local WhisperOfTides = player:hasKeyItem(xi.ki.WHISPER_OF_TIDES)
+
+    if ((TrialByWater == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.NORG) >= 4) or (TrialByWater == QUEST_COMPLETED and os.time() > player:getCharVar("TrialByWater_date"))) then
         player:startEvent(109, 0, xi.ki.TUNING_FORK_OF_WATER) -- Start and restart quest "Trial by Water"
     elseif
         trialByWater == QUEST_ACCEPTED and

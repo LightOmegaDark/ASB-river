@@ -14,8 +14,8 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local guardian = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.GREETINGS_TO_THE_GUARDIAN)
-    local pamamas = player:getCharVar("PamamaVar")
+    local Guardian = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.GREETINGS_TO_THE_GUARDIAN)
+    local Pamamas = player:getCharVar("PamamaVar")
     local pfame = player:getFameLevel(xi.quest.fame_area.WINDURST)
     local needToZone = player:needToZone()
 
@@ -54,8 +54,9 @@ entity.onEventFinish = function(player, csid, option)
             player:addTitle(xi.title.KAZHAM_CALLER)
             player:setCharVar("PamamaVar", 0)
             player:needToZone(true)
-        elseif pamamas == 2 then --Repeats of quest; give only gil and less fame
-            npcUtil.giveCurrency(player, 'gil', 5000)
+        elseif (Pamamas == 2) then --Repeats of quest; give only gil and less fame
+            player:addGil(xi.settings.GIL_RATE * 5000)
+            player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE * 5000)
             player:addFame(xi.quest.fame_area.WINDURST, 30)
             player:setCharVar("PamamaVar", 0)
             player:needToZone(true)

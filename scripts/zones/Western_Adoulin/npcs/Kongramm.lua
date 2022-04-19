@@ -15,11 +15,12 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    if
-        player:getCurrentMission(xi.mission.log_id.SOA) == xi.mission.id.soa.A_CURSE_FROM_THE_PAST and
-        not player:hasKeyItem(xi.ki.PIECE_OF_A_STONE_WALL)
-    then
-        if player:getCharVar("SOA_ACFTP_Kongramm") < 1 then
+    local SOA_Mission = player:getCurrentMission(xi.mission.log_id.SOA)
+    local ACSP = player:getQuestStatus(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.A_CERTAIN_SUBSTITUTE_PATROLMAN)
+    local Transporting = player:getQuestStatus(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.TRANSPORTING)
+
+    if ((SOA_Mission == xi.mission.id.soa.A_CURSE_FROM_THE_PAST) and (not player:hasKeyItem(xi.ki.PIECE_OF_A_STONE_WALL))) then
+        if (player:getCharVar("SOA_ACFTP_Kongramm") < 1) then
             -- Gives hint for SOA Mission: 'A Curse From the Past'
             player:startEvent(148)
         else

@@ -22,7 +22,7 @@ entity.onTrigger = function(player, npc)
 
     if
         player:getFameLevel(xi.quest.fame_area.JEUNO) >= 4 and
-        theWonderMagicSet == QUEST_AVAILABLE
+        TheWonderMagicSet == QUEST_AVAILABLE
     then
         player:startEvent(77) -- Start quest "The wonder magic set"
 

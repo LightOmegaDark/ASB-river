@@ -258,19 +258,8 @@ std::optional<CLuaBaseEntity> CLuaZone::insertDynamicEntity(sol::table table)
 
     PEntity->isRenamed = true;
 
-    PEntity->m_bReleaseTargIDOnDisappear = table["releaseIdOnDisappear"].get_or(false);
-
-    auto typeKey    = (PEntity->objtype == TYPE_NPC) ? "npcs" : "mobs";
-    auto cacheEntry = lua[sol::create_if_nil]["xi"]["zones"][m_pLuaZone->GetName()][typeKey][lookupName];
-
-    // Bind any functions that are passed in
-    for (auto& [entryKey, entryValue] : table)
-    {
-        if (entryValue.get_type() == sol::type::function)
-        {
-            cacheEntry[entryKey] = entryValue.as<sol::function>();
-        }
-    }
+    auto typeKey = (PEntity->objtype == TYPE_NPC) ? "npcs" : "mobs";
+    auto cacheEntry = lua[sol::create_if_nil]["xi"]["zones"][(const char*)m_pLuaZone->GetName()][typeKey][lookupName];
 
     if (auto* PNpc = dynamic_cast<CNpcEntity*>(PEntity))
     {

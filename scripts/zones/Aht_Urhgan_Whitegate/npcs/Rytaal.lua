@@ -18,10 +18,7 @@ end
 entity.onTrigger = function(player, npc)
     local currentAssault = player:getCurrentAssault()
 
-    if
-        player:getCurrentMission(xi.mission.log_id.TOAU) <= xi.mission.id.toau.IMMORTAL_SENTRIES or
-        player:getMainLvl() <= 49
-    then
+    if player:getCurrentMission(xi.mission.log_id.TOAU) <= xi.mission.id.toau.IMMORTAL_SENTRIES or player:getMainLvl() <= 49 then
         player:startEvent(270)
     elseif currentAssault ~= 0 and player:getCharVar("assaultEntered") ~= 0 then
         if player:getCharVar("AssaultComplete") == 1 then

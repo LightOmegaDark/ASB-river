@@ -14,6 +14,30 @@ end
 entity.onTrigger = function(player, npc)
     local classReunion = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CLASS_REUNION)
 
+    -- MAKING THE GRADE
+    if
+        teachersPet == QUEST_COMPLETED and
+        makingTheGrade == QUEST_AVAILABLE and
+        player:getFameLevel(xi.quest.fame_area.WINDURST) >= 3 and
+        letSleepingDogsLie ~= QUEST_ACCEPTED
+    then
+        player:startEvent(442)
+    elseif makingTheGrade == QUEST_ACCEPTED then
+        -- 1 = answers found
+        -- 2 = gave test answers to principle
+        -- 3 = spoke to chomoro
+        local makingTheGradeProg = player:getCharVar("QuestMakingTheGrade_prog")
+
+        if makingTheGradeProg == 0 then
+            player:startEvent(443) -- Get Test Sheets Reminder
+        elseif makingTheGradeProg == 1 then
+            player:startEvent(456) -- Deliver Test Sheets Reminder
+        elseif makingTheGradeProg == 2 or makingTheGradeProg == 3 then
+            player:startEvent(458) -- Quest Finish
+        end
+    elseif makingTheGrade == QUEST_COMPLETED and player:needToZone() then
+        player:startEvent(459)
+
     -- CLASS REUNION
     if
         classReunion == QUEST_ACCEPTED and
@@ -28,7 +52,21 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 817 then
+    if csid == 442 and option == 1 then
+        player:addQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.MAKING_THE_GRADE)
+    elseif csid == 455 then -- Quest Progress: Test Papers Shown and told to deliver them to principal
+        player:setCharVar("QuestMakingTheGrade_prog", 1)
+    elseif
+        csid == 458 and
+        npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.MAKING_THE_GRADE, {
+            item = 4855,
+            fame = 75,
+            fameArea = xi.quest.fame_area.WINDURST,
+            var = "QuestMakingTheGrade_prog",
+        })
+    then
+        player:needToZone(true)
+    elseif csid == 817 then
         player:setCharVar("ClassReunion_TalkedToFupepe", 1)
     end
 end

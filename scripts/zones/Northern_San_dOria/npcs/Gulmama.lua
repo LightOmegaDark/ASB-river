@@ -32,10 +32,7 @@ entity.onTrigger = function(player, npc)
     then
         player:startEvent(712, 0, 1171, 0, 0, 0, 0, 0, 0) -- lost the ice pendulum need another one
     -----------------------------------
-    elseif
-        (trialByIce == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 6) or
-        (trialByIce == QUEST_COMPLETED and os.time() > player:getCharVar("TrialByIce_date"))
-    then
+    elseif ((TrialByIce == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 6) or (TrialByIce == QUEST_COMPLETED and os.time() > player:getCharVar("TrialByIce_date"))) then
         player:startEvent(706, 0, xi.ki.TUNING_FORK_OF_ICE) -- Start and restart quest "Trial by ice"
     elseif
         trialByIce == QUEST_ACCEPTED and

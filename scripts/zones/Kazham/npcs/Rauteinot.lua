@@ -26,10 +26,7 @@ entity.onTrigger = function(player, npc)
     local missionaryMan = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.MISSIONARY_MAN)
     local missionaryManVar = player:getCharVar("MissionaryManVar")
 
-    if
-        missionaryMan == QUEST_AVAILABLE and
-        player:getFameLevel(xi.quest.fame_area.WINDURST) >= 3
-    then
+    if (MissionaryMan == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 3) then
         player:startEvent(137, 0, 1146) -- Start quest "Missionary Man"
     elseif missionaryMan == QUEST_ACCEPTED and missionaryManVar == 1 then
         player:startEvent(138, 0, 1146) -- During quest (before trade marble) "Missionary Man"

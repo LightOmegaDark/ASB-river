@@ -25,7 +25,9 @@ zoneObject.onZoneIn = function(player, prevZone)
         player:setPos(600.101, 130.355, 797.612, 50)
     end
 
-    if
+    if player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.CHAINS_AND_BONDS and player:getCharVar("PromathiaStatus") == 2 then
+        cs = 14
+    elseif
         player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_ACCEPTED and
         player:getCharVar('ApocalypseNigh') == 1
     then

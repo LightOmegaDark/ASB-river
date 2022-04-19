@@ -20,11 +20,9 @@ entity.onMobInitialize = function(IxAernDrkMob)
         if math.random (1, 10) < 10 then
             -- reraise
             local target = mob:getTarget()
-            if
-                target:isPet() and
-                not target:isAlive()
-            then
-                target = target:getMaster()
+            local targetid = 0
+            if target then
+                targetid = target:getTargID()
             end
 
             mob:setMobMod(xi.mobMod.NO_DROPS, 1)

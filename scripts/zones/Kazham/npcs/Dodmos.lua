@@ -25,12 +25,7 @@ end
 entity.onTrigger = function(player, npc)
     local trialSizeFire = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.TRIAL_SIZE_TRIAL_BY_FIRE)
 
-    if
-        player:getMainLvl() >= 20 and
-        player:getMainJob() == xi.job.SMN and
-        trialSizeFire == QUEST_AVAILABLE and
-        player:getFameLevel(xi.quest.fame_area.WINDURST) >= 2
-    then --Requires player to be Summoner at least lvl 20
+    if (player:getMainLvl() >= 20 and player:getMainJob() == xi.job.SMN and TrialSizeFire == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 2) then --Requires player to be Summoner at least lvl 20
         player:startEvent(286, 0, 1544, 0, 20)     --mini tuning fork, zone, level
     elseif trialSizeFire == QUEST_ACCEPTED then
         local hasFireFork = player:hasItem(1544)

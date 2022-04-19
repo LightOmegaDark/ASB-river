@@ -25,11 +25,11 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local offset               = npc:getID() - ID.npc.AFTERGRLOW_OFFSET
-    local aCrystallineProphecy = player:getCurrentMission(xi.mission.log_id.ACP)
-    local needToZone           = player:needToZone()
-    local progressMask         = player:getCharVar("SEED_AFTERGLOW_MASK")
-    local intensity            = player:getCharVar("SEED_AFTERGLOW_INTENSITY")
+    local offset        = npc:getID() - ID.npc.AFTERGRLOW_OFFSET
+    local ACP           = player:getCurrentMission(xi.mission.log_id.ACP)
+    local needToZone    = player:needToZone()
+    local progressMask  = player:getCharVar("SEED_AFTERGLOW_MASK")
+    local intensity     = player:getCharVar("SEED_AFTERGLOW_INTENSITY")
 
     if
         player:hasKeyItem(xi.ki.MARK_OF_SEED) or

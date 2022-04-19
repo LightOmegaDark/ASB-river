@@ -534,7 +534,7 @@ end
 
     Example of usage with params (all params are optional):
         npcUtil.completeQuest(player, xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.ROSEL_THE_ARMORER, {
-            item = { { 640, 2 }, 641 },   -- see npcUtil.giveItem for formats
+            item = { {640, 2}, 641 },   -- see npcUtil.giveItem for formats
             itemParams = {              -- see npcUtil.giveItem for formats
                 fromTrade = true,
             },
@@ -637,7 +637,7 @@ end
 
     Example of usage with params (all params are optional):
         npcUtil.completeMission(player, xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.ROSEL_THE_ARMORER, {
-            item = { { 640, 2 }, 641 },   -- see npcUtil.giveItem for formats
+            item = { {640, 2}, 641 },   -- see npcUtil.giveItem for formats
             itemParams = {              -- see npcUtil.giveItem for formats
                 fromTrade = true,
             },

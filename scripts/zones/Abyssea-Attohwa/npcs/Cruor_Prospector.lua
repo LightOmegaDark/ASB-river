@@ -33,8 +33,7 @@ local prospectorItems =
     },
 
     [itemType.TEMP] =
-    {
-    --  Sel      Item                               Cost
+    {-- Sel      Item                          Cost, Qty
         [ 1] = { xi.items.LUCID_POTION_I,             80 },
         [ 2] = { xi.items.LUCID_ETHER_I,              80 },
         [ 3] = { xi.items.BOTTLE_OF_CATHOLICON,       80 },

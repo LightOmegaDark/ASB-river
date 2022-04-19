@@ -46,6 +46,14 @@ entity.onTrigger = function(player, npc)
         elseif distantLoyaltiesProgress == 3 and not player:needToZone() then
             player:startEvent(318)
         end
+
+    -- FATHER FIGURE
+    elseif (theElvaanGoldsmith == QUEST_COMPLETED and fatherFigure == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.BASTOK) >= 2) then
+        player:startEvent(240)
+
+    -- DEFAULT DIALOG
+    else
+        player:startEvent(125)
     end
 end
 
@@ -53,6 +61,16 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
+
+    -- THE ELVAAN GOLDSMITH
+    if (csid == 215) then
+        player:addQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_ELVAAN_GOLDSMITH)
+    elseif (csid == 216) then
+        local fame = player:hasCompletedQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_ELVAAN_GOLDSMITH) and 8 or 100
+        if (npcUtil.completeQuest(player, xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_ELVAAN_GOLDSMITH, {gil=180, fame=fame})) then
+            player:confirmTrade()
+        end
+
     -- DISTANT LOYALTIES
     if csid == 315 then
         player:delKeyItem(xi.ki.GOLDSMITHING_ORDER)
@@ -64,6 +82,14 @@ entity.onEventFinish = function(player, csid, option)
     elseif csid == 318 then
         player:setCharVar("DistantLoyaltiesProgress", 4)
         npcUtil.giveKeyItem(player, xi.ki.MYTHRIL_HEARTS)
+
+    -- FATHER FIGURE
+    elseif (csid == 240) then
+        player:addQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.FATHER_FIGURE)
+    elseif (csid == 241) then
+        if (npcUtil.completeQuest(player, xi.quest.log_id.BASTOK, xi.quest.id.bastok.FATHER_FIGURE, {gil=2200, fame=120})) then
+            player:confirmTrade()
+        end
     end
 end
 

@@ -36,7 +36,7 @@ zoneObject.onZoneIn = function(player, prevZone)
         SpawnMob(ID.mob.MISER_MURPHY) -- RDM AF
     end
 
-    if player:getCurrentMission(xi.mission.log_id.ACP) == xi.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_I then
+    if (player:getCurrentMission(xi.mission.log_id.ACP) == xi.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_I) then
         cs = 29
     elseif
         prevZone == xi.zone.BEAUCEDINE_GLACIER and

@@ -32,10 +32,7 @@ entity.onTrigger = function(player, npc)
     local postmanKOsTwice = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.THE_POSTMAN_ALWAYS_KO_S_TWICE)
     local toBeeOrNotStatus = player:getCharVar("ToBeeOrNot_var")
 
-    if
-        (player:getFameLevel(xi.quest.fame_area.WINDURST) >= 2 and postmanKOsTwice == QUEST_COMPLETED and toBee == QUEST_AVAILABLE) or
-        (toBee == QUEST_ACCEPTED and toBeeOrNotStatus == 10)
-    then
+    if ((player:getFameLevel(xi.quest.fame_area.WINDURST) >= 2 and PostmanKOsTwice == QUEST_COMPLETED and ToBee == QUEST_AVAILABLE) or (ToBee == QUEST_ACCEPTED and ToBeeOrNotStatus == 10)) then
         player:startEvent(64)   -- Just Before Quest Start "Too Bee or Not Too Be" (Speech given with lots of coughing)
     elseif toBee == QUEST_ACCEPTED then
         if toBeeOrNotStatus == 1 then

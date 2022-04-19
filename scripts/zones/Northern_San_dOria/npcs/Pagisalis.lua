@@ -19,6 +19,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
+
     local sanFame = player:getFameLevel(xi.quest.fame_area.SANDORIA)
     local undyingFlames = player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.UNDYING_FLAMES)
 

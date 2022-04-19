@@ -18,10 +18,18 @@ entity.onTrigger = function(player, npc)
     local trialByEarth = player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.TRIAL_BY_EARTH)
     local hasWhisperOfTremors = player:hasKeyItem(xi.ki.WHISPER_OF_TREMORS)
 
-    if
-        (trialByEarth == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.BASTOK) >= 6) or
-        (trialByEarth == QUEST_COMPLETED and os.time() > player:getCharVar("TrialByEarth_date"))
-    then
+    local TrialByEarth = player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.TRIAL_BY_EARTH)
+    local WhisperOfTremors = player:hasKeyItem(xi.ki.WHISPER_OF_TREMORS)
+    local ThePuppetMaster = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.THE_PUPPET_MASTER)
+    local ThePuppetMasterProgress = player:getCharVar("ThePuppetMasterProgress")
+
+    if (ThePuppetMaster == QUEST_ACCEPTED and ThePuppetMasterProgress == 1) then
+        player:startEvent(256, 0, 329, 0, 1169, 0, 0, 0, 0)
+    elseif (ThePuppetMaster == QUEST_ACCEPTED and ThePuppetMasterProgress == 2 and player:hasItem(1169) == false) then -- you've lost/tossed away the earth pendulum
+        player:startEvent(257, 0, 1169, 0, 0, 0, 0, 0, 0)
+    elseif (ThePuppetMaster == QUEST_ACCEPTED and ThePuppetMasterProgress == 3) then
+        player:startEvent(258)
+    elseif ((TrialByEarth == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.BASTOK) >= 6) or (TrialByEarth == QUEST_COMPLETED and os.time() > player:getCharVar("TrialByEarth_date"))) then
         player:startEvent(249, 0, xi.ki.TUNING_FORK_OF_EARTH) -- Start and restart quest "Trial by Earth"
     elseif
         trialByEarth == QUEST_ACCEPTED and

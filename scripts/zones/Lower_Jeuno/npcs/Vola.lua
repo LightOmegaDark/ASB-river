@@ -30,7 +30,7 @@ entity.onTrigger = function(player, npc)
 
     if
         player:getFameLevel(xi.quest.fame_area.NORG) >= 3 and
-        fistfulOfFury == QUEST_AVAILABLE and
+        FistfulOfFury == QUEST_AVAILABLE and
         player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.SILENCE_OF_THE_RAMS) == QUEST_COMPLETED
     then
         player:startEvent(216) -- Start Quest "Fistful of Fury"

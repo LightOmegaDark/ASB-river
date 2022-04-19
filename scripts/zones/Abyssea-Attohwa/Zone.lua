@@ -6,8 +6,8 @@ require('scripts/globals/abyssea')
 -----------------------------------
 local zoneObject = {}
 
-zoneObject.onInitialize = function(zone)
-    zone:registerTriggerArea(1, -180, 15, -210, -120, 21, -156)
+zone_object.onInitialize = function(zone)
+    zone:registerRegion(1, -180, 15, -210, -120, 21, -156)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -26,8 +26,26 @@ zoneObject.onZoneIn = function(player, prevZone)
     return cs
 end
 
-zoneObject.afterZoneIn = function(player)
+zone_object.afterZoneIn = function(player)
     xi.abyssea.afterZoneIn(player)
+end
+
+zone_object.onRegionEnter = function(player, region)
+    switch (region:GetRegionID()): caseof
+    {
+        [1] = function()
+            xi.abyssea.onWardRegionEnter(player)
+        end,
+    }
+end
+
+zone_object.onRegionLeave = function(player, region)
+    switch (region:GetRegionID()): caseof
+    {
+        [1] = function()
+            xi.abyssea.onWardRegionLeave(player)
+        end,
+    }
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)

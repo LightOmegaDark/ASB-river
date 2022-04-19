@@ -1566,8 +1566,8 @@ void CStatusEffectContainer::LoadStatusEffects()
     {
         while (sql->NextRow() == SQL_SUCCESS)
         {
-            auto flags    = sql->GetUIntData(8);
-            auto duration = sql->GetUIntData(4);
+            auto flags    = (uint32)sql->GetUIntData(8);
+            auto duration = (uint32)sql->GetUIntData(4);
             auto effectID = (EFFECT)sql->GetUIntData(0);
 
             if (flags & EFFECTFLAG_OFFLINE_TICK)
@@ -1593,7 +1593,7 @@ void CStatusEffectContainer::LoadStatusEffects()
             }
             CStatusEffect* PStatusEffect =
                 new CStatusEffect(effectID, (uint16)sql->GetUIntData(1), (uint16)sql->GetUIntData(2),
-                                  sql->GetUIntData(3), duration, sql->GetUIntData(5), (uint16)sql->GetUIntData(6),
+                                  (uint32)sql->GetUIntData(3), duration, (uint16)sql->GetUIntData(5), (uint16)sql->GetUIntData(6),
                                   (uint16)sql->GetUIntData(7), flags);
 
             PEffectList.push_back(PStatusEffect);

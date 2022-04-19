@@ -26,12 +26,9 @@ end
 entity.onTrigger = function(player, npc)
     local trialSizeByIce = player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.TRIAL_SIZE_TRIAL_BY_ICE)
 
-    if
-        player:getMainLvl() >= 20 and
-        player:getMainJob() == xi.job.SMN and
-        trialSizeByIce == QUEST_AVAILABLE and
-        player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 2
-    then -- Requires player to be Summoner at least lvl 20
+    local TrialSizeByIce = player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.TRIAL_SIZE_TRIAL_BY_ICE)
+
+    if (player:getMainLvl() >= 20 and player:getMainJob() == xi.job.SMN and TrialSizeByIce == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 2) then -- Requires player to be Summoner at least lvl 20
         player:startEvent(733, 0, 1545, 4, 20)     --mini tuning fork of ice, zone, level
     elseif trialSizeByIce == QUEST_ACCEPTED then
         local iceFork = player:hasItem(1545)

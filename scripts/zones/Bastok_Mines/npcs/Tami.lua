@@ -15,6 +15,29 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
+    -- GROCERIES
+    if csid == 110 then
+        player:addQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.GROCERIES)
+        player:addKeyItem(xi.ki.TAMIS_NOTE)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.TAMIS_NOTE)
+        player:setCharVar("Groceries", 1)
+    elseif csid == 112 then
+        player:addFame(xi.quest.fame_area.BASTOK, 8)
+        player:setCharVar("Groceries", 0)
+        player:addGil(xi.settings.GIL_RATE * 10)
+        player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE * 10)
+    elseif csid == 113 then
+        if player:getFreeSlotsCount() >= 1 then
+            player:tradeComplete()
+            player:setCharVar("Groceries", 0)
+            player:completeQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.GROCERIES)
+            player:addFame(xi.quest.fame_area.BASTOK, 75)
+            player:addItem(13594) -- Rabbit Mantle
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 13594)
+        else
+            player:messageSpecial(ID.text.FULL_INVENTORY_AFTER_TRADE, 13594)
+        end
+    end
 end
 
 return entity

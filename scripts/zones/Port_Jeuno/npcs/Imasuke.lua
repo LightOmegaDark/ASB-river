@@ -27,6 +27,20 @@ entity.onTrigger = function(player, npc)
         elseif circleProgress == 5 then
             player:startEvent(31)
         end
+
+    -- THE ANTIQUE COLLECTOR
+    elseif
+        theAntiqueCollector == QUEST_AVAILABLE and
+        player:getFameLevel(xi.quest.fame_area.JEUNO) >= 3
+    then
+        player:startEvent(13) -- Start quest
+
+    elseif theAntiqueCollector == QUEST_ACCEPTED then
+        player:startEvent(14) -- Mid CS
+
+    -- DEFAULT DIALOG
+    else
+        player:startEvent(12)
     end
 end
 
@@ -34,6 +48,23 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
+    -- THE ANTIQUE COLLECTOR
+    if csid == 13 and option == 1 then
+        player:addQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.THE_ANTIQUE_COLLECTOR)
+    elseif csid == 15 then
+        player:addTitle(xi.title.TRADER_OF_ANTIQUITIES)
+        if not player:hasKeyItem(xi.ki.MAP_OF_DELKFUTTS_TOWER) then
+            player:addKeyItem(xi.ki.MAP_OF_DELKFUTTS_TOWER)
+            player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.MAP_OF_DELKFUTTS_TOWER)
+        else
+            player:addGil(2000 * xi.settings.GIL_RATE)
+            player:messageSpecial(ID.text.GIL_OBTAINED, 2000 * xi.settings.GIL_RATE)
+            player:addExp(2000 * xi.settings.EXP_RATE)
+        end
+        player:addFame(xi.quest.fame_area.JEUNO, 30)
+        player:tradeComplete()
+        player:completeQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.THE_ANTIQUE_COLLECTOR)
+
     -- CIRCLE OF TIME
     if csid == 29 and option == 1 then
         player:setCharVar("circleTime", 3)

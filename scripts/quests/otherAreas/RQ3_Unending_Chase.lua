@@ -16,10 +16,10 @@ local quest = Quest:new(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.UNEN
 
 quest.reward =
 {
-    fame     = 120,
+    fame  = 120,
     fameArea = xi.quest.fame_area.WINDURST,
-    title    = xi.title.TWO_STAR_PURVEYOR,
-    gil      = 2100,
+    title = xi.title.TWO_STAR_PURVEYOR,
+    gil   = 2100,
 }
 
 quest.sections =
@@ -27,7 +27,7 @@ quest.sections =
     -- Section: Quest is available.
     {
         check = function(player, status, vars)
-            return status == QUEST_AVAILABLE and
+            return status == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) > 2 and vars.Prog == 0 and
                 player:getQuestStatus(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.WAY_OF_THE_COOK) == QUEST_COMPLETED
         end,
 

@@ -42,6 +42,27 @@ entity.onTrigger = function(player, npc)
     local carbuncleDebacle = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CARBUNCLE_DEBACLE)
     local carbuncleDebacleProgress = player:getCharVar("CarbuncleDebacleProgress")
 
+    if blastFromPast == QUEST_AVAILABLE and qStarStruck == QUEST_COMPLETED and player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CLASS_REUNION) ~= QUEST_ACCEPTED and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 3 and player:needToZone() == false then
+        player:startEvent(214)
+    elseif blastFromPast == QUEST_ACCEPTED and blastProg >= 2 then
+        player:startEvent(215)
+    elseif blastFromPast == QUEST_ACCEPTED then
+        player:startEvent(216)
+    elseif player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.MAKING_THE_GRADE) == QUEST_ACCEPTED then
+        local makingGradeProg = player:getCharVar("QuestMakingTheGrade_prog")
+        if makingGradeProg == 0 and player:hasItem(544) then
+            player:startEvent(287) -- MAKING THE GRADE: Have test answers but not talked/given to Fuepepe
+        elseif makingGradeProg == 1 then
+            player:startEvent(285) -- MAKING THE GRADE: Turn in Test Answer & Told to go back to Fuepepe & Chomoro
+        elseif makingGradeProg >= 2 then
+            player:startEvent(286) -- MAKING THE GRADE: Reminder to go away
+        else
+            player:startEvent(193)
+        end
+    elseif qStarStruck == QUEST_ACCEPTED then
+        player:startEvent(198)
+    elseif qStarStruck == QUEST_AVAILABLE and ClassReunion ~= QUEST_ACCEPTED and player:hasItem(584) then
+        player:startEvent(197)
     -----------------------------------
     -- Carbuncle Debacle
     if
@@ -93,7 +114,48 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 412 then
+
+    if csid == 285 then  -- Giving him KI from Principle
+        player:tradeComplete()
+        player:addKeyItem(xi.ki.TATTERED_TEST_SHEET)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.TATTERED_TEST_SHEET)
+        player:setCharVar("QuestMakingTheGrade_prog", 2)
+    elseif csid == 211 then
+        player:tradeComplete()
+        player:addItem(12502)
+        player:messageSpecial(ID.text.ITEM_OBTAINED, 12502)
+        player:completeQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.STAR_STRUCK)
+        player:needToZone(true)
+        player:addFame(xi.quest.fame_area.WINDURST, 20)
+    elseif csid == 199 then
+        player:tradeComplete()
+        player:messageSpecial(ID.text.GIL_OBTAINED, 50)
+        player:addGil(50)
+    elseif csid == 197 and option == 0 then
+        player:addQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.STAR_STRUCK)
+    elseif csid == 214 and option == 0 then
+        player:addQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.BLAST_FROM_THE_PAST)
+    elseif csid == 224 then
+        player:tradeComplete()
+        player:setCharVar("BlastFromThePast_Prog", 0)
+        player:completeQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.BLAST_FROM_THE_PAST)
+        player:addItem(17030)
+        player:messageSpecial(ID.text.ITEM_OBTAINED, 17030)
+        player:addTitle(xi.title.FOSSILIZED_SEA_FARER)
+        player:addFame(xi.quest.fame_area.WINDURST, 30)
+        player:needToZone(true)
+    elseif csid == 404 then
+        if player:getFreeSlotsCount() ~= 0 then
+            player:addItem(17532)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 17532)
+            player:completeQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.THE_PUPPET_MASTER)
+            player:setCharVar("ThePuppetMasterProgress", 0)
+            player:needToZone(true)
+            player:addFame(xi.quest.fame_area.WINDURST, 20)
+        else
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 17532)
+        end
+    elseif csid == 412 then
         player:delKeyItem(xi.ki.CARBUNCLES_TEAR)
         player:setCharVar("ClassReunionProgress", 2)
     elseif csid == 407 then

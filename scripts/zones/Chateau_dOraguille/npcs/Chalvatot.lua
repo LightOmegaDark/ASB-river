@@ -55,10 +55,7 @@ entity.onTrigger = function(player, npc)
         player:startEvent(561)
 
     -- HER MAJESTY'S GARDEN
-    elseif
-        herMajestysGarden == QUEST_AVAILABLE and
-        player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 4
-    then
+    elseif (herMajestysGarden == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 4) then
         player:startEvent(84)
     elseif herMajestysGarden == QUEST_ACCEPTED then
         player:startEvent(82)

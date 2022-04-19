@@ -19,8 +19,10 @@ entity.onTrigger = function(player, npc)
     local atftaNeedKI = player:getCharVar("ATFTA_Status") < 2 and not player:hasKeyItem(xi.ki.COPY_OF_THE_ALLIANCE_AGREEMENT)
     local soaMission = player:getCurrentMission(xi.mission.log_id.SOA)
 
-    if soaMission >= xi.mission.id.soa.LIFE_ON_THE_FRONTIER then
-        if atfta == QUEST_ACCEPTED and atftaNeedKI then
+    local SOA_Mission = player:getCurrentMission(xi.mission.log_id.SOA)
+
+    if (SOA_Mission >= xi.mission.id.soa.LIFE_ON_THE_FRONTIER) then
+        if ((ATFTA == QUEST_ACCEPTED) and ATFTA_Need_KI) then
             -- Progresses Quest: 'A Thirst for the Ages'
             player:startEvent(5053)
         end

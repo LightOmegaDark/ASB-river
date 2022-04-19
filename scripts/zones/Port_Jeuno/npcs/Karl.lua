@@ -26,7 +26,16 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 316 then
+    if csid == 0 then
+        player:addQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.CHILD_S_PLAY)
+    elseif csid == 1 then
+        player:addTitle(xi.title.TRADER_OF_MYSTERIES)
+        player:addKeyItem(xi.ki.WONDER_MAGIC_SET)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.WONDER_MAGIC_SET)
+        player:addFame(xi.quest.fame_area.JEUNO, 30)
+        player:tradeComplete()
+        player:completeQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.CHILD_S_PLAY)
+    elseif csid == 316 then
         player:setCharVar("WildcatJeuno", utils.mask.setBit(player:getCharVar("WildcatJeuno"), 16, true))
     end
 end

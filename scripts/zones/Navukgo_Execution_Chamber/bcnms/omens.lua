@@ -41,7 +41,7 @@ end
 battlefieldObject.onEventUpdate = function(player, csid, option)
 end
 
-battlefieldObject.onEventFinish = function(player, csid, option)
+battlefield_object.onEventFinish = function(player, csid, option)
 end
 
-return battlefieldObject
+return battlefield_object

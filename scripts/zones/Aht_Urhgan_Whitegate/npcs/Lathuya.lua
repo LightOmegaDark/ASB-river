@@ -133,10 +133,10 @@ entity.onEventFinish = function(player, csid, option)
     local remainingBLUAF = player:getCharVar("[BLUAF]Remaining") -- Bitmask of AF the player has NOT crafted
     local totalCraftedPieces = 3 - utils.mask.countBits(remainingBLUAF, 3)
     local currentTask = player:getCharVar("[BLUAF]Current")
-    local artifactOffset = 8 * totalCraftedPieces
+    local AFoffset = 8 * totalCraftedPieces
 
     -- BLU AF CRAFTING
-    if csid == 732 + artifactOffset then
+    if csid == 732 + AFoffset then
         player:setCharVar("[BLUAF]CraftingStage", 1)
         player:confirmTrade()
     elseif csid == 734 + artifactOffset then

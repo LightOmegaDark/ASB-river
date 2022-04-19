@@ -25,18 +25,9 @@ entity.onTrigger = function(player, npc)
         player:setCharVar("PromathiaStatus", 3)
     end
 
-    if
-        player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.GARDEN_OF_ANTIQUITY and
-        player:getCharVar("PromathiaStatus") == 1
-    then
+    if (player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.GARDEN_OF_ANTIQUITY and player:getCharVar("PromathiaStatus") == 1) then
         player:startEvent(164)
-    elseif
-        player:getCurrentMission(xi.mission.log_id.COP) > xi.mission.id.cop.GARDEN_OF_ANTIQUITY or
-        (
-            player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.GARDEN_OF_ANTIQUITY and
-            player:getCharVar("PromathiaStatus") == 3
-        )
-    then
+    elseif (player:getCurrentMission(xi.mission.log_id.COP) > xi.mission.id.cop.GARDEN_OF_ANTIQUITY or (player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.GARDEN_OF_ANTIQUITY and player:getCharVar("PromathiaStatus") == 3)) then
         player:startEvent(100) -- Teleport inside
     end
 end

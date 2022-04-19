@@ -10,14 +10,14 @@ require("scripts/globals/missions")
 local instanceObject = {}
 
 -- Requirements for the first player registering the instance
-instanceObject.registryRequirements = function(player)
+instance_object.registryRequirements = function(player)
     return player:getCurrentMission(xi.mission.log_id.TOAU) == xi.mission.id.toau.PATH_OF_DARKNESS and
         player:hasKeyItem(xi.ki.NYZUL_ISLE_ROUTE) and
         player:getMissionStatus(xi.mission.log_id.TOAU) == 1
 end
 
 -- Requirements for further players entering an already-registered instance
-instanceObject.entryRequirements = function(player)
+instance_object.entryRequirements = function(player)
     return player:getCurrentMission(xi.mission.log_id.TOAU) >= xi.mission.id.toau.PATH_OF_DARKNESS
 end
 

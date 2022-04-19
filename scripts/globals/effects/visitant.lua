@@ -4,9 +4,38 @@
 require("scripts/globals/abyssea")
 require("scripts/globals/zone")
 -----------------------------------
-local effectObject = {}
+local effect_object = {}
 
-local remainingTimeLimits = { 300, 120, 60, 30, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 }
+local exitPositions =
+{
+    [xi.zone.ABYSSEA_KONSCHTAT]  = {   88.4, -68.09, -579.97, 128, 108 },
+    [xi.zone.ABYSSEA_TAHRONGI]   = {  -28.6,  46.17,  -680.3, 192, 117 },
+    [xi.zone.ABYSSEA_LA_THEINE]  = {   -562,      0,     640, 158, 102 },
+    [xi.zone.ABYSSEA_ATTOHWA]    = {   -340, -23.36,   48.49,  31, 118 },
+    [xi.zone.ABYSSEA_MISAREAUX]  = { 363.47,      0, -119.72, 129, 103 },
+    [xi.zone.ABYSSEA_VUNKERL]    = { 242.98,   0.24,    8.72, 157, 104 },
+    [xi.zone.ABYSSEA_ALTEPA]     = {    340,  -0.52,    -668, 192, 107 },
+    [xi.zone.ABYSSEA_ULEGUERAND] = {    270,   -7.8,     -82,  64, 112 },
+    [xi.zone.ABYSSEA_GRAUBERG]   = {    -64,      0,     600,   0, 106 },
+}
+
+local remainingTimeLimits =
+{
+    300,
+    120,
+     60,
+     30,
+     10,
+      9,
+      8,
+      7,
+      6,
+      5,
+      4,
+      3,
+      2,
+      1,
+}
 
 -- NOTE: Update the last
 local reportTimeRemaining
@@ -19,7 +48,9 @@ reportTimeRemaining = function(player, effect)
 
     -- All possible forms of TE will reset out of the final two minute warning,
     -- reset this here.
-    if currentTime > lastTimeUpdate then
+    if
+        currentTime > lastTimeUpdate
+    then
         lastTimeUpdate = currentTime
         player:setLocalVar('finalCountdown', 0)
         return
@@ -37,7 +68,6 @@ reportTimeRemaining = function(player, effect)
             if messageParam <= 30 then
                 player:setLocalVar('finalCountdown', 1)
             end
-
             break
         end
     end
@@ -58,9 +88,7 @@ reportTimeRemaining = function(player, effect)
         if messageParam > 0 then
             local timerVal = (messageParam - nextTimeReport) * 1000
 
-            player:timer(timerVal, function()
-                reportTimeRemaining(player, effect)
-            end)
+            player:timer(timerVal, function() reportTimeRemaining(player, effect) end)
         else
             -- There's 4s of buffer time built in, so that the full countdown is displayed.
             -- If we reached the end, delete the status effect so that the player is ejected.
@@ -69,7 +97,7 @@ reportTimeRemaining = function(player, effect)
     end
 end
 
-effectObject.onEffectGain = function(target, effect)
+effect_object.onEffectGain = function(target, effect)
     local visEffect = target:getStatusEffect(xi.effect.VISITANT)
 
     visEffect:setFlag(xi.effectFlag.OFFLINE_TICK)
@@ -78,6 +106,52 @@ effectObject.onEffectGain = function(target, effect)
     visEffect:setFlag(xi.effectFlag.HIDE_TIMER)
 
     target:setLocalVar('lastTimeUpdate', effect:getTimeRemaining() / 1000 + 1)
+end
+
+effect_object.onEffectTick = function(target, effect)
+	if not xi.abyssea.isInAbysseaZone(target) then
+        target:delStatusEffect(effect)
+    end
+
+    -- Searing Ward Tether is set and reset in zone onRegionLeave and
+    -- onRegionEnter.
+    if target:getLocalVar('tetherTimer') == 11 then
+        xi.abyssea.searingWardTimer(target)
+    end
+
+    -- Handle Time Remaining Messages. This will no longer be called if the time
+    -- remaining is less that 30s, as then we move to timers set on the player to
+    -- ensure that they're displayed at the appropriate timings.
+    if
+        target:getLocalVar('finalCountdown') == 0
+    then
+        reportTimeRemaining(target, effect)
+    end
+end
+
+effect_object.onEffectLose = function(target, effect)
+    local zoneID = target:getZoneID()
+    local ID = zones[zoneID]
+
+    if xi.abyssea.isInAbysseaZone(target) then
+        target:setLocalVar('finalCountdown', 0)
+        target:messageSpecial(ID.text.ABYSSEA_TIME_OFFSET + 8)
+        target:setPos(unpack(exitPositions[zoneID]))
+    elseif effect:getIcon() == xi.effect.VISITANT then
+        -- Player exited willingly, set their time stored as seconds remaining.  Cap at 120 minutes,
+        -- and remove the 4 seconds that was granted as a buffer time.
+        local timeRemaining = math.min(effect:getTimeRemaining() / 1000 - 4, 7200)
+
+        if timeRemaining < 0 then
+            timeRemaining = 0
+        end
+
+        target:setCharVar('abysseaTimeStored', timeRemaining)
+    end
+
+    -- Reset Abyssea Lights
+    target:setCharVar('abysseaLights1', 0)
+    target:setCharVar('abysseaLights2', 0)
 end
 
 effectObject.onEffectTick = function(target, effect)

@@ -93,7 +93,7 @@ entity.onEventFinish = function(player, csid, option)
             player:addFame(xi.quest.fame_area.WINDURST, 75)
             player:addItem(131)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 131)
-        elseif player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.REAP_WHAT_YOU_SOW) == QUEST_COMPLETED then
+        elseif (player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.REAP_WHAT_YOU_SOW) == QUEST_COMPLETED) then
             player:addFame(xi.quest.fame_area.WINDURST, 8)
             player:setCharVar("QuestReapSow_var", 0)
         end
@@ -106,7 +106,7 @@ entity.onEventFinish = function(player, csid, option)
             player:addFame(xi.quest.fame_area.WINDURST, 75)
             player:addItem(131)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 131)
-        elseif player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.REAP_WHAT_YOU_SOW) == QUEST_COMPLETED then
+        elseif (player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.REAP_WHAT_YOU_SOW) == QUEST_COMPLETED) then
             player:addFame(xi.quest.fame_area.WINDURST, 8)
             player:setCharVar("QuestReapSow_var", 0)
         end

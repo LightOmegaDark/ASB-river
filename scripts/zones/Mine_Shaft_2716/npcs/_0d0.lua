@@ -11,7 +11,14 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    xi.bcnm.onTrigger(player, npc)
+    if
+        player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.FIRE_IN_THE_EYES_OF_MEN and
+        player:getCharVar("PromathiaStatus") == 0
+    then
+        player:startEvent(4)
+    else
+        xi.bcnm.onTrigger(player, npc)
+    end
 end
 
 entity.onEventUpdate = function(player, csid, option, extras)

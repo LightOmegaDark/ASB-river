@@ -35,7 +35,7 @@ entity.onTrigger = function(player, npc)
 
     if
         player:getFameLevel(xi.quest.fame_area.JEUNO) >= 3 and
-        collectTarutCards == QUEST_AVAILABLE
+        CollectTarutCards == QUEST_AVAILABLE
     then
         player:startEvent(28) -- Start quest "Collect Tarut Cards" with option
 
@@ -74,8 +74,8 @@ entity.onTrigger = function(player, npc)
 
     elseif
         player:getFameLevel(xi.quest.fame_area.JEUNO) >= 4 and
-        collectTarutCards == QUEST_COMPLETED and
-        allInTheCards == QUEST_AVAILABLE
+        CollectTarutCards == QUEST_COMPLETED and
+        AllInTheCards == QUEST_AVAILABLE
     then
         player:startEvent(10110) -- Start quest "All in the Cards" with option
 
@@ -176,13 +176,11 @@ entity.onEventFinish = function(player, csid, option)
         player:setLocalVar("Cardstemp", 1)
 
     elseif csid == 10114 then
-        if
-            npcUtil.completeQuest(player, xi.quest.log_id.JEUNO, xi.quest.id.jeuno.ALL_IN_THE_CARDS, {
-                gil = 600,
-                title = xi.title.CARD_COLLECTOR,
-                var = { "AllInTheCards_date" }
-            })
-        then
+        if npcUtil.completeQuest(player, xi.quest.log_id.JEUNO, xi.quest.id.jeuno.ALL_IN_THE_CARDS, {
+            gil = 600,
+            title = xi.title.CARD_COLLECTOR,
+            var = {"AllInTheCards_date"}
+        }) then
             player:confirmTrade()
         end
 

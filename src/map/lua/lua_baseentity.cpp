@@ -2791,14 +2791,6 @@ void CLuaBaseEntity::addTeleport(uint8 teleType, uint32 bitval, sol::object cons
         case TELEPORT_TYPE::ABYSSEA_CONFLUX:
             PChar->teleport.abysseaConflux[set] |= bit;
             break;
-        case TELEPORT_TYPE::WAYPOINT:
-        {
-            uint8 index  = bitval / 32;
-            uint8 setBit = bitval % 32;
-
-            PChar->teleport.waypoints.access[index] |= (1 << setBit);
-        }
-        break;
         default:
             ShowError("LuaBaseEntity::addTeleport : Parameter 1 out of bounds.");
             return;
@@ -4609,7 +4601,7 @@ void CLuaBaseEntity::renameEntity(std::string const& newName)
         return;
     }
 
-    auto oldName              = m_PBaseEntity->packetName.empty() ? "<empty>" : m_PBaseEntity->packetName;
+    auto oldName = m_PBaseEntity->packetName.empty() ? "<empty>" : m_PBaseEntity->packetName;
     m_PBaseEntity->packetName = newName;
     m_PBaseEntity->updatemask |= UPDATE_NAME | UPDATE_HP;
     m_PBaseEntity->isRenamed = true;
@@ -13417,11 +13409,11 @@ uint32 CLuaBaseEntity::getMobFlags()
 }
 
 /************************************************************************
- *  Function: setNpcFlags()
- *  Purpose : Manually set NPC Entity Flags
- *  Example : npc:setNpcFlags(1)
- *  Notes   :
- ************************************************************************/
+*  Function: setNpcFlags()
+*  Purpose : Manually set NPC Entity Flags
+*  Example : npc:setNpcFlags(1)
+*  Notes   :
+************************************************************************/
 
 void CLuaBaseEntity::setNpcFlags(uint32 flags)
 {

@@ -26,6 +26,17 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
+    -- THE COLD LIGHT OF DAY
+    if (csid == 102) then
+        if (player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_COLD_LIGHT_OF_DAY) == QUEST_AVAILABLE) then
+            player:addQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_COLD_LIGHT_OF_DAY)
+        end
+    elseif (csid == 104) then
+        local fame = player:hasCompletedQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_COLD_LIGHT_OF_DAY) and 8 or 50
+        if (npcUtil.completeQuest(player, xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_COLD_LIGHT_OF_DAY, {title=xi.title.CRAB_CRUSHER, gil=500, fame=fame})) then
+            player:confirmTrade()
+        end
+
     -- WISH UPON A STAR
     if csid == 330 then
         player:setCharVar("WishUponAStar_Status", 2)

@@ -24,7 +24,7 @@ quest.sections =
         {
             ['Faunus_Wyvern'] =
             {
-                onMobDeath = function(mob, player, optParams)
+                onMobDeath = function(mob, player, isKiller, noKiller)
                     xi.abyssea.dominionOnMobDeath(mob, player, 591)
                 end,
             },

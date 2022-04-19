@@ -42,12 +42,7 @@ entity.onTrigger = function(player, npc)
         player:startEvent(557)                             -- new dialog before finish of quest
 
     -- A Crisis in the Making
-    elseif
-        crisisstatus == QUEST_AVAILABLE and
-        player:getFameLevel(xi.quest.fame_area.WINDURST) >= 2 and
-        not player:needToZone()
-    then
-        -- A Crisis in the Making + ITEM: Quest Offer
+    elseif (crisisstatus == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 2 and player:needToZone() == false) then -- A Crisis in the Making + ITEM: Quest Offer
         player:startEvent(258, 0, 625)
     elseif crisisstatus == QUEST_ACCEPTED then
         local prog = player:getCharVar("QuestCrisisMaking_var")

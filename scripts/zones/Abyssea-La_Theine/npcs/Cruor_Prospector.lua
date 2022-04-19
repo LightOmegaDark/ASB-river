@@ -17,7 +17,26 @@ local localProspectorItems =
 {
     [itemType.ITEM] = xi.abyssea.visionsCruorProspectorItems,
 
-    [itemType.TEMP] = xi.abyssea.visionsCruorProspectorTemps,
+    [itemType.TEMP] =
+    {-- Sel      Item                          Cost, Qty
+        [ 1] = { xi.items.LUCID_POTION_I,             80 },
+        [ 2] = { xi.items.LUCID_ETHER_I,              80 },
+        [ 3] = { xi.items.BOTTLE_OF_CATHOLICON,       80 },
+        [ 4] = { xi.items.DUSTY_ELIXIR,              120 },
+        [ 5] = { xi.items.TUBE_OF_CLEAR_SALVE_I,     120 },
+        [ 6] = { xi.items.BOTTLE_OF_STALWARTS_TONIC, 150 },
+        [ 7] = { xi.items.BOTTLE_OF_ASCETICS_TONIC,  150 },
+        [ 8] = { xi.items.BOTTLE_OF_CHAMPIONS_TONIC, 150 },
+        [ 9] = { xi.items.LUCID_POTION_II,           200 },
+        [10] = { xi.items.LUCID_ETHER_II,            200 },
+        [11] = { xi.items.LUCID_ELIXIR_I,            300 },
+        [12] = { xi.items.FLASK_OF_HEALING_POWDER,   300 },
+        [13] = { xi.items.PINCH_OF_MANA_POWDER,      300 },
+        [14] = { xi.items.TUBE_OF_HEALING_SALVE_I,   300 },
+        [15] = { xi.items.BOTTLE_OF_VICARS_DRINK,    300 },
+        [16] = { xi.items.TUBE_OF_CLEAR_SALVE_II,    300 },
+        [17] = { xi.items.PRIMEVAL_BREW,         2000000 },
+    },
 
     [itemType.KEYITEM] =
     {

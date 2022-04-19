@@ -38,11 +38,11 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local makingAmends = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.MAKING_AMENDS)
-    local makingAmens  = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.MAKING_AMENS) --Second quest in series
-    local wonderWands  = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.WONDER_WANDS) --Third and final quest in series
-    local needToZone   = player:needToZone()
-    local pFame        = player:getFameLevel(xi.quest.fame_area.WINDURST)
+    local MakingAmends = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.MAKING_AMENDS)
+    local MakingAmens = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.MAKING_AMENS) --Second quest in series
+    local WonderWands = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.WONDER_WANDS) --Third and final quest in series
+    local needToZone = player:needToZone()
+    local pFame = player:getFameLevel(xi.quest.fame_area.WINDURST)
 
 -- Begin Making Amends Section
     if makingAmends == QUEST_AVAILABLE and pFame >= 2 then

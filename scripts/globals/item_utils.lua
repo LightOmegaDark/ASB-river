@@ -3,50 +3,12 @@
 -----------------------------------
 require("scripts/globals/status")
 require("scripts/globals/msg")
-require("scripts/globals/utils")
 -----------------------------------
 xi = xi or {}
 xi.item_utils = {}
 
-xi.item_utils.removableEffects =
-{
-    xi.effect.PARALYSIS,
-    xi.effect.POISON,
-    xi.effect.BLINDNESS,
-    xi.effect.SILENCE,
-    xi.effect.DISEASE,
-    xi.effect.PETRIFICATION,
-    xi.effect.BIND,
-    xi.effect.WEIGHT,
-    xi.effect.ADDLE,
-    xi.effect.BURN,
-    xi.effect.FROST,
-    xi.effect.CHOKE,
-    xi.effect.RASP,
-    xi.effect.SHOCK,
-    xi.effect.DROWN,
-    xi.effect.DIA,
-    xi.effect.BIO,
-    xi.effect.STR_DOWN,
-    xi.effect.DEX_DOWN,
-    xi.effect.VIT_DOWN,
-    xi.effect.AGI_DOWN,
-    xi.effect.INT_DOWN,
-    xi.effect.MND_DOWN,
-    xi.effect.CHR_DOWN,
-    xi.effect.MAX_HP_DOWN,
-    xi.effect.MAX_MP_DOWN,
-    xi.effect.ATTACK_DOWN,
-    xi.effect.EVASION_DOWN,
-    xi.effect.DEFENSE_DOWN,
-    xi.effect.MAGIC_DEF_DOWN,
-    xi.effect.INHIBIT_TP,
-    xi.effect.MAGIC_ACC_DOWN,
-    xi.effect.MAGIC_ATK_DOWN
-}
-
 xi.item_utils.skillBookCheck = function(target, skillID)
-    local skill   = skillID
+    local skill = skillID
     local mainCap = target:getMaxSkillLevel(target:getMainLvl(), target:getMainJob(), skill) or 0
     local subCap  = target:getMaxSkillLevel(target:getSubLvl(), target:getSubJob(), skill) or 0
     local mainDif = (mainCap * 10) / 10 - (target:getCharSkillLevel(skill) * 10) / 100

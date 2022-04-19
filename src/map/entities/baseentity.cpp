@@ -30,22 +30,8 @@
 #include <cstring>
 
 CBaseEntity::CBaseEntity()
-: id(0)
-, targid(0)
-, objtype(ENTITYTYPE::TYPE_NONE)
-, status(STATUS_TYPE::DISAPPEAR)
-, m_TargID(0)
-, animation(0)
-, animationsub(0)
-, speed(50 + settings::get<int8>("map.SPEED_MOD")) // It is downright dumb to init every entity at PLAYER speed, but until speed is reworked this hack stays.
-, speedsub(50)                                     // Retail does NOT adjust this when speed is adjusted.
-, namevis(0)
-, allegiance(ALLEGIANCE_TYPE::MOB)
-, spawnAnimation(SPAWN_ANIMATION::NORMAL)
-, PAI(nullptr)
-, PBattlefield(nullptr)
-, PInstance(nullptr)
-, m_nextUpdateTimer(std::chrono::steady_clock::now())
+: status(STATUS_TYPE::DISAPPEAR)
+, isRenamed(false)
 {
     id       = 0;
     targid   = 0;
@@ -97,6 +83,11 @@ const std::string& CBaseEntity::GetName()
 const std::string& CBaseEntity::GetPacketName()
 {
     return packetName;
+}
+
+const int8* CBaseEntity::GetPacketName()
+{
+    return (const int8*)packetName.c_str();
 }
 
 uint16 CBaseEntity::getZone() const

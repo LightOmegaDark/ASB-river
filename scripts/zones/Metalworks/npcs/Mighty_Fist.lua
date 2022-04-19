@@ -9,7 +9,14 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local randMessage = math.random(0, 1)
+    if (player:getCharVar("darkLegacyCS") == 1) then
+        player:startEvent(752)
+    elseif (player:hasKeyItem(xi.ki.DARKSTEEL_FORMULA)) then
+        player:startEvent(754)
+    elseif (player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_DARKSMITH) == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.BASTOK) >= 3) then
+        player:startEvent(565)
+    else
+        local Message = math.random(0, 1)
 
     if randMessage == 1 then
         player:startEvent(560)
@@ -22,6 +29,26 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
+    if (csid == 565) then
+        player:addQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_DARKSMITH)
+    elseif (csid == 566) then
+        local TheDarksmith = player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_DARKSMITH)
+
+        player:tradeComplete()
+        player:addGil(xi.settings.GIL_RATE * 8000)
+        player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE * 8000)
+
+        if (TheDarksmith == QUEST_ACCEPTED) then
+            player:addFame(xi.quest.fame_area.BASTOK, 30)
+            player:completeQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_DARKSMITH)
+        else
+            player:addFame(xi.quest.fame_area.BASTOK, 5)
+        end
+    elseif (csid == 752) then
+        player:setCharVar("darkLegacyCS", 2)
+        player:addKeyItem(xi.ki.LETTER_FROM_THE_DARKSTEEL_FORGE)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.LETTER_FROM_THE_DARKSTEEL_FORGE)
+    end
 end
 
 return entity

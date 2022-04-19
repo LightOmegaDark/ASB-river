@@ -20,10 +20,10 @@ local quest = Quest:new(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.THE_
 
 quest.reward =
 {
-    fame     = 120,
+    fame = 120,
     fameArea = xi.quest.fame_area.WINDURST,
-    item     = xi.items.TEA_SET,
-    title    = xi.title.FIVE_STAR_PURVEYOR,
+    item = xi.items.TEA_SET,
+    title = xi.title.FIVE_STAR_PURVEYOR,
 }
 
 quest.sections =

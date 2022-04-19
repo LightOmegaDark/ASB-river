@@ -23,8 +23,7 @@ entity.onTrigger = function(player, npc)
     -- Look at the "The Setting Sun" quest status and San d'Oria player's fame
     local theSettingSun = player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.THE_SETTING_SUN)
 
-    if
-        theSettingSun == QUEST_AVAILABLE and
+    if theSettingSun == QUEST_AVAILABLE  and
         player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 5 and
         player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.BLACKMAIL) ~= QUEST_COMPLETED
     then
@@ -46,7 +45,8 @@ entity.onEventFinish = function(player, csid, option)
         player:addQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.THE_SETTING_SUN)
     elseif csid == 658 then --The player trades the Engraved Key to the NPC. Here come the rewards!
         player:tradeComplete()
-        npcUtil.giveCurrency(player, 'gil', 10000)
+        player:addGil(xi.settings.GIL_RATE * 10000)
+        player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE * 10000)
         player:addFame(xi.quest.fame_area.SANDORIA, 30)
         player:completeQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.THE_SETTING_SUN)
     end

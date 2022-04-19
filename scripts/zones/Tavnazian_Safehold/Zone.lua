@@ -28,6 +28,10 @@ zoneObject.onZoneIn = function(player, prevZone)
         player:setPos(27.971, -14.068, 43.735, 66)
     end
 
+    if player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.CHAINS_AND_BONDS and player:getCharVar("PromathiaStatus") == 1 then
+        cs = 114
+    end
+
     return cs
 end
 

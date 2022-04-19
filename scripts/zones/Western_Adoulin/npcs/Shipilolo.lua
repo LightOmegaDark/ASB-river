@@ -18,11 +18,12 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local tomath = player:getQuestStatus(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.THE_OLD_MAN_AND_THE_HARPOON)
-    local fertileGround = player:getQuestStatus(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.FERTILE_GROUND)
-    local waywardWaypoints = player:getQuestStatus(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.WAYWARD_WAYPOINTS)
-    waywardWaypoints = waywardWaypoints == QUEST_ACCEPTED and player:getCharVar("WW_Need_Shipilolo") > 0
-    local soaMission = player:getCurrentMission(xi.mission.log_id.SOA)
+    local TOMATH = player:getQuestStatus(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.THE_OLD_MAN_AND_THE_HARPOON)
+    local Fertile_Ground = player:getQuestStatus(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.FERTILE_GROUND)
+    local Wayward_Waypoints = player:getQuestStatus(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.WAYWARD_WAYPOINTS)
+    Wayward_Waypoints = (Wayward_Waypoints == QUEST_ACCEPTED) and (player:getCharVar("WW_Need_Shipilolo") > 0)
+    local ACSP = player:getQuestStatus(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.A_CERTAIN_SUBSTITUTE_PATROLMAN)
+    local SOA_Mission = player:getCurrentMission(xi.mission.log_id.SOA)
 
     if soaMission >= xi.mission.id.soa.LIFE_ON_THE_FRONTIER then
         if tomath == QUEST_ACCEPTED and player:hasKeyItem(xi.ki.BROKEN_HARPOON) then

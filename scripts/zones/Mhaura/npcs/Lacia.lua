@@ -24,13 +24,9 @@ end
 entity.onTrigger = function(player, npc)
     local trialSizeLightning = player:getQuestStatus(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.TRIAL_SIZE_TRIAL_BY_LIGHTNING)
 
-    if
-        player:getMainLvl() >= 20 and
-        player:getMainJob() == xi.job.SMN and
-        trialSizeLightning == QUEST_AVAILABLE and
-        player:getFameLevel(xi.quest.fame_area.WINDURST) >= 2
-    then
-        --Requires player to be Summoner at least lvl 20
+    local TrialSizeLightning = player:getQuestStatus(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.TRIAL_SIZE_TRIAL_BY_LIGHTNING)
+
+    if (player:getMainLvl() >= 20 and player:getMainJob() == xi.job.SMN and TrialSizeLightning == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 2) then --Requires player to be Summoner at least lvl 20
         player:startEvent(10025, 0, 1548, 5, 20)     --mini tuning fork of lightning, zone, level
     elseif trialSizeLightning == QUEST_ACCEPTED then
         local hasLightningFork = player:hasItem(1548)

@@ -3,17 +3,17 @@
 -- Deals damage based off TP.
 -- 100% TP: ??? / 250% TP: ??? / 300% TP: ???
 -----------------------------------
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/status")
 require("scripts/globals/mobskills")
 -----------------------------------
-local mobskillObject = {}
+local mobskill_object = {}
 
-mobskillObject.onMobSkillCheck = function(target, mob, skill)
+mobskill_object.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
+mobskill_object.onMobWeaponSkill = function(target, mob, skill)
     local numhits = 1
     local accmod = 1
     local dmgmod = 3.0
@@ -28,4 +28,4 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     return dmg
 end
 
-return mobskillObject
+return mobskill_object

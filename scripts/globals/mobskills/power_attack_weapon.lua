@@ -9,8 +9,8 @@ require("scripts/globals/mobskills")
 -----------------------------------
 local mobskillObject = {}
 
-mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    if mob:getMainJob() == xi.job.WAR or mob:getMainJob() == xi.job.SAM then
+mobskill_object.onMobSkillCheck = function(target, mob, skill)
+    if (mob:getMainJob() == xi.job.WAR or mob:getMainJob() == xi.job.SAM) then
         return 0
     end
 

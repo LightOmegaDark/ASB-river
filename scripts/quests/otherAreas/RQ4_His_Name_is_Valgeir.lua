@@ -19,10 +19,10 @@ local quest = Quest:new(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.HIS_
 
 quest.reward =
 {
-    fame     = 120,
+    fame    = 120,
     fameArea = xi.quest.fame_area.WINDURST,
-    gil      = 2000,
-    keyItem  = xi.ki.MAP_OF_THE_TORAIMARAI_CANAL,
+    gil     = 2000,
+    keyItem = xi.ki.MAP_OF_THE_TORAIMARAI_CANAL,
 }
 
 quest.sections =
@@ -30,7 +30,7 @@ quest.sections =
     -- Section: Quest is available.
     {
         check = function(player, status, vars)
-            return status == QUEST_AVAILABLE and
+            return status == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) > 2 and
                 player:getQuestStatus(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.UNENDING_CHASE) == QUEST_COMPLETED
         end,
 

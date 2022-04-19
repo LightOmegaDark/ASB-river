@@ -14,6 +14,19 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
+
+    if (csid == 110) then
+        player:addQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.A_FOREMAN_S_BEST_FRIEND)
+    elseif (csid == 112) then
+        if (player:hasKeyItem(xi.ki.MAP_OF_THE_GUSGEN_MINES) == false) then
+            player:addKeyItem(xi.ki.MAP_OF_THE_GUSGEN_MINES)
+            player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.MAP_OF_THE_GUSGEN_MINES)
+        end
+        player:addExp(2000 * xi.settings.EXP_RATE)
+        player:addFame(xi.quest.fame_area.BASTOK, 60)
+        player:completeQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.A_FOREMAN_S_BEST_FRIEND)
+    end
+
 end
 
 return entity

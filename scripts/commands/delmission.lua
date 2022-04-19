@@ -21,7 +21,7 @@ function onTrigger(player, logId, missionId, target)
     -- validate logId
     local logName
     local logInfo = logIdHelpers.getMissionLogInfo(logId)
-    if logInfo == nil then
+    if (logInfo == nil) then
         error(player, "Invalid logID.")
         return
     end

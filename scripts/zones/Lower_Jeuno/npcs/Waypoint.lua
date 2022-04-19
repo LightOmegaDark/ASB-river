@@ -17,8 +17,9 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    if player:hasKeyItem(xi.ki.ADOULINIAN_CHARTER_PERMIT) then
-        xi.waypoint.onTrigger(player, npc)
+    local adoulinAccess = player:getCurrentMission(xi.mission.log_id.SOA) > xi.mission.id.soa.ONWARD_TO_ADOULIN
+    if adoulinAccess then
+        player:startEvent(10121)
     else
         player:messageSpecial(ID.text.WAYPOINT_EXAMINE)
     end

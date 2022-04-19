@@ -50,8 +50,8 @@ end
 function quest.unlockingMyth.onTrigger(player, npc)
     local mainJobId = player:getMainJob()
     local unlockingAMyth = player:getQuestStatus(xi.quest.log_id.JEUNO, quest.unlockingMyth.getQuestId(mainJobId))
-    local nyzulWeaponMain = xi.nyzul.isBaseWeapon(player:getEquipID(xi.slot.MAIN))
-    local nyzulWeaponRanged = xi.nyzul.isBaseWeapon(player:getEquipID(xi.slot.RANGED))
+    local nyzulWeaponMain = nyzul.isBaseWeapon(player:getEquipID(xi.slot.MAIN))
+    local nyzulWeaponRanged = nyzul.isBaseWeapon(player:getEquipID(xi.slot.RANGED))
 
     if unlockingAMyth == QUEST_AVAILABLE then
         if player:needToZone() and player:getVar("Quest[3][102]Prog") > 0 then

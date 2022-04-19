@@ -20,7 +20,22 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 803 and option == 1 then
+    if (csid == 748) then
+        player:addQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.TRUE_STRENGTH)
+    elseif (csid == 749) then
+        if (player:getFreeSlotsCount() == 0) then
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 14215) -- Temple Hose
+        else
+            player:tradeComplete()
+            player:addTitle(xi.title.PARAGON_OF_MONK_EXCELLENCE)
+            player:addItem(14215)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 14215) -- Temple Hose
+            player:addFame(xi.quest.fame_area.BASTOK, 60)
+            player:completeQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.TRUE_STRENGTH)
+        end
+    elseif (csid == 935) then
+        player:setCharVar("WildcatBastok", utils.mask.setBit(player:getCharVar("WildcatBastok"), 9, true))
+    elseif (csid == 803 and option == 1) then
         player:setCharVar("FadedPromises", 2)
     elseif csid == 804 then
         player:setCharVar("FadedPromises", 4)

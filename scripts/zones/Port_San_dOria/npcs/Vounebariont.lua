@@ -19,7 +19,8 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    if player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 2 then
+
+    if (player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 2) then
         player:startEvent(516)
     else
         player:startEvent(568)

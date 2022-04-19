@@ -9,12 +9,37 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
+    local pFame = player:getFameLevel(xi.quest.fame_area.BASTOK)
+    local FatherFigure = player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.FATHER_FIGURE)
+    local TheReturn = player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_RETURN_OF_THE_ADVENTURER)
+
+    if FatherFigure == QUEST_COMPLETED and TheReturn == QUEST_AVAILABLE and pFame >= 3 then
+        player:startEvent(242)
+    elseif player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_COLD_LIGHT_OF_DAY) == QUEST_ACCEPTED then
+        player:startEvent(103)
+    else
+        player:startEvent(113)
+    end
 end
 
 entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
+    if csid == 242 then
+        player:addQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_RETURN_OF_THE_ADVENTURER)
+    elseif csid == 243 then
+        if (player:getFreeSlotsCount() >= 1) then
+            player:tradeComplete()
+            player:addTitle(xi.title.KULATZ_BRIDGE_COMPANION)
+            player:addItem(12498)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 12498)
+            player:addFame(xi.quest.fame_area.BASTOK, 80)
+            player:completeQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_RETURN_OF_THE_ADVENTURER)
+        else
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 12498)
+        end
+    end
 end
 
 return entity

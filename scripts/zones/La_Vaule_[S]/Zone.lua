@@ -20,7 +20,9 @@ zoneObject.onZoneIn = function(player, prevZone)
     then
         player:setPos(236.547, -2.25, 20, 120)
     end
-
+    if player:getCurrentMission(xi.mission.log_id.WOTG) == xi.mission.id.wotg.A_TIMESWEPT_BUTTERFLY and prevZone == xi.zone.JUGNER_FOREST_S then
+        cs = 1
+    end
     return cs
 end
 

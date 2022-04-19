@@ -28,12 +28,8 @@ zoneObject.onZoneIn = function(player, prevZone)
         player:changeMusic(1, 239)
     end
 
-    if
-        player:getXPos() == 0 and
-        player:getYPos() == 0 and
-        player:getZPos() == 0
-    then
-        if prevZone == xi.zone.SAN_DORIA_JEUNO_AIRSHIP then
+    if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
+        if (prevZone == xi.zone.SAN_DORIA_JEUNO_AIRSHIP) then
             cs = 10018
             player:setPos(-87.000, 12.000, 116.000, 128)
         elseif prevZone == xi.zone.BASTOK_JEUNO_AIRSHIP then

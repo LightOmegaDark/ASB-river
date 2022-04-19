@@ -26,11 +26,7 @@ entity.onTrigger = function(player, npc)
         player:startEvent(291)
 
     -- A Greeting Cardian
-    elseif
-        c2000 == QUEST_COMPLETED and
-        aGreetingCardian == QUEST_AVAILABLE and
-        player:getFameLevel(xi.quest.fame_area.WINDURST) >= 3
-    then
+    elseif C2000 == QUEST_COMPLETED and AGreetingCardian == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 3 then
         player:startEvent(296) -- A Greeting Cardian quest start
     elseif aGreetingCardian == QUEST_ACCEPTED and agccs == 3 then
         if player:needToZone() or os.time() < agcTime then

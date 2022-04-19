@@ -27,6 +27,7 @@ entity.onTrigger = function(player, npc)
             4154,  6440  -- Holy Water
         }
         xi.shop.general(player, stock, xi.quest.fame_area.WINDURST)
+
     end
 end
 

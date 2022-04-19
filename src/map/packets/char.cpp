@@ -35,25 +35,7 @@ CCharPacket::CCharPacket(CCharEntity* PChar, ENTITYUPDATE type, uint8 updatemask
     this->setSize(0x74);
 
     ref<uint32>(0x04) = PChar->id;
-    updateWith(PChar, type, updatemask);
-}
-
-void CCharPacket::updateWith(CCharEntity* PChar, ENTITYUPDATE type, uint8 updatemask)
-{
-    uint32 currentId = ref<uint32>(0x04);
-    if (currentId != PChar->id)
-    {
-        // Should only be able to update packets about the same character.
-        ShowError("Unable to update char packet for %d with data from %d", currentId, PChar->id);
-        return;
-    }
-
     ref<uint16>(0x08) = PChar->targid; // 0x0D entity updates are valid for 1024 to 1791
-
-    if (type == ENTITY_SPAWN)
-    {
-        updatemask = 0x1F; // override mask to spawn mask
-    }
 
     switch (type)
     {
@@ -188,7 +170,8 @@ void CCharPacket::updateWith(CCharEntity* PChar, ENTITYUPDATE type, uint8 update
 
             if (updatemask & UPDATE_NAME)
             {
-                memcpy(data + (0x5A), PChar->GetName().c_str(), PChar->GetName().size());
+                std::string name = (const char*)PChar->GetName();
+                memcpy(data + (0x5A), name.c_str(), name.size());
             }
         }
         break;

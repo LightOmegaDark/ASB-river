@@ -12,7 +12,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local tooManyChefs = player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.TOO_MANY_CHEFS)
+    local TooManyChefs = player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.TOO_MANY_CHEFS)
     local pFame = player:getFameLevel(xi.quest.fame_area.BASTOK)
 
     if tooManyChefs == QUEST_AVAILABLE and pFame >= 5 then

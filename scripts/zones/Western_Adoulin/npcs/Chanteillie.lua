@@ -48,6 +48,12 @@ entity.onTrigger = function(player, npc)
     -- VEGETABLE VEGETABLE CRISIS
     elseif vvc == QUEST_ACCEPTED and player:getCharVar("VVC_Status") == 1 then
         player:startEvent(5088)
+
+    -- STANDARD DIALOGS
+    elseif (player:getCurrentMission(xi.mission.log_id.SOA) >= xi.mission.id.soa.LIFE_ON_THE_FRONTIER) then
+        player:startEvent(588) -- Standard dialogue
+    else
+        player:startEvent(531) -- Dialogue prior to joining colonization effort
     end
 end
 

@@ -32,10 +32,7 @@ entity.onTrigger = function(player, npc)
         end
     elseif twinstoneBonding == QUEST_ACCEPTED then
         player:startEvent(488, 0, 13360)
-    elseif
-        twinstoneBonding == QUEST_AVAILABLE and
-        player:getFameLevel(xi.quest.fame_area.WINDURST) >= 2
-    then
+    elseif twinstoneBonding == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 2 then
         player:startEvent(487, 0, 13360)
     else
         player:startEvent(424)
@@ -55,10 +52,11 @@ entity.onEventFinish = function(player, csid, option)
         player:setCharVar("GiohAijhriSpokenTo", 0)
 
         if player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TWINSTONE_BONDING) == QUEST_ACCEPTED then
-            npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.TWINSTONE_BONDING, { item = 17154, fame = 80, fameArea = xi.quest.fame_area.WINDURST, title = xi.title.BOND_FIXER })
+            npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.TWINSTONE_BONDING, {item=17154, fame=80, fameArea = xi.quest.fame_area.WINDURST, title=xi.title.BOND_FIXER})
         else
             player:addFame(xi.quest.fame_area.WINDURST, 10)
-            npcUtil.giveCurrency(player, 'gil', 900)
+            player:addGil(xi.settings.GIL_RATE*900)
+            player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE*900)
         end
     elseif csid == 488 then
         player:setCharVar("GiohAijhriSpokenTo", 1)

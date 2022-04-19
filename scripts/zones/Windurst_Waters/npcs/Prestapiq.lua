@@ -30,6 +30,7 @@ entity.onTrigger = function(player, npc)
             5165,   736    --Movalpolos Water
         }
         xi.shop.general(player, stock, xi.quest.fame_area.WINDURST)
+
     end
 end
 

@@ -17,11 +17,8 @@ entity.onTrigger = function(player, npc)
     local zPos = player:getZPos()
     local theSandCharm = player:getQuestStatus(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.THE_SAND_CHARM)
 
-    if zPos <= 29 or zPos >= 38 or xPos <= 16 or xPos >= 32 then
-        if
-            player:getFameLevel(xi.quest.fame_area.WINDURST) >= 4 and
-            theSandCharm == QUEST_AVAILABLE
-        then
+    if Z <= 29 or Z >= 38 or X <= 16 or X >= 32 then
+        if player:getFameLevel(xi.quest.fame_area.WINDURST) >= 4 and TheSandCharm == QUEST_AVAILABLE then
             player:startEvent(125) -- Start quest "The Sand Charm"
         elseif player:getCharVar("theSandCharmVar") == 2 then
             player:startEvent(124) -- During quest "The Sand Charm" - 2nd dialog

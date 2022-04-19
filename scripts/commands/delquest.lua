@@ -20,7 +20,7 @@ end
 function onTrigger(player, logId, questId, target)
     -- validate logId
     local questLog = logIdHelpers.getQuestLogInfo(logId)
-    if questLog == nil then
+    if (questLog == nil) then
         error(player, "Invalid logID.")
         return
     end

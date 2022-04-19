@@ -29,7 +29,7 @@ entity.onSpellPrecast = function(mob, spell)
     ]]
 end
 
-entity.onMobDeath = function(mob, player, optParams)
+entity.onMobDeath = function(mob, player, isKiller)
     player:addTitle(xi.title.TURUL_GROUNDER)
 end
 

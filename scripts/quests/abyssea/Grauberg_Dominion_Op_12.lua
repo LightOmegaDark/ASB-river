@@ -24,7 +24,7 @@ quest.sections =
         {
             ['Unseelie'] =
             {
-                onMobDeath = function(mob, player, optParams)
+                onMobDeath = function(mob, player, isKiller, noKiller)
                     xi.abyssea.dominionOnMobDeath(mob, player, 599)
                 end,
             },

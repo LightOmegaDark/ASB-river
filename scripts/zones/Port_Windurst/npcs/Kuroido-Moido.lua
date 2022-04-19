@@ -53,6 +53,19 @@ entity.onTrigger = function(player, npc)
         else
             player:startEvent(286, 0, 937) -- Post Making Amens! dialogue (before Wonder Wands)
         end
+    elseif (player:getCurrentMission(xi.mission.log_id.ASA) == xi.mission.id.asa.THAT_WHICH_CURDLES_BLOOD) then
+        local item = 0
+        local asaStatus = player:getCharVar("ASA_Status")
+
+        -- TODO: Other Enfeebling Kits
+        if (asaStatus == 0) then
+            item = 2779
+        else
+            printf("Error: Unknown ASA Status Encountered <%u>", asaStatus)
+        end
+
+        -- The Parameters are Item IDs for the Recipe
+        player:startEvent(858, item, 1134, 2778, 2778, 4099, 2778)
     else
         local rand = math.random(1, 2)
         if rand == 1 then
@@ -70,7 +83,8 @@ entity.onEventFinish = function(player, csid, option)
         player:needToZone(true)
         player:delKeyItem(xi.ki.BROKEN_WAND)
         player:addTitle(xi.title.HAKKURU_RINKURUS_BENEFACTOR)
-        npcUtil.giveCurrency(player, 'gil', 6000)
+        player:addGil(xi.settings.GIL_RATE*6000)
+        player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE*6000)
         player:addFame(xi.quest.fame_area.WINDURST, 150)
         player:completeQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.MAKING_AMENS)
     end

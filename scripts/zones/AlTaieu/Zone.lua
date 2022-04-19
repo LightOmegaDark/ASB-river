@@ -24,12 +24,10 @@ zoneObject.onZoneIn = function(player, prevZone)
     then
         player:setPos(-25, -1 , -620 , 33)
     end
-
-    if
-        player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.DAWN and
-        player:getCharVar("PromathiaStatus") == 0
-    then
-        cs = 167
+    if (player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.GARDEN_OF_ANTIQUITY and player:getCharVar("PromathiaStatus") == 0) then
+        cs=1
+    elseif (player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.DAWN and player:getCharVar("PromathiaStatus") == 0) then
+        cs=167
     end
 
     return cs

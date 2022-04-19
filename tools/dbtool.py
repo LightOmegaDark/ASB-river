@@ -7,7 +7,6 @@ import time
 import fileinput
 import shutil
 import importlib
-import pathlib
 
 # Pre-flight sanity checks
 def preflight_exit():
@@ -68,31 +67,14 @@ except Exception as e:
     )
     preflight_exit()
 
-GREEN = colorama.Fore.GREEN
-RED = colorama.Fore.RED
-RESET = colorama.Style.RESET_ALL
-NOOP = lambda *args, **kwargs: None
-
-
-def print_red(str):
-    print(colorama.Fore.RED + str)
-
-
-def print_green(str):
-    print(colorama.Fore.GREEN + str)
-
-
 def populate_migrations():
     migration_list = []
-    for file in sorted(
-        os.scandir(from_dbtool_path("migrations")), key=lambda e: e.name
-    ):
+    for file in os.scandir("migrations"):
         if file.name.endswith(".py") and file.name != "utils.py":
             name = file.name.replace(".py", "")
             module = importlib.import_module("migrations." + name)
             migration_list.append(module)
     return migration_list
-
 
 # Migrations are automatically scraped from the migrations folder
 migrations = populate_migrations()

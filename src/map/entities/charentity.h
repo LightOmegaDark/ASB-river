@@ -38,15 +38,11 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "battleentity.h"
 #include "petentity.h"
 
-#include "utils/fishingutils.h"
-
 #define MAX_QUESTAREA    11
 #define MAX_QUESTID      256
 #define MAX_MISSIONAREA  15
 #define MAX_MISSIONID    851
 #define MAX_ABYSSEAZONES 9
-
-#define TIME_BETWEEN_PERSIST 2min
 
 class CItemWeapon;
 class CTrustEntity;
@@ -162,23 +158,9 @@ struct teleport_t
     uint32      campaignSandy;
     uint32      campaignBastok;
     uint32      campaignWindy;
-    telepoint_t homepoint;
-    telepoint_t survival;
+    Telepoint_t homepoint;
+    Telepoint_t survival;
     uint8       abysseaConflux[MAX_ABYSSEAZONES];
-    waypoint_t  waypoints;
-
-    teleport_t()
-    {
-        outpostSandy   = 0;
-        outpostBastok  = 0;
-        outpostWindy   = 0;
-        runicPortal    = 0;
-        pastMaw        = 0;
-        campaignSandy  = 0;
-        campaignBastok = 0;
-        campaignWindy  = 0;
-        std::memset(&abysseaConflux, 0, sizeof(abysseaConflux));
-    }
 };
 
 struct PetInfo_t

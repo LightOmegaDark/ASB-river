@@ -81,11 +81,7 @@ entity.onTrigger = function(player, npc)
         end
 
         -- CAN CARDIANS CRY?
-    elseif
-        allNewC3000 == QUEST_COMPLETED and
-        canCardiansCry == QUEST_AVAILABLE and
-        player:getFameLevel(xi.quest.fame_area.WINDURST) >= 5
-    then
+    elseif allNewC3000 == QUEST_COMPLETED and canCardiansCry == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 5 then
         player:startEvent(319, 0, 20000) -- start quest
     elseif canCardiansCry == QUEST_ACCEPTED then
         player:startEvent(320, 0, 20000) -- reminder
@@ -119,10 +115,9 @@ entity.onEventFinish = function(player, csid, option)
         -- CAN CARDIANS CRY?
     elseif csid == 319 then
         player:addQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CAN_CARDIANS_CRY)
-    elseif
-        csid == 325 and
-        npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.CAN_CARDIANS_CRY, { gil = 5000 })
-    then
+    elseif csid == 325 and npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.CAN_CARDIANS_CRY, {
+        gil = 5000
+    }) then
         player:confirmTrade()
 
         -- TRUST

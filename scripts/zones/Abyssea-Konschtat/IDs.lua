@@ -96,6 +96,7 @@ zones[xi.zone.ABYSSEA_KONSCHTAT] =
     },
     npc =
     {
+        STURDY_PYXIS_BASE = 16839114,
     },
 }
 

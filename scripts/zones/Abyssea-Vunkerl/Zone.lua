@@ -1,15 +1,15 @@
 -----------------------------------
 -- Zone: Abyssea - Vunkerl
 -----------------------------------
-local ID = require('scripts/zones/Abyssea-Vunkerl/IDs')
-require('scripts/globals/abyssea')
+local ID = require("scripts/zones/Abyssea-Vunkerl/IDs")
+require("scripts/globals/abyssea")
 -----------------------------------
 local zoneObject = {}
 
-zoneObject.onInitialize = function(zone)
+zone_object.onInitialize = function(zone)
     -- NOTE: Player can make it all the way to the west ledge due to the shape of the
     -- area.  Might need to add some additional logic in the future.
-    zone:registerTriggerArea(1, -385, -55, 644, -305, -38.85, 710)
+    zone:registerRegion(1, -385, -55, 644, -305, -38.85, 710)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -28,8 +28,26 @@ zoneObject.onZoneIn = function(player, prevZone)
     return cs
 end
 
-zoneObject.afterZoneIn = function(player)
+zone_object.afterZoneIn = function(player)
     xi.abyssea.afterZoneIn(player)
+end
+
+zone_object.onRegionEnter = function(player, region)
+    switch (region:GetRegionID()): caseof
+    {
+        [1] = function()
+            xi.abyssea.onWardRegionEnter(player)
+        end,
+    }
+end
+
+zone_object.onRegionLeave = function(player, region)
+    switch (region:GetRegionID()): caseof
+    {
+        [1] = function()
+            xi.abyssea.onWardRegionLeave(player)
+        end,
+    }
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)

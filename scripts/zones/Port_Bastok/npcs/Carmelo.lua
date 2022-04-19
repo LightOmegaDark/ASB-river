@@ -20,12 +20,15 @@ entity.onTrigger = function(player, npc)
     local aTestOfTrueLoveProgress = player:getCharVar("ATestOfTrueLoveProgress")
     local loversInTheDusk = player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.LOVERS_IN_THE_DUSK)
 
-    if
-        player:getFameLevel(xi.quest.fame_area.BASTOK) >= 7 and
-        aTestOfTrueLove == QUEST_AVAILABLE and
-        loveAndIce == QUEST_COMPLETED and
-        not player:needToZone()
-    then
+    if (LoveAndIce == QUEST_AVAILABLE and SirensTear == QUEST_COMPLETED) then
+        if (player:getFameLevel(xi.quest.fame_area.BASTOK) >= 5 and player:seenKeyItem(xi.ki.CARRIER_PIGEON_LETTER) == true) then
+            player:startEvent(185)
+        else
+            player:startEvent(187)
+        end
+    elseif (LoveAndIce == QUEST_ACCEPTED and LoveAndIceProgress == 1) then
+        player:startEvent(186)
+    elseif (player:getFameLevel(xi.quest.fame_area.BASTOK) >= 7 and ATestOfTrueLove == QUEST_AVAILABLE and LoveAndIce == QUEST_COMPLETED and player:needToZone() == false) then
         player:startEvent(270)
     elseif aTestOfTrueLove == QUEST_ACCEPTED and aTestOfTrueLoveProgress < 3 then
         player:startEvent(271)
@@ -60,7 +63,23 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 270 then
+    if (csid == 185) then
+        player:addQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.LOVE_AND_ICE)
+        player:addKeyItem(xi.ki.CARMELOS_SONG_SHEET)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.CARMELOS_SONG_SHEET)
+    elseif (csid == 186) then
+        if (player:getFreeSlotsCount() == 0) then
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 17356)
+        else
+            player:setCharVar("LoveAndIceProgress", 0)
+            player:needToZone(true)
+            player:addTitle(xi.title.SORROW_DROWNER)
+            player:addItem(17356)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 17356) -- Lamia Harp
+            player:addFame(xi.quest.fame_area.BASTOK, 120)
+            player:completeQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.LOVE_AND_ICE)
+        end
+    elseif (csid == 270) then
         player:addQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.A_TEST_OF_TRUE_LOVE)
     elseif csid == 272 then
         player:setCharVar("ATestOfTrueLoveProgress", 4)

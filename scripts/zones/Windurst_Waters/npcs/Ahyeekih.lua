@@ -32,6 +32,7 @@ entity.onTrigger = function(player, npc)
             4445,    40   -- Yagudo Cherry
         }
         xi.shop.general(player, stock, xi.quest.fame_area.WINDURST)
+
     end
 end
 

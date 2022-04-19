@@ -37,8 +37,9 @@ entity.onEventFinish = function(player, csid, option)
         player:addQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.FEAR_OF_THE_DARK)
     elseif csid == 18 then
         player:tradeComplete()
-        npcUtil.giveCurrency(player, 'gil', 200)
-        if player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.FEAR_OF_THE_DARK) == QUEST_ACCEPTED then
+        player:addGil(xi.settings.GIL_RATE * 200)
+        player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE * 200)
+        if (player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.FEAR_OF_THE_DARK) == QUEST_ACCEPTED) then
             player:addFame(xi.quest.fame_area.SANDORIA, 30)
             player:completeQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.FEAR_OF_THE_DARK)
         else

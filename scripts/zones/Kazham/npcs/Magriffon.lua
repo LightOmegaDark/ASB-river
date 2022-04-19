@@ -46,10 +46,7 @@ entity.onTrigger = function(player, npc)
     if gulliblesTravelsStatus == QUEST_ACCEPTED then
         local magriffonGilRequest = player:getCharVar("MAGRIFFON_GIL_REQUEST")
         player:startEvent(145, 0, magriffonGilRequest)
-    elseif
-        gulliblesTravelsStatus == QUEST_AVAILABLE and
-        player:getFameLevel(xi.quest.fame_area.WINDURST) >= 6
-    then
+    elseif (gulliblesTravelsStatus == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 6) then
         local gil = math.random(10, 30) * 1000
         player:setCharVar("MAGRIFFON_GIL_REQUEST", gil)
         player:startEvent(144, 0, gil)
@@ -68,13 +65,9 @@ entity.onTrigger = function(player, npc)
         player:getCharVar("EVEN_MORE_GULLIBLES_PROGRESS") == 2
     then
         player:startEvent(152, 0, 1144, 256)
-    elseif gulliblesTravelsStatus == QUEST_COMPLETED then
-        if
-            evenmoreTravelsStatus == QUEST_AVAILABLE and
-            player:getFameLevel(xi.quest.fame_area.WINDURST) >= 7 and
-            not player:needToZone()
-        then
-            player:startEvent(148, 0, 256, 0, 0, 35000)
+    elseif (gulliblesTravelsStatus == QUEST_COMPLETED) then
+        if (evenmoreTravelsStatus == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 7 and player:needToZone() == false) then
+        player:startEvent(148, 0, 256, 0, 0, 35000)
         else
             player:startEvent(147)
         end

@@ -15,11 +15,9 @@ local function clearTowerVars(player, towerNum)
     player:setCharVar("Ru_aern_"..towerNum.."-3KILL", 0)
 end
 
-entity.onMobDeath = function(mob, player, optParams)
-    if
-        player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.GARDEN_OF_ANTIQUITY and
-        player:getCharVar("PromathiaStatus") < 3
-    then
+entity.onMobDeath = function(mob, player, isKiller)
+
+    if (player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.GARDEN_OF_ANTIQUITY and player:getCharVar("PromathiaStatus") < 3) then
         local aernKills =
         {
             [ID.mob.RUAERN_BASE + 0] = "Ru_aern_1-1KILL",

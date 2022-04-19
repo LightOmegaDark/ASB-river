@@ -56,17 +56,28 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local amqtr = player:getQuestStatus(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.ALWAYS_MORE_QUOTH_THE_RAVENOUS)
-
-    if
-        player:getFameLevel(xi.quest.fame_area.ADOULIN) >= 2 and
-        not player:needToZone() and vanaDay() > player:getCharVar("Westerly_Breeze_Wait")
-    then
-        if
-            amqtr ~= QUEST_COMPLETED and
-            player:getFameLevel(xi.quest.fame_area.ADOULIN) >= 3
-        then
-            if amqtr == QUEST_AVAILABLE then
+    local HS = player:getQuestStatus(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.HUNGER_STRIKES)
+    local TS = player:getQuestStatus(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.THE_STARVING)
+    local AMQTR = player:getQuestStatus(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.ALWAYS_MORE_QUOTH_THE_RAVENOUS)
+    if (HS ~= QUEST_COMPLETED) then
+        if (HS == QUEST_AVAILABLE) then
+            -- Starts Quest: 'Hunger Strikes'
+            player:startEvent(2530)
+        else
+            -- Reminder for Quest: 'Hunger Strikes'
+            player:startEvent(2531)
+        end
+    elseif ((player:getFameLevel(xi.quest.fame_area.ADOULIN) >= 2) and (not player:needToZone()) and (vanaDay() > player:getCharVar("Westerly_Breeze_Wait"))) then
+        if (TS ~= QUEST_COMPLETED) then
+            if (TS == QUEST_AVAILABLE) then
+                -- Starts Quest: 'The Starving'
+                player:startEvent(3005)
+            else
+                -- Reminder for Quest: 'The Starving'
+                player:startEvent(3006)
+            end
+        elseif ((AMQTR ~= QUEST_COMPLETED) and (player:getFameLevel(xi.quest.fame_area.ADOULIN) >= 3)) then
+            if (AMQTR == QUEST_AVAILABLE) then
                 -- Starts Quest: 'Always More Quoth the Ravenous'
                 player:startEvent(3010)
             else
@@ -81,16 +92,37 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 3010 then
+    if (csid == 2530) then
+        -- Starting Quest: 'Hunger Strikes'
+        player:addQuest(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.HUNGER_STRIKES)
+    elseif ((csid == 2532) or (csid == 3007)) then
+        -- Finishing Quest: 'Hunger Strikes' or 'The Starving'
+        player:tradeComplete()
+        player:addExp(1000 * xi.settings.EXP_RATE)
+        player:addCurrency('bayld', 500 * xi.settings.BAYLD_RATE)
+        player:messageSpecial(ID.text.BAYLD_OBTAINED, 500 * xi.settings.BAYLD_RATE)
+        player:addFame(xi.quest.fame_area.ADOULIN)
+        player:setCharVar("Westerly_Breeze_Wait", vanaDay())
+        player:needToZone(true)
+
+        if (csid == 2532) then
+            player:completeQuest(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.HUNGER_STRIKES)
+        elseif (csid == 3007) then
+            player:completeQuest(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.THE_STARVING)
+        end
+    elseif (csid == 3005) then
+        -- Starting Quest: 'The Starving'
+        player:addQuest(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.THE_STARVING)
+    elseif (csid == 3010) then
         -- Starting Quest: 'Always More Quoth the Ravenous'
         player:addQuest(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.ALWAYS_MORE_QUOTH_THE_RAVENOUS)
     elseif csid == 3012 then
         -- Finishing Quest: 'Always More Quoth The Ravenous'
         player:tradeComplete()
         player:completeQuest(xi.quest.log_id.ADOULIN, xi.quest.id.adoulin.ALWAYS_MORE_QUOTH_THE_RAVENOUS)
-        player:addExp(1500 * xi.settings.main.EXP_RATE)
-        player:addCurrency('bayld', 1000 * xi.settings.main.BAYLD_RATE)
-        player:messageSpecial(ID.text.BAYLD_OBTAINED, 1000 * xi.settings.main.BAYLD_RATE)
+        player:addExp(1500 * xi.settings.EXP_RATE)
+        player:addCurrency('bayld', 1000 * xi.settings.BAYLD_RATE)
+        player:messageSpecial(ID.text.BAYLD_OBTAINED, 1000 * xi.settings.BAYLD_RATE)
         player:addFame(xi.quest.fame_area.ADOULIN)
         player:setCharVar("Westerly_Breeze_Wait", 0)
     elseif csid == 3014 then

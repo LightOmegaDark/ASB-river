@@ -15,14 +15,14 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local currentZM = player:getCurrentMission(xi.mission.log_id.ZILART)
-    local zmProgress = player:getMissionStatus(xi.mission.log_id.ZILART)
-    local dmStatus = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.DIVINE_MIGHT)
-    local dmRepeat = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.DIVINE_MIGHT_REPEAT)
-    local aaKeyitems = 0
-    local dmEarrings = 0
-    local divineStatus = player:getCharVar("DivineMight")
-    local hasMoonOre = player:hasKeyItem(xi.ki.MOONLIGHT_ORE)
+    local CurrentZM = player:getCurrentMission(xi.mission.log_id.ZILART)
+    local ZMProgress = player:getMissionStatus(xi.mission.log_id.ZILART)
+    local DMStatus = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.DIVINE_MIGHT)
+    local DMRepeat = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.DIVINE_MIGHT_REPEAT)
+    local AAKeyitems = 0
+    local DMEarrings = 0
+    local DivineStatus = player:getCharVar("DivineMight")
+    local MoonOre = player:hasKeyItem(xi.ki.MOONLIGHT_ORE)
 
     -- Count keyitems
     for i = xi.ki.SHARD_OF_APATHY, xi.ki.SHARD_OF_RAGE do

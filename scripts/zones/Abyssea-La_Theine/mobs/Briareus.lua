@@ -5,13 +5,9 @@
 require("scripts/globals/status")
 require("scripts/globals/titles")
 -----------------------------------
-mixins = { require("scripts/mixins/rage") }
+mixins = {require("scripts/mixins/rage")}
 -----------------------------------
 local entity = {}
-
-local useMeikyoShisui = function(mob)
-    mob:useMobAbility(xi.jsa.MEIKYO_SHISUI)
-end
 
 local mercurialEffects =
 {
@@ -25,7 +21,7 @@ local mercurialEffects =
     [ 777] = { 2576, nil }, -- Mercurial Strike + JA Reset (NOTE: No need for JA reset)
     [ 888] = { 2578, nil }, -- Colossal Slam
     [ 999] = { 2578, nil }, -- Colossal Slam
-    [1111] = { 2578, useMeikyoShisui }, -- Colossal Slam + 2H
+    [1111] = { 2578, function(mob) mob:useMobAbility(xi.jsa.MEIKYO_SHISUI) end }, -- Colossal Slam + 2H
 }
 
 entity.onMobSpawn = function(mob)
@@ -39,7 +35,6 @@ entity.onMobFight = function(mob, target)
         if type(mercurialEffects[mercDamage][2]) == "function" then
             mercurialEffects[mercDamage][2](mob)
         end
-
         mob:setLocalVar("MERCURIAL_STRIKE_DAMAGE", 0)
     end
 
@@ -64,7 +59,7 @@ entity.onMobWeaponSkillPrepare = function(mob, target)
     return cueMove
 end
 
-entity.onMobDeath = function(mob, player, optParams)
+entity.onMobDeath = function(mob, player, isKiller)
     player:addTitle(xi.title.BRIAREUS_FELLER)
 end
 

@@ -25,11 +25,7 @@ entity.onTrigger = function(player, npc)
         player:hasKeyItem(xi.ki.GANTINEUXS_LETTER)
     then
         player:startEvent(680) -- Finish quest "Acting in Good Faith"
-    elseif
-        healingTheLand == QUEST_AVAILABLE and
-        player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 4 and
-        player:getMainLvl() >= 10
-    then
+    elseif HealingTheLand == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 4 and player:getMainLvl() >= 10 then
         player:startEvent(681) -- Start quest "Healing the Land"
     elseif
         healingTheLand == QUEST_ACCEPTED and
@@ -70,8 +66,20 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 680 then
-        if player:getFreeSlotsCount() == 0 then
+
+    if csid == 679 then
+        if (player:getFreeSlotsCount() == 0) then
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 4731)
+        else
+            player:addTitle(xi.title.PILGRIM_TO_DEM)
+            player:delKeyItem(xi.ki.LETTER_FROM_VIRNAGE)
+            player:addItem(4731)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, 4731) -- Scroll of Teleport-Dem
+            player:addFame(xi.quest.fame_area.BASTOK, 30)
+            player:completeQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.ALTANA_S_SORROW)
+        end
+    elseif csid == 680 then
+        if (player:getFreeSlotsCount() == 0) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 4732)
         else
             player:addTitle(xi.title.PILGRIM_TO_MEA)

@@ -45,9 +45,7 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
-    mob:setMod(xi.mod.COUNTER, 10)
-    mob:setMod(xi.mod.REGAIN, 50)
-    mob:setMod(xi.mod.REGEN, 25)
+    mob:setMobMod(xi.mobMod.SUPERLINK, mob:getTargID())
     mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
     quadrupedForm(mob)
 end

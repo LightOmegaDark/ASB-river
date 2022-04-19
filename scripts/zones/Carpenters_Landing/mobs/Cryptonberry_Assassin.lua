@@ -32,7 +32,11 @@ end
 entity.onMobRoam = function(mob)
 end
 
-entity.onMobDeath = function(mob, player, optParams)
+entity.onMobDeath = function(mob, player, isKiller)
+    if player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.CALM_BEFORE_THE_STORM and player:getCharVar("Cryptonberry_Executor_KILL") < 2 then
+        local offset = mob:getID() - ID.mob.CRYPTONBERRY_EXECUTOR
+        player:setCharVar(string.format("Cryptonberry_Assassins-%i_KILL", offset), 1)
+    end
 end
 
 return entity

@@ -32,6 +32,7 @@ entity.onTrigger = function(player, npc)
             1411,  1656   -- Phalaenopsis
         }
         xi.shop.general(player, stock, xi.quest.fame_area.WINDURST)
+
     end
 end
 

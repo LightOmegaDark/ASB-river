@@ -13,7 +13,9 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    if player:getCurrentMission(xi.mission.log_id.SOA) < xi.mission.id.soa.LIFE_ON_THE_FRONTIER then
+    local SOA_Mission = player:getCurrentMission(xi.mission.log_id.SOA)
+
+    if (SOA_Mission < xi.mission.id.soa.LIFE_ON_THE_FRONTIER) then
         -- Dialogue prior to joining colonization effort
         player:startEvent(571)
     else

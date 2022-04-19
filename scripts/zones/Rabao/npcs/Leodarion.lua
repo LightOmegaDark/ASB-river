@@ -76,9 +76,8 @@ entity.onEventFinish = function(player, csid, option)
     elseif csid == 97 then
         player:delKeyItem(xi.ki.OLD_TRICK_BOX)
         player:setCharVar("trueWillCS", 2)
-    elseif csid == 99 then
-        if
-            npcUtil.completeQuest(player, xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.TRUE_WILL, {
+    elseif (csid == 99) then
+        if npcUtil.completeQuest(player, xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.TRUE_WILL, {
                 item = 13782, -- Ninja Chainmail
                 fameArea = xi.quest.fame_area.NORG,
                 title = xi.title.PARAGON_OF_NINJA_EXCELLENCE,
