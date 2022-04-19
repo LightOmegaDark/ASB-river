@@ -1540,69 +1540,6 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_trigger_areas)
         m_EffectCheckTime = m_EffectCheckTime + 3s > tick ? m_EffectCheckTime + 3s : tick + 3s;
     }
 
-    if (tick > charPersistTime && !charTargIds.empty())
-    {
-        charPersistTime = tick + 1s;
-
-        auto charTargIdIter = charTargIds.lower_bound(lastCharPersistTargId);
-        if (charTargIdIter == charTargIds.end())
-        {
-            charTargIdIter = charTargIds.begin();
-        }
-
-        size_t maxChecks = std::min<size_t>(charTargIds.size(), PERSIST_CHECK_CHARACTERS);
-
-        for (size_t i = 0; i < maxChecks; i++)
-        {
-            CCharEntity* pc = (CCharEntity*)m_charList[*charTargIdIter];
-            charTargIdIter++;
-            if (charTargIdIter == charTargIds.end())
-            {
-                charTargIdIter = charTargIds.begin();
-            }
-
-            if (pc && pc->PersistData(tick))
-            {
-                // We only want to persist at most 1 character per zone tick
-                break;
-            }
-        }
-        lastCharPersistTargId = *charTargIdIter;
-    }
-
-    if (tick > computeTime && !charTargIds.empty())
-    {
-        // Tick time is irregular to avoid consistently happening at the same time as char persistence
-        computeTime = tick + 567ms;
-
-        auto charTargIdIter = charTargIds.lower_bound(lastCharComputeTargId);
-        if (charTargIdIter == charTargIds.end())
-        {
-            charTargIdIter = charTargIds.begin();
-        }
-
-        std::size_t maxIterations = std::min<std::size_t>(charTargIds.size(), std::min<std::size_t>(10000U / charTargIds.size(), 20U));
-
-        for (std::size_t i = 0; i < maxIterations; i++)
-        {
-            CCharEntity* pc = static_cast<CCharEntity*>(m_charList[*charTargIdIter]);
-            charTargIdIter++;
-
-            if (charTargIdIter == charTargIds.end())
-            {
-                charTargIdIter = charTargIds.begin();
-            }
-
-            if (pc && pc->requestedInfoSync)
-            {
-                pc->requestedInfoSync = false;
-                SpawnPCs(pc);
-            }
-        }
-
-        lastCharComputeTargId = *charTargIdIter;
-    }
-
     moduleutils::OnZoneTick(m_zone);
 }
 
