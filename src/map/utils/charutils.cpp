@@ -6214,6 +6214,8 @@ namespace charutils
 
     int32 GetCharVar(CCharEntity* PChar, std::string const& var)
     {
+        TracyZoneScoped;
+
         if (PChar == nullptr)
         {
             return 0;
@@ -6286,6 +6288,8 @@ namespace charutils
 
     void IncrementCharVar(CCharEntity* PChar, std::string const& var, int32 value)
     {
+        TracyZoneScoped;
+        
         if (PChar == nullptr)
         {
             return;
@@ -6323,6 +6327,26 @@ namespace charutils
         {
             sql->Query("INSERT INTO char_vars SET charid = %u, varname = '%s', value = %i ON DUPLICATE KEY UPDATE value = %i;", charId, var, value, value);
         }
+    }
+
+    void ClearCharVarsWithPrefix(CCharEntity* PChar, std::string prefix)
+    {
+        TracyZoneScoped;
+    
+        if (PChar == nullptr)
+        {
+            return;
+        }
+
+        // Validate that prefix is not too short, since we don't want it to
+        // accidentally clear a lot of variables it shouldn't.
+        if (prefix.size() < 5)
+        {
+            ShowError("Prefix too short to clear with: '%s'", prefix);
+            return;
+        }
+
+        sql->Query("DELETE FROM char_vars WHERE charid = %u AND varname LIKE '%s%%';", PChar->id, prefix.c_str());
     }
 
     uint16 getWideScanRange(JOBTYPE job, uint8 level)

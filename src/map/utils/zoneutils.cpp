@@ -21,29 +21,6 @@
 
 #include "zoneutils.h"
 
-#include "ai/ai_container.h"
-#include "battlefield.h"
-#include "campaign_system.h"
-#include "common/logging.h"
-#include "common/timer.h"
-#include "conquest_system.h"
-#include "entities/mobentity.h"
-#include "entities/npcentity.h"
-#include "items/item_weapon.h"
-#include "lua/luautils.h"
-#include "map.h"
-#include "mob_modifier.h"
-#include "mob_spell_list.h"
-#include "mobutils.h"
-#include "packets/entity_update.h"
-#include "zone_instance.h"
-
-#include <algorithm>
-#include <cstring>
-#include <execution>
-
-#include <task_system.hpp>
-
 std::map<uint16, CZone*> g_PZoneList; // Global array of pointers for zones
 CNpcEntity*              g_PTrigger;  // trigger to start events
 

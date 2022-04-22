@@ -92,21 +92,6 @@ std::unique_ptr<SqlConnection> sql;
 
 extern std::map<uint16, CZone*> g_PZoneList; // Global array of pointers for zones
 
-bool gLoadAllLua = false;
-
-std::unordered_map<uint32, std::unordered_map<uint16, std::vector<std::pair<uint16, uint8>>>> PacketMods;
-
-namespace
-{
-    uint32 MAX_BUFFER_SIZE             = 2500U;
-    uint32 MAX_PACKETS_PER_COMPRESSION = 32U;
-    uint32 MAX_PACKET_BACKLOG_SIZE     = MAX_PACKETS_PER_COMPRESSION * 6U; // If we hit this number, things are going very very badly.
-
-    uint32 TotalPacketsToSendPerTick  = 0U;
-    uint32 TotalPacketsSentPerTick    = 0U;
-    uint32 TotalPacketsDelayedPerTick = 0U;
-} // namespace
-
 /************************************************************************
  *                                                                       *
  *  mapsession_getbyipp                                                  *
@@ -428,12 +413,10 @@ void set_socket_type()
 
 void ReportTracyStats()
 {
-    TracyReportLuaMemory(lua.lua_state());
-
+    TracyReportLuaMemory(luautils::lua.lua_state());
     std::size_t activeZoneCount = 0;
-    std::size_t playerCount     = 0;
-    std::size_t mobCount        = 0;
-
+    std::size_t playerCount = 0;
+    std::size_t mobCount = 0;
     for (auto& [id, PZone] : g_PZoneList)
     {
         if (PZone->IsZoneActive())
@@ -443,19 +426,10 @@ void ReportTracyStats()
             mobCount += PZone->GetZoneEntities()->GetMobList().size();
         }
     }
-
     TracyReportGraphNumber("Active Zones (Process)", static_cast<std::int64_t>(activeZoneCount));
     TracyReportGraphNumber("Connected Players (Process)", static_cast<std::int64_t>(playerCount));
     TracyReportGraphNumber("Active Mobs (Process)", static_cast<std::int64_t>(mobCount));
     TracyReportGraphNumber("Task Manager Tasks", static_cast<std::int64_t>(CTaskMgr::getInstance()->getTaskList().size()));
-
-    TracyReportGraphNumber("Total Packets To Send Per Tick", static_cast<std::int64_t>(TotalPacketsToSendPerTick));
-    TracyReportGraphNumber("Total Packets Sent Per Tick", static_cast<std::int64_t>(TotalPacketsSentPerTick));
-    TracyReportGraphNumber("Total Packets Delayed Per Tick", static_cast<std::int64_t>(TotalPacketsDelayedPerTick));
-
-    TotalPacketsToSendPerTick  = 0;
-    TotalPacketsSentPerTick    = 0;
-    TotalPacketsDelayedPerTick = 0;
 }
 
 /************************************************************************
@@ -466,6 +440,8 @@ void ReportTracyStats()
 
 int32 do_sockets(fd_set* rfd, duration next)
 {
+    TracyZoneScoped;
+
     message::handle_incoming();
 
     struct timeval timeout;
