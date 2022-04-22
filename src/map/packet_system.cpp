@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -794,8 +794,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                 return "Unknown";
         }
     };
-    auto actionStr = actionToStr(action);
-    TracyZoneString(fmt::format("Player Action: {}: {} -> targid: {}", PChar->GetName(), actionStr, TargID));
+    TracyZoneString(fmt::format("Player Action: {}: {} -> targid: {}", PChar->GetName(), actionToStr(action), TargID));
 
     switch (action)
     {
