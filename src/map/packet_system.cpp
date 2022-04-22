@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -827,11 +827,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                 return "Unknown";
         }
     };
-
-    auto actionStr = fmt::format("Player Action: {}: {} (0x{:02X}) -> targid: {}", PChar->GetName(), actionToStr(action), action, TargID);
-    TracyZoneString(actionStr);
-    ShowTrace(actionStr);
-    DebugActions(actionStr);
+    TracyZoneString(fmt::format("Player Action: {}: {} -> targid: {}", PChar->GetName(), actionToStr(action), TargID));
 
     switch (action)
     {
@@ -945,12 +941,12 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
         break;
         case 0x09: // jobability
         {
-            uint16 JobAbilityID     = data.ref<uint16>(0x0C);
-            uint8  currentAnimation = PChar->animation;
+            uint16 JobAbilityID = data.ref<uint16>(0x0C);
+            uint8 currentAnimation = PChar->animation;
 
             if (currentAnimation != ANIMATION_NONE && currentAnimation != ANIMATION_ATTACK)
             {
-                ShowWarning("SmallPacket0x01A: Player %s trying to use a Job Ability from invalid state", PChar->GetName());
+                ShowExploit("SmallPacket0x01A: Player %s trying to use a Job Ability from invalid state", PChar->GetName());
                 return;
             }
 
