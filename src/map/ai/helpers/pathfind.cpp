@@ -295,6 +295,8 @@ void CPathFind::FollowPath(time_point tick)
 
     pathpoint_t targetPoint = m_points[m_currentPoint];
 
+    StepTo(targetPoint, m_pathFlags & PATHFLAG_RUN);
+
     if (isNavMeshEnabled() && m_carefulPathing)
     {
         m_POwner->loc.zone->m_navMesh->snapToValidPosition(m_POwner->loc.p);
@@ -410,11 +412,6 @@ bool CPathFind::FindPath(const position_t& start, const position_t& end)
 {
     TracyZoneScoped;
 
-    if (arePositionsClose(start, end))
-    {
-        return false;
-    }
-
     if (!isNavMeshEnabled())
     {
         return false;
@@ -469,11 +466,6 @@ bool CPathFind::FindRandomPath(const position_t& start, float maxRadius, uint8 m
 bool CPathFind::FindClosestPath(const position_t& start, const position_t& end)
 {
     TracyZoneScoped;
-
-    if (arePositionsClose(start, end))
-    {
-        return false;
-    }
 
     if (!isNavMeshEnabled())
     {
