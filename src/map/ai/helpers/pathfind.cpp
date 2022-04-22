@@ -240,6 +240,8 @@ void CPathFind::FollowPath()
     m_onPoint = false;
     position_t& targetPoint = m_points[m_currentPoint];
 
+    StepTo(targetPoint, m_pathFlags & PATHFLAG_RUN);
+
     if (isNavMeshEnabled() && m_carefulPathing)
     {
         m_POwner->loc.zone->m_navMesh->snapToValidPosition(m_POwner->loc.p);
