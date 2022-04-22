@@ -794,7 +794,8 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                 return "Unknown";
         }
     };
-    TracyZoneString(fmt::format("Player Action: {}: {} -> targid: {}", PChar->GetName(), actionToStr(action), TargID));
+    auto actionStr = actionToStr(action);
+    TracyZoneString(fmt::format("Player Action: {}: {} -> targid: {}", PChar->GetName(), actionStr, TargID));
 
     switch (action)
     {
