@@ -23,12 +23,9 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 #include "common/blowfish.h"
 #include "common/cbasetypes.h"
-#include "common/console_service.h"
 #include "common/logging.h"
-#include "common/lua.h"
 #include "common/md52.h"
 #include "common/mmo.h"
-#include "common/settings.h"
 #include "common/socket.h"
 #include "common/sql.h"
 #include "common/taskmgr.h"
@@ -545,7 +542,7 @@ void HandleGroupListRequest(CTCPRequestPacket& PTCPRequest)
 
 void HandleSearchComment(CTCPRequestPacket& PTCPRequest)
 {
-    uint8* data     = PTCPRequest.GetData();
+    uint8* data     = (uint8*)PTCPRequest.GetData();
     uint32 playerId = ref<uint32>(data, 0x10);
 
     CDataLoader PDataLoader;
@@ -591,6 +588,7 @@ void HandleSearchRequest(CTCPRequestPacket& PTCPRequest)
         if (currentResult == totalResults)
             PSearchPacket.SetFinal();
 
+        // PrintPacket((int8*)PSearchPacket->GetData(), PSearchPacket->GetSize());
         auto ret = PTCPRequest.SendToSocket(PSearchPacket.GetData(), PSearchPacket.GetSize());
         if (ret <= 0)
             break;
