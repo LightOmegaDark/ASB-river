@@ -1,28 +1,21 @@
 ﻿/*
 ===========================================================================
-
   Copyright (c) 2010-2015 Darkstar Dev Teams
-
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
-
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
-
 ===========================================================================
 */
 
 #include "mobentity.h"
 
-#include "common/timer.h"
-#include "common/utils.h"
 #include "../ai/ai_container.h"
 #include "../ai/controllers/mob_controller.h"
 #include "../ai/helpers/pathfind.h"
@@ -50,6 +43,8 @@
 #include "../utils/mobutils.h"
 #include "../utils/petutils.h"
 #include "../weapon_skill.h"
+#include "common/timer.h"
+#include "common/utils.h"
 #include <cstring>
 
 CMobEntity::CMobEntity()
@@ -753,7 +748,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         }
         else
         {
-            target.reaction = REACTION::HIT;
+            target.reaction   = REACTION::HIT;
             target.speceffect = SPECEFFECT::HIT;
         }
 
@@ -821,15 +816,15 @@ void CMobEntity::DistributeRewards()
             m_UsedSkillIds.clear();
 
             // RoE Mob kill event for all party members
-            PChar->ForAlliance([this, PChar](CBattleEntity* PMember) {
+            PChar->ForAlliance([this, PChar](CBattleEntity* PMember)
+                               {
                 if (PMember->getZone() == PChar->getZone())
                 {
                     RoeDatagramList datagrams;
                     datagrams.push_back(RoeDatagram("mob", this));
                     datagrams.push_back(RoeDatagram("atkType", static_cast<uint8>(this->BattleHistory.lastHitTaken_atkType)));
                     roeutils::event(ROE_MOBKILL, (CCharEntity*)PMember, datagrams);
-                }
-            });
+                } });
 
             if (m_giveExp && !PChar->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD))
             {
@@ -898,8 +893,8 @@ void CMobEntity::DropItems(CCharEntity* PChar)
     // Apply m_DropListModifications changes to DropList
     for (auto& entry : m_DropListModifications)
     {
-        uint16 itemID = entry.first;
-        uint16 dropRate = entry.second.first;
+        uint16    itemID   = entry.first;
+        uint16    dropRate = entry.second.first;
         DROP_TYPE dropType = static_cast<DROP_TYPE>(entry.second.second);
 
         if (dropType == DROP_NORMAL)
@@ -1228,7 +1223,8 @@ void CMobEntity::DropItems(CCharEntity* PChar)
             }
         }
         uint8 crystalRolls = 0;
-        PChar->ForParty([this, &crystalRolls, &effect](CBattleEntity* PMember) {
+        PChar->ForParty([this, &crystalRolls, &effect](CBattleEntity* PMember)
+                        {
             switch (effect)
             {
                 case 1:
@@ -1254,8 +1250,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
                     break;
                 default:
                     break;
-            }
-        });
+            } });
         for (uint8 i = 0; i < crystalRolls; i++)
         {
             if (xirand::GetRandomNumber(100) < 20 && AddItemToPool(4095 + m_Element, ++dropCount))
@@ -1307,13 +1302,13 @@ void CMobEntity::OnEngage(CAttackState& state)
         }
         if (PTarget->objtype == TYPE_PC)
         {
-            ((CCharEntity*)PTarget)->ForAlliance([this, PTarget, range](CBattleEntity* PMember) {
+            ((CCharEntity*)PTarget)->ForAlliance([this, PTarget, range](CBattleEntity* PMember)
+                                                 {
                 auto currentDistance = distance(PMember->loc.p, PTarget->loc.p);
                 if (currentDistance < range)
                 {
                     this->PEnmityContainer->AddBaseEnmity(PMember);
-                }
-            });
+                } });
             this->PEnmityContainer->UpdateEnmity((PPet ? (CBattleEntity*)PPet : (CBattleEntity*)PTarget), 0, 1); // Set VE so target doesn't change
         }
     }
