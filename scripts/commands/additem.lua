@@ -19,15 +19,6 @@ function onTrigger(player, item, quantity, aug0, aug0val, aug1, aug1val, aug2, a
     local ID = zones[player:getZoneID()]
     local itemToGet = 0
 
-    if type(itemId) == "string" then
-        if (name == nil or tostring(name) == nil) then
-            error(player, "Invalid name.")
-            return
-        end
-        
-        local itemId = GetItemIDByName(name)
-    end
-
     -- validate itemId
     if (itemId == nil or tonumber(itemId) == nil or tonumber(itemId) == 0) then
         error(player, "Invalid itemId.")
