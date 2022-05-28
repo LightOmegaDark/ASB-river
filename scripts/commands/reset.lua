@@ -31,7 +31,7 @@ function onTrigger(player, target)
     -- reset target recasts
     targ:resetRecasts()
     if targ:getID() ~= player:getID() then
-        player:PrintToPlayer(string.format("Reset %s's recast timers.", targ:getName()))
+        player:PrintToPlayer( string.format( "Reset %s's recast timers.", targ:getName() ) )
     end
 
     -- Clear debilitating effects from player
@@ -58,4 +58,6 @@ function onTrigger(player, target)
     for _, v in pairs(effects) do
         player:delStatusEffect(v)
     end
+
+
 end
