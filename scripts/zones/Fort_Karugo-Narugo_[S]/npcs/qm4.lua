@@ -2,7 +2,7 @@
 -- Area: Fort Karugo Narugo [S]
 --  NPC: ???
 -- Type: Quest
--- !pos 280 -20 85 96
+-- !pos 0 207.748 -30.190 54.052
 -----------------------------------
 local ID = require("scripts/zones/Fort_Karugo-Narugo_[S]/IDs")
 require("scripts/globals/quests")
