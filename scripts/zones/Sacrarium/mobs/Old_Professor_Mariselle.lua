@@ -103,4 +103,20 @@ entity.onMobDespawn = function(mob)
     end
 end
 
+entity.onMobRoam = function(mob)
+    local profLocation = mob:getLocalVar("spawnLocation")
+    local returnPoint =
+    {
+    [0] = { 102.669, -3.111, 127.279 },
+    [1] = { 62.668, -3.111, 127.288 },
+    [2] = { 22.669, -3.111, 127.279 },
+    [3] = { 102.670, -3.111, -127.318 },
+    [4] = { 62.668, -3.111, -127.318 },
+    [5] = { 22.669, -3.111, -127.318 },
+    }
+
+    local posPath = {mob:getXPos(), mob:getYPos(), mob:getZPos(), returnPoint[profLocation][1], returnPoint[profLocation][2], returnPoint[profLocation][3]}
+    xi.path.patrol(mob, posPath)
+end
+
 return entity
