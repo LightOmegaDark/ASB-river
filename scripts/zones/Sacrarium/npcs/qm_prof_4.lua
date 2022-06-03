@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Sacrarium
---  NPC: qm_professor_mariselle (???)
+--  NPC: qm_prof_4 (???)
 -- Notes: Used to spawn Old Prof. Mariselle
 -- !pos 62.668 -3.111 -127.310 28
 -----------------------------------
-local ID = require("scripts/zones/Sacrarium/IDs")
+local ID = require('scripts/zones/Sacrarium/IDs')
 -----------------------------------
 local entity = {}
 

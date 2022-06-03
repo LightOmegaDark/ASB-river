@@ -23,25 +23,23 @@ local profQmOnTrigger = function(player, npc)
     local missionStatus = mission:getVar(player, 'Status')
     local isSpawnPoint = npc:getLocalVar('hasProfessorMariselle') == 1
 
-    print('wtf')
-
     if
         missionStatus == 3 and
         not player:hasKeyItem(xi.ki.RELIQUIARIUM_KEY) and
-        isSpawnPoint and
-        npcUtil.popFromQM(player, npc, sacrariumID.mob.OLD_PROFESSOR_MARISELLE, { radius = 2, hide = 0 })
+        isSpawnPoint
     then
-        print('wtf')
+        GetMobByID(sacrariumID.mob.OLD_PROFESSOR_MARISELLE):setSpawn(npc:getXPos(), npc:getYPos(), npc:getZPos(), 0)
+        for i = 1, 2 do
+            GetMobByID(sacrariumID.mob.OLD_PROFESSOR_MARISELLE + i):setSpawn(npc:getXPos(), npc:getYPos(), npc:getZPos(), 0)
+        end
+        npcUtil.popFromQM(player, npc, sacrariumID.mob.OLD_PROFESSOR_MARISELLE, { radius = 2, hide = 0 })
         return mission:messageSpecial(sacrariumID.text.EVIL_PRESENCE)
-
     elseif
         mission:getLocalVar(player, 'hasKilled') == 1 and
         not player:hasKeyItem(xi.ki.RELIQUIARIUM_KEY)
     then
-        print('wtf')
         npcUtil.giveKeyItem(player, xi.ki.RELIQUIARIUM_KEY)
         return mission:noAction()
-
     end
 end
 
@@ -146,15 +144,10 @@ mission.sections =
             },
 
             ['qm_prof_0'] = profQmOnTrigger,
-
             ['qm_prof_1'] = profQmOnTrigger,
-
             ['qm_prof_2'] = profQmOnTrigger,
-
             ['qm_prof_3'] = profQmOnTrigger,
-
             ['qm_prof_4'] = profQmOnTrigger,
-
             ['qm_prof_5'] = profQmOnTrigger,
 
             ['Old_Professor_Mariselle'] =

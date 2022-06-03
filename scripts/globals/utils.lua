@@ -95,6 +95,20 @@ function utils.stoneskin(target, dmg)
     return dmg
 end
 
+-- returns reduced magic damage from RUN buff, "One for All"
+function utils.oneforall(target, dmg)
+    if dmg > 0 then
+        local oneForAllEffect = target:getStatusEffect(xi.effect.ONE_FOR_ALL)
+
+        if oneForAllEffect ~= nil then
+            local power = oneForAllEffect:getPower()
+            dmg = math.max(0, dmg - power)
+        end
+    end
+
+    return dmg
+end
+
 function utils.takeShadows(target, dmg, shadowbehav)
     if shadowbehav == nil then
         shadowbehav = 1
@@ -479,18 +493,29 @@ end
 function utils.splitStr(s, sep)
     local fields = {}
     local pattern = string.format("([^%s]+)", sep)
-    _ = string.gsub(s, pattern, function(c) fields[#fields + 1] = c end)
+    local _ = string.gsub(s, pattern, function(c) fields[#fields + 1] = c end)
     return fields
 end
 
 function utils.mobTeleport(mob, hideDuration, pos, disAnim, reapAnim)
 
-    --TODO Table of animations that are used for TEleporst for reference
+    --TODO Table of animations that are used for teleports for reference
 
-    if hideDuration == nil then hideDuration = 5000 end
-    if disAnim == nil then disAnim = "kesu" end
-    if reapAnim == nil then reapAnim = "deru" end
-    if pos == nil then pos = mob:getPos() end
+    if hideDuration == nil then
+        hideDuration = 5000
+    end
+
+    if disAnim == nil then
+        disAnim = "kesu"
+    end
+
+    if reapAnim == nil then
+        reapAnim = "deru"
+    end
+
+    if pos == nil then
+        pos = mob:getPos()
+    end
 
     local mobSpeed = mob:getSpeed()
 
@@ -504,7 +529,7 @@ function utils.mobTeleport(mob, hideDuration, pos, disAnim, reapAnim)
 
     mob:entityAnimationPacket(disAnim)
     mob:hideName(true)
-    mob:untargetable(true)
+    mob:setUntargetable(true)
     mob:SetAutoAttackEnabled(false)
     mob:SetMagicCastingEnabled(false)
     mob:SetMobAbilityEnabled(false)
@@ -512,16 +537,16 @@ function utils.mobTeleport(mob, hideDuration, pos, disAnim, reapAnim)
     mob:setSpeed(0)
 
     mob:timer(hideDuration, function(mobArg)
-        mob:setPos(pos, 0)
-        mob:hideName(false)
-        mob:untargetable(false)
-        mob:SetAutoAttackEnabled(true)
-        mob:SetMagicCastingEnabled(true)
-        mob:SetMobAbilityEnabled(true)
-        mob:setSpeed(mobSpeed)
-        mob:entityAnimationPacket(reapAnim)
+        mobArg:setPos(pos, 0)
+        mobArg:hideName(false)
+        mobArg:setUntargetable(false)
+        mobArg:SetAutoAttackEnabled(true)
+        mobArg:SetMagicCastingEnabled(true)
+        mobArg:SetMobAbilityEnabled(true)
+        mobArg:setSpeed(mobSpeed)
+        mobArg:entityAnimationPacket(reapAnim)
 
-        if mob:isDead() then
+        if mobArg:isDead() then
             return
         end
     end)
