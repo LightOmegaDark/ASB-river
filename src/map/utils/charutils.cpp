@@ -5970,8 +5970,6 @@ namespace charutils
     int32 GetCharVar(CCharEntity* PChar, std::string const& var)
     {
         TracyZoneScoped;
-        TracyZoneString(PChar->name);
-        TracyZoneString(var);
 
         if (PChar == nullptr)
         {
@@ -5997,9 +5995,7 @@ namespace charutils
     void SetCharVar(CCharEntity* PChar, std::string const& var, int32 value)
     {
         TracyZoneScoped;
-        TracyZoneString(PChar->name);
-        TracyZoneString(fmt::format("{} -> {}", var, value));
-
+        
         if (PChar == nullptr)
         {
             ShowError("SetCharVar was requested for a nullptr PChar");
@@ -6023,7 +6019,7 @@ namespace charutils
     void ClearCharVarsWithPrefix(CCharEntity* PChar, std::string prefix)
     {
         TracyZoneScoped;
-
+    
         if (PChar == nullptr)
         {
             return;

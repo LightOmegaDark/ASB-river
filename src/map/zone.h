@@ -601,10 +601,7 @@ public:
     virtual void TOTDChange(TIMETYPE TOTD);
     virtual void PushPacket(CBaseEntity*, GLOBAL_MESSAGE_TYPE, CBasicPacket*);
 
-    virtual void UpdateCharPacket(CCharEntity* PChar, ENTITYUPDATE type, uint8 updatemask);
-    virtual void UpdateEntityPacket(CBaseEntity* PEntity, ENTITYUPDATE type, uint8 updatemask, bool alwaysInclude = false);
-
-    bool           IsZoneActive() const;
+    bool IsZoneActive() const;
     CZoneEntities* GetZoneEntities();
 
     time_point      m_RegionCheckTime; // время последней проверки регионов
