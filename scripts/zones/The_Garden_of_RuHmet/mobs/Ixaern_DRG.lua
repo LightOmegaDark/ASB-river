@@ -72,6 +72,15 @@ entity.onMobEngaged = function(mob, target)
     end
 end
 
+entity.onMobEngaged = function(mob, target)
+    local mobId = mob:getID()
+
+    mob:setLocalVar("changeTime", 0)
+    for i = mobId + 1, mobId + 3 do -- Wynavs share hate with Ix'DRG
+        GetMobByID(i):updateEnmity(target)
+    end
+end
+
 entity.onMobDeath = function(mob, player, optParams)
     -- despawn pets
     local mobId = mob:getID()
