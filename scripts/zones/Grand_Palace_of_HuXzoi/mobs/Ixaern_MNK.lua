@@ -35,11 +35,11 @@ entity.onMobSpawn = function(mob)
     local qm = GetNPCByID(ID.npc.QM_IXAERN_MNK)
     local chance = qm:getLocalVar("[SEA]IxAern_DropRate")
     if math.random(0, 3) > 0 then
-        SetDropRate(2845, xi.items.DEED_OF_PLACIDITY, chance * 10) -- Deed Of Placidity
-        SetDropRate(2845, xi.items.VICE_OF_ANTIPATHY, 0)
+        SetDropRate(2845, 1851, chance * 10) -- Deed Of Placidity
+        SetDropRate(2845, 1901, 0)
     else
-        SetDropRate(2845, xi.items.DEED_OF_PLACIDITY, 0)
-        SetDropRate(2845, xi.items.VICE_OF_ANTIPATHY, chance * 10) -- Vice of Antipathy
+        SetDropRate(2845, 1851, 0)
+        SetDropRate(2845, 1901, chance * 10) -- Vice of Antipathy
     end
     qm:setLocalVar("[SEA]IxAern_DropRate", 0)
 
@@ -56,7 +56,7 @@ entity.onMobFight = function(mob, target)
 
     if mob:getLocalVar("BracerMode") == 0 then
         if
-            mob:getHPP() < 60 or
+            mob:getHPP() < 50 or
             qnAern1:isAlive() and qnAern1:getHPP() < 60 or
             qnAern2:isAlive() and qnAern2:getHPP() < 60
         then -- If any of the three mobs gets below 60% then all three gain bracelets

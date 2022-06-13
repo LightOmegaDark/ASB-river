@@ -63,6 +63,17 @@ entity.onMagicCastingCheck = function(mob, target, spell)
     end
 end
 
+entity.onMagicCastingCheck = function(mob, target, spell)
+    local rnd = math.random()
+    if rnd < 0.2 then
+        return 40 -- banishga III
+    elseif rnd < 0.6 then
+        return 31 -- banish IV
+    else
+        return 112 -- flash
+    end
+end
+
 entity.onMobDeath = function(mob, player, optParams)
 end
 

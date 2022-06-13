@@ -167,6 +167,22 @@ entity.onMobWeaponSkill = function(target, mob, skill)
     end
 end
 
+entity.onMobWeaponSkill = function(target, mob, skill)
+    local skillID = skill:getID()
+    if skillID == 1465 then
+        local opticCounter = mob:getLocalVar("opticCounter")
+
+        opticCounter = opticCounter +1
+        mob:setLocalVar("opticCounter", opticCounter)
+
+        if opticCounter > 0 then
+            mob:setLocalVar("opticCounter", 0)
+            mob:setLocalVar("opticInduration", 1)
+            chargeOptic(mob)
+        end
+    end
+end
+
 entity.onMobDeath = function(mob, player, optParams)
 end
 
