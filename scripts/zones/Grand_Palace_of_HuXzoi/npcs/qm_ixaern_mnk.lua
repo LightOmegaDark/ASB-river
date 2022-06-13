@@ -16,9 +16,9 @@ entity.onTrade = function(player, npc, trade)
     if not nm:isSpawned() then
         local chance = 0 -- percent chance that an item will drop.
 
-        if npcUtil.tradeHas(trade, { { 1900, 3 } }) then
+        if npcUtil.tradeHas(trade, {{1900, 3}}) then
             chance = 100
-        elseif npcUtil.tradeHas(trade, { { 1900, 2 } }) then
+        elseif npcUtil.tradeHas(trade, {{1900, 2}}) then
             chance = 66
         elseif npcUtil.tradeHas(trade, 1900) then
             chance = 33
@@ -30,17 +30,13 @@ entity.onTrade = function(player, npc, trade)
 
             -- spawn Ix'Aern (MNK) and minions
             nm:setSpawn(npc:getXPos(), npc:getYPos(), npc:getZPos())
-            local mob = SpawnMob(ID.mob.IXAERN_MNK)
-            mob:updateClaim(player)
-            mob:setLocalVar("[SEA]IxAern_DropRate", chance * 10)
-
+            SpawnMob(ID.mob.IXAERN_MNK):updateClaim(player)
             if chance >= 66 then
-                GetMobByID(ID.mob.IXAERN_MNK + 1):setSpawn(npc:getXPos(), npc:getYPos(), npc:getZPos() - 4)
+                GetMobByID(ID.mob.IXAERN_MNK + 1):setSpawn(npc:getXPos(), npc:getYPos(), npc:getZPos()-4)
                 SpawnMob(ID.mob.IXAERN_MNK + 1):updateClaim(player)
             end
-
             if chance == 100 then
-                GetMobByID(ID.mob.IXAERN_MNK + 2):setSpawn(npc:getXPos(), npc:getYPos(), npc:getZPos() + 4)
+                GetMobByID(ID.mob.IXAERN_MNK + 2):setSpawn(npc:getXPos(), npc:getYPos(), npc:getZPos()+4)
                 SpawnMob(ID.mob.IXAERN_MNK + 2):updateClaim(player)
             end
         end
