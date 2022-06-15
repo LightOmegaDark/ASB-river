@@ -39,6 +39,22 @@
     {                                                                \
         ShowCritical("HIT DEBUG BREAK CONDITION: %s", #_CONDITION_); \
     }
+#else
+#include "assert.h"
+#define XI_DEBUG_BREAK_IF(_CONDITION_)                      \
+    if (_CONDITION_)                                        \
+    {                                                       \
+        ShowError("HIT DEBUG CONDITION: %s", #_CONDITION_); \
+        assert(!(_CONDITION_));                             \
+    }
+#endif
+#else
+#define XI_DEBUG_BREAK_IF(_CONDITION_)                      \
+    if (_CONDITION_)                                        \
+    {                                                       \
+        ShowError("HIT DEBUG CONDITION: %s", #_CONDITION_); \
+    }
+#endif
 
 // typedef/using
 using int8  = std::int8_t;

@@ -247,6 +247,28 @@ struct look_t
         sub     = look[8];
         ranged  = look[9];
     }
+
+    look_t(std::vector<uint16> &look)
+    {
+        if (look.size() == 10)
+        {
+            size    = look[0];
+            modelid = look[1];
+            head    = look[2];
+            body    = look[3];
+            hands   = look[4];
+            legs    = look[5];
+            feet    = look[6];
+            main    = look[7];
+            sub     = look[8];
+            ranged  = look[9];
+        }
+        else // throw exception instead?
+        {
+            look_t();
+        }
+    }
+
 };
 
 struct skills_t
@@ -421,7 +443,7 @@ struct eminencelog_t
 
     eminencelog_t()
     {
-        std::memset(&active, 0, sizeof(active));
+        std::memset(&active,   0, sizeof(active));
         std::memset(&progress, 0, sizeof(progress));
         std::memset(&complete, 0, sizeof(complete));
     }
@@ -431,8 +453,7 @@ struct eminencecache_t
 {
     std::bitset<4096> activemap;
     uint32            lastWriteout;
-    bool              notifyTimedRecord;
-    ;
+    bool              notifyTimedRecord;;
 
     eminencecache_t()
     {
@@ -476,18 +497,11 @@ struct search_t
 
 struct bazaar_t
 {
-    std::string message;
+    string_t message;
 
     bazaar_t()
     {
     }
-};
-
-struct pathpoint_t
-{
-    position_t position;
-    uint32     wait;
-    bool       setRotation = false;
 };
 
 // A comment on the packets below, defined as macros.
@@ -567,8 +581,8 @@ public:
     {
         std::memset(&m_name, 0, sizeof(m_name));
 
-        m_mjob   = 0;
-        m_zone   = 0;
+        m_mjob = 0;
+        m_zone = 0;
         m_nation = 0;
     };
     ~char_mini(){};

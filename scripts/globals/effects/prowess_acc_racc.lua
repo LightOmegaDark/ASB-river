@@ -6,7 +6,7 @@ require("scripts/globals/status")
 -----------------------------------
 local effectObject = {}
 
-effectObject.onEffectGain = function(target, effect)
+effect_object.onEffectGain = function(target, effect)
 -- This might not be % in retail. If not a % just change ACCP to just ACC
     target:addMod(xi.mod.ACC, effect:getPower())
     target:addMod(xi.mod.RACC, effect:getPower())

@@ -20,9 +20,11 @@ entity.onMobInitialize = function(IxAernDrkMob)
         if math.random (1, 10) < 10 then
             -- reraise
             local target = mob:getTarget()
-            local targetid = 0
-            if target then
-                targetid = target:getTargID()
+            if
+                target:isPet() and
+                not target:isAlive()
+            then
+                target = target:getMaster()
             end
 
             mob:setMobMod(xi.mobMod.NO_DROPS, 1)
@@ -49,7 +51,6 @@ entity.onMobInitialize = function(IxAernDrkMob)
                             elseif i == partySize then --if all checks fail just disengage
                                 mobArg:disengage()
                             end
-
                             i = i + 1
                         end
                     else

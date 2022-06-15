@@ -13,23 +13,19 @@ abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-abilityObject.onUseAbility = function(player, target, ability)
-    local modAcc       = player:getMerit(xi.merit.FERAL_HOWL)
+ability_object.onUseAbility = function(player, target, ability)
+    local modAcc = player:getMerit(xi.merit.FERAL_HOWL)
     local feralHowlMod = player:getMod(xi.mod.FERAL_HOWL_DURATION)
-    local duration     = 10
+    local duration = 10
 
-    if
-        target:hasStatusEffect(xi.effect.TERROR) or
-        target:hasStatusEffect(xi.effect.STUN)
-    then
-        -- effect already on, or target stunned, do nothing
-        -- reserved for miss based on target already having stun or terror effect active
+    if target:hasStatusEffect(xi.effect.TERROR) == true or target:hasStatusEffect(xi.effect.STUN) == true then -- effect already on, or target stunned, do nothing
+    -- reserved for miss based on target already having stun or terror effect active
     else
         -- Calculate duration.
         if feralHowlMod >= 1 then
             -- http://wiki.ffxiclopedia.org/wiki/Monster_Jackcoat_(Augmented)_%2B2
             -- add 20% duration per merit level if wearing Augmented Monster Jackcoat +2
-            duration = duration + (duration * modAcc * 0.04) -- modAcc returns intervals of 5. (0.2 / 5 = 0.04)
+            duration = (duration + (duration * modAcc * 0.04)) -- modAcc returns intervals of 5. (0.2 / 5 = 0.04)
         end
     end
 
@@ -41,7 +37,7 @@ abilityObject.onUseAbility = function(player, target, ability)
     local mLvl = target:getMainLvl()
 
     -- Checking level difference between the target and the BST
-    local dLvl = mLvl - pLvl
+    local dLvl = (mLvl - pLvl)
 
     -- Determining what level of resistance the target will have to the ability
     local resist = 0
@@ -55,10 +51,10 @@ abilityObject.onUseAbility = function(player, target, ability)
 
     -- Adjusting duration based on resistance.
     if resist >= 20 then
-        if resist / 10 >= duration then
-            duration = duration - math.random(1, (duration - 2))
+        if (resist / 10) >= (duration) then
+            duration = (duration - math.random(1, (duration - 2)))
         else
-            duration = duration - math.random(1, (resist / 10))
+            duration = (duration - math.random(1, (resist / 10)))
         end
     end
 

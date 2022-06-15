@@ -76,6 +76,8 @@ entity.onTrigger = function(player, npc)
         player:setCharVar("BrygidGetBody", getBody)
         player:setCharVar("BrygidGetLegs", getLegs)
 
+        player:startEvent(380, brygidSet, getBody, getLegs, player:getMainJob())
+
         player:startEvent(380, robeEquipped, getBody, getLegs, player:getMainJob())
 
     elseif

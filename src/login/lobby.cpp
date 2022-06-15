@@ -20,9 +20,7 @@
 */
 
 #include "common/logging.h"
-#include "common/lua.h"
 #include "common/md52.h"
-#include "common/settings.h"
 #include "common/socket.h"
 #include "common/utils.h"
 
@@ -161,8 +159,7 @@ int32 lobbydata_parse(int32 fd)
                 LOBBY_A1_RESERVEPACKET(ReservePacket);
 
                 // server's name that shows in lobby menu
-                auto serverName = settings::get<std::string>("main.SERVER_NAME");
-                std::memcpy(ReservePacket + 60, serverName.c_str(), std::clamp<size_t>(serverName.length(), 0, 15));
+                std::memcpy(ReservePacket + 60, login_config.servername.c_str(), std::clamp<size_t>(login_config.servername.length(), 0, 15));
 
                 // Prepare the character list data..
                 for (int j = 0; j < 16; ++j)
@@ -179,11 +176,8 @@ int32 lobbydata_parse(int32 fd)
                 // Extract all the necessary information about the character from the database.
                 while (sql->NextRow() != SQL_NO_DATA)
                 {
-                    char strCharName[16] = {}; // 15 characters + null terminator
-                    std::memset(strCharName, 0, sizeof(strCharName));
-
-                    std::string dbCharName = sql->GetStringData(1);
-                    std::memcpy(strCharName, dbCharName.c_str(), dbCharName.length());
+                    char* strCharName = nullptr;
+                    sql->GetData(1, &strCharName, nullptr);
 
                     auto gmlevel = sql->GetIntData(36);
                     if (maintMode == 0 || gmlevel > 0)
@@ -211,7 +205,7 @@ int32 lobbydata_parse(int32 fd)
                         ref<uint8>(CharList, charListOffset + 6)  = worldId;
                         ref<uint8>(CharList, charListOffset + 11) = charIdExtra;
 
-                        std::memcpy(CharList + charListOffset + 12, &strCharName, 16);
+                        std::memcpy(CharList + charListOffset + 12, strCharName, 15);
 
                         uint16 zone = (uint16)sql->GetUIntData(2);
 
@@ -221,15 +215,15 @@ int32 lobbydata_parse(int32 fd)
                         ref<uint8>(CharList, charListOffset + 46) = MainJob;
                         ref<uint8>(CharList, charListOffset + 73) = lvlMainJob;
 
-                        ref<uint8>(CharList, charListOffset + 44)  = (uint8)sql->GetUIntData(5);   // race
-                        ref<uint8>(CharList, charListOffset + 56)  = (uint8)sql->GetUIntData(6);   // face
-                        ref<uint16>(CharList, charListOffset + 58) = (uint16)sql->GetUIntData(7);  // head
-                        ref<uint16>(CharList, charListOffset + 60) = (uint16)sql->GetUIntData(8);  // body
-                        ref<uint16>(CharList, charListOffset + 62) = (uint16)sql->GetUIntData(9);  // hands
-                        ref<uint16>(CharList, charListOffset + 64) = (uint16)sql->GetUIntData(10); // legs
-                        ref<uint16>(CharList, charListOffset + 66) = (uint16)sql->GetUIntData(11); // feet
-                        ref<uint16>(CharList, charListOffset + 68) = (uint16)sql->GetUIntData(12); // main
-                        ref<uint16>(CharList, charListOffset + 70) = (uint16)sql->GetUIntData(13); // sub
+                        ref<uint8>(CharList, charListOffset + 44)  = (uint8)sql->GetUIntData(5);   // race;
+                        ref<uint8>(CharList, charListOffset + 56)  = (uint8)sql->GetUIntData(6);   // face;
+                        ref<uint16>(CharList, charListOffset + 58) = (uint16)sql->GetUIntData(7);  // head;
+                        ref<uint16>(CharList, charListOffset + 60) = (uint16)sql->GetUIntData(8);  // body;
+                        ref<uint16>(CharList, charListOffset + 62) = (uint16)sql->GetUIntData(9);  // hands;
+                        ref<uint16>(CharList, charListOffset + 64) = (uint16)sql->GetUIntData(10); // legs;
+                        ref<uint16>(CharList, charListOffset + 66) = (uint16)sql->GetUIntData(11); // feet;
+                        ref<uint16>(CharList, charListOffset + 68) = (uint16)sql->GetUIntData(12); // main;
+                        ref<uint16>(CharList, charListOffset + 70) = (uint16)sql->GetUIntData(13); // sub;
 
                         ref<uint8>(CharList, charListOffset + 72)  = (uint8)zone;
                         ref<uint16>(CharList, charListOffset + 78) = zone;
@@ -245,6 +239,7 @@ int32 lobbydata_parse(int32 fd)
                 {
                     LOBBBY_ERROR_MESSAGE(ReservePacketEmptyList);
                     ref<uint16>(ReservePacketEmptyList, 32) = 321;
+                    // std::memcpy(MainReservePacket, ReservePacket, ref<uint8>(ReservePacket, 0));
 
                     unsigned char Hash[16];
                     uint8         SendBuffSize = ref<uint8>(ReservePacketEmptyList, 0);
@@ -341,18 +336,15 @@ int32 lobbydata_parse(int32 fd)
                     ref<uint32>(ReservePacket, (0x38)) = ZoneIP;
                     ref<uint16>(ReservePacket, (0x3C)) = ZonePort;
 
-                    char strCharName[16] = {}; // 15 characters + null terminator
-                    std::memset(strCharName, 0, sizeof(strCharName));
-
-                    std::string dbCharName = sql->GetStringData(6);
-                    std::memcpy(strCharName, dbCharName.c_str(), dbCharName.length());
+                    char*       charname       = nullptr;
+                    std::size_t charnameLength = 0;
+                    sql->GetData(6, &charname, &charnameLength);
 
                     ref<uint32>(ReservePacket, 28) = charid;
                     ref<uint32>(ReservePacket, 32) = charid;
-                    std::memcpy(ReservePacket + 36, &strCharName, 16);
+                    std::memcpy(ReservePacket + 36, charname, charnameLength);
 
-                    ShowInfo(fmt::format("lobbydata_parse: zoneid:({}), zoneip:({}), zoneport:({}) for char:({})",
-                                         ZoneID, ip2str(ntohl(ZoneIP)), ZonePort, charid));
+                    ShowInfo("lobbydata_parse: zoneid:(%u),zoneip:(%s),zoneport:(%u) for char:(%u)", ZoneID, ip2str(ntohl(ZoneIP)), ZonePort, charid);
 
                     // Check the number of sessions
                     uint16 sessionCount = 0;
@@ -367,28 +359,13 @@ int32 lobbydata_parse(int32 fd)
                         sessionCount = (uint16)sql->GetIntData(0);
                     }
 
-                    fmtQuery = "SELECT UNIX_TIMESTAMP(exception) \
-                                FROM ip_exceptions \
-                                WHERE accid = %u;";
-
-                    uint64 exceptionTime = 0;
-
-                    if (sql->Query(fmtQuery, sd->accid) != SQL_ERROR && sql->NumRows() != 0)
-                    {
-                        sql->NextRow();
-                        exceptionTime = sql->GetUInt64Data(0);
-                    }
-
-                    uint64 timeStamp    = std::chrono::duration_cast<std::chrono::seconds>(server_clock::now().time_since_epoch()).count();
-                    bool   isNotMaint   = !settings::get<bool>("login.MAINT_MODE");
-                    auto   loginLimit   = settings::get<uint8>("login.LOGIN_LIMIT");
-                    bool   excepted     = exceptionTime > timeStamp;
-                    bool   loginLimitOK = loginLimit == 0 || sessionCount < loginLimit || excepted;
-                    bool   isGM         = gmlevel > 0;
+                    bool isNotMaint   = maint_config.maint_mode == 0;
+                    bool loginLimitOK = (login_config.login_limit == 0 || sessionCount < login_config.login_limit);
+                    bool isGM         = gmlevel > 0;
 
                     if (!loginLimitOK)
                     {
-                        ShowWarning(fmt::format("{} already has {} active session(s), limit is {}", sd->login, sessionCount, loginLimit));
+                        ShowWarning("Already %u active session(s) for %s (Limit is %u)", sessionCount, sd->login, login_config.login_limit);
                     }
 
                     if ((isNotMaint && loginLimitOK) || isGM)
@@ -564,8 +541,8 @@ int32 lobbyview_parse(int32 fd)
                 int32         sendsize = 0x28;
                 unsigned char MainReservePacket[0x28];
 
-                std::string client_ver_data((buff + 0x74), 6); // Full length is 10 but we drop last 4
-                client_ver_data = client_ver_data + "xx_x";    // And then we replace those last 4..
+                string_t client_ver_data((buff + 0x74), 6); // Full length is 10 but we drop last 4
+                client_ver_data = client_ver_data + "xx_x"; // And then we replace those last 4..
 
                 std::string expected_version(settings::get<std::string>("login.CLIENT_VER"), 0, 6); // Same deal here!
                 expected_version   = expected_version + "xx_x";
@@ -643,7 +620,7 @@ int32 lobbyview_parse(int32 fd)
             break;
             case 0x14:
             {
-                if (!settings::get<bool>("login.CHARACTER_DELETION"))
+                if (!login_config.character_deletion)
                 {
                     int32         sendsize = 0x28;
                     unsigned char MainReservePacket[0x28];
@@ -706,9 +683,7 @@ int32 lobbyview_parse(int32 fd)
             case 0x24:
             {
                 LOBBY_024_RESERVEPACKET(ReservePacket);
-
-                auto serverName = settings::get<std::string>("main.SERVER_NAME");
-                std::memcpy(ReservePacket + 36, serverName.c_str(), std::clamp<size_t>(serverName.length(), 0, 15));
+                std::memcpy(ReservePacket + 36, login_config.servername.c_str(), std::clamp<size_t>(login_config.servername.length(), 0, 15));
 
                 unsigned char Hash[16];
 
@@ -756,6 +731,7 @@ int32 lobbyview_parse(int32 fd)
                 unsigned char hash[16];
 
                 int32 sendsize = 32;
+                // std::memset(ReservePacket+12,0,sizeof(16));
                 md5((unsigned char*)(ReservePacket), hash, sendsize);
 
                 std::memcpy(ReservePacket + 12, hash, sizeof(hash));
@@ -781,7 +757,7 @@ int32 lobbyview_parse(int32 fd)
                     // creating new char
                     char CharName[16];
                     std::memset(CharName, 0, sizeof(CharName));
-                    std::memcpy(CharName, sessions[fd]->rdata.data() + 32, sizeof(CharName));
+                    std::memcpy(CharName, sessions[fd]->rdata.data() + 32, sizeof(CharName) - 1);
 
                     // Sanitize name
                     char escapedCharName[16 * 2 + 1];
@@ -869,7 +845,7 @@ int32 lobbyview_parse(int32 fd)
                     else
                     {
                         // copy charname
-                        std::memcpy(sd->charname, CharName, 16);
+                        std::memcpy(sd->charname, CharName, 15);
                         sendsize = 0x20;
                         LOBBY_ACTION_DONE(ReservePacket);
                         std::memcpy(MainReservePacket, ReservePacket, sendsize);

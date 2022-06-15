@@ -115,19 +115,19 @@ struct Pet_t
     int16 light_sdt;
     int16 dark_sdt;
 
-    int8 fire_res_rank;
-    int8 ice_res_rank;
-    int8 wind_res_rank;
-    int8 earth_res_rank;
-    int8 thunder_res_rank;
-    int8 water_res_rank;
-    int8 light_res_rank;
-    int8 dark_res_rank;
+    int16 fire_res;
+    int16 ice_res;
+    int16 wind_res;
+    int16 earth_res;
+    int16 thunder_res;
+    int16 water_res;
+    int16 light_res;
+    int16 dark_res;
 
     Pet_t()
     : EcoSystem(ECOSYSTEM::ECO_ERROR)
     {
-        PetID = 0;
+        PetID     = 0;
 
         minLevel = -1;
         maxLevel = 99;
@@ -163,10 +163,10 @@ struct Pet_t
         hasSpellScript = false;
         spellList      = 0;
 
-        slash_sdt  = 0;
-        pierce_sdt = 0;
-        hth_sdt    = 0;
-        impact_sdt = 0;
+        slash_sdt   = 0;
+        pierce_sdt  = 0;
+        hth_sdt     = 0;
+        impact_sdt  = 0;
 
         fire_sdt    = 0;
         ice_sdt     = 0;
@@ -177,14 +177,15 @@ struct Pet_t
         light_sdt   = 0;
         dark_sdt    = 0;
 
-        fire_res_rank    = 0;
-        ice_res_rank     = 0;
-        wind_res_rank    = 0;
-        earth_res_rank   = 0;
-        thunder_res_rank = 0;
-        water_res_rank   = 0;
-        light_res_rank   = 0;
-        dark_res_rank    = 0;
+        fire_res    = 0;
+        ice_res     = 0;
+        wind_res    = 0;
+        earth_res   = 0;
+        thunder_res = 0;
+        water_res   = 0;
+        light_res   = 0;
+        dark_res    = 0;
+
     }
 };
 
@@ -1262,7 +1263,27 @@ namespace petutils
             PPet->Spawn();
             if (PMaster->objtype == TYPE_PC)
             {
-                SetupPetWithMaster(PMaster, PPet);
+                // automaton gets theirs by attachment only
+                if (PPet->getPetType() != PET_TYPE::AUTOMATON)
+                {
+                    battleutils::AddTraits(PPet, traits::GetTraits(PPet->GetMJob()), PPet->GetMLevel());
+                    battleutils::AddTraits(PPet, traits::GetTraits(PPet->GetSJob()), PPet->GetSLevel());
+                }
+
+                charutils::BuildingCharAbilityTable((CCharEntity*)PMaster);
+                charutils::BuildingCharPetAbilityTable((CCharEntity*)PMaster, PPet, PetID);
+                ((CCharEntity*)PMaster)->pushPacket(new CCharUpdatePacket((CCharEntity*)PMaster));
+                ((CCharEntity*)PMaster)->pushPacket(new CPetSyncPacket((CCharEntity*)PMaster));
+
+                // check latents affected by pets
+                ((CCharEntity*)PMaster)->PLatentEffectContainer->CheckLatentsPetType();
+
+                // clang-format off
+                PMaster->ForParty([](CBattleEntity* PMember)
+                {
+                    ((CCharEntity*)PMember)->PLatentEffectContainer->CheckLatentsPartyAvatar();
+                });
+                // clang-format on
             }
 
             // apply stats from previous zone if this pet is being transferred
@@ -1288,8 +1309,22 @@ namespace petutils
 
         // grab pet info
         Pet_t*      petData = g_PPetList.at(PetID);
-        CMobEntity* PPet    = dynamic_cast<CMobEntity*>(PMaster->PPet);
-        if (PPet)
+        CMobEntity* PPet    = (CMobEntity*)PMaster->PPet;
+
+        PPet->look = petData->look;
+        PPet->name = petData->name;
+        PPet->SetMJob(petData->mJob);
+        PPet->m_EcoSystem = petData->EcoSystem;
+        PPet->m_Family    = petData->m_Family;
+        PPet->m_Element   = petData->m_Element;
+        PPet->HPscale     = petData->HPscale;
+        PPet->MPscale     = petData->MPscale;
+
+        PPet->allegiance = PMaster->allegiance;
+        PMaster->StatusEffectContainer->CopyConfrontationEffect(PPet);
+
+        // TODO: Lets not do this here.
+        if (PPet->m_EcoSystem == ECOSYSTEM::AVATAR || PPet->m_EcoSystem == ECOSYSTEM::ELEMENTAL)
         {
             PPet->look = petData->look;
             PPet->name = petData->name;
@@ -1335,6 +1370,31 @@ namespace petutils
             PPet->setModifier(Mod::LIGHT_RES_RANK, petData->light_res_rank);
             PPet->setModifier(Mod::DARK_RES_RANK, petData->dark_res_rank);
         }
+
+        PPet->m_SpellListContainer = mobSpellList::GetMobSpellList(petData->spellList);
+
+        PPet->setModifier(Mod::SLASH_SDT, petData->slash_sdt);
+        PPet->setModifier(Mod::PIERCE_SDT, petData->pierce_sdt);
+        PPet->setModifier(Mod::HTH_SDT, petData->hth_sdt);
+        PPet->setModifier(Mod::IMPACT_SDT, petData->impact_sdt);
+
+        PPet->setModifier(Mod::FIRE_SDT, petData->fire_sdt);
+        PPet->setModifier(Mod::ICE_SDT, petData->ice_sdt);
+        PPet->setModifier(Mod::WIND_SDT, petData->wind_sdt);
+        PPet->setModifier(Mod::EARTH_SDT, petData->earth_sdt);
+        PPet->setModifier(Mod::THUNDER_SDT, petData->thunder_sdt);
+        PPet->setModifier(Mod::WATER_SDT, petData->water_sdt);
+        PPet->setModifier(Mod::LIGHT_SDT, petData->light_sdt);
+        PPet->setModifier(Mod::DARK_SDT, petData->dark_sdt);
+
+        PPet->setModifier(Mod::FIRE_RES, petData->fire_res); // These are stored as signed integers which
+        PPet->setModifier(Mod::ICE_RES, petData->ice_res);   // is directly the modifier starting value.
+        PPet->setModifier(Mod::WIND_RES, petData->wind_res); // Positives signify increased resist chance.
+        PPet->setModifier(Mod::EARTH_RES, petData->earth_res);
+        PPet->setModifier(Mod::THUNDER_RES, petData->thunder_res);
+        PPet->setModifier(Mod::WATER_RES, petData->water_res);
+        PPet->setModifier(Mod::LIGHT_RES, petData->light_res);
+        PPet->setModifier(Mod::DARK_RES, petData->dark_res);
     }
 
     void DetachPet(CBattleEntity* PMaster)
@@ -1403,12 +1463,12 @@ namespace petutils
                 PMaster->setModifier(Mod::AVATAR_PERPETUATION, 0);
             }
 
-            static_cast<CCharEntity*>(PMaster)->PLatentEffectContainer->CheckLatentsPetType();
+            ((CCharEntity*)PMaster)->PLatentEffectContainer->CheckLatentsPetType();
 
             // clang-format off
             PMaster->ForParty([](CBattleEntity* PMember)
             {
-                static_cast<CCharEntity*>(PMember)->PLatentEffectContainer->CheckLatentsPartyAvatar();
+                ((CCharEntity*)PMember)->PLatentEffectContainer->CheckLatentsPartyAvatar();
             });
             // clang-format on
 
@@ -1683,8 +1743,10 @@ namespace petutils
         XI_DEBUG_BREAK_IF(PMaster == nullptr);
         XI_DEBUG_BREAK_IF(PetID >= MAX_PETID);
 
-        Pet_t* PPetData = *std::find_if(g_PPetList.begin(), g_PPetList.end(), [PetID](Pet_t* t)
-                                        { return t->PetID == PetID; });
+        Pet_t* PPetData = new Pet_t();
+
+        PPetData = *std::find_if(g_PPetList.begin(), g_PPetList.end(), [PetID](Pet_t* t)
+                                 { return t->PetID == PetID; });
 
         if (PMaster->GetMJob() != JOB_DRG && PetID == PETID_WYVERN)
         {
@@ -1851,6 +1913,78 @@ namespace petutils
         PPet->m_EcoSystem   = PPetData->EcoSystem;
 
         PMaster->PPet = PPet;
+    }
+
+    void LoadWyvernStatistics(CBattleEntity* PMaster, CPetEntity* PPet, bool finalize)
+    {
+        // set the wyvern job based on master's SJ
+        if (PMaster->GetSJob() != JOB_NON)
+        {
+            PPet->SetSJob(PMaster->GetSJob());
+        }
+
+        PPet->SetMJob(JOB_DRG);
+        PPet->SetMLevel(PMaster->GetMLevel());
+
+        LoadAvatarStats(PMaster, PPet);                                                                    // follows PC calcs (w/o SJ)
+        ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (320.0f / 60.0f)))); // 320 delay
+        ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(1 + floor(PPet->GetMLevel() * 0.9f)));
+        // Set A+ weapon skill
+        PPet->setModifier(Mod::ATT, battleutils::GetMaxSkill(SKILL_GREAT_AXE, JOB_WAR, PPet->GetMLevel()));
+        PPet->setModifier(Mod::ACC, battleutils::GetMaxSkill(SKILL_GREAT_AXE, JOB_WAR, PPet->GetMLevel()));
+        // Set D evasion and def
+        PPet->setModifier(Mod::EVA, battleutils::GetMaxSkill(SKILL_HAND_TO_HAND, JOB_WAR, PPet->GetMLevel()));
+        PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(SKILL_HAND_TO_HAND, JOB_WAR, PPet->GetMLevel()));
+
+        // Job Point: Wyvern Max HP
+        if (PMaster->objtype == TYPE_PC)
+        {
+            uint8 jpValue = static_cast<CCharEntity*>(PMaster)->PJobPoints->GetJobPointValue(JP_WYVERN_MAX_HP_BONUS);
+            if (jpValue > 0)
+            {
+                PPet->addModifier(Mod::HP, jpValue * 10);
+            }
+
+            if (PMaster->GetMJob() == JOBTYPE::JOB_DRG)
+            {
+                PPet->addModifier(Mod::ACC, PMaster->getMod(Mod::PET_ACC_EVA));
+                PPet->addModifier(Mod::EVA, PMaster->getMod(Mod::PET_ACC_EVA));
+                PPet->addModifier(Mod::MACC, PMaster->getMod(Mod::PET_MACC_MEVA));
+                PPet->addModifier(Mod::MEVA, PMaster->getMod(Mod::PET_MACC_MEVA));
+            }
+        }
+
+        if (finalize)
+        {
+            FinalizePetStatistics(PMaster, PPet);
+        }
+    }
+
+    void FinalizePetStatistics(CBattleEntity* PMaster, CPetEntity* PPet)
+    {
+        // set C magic evasion
+        PPet->setModifier(Mod::MEVA, battleutils::GetMaxSkill(SKILL_ELEMENTAL_MAGIC, JOB_RDM, PPet->GetMLevel()));
+        PPet->health.tp = 0;
+        PMaster->applyPetModifiers(PPet);
+        PPet->UpdateHealth();
+        PPet->health.hp = PPet->GetMaxHP();
+        PPet->health.mp = PPet->GetMaxMP();
+
+        // Stout Servant - Can't really tie it ot a real mod since it applies to the pet
+        if (CCharEntity* PCharMaster = dynamic_cast<CCharEntity*>(PMaster))
+        {
+            if (charutils::hasTrait(PCharMaster, TRAIT_STOUT_SERVANT))
+            {
+                for (CTrait* trait : PCharMaster->TraitList)
+                {
+                    if (trait->getID() == TRAIT_STOUT_SERVANT)
+                    {
+                        PPet->addModifier(Mod::DMG, -(trait->getValue() * 100));
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     bool CheckPetModType(CBattleEntity* PPet, PetModType petmod)

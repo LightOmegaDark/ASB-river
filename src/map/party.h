@@ -67,7 +67,7 @@ public:
     CBattleEntity* GetLeader();
     CBattleEntity* GetSyncTarget();
     CBattleEntity* GetQuaterMaster();
-    CBattleEntity* GetMemberByName(const std::string& memberName); // Returns entity pointer for member name string
+    CBattleEntity* GetMemberByName(const int8* MemberName); // Returns entity pointer for member name string
 
     void DisbandParty(bool playerInitiated = true);
     void ReloadParty();
@@ -81,9 +81,9 @@ public:
     void   PopMember(CBattleEntity* PEntity);    // remove a member from memberlist (zoned to different server)
     void   PushMember(CBattleEntity* PEntity);   // add a member without invoking chat/db
     void   SetPartyID(uint32 id);                // set new party ID
-    void   AssignPartyRole(const std::string& MemberName, uint8 role);
+    void   AssignPartyRole(int8* MemberName, uint8 role);
     void   DisableSync();
-    void   SetSyncTarget(const std::string& MemberName, uint16 message);
+    void   SetSyncTarget(int8* MemberName, uint16 message);
     void   RefreshSync();
     void   SetPartyNumber(uint8 number);
     bool   HasOnlyOneMember() const;

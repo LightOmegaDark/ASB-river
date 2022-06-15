@@ -66,5 +66,26 @@ CMenuMeritPacket::CMenuMeritPacket(CCharEntity* PChar)
     ref<uint16>(0x0A) |= ((atMaxLevelLimit && hasCappedXp) || PChar->MeritMode) << 14; // XP is capped, or player is in Merit Mode
     ref<uint16>(0x0A) |= (canUseMeritMode && PChar->MeritMode) << 15;                  // Merit Mode Enabled, and Current Job is eligible
 
-    ref<uint8>(0x0C) = settings::get<uint8>("map.MAX_MERIT_POINTS") + PChar->PMeritPoints->GetMeritValue(MERIT_MAX_MERIT, PChar);
+    this->setSize(0xDC);
+
+    memset(data + 4, 0, PACKET_SIZE - 4);
+
+    uint8 packet[] = { 0x03, 0x00, 0xD8 };
+
+    memcpy(data + (0x04), &packet, sizeof(packet));
+
+    // This is a hack.  We really should clear all non-relevant bytes in memset
+    ref<uint8>(0x0C) = 0x00; // Temporary fix for Monstrosity Gladiator Rank.  This applies to next packet as well.
+
+    PChar->pushPacket(new CBasicPacket(*this));
+
+    // Update Type 4 : Monstrosity 2
+    // --------------------------------------------
+
+    this->setSize(0xB4);
+
+    memset(data + 4, 0, PACKET_SIZE - 4);
+
+    uint8 packet2[] = { 0x04, 0x00, 0xB0 };
+    memcpy(data + (0x04), &packet2, sizeof(packet2));
 }

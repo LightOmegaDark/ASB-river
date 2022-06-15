@@ -32,81 +32,6 @@
 #include "spdlog/sinks/daily_file_sink.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 
-std::string ServerName;
-
-class star_formatter_flag : public spdlog::custom_flag_formatter
-{
-public:
-    void format(const spdlog::details::log_msg& msg, const std::tm&, spdlog::memory_buf_t& dest) override
-    {
-        // spdlog and libfmt don't appear to have functionality to truncate text leaving the contents
-        // on the right, so we have to do it by hand.
-        // If longer than length, we pad, if less, then we build a new string of size length.
-        // https://fmt.dev/latest/syntax.html
-        std::size_t length      = 32;
-        std::string locationStr = fmt::format("{}:{}", msg.source.funcname, msg.source.line);
-        std::string outStr      = locationStr.size() > length ? std::string(locationStr.end() - length, locationStr.end()) : fmt::format("{:>{}}", locationStr, length);
-        dest.append(outStr.data(), outStr.data() + outStr.size());
-    }
-
-    std::unique_ptr<custom_flag_formatter> clone() const override
-    {
-        return spdlog::details::make_unique<star_formatter_flag>();
-    }
-};
-
-class ampersand_formatter_flag : public spdlog::custom_flag_formatter
-{
-public:
-    void format(const spdlog::details::log_msg&, const std::tm&, spdlog::memory_buf_t& dest) override
-    {
-        std::string outStr = ServerName;
-        dest.append(outStr.data(), outStr.data() + outStr.size());
-    }
-
-    std::unique_ptr<custom_flag_formatter> clone() const override
-    {
-        return spdlog::details::make_unique<ampersand_formatter_flag>();
-    }
-};
-
-class underscore_formatter_flag : public spdlog::custom_flag_formatter
-{
-public:
-    void format(const spdlog::details::log_msg&, const std::tm&, spdlog::memory_buf_t& dest) override
-    {
-        std::string firstChar = std::string(1, ServerName[0]);
-        std::string outStr    = to_upper(firstChar);
-        dest.append(outStr.data(), outStr.data() + outStr.size());
-    }
-
-    std::unique_ptr<custom_flag_formatter> clone() const override
-    {
-        return spdlog::details::make_unique<underscore_formatter_flag>();
-    }
-};
-
-class q_formatter_flag : public spdlog::custom_flag_formatter
-{
-public:
-    void format(const spdlog::details::log_msg& msg, const std::tm&, spdlog::memory_buf_t& dest) override
-    {
-        // spdlog and libfmt don't appear to have functionality to truncate text leaving the contents
-        // on the right, so we have to do it by hand.
-        // If longer than length, we pad, if less, then we build a new string of size length.
-        // https://fmt.dev/latest/syntax.html
-        std::size_t length      = 32;
-        std::string locationStr = fmt::format("{}:{}", msg.source.filename, msg.source.line);
-        std::string outStr      = locationStr.size() > 12 ? std::string(locationStr.end() - length, locationStr.end()) : fmt::format("{:>{}}", locationStr, length);
-        dest.append(outStr.data(), outStr.data() + outStr.size());
-    }
-
-    std::unique_ptr<custom_flag_formatter> clone() const override
-    {
-        return spdlog::details::make_unique<q_formatter_flag>();
-    }
-};
-
 namespace logging
 {
     const std::vector<std::string> logNames = {
@@ -129,8 +54,8 @@ namespace logging
         spdlog::flush_every(std::chrono::seconds(5));
 
         // Sink to console
-        std::vector<spdlog::sink_ptr> sinks;
-        sinks.push_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
+        auto                          stdout_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+        std::vector<spdlog::sink_ptr> sinks{ stdout_sink };
 
         // Daily Sink, creating new files at midnight
         if (appendDate)
@@ -151,7 +76,56 @@ namespace logging
 
         spdlog::set_level(spdlog::level::debug);
 
-        spdlog::enable_backtrace(16);
+        // direct printf replacement
+        auto standardLogger = createLogger("standard");
+        auto messageLogger  = createLogger("message");
+
+        // To inform about good things
+        auto statusLogger = createLogger("status");
+
+        // Variable information
+        auto infoLogger = createLogger("info");
+
+        // Less than a warning
+        auto noticeLogger = createLogger("notice");
+
+        // Warnings
+        auto warningLogger = createLogger("warning");
+
+        // Important stuff
+        auto debugLogger = createLogger("debug");
+
+        // Regular errors
+        auto errorLogger = createLogger("error");
+
+        // Fatal errors, abort(); if possible
+        auto fatalErrorLogger = createLogger("fatalerror");
+
+        // For dumping out anything related with SQL) <- Actually, this is mostly used for SQL errors with the database, as
+        // successes can as well just be anything else...
+        auto sqlLogger = createLogger("sql");
+
+        // Lua related logging and errors
+        auto luaLogger = createLogger("lua");
+
+        // Navmesh related errors
+        auto navmeshLogger = createLogger("navmesh");
+
+        // Mostly useless "player did this" info
+        auto actionLogger = createLogger("action");
+
+        // Detected a likely exploit
+        auto exploitLogger = createLogger("exploit");
+
+        // Dumping stacktraces
+        auto stacktraceLogger = createLogger("stacktrace");
+
+        spdlog::set_default_logger(standardLogger);
+        spdlog::flush_on(spdlog::level::warn);
+        spdlog::flush_every(std::chrono::seconds(30));
+
+        // Set default log level (everything)
+        spdlog::set_level(spdlog::level::trace);
     }
 
     void ShutDown()
@@ -162,13 +136,72 @@ namespace logging
 
     void SetPattern(std::string const& str)
     {
-        // https://github.com/gabime/spdlog/wiki/3.-Custom-formatting
-        auto formatter = std::make_unique<spdlog::pattern_formatter>();
-        formatter->add_flag<star_formatter_flag>('*');
-        formatter->add_flag<ampersand_formatter_flag>('&');
-        formatter->add_flag<underscore_formatter_flag>('_');
-        formatter->add_flag<q_formatter_flag>('q');
-        formatter->set_pattern(str);
-        spdlog::set_formatter(std::move(formatter));
+        TracyZoneScoped;
+
+        // TODO: Loopify this, this sucks
+        if (filterMask & MSG_STANDARD)
+        {
+            spdlog::get("standard")->set_level(spdlog::level::off);
+        }
+
+        if (filterMask & MSG_STATUS)
+        {
+            spdlog::get("status")->set_level(spdlog::level::off);
+        }
+
+        if (filterMask & MSG_INFO)
+        {
+            spdlog::get("info")->set_level(spdlog::level::off);
+        }
+
+        if (filterMask & MSG_NOTICE)
+        {
+            spdlog::get("notice")->set_level(spdlog::level::off);
+        }
+
+        if (filterMask & MSG_WARNING)
+        {
+            spdlog::get("warning")->set_level(spdlog::level::off);
+        }
+
+        if (filterMask & MSG_DEBUG)
+        {
+            spdlog::get("debug")->set_level(spdlog::level::off);
+        }
+
+        if (filterMask & MSG_ERROR)
+        {
+            spdlog::get("error")->set_level(spdlog::level::off);
+        }
+
+        if (filterMask & MSG_FATALERROR)
+        {
+            spdlog::get("fatalerror")->set_level(spdlog::level::off);
+        }
+
+        if (filterMask & MSG_SQL)
+        {
+            spdlog::get("sql")->set_level(spdlog::level::off);
+        }
+
+        if (filterMask & MSG_LUASCRIPT)
+        {
+            spdlog::get("lua")->set_level(spdlog::level::off);
+        }
+
+        if (filterMask & MSG_NAVMESH)
+        {
+            spdlog::get("navmesh")->set_level(spdlog::level::off);
+        }
+
+        if (filterMask & MSG_ACTION)
+        {
+            spdlog::get("action")->set_level(spdlog::level::off);
+        }
+
+        if (filterMask & MSG_EXPLOIT)
+        {
+            spdlog::get("exploit")->set_level(spdlog::level::off);
+        }
     }
 } // namespace logging

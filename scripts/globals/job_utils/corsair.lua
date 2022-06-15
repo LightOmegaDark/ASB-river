@@ -12,6 +12,7 @@ xi.job_utils = xi.job_utils or {}
 xi.job_utils.corsair = xi.job_utils.corsair or {}
 -----------------------------------
 
+
 -- rollModifiers format: Effect Powers table, phantomBase, roll bonus increase, Effect, Mod, Optimal Job
 -- NOTE: nil items below are nil values on purpose.  This might break if parameters are added to various bindings
 -- TODO: replace "nil" pet values with tables, handle multiple effects in case of pet roll. Will need core changes.
@@ -157,9 +158,9 @@ local function corsairSetup(caster, ability, action, effect, job)
     action:speceffect(caster:getID(), roll)
 
     if checkForElevenRoll(caster) then
-        action:setRecast(ability:getRecast() / 2) -- halves phantom roll recast timer for all rolls while under the effects of an 11 (upon first hitting 11, phantom roll cooldown is reset in double-up.lua)
+        ability:setRecast(ability:getRecast() / 2) -- halves phantom roll recast timer for all rolls while under the effects of an 11 (upon first hitting 11, phantom roll cooldown is reset in double-up.lua)
     else
-        action:setRecast(ability:getRecast() - caster:getMerit(xi.merit.PHANTOM_ROLL_RECAST)) -- Recast merits have value of 2 from DB
+        ability:setRecast(ability:getRecast() - caster:getMerit(xi.merit.PHANTOM_ROLL_RECAST)) -- Recast merits have value of 2 from DB
     end
 
     checkForJobBonus(caster, job)
@@ -199,7 +200,7 @@ local function applyRoll(caster, target, inAbility, action, total, isDoubleup, c
         effectpower = effectpower * (caster:getSubLvl() / target:getMainLvl())
     end
 
-    if not target:addCorsairRoll(caster:getMainJob(), caster:getMerit(xi.merit.BUST_DURATION), corsairRollMods[abilityId][4], effectpower, 0, duration, caster:getID(), total, corsairRollMods[abilityId][5]) then
+    if target:addCorsairRoll(caster:getMainJob(), caster:getMerit(xi.merit.BUST_DURATION), corsairRollMods[abilityId][4], effectpower, 0, duration, caster:getID(), total, corsairRollMods[abilityId][5]) == false then
         -- no effect or otherwise prevented
         if caster:getID() == target:getID() then                  -- dead code? you can't roll if the same roll is already active. There is no known buff that would prevent a corsair roll.
             currentAbility:setMsg(xi.msg.basic.ROLL_MAIN_FAIL)    -- no effect for the COR rolling if they had the buff already
@@ -251,10 +252,10 @@ end
 
 xi.job_utils.corsair.useDoubleUp = function(caster, target, ability, action)
     if caster:getID() == target:getID() then -- the COR handles all the calculations
-        local duEffect = caster:getStatusEffect(xi.effect.DOUBLE_UP_CHANCE)
-        local prevRoll = caster:getStatusEffect(duEffect:getSubPower())
-        local roll     = prevRoll:getSubPower()
-        local job      = duEffect:getTier()
+        local du_effect = caster:getStatusEffect(xi.effect.DOUBLE_UP_CHANCE)
+        local prev_roll = caster:getStatusEffect(du_effect:getSubPower())
+        local roll = prev_roll:getSubPower()
+        local job = du_effect:getTier()
 
         caster:setLocalVar("corsairActiveRoll", duEffect:getSubType())
         local snakeEye = caster:getStatusEffect(xi.effect.SNAKE_EYE)
@@ -288,15 +289,15 @@ xi.job_utils.corsair.useDoubleUp = function(caster, target, ability, action)
     local activeRoll  = caster:getLocalVar("corsairActiveRoll")
     local prevAbility = GetAbility(activeRoll)
 
-    if prevAbility then -- Apply rolls to target(s), including the COR
-        action:actionID(prevAbility:getID())
+    if prev_ability then -- Apply rolls to target(s), including the COR
+        action:actionID(prev_ability:getID())
 
-        total = applyRoll(caster, target, prevAbility, action, total, true, ability)
+        total = applyRoll(caster, target, prev_ability, action, total, true, ability)
 
         if total > 11 then
             action:setAnimation(target:getID(), 98) -- 98 is bust anim for all rolls
         else
-            action:setAnimation(target:getID(), prevAbility:getAnimation())
+            action:setAnimation(target:getID(), prev_ability:getAnimation())
         end
 
         return total

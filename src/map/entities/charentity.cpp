@@ -102,7 +102,7 @@ CCharEntity::CCharEntity()
     gotMessage = false;
     m_Locked   = false;
 
-    accid        = 0;
+    accid = 0;
     m_GMlevel    = 0;
     m_isGMHidden = false;
 
@@ -152,8 +152,6 @@ CCharEntity::CCharEntity()
     memset(&m_missionLog, 0, sizeof(m_missionLog));
     m_eminenceCache.activemap.reset();
 
-    memset(&m_claimedDeeds, 0, sizeof(m_claimedDeeds));
-
     for (uint8 i = 0; i <= 3; ++i)
     {
         m_missionLog[i].current = 0xFFFF;
@@ -195,7 +193,7 @@ CCharEntity::CCharEntity()
     PMeritPoints = nullptr;
     PJobPoints   = nullptr;
 
-    PGuildShop = nullptr;
+    PGuildShop   = nullptr;
 
     m_isStyleLocked = false;
     m_isBlockingAid = false;
@@ -240,8 +238,8 @@ CCharEntity::CCharEntity()
     fishingToken = 0;
     hookDelay    = 13;
 
-    profile = {};
-    search  = {};
+    profile     = {};
+    search      = {};
     std::memset(&styleItems, 0, sizeof(styleItems));
 
     m_StartActionPos   = {};
@@ -270,7 +268,7 @@ CCharEntity::~CCharEntity()
     delete CraftContainer;
     delete PMeritPoints;
     delete PJobPoints;
-    PGuildShop = nullptr;
+    delete PGuildShop;
     delete eventPreparation;
     delete currentEvent;
 
@@ -1213,9 +1211,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                             }
 
                             actionTarget.additionalEffect = effect;
-
                             // Despite appearances, ws_points_skillchain is not a multiplier it is just an amount "per element"
-                            auto wsPointsSkillchain = settings::get<uint8>("map.WS_POINTS_SKILLCHAIN");
                             if (effect >= 7 && effect < 15)
                             {
                                 wspoints += (1 * wsPointsSkillchain); // 1 element

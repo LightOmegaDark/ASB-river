@@ -3,14 +3,14 @@
 -- plate_of_indi-malaise
 -- Teaches INDI-MALAISE
 -----------------------------------------
-local itemObject = {}
+local item_object = {}
 
-itemObject.onItemCheck = function(target)
+item_object.onItemCheck = function(target)
     return target:canLearnSpell(xi.magic.spell.INDI_MALAISE)
 end
 
-itemObject.onItemUse = function(target)
+item_object.onItemUse = function(target)
     target:addSpell(xi.magic.spell.INDI_MALAISE)
 end
 
-return itemObject
+return item_object

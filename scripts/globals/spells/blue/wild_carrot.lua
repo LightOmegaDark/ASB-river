@@ -35,7 +35,34 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.divisor2 = 15.6666
     params.constant2 = 170.43
 
-    return xi.spells.blue.useCuringSpell(caster, target, spell, params)
+    if (power > 299) then
+        divisor = 15.6666
+        constant = 170.43
+    elseif (power > 179) then
+        divisor =  2
+        constant = 105
+    end
+
+    local final = getCureFinal(caster, spell, getBaseCureOld(power, divisor, constant), minCure, true)
+
+    final = final + (final * (target:getMod(xi.mod.CURE_POTENCY_RCVD)/100))
+
+    if (target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == xi.objType.PC or target:getObjType() == xi.objType.MOB)) then
+        --Applying server mods
+        final = final * xi.settings.CURE_POWER
+    end
+
+    local diff = (target:getMaxHP() - target:getHP())
+    if (final > diff) then
+        final = diff
+    end
+
+    target:addHP(final)
+    target:wakeUp()
+    caster:updateEnmityFromCure(target, final)
+    spell:setMsg(xi.msg.basic.MAGIC_RECOVERS_HP)
+
+    return final
 end
 
 return spellObject

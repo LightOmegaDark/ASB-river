@@ -49,9 +49,9 @@ local function calculateWSC(attacker, params)
     return wsc
 end
 
--- Get cRatio
-local function calculatecRatio(ratio, atk_lvl, def_lvl)
-    -- Get ratio with level penalty
+-- Given the raw ratio value (atk/def) and levels, returns the cRatio (min then max)
+local function BluecRatio(ratio, atk_lvl, def_lvl)
+    -- Level penalty
     local levelcor = 0
     if atk_lvl < def_lvl then
         levelcor = 0.05 * (def_lvl - atk_lvl)
@@ -148,28 +148,22 @@ local function calculateCorrelation(spellEcosystem, monsterEcosystem, merits)
         effect = effect + 0.001 * merits
     end
 
-    return effect
-end
-
------------------------------------
--- Global functions
------------------------------------
-
--- Get the damage for a physical Blue Magic spell
-xi.spells.blue.usePhysicalSpell = function(caster, target, spell, params)
-    -----------------------
-    -- Get final D value --
-    -----------------------
-
-    -- Initial D value
-    local initialD = math.floor(caster:getSkillLevel(xi.skill.BLUE_MAGIC) * 0.11) * 2 + 3
-    initialD = utils.clamp(initialD, 0, params.duppercap)
-
-    -- fSTR
-    local fStr = calculatefSTR(caster:getStat(xi.mod.STR) - target:getStat(xi.mod.VIT))
+    local fStr = BluefSTR(caster:getStat(xi.mod.STR) - target:getStat(xi.mod.VIT))
     if fStr > 22 then
-        if params.ignorefstrcap == nil then -- Smite of Rage / Grand Slam don't have this cap applied
-            fStr = 22
+        fStr = 22 -- TODO: Smite of Rage doesn't have this cap applied.
+    end
+
+    local wsc = BlueGetWsc(caster, params)
+
+    local multiplier = params.multiplier
+
+    -- If under CA, replace multiplier with fTP(multiplier, tp150, tp300)
+    local chainAffinity = caster:getStatusEffect(xi.effect.CHAIN_AFFINITY)
+    if chainAffinity ~= nil then
+        -- Calculate the total TP available for the fTP multiplier.
+        local tp = caster:getTP() + caster:getMerit(xi.merit.ENCHAINMENT)
+        if tp > 3000 then
+            tp = 3000
         end
     end
 
@@ -177,49 +171,19 @@ xi.spells.blue.usePhysicalSpell = function(caster, target, spell, params)
     local multiplier = 1
     local bonusWSC = 0
 
-    -- BLU AF3 bonus (triples the base WSC when it procs)
-    if caster:getMod(xi.mod.AUGMENT_BLU_MAGIC) > math.random(0, 99) then
-        bonusWSC = 2
-    end
-
-    -- Chain Affinity -- TODO: add "Damage/Accuracy/Critical Hit Chance varies with TP"
-    if caster:getStatusEffect(xi.effect.CHAIN_AFFINITY) then
-        local tp = caster:getTP() + caster:getMerit(xi.merit.ENCHAINMENT) -- Total TP available
-        tp = utils.clamp(tp, 0, 3000)
-        multiplier = calculatefTP(tp, params.multiplier, params.tp150, params.tp300)
-        bonusWSC = bonusWSC + 1 -- Chain Affinity doubles base WSC
-    end
-
-    -- WSC
-    local wsc = calculateWSC(caster, params)
-    wsc = wsc + (wsc * bonusWSC) -- Bonus WSC from AF3/CA
-
-    -- Monster correlation
-    local correlationMultiplier = calculateCorrelation(params.ecosystem, target:getSystem(), caster:getMerit(xi.merit.MONSTER_CORRELATION))
-
-    -- Azure Lore
-    if caster:getStatusEffect(xi.effect.AZURE_LORE) then
-        multiplier = params.azuretp
-    end
-
-    -- Final D
-    local finalD = math.floor(initialD + fStr + wsc)
-
-    ----------------------------------------------
-    -- Get the possible pDIF range and hit rate --
-    ----------------------------------------------
-
-    if params.offcratiomod == nil then -- For all spells except Cannonball, which uses a DEF mod
+    -----------------------------------
+    -- Get the possible pDIF range and hit rate
+    -----------------------------------
+    if params.offcratiomod == nil then -- default to attack. Pretty much every physical spell will use this, Cannonball being the exception.
         params.offcratiomod = caster:getStat(xi.mod.ATT)
     end
 
-    local cratio = calculatecRatio(params.offcratiomod / target:getStat(xi.mod.DEF), caster:getMainLvl(), target:getMainLvl())
-    local hitrate = calculateHitrate(caster, target)
+    local cratio = BluecRatio(params.offcratiomod / target:getStat(xi.mod.DEF), caster:getMainLvl(), target:getMainLvl())
+    local hitrate = BlueGetHitRate(caster, target, true)
 
-    -------------------------
-    -- Perform the attacks --
-    -------------------------
-
+    -----------------------------------
+    -- Perform the attacks
+    -----------------------------------
     local hitsdone = 0
     local hitslanded = 0
     local finaldmg = 0
@@ -251,7 +215,7 @@ xi.spells.blue.usePhysicalSpell = function(caster, target, spell, params)
         hitsdone = hitsdone + 1
     end
 
-    return xi.spells.blue.applySpellDamage(caster, target, spell, finaldmg, params)
+    return finaldmg
 end
 
 -- Get the damage for a magical Blue Magic spell
@@ -424,7 +388,30 @@ xi.spells.blue.calculateDurationWithDiffusion = function(caster, duration)
             duration = duration + (duration / 100) * (merits - 5)
         end
 
-        caster:delStatusEffect(xi.effect.DIFFUSION)
+    if resist == 0.125 then
+        resist = 1
+    elseif resist == 0.25 then
+        resist = 2
+    elseif resist == 0.5 then
+        resist = 3
+    else
+        resist = 4
+    end
+
+    if effect == xi.effect.BIND then
+        duration = math.random(0, 5) + resist * 5
+    elseif effect == xi.effect.STUN then
+        duration = math.random(2, 3) + resist
+    elseif effect == xi.effect.WEIGHT then
+        duration = math.random(20, 24) + resist * 9 -- 20-24
+    elseif effect == xi.effect.PARALYSIS then
+        duration = math.random(50, 60) + resist * 15 -- 50- 60
+    elseif effect == xi.effect.SLOW then
+        duration = math.random(60, 120) + resist * 15 -- 60- 120 -- Needs confirmation but capped max duration based on White Magic Spell Slow
+    elseif effect == xi.effect.SILENCE then
+        duration = math.random(60, 180) + resist * 15 -- 60- 180 -- Needs confirmation but capped max duration based on White Magic Spell Silence
+    elseif effect == xi.effect.POISON then
+        duration = math.random(20, 30) + resist * 9 -- 20-30 -- based on magic spell poison
     end
 
     return duration

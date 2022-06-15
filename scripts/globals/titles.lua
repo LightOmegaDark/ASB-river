@@ -1095,10 +1095,6 @@ xi.title =
     BEARER_OF_SECRETS                         = 1141,
     LONG_LIVE_MUMOR                           = 1142,
     PARTER_OF_THE_VEIL                        = 1143,
-    DEMONIC_DREAMER                           = 1144,
-    SEARCHER_OF_THE_VORACIOUS                 = 1145,
-    ANOTHER_PSYCHE                            = 1146,
-    SENDER_OF_SHADOW                          = 1147,
 }
 
 -----------------------------------

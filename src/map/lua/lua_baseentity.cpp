@@ -3431,7 +3431,7 @@ bool CLuaBaseEntity::addItem(sol::variadic_args va)
                     char encoded[SignatureStringLength];
 
                     memset(&encoded, 0, sizeof(encoded));
-                    PItem->setSignature(EncodeStringSignature(signature, encoded));
+                    PItem->setSignature(EncodeStringSignature((int8*)signature.c_str(), encoded));
                 }
 
                 sol::object appraisalObj = table["appraisal"];
@@ -3908,7 +3908,11 @@ bool CLuaBaseEntity::breakLinkshell(std::string const& lsname)
             PLinkshell = linkshell::LoadLinkshell(lsid);
         }
 
-        PLinkshell->BreakLinkshell();
+        int8 EncodedName[LinkshellStringLength];
+
+        memset(&EncodedName, 0, sizeof(EncodedName));
+        EncodeStringLinkshell((int8*)lsname.c_str(), EncodedName);
+        PLinkshell->BreakLinkshell(EncodedName, true);
         linkshell::UnloadLinkshell(lsid);
         found = true;
     }
@@ -3938,7 +3942,7 @@ bool CLuaBaseEntity::addLinkpearl(std::string const& lsname, bool equip)
             char EncodedString[LinkshellStringLength];
 
             memset(&EncodedString, 0, sizeof(EncodedString));
-            EncodeStringLinkshell(lsname, EncodedString);
+            EncodeStringLinkshell((int8*)lsname.c_str(), EncodedString);
             ((CItem*)PItemLinkPearl)->setSignature(EncodedString);
             PItemLinkPearl->SetLSID(sql->GetUIntData(0));
             PItemLinkPearl->SetLSColor(sql->GetIntData(1));
@@ -9154,7 +9158,7 @@ sol::table CLuaBaseEntity::getAlliance()
 
     auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
 
-    auto table = lua.create_table();
+    auto table = luautils::lua.create_table();
 
     // clang-format off
     PChar->ForAlliance([&table](CBattleEntity* PMember)
@@ -10920,7 +10924,7 @@ sol::table CLuaBaseEntity::getStatusEffects()
         return {};
     }
 
-    auto table = lua.create_table();
+    auto table = luautils::lua.create_table();
     // clang-format off
     static_cast<CBattleEntity*>(m_PBaseEntity)->StatusEffectContainer->ForEachEffect(
     [&table](CStatusEffect* PEffect)
@@ -12342,7 +12346,7 @@ void CLuaBaseEntity::trustPartyMessage(uint32 message_id)
 {
     XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_TRUST);
 
-    auto* PTrust = static_cast<CTrustEntity*>(m_PBaseEntity);
+    auto* PTrust  = static_cast<CTrustEntity*>(m_PBaseEntity);
     if (auto* PMaster = dynamic_cast<CCharEntity*>(PTrust->PMaster))
     {
         // clang-format off
@@ -14220,9 +14224,6 @@ void CLuaBaseEntity::useJobAbility(uint16 skillID, sol::object const& pet)
         }
     }));
     // clang-format on
-
-    // Check queue immediately in case of 0 ms delay abilities
-    m_PBaseEntity->PAI->checkQueueImmediately();
 }
 
 /************************************************************************
@@ -14285,57 +14286,6 @@ void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
         }
     }));
     // clang-format on
-}
-
-/************************************************************************
- *  Function: triggerDrawIn()
- *  Purpose : Forces a mob to use DrawIn on the mob's current target
- *  Example : mob:triggerDrawIn(bool includeParty, CLuaBaseEntity* PEntity)
- *  Note    : Params can assume a default value by passing nil
- *          : e.g. triggerDrawIn(true) to pull in a party/alliance
- ************************************************************************/
-inline int32 CLuaBaseEntity::triggerDrawIn(CLuaBaseEntity* PMobEntity, sol::object const& includePt, sol::object const& drawRange, sol::object const& maxReach, sol::object const& target)
-{
-    XI_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
-
-    auto*          PMob    = static_cast<CMobEntity*>(PMobEntity->m_PBaseEntity);
-    CBattleEntity* PTarget = PMob->GetBattleTarget();
-
-    // Default values
-    uint8  drawInRange  = PMob->GetMeleeRange() * 2;
-    uint16 maximumReach = 0xFFFF;
-    bool   includeParty = false;
-    float  offset       = PMob->GetMeleeRange() - 0.2f;
-
-    if ((drawRange != sol::lua_nil) && drawRange.is<uint8>())
-    {
-        drawInRange = drawRange.as<uint8>();
-    }
-
-    if ((maxReach != sol::lua_nil) && maxReach.is<uint16>())
-    {
-        maximumReach = maxReach.as<uint16>();
-    }
-
-    if ((target != sol::lua_nil) && target.is<CLuaBaseEntity*>())
-    {
-        CLuaBaseEntity* PTargetEntity = target.as<CLuaBaseEntity*>();
-        PTarget = dynamic_cast<CBattleEntity*>(PTargetEntity->m_PBaseEntity);
-    }
-
-    if (includePt != sol::lua_nil)
-    {
-        includeParty = includePt.as<bool>();
-    }
-
-    if (PTarget)
-    {
-        // Draw in requires a target
-        battleutils::DrawIn(PTarget, PMob, offset, drawInRange, maximumReach, includeParty);
-    }
-
-    return 0;
 }
 
 /************************************************************************

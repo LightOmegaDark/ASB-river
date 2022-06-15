@@ -2281,11 +2281,6 @@ namespace charutils
         auto*       RecycleBin     = PChar->getStorage(LOC_RECYCLEBIN);
         auto*       OtherContainer = PChar->getStorage(container);
 
-        if (PItem == nullptr)
-        {
-            return;
-        }
-
         // Try and insert
         uint8 NewSlotID = PChar->getStorage(LOC_RECYCLEBIN)->InsertItem(PItem);
         if (NewSlotID != ERROR_SLOTID)
@@ -2355,109 +2350,6 @@ namespace charutils
         if (sql->Query(Query, PChar->id) != SQL_ERROR)
         {
             recycleBin->Clear();
-        }
-    }
-
-    void SaveJobChangeGear(CCharEntity* PChar)
-    {
-        if (PChar == nullptr)
-        {
-            return;
-        }
-
-        const char* Query = "REPLACE INTO char_equip_saved SET \
-                                    charid = %u, \
-                                    jobid = %u, \
-                                    main = %u, \
-                                    sub = %u, \
-                                    ranged = %u, \
-                                    ammo = %u, \
-                                    head = %u, \
-                                    body = %u, \
-                                    hands = %u, \
-                                    legs = %u, \
-                                    feet = %u, \
-                                    neck = %u, \
-                                    waist = %u, \
-                                    ear1 = %u, \
-                                    ear2 = %u, \
-                                    ring1 = %u, \
-                                    ring2 = %u, \
-                                    back = %u;";
-
-        auto getEquipIdFromSlot = [](CCharEntity* PChar, SLOTTYPE slot) -> uint16
-        {
-            return (PChar->getEquip(slot) != nullptr) ? PChar->getEquip(slot)->getID() : 0;
-        };
-
-        uint16 main   = getEquipIdFromSlot(PChar, SLOT_MAIN);
-        uint16 sub    = getEquipIdFromSlot(PChar, SLOT_SUB);
-        uint16 ranged = getEquipIdFromSlot(PChar, SLOT_RANGED);
-        uint16 ammo   = getEquipIdFromSlot(PChar, SLOT_AMMO);
-        uint16 head   = getEquipIdFromSlot(PChar, SLOT_HEAD);
-        uint16 body   = getEquipIdFromSlot(PChar, SLOT_BODY);
-        uint16 hands  = getEquipIdFromSlot(PChar, SLOT_HANDS);
-        uint16 legs   = getEquipIdFromSlot(PChar, SLOT_LEGS);
-        uint16 feet   = getEquipIdFromSlot(PChar, SLOT_FEET);
-        uint16 neck   = getEquipIdFromSlot(PChar, SLOT_NECK);
-        uint16 waist  = getEquipIdFromSlot(PChar, SLOT_WAIST);
-        uint16 ear1   = getEquipIdFromSlot(PChar, SLOT_EAR1);
-        uint16 ear2   = getEquipIdFromSlot(PChar, SLOT_EAR2);
-        uint16 ring1  = getEquipIdFromSlot(PChar, SLOT_RING1);
-        uint16 ring2  = getEquipIdFromSlot(PChar, SLOT_RING2);
-        uint16 back   = getEquipIdFromSlot(PChar, SLOT_BACK);
-
-        sql->Query(Query, PChar->id, PChar->GetMJob(), main, sub, ranged, ammo,
-                   head, body, hands, legs, feet, neck, waist, ear1, ear2, ring1,
-                   ring2, back);
-    }
-
-    void LoadJobChangeGear(CCharEntity* PChar)
-    {
-        if (PChar == nullptr)
-        {
-            return;
-        }
-
-        const char* Query = "SELECT main, sub, ranged, ammo, head, body, hands, legs, feet, neck, waist, ear1, ear2, ring1, ring2, back FROM char_equip_saved AS equip WHERE charid = %u AND jobid = %u;";
-
-        if (sql->Query(Query, PChar->id, PChar->GetMJob()) == SQL_SUCCESS && sql->NumRows() != 0 && sql->NextRow() == SQL_SUCCESS)
-        {
-            for (uint8 equipSlot = SLOT_MAIN; equipSlot <= SLOT_BACK; equipSlot++)
-            {
-                uint16 itemId = sql->GetUIntData(equipSlot);
-
-                if (itemId > 0)
-                {
-                    for (int container = LOC_INVENTORY; container <= LOC_WARDROBE8; container++)
-                    {
-                        bool found = false;
-
-                        if (container == LOC_INVENTORY || (container >= LOC_WARDROBE && container <= LOC_WARDROBE8))
-                        {
-                            for (uint8 slot = 0; slot < PChar->getStorage(container)->GetSize(); slot++)
-                            {
-                                CItem* PItem  = PChar->getStorage(container)->GetItem(slot);
-                                auto*  PEquip = dynamic_cast<CItemEquipment*>(PItem);
-
-                                if ((PItem != nullptr && PItem->getID() == itemId && PEquip != nullptr) &&
-                                    (PEquip != PChar->getEquip(static_cast<SLOTTYPE>(equipSlot - 1)) &&
-                                     PEquip != PChar->getEquip(static_cast<SLOTTYPE>(equipSlot + 1))))
-                                {
-                                    found = true;
-                                    charutils::EquipItem(PChar, PItem->getSlotID(), equipSlot, static_cast<CONTAINER_ID>(container));
-                                    break;
-                                }
-                            }
-
-                            if (found)
-                            {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 
@@ -4794,24 +4686,6 @@ namespace charutils
         sql->Query(Query, PChar->loc.p.rotation, PChar->loc.p.x, PChar->loc.p.y, PChar->loc.p.z, PChar->loc.boundary, PChar->id);
     }
 
-    /* TODO: Move linkshell persistence here
-    void SaveCharLinkshells(CCharEntity* PChar)
-    {
-        for (uint8 lsSlot = 16; lsSlot < 18; ++lsSlot)
-        {
-            if (PChar->equip[lsSlot] == 0)
-            {
-                sql->Query("DELETE FROM char_linkshells WHERE charid = %u AND lsslot = %u LIMIT 1;", PChar->id, lsSlot);
-            }
-            else
-            {
-                const char* fmtQuery = "INSERT INTO char_linkshells SET charid = %u, lsslot = %u, location = %u, slot = %u ON DUPLICATE KEY UPDATE location = %u, slot = %u;";
-                sql->Query(fmtQuery, PChar->id, lsSlot, PChar->equipLoc[lsSlot], PChar->equip[lsSlot], PChar->equipLoc[lsSlot], PChar->equip[lsSlot]);
-            }
-        }
-    }
-    */
-
     void SaveQuestsList(CCharEntity* PChar)
     {
         TracyZoneScoped;
@@ -5100,12 +4974,7 @@ namespace charutils
                             "WHERE charid = %u;";
 
         sql->Query(Query, PChar->health.hp, PChar->health.mp, PChar->nameflags.flags, PChar->profile.mhflag, PChar->GetMJob(), PChar->GetSJob(),
-                   PChar->petZoningInfo.petID, static_cast<uint8>(PChar->petZoningInfo.petType), PChar->petZoningInfo.petHP, PChar->petZoningInfo.petMP, PChar->petZoningInfo.petLevel, PChar->id);
-
-        // These two are jug only variables. We should probably move pet char stats into its own table, but in the meantime
-        // we use charvars for jug specific things
-        PChar->setCharVar("jugpet-spawn-time", PChar->petZoningInfo.jugSpawnTime);
-        PChar->setCharVar("jugpet-duration-seconds", PChar->petZoningInfo.jugDuration);
+                   PChar->petZoningInfo.petID, static_cast<uint8>(PChar->petZoningInfo.petType), PChar->petZoningInfo.petHP, PChar->petZoningInfo.petMP, PChar->id);
     }
 
     /************************************************************************
@@ -6106,10 +5975,8 @@ namespace charutils
 
         if (type == 2)
         {
-            auto ip   = (uint32)ipp;
-            auto port = (uint32)(ipp >> 32);
-            sql->Query("UPDATE accounts_sessions SET server_addr = %u, server_port = %u WHERE charid = %u;",
-                       ip, port, PChar->id);
+            sql->Query("UPDATE accounts_sessions SET server_addr = %u, server_port = %u WHERE charid = %u;", (uint32)ipp, (uint32)(ipp >> 32),
+                       PChar->id);
 
             const char* Query = "UPDATE chars "
                                 "SET "
@@ -6302,11 +6169,15 @@ namespace charutils
     {
         if (value == 0)
         {
-            sql->Query("DELETE FROM char_vars WHERE charid = %u AND varname = '%s' LIMIT 1;", charId, var);
+            sql->Query(fmt::format("DELETE FROM char_vars WHERE charid = {} AND varname = '{}' LIMIT 1;",
+                                   PChar->id, var)
+                           .c_str());
         }
         else
         {
-            sql->Query("INSERT INTO char_vars SET charid = %u, varname = '%s', value = %i ON DUPLICATE KEY UPDATE value = %i;", charId, var, value, value);
+            sql->Query(fmt::format("INSERT INTO char_vars SET charid = {}, varname = '{}', value = {} ON DUPLICATE KEY UPDATE value = {};",
+                                   PChar->id, var.c_str(), value, value)
+                           .c_str());
         }
     }
 

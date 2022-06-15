@@ -235,13 +235,7 @@ namespace charutils
     int32 GetCharVar(CCharEntity* PChar, std::string const& var);
     void  SetCharVar(uint32 charId, std::string const& var, int32 value);
     void  SetCharVar(CCharEntity* PChar, std::string const& var, int32 value);
-    int32 ClearCharVarsWithPrefix(CCharEntity* PChar, std::string const& prefix);
-    int32 RemoveCharVarsWithTag(CCharEntity* PChar, std::string const& varsTag);
-    void  ClearCharVarFromAll(std::string const& varName, bool localOnly = false);
-    void  IncrementCharVar(CCharEntity* PChar, std::string const& var, int32 value);
-
-    int32 FetchCharVar(uint32 charId, std::string const& var);
-    void  PersistCharVar(uint32 charId, std::string const& var, int32 value);
+    void  ClearCharVarsWithPrefix(CCharEntity* PChar, std::string prefix);
 
     uint16 getWideScanRange(JOBTYPE job, uint8 level);
     uint16 getWideScanRange(CCharEntity* PChar);

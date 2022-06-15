@@ -11,7 +11,7 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
     return 0
 end
 
-spellObject.onSpellCast = function(caster, target, spell)
+spell_object.onSpellCast = function(caster, target, spell)
     return xi.spells.enhancing.useEnhancingSpell(caster, target, spell)
 end
 

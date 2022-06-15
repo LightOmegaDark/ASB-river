@@ -1784,6 +1784,10 @@ xi.mod =
     PELICAN_RING_EFFECT   = 154, -- adds extra skillup roll for fishing
     FISHING_SKILL_GAIN    = 155, -- food increase for fishing skill ups
 
+    MAIN_DMG_RANK                = 377, -- adds weapon rank to main weapon http://wiki.bluegartr.com/bg/Weapon_Rank
+    SUB_DMG_RANK                 = 378, -- adds weapon rank to sub weapon
+    RANGED_DMG_RANK              = 379, -- adds weapon rank to ranged weapon
+
     BLOOD_BOON                   = 913, -- Occasionally cuts down MP cost of Blood Pact abilities. Does not affect abilities that require Astral Flow.
     EXPERIENCE_RETAINED          = 914, -- Experience points retained upon death (this is a percentage)
     CAPACITY_BONUS               = 915, -- Capacity point bonus granted

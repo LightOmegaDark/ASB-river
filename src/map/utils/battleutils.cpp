@@ -337,18 +337,6 @@ namespace battleutils
     }
 
     /************************************************************************
-     *  Clear Pet Skills List                                                *
-     ************************************************************************/
-    void FreePetSkillList()
-    {
-        for (auto& petskill : g_PPetSkillList)
-        {
-            delete petskill.second;
-        }
-        g_PPetSkillList.clear();
-    }
-
-    /************************************************************************
      *   Get Skill Rank By SkillId and JobId                                 *
      ************************************************************************/
 
@@ -478,24 +466,6 @@ namespace battleutils
             // False positive: this is CMobSkill*, so it's OK
             // cppcheck-suppress CastIntegerToAddressAtReturn
             return g_PMobSkillList[SkillID];
-        }
-        else
-        {
-            return nullptr;
-        }
-    }
-
-    /************************************************************************
-     *                                                                       *
-     *  Get Pet Skill by Id                                                  *
-     *                                                                       *
-     ************************************************************************/
-
-    CPetSkill* GetPetSkill(uint16 SkillID)
-    {
-        if (g_PPetSkillList.find(SkillID) != g_PPetSkillList.end())
-        {
-            return g_PPetSkillList[SkillID];
         }
         else
         {

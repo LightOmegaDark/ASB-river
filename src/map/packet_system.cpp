@@ -320,10 +320,19 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
                 PChar->loc.zoning = true;
             }
         }
+        PChar->status = STATUS_TYPE::NORMAL;
+    }
+    else if (PChar->loc.zone != nullptr)
+    {
+        // TODO: this should only happen ONCE, instead of spamming the log dozens of times..
+        ShowWarning("Client cannot receive packet or key is invalid: %s, Zone: %s (%i)",
+                    PChar->GetName(), PChar->loc.zone->GetName(), PChar->loc.zone->GetID());
 
         // TODO: work out how to drop player in moghouse that exits them to the zone they were in before this happened, like we used to.
-        ShowWarning("packet_system::SmallPacket0x00A dumping player `%s` to homepoint!", PChar->GetName());
-        charutils::HomePoint(PChar);
+        ShowWarning("packet_system::SmallPacket0x00A dumping player `%s` to a valid zone!", PChar->GetName());
+        auto prevZone          = PChar->loc.prevzone ? PChar->loc.prevzone : (uint16)ZONE_VALKURM_DUNES;
+        PChar->loc.destination = prevZone;
+        sql->Query("UPDATE chars SET pos_zone = %u WHERE charid = %u", prevZone, PChar->id);
     }
 
     // Only release client from "Downloading Data" if the packet sequence came in without a drop on 0x00D
@@ -366,20 +375,16 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
                     CItem* PContainerItem = PContainer->GetItem(slotIndex);
                     if (PContainerItem != nullptr && PContainerItem->isType(ITEM_FURNISHING))
                     {
-                        auto* PFurnishing = static_cast<CItemFurnishing*>(PContainerItem);
-                        if (PFurnishing->isInstalled() && PFurnishing->isMannequin())
-                        {
-                            auto*  PMannequin = PFurnishing;
-                            uint16 mainId     = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 0]);
-                            uint16 subId      = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 1]);
-                            uint16 rangeId    = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 2]);
-                            uint16 headId     = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 3]);
-                            uint16 bodyId     = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 4]);
-                            uint16 handsId    = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 5]);
-                            uint16 legId      = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 6]);
-                            uint16 feetId     = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 7]);
-                            PChar->pushPacket(new CInventoryCountPacket(safeContainerId, slotIndex, headId, bodyId, handsId, legId, feetId, mainId, subId, rangeId));
-                        }
+                        auto*  PMannequin = PFurnishing;
+                        uint16 mainId     = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 0]);
+                        uint16 subId      = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 1]);
+                        uint16 rangeId    = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 2]);
+                        uint16 headId     = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 3]);
+                        uint16 bodyId     = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 4]);
+                        uint16 handsId    = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 5]);
+                        uint16 legId      = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 6]);
+                        uint16 feetId     = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 7]);
+                        PChar->pushPacket(new CInventoryCountPacket(safeContainerId, slotIndex, headId, bodyId, handsId, legId, feetId, mainId, subId, rangeId));
                     }
                 }
             }
@@ -759,6 +764,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
 {
     TracyZoneScoped;
 
+    // uint32 ID = data.ref<uint32>(0x04);
     uint16     TargID       = data.ref<uint16>(0x08);
     uint8      action       = data.ref<uint8>(0x0A);
     position_t actionOffset = {
@@ -936,8 +942,8 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
         break;
         case 0x09: // jobability
         {
-            uint16 JobAbilityID = data.ref<uint16>(0x0C);
-            uint8 currentAnimation = PChar->animation;
+            uint16 JobAbilityID     = data.ref<uint16>(0x0C);
+            uint8  currentAnimation = PChar->animation;
 
             if (currentAnimation != ANIMATION_NONE && currentAnimation != ANIMATION_ATTACK)
             {
@@ -1753,7 +1759,7 @@ void SmallPacket0x036(map_session_data_t* const PSession, CCharEntity* const PCh
 {
     TracyZoneScoped;
 
-    // If PChar is invisible don't allow the trade
+    // If PChar is invisible don't allow the trade, but you are able to initiate a trade TO an invisible player
     if (PChar->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_INVISIBLE))
     {
         // "You cannot use that command while invisible."
@@ -3290,30 +3296,9 @@ void SmallPacket0x050(map_session_data_t* const PSession, CCharEntity* const PCh
     uint8 equipSlotID = data.ref<uint8>(0x05); // charequip slot
     uint8 containerID = data.ref<uint8>(0x06); // container id
 
-    bool isAdditionalContainer =
-        containerID == LOC_MOGSATCHEL ||
-        containerID == LOC_MOGSACK ||
-        containerID == LOC_MOGCASE;
-
-    bool isEquippableInventory =
-        containerID == LOC_INVENTORY ||
-        containerID == LOC_WARDROBE ||
-        containerID == LOC_WARDROBE2 ||
-        containerID == LOC_WARDROBE3 ||
-        containerID == LOC_WARDROBE4 ||
-        containerID == LOC_WARDROBE5 ||
-        containerID == LOC_WARDROBE6 ||
-        containerID == LOC_WARDROBE7 ||
-        containerID == LOC_WARDROBE8 ||
-        (settings::get<bool>("main.EQUIP_FROM_OTHER_CONTAINERS") &&
-         isAdditionalContainer);
-
-    bool isLinkshell =
-        equipSlotID == SLOT_LINK1 ||
-        equipSlotID == SLOT_LINK2;
-
-    // Sanity check
-    if (!isEquippableInventory && !isLinkshell)
+    if (containerID != LOC_INVENTORY && containerID != LOC_WARDROBE && containerID != LOC_WARDROBE2 && containerID != LOC_WARDROBE3 &&
+        containerID != LOC_WARDROBE4 && containerID != LOC_WARDROBE5 && containerID != LOC_WARDROBE6 && containerID != LOC_WARDROBE7 &&
+        containerID != LOC_WARDROBE8)
     {
         return;
     }
@@ -3791,21 +3776,16 @@ void SmallPacket0x05E(map_session_data_t* const PSession, CCharEntity* const PCh
                 }
             }
 
-            bool moghouseExitRegular          = requestedZone == 0 && PChar->m_moghouseID > 0;
-            bool requestedMoghouseFloorChange = startingZone == destinationZone && requestedZone >= 125 && requestedZone <= 127;
-            bool moghouse2FUnlocked           = PChar->profile.mhflag & 0x20;
-            auto startingRegion               = zoneutils::GetCurrentRegion(startingZone);
-            auto destinationRegion            = zoneutils::GetCurrentRegion(destinationZone);
-            auto moghouseExitRegions          = { REGION_TYPE::SANDORIA, REGION_TYPE::BASTOK, REGION_TYPE::WINDURST, REGION_TYPE::JEUNO, REGION_TYPE::WEST_AHT_URHGAN };
-            auto moghouseSameRegion           = std::any_of(moghouseExitRegions.begin(), moghouseExitRegions.end(),
-                                                            [&destinationRegion](REGION_TYPE acceptedReg)
-                                                            { return destinationRegion == acceptedReg; });
-            auto moghouseQuestComplete        = PChar->profile.mhflag & (town ? 0x01 << (town - 1) : 0);
-            bool moghouseExitQuestZoneline    = moghouseQuestComplete &&
-                                             startingRegion == destinationRegion &&
-                                             PChar->m_moghouseID > 0 &&
-                                             moghouseSameRegion &&
-                                             !requestedMoghouseFloorChange;
+            bool moghouseExitRegular = requestedZone == 0 && PChar->m_moghouseID > 0;
+
+            auto startingRegion            = zoneutils::GetCurrentRegion(startingZone);
+            auto destinationRegion         = zoneutils::GetCurrentRegion(destinationZone);
+            auto moghouseExitRegions       = { REGION_TYPE::SANDORIA, REGION_TYPE::BASTOK, REGION_TYPE::WINDURST, REGION_TYPE::JEUNO, REGION_TYPE::WEST_AHT_URHGAN };
+            auto moghouseQuestComplete     = PChar->profile.mhflag & (town ? 0x01 << (town - 1) : 0);
+            bool moghouseExitQuestZoneline = moghouseQuestComplete && startingRegion == destinationRegion && PChar->m_moghouseID > 0 &&
+                                             std::any_of(moghouseExitRegions.begin(), moghouseExitRegions.end(),
+                                                         [&destinationRegion](REGION_TYPE acceptedReg)
+                                                         { return destinationRegion == acceptedReg; });
 
             bool moghouseExitMogGardenZoneline = destinationZone == ZONE_MOG_GARDEN && PChar->m_moghouseID > 0;
 
@@ -3814,27 +3794,7 @@ void SmallPacket0x05E(map_session_data_t* const PSession, CCharEntity* const PCh
             {
                 PChar->m_moghouseID    = 0;
                 PChar->loc.destination = destinationZone;
-                PChar->loc.p           = {};
-
-                // Clear Moghouse 2F tracker flag
-                PChar->profile.mhflag &= ~(0x40);
-            }
-            else if (requestedMoghouseFloorChange)
-            {
-                PChar->loc.destination = destinationZone;
-                PChar->loc.p           = {};
-
-                if (moghouse2FUnlocked)
-                {
-                    // Toggle Moghouse 2F tracker flag
-                    PChar->profile.mhflag ^= 0x40;
-                }
-                else
-                {
-                    PChar->status = STATUS_TYPE::NORMAL;
-                    ShowWarning("SmallPacket0x05E: Moghouse 2F requested without it being unlocked: %s", PChar->GetName());
-                    return;
-                }
+                PChar->loc.p = {};
             }
             else
             {
@@ -5272,8 +5232,15 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
 
                         if (settings::get<bool>("map.AUDIT_CHAT") && settings::get<uint8>("map.AUDIT_UNITY"))
                         {
-                            // clang-format off
-                            Async::getInstance()->query([name = PChar->GetName(), rawMessage = (const char*)data[6]](SqlConnection* _sql)
+                            char escaped_speaker[16 * 2 + 1];
+                            sql->EscapeString(escaped_speaker, (const char*)PChar->GetName());
+
+                            std::string escaped_full_string;
+                            escaped_full_string.reserve(strlen((const char*)data[6]) * 2 + 1);
+                            sql->EscapeString(escaped_full_string.data(), (const char*)data[6]);
+
+                            const char* fmtQuery = "INSERT into audit_chat (speaker,type,message,datetime) VALUES('%s','SAY','%s',current_timestamp())";
+                            if (sql->Query(fmtQuery, escaped_speaker, escaped_full_string.data()) == SQL_ERROR)
                             {
                                 auto message = _sql->EscapeString(rawMessage);
                                 std::ignore  = _sql->Query("INSERT INTO audit_chat (speaker,type,message,datetime) VALUES('%s','UNITY','%s',current_timestamp())",
@@ -5512,8 +5479,8 @@ void SmallPacket0x0C4(map_session_data_t* const PSession, CCharEntity* const PCh
             uint32 LinkshellID    = 0;
             uint16 LinkshellColor = data.ref<uint16>(0x04);
 
-            char DecodedName[DecodeStringLength];
-            char EncodedName[LinkshellStringLength];
+            int8 DecodedName[DecodeStringLength];
+            int8 EncodedName[LinkshellStringLength];
 
             memset(&DecodedName, 0, sizeof(DecodedName));
             memset(&EncodedName, 0, sizeof(EncodedName));

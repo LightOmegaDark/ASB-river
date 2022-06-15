@@ -27,8 +27,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../entities/charentity.h"
 #include "../entities/mobentity.h"
 #include "../entities/npcentity.h"
-#include "../entities/trustentity.h"
-#include "../mob_modifier.h"
 #include "../status_effect_container.h"
 #include "../utils/mobutils.h"
 #include "../utils/zoneutils.h"
@@ -101,32 +99,13 @@ uint32 CLuaBattlefield::getPlayerCount()
 
 sol::table CLuaBattlefield::getPlayers()
 {
-    auto table = lua.create_table();
+    auto table = luautils::lua.create_table();
     // clang-format off
     m_PLuaBattlefield->ForEachPlayer([&](CCharEntity* PChar)
     {
         if (PChar)
         {
             table.add(CLuaBaseEntity(PChar));
-        }
-    });
-    // clang-format on
-    return table;
-}
-
-sol::table CLuaBattlefield::getPlayersAndTrusts()
-{
-    auto table = lua.create_table();
-    // clang-format off
-    m_PLuaBattlefield->ForEachPlayer([&](CCharEntity* PChar)
-    {
-        if (PChar)
-        {
-            table.add(CLuaBaseEntity(PChar));
-            for (auto PTrust : PChar->PTrusts)
-            {
-                table.add(CLuaBaseEntity(PTrust));
-            }
         }
     });
     // clang-format on
@@ -164,7 +143,7 @@ sol::table CLuaBattlefield::getMobs(bool required, bool adds)
 
 sol::table CLuaBattlefield::getNPCs()
 {
-    auto table = lua.create_table();
+    auto table = luautils::lua.create_table();
     // clang-format off
     m_PLuaBattlefield->ForEachNpc(
     [&](CNpcEntity* PNpc)
@@ -177,7 +156,7 @@ sol::table CLuaBattlefield::getNPCs()
 
 sol::table CLuaBattlefield::getAllies()
 {
-    auto table = lua.create_table();
+    auto table = luautils::lua.create_table();
     // clang-format off
     m_PLuaBattlefield->ForEachAlly(
     [&](CMobEntity* PAlly)

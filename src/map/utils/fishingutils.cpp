@@ -1904,7 +1904,7 @@ namespace fishingutils
 
     void StartFishing(CCharEntity* PChar)
     {
-        if (!settings::get<bool>("map.FISHING_ENABLE"))
+        if (map_config.fishing_enable == 0)
         {
             ShowWarning("Fishing is currently disabled");
             PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, "Fishing is currently disabled"));
@@ -2622,7 +2622,7 @@ namespace fishingutils
 
     void FishingAction(CCharEntity* PChar, FISHACTION action, uint16 stamina, uint32 special)
     {
-        if (!settings::get<bool>("map.FISHING_ENABLE"))
+        if (map_config.fishing_enable == 0)
         {
             ShowWarning("Fishing is currently disabled, but somehow we have someone commencing a fishing action");
             // Unlikely anyone can get here legit, since we already disabled "startFishing"

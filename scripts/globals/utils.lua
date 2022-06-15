@@ -280,7 +280,7 @@ function utils.conalDamageAdjustment(attacker, target, skill, maxDamage, minimum
 
     if conalAnglePower < 0 then
         -- #TODO The below print will be a valid print upon fixing to-do above relating to beam center orgin
-        conalAnglePower = 0
+        conal_angle_power = 0
     end
 
     -- Calculate the amount of damage to add above the minimum percentage based on how close

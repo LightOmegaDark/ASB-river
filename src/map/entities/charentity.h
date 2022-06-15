@@ -22,10 +22,9 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #ifndef _CHARENTITY_H
 #define _CHARENTITY_H
 
-#include "event_info.h"
-#include "packets/char.h"
-#include "packets/entity_update.h"
-
+#include "../event_info.h"
+#include "../packets/char.h"
+#include "../packets/entity_update.h"
 #include "common/cbasetypes.h"
 #include "common/mmo.h"
 
@@ -161,6 +160,20 @@ struct teleport_t
     Telepoint_t homepoint;
     Telepoint_t survival;
     uint8       abysseaConflux[MAX_ABYSSEAZONES];
+    waypoint_t  waypoints;
+
+    teleport_t()
+    {
+        outpostSandy   = 0;
+        outpostBastok  = 0;
+        outpostWindy   = 0;
+        runicPortal    = 0;
+        pastMaw        = 0;
+        campaignSandy  = 0;
+        campaignBastok = 0;
+        campaignWindy  = 0;
+        std::memset(&abysseaConflux, 0, sizeof(abysseaConflux));
+    }
 };
 
 struct PetInfo_t
@@ -558,14 +571,6 @@ public:
 
     virtual void OnItemFinish(CItemState&, action_t&);
 
-    int32 getCharVar(std::string const& varName);
-    void  setCharVar(std::string const& varName, int32 value);
-    void  setVolatileCharVar(std::string const& varName, int32 value);
-    void  updateCharVarCache(std::string const& varName, int32 value);
-    void  removeFromCharVarCache(std::string const& varName);
-
-    void clearCharVarsWithPrefix(std::string const& prefix);
-
     bool m_Locked; // Is the player locked in a cutscene
 
     CCharEntity();
@@ -599,12 +604,6 @@ private:
     bool m_isStyleLocked;
     bool m_isBlockingAid;
     bool m_reloadParty;
-
-    std::unordered_map<std::string, int32> charVarCache;
-    std::unordered_set<std::string>        charVarChanges;
-
-    uint8      dataToPersist;
-    time_point nextDataPersistTime;
 
     PacketList_t                                     PacketList;           // the list of packets to be sent to the character during the next network cycle
     std::unordered_map<uint32, CCharPacket*>         PendingCharPackets;   // Keep track of which char packets are queued up for this char, such that they can be updated

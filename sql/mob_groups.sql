@@ -543,6 +543,7 @@ INSERT INTO `mob_groups` VALUES (36,6718,12,'Sword_Sorcerer_Solisoq',3600,0,3224
 INSERT INTO `mob_groups` VALUES (37,2684,12,'Moblin_Aidman',0,128,1703,0,0,75,79,0);
 INSERT INTO `mob_groups` VALUES (38,2692,12,'Moblin_Engineman',0,128,1708,0,0,75,79,0);
 
+
 -- ------------------------------------------------------------
 -- Mine_Shaft_2716 (Zone 13)
 -- ------------------------------------------------------------

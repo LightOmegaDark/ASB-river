@@ -1,12 +1,12 @@
 ﻿// Copyright (c) 2010-2015 Darkstar Dev Teams
 
-#include "common/cbasetypes.h"
-#include "common/kernel.h"
-#include "common/logging.h"
-#include "common/mmo.h"
-#include "common/taskmgr.h"
-#include "common/timer.h"
-#include "common/utils.h"
+#include "../common/cbasetypes.h"
+#include "../common/kernel.h"
+#include "../common/logging.h"
+#include "../common/mmo.h"
+#include "../common/taskmgr.h"
+#include "../common/timer.h"
+#include "../common/utils.h"
 
 #include "settings.h"
 #include "socket.h"
@@ -905,9 +905,11 @@ void do_close_tcp(int32 fd)
 ///
 std::vector<AccessControl> get_access_list(std::string access_list)
 {
-    // with the provided comma delimited access list, we will convert into a
-    // vector of string entries
-    std::vector<AccessControl> result;
+    TracyZoneScoped;
+    char  line[1024] = {};
+    char  w1[1024]   = {};
+    char  w2[1024]   = {};
+    FILE* fp;
 
     std::stringstream ss(access_list);
     while (ss.good())
@@ -1118,9 +1120,9 @@ void set_eof(int32 fd)
 int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse)
 {
     TracyZoneScoped;
-
-    DebugSockets(fmt::format("create_session fd: {}", fd).c_str());
-
+#ifdef _DEBUG
+    ShowDebug(fmt::format("create_session fd: {}", fd).c_str());
+#endif // _DEBUG
     sessions[fd] = std::make_unique<socket_data>(func_recv, func_send, func_parse);
 
     sessions[fd]->rdata.reserve(RFIFO_SIZE);

@@ -95,6 +95,8 @@ bool matches(std::string const& target, std::string const& pattern, std::string 
 bool starts_with(std::string const& target, std::string const& pattern);
 auto replace(std::string const& target, std::string const& search, std::string const& replace) -> std::string;
 
+auto   split(std::string const& s, std::string const& delimiter = " ") -> std::vector<std::string>;
+auto   trim(const std::string& str, const std::string& whitespace = " \t") -> std::string ;
 look_t stringToLook(std::string str);
 
 // Float tools

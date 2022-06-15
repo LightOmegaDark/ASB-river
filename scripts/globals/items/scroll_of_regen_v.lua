@@ -3,14 +3,14 @@
 -- Scroll of Regen V
 -- Teaches the white magic Regen V
 -----------------------------------
-local itemObject = {}
+local item_object = {}
 
-itemObject.onItemCheck = function(target)
+item_object.onItemCheck = function(target)
     return target:canLearnSpell(xi.magic.spell.REGEN_V)
 end
 
-itemObject.onItemUse = function(target)
+item_object.onItemUse = function(target)
     target:addSpell(xi.magic.spell.REGEN_V)
 end
 
-return itemObject
+return item_object

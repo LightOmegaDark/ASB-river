@@ -162,14 +162,14 @@ function xi.unity.onEventUpdate(player, csid, option)
 
         -- Attempt to grant the Item selected
         elseif category == 4 then
-            local qty    = bit.rshift(option, 13)
+            local qty = bit.rshift(option, 13)
             local itemId = unityOptions[category][selection][1]
-            local cost   = unityOptions[category][selection][4] * qty
+            local cost = unityOptions[category][selection][4] * qty
 
-            if npcUtil.giveItem(player, { { itemId, qty } }) then
+            if npcUtil.giveItem(player, { {itemId, qty} }) then
                 accolades = accolades - cost
                 player:delCurrency("unity_accolades", cost)
-                if xi.settings.main.ENABLE_EXCHANGE_LIMIT == 1 then
+                if xi.settings.ENABLE_EXCHANGE_LIMIT == 1 then
                     remainingLimit = remainingLimit - cost
                     player:setCharVar("weekly_accolades_spent", weeklyAccoladesSpent + cost)
                 end

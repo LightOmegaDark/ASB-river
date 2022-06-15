@@ -10903,7 +10903,7 @@ INSERT INTO `item_equipment` VALUES (22063,'nirvana',99,119,16384,567,0,1,1,0,0)
 INSERT INTO `item_equipment` VALUES (22064,'hvergelmir',99,119,540680,581,0,1,1,0,0);
 INSERT INTO `item_equipment` VALUES (22065,'aern_staff',1,0,4194303,829,0,0,1,0,0);
 INSERT INTO `item_equipment` VALUES (22066,'aern_staff_ii',1,0,4194303,895,0,0,1,0,0);
-INSERT INTO `item_equipment` VALUES (22068,'savage._pole',1,0,4194303,870,0,0,1,0,0);
+INSERT INTO `item_equipment` VALUES (22068,'savage._pole',1,0,4194303,829,0,0,1,0,0); -- TODO: capture model from retail (using Aern Staff model)
 INSERT INTO `item_equipment` VALUES (22069,'hapy_staff',1,0,4194303,806,0,0,1,0,0);
 INSERT INTO `item_equipment` VALUES (22072,'lamia_staff',1,0,4194303,832,0,0,1,0,0);
 INSERT INTO `item_equipment` VALUES (22074,'arasy_staff',99,119,1590047,292,0,0,1,0,1);

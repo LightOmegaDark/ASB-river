@@ -142,7 +142,20 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        ShowInfo("luautils: Lua initializing");
+        lua = sol::state();
+        TracyLuaRegister(lua.lua_state());
+        lua.open_libraries();
+
+        // Globally require bit library
+        lua.do_string("if not bit then bit = require('bit') end");
+
+        lua.do_string(
+            "function __FILE__() return debug.getinfo(2, 'S').source end\n"
+            "function __LINE__() return debug.getinfo(2, 'l').currentline end\n"
+            "function __FUNC__() return debug.getinfo(2, 'n').name end\n");
+
+        // Bind print(...) globally
+        lua.set_function("print", &luautils::print);
 
         // Bind math.randon(...) globally
         // clang-format off
@@ -231,11 +244,6 @@ namespace luautils
                 version::GetGitCommitSubject(),
                 version::GetGitDate());
         });
-
-        lua.set_function("GetFirstID", [](std::string const& name)
-        {
-            return "LOOKUP_" + name;
-        });
         // clang-format on
 
         // Register Sol Bindings
@@ -256,7 +264,8 @@ namespace luautils
 
         // Load globals
         // Truly global files first
-        lua.safe_script_file("./scripts/globals/common.lua");
+        lua.safe_script_file("./scripts/settings/main.lua", &sol::script_pass_on_error);
+        lua.safe_script_file("./scripts/globals/common.lua", &sol::script_pass_on_error);
         roeutils::init(); // TODO: Get rid of the need to do this
 
         // Then the rest...
@@ -264,11 +273,11 @@ namespace luautils
         {
             if (entry.extension() == ".lua")
             {
-                auto relative_path_string = entry.relative_path().generic_string();
-
-                ShowTrace("Loading global script %s", relative_path_string);
-
-                auto result = lua.safe_script_file(relative_path_string);
+                // TODO: Add to verbose logging
+                auto relative_path_string = entry.path().relative_path().generic_string();
+                // auto lua_path = std::filesystem::relative(entry.path(), "./").replace_extension("").generic_string();
+                // ShowInfo("Loading global script %s", lua_path);
+                auto result = lua.safe_script_file(relative_path_string, &sol::script_pass_on_error);
                 if (!result.valid())
                 {
                     sol::error err = result;
@@ -415,6 +424,96 @@ namespace luautils
         scrapeSubdir("scripts/quests");
 
         return outVec;
+    }
+
+    /************************************************************************
+     *                                                                       *
+     * Overriding the official lua print function                            *
+     *                                                                       *
+     ************************************************************************/
+    std::string luaToString(sol::object const& obj, std::size_t depth = 0)
+    {
+        switch (obj.get_type())
+        {
+            case sol::type::none:
+                [[fallthrough]];
+            case sol::type::lua_nil:
+            {
+                return "nil";
+            }
+            case sol::type::string:
+            {
+                if (depth > 0)
+                {
+                    return "\"" + obj.as<std::string>() + "\"";
+                }
+                else
+                {
+                    return obj.as<std::string>();
+                }
+            }
+            case sol::type::number:
+            {
+                return fmt::format("{0:g}", obj.as<double>());
+            }
+            case sol::type::thread:
+            {
+                return "thread";
+            }
+            case sol::type::boolean:
+            {
+                return obj.as<bool>() ? "true" : "false";
+            }
+            case sol::type::function:
+            {
+                return "function";
+            }
+            case sol::type::userdata:
+            {
+                return lua["tostring"](obj);
+            }
+            case sol::type::lightuserdata:
+            {
+                return "lightuserdata";
+            }
+            case sol::type::table:
+            {
+                auto table = obj.as<sol::table>();
+
+                // Stringify everything first
+                std::vector<std::string> stringVec;
+                for (auto& pair : table)
+                {
+                    stringVec.emplace_back(luaToString(pair.second, depth + 1));
+                }
+
+                // Accumulate into a pretty string
+                std::string outStr = "table{ ";
+                outStr += std::accumulate(std::begin(stringVec), std::end(stringVec), std::string(),
+                                          [](std::string& ss, std::string& s)
+                                          {
+                                              return ss.empty() ? s : ss + ", " + s;
+                                          });
+                return outStr + " }";
+            }
+            default:
+            {
+                return "UNKNOWN";
+            }
+        }
+    }
+
+    void print(sol::variadic_args va)
+    {
+        TracyZoneScoped;
+
+        std::vector<std::string> vec;
+        for (std::size_t i = 0; i < va.size(); ++i)
+        {
+            vec.emplace_back(luaToString(va[i]));
+        }
+
+        ShowScript(fmt::format("{}", fmt::join(vec.begin(), vec.end(), " ")).c_str());
     }
 
     sol::function getEntityCachedFunction(CBaseEntity* PEntity, std::string funcName)
@@ -674,7 +773,7 @@ namespace luautils
         }
 
         // Try and load script
-        auto file_result = lua.safe_script_file(filename);
+        auto file_result = lua.safe_script_file(filename, &sol::script_pass_on_error);
         if (!file_result.valid())
         {
             sol::error err = file_result;
@@ -940,7 +1039,7 @@ namespace luautils
     {
         CacheLuaObjectFromFile("./scripts/globals/interaction/interaction_global.lua");
 
-        auto initZones = lua["xi"]["globals"]["interaction"]["interaction_global"]["initZones"];
+        auto                initZones = lua["xi"]["globals"]["interaction"]["interaction_global"]["initZones"];
 
         std::vector<uint16> zoneIds;
         // clang-format off
@@ -2959,7 +3058,7 @@ namespace luautils
 
         auto filename = fmt::format("./scripts/zones/{}/mobs/{}.lua", zone_name, name);
 
-        auto script_result = lua.safe_script_file(filename);
+        auto script_result = lua.safe_script_file(filename, &sol::script_pass_on_error);
         if (!script_result.valid())
         {
             return -1;
@@ -3008,7 +3107,7 @@ namespace luautils
 
         auto filename = fmt::format("./scripts/mixins/zones/{}.lua", PMob->loc.zone->GetName());
 
-        auto script_result = lua.safe_script_file(filename);
+        auto script_result = lua.safe_script_file(filename, &sol::script_pass_on_error);
         if (!script_result.valid())
         {
             return -1;
@@ -3489,7 +3588,7 @@ namespace luautils
             sol::function onMobDeath          = getEntityCachedFunction(PMob, "onMobDeath");
 
             // clang-format off
-            PChar->ForAlliance([PMob, PChar, &onMobDeathFramework, &onMobDeath, &filename, &optParams](CBattleEntity* PPartyMember)
+            PChar->ForAlliance([PMob, PChar, &onMobDeathFramework, &onMobDeath, &filename](CBattleEntity* PPartyMember)
             {
                 CCharEntity* PMember = (CCharEntity*)PPartyMember;
                 if (PMember && PMember->getZone() == PChar->getZone())
@@ -4108,38 +4207,6 @@ namespace luautils
                 {
                     charutils::TrySkillUP(PMaster, SKILL_SUMMONING_MAGIC, PMaster->GetMLevel());
                 }
-            }
-        }
-
-        return result.get_type(0) == sol::type::number ? result.get<int32>(0) : 0;
-    }
-
-    int32 OnPetAbility(CBaseEntity* PTarget, CPetEntity* PPet, CPetSkill* PPetSkill, CBaseEntity* PMobMaster, action_t* action)
-    {
-        TracyZoneScoped;
-
-        std::string filename = fmt::format("./scripts/globals/abilities/pets/{}.lua", PPetSkill->getName());
-
-        sol::function onPetAbility = GetCacheEntryFromFilename(filename)["onPetAbility"];
-        if (!onPetAbility.valid())
-        {
-            return 0;
-        }
-
-        auto result = onPetAbility(CLuaBaseEntity(PTarget), CLuaBaseEntity(PPet), CLuaPetSkill(PPetSkill), CLuaBaseEntity(PMobMaster), CLuaAction(action));
-        if (!result.valid())
-        {
-            sol::error err = result;
-            ShowError("luautils::onPetAbility: %s", err.what());
-            return 0;
-        }
-
-        if (PPet->getPetType() == PET_TYPE::AVATAR && PPet->PMaster->objtype == TYPE_PC)
-        {
-            CCharEntity* PMaster = (CCharEntity*)PPet->PMaster;
-            if (PMaster->GetMJob() == JOB_SMN)
-            {
-                charutils::TrySkillUP(PMaster, SKILL_SUMMONING_MAGIC, PMaster->GetMLevel());
             }
         }
 

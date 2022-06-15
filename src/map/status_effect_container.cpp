@@ -997,12 +997,9 @@ bool CStatusEffectContainer::ApplyBardEffect(CStatusEffect* PStatusEffect, uint8
 
 bool CStatusEffectContainer::ApplyCorsairEffect(CStatusEffect* PStatusEffect, uint8 maxRolls, uint8 bustDuration)
 {
-    // Don't process if not a COR roll.
-    if (!((PStatusEffect->GetStatusID() >= EFFECT_FIGHTERS_ROLL && PStatusEffect->GetStatusID() <= EFFECT_NATURALISTS_ROLL) ||
-          (PStatusEffect->GetStatusID() == EFFECT_RUNEISTS_ROLL)))
-    {
-        return false;
-    }
+    // break if not a COR roll.
+    XI_DEBUG_BREAK_IF(!((PStatusEffect->GetStatusID() >= EFFECT_FIGHTERS_ROLL && PStatusEffect->GetStatusID() <= EFFECT_NATURALISTS_ROLL) ||
+                        (PStatusEffect->GetStatusID() == EFFECT_RUNEISTS_ROLL)));
 
     // if all match tier/id/effect then overwrite
 
@@ -1747,11 +1744,9 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
         if (auraTarget == AURA_TARGET::ALLIES)
         {
             // clang-format off
-            PChar->ForPartyWithTrusts([&](CBattleEntity* PMember)
+            PEntity->ForParty([&](CBattleEntity* PMember)
             {
-                if (PMember != nullptr &&
-                    m_POwner->loc.zone->GetID() == PMember->loc.zone->GetID() &&
-                    distance(m_POwner->loc.p, PMember->loc.p) <= aura_range &&
+                if (PMember != nullptr && PEntity->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(m_POwner->loc.p, PMember->loc.p) <= aura_range &&
                     !PMember->isDead())
                 {
                     CStatusEffect* PEffect = new CStatusEffect((EFFECT)PStatusEffect->GetSubID(), // Effect ID
@@ -1802,7 +1797,7 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
                     PMember->StatusEffectContainer->AddStatusEffect(PEffect, true);
                 }
             });
-            // clang-format on
+             // clang-format on
         }
         else if (auraTarget == AURA_TARGET::ENEMIES)
         {

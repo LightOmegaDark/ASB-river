@@ -30,7 +30,26 @@ public:
     WorldServer(std::unique_ptr<argparse::ArgumentParser>&& pArgParser);
     ~WorldServer() override;
 
-    void Tick() override;
+        // clang-format off
+        gConsoleService->RegisterCommand("stats", "Print server runtime statistics",
+        [](std::vector<std::string> inputs)
+        {
+            fmt::print("TODO: Some stats!\n");
+        });
+        // clang-format on
+    }
+
+    ~WorldServer() override
+    {
+        // Everything should be handled with RAII
+    }
+
+    void Tick() override
+    {
+        Application::Tick();
+
+        // World Server specific things
+    }
 
 private:
     std::unique_ptr<HTTPServer> httpServer;

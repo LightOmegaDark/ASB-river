@@ -163,6 +163,55 @@ sigfunc* compat_signal(int signo, sigfunc* func)
 
 static void dump_backtrace() // handled in debug_osx.cpp and debug_linux.cpp
 {
+    // gdb
+#if defined(__linux__)
+    int fd[2] = {};
+    int status = pipe(fd);
+    if (status == -1)
+    {
+        ShowError("pipe failed for gdb backtrace: %s", strerror(errno));
+        _exit(EXIT_FAILURE);
+    }
+    pid_t child_pid = fork();
+
+#ifdef HAS_YAMA_PRCTL
+    // Tell yama that we allow our child_pid to trace our process
+    if (child_pid > 0)
+    {
+        prctl(PR_SET_DUMPABLE, 1);
+        prctl(PR_SET_PTRACER, child_pid);
+    }
+#endif
+
+    if (child_pid < 0)
+    {
+        ShowError("Fork failed for gdb backtrace");
+    }
+    else if (child_pid == 0)
+    {
+        // NOTE: gdb-7.8 has regression, either update or downgrade.
+        close(fd[0]);
+        char buf[255];
+        snprintf(buf, sizeof(buf), "gdb -p %d -n -batch -ex generate-core-file -ex bt 2>/dev/null 1>&%d", getppid(), fd[1]);
+        execl("/bin/sh", "/bin/sh", "-c", buf, NULL);
+        ShowError("Failed to launch gdb for backtrace");
+        _exit(EXIT_FAILURE);
+    }
+    else
+    {
+        close(fd[1]);
+        waitpid(child_pid, nullptr, 0);
+        char buf[4096] = { 0 };
+        status         = read(fd[0], buf, sizeof(buf) - 1);
+        if (status == -1)
+        {
+            ShowError("read failed for gdb backtrace: %s", strerror(errno));
+            _exit(EXIT_FAILURE);
+        }
+        ShowFatalError("--- gdb backtrace ---");
+        ShowFatalError("%s", buf);
+    }
+#endif
 }
 
 /************************************************************************
@@ -273,24 +322,6 @@ int main(int argc, char** argv)
     fd_set rfd = {};
     { // Main runtime cycle
         duration next = std::chrono::milliseconds(200);
-
-        // clang-format off
-        auto watchdog = Watchdog(2000ms, [&]()
-        {
-            ShowCritical("Process main tick has taken 2000ms or more.");
-            if (debug::isRunningUnderDebugger())
-            {
-                ShowCritical("Detaching watchdog thread, it will not fire again until restart.");
-            }
-            else
-            {
-#ifndef SIGKILL
-#define SIGKILL 9
-#endif // SIGKILL
-                std::raise(SIGKILL);
-            }
-        });
-        // clang-format on
 
         while (gRunFlag)
         {

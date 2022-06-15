@@ -507,10 +507,11 @@ uint64 unpackBitsLE(const uint8* target, int32 byteOffset, int32 bitOffset, uint
 
 void EncodeStringLinkshell(const std::string& signature, char* target)
 {
-    uint8 encodedSignature[LinkshellStringLength] = {};
-    uint8 chars                                   = 0;
-    uint8 leftover                                = 0;
-    auto  length                                  = std::min<size_t>(20u, signature.size());
+    uint8 encodedSignature[LinkshellStringLength];
+    memset(&encodedSignature, 0, sizeof encodedSignature);
+    uint8 chars    = 0;
+    uint8 leftover = 0;
+    auto  length   = std::min<size_t>(20u, strlen((const char*)signature));
 
     for (std::size_t currChar = 0; currChar < length; ++currChar)
     {
@@ -540,8 +541,9 @@ void EncodeStringLinkshell(const std::string& signature, char* target)
 
 void DecodeStringLinkshell(const std::string& signature, char* target)
 {
-    char decodedSignature[21] = {};
-    auto length               = std::min<size_t>(20u, (signature.size() * 8) / 6);
+    uint8 decodedSignature[21];
+    memset(&decodedSignature, 0, sizeof decodedSignature);
+    auto length = std::min<size_t>(20u, (strlen((const char*)signature) * 8) / 6);
 
     for (std::size_t currChar = 0; currChar < length; ++currChar)
     {
@@ -581,9 +583,11 @@ void DecodeStringLinkshell(const std::string& signature, char* target)
 
 std::string EncodeStringSignature(const std::string& signature, char* target)
 {
-    uint8 encodedSignature[SignatureStringLength] = {};
-    uint8 chars                                   = 0;
-    auto  length                                  = std::min<size_t>(15u, signature.size());
+    uint8 encodedSignature[SignatureStringLength];
+    memset(&encodedSignature, 0, sizeof encodedSignature);
+    uint8 chars = 0;
+    // uint8 leftover = 0;
+    auto length = std::min<size_t>(15u, strlen((const char*)signature));
 
     for (std::size_t currChar = 0; currChar < length; ++currChar)
     {
@@ -695,8 +699,7 @@ std::string UnpackSoultrapperName(uint8 input[])
     uint8       remainder = 0;
     uint8       shift     = 1;
     uint8       maxSize   = 13; // capped at 13 based on examples like GoblinBountyH
-    char        indexChar;
-    std::string output = "";
+    std::string output    = "";
 
     // Unpack and shift 7-bit to 8-bit
     for (uint8 i = 0; i <= maxSize; ++i)
@@ -724,10 +727,7 @@ std::string UnpackSoultrapperName(uint8 input[])
 
         if (shift == 7)
         {
-            if (char(remainder) >= '0' && char(remainder) <= 'z')
-            {
-                output = output + char(remainder);
-            }
+            output    = output + char(remainder);
             remainder = 0;
             shift     = 1;
         }
@@ -921,19 +921,7 @@ look_t stringToLook(std::string str)
         entry       = top | bottom;
     }
 
-    out.size = hex[0];
-
-    out.face = hex[1] & 0x00FF;
-    out.race = hex[1] >> 8;
-
-    out.head   = hex[2] &= ~0x1000;
-    out.body   = hex[3] &= ~0x2000;
-    out.hands  = hex[4] &= ~0x3000;
-    out.legs   = hex[5] &= ~0x4000;
-    out.feet   = hex[6] &= ~0x5000;
-    out.main   = hex[7] &= ~0x6000;
-    out.sub    = hex[8] &= ~0x7000;
-    out.ranged = hex[9] &= ~0x8000;
+    look_t out(hex);
 
     return out;
 }

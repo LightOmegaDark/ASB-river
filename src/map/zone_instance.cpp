@@ -168,7 +168,7 @@ void CZoneInstance::DecreaseZoneCounter(CCharEntity* PChar)
         {
             if (instance->Failed() || instance->Completed())
             {
-                ShowDebug("[CZoneInstance]DecreaseZoneCounter cleaned up Instance %s", instance->GetName());
+                ShowDebug("[CZoneInstance]DecreaseZoneCounter cleaned up Instance %s", (const char*)instance->GetName());
                 instanceList.erase(std::find_if(instanceList.begin(), instanceList.end(), [&instance](const auto& el)
                                                 { return el.get() == instance; }));
             }

@@ -3,14 +3,14 @@
 -- plate_of_indi-agi
 -- Teaches INDI-AGI
 -----------------------------------------
-local itemObject = {}
+local item_object = {}
 
-itemObject.onItemCheck = function(target)
+item_object.onItemCheck = function(target)
     return target:canLearnSpell(xi.magic.spell.INDI_AGI)
 end
 
-itemObject.onItemUse = function(target)
+item_object.onItemUse = function(target)
     target:addSpell(xi.magic.spell.INDI_AGI)
 end
 
-return itemObject
+return item_object

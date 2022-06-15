@@ -59,8 +59,35 @@ local teleportEventsByArea =
     [4] = 0, -- Teleports player to NE room of map 3
 }
 
-zoneObject.onTriggerAreaEnter = function(player, triggerArea)
-    local areaId = triggerArea:GetTriggerAreaID()
+    switch (region:GetRegionID()): caseof
+    {
+        -----------------------------------
+        [1] = function (x)  --
+        -----------------------------------
+            player:startEvent(3) -- ports player to NW room of map 3
+        end,
+
+        -----------------------------------
+        [2] = function (x)  --
+        -----------------------------------
+            player:startEvent(2) -- ports player to SW room of map 3
+        end,
+
+        -----------------------------------
+        [3] = function (x)  --
+        -----------------------------------
+            player:startEvent(1) -- ports player to SE room of map 3
+        end,
+
+        -----------------------------------
+        [4] = function (x)  --
+        -----------------------------------
+            player:startEvent(0) -- ports player to NE room of map 3
+        end,
+
+        default = function (x)
+        end,
+    }
 
     if teleportEventsByArea[areaId] then
         player:startEvent(teleportEventsByArea[areaId])

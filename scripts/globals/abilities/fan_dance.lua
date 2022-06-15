@@ -13,7 +13,7 @@ abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-abilityObject.onUseAbility = function(player, target, ability)
+ability_object.onUseAbility = function(player, target, ability)
     player:addStatusEffect(xi.effect.FAN_DANCE, 9000, 0, 300)
 end
 

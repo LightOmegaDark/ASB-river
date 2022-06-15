@@ -31,60 +31,59 @@ entity.onMobSpawn = function(mob)
     mob:setLocalVar("skin", skin)
     if skin == 1161 then -- Fire
         mob:setSpellList(spellTable[skin][2])
-        mob:setMod(xi.mod.ICE_MEVA, 80)
-        mob:setMod(xi.mod.PARALYZE_MEVA, 99)
-        mob:setMod(xi.mod.BIND_MEVA, 99)
-        mob:setMod(xi.mod.FIRE_MEVA, 100)
-        mob:setMod(xi.mod.WATER_MEVA, -27)
+        mob:setMod(xi.mod.ICE_RES, 80)
+        mob:setMod(xi.mod.PARALYZERES, 99)
+        mob:setMod(xi.mod.BINDRES, 99)
+        mob:setMod(xi.mod.FIRE_RES, 100)
+        mob:setMod(xi.mod.WATER_RES, -27)
     elseif skin == 1162 then -- Ice
         mob:setSpellList(spellTable[skin][2])
-        mob:setMod(xi.mod.WIND_MEVA, 80)
-        mob:setMod(xi.mod.GRAVITY_MEVA, 99)
-        mob:setMod(xi.mod.SILENCE_MEVA, 99)
-        mob:setMod(xi.mod.ICE_MEVA, 100)
-        mob:setMod(xi.mod.PARALYZE_MEVA, 100)
-        mob:setMod(xi.mod.BIND_MEVA, 100)
-        mob:setMod(xi.mod.FIRE_MEVA, -27)
+        mob:setMod(xi.mod.WIND_RES, 80)
+        mob:setMod(xi.mod.GRAVITYRES, 99)
+        mob:setMod(xi.mod.SILENCERES, 99)
+        mob:setMod(xi.mod.ICE_RES, 100)
+        mob:setMod(xi.mod.PARALYZERES, 100)
+        mob:setMod(xi.mod.BINDRES, 100)
+        mob:setMod(xi.mod.FIRE_RES, -27)
     elseif skin == 1163 then -- Wind
         mob:setSpellList(spellTable[skin][2])
-        mob:setMod(xi.mod.EARTH_MEVA, 80)
-        mob:setMod(xi.mod.SLOW_MEVA, 99)
-        mob:setMod(xi.mod.WIND_MEVA, 100)
-        mob:setMod(xi.mod.GRAVITY_MEVA, 100)
-        mob:setMod(xi.mod.SILENCE_MEVA, 100)
-        mob:setMod(xi.mod.ICE_MEVA, -27)
+        mob:setMod(xi.mod.EARTH_RES, 80)
+        mob:setMod(xi.mod.SLOWRES, 99)
+        mob:setMod(xi.mod.WIND_RES, 100)
+        mob:setMod(xi.mod.GRAVITYRES, 100)
+        mob:setMod(xi.mod.SILENCERES, 100)
+        mob:setMod(xi.mod.ICE_RES, -27)
     elseif skin == 1164 then -- Earth
         mob:setSpellList(spellTable[skin][2])
-        mob:setMod(xi.mod.THUNDER_MEVA, 80)
-        mob:setMod(xi.mod.STUN_MEVA, 99)
-        mob:setMod(xi.mod.EARTH_MEVA, 100)
-        mob:setMod(xi.mod.SLOW_MEVA, 100)
-        mob:setMod(xi.mod.WIND_MEVA, -27)
+        mob:setMod(xi.mod.THUNDER_RES, 80)
+        mob:setMod(xi.mod.STUNRES, 99)
+        mob:setMod(xi.mod.EARTH_RES, 100)
+        mob:setMod(xi.mod.SLOWRES, 100)
+        mob:setMod(xi.mod.WIND_RES, -27)
     elseif skin == 1165 then -- Lightning
         mob:setSpellList(spellTable[skin][2])
-        mob:setMod(xi.mod.WATER_MEVA, 80)
-        mob:setMod(xi.mod.POISON_MEVA, 99)
-        mob:setMod(xi.mod.THUNDER_MEVA, 100)
-        mob:setMod(xi.mod.STUN_MEVA, 100)
-        mob:setMod(xi.mod.EARTH_MEVA, -27)
+        mob:setMod(xi.mod.WATER_RES, 80)
+        mob:setMod(xi.mod.POISONRES, 99)
+        mob:setMod(xi.mod.THUNDER_RES, 100)
+        mob:setMod(xi.mod.STUNRES, 100)
+        mob:setMod(xi.mod.EARTH_RES, -27)
     elseif skin == 1166 then -- Water
         mob:setSpellList(spellTable[skin][2])
-        mob:setMod(xi.mod.FIRE_MEVA, 80)
-        mob:setMod(xi.mod.WATER_MEVA, 100)
-        mob:setMod(xi.mod.POISON_MEVA, 100)
-        mob:setMod(xi.mod.THUNDER_MEVA, -27)
+        mob:setMod(xi.mod.FIRE_RES, 80)
+        mob:setMod(xi.mod.WATER_RES, 100)
+        mob:setMod(xi.mod.POISONRES, 100)
+        mob:setMod(xi.mod.THUNDER_RES, -27)
     elseif skin == 1167 then -- Light
         mob:setSpellList(spellTable[skin][2])
-        mob:setMod(xi.mod.LIGHT_MEVA, 100)
-        mob:setMod(xi.mod.LULLABY_MEVA, 100)
-        mob:setMod(xi.mod.DARK_MEVA, -27)
+        mob:setMod(xi.mod.LIGHT_RES, 100)
+        mob:setMod(xi.mod.LULLABYRES, 100)
+        mob:setMod(xi.mod.DARK_RES, -27)
     elseif skin == 1168 then -- Dark
         mob:setSpellList(spellTable[skin][2])
-        mob:setMod(xi.mod.DARK_MEVA, 100)
-        mob:setMod(xi.mod.SLEEP_MEVA, 100)
-        mob:setMod(xi.mod.LIGHT_MEVA, -27)
+        mob:setMod(xi.mod.DARK_RES, 100)
+        mob:setMod(xi.mod.SLEEPRES, 100)
+        mob:setMod(xi.mod.LIGHT_RES, -27)
     end
-
     mob:setModelId(1167)
 end
 
@@ -115,7 +114,6 @@ entity.onMobFight = function(mob, target)
         elseif mob:getLocalVar("state") == 3 then
             mob:useMobAbility(693) -- perfect dodge
         end
-
         mob:setLocalVar("canTwoHour", 1)
     end
 
@@ -132,8 +130,8 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
-    if (player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.A_FATE_DECIDED  and player:getCharVar("PromathiaStatus")==1) then
+entity.onMobDeath  = function(mob, player, isKiller)
+    if (player:getCurrentMission(xi.mission.log_id.cop) == xi.mission.id.cop.A_FATE_DECIDED  and player:getCharVar("PromathiaStatus")==1) then
         player:setCharVar("PromathiaStatus", 2)
     end
 end

@@ -165,8 +165,8 @@ void message_server_parse(MSGSERVTYPE type, zmq::message_t* extra, zmq::message_
 
     if (ret != SQL_ERROR)
     {
-        ShowDebug(fmt::format("Message: Received message {} ({}) from {}:{}",
-                              msgTypeToStr(type), static_cast<uint8>(type), from_address, from_port));
+        ShowDebug("Message: Received message %s (%d) from %s:%hu",
+                  msgTypeToStr(type), static_cast<uint8>(type), from_address, from_port);
 
         while (zmqSql->NextRow() == SQL_SUCCESS)
         {

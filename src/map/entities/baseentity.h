@@ -22,10 +22,9 @@
 #ifndef _BASEENTITY_H
 #define _BASEENTITY_H
 
+#include "../packets/message_basic.h"
 #include "common/cbasetypes.h"
 #include "common/mmo.h"
-#include "packets/message_basic.h"
-
 #include <map>
 #include <memory>
 #include <vector>
@@ -45,7 +44,7 @@ enum ENTITYTYPE : uint8
 enum class STATUS_TYPE : uint8
 {
     NORMAL        = 0,
-    MOB           = 1,
+    MOB           = 1, // STATUS_UPDATE = 1,
     DISAPPEAR     = 2,
     INVISIBLE     = 3,
     STATUS_4      = 4,
@@ -141,10 +140,8 @@ enum MOUNTTYPE : uint8
     MOUNT_RED_RAPTOR     = 31,
     MOUNT_IRON_GIANT     = 32,
     MOUNT_BYAKKO         = 33,
-    MOUNT_NOBLE_CHOCOBO  = 34, // NOTE: This is currently blank, probably needs additional packets sent
-    MOUNT_IXION          = 35,
     //
-    MOUNT_MAX = 36,
+    MOUNT_MAX = 34,
 };
 
 enum class ALLEGIANCE_TYPE : uint8
@@ -233,6 +230,16 @@ struct location_t
     uint16     boundary;    // A certain area in the zone in which the entity is located (used by characters and transport)
 
     location_t()
+    {
+        destination = 0;
+        zone        = nullptr;
+        prevzone    = 0;
+        zoning      = false;
+        boundary    = 0;
+    }
+};
+
+    location_t()
     : destination(0)
     , zone(nullptr)
     , prevzone(0)
@@ -294,14 +301,14 @@ public:
 
     bool IsDynamicEntity() const;
 
-    uint32          id;           // global identifier unique on the server
-    uint16          targid;       // local identifier unique to the zone
-    ENTITYTYPE      objtype;      // Type of entity
-    STATUS_TYPE     status;       // Entity status (different entities - different statuses)
-    uint16          m_TargID;     // the targid of the object the entity is looking at
-    std::string     name;         // Entity name
-    std::string     packetName;   // Used to override name when being sent to the client
-    look_t          look;         //
+    uint32          id;         // global identifier unique on the server
+    uint16          targid;     // local identifier unique to the zone
+    ENTITYTYPE      objtype;    // Type of entity
+    STATUS_TYPE     status;     // Entity status (different entities - different statuses)
+    uint16          m_TargID;   // the targid of the object the entity is looking at
+    string_t        name;       // Entity name
+    string_t        packetName; // Used to override name when being sent to the client
+    look_t          look; //
     look_t          mainlook;     // only used if mob use changeSkin() or player /lockstyle
     location_t      loc;          // Location of entity
     uint8           animation;    // animation

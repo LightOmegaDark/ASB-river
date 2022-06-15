@@ -36,6 +36,14 @@ namespace
     }
 } // namespace
 
+namespace
+{
+    bool arePositionsClose(const position_t& a, const position_t& b)
+    {
+        return distance(a, b) < 1.0f;
+    }
+} // namespace
+
 CPathFind::CPathFind(CBaseEntity* PTarget)
 : m_POwner(PTarget)
 , m_pathFlags(0)
@@ -412,6 +420,11 @@ bool CPathFind::FindPath(const position_t& start, const position_t& end)
 {
     TracyZoneScoped;
 
+    if (arePositionsClose(start, end))
+    {
+        return false;
+    }
+
     if (!isNavMeshEnabled())
     {
         return false;
@@ -466,6 +479,11 @@ bool CPathFind::FindRandomPath(const position_t& start, float maxRadius, uint8 m
 bool CPathFind::FindClosestPath(const position_t& start, const position_t& end)
 {
     TracyZoneScoped;
+
+    if (arePositionsClose(start, end))
+    {
+        return false;
+    }
 
     if (!isNavMeshEnabled())
     {

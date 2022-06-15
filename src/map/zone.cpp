@@ -80,7 +80,7 @@ int32 zone_server(time_point tick, CTaskMgr::CTask* PTask)
     return 0;
 }
 
-int32 zone_server_trigger_area(time_point tick, CTaskMgr::CTask* PTask)
+int32 zone_server_region(time_point tick, CTaskMgr::CTask* PTask)
 {
     CZone* PZone = std::any_cast<CZone*>(PTask->m_data);
 
@@ -122,7 +122,6 @@ CZone::CZone(ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID, ui
 , m_levelRestriction(levelRestriction)
 {
     TracyZoneScoped;
-
     m_useNavMesh = false;
     std::ignore  = m_useNavMesh;
     ZoneTimer    = nullptr;
@@ -600,26 +599,6 @@ void CZone::TransportDepart(uint16 boundary, uint16 zone)
     m_zoneEntities->TransportDepart(boundary, zone);
 }
 
-void CZone::updateCharLevelRestriction(CCharEntity* PChar)
-{
-    if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_RESTRICTION))
-    {
-        // If the level restriction is already the same then no need to change it
-        CStatusEffect* statusEffect = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_LEVEL_RESTRICTION);
-        if (statusEffect == nullptr || statusEffect->GetPower() == m_levelRestriction)
-        {
-            return;
-        }
-
-        PChar->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);
-    }
-
-    if (m_levelRestriction != 0)
-    {
-        PChar->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_LEVEL_RESTRICTION, EFFECT_LEVEL_RESTRICTION, m_levelRestriction, 0, 0));
-    }
-}
-
 void CZone::SetWeather(WEATHER weather)
 {
     TracyZoneScoped;
@@ -879,7 +858,7 @@ void CZone::SavePlayTime()
     m_zoneEntities->SavePlayTime();
 }
 
-CCharEntity* CZone::GetCharByName(std::string name)
+CCharEntity* CZone::GetCharByName(int8* name)
 {
     return m_zoneEntities->GetCharByName(name);
 }
@@ -1019,7 +998,7 @@ void CZone::createZoneTimer()
     TracyZoneScoped;
     ZoneTimer =
         CTaskMgr::getInstance()->AddTask(m_zoneName, server_clock::now(), this, CTaskMgr::TASK_INTERVAL,
-                                         m_triggerAreaList.empty() ? zone_server : zone_server_trigger_area,
+                                         m_regionList.empty() ? zone_server : zone_server_region,
                                          std::chrono::milliseconds(static_cast<uint32>(server_tick_interval)));
 }
 
@@ -1261,45 +1240,6 @@ void CZone::CheckTriggerAreas(CCharEntity* PChar)
         }
     }
     PChar->m_InsideTriggerAreaID = triggerAreaID;
-}
-
-//==========================================================
-
-void CZone::SetZoneDirection(uint8 direction)
-{
-    m_ZoneDirection = direction;
-}
-void CZone::SetZoneAnimation(uint8 animation)
-{
-    m_ZoneAnimation = animation;
-}
-void CZone::SetZoneAnimStartTime(uint32 startTime)
-{
-    m_ZoneAnimStartTime = startTime;
-}
-void CZone::SetZoneAnimLength(uint16 length)
-{
-    m_ZoneAnimLength = length;
-}
-
-uint8 CZone::GetZoneDirection()
-{
-    return m_ZoneDirection;
-}
-
-uint8 CZone::GetZoneAnimation()
-{
-    return m_ZoneAnimation;
-}
-
-uint32 CZone::GetZoneAnimStartTime()
-{
-    return m_ZoneAnimStartTime;
-}
-
-uint16 CZone::GetZoneAnimLength()
-{
-    return m_ZoneAnimLength;
 }
 
 //===========================================================

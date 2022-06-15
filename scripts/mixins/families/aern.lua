@@ -73,13 +73,52 @@ g_mixins.families.aern = function(aernMob)
                     mobArg:disengage()
                 end
             end
-
-            mobArg:triggerListener("AERN_RERAISE", mobArg, currReraise + 1)
-        end)
-
-        mob:timer(16000, function(mobArg)
-            mobArg:setAnimationSub(1)
-        end)
+            mob:setMobMod(xi.mobMod.NO_DROPS, 0) -- Drops on if Not reraising
+            if curr_reraise < reraises then
+                mob:setMobMod(xi.mobMod.NO_DROPS, 1)  -- Drops off if reraising
+                local dropid = mob:getDropID()
+                local target = mob:getTarget()
+                if
+                    target:isPet() and
+                    not target:isAlive()
+                then
+                    target = target:getMaster()
+                end
+                mob:timer(12000, function(mobArg)
+                    mobArg:setHP(mob:getMaxHP())
+                    mobArg:setDropID(dropid)
+                    mobArg:setAnimationSub(3)
+                    mobArg:setLocalVar("AERN_RERAISES", curr_reraise + 1)
+                    mobArg:resetAI()
+                    mobArg:stun(3000)
+                    if
+                        mobArg:checkDistance(target) < 25 and
+                        target:isAlive()
+                    then
+                        mobArg:updateClaim(target)
+                        mobArg:updateEnmity(target)
+                    else
+                        local partySize = killer:getPartySize() -- Check for other available valid aggro targets
+                        local i = 1
+                        if killer ~= nil then
+                            for _, partyMember in pairs(killer:getAlliance()) do --TODO add enmity list check when binding avail
+                                if partyMember:isAlive() and mobArg:checkDistance(partyMember) < 25 then
+                                    mobArg:updateClaim(partyMember)
+                                    mobArg:updateEnmity(partyMember)
+                                    break
+                                elseif i == partySize then --if all checks fail just disengage
+                                    mobArg:disengage()
+                                end
+                                i = i + 1
+                            end
+                        else
+                            mobArg:disengage()
+                        end
+                    end
+                    mobArg:triggerListener("AERN_RERAISE", mobArg, curr_reraise + 1)
+                end)
+            end
+        end
     end)
 end
 

@@ -27,10 +27,10 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onTriggerAreaEnter = function(player, triggerArea)
+zone_object.onRegionEnter = function(player, region)
 end
 
-zoneObject.onEventUpdate = function(player, csid, option)
+zone_object.onEventUpdate = function(player, csid, option)
 end
 
 zoneObject.onEventFinish = function(player, csid, option)

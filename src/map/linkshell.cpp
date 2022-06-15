@@ -151,8 +151,13 @@ bool CLinkshell::DelMember(CCharEntity* PChar)
     return !members.empty();
 }
 
-// Promotes or demotes the target member (pearlsack/linkpearl)
-void CLinkshell::ChangeMemberRank(const std::string& MemberName, uint8 toSack)
+/************************************************************************
+ *                                                                       *
+ *  Promotes or demotes the target member       (linkshell)             *
+ *                                                                       *
+ ************************************************************************/
+
+void CLinkshell::ChangeMemberRank(int8* MemberName, uint8 toSack)
 {
     // topearl = 3
     // tosack = 2

@@ -2550,8 +2550,100 @@ end
 
 xi.gear_sets.itemToSetId = xi.gear_sets.createItemToSetId()
 
--- Global function to check for equipped sets and apply mods.  This is called by
--- core on equip and unequip of an item.
+        if (matches > 1 and matches < 4) then
+            modValue = 4 -- 2 or 3 pieces
+        elseif (matches > 3) then
+            modValue = 10 -- 4 or 5 pieces
+        end
+
+        player:addGearSetMod(gearset.id, xi.mod.FASTCAST, modValue)
+        return
+    -- AF1 119+2/+3 ACC/RACC/MACC Sets EXCEPT SMN
+    elseif (gearset.id >= 133 and gearset.id <= 199 and gearset.id ~= 175) then
+        local modValue = 0
+
+        if (matches == 2) then
+            modValue = 15 -- 2 matches
+        elseif (matches == 3) then
+            modValue = 30 -- 3 matches
+        elseif (matches == 4) then
+            modValue = 45 -- 4 matches
+        elseif (matches >= 5) then
+            modValue = 60 -- 5 or more matches
+        end
+        player:addGearSetMod(gearset.id, xi.mod.ACC, modValue)
+        player:addGearSetMod(gearset.id + 1, xi.mod.RACC, modValue)
+        player:addGearSetMod(gearset.id + 2, xi.mod.MACC, modValue)
+        return
+    -- AF1 119 +2/+3 SMN Avatar:ACC/RACC/MACC (unimplemented)
+    --[[
+    elseif (gearset.id == 175) then
+        local modValue = 0
+
+        if (matches == 2) then
+            modValue = 15 -- 2 matches
+        elseif (matches == 3) then
+            modValue = 30 -- 3 matches
+        elseif (matches == 4) then
+            modValue = 45 -- 4 matches
+        elseif (matches >= 5) then
+            modValue = 60 -- 5 or more matches
+        end
+        --Unimplemented method to add pet mods
+        return
+    ]]--
+    end
+end
+
+-----------------------------------
+-- Applys a gear set mod
+-----------------------------------
+local function ApplyMod(player, gearset, matches)
+
+    for _, set in pairs(cappedTierSets) do
+        if (set.id == gearset.id) then
+            handleCappedTierSet(player, gearset, matches)
+            return
+        end
+    end
+
+    -- find any additional matches
+    local addMatches = matches - gearset.matches
+
+    -- just in case some d00d decides to customize things and complain the script is b0rked
+    if (addMatches < 0) then
+        return
+    end
+
+    local i = 0
+    for _, mod in pairs(gearset.mods) do
+        local modId = mod[1]
+        local modValue = mod[2]
+
+        -- value/multiplier for additional pieces
+        local addMatchValue = mod[3]
+
+        -- additional bonus for complete set
+        local addSetBonus = 0
+
+        -- cause we need all pieces to form a complete set
+        if (matches == #gearset.items) then
+            addSetBonus = mod[4]
+        end
+
+        -- add bonus mods per piece
+        if (addMatches ~= 0 and addMatchValue ~= 0) then
+            modValue = modValue + (addMatchValue * addMatches)
+        end
+
+        player:addGearSetMod(gearset.id + i, modId, modValue + addSetBonus)
+        i = i + 1
+    end
+end
+
+-----------------------------------
+-- Checks for gear sets present on a player
+-----------------------------------
 xi.gear_sets.checkForGearSet = function(player)
     player:clearGearSetMods()
 

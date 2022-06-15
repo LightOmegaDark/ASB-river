@@ -85,12 +85,12 @@
   82    Wail of the Void            Rhapsodies finale
   83    Rhapsodies of Vana'diel     Ending Song
   84    Full Speed Ahead!           Mount riding music
-  85    Ambuscade                   Legion
+  85    ?                           ???
   86    Awakening                   Dynamis, Shadow Lord Fight
-  87    Unknown Title               Omen
-  88    Unknown Title               Dynamis Divergence
-  89    Unknown Title               Dynamis Divergence
-  90    Unknown Title               ???
+  87    ?                           ???
+  88    ?                           Dynamis Divergence
+  89    ?                           ???
+  90    ?                           ???
   91    Unused ID                   Unused ID
   92    Unused ID                   Unused ID
   93    Unused ID                   Unused ID

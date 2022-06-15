@@ -588,7 +588,10 @@ public:
     virtual void TOTDChange(TIMETYPE TOTD);
     virtual void PushPacket(CBaseEntity*, GLOBAL_MESSAGE_TYPE, CBasicPacket*);
 
-    bool IsZoneActive() const;
+    virtual void UpdateCharPacket(CCharEntity* PChar, ENTITYUPDATE type, uint8 updatemask);
+    virtual void UpdateEntityPacket(CBaseEntity* PEntity, ENTITYUPDATE type, uint8 updatemask, bool alwaysInclude = false);
+
+    bool           IsZoneActive() const;
     CZoneEntities* GetZoneEntities();
 
     time_point      m_TriggerAreaCheckTime;
@@ -621,22 +624,6 @@ public:
     void SetZoneAnimStartTime(uint32 startTime);
     void SetZoneAnimLength(uint16 length);
 
-    uint8           GetZoneDirection();
-    uint8           GetZoneAnimation();
-    uint32          GetZoneAnimStartTime();
-    uint16          GetZoneAnimLength();
-
-private:
-    ZONEID         m_zoneID;
-    ZONE_TYPE      m_zoneType;
-    REGION_TYPE    m_regionID;
-    CONTINENT_TYPE m_continentID;
-    uint8          m_levelRestriction;
-    std::string    m_zoneName;
-    uint16         m_zonePort;
-    uint32         m_zoneIP;
-    bool           m_useNavMesh;
-
     WEATHER m_Weather;
     uint32  m_WeatherChangeTime;
 
@@ -666,7 +653,7 @@ private:
     uint16          m_ZoneAnimLength;       // zone animation length in seconds
 
 protected:
-    CTaskMgr::CTask* ZoneTimer; // The pointer to the created timer is Zoneserver.necessary for the possibility of stopping it
+    CTaskMgr::CTask* ZoneTimer; // указатель на созданный таймер - ZoneServer. необходим для возможности его остановки
 
     void createZoneTimer();
     void CharZoneIn(CCharEntity* PChar);

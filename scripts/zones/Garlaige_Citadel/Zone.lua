@@ -15,6 +15,12 @@ zoneObject.onInitialize = function(zone)
     zone:registerTriggerArea(3, -213, -1, 224, -211, 1, 227)
     zone:registerTriggerArea(4, -213, -1, 212, -211, 1, 215)
 
+zone_object.onInitialize = function(zone)
+    -- Banishing Gate #1
+    zone:registerRegion(1, -208, -1, 224, -206, 1, 227)
+    zone:registerRegion(2, -208, -1, 212, -206, 1, 215)
+    zone:registerRegion(3, -213, -1, 224, -211, 1, 227)
+    zone:registerRegion(4, -213, -1, 212, -211, 1, 215)
     -- Banishing Gate #2
     zone:registerTriggerArea(10,  -51, -1,  82,  -49, 1,  84)
     zone:registerTriggerArea(11, -151, -1,  82, -149, 1,  84)

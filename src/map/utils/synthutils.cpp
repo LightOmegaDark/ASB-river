@@ -583,7 +583,7 @@ namespace synthutils
                 uint16 craftCommonCap    = settings::get<uint16>("map.CRAFT_COMMON_CAP");
                 uint16 skillCumulation   = skillUpAmount;
                 uint8  skillHighest      = skillID; // Default to lowering current skill in use, since we have to lower something if it's going past the limit... (AKA, badly configurated server)
-                uint16 skillHighestValue = settings::get<uint16>("map.CRAFT_COMMON_CAP");
+                uint16 skillHighestValue = map_config.craft_common_cap;
 
                 if ((charSkill + skillUpAmount) > craftCommonCap) // If server is using the specialization system
                 {
@@ -944,7 +944,7 @@ namespace synthutils
                     char encodedSignature[SignatureStringLength];
 
                     memset(&encodedSignature, 0, sizeof(encodedSignature));
-                    PItem->setSignature(EncodeStringSignature(PChar->name.c_str(), encodedSignature));
+                    PItem->setSignature(EncodeStringSignature((int8*)PChar->name.c_str(), encodedSignature));
 
                     char signature_esc[31]; // max charname: 15 chars * 2 + 1
                     sql->EscapeStringLen(signature_esc, PChar->name.c_str(), strlen(PChar->name.c_str()));

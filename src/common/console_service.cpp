@@ -21,77 +21,7 @@
 
 #include "console_service.h"
 
-#include <sstream>
-
-#ifdef _WIN32
-#include <conio.h>
-#include <io.h>
-#include <windows.h>
-#define isatty  _isatty
-#define getchar _getch
-#else
-#include <poll.h>
-#include <sys/socket.h>
-#include <unistd.h>
-#endif
-
-// https://stackoverflow.com/a/71992965
-bool stdinHasData()
-{
-#if defined(_WIN32)
-    // this works by harnessing Windows' black magic:
-    return _kbhit();
-#else
-    struct pollfd pollFileDescriptor = { STDIN_FILENO, POLLIN, 0 };
-
-    // poll the stdin file descriptor until it tells us it's ready
-    // poll returns a 0 if STDIN isn't ready, or a 1 if it is.
-    return poll(&pollFileDescriptor, 1, 0) == 1;
-#endif
-}
-
-bool getLine(std::string& line)
-{
-    // If there is data on stdin we can call _getch() knowing that it won't block!
-    // This makes this routine non-blocking.
-    if (!stdinHasData())
-    {
-        return false;
-    }
-#if defined(_WIN32)
-    auto keyCharacter = static_cast<unsigned char>(getchar());
-    if (keyCharacter == '\r')
-    {
-        fmt::print("\n"); // Windows needs \r\n for newlines in the console, but the enter key is only \r.
-        return true;
-    }
-    if (keyCharacter == '\n')
-    {
-        return true;
-    }
-
-    if (keyCharacter == '\b')
-    {
-        fmt::print("\b \b"); // move cursor left, overwrite with space, move cursor left
-        if (line.size() > 0)
-        {
-            line.pop_back(); // remove last char in buffer if any
-        }
-        return false;
-    }
-
-    fmt::print("{:c}", keyCharacter); // echo character back to console, apparently using ReadConsoleInput & GetStdHandle prevents echo?
-    if (std::isprint(keyCharacter))
-    {
-        line += keyCharacter;
-    }
-
-    return false;
-#else
-    std::getline(std::cin, line);
-    return true;
-#endif
-}
+extern std::atomic<bool> gRunFlag;
 
 ConsoleService::ConsoleService()
 {
@@ -112,42 +42,31 @@ ConsoleService::ConsoleService()
         fmt::print("> tasks registered to the application task manager: {}\n", CTaskMgr::getInstance()->getTaskList().size());
     });
 
-    RegisterCommand("log_level", "Set the maximum log level to be displayed (available: 0: trace, 1: debug, 2: info, 3: warn)",
+    RegisterCommand("exit", "Terminate the program.",
     [](std::vector<std::string> inputs)
     {
-        if (inputs.size() >= 2)
-        {
-            std::vector<std::string> names = { "trace", "debug", "info", "warn" };
-            auto level = std::clamp<uint8>(stoi(inputs[1]), 0, 3);
-            spdlog::set_level(static_cast<spdlog::level::level_enum>(level));
-            fmt::print("> Log level set to: {} ({})\n", level, names[level]);
-        }
-        else
-        {
-            fmt::print("> Invalid inputs.\n");
-        }
+        fmt::print("> Goodbye!\n");
+        gRunFlag = false;
     });
 
     bool attached = isatty(0);
     if (attached)
     {
-        ShowInfo("Console input thread is ready...");
-        ShowInfo("Type 'help' for a list of available commands.");
-        m_consoleInputThread = nonstd::jthread([&]()
+        ShowStatus("Console input thread is ready...");
+        ShowStatus("Type 'help' for a list of available commands.");
+        m_consoleInputThread = std::thread([&]()
         {
-            std::string line;
+            auto lastInputTime = server_clock::now();
 
-            while (m_consoleThreadRun)
+            // TODO: condition_variable
+            while (gRunFlag)
             {
-                std::unique_lock<std::mutex> lock(m_consoleInputBottleneck);
-
-                // https://en.cppreference.com/w/cpp/thread/condition_variable/wait_for
-                if (!m_consoleStopCondition.wait_for(lock, 50ms, [&]{ return !m_consoleThreadRun; }))
+                if ((server_clock::now() - lastInputTime) > 1s)
                 {
-                    if (!getLine(line))
-                    {
-                        continue;
-                    }
+                    std::lock_guard lock(m_consoleInputBottleneck);
+
+                    std::string line;
+                    std::getline(std::cin, line);
 
                     std::istringstream stream(line);
                     std::string        input;
@@ -172,14 +91,13 @@ ConsoleService::ConsoleService()
                         }
                         else
                         {
-                            fmt::print(fmt::format("> Unknown command: {}\n", inputs[0]));
+                            fmt::print("> Unknown command.\n");
                         }
                     }
-
-                    line = std::string();
                 }
+                std::this_thread::sleep_for(250ms); // TODO: Do this better
             };
-            fmt::print("Console input thread exiting...\n");
+            ShowStatus("Console input thread exiting...");
         });
     }
     // clang-format on
@@ -187,20 +105,14 @@ ConsoleService::ConsoleService()
 
 ConsoleService::~ConsoleService()
 {
-    stop();
-    m_consoleStopCondition.notify_all();
+    m_consoleThreadRun = false;
+    m_consoleInputThread.join();
 }
 
 // NOTE: If you capture things in this function, make sure they're protected (locked or atomic)!
 // NOTE: If you're going to print, use fmt::print, rather than ShowInfo etc.
 void ConsoleService::RegisterCommand(std::string const& name, std::string const& description, std::function<void(std::vector<std::string>)> func)
 {
-    std::lock_guard<std::mutex> lock(m_consoleInputBottleneck);
-
+    std::lock_guard lock(m_consoleInputBottleneck);
     m_commands[name] = ConsoleCommand{ name, description, func };
-}
-
-void ConsoleService::stop()
-{
-    m_consoleThreadRun = false;
 }

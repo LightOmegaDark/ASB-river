@@ -38,7 +38,7 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 332 then -- Quest: Wish Upon a Star
+    if (csid == 332) then -- Quest: Wish Upon a Star
         player:setCharVar("WishUponAStar_Status", 3)
     elseif csid == 334 then -- Quest: Wish Upon a Star - Traded Fallen Star
         player:tradeComplete()

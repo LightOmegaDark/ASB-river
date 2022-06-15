@@ -524,27 +524,27 @@ local battlefields =
 -- Check requirements for registrant and allies
 -----------------------------------
 local function checkReqs(player, npc, bfid, registrant)
-    local mi      = xi.mission.id
-    local npcid   = npc:getID()
-    local mjob    = player:getMainJob()
-    local mlvl    = player:getMainLvl()
-    local nat     = player:getCurrentMission(player:getNation())
-    local sandy   = player:getCurrentMission(xi.mission.log_id.SANDORIA)
-    local basty   = player:getCurrentMission(xi.mission.log_id.BASTOK)
-    local windy   = player:getCurrentMission(xi.mission.log_id.WINDURST)
-    local roz     = player:getCurrentMission(xi.mission.log_id.ZILART)
-    local cop     = player:getCurrentMission(xi.mission.log_id.COP)
-    local toau    = player:getCurrentMission(xi.mission.log_id.TOAU)
-    local wotg    = player:getCurrentMission(xi.mission.log_id.WOTG)
-    local asa     = player:getCurrentMission(xi.mission.log_id.ASA)
+    local mi       = xi.mission.id
+    local npcid    = npc:getID()
+    local mjob     = player:getMainJob()
+    local mlvl     = player:getMainLvl()
+    local nat      = player:getCurrentMission(player:getNation())
+    local sandy    = player:getCurrentMission(xi.mission.log_id.SANDORIA)
+    local basty    = player:getCurrentMission(xi.mission.log_id.BASTOK)
+    local windy    = player:getCurrentMission(xi.mission.log_id.WINDURST)
+    local roz      = player:getCurrentMission(xi.mission.log_id.ZILART)
+    local cop      = player:getCurrentMission(xi.mission.log_id.COP)
+    local toau     = player:getCurrentMission(xi.mission.log_id.TOAU)
+    local wotg     = player:getCurrentMission(xi.mission.log_id.WOTG)
+    local asa      = player:getCurrentMission(xi.mission.log_id.ASA)
     local natStat  = player:getMissionStatus(player:getNation())
     local rozStat  = player:getMissionStatus(xi.mission.log_id.ZILART)
     local copStat  = player:getCharVar("PromathiaStatus")
     local toauStat = player:getMissionStatus(xi.mission.log_id.TOAU)
     local wotgStat = player:getMissionStatus(xi.mission.log_id.WOTG)
-    local stc = player:hasCompletedMission(xi.mission.log_id.SANDORIA, mi.sandoria.SAVE_THE_CHILDREN)
-    local dm1 = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.DIVINE_MIGHT)
-    local dm2 = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.DIVINE_MIGHT_REPEAT)
+    local stc      = player:hasCompletedMission(xi.mission.log_id.SANDORIA, mi.sandoria.SAVE_THE_CHILDREN)
+    local dm1      = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.DIVINE_MIGHT)
+    local dm2      = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.DIVINE_MIGHT_REPEAT)
 
     local function getEntranceOffset(offset)
         return zones[player:getZoneID()].npc.ENTRANCE_OFFSET + offset
@@ -877,7 +877,7 @@ local function checkReqs(player, npc, bfid, registrant)
     }
 
     -- Determine whether player meets battlefield requirements
-    local req = registrant and registerReqs[bfid] or enterReqs[bfid]
+    local req = (registrant == true) and registerReqs[bfid] or enterReqs[bfid]
 
     if not req or req() then
         return true
@@ -929,14 +929,6 @@ local function checkSkip(player, bfid)
             sandy == mi.sandoria.JOURNEY_TO_WINDURST2 or
             basty == mi.bastok.THE_EMISSARY_WINDURST2
         )
-
-    local sandoriaMission  = player:getCurrentMission(xi.mission.log_id.SANDORIA)
-    local bastokMission    = player:getCurrentMission(xi.mission.log_id.BASTOK)
-    local windurstMission  = player:getCurrentMission(xi.mission.log_id.WINDURST)
-    local promathiaMission = player:getCurrentMission(xi.mission.log_id.COP)
-
-    local nationStatus    = player:getMissionStatus(player:getNation())
-    local promathiaStatus = player:getCharVar("PromathiaStatus")
 
     -- Requirements to skip a battlefield
     local skipReqs =
@@ -1303,10 +1295,6 @@ end
 -----------------------------------
 
 xi.bcnm.onTrade = function(player, npc, trade, onUpdate)
-    if xi.battlefield.rejectLevelSyncedParty(player, npc) then -- player's party has level sync, abort.
-        return false
-    end
-
     -- Validate trade
     local itemId
 
@@ -1314,22 +1302,11 @@ xi.bcnm.onTrade = function(player, npc, trade, onUpdate)
         return false
 
     -- Chips for limbus
-    elseif
-        trade:getItemCount() == 3 and
-        trade:hasItemQty(1907, 1) and
-        trade:hasItemQty(1908, 1) and
-        trade:hasItemQty(1986, 1)
-    then
+    elseif trade:getItemCount() == 3 and trade:hasItemQty(1907, 1) and trade:hasItemQty(1908, 1) and trade:hasItemQty(1986, 1) then
         itemId = -1
 
     -- Chips for limbus
-    elseif
-        trade:getItemCount() == 4 and
-        trade:hasItemQty(1909, 1) and
-        trade:hasItemQty(1910, 1) and
-        trade:hasItemQty(1987, 1) and
-        trade:hasItemQty(1988, 1)
-    then
+    elseif trade:getItemCount() == 4 and trade:hasItemQty(1909, 1) and trade:hasItemQty(1910, 1) and trade:hasItemQty(1987, 1) and trade:hasItemQty(1988, 1) then
         itemId = -2
 
     -- Orbs / Testimonies
@@ -1346,7 +1323,7 @@ xi.bcnm.onTrade = function(player, npc, trade, onUpdate)
             return false
 
         -- Check for already used Orb or testimony.
-        elseif player:getWornUses(itemId) > 0 then
+        elseif player:hasWornItem(itemId) then
             player:messageBasic(xi.msg.basic.ITEM_UNABLE_TO_USE_2, 0, 0) -- Unable to use item.
             return false
         end
@@ -1387,11 +1364,6 @@ end
 -- onTrigger Action
 -----------------------------------
 xi.bcnm.onTrigger = function(player, npc)
-    -- Cannot enter if anyone in party is level/master sync'd
-    if xi.battlefield.rejectLevelSyncedParty(player, npc) then
-        return false
-    end
-
     -- Player has battlefield status effect. That means a battlefield is open OR the player is inside a battlefield.
     if player:hasStatusEffect(xi.effect.BATTLEFIELD) then
         -- Player is inside battlefield. Attempting to leave.
@@ -1470,6 +1442,24 @@ xi.bcnm.onEventUpdate = function(player, csid, option, extras)
         local clearTime = 1
         local name      = "Meme"
         local partySize = 1
+
+        switch (battlefieldId): caseof
+        {
+            [1290] = function() area = 2 end, -- NW_Apollyon
+            [1291] = function() area = 1 end, -- SW_Apollyon
+            [1292] = function() area = 4 end, -- NE_Apollyon
+            [1293] = function() area = 3 end, -- SE_Apollyon
+            [1294] = function() area = 6 end, -- CS_Apollyon
+            [1296] = function() area = 5 end, -- Central_Apollyon
+            [1298] = function() area = 3 end, -- Temenos_Western_Tower
+            [1299] = function() area = 1 end, -- Temenos_Northern_Tower
+            [1300] = function() area = 2 end, -- Temenos_Eastern_Tower
+            [1301] = function() area = 8 end, -- Central_Temenos_Basement
+            [1303] = function() area = 7 end, -- Central_Temenos_1st_Floor
+            [1304] = function() area = 6 end, -- Central_Temenos_2nd_Floor
+            [1305] = function() area = 5 end, -- Central_Temenos_3rd_Floor
+            [1306] = function() area = 4 end, -- Central_Temenos_4th_Floor
+        }
 
         local result = xi.battlefield.returnCode.REQS_NOT_MET
         result       = player:registerBattlefield(id, area)

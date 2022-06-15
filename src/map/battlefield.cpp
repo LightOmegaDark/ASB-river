@@ -630,7 +630,7 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
             }
             else
             {
-                auto checkEnemy = [PEntity, &found](auto entity)
+                auto check = [PEntity, &found](auto entity)
                 {
                     if (entity.PMob == PEntity)
                     {
@@ -873,6 +873,26 @@ bool CBattlefield::SpawnLoot(CBaseEntity* PEntity)
     }
     SetLocalVar("lootSpawned", 1);
     return InsertEntity(PEntity, true);
+}
+
+void CBattlefield::ClearEnmityForEntity(CBattleEntity* PEntity)
+{
+    if (!PEntity)
+    {
+        return;
+    }
+
+    auto func = [&](auto mob)
+    {
+        if (PEntity->PPet)
+        {
+            mob->PEnmityContainer->Clear(PEntity->PPet->id);
+        }
+        mob->PEnmityContainer->Clear(PEntity->id);
+    };
+
+    ForEachRequiredEnemy(func);
+    ForEachAdditionalEnemy(func);
 }
 
 bool CBattlefield::CheckInProgress()

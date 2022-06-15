@@ -32,7 +32,15 @@
 #include "itemutils.h"
 #include "serverutils.h"
 
-// TODO: During the closure of the guild, all viewing products of the goods are sent 0x86 with information about the closure of the guild
+// TODO: во время закрытия гильдии всем просматривающим список товаров отправляется пакет 0x86 с информацией о закрытии гильдии
+
+//#define количество обновляемых предметов при restock (в процентах от максимального количества)
+
+/************************************************************************
+ *                                                                      *
+ *  Список гильдий                                                      *
+ *                                                                      *
+ ************************************************************************/
 
 std::vector<CGuild*>         g_PGuildList;
 std::vector<CItemContainer*> g_PGuildShopList;
@@ -45,6 +53,12 @@ std::vector<CItemContainer*> g_PGuildShopList;
 
 namespace guildutils
 {
+    /************************************************************************
+     *                                                                      *
+     *  Инициализация гильдий                                               *
+     *                                                                      *
+     ************************************************************************/
+
     void Initialize()
     {
         const char* fmtQuery = "SELECT DISTINCT id, points_name FROM guilds ORDER BY id ASC;";
@@ -144,9 +158,14 @@ namespace guildutils
         }
         else
         {
-            // load the pattern in case it was set by another server (and this server did not set it)
-            pattern = serverutils::GetServerVar("[GUILD]pattern");
-            charutils::ClearCharVarFromAll("[GUILD]daily_points", true);
+            update = true;
+        }
+        if (update)
+        {
+            // write the new pattern and update time to prevent other servers from updating the pattern
+            sql->Query("REPLACE INTO server_variables (name,value) VALUES('[GUILD]pattern_update', %u), ('[GUILD]pattern', %u);",
+                       CVanaTime::getInstance()->getJstYearDay(), pattern);
+            sql->Query("DELETE FROM char_vars WHERE varname = '[GUILD]daily_points';");
         }
 
         for (auto PGuild : g_PGuildList)
@@ -156,6 +175,12 @@ namespace guildutils
 
         ShowDebug("Guild point pattern update has finished. New pattern: %d", pattern);
     }
+
+    /************************************************************************
+     *                                                                      *
+     *  Получаем указатель на магазин гильдии с указанным ID                    *
+     *                                                                      *
+     ************************************************************************/
 
     CItemContainer* GetGuildShop(uint16 GuildShopID)
     {

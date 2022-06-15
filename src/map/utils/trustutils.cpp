@@ -99,20 +99,20 @@ struct Trust_t
     int16 light_sdt;
     int16 dark_sdt;
 
-    int8 fire_res_rank;
-    int8 ice_res_rank;
-    int8 wind_res_rank;
-    int8 earth_res_rank;
-    int8 thunder_res_rank;
-    int8 water_res_rank;
-    int8 light_res_rank;
-    int8 dark_res_rank;
+    int16 fire_res;
+    int16 ice_res;
+    int16 wind_res;
+    int16 earth_res;
+    int16 thunder_res;
+    int16 water_res;
+    int16 light_res;
+    int16 dark_res;
 
     Trust_t()
     : EcoSystem(ECOSYSTEM::ECO_ERROR)
     {
-        trustID = 0;
-        pool    = 0;
+        trustID     = 0;
+        pool        = 0;
 
         name_prefix = 0;
         radius      = 0;
@@ -120,7 +120,7 @@ struct Trust_t
 
         behaviour = 0;
 
-        mJob    = 0;
+        mJob     = 0;
         sJob    = 0;
         HPscale = 0.f;
         MPscale = 0.f;
@@ -160,14 +160,14 @@ struct Trust_t
         light_sdt   = 0;
         dark_sdt    = 0;
 
-        fire_res_rank    = 0;
-        ice_res_rank     = 0;
-        wind_res_rank    = 0;
-        earth_res_rank   = 0;
-        thunder_res_rank = 0;
-        water_res_rank   = 0;
-        light_res_rank   = 0;
-        dark_res_rank    = 0;
+        fire_res    = 0;
+        ice_res     = 0;
+        wind_res    = 0;
+        earth_res   = 0;
+        thunder_res = 0;
+        water_res   = 0;
+        light_res   = 0;
+        dark_res    = 0;
     }
 };
 
@@ -272,6 +272,7 @@ namespace trustutils
                 memcpy(&sqlModelID, sql->GetData(3), 20);
                 trust->look = look_t(sqlModelID);
 
+
                 trust->m_Family       = (uint16)sql->GetIntData(4);
                 trust->mJob           = (uint8)sql->GetIntData(5);
                 trust->sJob           = (uint8)sql->GetIntData(6);
@@ -286,31 +287,19 @@ namespace trustutils
                 trust->behaviour      = (uint16)sql->GetUIntData(13);
                 trust->m_MobSkillList = (uint16)sql->GetUIntData(14);
 
-                std::ignore = (uint16)sql->GetUIntData(15); // SpellID
+                trust->speed = (uint8)sql->GetIntData(19);
 
-                trust->radius    = sql->GetUIntData(16);
-                trust->EcoSystem = (ECOSYSTEM)sql->GetIntData(17);
-                trust->HPscale   = sql->GetFloatData(18);
-                trust->MPscale   = sql->GetFloatData(19);
-
-                // retail seems to have a static *155* for all Trusts in client memory
-                // TODO: trust->speed = 155;
-                trust->speed = (uint8)sql->GetIntData(20);
-
-                // similarly speedSub is always 50
-                trust->subSpeed = 50;
-
-                trust->strRank = (uint8)sql->GetIntData(21);
-                trust->dexRank = (uint8)sql->GetIntData(22);
-                trust->vitRank = (uint8)sql->GetIntData(23);
-                trust->agiRank = (uint8)sql->GetIntData(24);
-                trust->intRank = (uint8)sql->GetIntData(25);
-                trust->mndRank = (uint8)sql->GetIntData(26);
-                trust->chrRank = (uint8)sql->GetIntData(27);
-                trust->defRank = (uint8)sql->GetIntData(28);
-                trust->attRank = (uint8)sql->GetIntData(29);
-                trust->accRank = (uint8)sql->GetIntData(30);
-                trust->evaRank = (uint8)sql->GetIntData(31);
+                trust->strRank = (uint8)sql->GetIntData(20);
+                trust->dexRank = (uint8)sql->GetIntData(21);
+                trust->vitRank = (uint8)sql->GetIntData(22);
+                trust->agiRank = (uint8)sql->GetIntData(23);
+                trust->intRank = (uint8)sql->GetIntData(24);
+                trust->mndRank = (uint8)sql->GetIntData(25);
+                trust->chrRank = (uint8)sql->GetIntData(26);
+                trust->defRank = (uint8)sql->GetIntData(27);
+                trust->attRank = (uint8)sql->GetIntData(28);
+                trust->accRank = (uint8)sql->GetIntData(29);
+                trust->evaRank = (uint8)sql->GetIntData(30);
 
                 // resistances
                 trust->slash_sdt  = (uint16)(sql->GetFloatData(32) * 1000);

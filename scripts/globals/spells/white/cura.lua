@@ -81,7 +81,6 @@ spellObject.onSpellCast = function(caster, target, spell)
         if caster:getID() == target:getID() then -- Let's use a local var to hold the power of Misery so the boost is applied to all targets,
             caster:setLocalVar("Misery_Power", caster:getMod(xi.mod.AFFLATUS_MISERY))
         end
-
         local misery = caster:getLocalVar("Misery_Power")
         --THIS IS LARELY SEMI-EDUCATED GUESSWORK. THERE IS NOT A
         --LOT OF CONCRETE INFO OUT THERE ON CURA THAT I COULD FIND
@@ -107,7 +106,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     final = final + (final * (target:getMod(xi.mod.CURE_POTENCY_RCVD) / 100))
 
     --Applying server mods
-    final = final * xi.settings.main.CURE_POWER
+    final = final * xi.settings.CURE_POWER
 
     target:addHP(final)
 

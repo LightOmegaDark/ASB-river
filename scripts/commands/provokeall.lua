@@ -16,3 +16,4 @@ function onTrigger(player)
         mob:setTP(3000)
     end
 end
+

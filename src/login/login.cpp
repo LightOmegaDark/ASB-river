@@ -68,6 +68,14 @@ struct epoll_event login_lobbyviewEpollEvent = { EPOLLIN };
 #include "login_conf.h"
 #include "message_server.h"
 
+const char* LOGIN_CONF_FILENAME   = nullptr;
+const char* VERSION_INFO_FILENAME = nullptr;
+const char* MAINT_CONF_FILENAME   = nullptr;
+
+login_config_t login_config = {}; // main settings
+version_info_t version_info = {};
+maint_config_t maint_config = {};
+
 std::thread messageThread;
 
 std::unique_ptr<SqlConnection> sql;
@@ -368,6 +376,328 @@ int do_sockets(fd_set* rfd, duration next)
 
     sql->TryPing();
     return 0;
+}
+
+void login_config_read(const char* key, const char* value)
+{
+    char timestamp_format[20] = "[%d/%b] [%H:%M:%S]"; // For displaying Timestamps, default value
+
+    if (strcmpi(key, "timestamp_format") == 0)
+    {
+        strncpy(timestamp_format, value, 19);
+    }
+    else if (strcmp(key, "login_data_ip") == 0)
+    {
+        login_config.login_data_ip = std::string(value);
+    }
+    else if (strcmp(key, "login_data_port") == 0)
+    {
+        login_config.login_data_port = atoi(value);
+    }
+    else if (strcmp(key, "login_view_ip") == 0)
+    {
+        login_config.login_view_ip = std::string(value);
+    }
+    else if (strcmp(key, "login_view_port") == 0)
+    {
+        login_config.login_view_port = atoi(value);
+    }
+    else if (strcmp(key, "login_auth_ip") == 0)
+    {
+        login_config.login_auth_ip = std::string(value);
+    }
+    else if (strcmp(key, "login_auth_port") == 0)
+    {
+        login_config.login_auth_port = atoi(value);
+    }
+    else if (strcmp(key, "mysql_host") == 0)
+    {
+        login_config.mysql_host = std::string(value);
+    }
+    else if (strcmp(key, "mysql_login") == 0)
+    {
+        login_config.mysql_login = std::string(value);
+    }
+    else if (strcmp(key, "mysql_password") == 0)
+    {
+        login_config.mysql_password = std::string(value);
+    }
+    else if (strcmp(key, "mysql_port") == 0)
+    {
+        login_config.mysql_port = atoi(value);
+    }
+    else if (strcmp(key, "mysql_database") == 0)
+    {
+        login_config.mysql_database = std::string(value);
+    }
+    else if (strcmp(key, "search_server_port") == 0)
+    {
+        login_config.search_server_port = atoi(value);
+    }
+    else if (strcmp(key, "servername") == 0)
+    {
+        login_config.servername = std::string(value);
+    }
+    else if (strcmpi(key, "import") == 0)
+    {
+        config_read(value, "login", login_config_read);
+    }
+    else if (strcmp(key, "msg_server_port") == 0)
+    {
+        login_config.msg_server_port = atoi(value);
+    }
+    else if (strcmp(key, "msg_server_ip") == 0)
+    {
+        login_config.msg_server_ip = std::string(value);
+    }
+    else if (strcmp(key, "login_limit") == 0)
+    {
+        login_config.login_limit = atoi(value);
+    }
+    else if (strcmp(key, "log_user_ip") == 0)
+    {
+        login_config.log_user_ip = config_switch(value);
+    }
+    else if (strcmp(key, "account_creation") == 0)
+    {
+        login_config.account_creation = config_switch(value);
+    }
+    else if (strcmp(key, "character_deletion") == 0)
+    {
+        login_config.character_deletion = config_switch(value);
+    }
+    else
+    {
+        ShowWarning("Unknown setting '%s' with value '%s' in login file. Has this setting been removed?", key, value);
+    }
+}
+
+void version_info_read(const char* key, const char* value)
+{
+    if (strcmp(key, "CLIENT_VER") == 0)
+    {
+        version_info.client_ver = std::string(value);
+    }
+    else if (strcmp(key, "VER_LOCK") == 0)
+    {
+        version_info.ver_lock = std::atoi(value);
+
+        if (version_info.ver_lock > 2)
+        {
+            ShowError("ver_lock not within bounds (0..2) was %i, defaulting to 1\r", version_info.ver_lock);
+            version_info.ver_lock = 1;
+        }
+    }
+    else
+    {
+        ShowWarning("Unknown setting '%s' with value '%s' in version info file. Has this setting been removed?", key, value);
+    }
+}
+
+void login_config_default()
+{
+    login_config.login_data_ip   = "127.0.0.1";
+    login_config.login_data_port = 54230;
+    login_config.login_view_ip   = "127.0.0.1";
+    login_config.login_view_port = 54001;
+    login_config.login_auth_ip   = "127.0.0.1";
+    login_config.login_auth_port = 54231;
+
+    login_config.servername = "Nameless";
+
+    login_config.mysql_host     = "";
+    login_config.mysql_login    = "";
+    login_config.mysql_password = "";
+    login_config.mysql_database = "";
+    login_config.mysql_port     = 3306;
+
+    login_config.search_server_port = 54002;
+    login_config.msg_server_port    = 54003;
+    login_config.msg_server_ip      = "127.0.0.1";
+
+    login_config.login_limit        = 0;
+    login_config.log_user_ip        = "false";
+    login_config.account_creation   = "true";
+    login_config.character_deletion = "true";
+}
+
+void login_config_read_from_env()
+{
+    login_config.mysql_login     = std::getenv("XI_DB_USER") ? std::getenv("XI_DB_USER") : login_config.mysql_login;
+    login_config.mysql_password  = std::getenv("XI_DB_USER_PASSWD") ? std::getenv("XI_DB_USER_PASSWD") : login_config.mysql_password;
+    login_config.mysql_host      = std::getenv("XI_DB_HOST") ? std::getenv("XI_DB_HOST") : login_config.mysql_host;
+    login_config.mysql_port      = std::getenv("XI_DB_PORT") ? std::stoi(std::getenv("XI_DB_PORT")) : login_config.mysql_port;
+    login_config.mysql_database  = std::getenv("XI_DB_NAME") ? std::getenv("XI_DB_NAME") : login_config.mysql_database;
+    login_config.msg_server_ip   = std::getenv("XI_MSG_IP") ? std::getenv("XI_MSG_IP") : login_config.msg_server_ip;
+    login_config.msg_server_port = std::getenv("XI_MSG_PORT") ? std::stoi(std::getenv("XI_MSG_PORT")) : login_config.msg_server_port;
+}
+
+void version_info_default()
+{
+    version_info.client_ver = "99999999_9"; // xxYYMMDD_m = xx:MajorRelease YY:year MM:month DD:day _m:MinorRelease
+    version_info.ver_lock   = 2;
+}
+
+void maint_config_read(const char* key, const char* value)
+{
+    if (strcmp(key, "MAINT_MODE") == 0)
+    {
+        maint_config.maint_mode = std::atoi(value);
+
+        if (maint_config.maint_mode > 1)
+        {
+            ShowError("maint_mode not within bounds (0..1) was %i, defaulting to 0\r", maint_config.maint_mode);
+            maint_config.maint_mode = 0;
+        }
+    }
+    else
+    {
+        ShowWarning("Unknown setting '%s' with value '%s' in maint info file. Has this setting been removed?", key, value);
+    }
+}
+
+void maint_config_default()
+{
+    maint_config.maint_mode = 0;
+}
+
+std::string maint_config_write(const char* key)
+{
+    if (strcmp(key, "MAINT_MODE") == 0)
+    {
+        return std::to_string(maint_config.maint_mode);
+    }
+
+    ShowWarning("Did not find value for setting '%s'", key);
+
+    return std::string();
+}
+
+int32 config_read(const char* fileName, const char* config, const std::function<void(const char*, const char*)>& method)
+{
+    char  line[1024];
+    char  key[1024];
+    char  value[1024];
+    FILE* fp;
+
+    fp = fopen(fileName, "r");
+    if (fp == nullptr)
+    {
+        ShowError("%s configuration file not found at: %s", config, fileName);
+        return 1;
+    }
+
+    while (fgets(line, sizeof(line), fp))
+    {
+        char* ptr;
+
+        if (line[0] == '#')
+        {
+            continue;
+        }
+        if (sscanf(line, "%[^:]: %[^\t\r\n]", key, value) < 2)
+        {
+            continue;
+        }
+
+        // Strip trailing spaces
+        ptr = value + strlen(value);
+        while (--ptr >= value && *ptr == ' ')
+        {
+            ;
+        }
+        ptr++;
+        *ptr = '\0';
+
+        method(key, value);
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+int32 config_write(const char* fileName, const char* config, const std::function<std::string(const char*)>& method)
+{
+    char                     line[1024];
+    char                     key[1024];
+    char                     value[1024];
+    std::vector<std::string> lines;
+    FILE*                    fp;
+
+    fp = fopen(fileName, "r");
+    if (fp == nullptr)
+    {
+        ShowError("%s configuration file not found at: %s", config, fileName);
+        return 1;
+    }
+
+    while (fgets(line, sizeof(line), fp))
+    {
+        char* ptr;
+
+        if (line[0] == '#' || sscanf(line, "%[^:]: %[^\t\r\n]", key, value) < 2)
+        {
+            lines.emplace_back(line);
+            continue;
+        }
+
+        // Strip trailing spaces
+        ptr = value + strlen(value);
+        while (--ptr >= value && *ptr == ' ')
+        {
+            ;
+        }
+        ptr++;
+        *ptr = '\0';
+
+        auto replace  = method(key);
+        auto new_line = std::string(key);
+        new_line.append(": ");
+        new_line.append(replace);
+        lines.push_back(new_line);
+    }
+    fclose(fp);
+
+    fp = fopen(fileName, "w");
+    if (fp == nullptr)
+    {
+        ShowError("%s configuration file not found at: %s - unable to write changes", config, fileName);
+        return 1;
+    }
+
+    for (auto& item : lines)
+    {
+        fputs(item.c_str(), fp);
+    }
+    fclose(fp);
+    return 0;
+}
+
+void login_versionscreen(int32 flag)
+{
+    ShowInfo("Repository:\thttps://github.com/LandSandBoat/server");
+    ShowInfo("Website:\thttps://landsandboat.github.io/server/");
+    if (flag)
+    {
+        exit(EXIT_FAILURE);
+    }
+}
+
+void login_helpscreen(int32 flag)
+{
+    ShowMessage("Usage: login-server [options]");
+    ShowMessage("Options:");
+    ShowMessage("  Commands\t\t\tDescription");
+    ShowMessage("-----------------------------------------------------------------------------");
+    ShowMessage("  --help, --h, --?, /?     Displays this help screen");
+    ShowMessage("  --login-config <file>    Load login-server configuration from <file>");
+    ShowMessage("  --lan-config   <file>    Load lan configuration from <file>");
+    ShowMessage("  --version, --v, -v, /v   Displays the server's version");
+    ShowMessage("");
+    if (flag)
+    {
+        exit(EXIT_FAILURE);
+    }
 }
 
 void log_init(int argc, char** argv)

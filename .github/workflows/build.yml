@@ -39,7 +39,7 @@ jobs:
         npm install -g diff-so-fancy
     - id: changed-files
       name: Get Changed Files
-      uses: Ana06/get-changed-files@v2.2.0
+      uses: Ana06/get-changed-files@v2.1.0
       with:
         filter: |
           src/**

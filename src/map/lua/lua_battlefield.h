@@ -77,7 +77,6 @@ public:
     bool cleanup(bool cleanup);
     void win();
     void lose();
-    void addGroups(sol::table groups, bool hasMultipleArenas);
 
     static void Register();
 };

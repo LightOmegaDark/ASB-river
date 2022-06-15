@@ -59,10 +59,11 @@ def build_chat_packet(msg_type, gm_flag, zone, sender, msg):
 def send_server_message(msg):
     print(f"Sending '{msg}'")
     buffer = build_chat_packet(MSG_CHAT_SERVMES, 1, 0, "", msg)
-    sock.send_multipart(
-        [struct.pack("!B", MSG_CHAT_SERVMES), b"\0", buffer], zmq.NOBLOCK
-    )
-
+    sock.send_multipart([
+        struct.pack("!B", MSG_CHAT_SERVMES),
+        b"\0",
+        buffer
+    ], zmq.NOBLOCK)
 
 def main():
     if len(sys.argv) < 2:

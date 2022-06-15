@@ -101,9 +101,6 @@ private:
 
     time_point computeTime{ server_clock::now() };
     uint16     lastCharComputeTargId;
-
-    time_point charPersistTime{ server_clock::now() };
-    uint16     lastCharPersistTargId;
 };
 
 #endif

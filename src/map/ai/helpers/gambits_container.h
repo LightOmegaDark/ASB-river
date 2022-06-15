@@ -82,8 +82,6 @@ namespace gambits
         HIGHEST_WALTZ       = 8,
         ENTRUSTED           = 9,
         BEST_INDI           = 10,
-        STORM_DAY           = 11,
-        HELIX_DAY           = 12,
     };
 
     enum class G_TP_TRIGGER : uint16
@@ -171,7 +169,6 @@ namespace gambits
         std::vector<Action_t>    actions;
         uint16                   retry_delay;
         time_point               last_used;
-        std::string              identifier;
 
         Gambit_t()
         {

@@ -448,8 +448,6 @@
         "GetCachedInstanceScript",
         "ForceCrash",
         "BuildString",
-        "SendLuaFuncStringToZone",
-        "GetFirstID",
     ],
     "Lua.diagnostics.disable": [
         "lowercase-global"

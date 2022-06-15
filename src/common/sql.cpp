@@ -34,12 +34,14 @@
 #include <string>
 #include <thread>
 
-SqlConnection::SqlConnection()
-: SqlConnection(settings::get<std::string>("network.SQL_LOGIN").c_str(),
-                settings::get<std::string>("network.SQL_PASSWORD").c_str(),
-                settings::get<std::string>("network.SQL_HOST").c_str(),
-                settings::get<uint16>("network.SQL_PORT"),
-                settings::get<std::string>("network.SQL_DATABASE").c_str())
+#include <concurrentqueue.h>
+
+moodycamel::ConcurrentQueue<std::function<void(SqlConnection*)>> asyncQueue;
+
+std::atomic<bool>            asyncRunning;
+std::unique_ptr<std::thread> asyncThread;
+
+void AsyncThreadBody(const char* user, const char* passwd, const char* host, uint16 port, const char* db)
 {
     // Just forwarding the default credentials to the next contrictor
 }

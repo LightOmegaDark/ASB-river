@@ -107,7 +107,10 @@ namespace message
         auto& extra  = message.data;
         auto& packet = message.packet;
 
-        TracyZoneCString(MsgServTypeToString(type));
+        TracyZoneCString(msgTypeToStr(type));
+
+        ShowDebug("Message: Received message %s (%d) from message server",
+                  msgTypeToStr(type), static_cast<uint8>(type));
 
         ShowDebug("Message: Received message %d from message server", static_cast<uint8>(type));
         switch (type)
@@ -211,9 +214,8 @@ namespace message
             }
             case MSG_CHAT_YELL:
             {
-                // clang-format off
                 zoneutils::ForEachZone([&packet, &extra](CZone* PZone)
-                {
+                                       {
                     if (PZone->CanUseMisc(MISC_YELL))
                     {
                         PZone->ForEachChar([&packet, &extra](CCharEntity* PChar)
@@ -227,24 +229,17 @@ namespace message
                                 PChar->pushPacket(newPacket);
                             }
                         });
-                    }
-                });
-                // clang-format on
+                    } });
                 break;
             }
             case MSG_CHAT_SERVMES:
             {
-                // clang-format off
                 zoneutils::ForEachZone([&packet](CZone* PZone)
-                {
-                    PZone->ForEachChar([&packet](CCharEntity* PChar)
-                    {
+                                       { PZone->ForEachChar([&packet](CCharEntity* PChar)
+                                                            {
                         CBasicPacket* newPacket = new CBasicPacket();
                         memcpy(*newPacket, packet.data(), std::min<size_t>(packet.size(), PACKET_SIZE));
-                        PChar->pushPacket(newPacket);
-                    });
-                });
-                // clang-format on
+                        PChar->pushPacket(newPacket); }); });
                 break;
             }
             case MSG_PT_INVITE:
@@ -595,7 +590,7 @@ namespace message
             case MSG_LUA_FUNCTION:
             {
                 auto str    = std::string((const char*)extra.data() + 4);
-                auto result = lua.safe_script(str);
+                auto result = luautils::lua.safe_script(str);
                 if (!result.valid())
                 {
                     sol::error err = result;

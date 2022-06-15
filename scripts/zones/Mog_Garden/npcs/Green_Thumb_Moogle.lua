@@ -21,7 +21,7 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 1016 and option == 0xFFF00FF then -- Show the Mog House menu
+    if (csid == 1016 and option == 0xFFF00FF) then -- Show the Mog House menu
         -- Print the expire time for mog locker if exists
         local lockerLease = xi.moghouse.getMogLockerExpiryTimestamp(player)
         if lockerLease ~= nil then

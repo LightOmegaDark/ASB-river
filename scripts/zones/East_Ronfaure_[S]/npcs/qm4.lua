@@ -16,6 +16,10 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
+    if (csid == 2) then
+        player:addKeyItem(xi.ki.PIECE_OF_SHATTERED_LUMBER)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.PIECE_OF_SHATTERED_LUMBER)
+    end
 end
 
 return entity

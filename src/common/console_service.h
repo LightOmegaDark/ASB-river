@@ -38,6 +38,13 @@
 #include "tracy.h"
 #include "utils.h"
 
+#ifdef WIN32
+#include <io.h>
+#define isatty _isatty
+#else
+#include <unistd.h>
+#endif
+
 class ConsoleService
 {
 private:
@@ -57,9 +64,6 @@ public:
     // NOTE: If you capture things in this function, make sure they're protected (locked or atomic)!
     // NOTE: If you're going to print, use fmt::print, rather than ShowInfo etc.
     void RegisterCommand(std::string const& name, std::string const& description, std::function<void(std::vector<std::string>)> func);
-
-    // Call this to stop processing commands
-    void stop();
 
 private:
     std::mutex              m_consoleInputBottleneck;

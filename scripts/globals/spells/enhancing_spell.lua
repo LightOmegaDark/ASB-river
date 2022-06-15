@@ -42,23 +42,23 @@ local pTable =
     [xi.magic.spell.BARTHUNDRA   ] = { 2, xi.effect.BARTHUNDER,     1,    0,  480, true,  true,  0 },
     [xi.magic.spell.BARWATERA    ] = { 2, xi.effect.BARWATER,       1,    0,  480, true,  true,  0 },
 
-    -- Bar-Effect
-    [xi.magic.spell.BARAMNESIA   ] = { 1, xi.effect.BARAMNESIA,     1,   20,  480, true,  true,  0 },
-    [xi.magic.spell.BARBLIND     ] = { 1, xi.effect.BARBLIND,       1,   20,  480, true,  true,  0 },
-    [xi.magic.spell.BARPARALYZE  ] = { 1, xi.effect.BARPARALYZE,    1,   20,  480, true,  true,  0 },
-    [xi.magic.spell.BARPETRIFY   ] = { 1, xi.effect.BARPETRIFY,     1,   20,  480, true,  true,  0 },
-    [xi.magic.spell.BARPOISON    ] = { 1, xi.effect.BARPOISON,      1,   20,  480, true,  true,  0 },
-    [xi.magic.spell.BARSILENCE   ] = { 1, xi.effect.BARSILENCE,     1,   20,  480, true,  true,  0 },
-    [xi.magic.spell.BARSLEEP     ] = { 1, xi.effect.BARSLEEP,       1,   20,  480, true,  true,  0 },
-    [xi.magic.spell.BARVIRUS     ] = { 1, xi.effect.BARVIRUS,       1,   20,  480, true,  true,  0 },
-    [xi.magic.spell.BARAMNESRA   ] = { 2, xi.effect.BARAMNESIA,     1,   20,  480, true,  true,  0 },
-    [xi.magic.spell.BARBLINDRA   ] = { 2, xi.effect.BARBLIND,       1,   20,  480, true,  true,  0 },
-    [xi.magic.spell.BARPARALYZRA ] = { 2, xi.effect.BARPARALYZE,    1,   20,  480, true,  true,  0 },
-    [xi.magic.spell.BARPETRA     ] = { 2, xi.effect.BARPETRIFY,     1,   20,  480, true,  true,  0 },
-    [xi.magic.spell.BARPOISONRA  ] = { 2, xi.effect.BARPOISON,      1,   20,  480, true,  true,  0 },
-    [xi.magic.spell.BARSILENCERA ] = { 2, xi.effect.BARSILENCE,     1,   20,  480, true,  true,  0 },
-    [xi.magic.spell.BARSLEEPRA   ] = { 2, xi.effect.BARSLEEP,       1,   20,  480, true,  true,  0 },
-    [xi.magic.spell.BARVIRA      ] = { 2, xi.effect.BARVIRUS,       1,   20,  480, true,  true,  0 },
+    -- Bar-Element
+    [xi.magic.spell.BARAMNESIA   ] = { 1, xi.effect.BARAMNESIA,     1,    1,  480, true,  true,  0 },
+    [xi.magic.spell.BARBLIND     ] = { 1, xi.effect.BARBLIND,       1,    1,  480, true,  true,  0 },
+    [xi.magic.spell.BARPARALYZE  ] = { 1, xi.effect.BARPARALYZE,    1,    1,  480, true,  true,  0 },
+    [xi.magic.spell.BARPETRIFY   ] = { 1, xi.effect.BARPETRIFY,     1,    1,  480, true,  true,  0 },
+    [xi.magic.spell.BARPOISON    ] = { 1, xi.effect.BARPOISON,      1,    1,  480, true,  true,  0 },
+    [xi.magic.spell.BARSILENCE   ] = { 1, xi.effect.BARSILENCE,     1,    1,  480, true,  true,  0 },
+    [xi.magic.spell.BARSLEEP     ] = { 1, xi.effect.BARSLEEP,       1,    1,  480, true,  true,  0 },
+    [xi.magic.spell.BARVIRUS     ] = { 1, xi.effect.BARVIRUS,       1,    1,  480, true,  true,  0 },
+    [xi.magic.spell.BARAMNESRA   ] = { 2, xi.effect.BARAMNESIA,     1,    1,  480, true,  true,  0 },
+    [xi.magic.spell.BARBLINDRA   ] = { 2, xi.effect.BARBLIND,       1,    1,  480, true,  true,  0 },
+    [xi.magic.spell.BARPARALYZRA ] = { 2, xi.effect.BARPARALYZE,    1,    1,  480, true,  true,  0 },
+    [xi.magic.spell.BARPETRA     ] = { 2, xi.effect.BARPETRIFY,     1,    1,  480, true,  true,  0 },
+    [xi.magic.spell.BARPOISONRA  ] = { 2, xi.effect.BARPOISON,      1,    1,  480, true,  true,  0 },
+    [xi.magic.spell.BARSILENCERA ] = { 2, xi.effect.BARSILENCE,     1,    1,  480, true,  true,  0 },
+    [xi.magic.spell.BARSLEEPRA   ] = { 2, xi.effect.BARSLEEP,       1,    1,  480, true,  true,  0 },
+    [xi.magic.spell.BARVIRA      ] = { 2, xi.effect.BARVIRUS,       1,    1,  480, true,  true,  0 },
 
     -- Blink
     [xi.magic.spell.BLINK        ] = { 1, xi.effect.BLINK,          1,    2,  300, true,  false, 0 },
@@ -174,9 +174,10 @@ local pTable =
     [xi.magic.spell.WINDSTORM    ] = { 1, xi.effect.WINDSTORM,     43,    2,  180, true,  true, 0 },
 
     -- Temper
-    [xi.magic.spell.TEMPER       ] = { 1, xi.effect.MULTI_STRIKES, 95,    5,  180, true,  false, 0 },
-    -- [xi.magic.spell.TEMPER_II    ] = { 2, 0                      , 99,    5,  180, true,  false, 0 },
+    [xi.magic.spell.TEMPER       ] = { 1, xi.effect.MULTI_STRIKES, 95,    5,  180, true,  false, 0},
+    -- [xi.magic.spell.TEMPER_II    ] = { 2, 0                      , 99,    5,  180, true,  false, 0},
 }
+
 
 -- Enhancing Spell Base Potency function.
 xi.spells.enhancing.calculateEnhancingBasePower = function(caster, target, spell, spellId, spellEffect)
@@ -203,12 +204,12 @@ xi.spells.enhancing.calculateEnhancingBasePower = function(caster, target, spell
         end
 
         basePower = utils.clamp(basePower, 40, 150) -- Max is 150 and min is 40 at skill 0.
+    -- Bar-Status
+    elseif spellEffect == xi.effect.BARAMNESIA or (spellEffect >= xi.effect.BARSLEEP and spellEffect <= xi.effect.BARVIRUS) then
+        basePower = basePower + skillLevel / 50 -- This is WRONG. SO SO WRONG.
 
     -- Boost-Stat / Gain-Stat
-    elseif
-        spellEffect >= xi.effect.STR_BOOST and
-        spellEffect <= xi.effect.CHR_BOOST
-    then
+    elseif spellEffect >= xi.effect.STR_BOOST and spellEffect <= xi.effect.CHR_BOOST then
         basePower = basePower + utils.clamp(math.floor((skillLevel - 300) / 10), 0, 20)
 
     -- Embrava
@@ -248,10 +249,7 @@ xi.spells.enhancing.calculateEnhancingBasePower = function(caster, target, spell
         basePower = utils.clamp(math.floor(math.floor((caster:getStat(xi.mod.INT) + 50) / 12) * (1 + caster:getMod(xi.mod.MATT) / 100)), 1, 25)
 
     -- Ice Spikes, Shock Spikes (Info from from BG-Wiki)
-    elseif
-        spellEffect == xi.effect.ICE_SPIKES or
-        spellEffect == xi.effect.SHOCK_SPIKES
-    then
+    elseif spellEffect == xi.effect.ICE_SPIKES or spellEffect == xi.effect.SHOCK_SPIKES then
         basePower = utils.clamp(math.floor(math.floor((caster:getStat(xi.mod.INT) + 50) / 20) * (1 + caster:getMod(xi.mod.MATT) / 100)), 1, 15)
 
     -- Temper
@@ -272,11 +270,7 @@ xi.spells.enhancing.calculateEnhancingFinalPower = function(caster, target, spel
     -- Enboden effect.
     --------------------
     --  Applied before other bonuses, pet buffs seem to not work.
-    if
-        not caster:isPet() and
-        target:hasStatusEffect(xi.effect.EMBOLDEN) and
-        spellGroup == xi.magic.spellGroup.WHITE
-    then
+    if not caster:isPet() and target:hasStatusEffect(xi.effect.EMBOLDEN) and spellGroup == xi.magic.spellGroup.WHITE then
 
         local emboldenPower = 1.5 + target:getJobPointLevel(xi.jp.EMBOLDEN_EFFECT) / 100 -- 1 point in job point category = 1%
 
@@ -294,11 +288,8 @@ xi.spells.enhancing.calculateEnhancingFinalPower = function(caster, target, spel
         finalPower = finalPower + caster:getMerit(xi.merit.BAR_SPELL_EFFECT) + caster:getMod(xi.mod.BARSPELL_AMOUNT) + caster:getJobPointLevel(xi.jp.BAR_SPELL_EFFECT) * 2
 
     -- Bar-Status
-    elseif
-        spellEffect == xi.effect.BARAMNESIA or
-        (spellEffect >= xi.effect.BARSLEEP and spellEffect <= xi.effect.BARVIRUS)
-    then
-        finalPower = finalPower + caster:getMerit(xi.merit.BAR_SPELL_EFFECT)
+    elseif spellEffect == xi.effect.BARAMNESIA or (spellEffect >= xi.effect.BARSLEEP and spellEffect <= xi.effect.BARVIRUS) then
+        finalPower = finalPower + caster:getMerit(xi.merit.BAR_SPELL_EFFECT) + caster:getMod(xi.mod.BARSPELL_MDEF_BONUS)
 
     -- Protect/Protectra
     elseif spellEffect == xi.effect.PROTECT then
@@ -324,10 +315,7 @@ xi.spells.enhancing.calculateEnhancingFinalPower = function(caster, target, spel
         end
 
     -- -storm
-    elseif
-        spellEffect >= xi.effect.FIRESTORM and
-        spellEffect <= xi.effect.VOIDSTORM
-    then
+    elseif spellEffect >= xi.effect.FIRESTORM and spellEffect <= xi.effect.VOIDSTORM then
         finalPower = finalPower + caster:getMerit(xi.merit.STORMSURGE) + caster:getMod(xi.mod.STORMSURGE_EFFECT)
     end
 
@@ -342,22 +330,14 @@ xi.spells.enhancing.calculateEnhancingDuration = function(caster, target, spell,
     local targetLevel  = target:getMainLvl()
 
     -- Deodorize, Invisible and Sneak have a random factor to base duration.
-    if
-        spellEffect == xi.effect.DEODORIZE or
-        spellEffect == xi.effect.INVISIBLE or
-        spellEffect == xi.effect.SNEAK
-    then
+    if spellEffect == xi.effect.DEODORIZE or spellEffect == xi.effect.INVISIBLE or spellEffect == xi.effect.SNEAK then
         duration = duration + 60 * math.random(0, 2)
     end
 
     --------------------
     -- Embolden, buffs cast by pet do not work.
     --------------------
-    if
-        not caster:isPet() and
-        target:hasStatusEffect(xi.effect.EMBOLDEN) and
-        spellGroup == xi.magic.spellGroup.WHITE
-    then
+    if not caster:isPet() and target:hasStatusEffect(xi.effect.EMBOLDEN) and spellGroup == xi.magic.spellGroup.WHITE then
         local emboldenDurationModifier = 0.5 + target:getMod(xi.mod.EMBOLDEN_DURATION) / 100 -- 1 point = 1%
         duration = duration * emboldenDurationModifier
     end
@@ -395,19 +375,12 @@ xi.spells.enhancing.calculateEnhancingDuration = function(caster, target, spell,
     -- Status Effects
     --------------------
     -- Composure
-    if
-        useComposure and
-        caster:hasStatusEffect(xi.effect.COMPOSURE) and
-        caster:getID() == target:getID()
-    then
+    if useComposure and caster:hasStatusEffect(xi.effect.COMPOSURE) and caster:getID() == target:getID() then
         duration = duration * 3
     end
 
     -- Perpetuance (Doesnt affect spikes and other Black magic enhancements)
-    if
-        caster:hasStatusEffect(xi.effect.PERPETUANCE) and
-        spellGroup == xi.magic.spellGroup.WHITE
-    then
+    if caster:hasStatusEffect(xi.effect.PERPETUANCE) and spellGroup == xi.magic.spellGroup.WHITE then
         duration  = duration * 2
     end
 
@@ -426,7 +399,6 @@ xi.spells.enhancing.useEnhancingSpell = function(caster, target, spell)
     local spellId           = spell:getID()
     local spellGroup        = spell:getSpellGroup()
     local magicDefenseBonus = 0
-
     -- Get Variables from Parameters Table.
     local tier            = pTable[spellId][1]
     local spellEffect     = pTable[spellId][2]
@@ -442,7 +414,6 @@ xi.spells.enhancing.useEnhancingSpell = function(caster, target, spell)
     -- Bar-Element (They use addStatusEffect argument 6. Bar-Status current implementation doesn't.)
     if spellEffect >= xi.effect.BARFIRE and spellEffect <= xi.effect.BARWATER then
         magicDefenseBonus = caster:getMerit(xi.merit.BAR_SPELL_EFFECT) + caster:getMod(xi.mod.BARSPELL_MDEF_BONUS)
-
     -- Embrava
     elseif spellEffect == xi.effect.EMBRAVA then
         -- If Tabula Rasa wears before spell goes off, no Embrava for you!
@@ -453,19 +424,13 @@ xi.spells.enhancing.useEnhancingSpell = function(caster, target, spell)
 
     -- Refresh
     elseif spellEffect == xi.effect.REFRESH then
-        if
-            target:hasStatusEffect(xi.effect.SUBLIMATION_ACTIVATED) or
-            target:hasStatusEffect(xi.effect.SUBLIMATION_COMPLETE)
-        then
+        if target:hasStatusEffect(xi.effect.SUBLIMATION_ACTIVATED) or target:hasStatusEffect(xi.effect.SUBLIMATION_COMPLETE) then
             spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
             return 0
         end
 
     -- Boost-Stat / Gain-Stat
-    elseif
-        spellEffect >= xi.effect.STR_BOOST and
-        spellEffect <= xi.effect.CHR_BOOST
-    then
+    elseif spellEffect >= xi.effect.STR_BOOST and spellEffect <= xi.effect.CHR_BOOST then
         -- Only one Boost Effect can be active at once, so if the player has any we have to cancel & overwrite
         local effectOverwrite =
         {
@@ -485,10 +450,7 @@ xi.spells.enhancing.useEnhancingSpell = function(caster, target, spell)
         end
 
     -- -storm spells
-    elseif
-        spellEffect >= xi.effect.FIRESTORM and
-        spellEffect <= xi.effect.VOIDSTORM
-    then
+    elseif spellEffect >= xi.effect.FIRESTORM and spellEffect <= xi.effect.VOIDSTORM then
         -- Only one storm effect can be active at once, so if the player has any we have to cancel & overwrite
         local effectOverwrite =
         {
@@ -519,11 +481,7 @@ xi.spells.enhancing.useEnhancingSpell = function(caster, target, spell)
     ------------------------------
     -- Handle Status Effects, Embolden buffs can only be applied by player, so do not remove embolden..
     ------------------------------
-    if
-        not caster:isPet() and
-        target:hasStatusEffect(xi.effect.EMBOLDEN) and
-        spellGroup == xi.magic.spellGroup.WHITE
-    then
+    if not caster:isPet() and target:hasStatusEffect(xi.effect.EMBOLDEN) and spellGroup == xi.magic.spellGroup.WHITE then
         target:delStatusEffectSilent(xi.effect.EMBOLDEN)
     end
 

@@ -21,39 +21,35 @@
 
 #include "mobentity.h"
 
-#include "ai/ai_container.h"
-#include "ai/controllers/mob_controller.h"
-#include "ai/helpers/pathfind.h"
-#include "ai/helpers/targetfind.h"
-#include "ai/states/attack_state.h"
-#include "ai/states/mobskill_state.h"
-#include "ai/states/weaponskill_state.h"
-#include "battlefield.h"
+#include "../ai/ai_container.h"
+#include "../ai/controllers/mob_controller.h"
+#include "../ai/helpers/pathfind.h"
+#include "../ai/helpers/targetfind.h"
+#include "../ai/states/attack_state.h"
+#include "../ai/states/mobskill_state.h"
+#include "../ai/states/weaponskill_state.h"
+#include "../conquest_system.h"
+#include "../enmity_container.h"
+#include "../entities/charentity.h"
+#include "../mob_modifier.h"
+#include "../mob_spell_container.h"
+#include "../mob_spell_list.h"
+#include "../mobskill.h"
+#include "../packets/action.h"
+#include "../packets/entity_update.h"
+#include "../packets/pet_sync.h"
+#include "../roe.h"
+#include "../status_effect_container.h"
+#include "../treasure_pool.h"
+#include "../utils/battleutils.h"
+#include "../utils/blueutils.h"
+#include "../utils/charutils.h"
+#include "../utils/itemutils.h"
+#include "../utils/mobutils.h"
+#include "../utils/petutils.h"
+#include "../weapon_skill.h"
 #include "common/timer.h"
 #include "common/utils.h"
-#include "conquest_system.h"
-#include "enmity_container.h"
-#include "entities/charentity.h"
-#include "lua/lua_loot.h"
-#include "mob_modifier.h"
-#include "mob_spell_container.h"
-#include "mob_spell_list.h"
-#include "mobskill.h"
-#include "packets/action.h"
-#include "packets/entity_update.h"
-#include "packets/pet_sync.h"
-#include "roe.h"
-#include "status_effect_container.h"
-#include "treasure_pool.h"
-#include "utils/battleutils.h"
-#include "utils/blueutils.h"
-#include "utils/charutils.h"
-#include "utils/itemutils.h"
-#include "utils/mobutils.h"
-#include "utils/petutils.h"
-#include "utils/zoneutils.h"
-#include "weapon_skill.h"
-
 #include <cstring>
 
 CMobEntity::CMobEntity()
@@ -120,14 +116,13 @@ CMobEntity::CMobEntity()
     m_Aggro         = false;
     m_TrueDetection = false;
     m_Link          = 0;
-    m_isAggroable   = false;
     m_battlefieldID = 0;
     m_bcnmID        = 0;
 
     m_maxRoamDistance = 50.0f;
     m_disableScent    = false;
 
-    m_Pool        = 0;
+    m_Pool = 0;
     m_RespawnTime = 300;
 
     m_SpellListContainer = nullptr;
@@ -922,7 +917,30 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 
     DropList_t* dropList = itemutils::GetDropList(m_DropID);
 
-    if (!getMobMod(MOBMOD_NO_DROPS) && dropList != nullptr && (!dropList->Items.empty() || !dropList->Groups.empty() || PAI->EventHandler.hasListener("ITEM_DROPS")))
+    // Apply m_DropListModifications changes to DropList
+    for (auto& entry : m_DropListModifications)
+    {
+        uint16    itemID   = entry.first;
+        uint16    dropRate = entry.second.first;
+        DROP_TYPE dropType = static_cast<DROP_TYPE>(entry.second.second);
+
+        if (dropType == DROP_NORMAL)
+        {
+            UpdateDroprateOrAddToList(DropList.Items, DROP_NORMAL, itemID, dropRate);
+        }
+        else if (dropType == DROP_GROUPED)
+        {
+            for (auto& group : DropList.Groups)
+            {
+                UpdateDroprateOrAddToList(group.Items, DROP_NORMAL, itemID, dropRate);
+            }
+        }
+    }
+
+    // Make sure m_DropListModifications doesn't persist by clearing it out now
+    m_DropListModifications.clear();
+
+    if (!getMobMod(MOBMOD_NO_DROPS) && (!DropList.Items.empty() || !DropList.Groups.empty()))
     {
         // THLvl is the number of 'extra chances' at an item. If the item is obtained, then break out.
         int16 maxRolls = 1 + (m_THLvl > 2 ? 2 : m_THLvl);
@@ -993,8 +1011,9 @@ void CMobEntity::DropItems(CCharEntity* PChar)
     ZONE_TYPE zoneType  = zoneutils::GetZone(PChar->getZone())->GetType();
     bool      validZone = zoneType != ZONE_TYPE::BATTLEFIELD && zoneType != ZONE_TYPE::DYNAMIS;
 
-    // Check if mob can drop seals -- mobmod to disable drops, zone type isnt battlefield/dynamis, mob is stronger than Too Weak, or mobmod for EXP bonus is -100 or lower (-100% exp)
-    if (!getMobMod(MOBMOD_NO_DROPS) && validZone && charutils::CheckMob(m_HiPCLvl, GetMLevel()) > EMobDifficulty::TooWeak && getMobMod(MOBMOD_EXP_BONUS) > -100)
+    bool validZone = ((Pzone > 0 && Pzone < 39) || (Pzone > 42 && Pzone < 134) || (Pzone > 135 && Pzone < 185) || (Pzone > 188 && Pzone < 255));
+
+    if (!getMobMod(MOBMOD_NO_DROPS) && validZone && charutils::CheckMob(m_HiPCLvl, GetMLevel()) > EMobDifficulty::TooWeak)
     {
         // check for seal drops
         /* MobLvl >= 1 = Beastmen Seals ID=1126

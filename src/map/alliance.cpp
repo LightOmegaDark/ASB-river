@@ -46,9 +46,9 @@ CAlliance::CAlliance(CBattleEntity* PEntity)
 
     m_AllianceID = PEntity->PParty->GetPartyID();
 
-    // Will need to deal with these:
-    // m_PSyncTarget
-    // m_PQuarterMaster
+    // will need to deal with these
+    // m_PSyncTarget    = nullptr;
+    //  m_PQuaterMaster = nullptr;
 
     addParty(PEntity->PParty);
     this->aLeader = PEntity->PParty;

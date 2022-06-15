@@ -40,40 +40,4 @@ void dumpBacktrace(int signal)
 
 void debug::init()
 {
-    struct rlimit core_limits;
-    core_limits.rlim_cur = core_limits.rlim_max = RLIM_INFINITY;
-    setrlimit(RLIMIT_CORE, &core_limits);
-
-    // things we want to handle
-    std::signal(SIGABRT, dumpBacktrace);
-    std::signal(SIGSEGV, dumpBacktrace);
-    std::signal(SIGFPE, dumpBacktrace);
-    std::signal(SIGXFSZ, dumpBacktrace);
-
-    // pass these onto default handler
-    std::signal(SIGILL, SIG_DFL);
-    std::signal(SIGBUS, SIG_DFL);
-    std::signal(SIGTRAP, SIG_DFL);
-}
-
-bool debug::isRunningUnderDebugger()
-{
-    static bool isCheckedAlready = false;
-
-    bool underDebugger = false;
-
-    if (!isCheckedAlready)
-    {
-        if (ptrace(PTRACE_TRACEME, 0, 1, 0) < 0)
-        {
-            underDebugger = true;
-        }
-        else
-        {
-            ptrace(PTRACE_DETACH, 0, 1, 0);
-        }
-
-        isCheckedAlready = true;
-    }
-    return underDebugger;
 }

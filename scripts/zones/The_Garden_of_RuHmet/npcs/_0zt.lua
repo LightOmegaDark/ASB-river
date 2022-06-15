@@ -19,7 +19,7 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 204 then
+    if (csid==204) then
         player:completeMission(xi.mission.log_id.COP, xi.mission.id.cop.WHEN_ANGELS_FALL)
         player:addMission(xi.mission.log_id.COP, xi.mission.id.cop.DAWN)
         player:setCharVar("PromathiaStatus", 0)

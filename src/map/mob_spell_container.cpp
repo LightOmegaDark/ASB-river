@@ -314,7 +314,7 @@ std::optional<SpellID> CMobSpellContainer::GetBestEntrustedSpell(CBattleEntity* 
         case JOB_SCH:
         case JOB_PLD:
         case JOB_RUN:
-            choice = SpellID::Indi_Refresh;
+           choice = SpellID::Indi_Refresh;
             break;
         case JOB_NIN:
             choice = SpellID::Indi_Regen;
@@ -334,14 +334,14 @@ std::optional<SpellID> CMobSpellContainer::GetBestAgainstTargetWeakness(CBattleE
     // clang-format off
     std::vector<int16> resistances
     {
-        PTarget->getMod(Mod::FIRE_RES_RANK),
-        PTarget->getMod(Mod::ICE_RES_RANK),
-        PTarget->getMod(Mod::WIND_RES_RANK),
-        PTarget->getMod(Mod::EARTH_RES_RANK),
-        PTarget->getMod(Mod::THUNDER_RES_RANK),
-        PTarget->getMod(Mod::WATER_RES_RANK),
-        PTarget->getMod(Mod::LIGHT_RES_RANK),
-        PTarget->getMod(Mod::DARK_RES_RANK),
+        PTarget->getMod(Mod::FIRE_RES),
+        PTarget->getMod(Mod::ICE_RES),
+        PTarget->getMod(Mod::WIND_RES),
+        PTarget->getMod(Mod::EARTH_RES),
+        PTarget->getMod(Mod::THUNDER_RES),
+        PTarget->getMod(Mod::WATER_RES),
+        PTarget->getMod(Mod::LIGHT_RES),
+        PTarget->getMod(Mod::DARK_RES),
     };
     // clang-format on
 

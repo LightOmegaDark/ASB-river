@@ -25,10 +25,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "common/cbasetypes.h"
 #include "common/console_service.h"
 #include "common/logging.h"
-#include "common/lua.h"
 #include "common/md52.h"
 #include "common/mmo.h"
-#include "common/settings.h"
 #include "common/socket.h"
 #include "common/sql.h"
 #include "common/taskmgr.h"
@@ -128,7 +126,6 @@ void PrintPacket(char* data, int size)
 int32 main(int32 argc, char** argv)
 {
     bool appendDate{};
-    bool requestExit = false;
 #ifdef WIN32
     WSADATA wsaData;
 #endif
@@ -285,7 +282,7 @@ int32 main(int32 argc, char** argv)
     // clang-format off
     gConsoleService = std::make_unique<ConsoleService>();
     gConsoleService->RegisterCommand(
-    "ah_cleanup", fmt::format("AH task to return items older than {} days.", expireDays),
+    "ah_cleanup", fmt::format("AH task to return items older than {} days.", search_config.expire_days),
     [](std::vector<std::string> inputs)
     {
         ah_cleanup(server_clock::now(), nullptr);

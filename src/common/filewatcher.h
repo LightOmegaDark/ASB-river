@@ -4,7 +4,6 @@
 #include <functional>
 #include <memory>
 #include <string>
-#include <vector>
 
 #include <concurrentqueue.h>
 #include <efsw/efsw.hpp>
@@ -19,5 +18,5 @@ public:
 
 private:
     std::unique_ptr<efsw::FileWatcher> fileWatcher;
-    std::vector<std::string>           basePaths;
+    std::string                        basePath;
 };

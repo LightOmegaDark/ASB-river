@@ -32,7 +32,6 @@
 #include <regex>
 #include <string>
 #include <vector>
-#include <iostream>
 
 namespace
 {
@@ -42,7 +41,7 @@ namespace
         static std::vector<CPPModule*> cppModules{};
         return cppModules;
     }
-}
+} // namespace
 
 extern uint16 map_port;
 
@@ -128,22 +127,7 @@ namespace moduleutils
     void LoadLuaModules()
     {
         // Load the helper file
-        lua.safe_script_file("./modules/module_utils.lua");
-
-        lua.safe_script(R""(
-            function applyOverride(base_table, name, func, fullname, filename)
-                local old = base_table[name]
-
-                local thisenv = getfenv(old)
-
-                local env = { super = old }
-                setmetatable(env, { __index = thisenv })
-
-                setfenv(func, env)
-
-                base_table[name] = func
-            end
-        )"");
+        lua.safe_script_file("./modules/module_utils.lua", &sol::script_pass_on_error);
 
         // Read lines from init.txt
         std::vector<std::string> list;
@@ -185,7 +169,7 @@ namespace moduleutils
                 std::string filename = path.filename().generic_string();
                 std::string relPath  = path.relative_path().generic_string();
 
-                auto res = lua.safe_script_file(relPath);
+                auto res = lua.safe_script_file(relPath, &sol::script_pass_on_error);
                 if (!res.valid())
                 {
                     sol::error err = res;

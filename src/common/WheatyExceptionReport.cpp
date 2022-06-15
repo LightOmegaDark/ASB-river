@@ -325,7 +325,6 @@ LONG WINAPI WheatyExceptionReport::WheatyUnhandledExceptionFilter(
         Log(_T("====================================================="));
 
         GenerateExceptionReport(pExceptionInfo);
-
     }
 
     Log(_T(fmt::format("WheatyUnhandledExceptionFilter Exit").c_str()));

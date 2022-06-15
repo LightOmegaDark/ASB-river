@@ -22,7 +22,6 @@
 #include "command_handler.h"
 
 #include "autotranslate.h"
-#include "common/async.h"
 #include "common/utils.h"
 #include "entities/charentity.h"
 #include "lua/lua_baseentity.h"
@@ -196,7 +195,8 @@ int32 CCommandHandler::call(sol::state& lua, CCharEntity* PChar, const std::stri
         filename = (*maybeRegisteredCommand).second;
     }
 
-    auto loadResult = lua.safe_script_file(filename);
+    auto filename   = fmt::format("./scripts/commands/{}.lua", cmdname.c_str());
+    auto loadResult = lua.safe_script_file(filename, &sol::script_pass_on_error);
     if (!loadResult.valid())
     {
         sol::error err = loadResult;

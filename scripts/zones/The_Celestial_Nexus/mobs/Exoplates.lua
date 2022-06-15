@@ -61,7 +61,7 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option, target)
-    if csid == 32004 then
+    if (csid == 32004) then
         DespawnMob(target:getID())
         DespawnMob(target:getID() - 1)
         DespawnMob(target:getID() + 2)

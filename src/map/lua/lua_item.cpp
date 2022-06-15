@@ -272,6 +272,7 @@ auto CLuaItem::getSignature() -> std::string
 {
     char signature[DecodeStringLength] = {};
 
+    memset(&signature, 0, sizeof(signature));
     if (m_PLuaItem->isType(ITEM_LINKSHELL))
     {
         DecodeStringLinkshell(m_PLuaItem->getSignature(), signature);
@@ -312,7 +313,7 @@ void CLuaItem::setSoulPlateData(std::string const& name, uint16 mobFamily, uint8
 auto CLuaItem::getSoulPlateData() -> sol::table
 {
     auto       data  = m_PLuaItem->getSoulPlateData();
-    sol::table table = lua.create_table();
+    sol::table table = luautils::lua.create_table();
 
     table["name"]       = std::get<0>(data);
     table["mobFamily"]  = std::get<1>(data);

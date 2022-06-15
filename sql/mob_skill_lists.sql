@@ -3776,79 +3776,23 @@ INSERT INTO `mob_skill_lists` VALUES ('Cop_Wardens',1170,562); -- Reactive Armor
 
 INSERT INTO `mob_skill_lists` VALUES ('Tenzen_Ranged',1171,1396); -- Tenzen Ranged Attack
 
-INSERT INTO `mob_skill_lists` VALUES ('Goblin_NM',1172,590);
-INSERT INTO `mob_skill_lists` VALUES ('Goblin_NM',1172,591);
-INSERT INTO `mob_skill_lists` VALUES ('Goblin_NM',1172,1081);
-INSERT INTO `mob_skill_lists` VALUES ('Goblin_NM',1172,1082);
-INSERT INTO `mob_skill_lists` VALUES ('Goblin_NM',1172,1084);
-INSERT INTO `mob_skill_lists` VALUES ('Goblin_NM',1172,1086);
-INSERT INTO `mob_skill_lists` VALUES ('Ladybug_Night',1173,2178);
-INSERT INTO `mob_skill_lists` VALUES ('Apis',1174,493);
-INSERT INTO `mob_skill_lists` VALUES ('Apis',1174,494);
-INSERT INTO `mob_skill_lists` VALUES ('Apis',1174,495);
-INSERT INTO `mob_skill_lists` VALUES ('Apis',1174,496);
-INSERT INTO `mob_skill_lists` VALUES ('Apis',1174,497);
-INSERT INTO `mob_skill_lists` VALUES ('Apis',1174,1364);
-INSERT INTO `mob_skill_lists` VALUES ('Puk_M',1175,1718);
-INSERT INTO `mob_skill_lists` VALUES ('Puk_M',1175,1720);
-INSERT INTO `mob_skill_lists` VALUES ('Puk_M',1175,1721);
-INSERT INTO `mob_skill_lists` VALUES ('Puk_M',1175,1722);
-INSERT INTO `mob_skill_lists` VALUES ('Puk_M',1175,1723);
-INSERT INTO `mob_skill_lists` VALUES ('Supplespine_Mujwuj',1176,1064);
-INSERT INTO `mob_skill_lists` VALUES ('Supplespine_Mujwuj',1176,609);
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Shantotto_II_Melee',1163,3739); -- shantotto_ii_melee (no name)
+INSERT INTO `mob_skill_lists` VALUES ('Teporingo',1164,258);
+INSERT INTO `mob_skill_lists` VALUES ('Bugbear_Muscleman',1165,361);
+INSERT INTO `mob_skill_lists` VALUES ('Goblin_NM',1166,590);
+INSERT INTO `mob_skill_lists` VALUES ('Goblin_NM',1166,591);
+INSERT INTO `mob_skill_lists` VALUES ('Goblin_NM',1166,1081);
+INSERT INTO `mob_skill_lists` VALUES ('Goblin_NM',1166,1082);
+INSERT INTO `mob_skill_lists` VALUES ('Goblin_NM',1166,1084);
+INSERT INTO `mob_skill_lists` VALUES ('Goblin_NM',1166,1086);
+INSERT INTO `mob_skill_lists` VALUES ('Ladybug_Night',1167,2178);
+INSERT INTO `mob_skill_lists` VALUES ('Puk_M',1169,1718);
+INSERT INTO `mob_skill_lists` VALUES ('Puk_M',1169,1720);
+INSERT INTO `mob_skill_lists` VALUES ('Puk_M',1169,1721);
+INSERT INTO `mob_skill_lists` VALUES ('Puk_M',1169,1722);
+INSERT INTO `mob_skill_lists` VALUES ('Puk_M',1169,1723);
 
--- Trial Sized Avatars
-INSERT INTO `mob_skill_lists` VALUES ('Avatar_Garuda_TSTBW',1177,867); -- Claw
-INSERT INTO `mob_skill_lists` VALUES ('Avatar_Garuda_TSTBW',1177,868); -- Aero II
-INSERT INTO `mob_skill_lists` VALUES ('Avatar_Ramuh_TSTBL',1178,885); -- Shock Strike
-INSERT INTO `mob_skill_lists` VALUES ('Avatar_Ramuh_TSTBL',1178,886); -- Thunder II
-INSERT INTO `mob_skill_lists` VALUES ('Avatar_Ramuh_TSTBL',1178,888); -- Thunderspark
-INSERT INTO `mob_skill_lists` VALUES ('Avatar_Shiva_TSTBI',1179,876); -- Axe Kick
-INSERT INTO `mob_skill_lists` VALUES ('Avatar_Shiva_TSTBI',1179,877); -- Blizzard II
-INSERT INTO `mob_skill_lists` VALUES ('Avatar_Ifrit_TSTBF',1180,840); -- Punch
-INSERT INTO `mob_skill_lists` VALUES ('Avatar_Ifrit_TSTBF',1180,841); -- Fire II
-INSERT INTO `mob_skill_lists` VALUES ('Avatar_Titan_TSTBE',1181,849); -- Rock Throw
-INSERT INTO `mob_skill_lists` VALUES ('Avatar_Titan_TSTBE',1181,850); -- Stone II
-INSERT INTO `mob_skill_lists` VALUES ('Avatar_Leviathan_TSTBW',1182,858); -- Barracuda Dive
-INSERT INTO `mob_skill_lists` VALUES ('Avatar_Leviathan_TSTBW',1182,859); -- Water II
-
-INSERT INTO `mob_skill_lists` VALUES ('Swamfisk',1185,452); -- Screwdriver
-INSERT INTO `mob_skill_lists` VALUES ('Swamfisk',1185,453); -- Water Wall
-INSERT INTO `mob_skill_lists` VALUES ('Barbastelle',1186,392); -- Ultrasonics
-
-INSERT INTO `mob_skill_lists` VALUES ('Omega_Critical',1187,1236); -- pile pitch
-INSERT INTO `mob_skill_lists` VALUES ('Omega_Critical',1187,1239); -- discharger
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Omega_Standing',1188,1525); -- guided_missile_ii
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Omega_Standing',1188,1528); -- floodlight
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Omega_Standing',1188,1529); -- hyper_pulse
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Omega_Standing',1188,1530); -- stun_cannon
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Omega_Final',1189,1526); -- colossal_blow
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Omega_Final',1189,1527); -- laser_shower
-
-INSERT INTO `mob_skill_lists` VALUES ('Ultima_Phase2',1190,1268); -- nuclear_waste
-INSERT INTO `mob_skill_lists` VALUES ('Ultima_Phase3',1191,1261); -- equalizer
-INSERT INTO `mob_skill_lists` VALUES ('Ultima_Phase3',1191,1269); -- chemical_bomb
-INSERT INTO `mob_skill_lists` VALUES ('Ultima_Phase3',1191,1270); -- particle_shield
-INSERT INTO `mob_skill_lists` VALUES ('Ultima_Phase4',1192,1260); -- antimatter
-INSERT INTO `mob_skill_lists` VALUES ('Ultima_Phase4',1192,1270); -- particle_shield
-
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase2',1193,1260); -- antimatter
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase2',1193,1259); -- wire_cutter
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase2',1193,1268); -- nuclear_waste
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase2',1193,1269); -- chemical_bomb
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase3',1194,1260); -- antimatter
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase3',1194,1261); -- equalizer
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase3',1194,1268); -- nuclear_waste
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase4',1195,1260); -- antimatter
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase4',1195,1261); -- equalizer
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase4',1195,1521); -- armor_buster
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase4',1195,1522); -- energy_screen
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase4',1195,1523); -- mana_screen
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase5',1196,1521); -- armor_buster
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase5',1196,1522); -- energy_screen
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Ultima_Phase5',1196,1523); -- mana_screen
-
--- Next available ID: 1190
+-- Next available ID: 1170
 
 -- ------------------------------------------------------------
 -- Start of Ambuscade section

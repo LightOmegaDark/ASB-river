@@ -108,7 +108,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     final = final + (final * (target:getMod(xi.mod.CURE_POTENCY_RCVD) / 100))
 
     --Applying server mods
-    final = final * xi.settings.main.CURE_POWER
+    final = final * xi.settings.CURE_POWER
 
     target:addHP(final)
 

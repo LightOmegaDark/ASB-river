@@ -1326,19 +1326,13 @@ function xi.battlefield.onBattlefieldTick(battlefield, timeinside)
     end
 
     -- Remove battlefield effect for players in alliance not inside battlefield once the battlefield gets locked. Do this only once.
-    if
-        status == xi.battlefield.status.LOCKED and
-        battlefield:getLocalVar("statusRemoval") == 0
-    then
+    if status == xi.battlefield.status.LOCKED and battlefield:getLocalVar("statusRemoval") == 0 then
         battlefield:setLocalVar("statusRemoval", 1)
 
         for _, player in pairs(players) do
             local alliance = player:getAlliance()
             for _, member in pairs(alliance) do
-                if
-                    member:hasStatusEffect(xi.effect.BATTLEFIELD) and
-                    not member:getBattlefield()
-                then
+                if member:hasStatusEffect(xi.effect.BATTLEFIELD) and not member:getBattlefield() then
                     member:delStatusEffect(xi.effect.BATTLEFIELD)
                 end
             end

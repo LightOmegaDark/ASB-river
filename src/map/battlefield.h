@@ -119,17 +119,6 @@ struct BattlefieldInitiator_t
     }
 };
 
-struct BattlefieldGroup
-{
-    std::vector<uint32> mobIds;
-    sol::function       deathCallback;
-    sol::function       randomDeathCallback;
-    sol::function       allDeathCallback;
-    sol::function       setupCallback;
-    uint8               deathCount  = 0;
-    uint32              randomMobId = 0;
-};
-
 class CBattlefield : public std::enable_shared_from_this<CBattlefield>
 {
 public:

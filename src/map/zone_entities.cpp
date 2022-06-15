@@ -67,7 +67,6 @@ namespace
     const int   CHARACTER_SYNC_DISTANCE_SWAP_THRESHOLD = 30;
     const int   CHARACTER_SYNC_PARTY_SIGNIFICANCE      = 100000;
     const int   CHARACTER_SYNC_ALLI_SIGNIFICANCE       = 10000;
-    const int   PERSIST_CHECK_CHARACTERS               = 20;
 } // namespace
 
 typedef std::pair<float, CCharEntity*> CharScorePair;
@@ -641,7 +640,6 @@ void CZoneEntities::SpawnTRUSTs(CCharEntity* PChar)
                     if (PMaster)
                     {
                         PChar->pushPacket(new CEntitySetNamePacket(PCurrentTrust));
-                        PChar->updateEntityPacket(PCurrentTrust, ENTITY_SPAWN, UPDATE_ALL_MOB);
                     }
                 }
             }
@@ -1359,20 +1357,7 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_trigger_areas)
                 PMob->PParty->RemoveMember(PMob);
             }
 
-            for (EntityList_t::const_iterator it = m_charList.begin(); it != m_charList.end(); ++it)
-            {
-                CCharEntity* PChar = (CCharEntity*)it->second;
-                if (distance(PChar->loc.p, PMob->loc.p) < 50)
-                {
-                    PChar->SpawnMOBList.erase(PMob->id);
-                }
-            }
-
-            it->second = nullptr;
-            m_mobList.erase(it++);
-            dynamicTargIdsToDelete.push_back(std::make_pair(PMob->targid, server_clock::now()));
-            delete PMob;
-            continue;
+            entitiesToRelease.insert(PMob->targid);
         }
 
         if (PMob->allegiance == ALLEGIANCE_TYPE::PLAYER && PMob->m_isAggroable)
