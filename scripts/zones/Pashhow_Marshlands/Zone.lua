@@ -73,16 +73,13 @@ zoneObject.onEventFinish = function(player, csid, option, npc)
 end
 
 zone_object.onZoneWeatherChange = function(weather)
-    local ToxicTamlyn = ID.mob.TOXIC_TAMLYN
-    local TamlynRe = GetServerVariable("TamlynRespawn")
-
     if weather == xi.weather.RAIN or weather == xi.weather.SQUALL then
-        DisallowRespawn(ToxicTamlyn, false)
-        if os.time() > TamlynRe then
-            SpawnMob(ToxicTamlyn)
+        DisallowRespawn(ID.mob.TOXIC_TAMLYN, false)
+        if os.time() > GetServerVariable("TamlynRespawn") then
+            SpawnMob(ID.mob.TOXIC_TAMLYN)
         end
     elseif weather ~= xi.weather.RAIN or weather ~= xi.weather.SQUALL then
-        DisallowRespawn(ToxicTamlyn, true)
+        DisallowRespawn(ID.mob.TOXIC_TAMLYN, true)
     end
 end
 
