@@ -48,10 +48,6 @@ zoneObject.onZoneIn = function(player, prevZone)
 end
 
 zone_object.onRegionEnter = function(player, region)
-    local regionID = region:GetRegionID()
-    if regionID == 1 and player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.DAWN and player:getCharVar("PromathiaStatus") == 6 then
-        player:startEvent(116)
-    end
 end
 
 zoneObject.onTriggerAreaLeave = function(player, triggerArea)
@@ -60,11 +56,7 @@ end
 zoneObject.onEventUpdate = function(player, csid, option)
 end
 
-zoneObject.onEventFinish = function(player, csid, option)
-    if csid == 116 then
-        player:setCharVar("PromathiaStatus", 7)
-        player:addTitle(xi.title.BANISHER_OF_EMPTINESS)
-    end
+zone_object.onEventFinish = function(player, csid, option)
 end
 
 return zoneObject
