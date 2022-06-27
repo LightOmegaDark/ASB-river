@@ -3878,6 +3878,8 @@ INSERT INTO `mob_skill_lists` VALUES ('Jailer_of_Hope', 1202, 1358);
 INSERT INTO `mob_skill_lists` VALUES ('Zipacna',1203,678);
 INSERT INTO `mob_skill_lists` VALUES ('EldritchEdge',1204,397);
 INSERT INTO `mob_skill_lists` VALUES ('DynastBeetle',1205,341);
+INSERT INTO `mob_skill_lists` VALUES ('Swamfisk',1206,452); -- Screwdriver
+INSERT INTO `mob_skill_lists` VALUES ('Swamfisk',1206,453); -- Water Wall
 
 -- Next available ID: 1204
 
