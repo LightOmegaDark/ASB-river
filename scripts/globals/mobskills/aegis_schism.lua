@@ -4,7 +4,7 @@
 --  Description: Damage varies with TP. Additional effect: defense down
 --  Type: Physical (Blunt)
 -----------------------------------
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/mobskills")
 require("scripts/globals/status")

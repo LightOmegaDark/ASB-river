@@ -3,7 +3,7 @@
 --  NPC: Naji
 -- !pos 64 -14 -4 237
 -----------------------------------
-require("scripts/settings/main");
+require("scripts/globals/settings");
 require("scripts/globals/keyitems");
 require("scripts/globals/titles");
 require("scripts/globals/quests");

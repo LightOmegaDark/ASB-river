@@ -3,7 +3,7 @@
 -----------------------------------
 require("scripts/globals/bcnm")
 require("scripts/globals/keyitems")
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
@@ -260,7 +260,7 @@ end
 
 xi.trust.canCast = function(caster, spell, notAllowedTrustIds)
     -- Trusts must be enabled in settings
-    if xi.settings.ENABLE_TRUST_CASTING == 0 then
+    if xi.settings.main.ENABLE_TRUST_CASTING == 0 then
         return xi.msg.basic.TRUST_NO_CAST_TRUST
     end
 

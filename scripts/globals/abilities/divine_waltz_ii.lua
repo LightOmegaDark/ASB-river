@@ -5,7 +5,7 @@
 -- TP Required: 80%
 -- Recast Time: 00:20
 -----------------------------------
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------
@@ -46,7 +46,7 @@ ability_object.onUseAbility = function(player, target, ability)
     end
 
     -- Applying server mods
-    cure = cure * xi.settings.CURE_POWER
+    cure = cure * xi.settings.main.CURE_POWER
 
     target:restoreHP(cure)
     target:wakeUp()

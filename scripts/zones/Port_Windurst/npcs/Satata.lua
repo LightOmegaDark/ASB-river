@@ -3,7 +3,7 @@
 --  NPC: Satata
 -----------------------------------
 require("scripts/globals/npc_util")
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/magic")
 -----------------------------------
 local entity = {}

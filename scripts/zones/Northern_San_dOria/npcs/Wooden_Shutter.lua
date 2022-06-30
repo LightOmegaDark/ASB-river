@@ -2,7 +2,7 @@
 -- Area: Northern San d'Oria
 --  NPC: Door : Wooden Shutter
 -----------------------------------
-require("scripts/settings/main")
+require("scripts/globals/settings")
 -----------------------------------
 local entity = {}
 

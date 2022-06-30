@@ -3,7 +3,7 @@
 --  NPC: Alfesar
 --Starts The Missing Piece
 -----------------------------------
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/keyitems")
 require("scripts/globals/shop")
 require("scripts/globals/quests")

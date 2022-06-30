@@ -2,7 +2,7 @@
 -- Area: Port Bastok
 --  NPC: Aishah
 -----------------------------------
-require("scripts/settings/main")
+require("scripts/globals/settings")
 -----------------------------------
 local entity = {}
 

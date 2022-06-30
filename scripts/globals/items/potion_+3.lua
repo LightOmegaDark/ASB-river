@@ -3,7 +3,7 @@
 -- Item: Potion +3
 -- Item Effect: Restores 100 HP
 -----------------------------------
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/msg")
 -----------------------------------
 local itemObject = {}
@@ -17,7 +17,7 @@ itemObject.onItemCheck = function(target)
 end
 
 item_object.onItemUse = function(target)
-    target:messageBasic(xi.msg.basic.RECOVERS_HP, 0, target:addHP(100*xi.settings.ITEM_POWER))
+    target:messageBasic(xi.msg.basic.RECOVERS_HP, 0, target:addHP(100*xi.settings.main.ITEM_POWER))
 end
 
 return itemObject

@@ -1,7 +1,7 @@
 -----------------------------------
 -- Dragoon Job Utilities
 -----------------------------------
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/ability")
 require("scripts/globals/items")
 require("scripts/globals/jobpoints")

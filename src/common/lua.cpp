@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2022 LandSandBoat Dev Teams
@@ -27,6 +27,8 @@
 #include <numeric>
 #include <string>
 
+// #define ShowScript(...) _ShowTrace("lua", __VA_ARGS__)
+
 sol::state lua;
 
 /**
@@ -36,6 +38,8 @@ void lua_init()
 {
     TracyZoneScoped;
 
+    ShowInfo("lua initialising");
+
     lua.open_libraries();
 
     // Globally require bit library
@@ -44,18 +48,11 @@ void lua_init()
     lua.do_string(
         "function __FILE__() return debug.getinfo(2, 'S').source end\n"
         "function __LINE__() return debug.getinfo(2, 'l').currentline end\n"
-        "function __FUNC__() return debug.getinfo(2, 'n').name end\n");
+        "function __FUNC__() return debug.getinfo(2, 'n').name end\n"
+    );
 
     // Bind print(...) globally
     lua.set_function("print", &lua_print);
-
-    // Attempt to startup lldebugger
-    auto result = lua["require"]("lldebugger");
-    if (result.valid())
-    {
-        result.get<sol::table>()["start"];
-        ShowInfo("Started script debugger");
-    }
 }
 
 /**
@@ -108,7 +105,7 @@ std::string lua_to_string(sol::object const& obj, std::size_t depth)
         }
         case sol::type::table:
         {
-            auto table = obj.as<sol::table>();
+            auto table  = obj.as<sol::table>();
 
             // Stringify everything first
             std::vector<std::string> stringVec;
@@ -118,14 +115,12 @@ std::string lua_to_string(sol::object const& obj, std::size_t depth)
             }
 
             // Accumulate into a pretty string
-            // clang-format off
             std::string outStr = "table{ ";
             outStr += std::accumulate(std::begin(stringVec), std::end(stringVec), std::string(),
             [](std::string& ss, std::string& s)
             {
                 return ss.empty() ? s : ss + ", " + s;
             });
-            // clang-format on
             return outStr + " }";
         }
         default:
@@ -148,5 +143,5 @@ void lua_print(sol::variadic_args va)
         vec.emplace_back(lua_to_string(va[i]));
     }
 
-    ShowLua(fmt::format("{}", fmt::join(vec.begin(), vec.end(), " ")).c_str());
+    ShowInfo(fmt::format("{}", fmt::join(vec.begin(), vec.end(), " ")).c_str());
 }

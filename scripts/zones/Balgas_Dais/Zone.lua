@@ -2,7 +2,7 @@
 -- Zone: Balgas_Dais (146)
 -----------------------------------
 local ID = require("scripts/zones/Balgas_Dais/IDs")
-require("scripts/settings/main")
+require("scripts/globals/settings")
 -----------------------------------
 local zoneObject = {}
 

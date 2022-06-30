@@ -4,7 +4,7 @@
 --  NPC: Zayhi-Bauhi
 --  Starts and Finishes Quest: To Bee or Not to Bee?
 -----------------------------------
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/quests")
 -----------------------------------
 local entity = {}

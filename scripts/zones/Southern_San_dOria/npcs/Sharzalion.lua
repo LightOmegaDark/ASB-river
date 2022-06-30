@@ -4,7 +4,7 @@
 -- !pos 95 0 111 230
 -----------------------------------
 require("scripts/globals/status")
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/titles")
 require("scripts/globals/keyitems")
 require("scripts/globals/shop")
@@ -20,7 +20,7 @@ entity.onTrigger = function(player, npc)
     local peaceForTheSpirit   = player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.PEACE_FOR_THE_SPIRIT)
     local peaceForTheSpiritCS = player:getCharVar("peaceForTheSpiritCS")
 
-    if (player:getMainJob() == xi.job.RDM and player:getMainLvl() >= xi.settings.AF1_QUEST_LEVEL and theCrimsonTrial == QUEST_AVAILABLE) then
+    if (player:getMainJob() == xi.job.RDM and player:getMainLvl() >= xi.settings.main.AF1_QUEST_LEVEL and theCrimsonTrial == QUEST_AVAILABLE) then
         if (player:getCharVar("has_seen_rdmaf1_quest_already") == 0) then
             player:startEvent(70)
         else

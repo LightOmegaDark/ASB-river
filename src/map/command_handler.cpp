@@ -233,7 +233,7 @@ int32 CCommandHandler::call(sol::state& lua, CCharEntity* PChar, const std::stri
     }
     else
     {
-        if (map_config.audit_gm_cmd <= permission && map_config.audit_gm_cmd > 0)
+        if (settings::get<uint8>("map.AUDIT_GM_CMD") <= permission && settings::get<uint8>("map.AUDIT_GM_CMD") > 0)
         {
             std::string name       = PChar->name;
             std::string cmdlinestr = autotranslate::replaceBytes(commandline);
@@ -327,4 +327,6 @@ int32 CCommandHandler::call(sol::state& lua, CCharEntity* PChar, const std::stri
 void CCommandHandler::registerCommand(std::string const& commandName, std::string const& path)
 {
     registeredCommands[commandName] = path;
+    lua["cmdprops"]  = sol::lua_nil;
+    lua["onTrigger"] = sol::lua_nil;
 }

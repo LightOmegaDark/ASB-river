@@ -1189,7 +1189,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                 // check if reaction bits don't contain miss (this WS was *fully* evaded or *fully* parried) (actionTarget.reaction & 0x01 == 0)
                 if ((actionTarget.reaction & REACTION::MISS) == REACTION::NONE)
                 {
-                    int wspoints = map_config.ws_points_base;
+                    int wspoints = settings::get<uint8>("map.WS_POINTS_BASE");
                     if (PWeaponSkill->getPrimarySkillchain() != 0)
                     {
                         // NOTE: GetSkillChainEffect is INSIDE this if statement because it
@@ -1209,19 +1209,22 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                             {
                                 actionTarget.addEffectMessage = 287 + effect;
                             }
+
                             actionTarget.additionalEffect = effect;
+
                             // Despite appearances, ws_points_skillchain is not a multiplier it is just an amount "per element"
+                            auto wsPointsSkillchain = settings::get<uint8>("map.WS_POINTS_SKILLCHAIN");
                             if (effect >= 7 && effect < 15)
                             {
-                                wspoints += (1 * map_config.ws_points_skillchain); // 1 element
+                                wspoints += (1 * wsPointsSkillchain); // 1 element
                             }
                             else if (effect >= 3)
                             {
-                                wspoints += (2 * map_config.ws_points_skillchain); // 2 elements
+                                wspoints += (2 * wsPointsSkillchain); // 2 elements
                             }
                             else
                             {
-                                wspoints += (4 * map_config.ws_points_skillchain); // 4 elements
+                                wspoints += (4 * wsPointsSkillchain); // 4 elements
                             }
                         }
                     }
@@ -1586,7 +1589,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         }
 
         uint16 recastID = PAbility->getRecastId();
-        if (map_config.blood_pact_shared_timer && (recastID == 173 || recastID == 174))
+        if (settings::get<bool>("map.BLOOD_PACT_SHARED_TIMER") && (recastID == 173 || recastID == 174))
         {
             PRecastContainer->Add(RECAST_ABILITY, (recastID == 173 ? 174 : 173), action.recast);
         }
@@ -1934,25 +1937,25 @@ void CCharEntity::OnRaise()
         {
             actionTarget.animation = 511;
             hpReturned             = (uint16)((GetLocalVar("MijinGakure") != 0) ? GetMaxHP() * 0.5 : GetMaxHP() * 0.1);
-            ratioReturned          = 0.50f * (1 - map_config.exp_retain);
+            ratioReturned          = 0.50f * (1 - settings::get<uint8>("map.EXP_RETAIN"));
         }
         else if (m_hasRaise == 2)
         {
             actionTarget.animation = 512;
             hpReturned             = (uint16)((GetLocalVar("MijinGakure") != 0) ? GetMaxHP() * 0.5 : GetMaxHP() * 0.25);
-            ratioReturned          = ((GetMLevel() <= 50) ? 0.50f : 0.75f) * (1 - map_config.exp_retain);
+            ratioReturned          = ((GetMLevel() <= 50) ? 0.50f : 0.75f) * (1 - settings::get<uint8>("map.EXP_RETAIN"));
         }
         else if (m_hasRaise == 3)
         {
             actionTarget.animation = 496;
             hpReturned             = (uint16)(GetMaxHP() * 0.5);
-            ratioReturned          = ((GetMLevel() <= 50) ? 0.50f : 0.90f) * (1 - map_config.exp_retain);
+            ratioReturned          = ((GetMLevel() <= 50) ? 0.50f : 0.90f) * (1 - settings::get<uint8>("map.EXP_RETAIN"));
         }
         else if (m_hasRaise == 4) // Used for spell "Arise" and Arise from the spell "Reraise IV"
         {
             actionTarget.animation = 496;
             hpReturned             = (uint16)GetMaxHP();
-            ratioReturned          = ((GetMLevel() <= 50) ? 0.50f : 0.90f) * (1 - map_config.exp_retain);
+            ratioReturned          = ((GetMLevel() <= 50) ? 0.50f : 0.90f) * (1 -settings::get<uint8>("map.EXP_RETAIN"));
         }
 
         addHP(((hpReturned < 1) ? 1 : hpReturned));
@@ -1970,7 +1973,7 @@ void CCharEntity::OnRaise()
 
             uint16 xpNeededToLevel = charutils::GetExpNEXTLevel(jobs.job[GetMJob()]) - jobs.exp[GetMJob()];
 
-        if (GetLocalVar("MijinGakure") == 0 && GetMLevel() >= map_config.exp_loss_level)
+        if (GetLocalVar("MijinGakure") == 0 && GetMLevel() >= settings::get<uint8>("map.EXP_LOSS_LEVEL"))
         {
             charutils::AddExperiencePoints(true, this, this, xpReturned);
 
@@ -2122,7 +2125,7 @@ void CCharEntity::Die()
         (PBattlefield == nullptr || (PBattlefield->GetRuleMask() & RULES_LOSE_EXP) == RULES_LOSE_EXP) &&
         GetMLevel() >= settings::get<uint8>("map.EXP_LOSS_LEVEL"))
     {
-        float retainPercent = std::clamp(map_config.exp_retain + getMod(Mod::EXPERIENCE_RETAINED) / 100.0f, 0.0f, 1.0f);
+        float retainPercent = std::clamp(settings::get<uint8>("map.EXP_RETAIN") + getMod(Mod::EXPERIENCE_RETAINED) / 100.0f, 0.0f, 1.0f);
         charutils::DelExperiencePoints(this, retainPercent, 0);
     }
 

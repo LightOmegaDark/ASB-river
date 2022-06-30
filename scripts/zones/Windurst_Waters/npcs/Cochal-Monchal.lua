@@ -3,7 +3,7 @@
 --  NPC: Cochal-Monchal
 -- !pos -52 -6 110 238
 -----------------------------------
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/keyitems")
 -----------------------------------
 local entity = {}

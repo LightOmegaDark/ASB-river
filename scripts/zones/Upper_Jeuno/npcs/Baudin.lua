@@ -4,7 +4,7 @@
 -- !pos -75 0 80 244
 -----------------------------------
 local ID = require("scripts/zones/Upper_Jeuno/IDs")
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/titles")
 require("scripts/globals/quests")
 -----------------------------------
@@ -30,8 +30,8 @@ entity.onEventFinish = function(player, csid, option)
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 17041)
         else
             player:addTitle(xi.title.EXORCIST_IN_TRAINING)
-            player:addGil(xi.settings.GIL_RATE*3000)
-            player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE*3000)
+            player:addGil(xi.settings.main.GIL_RATE*3000)
+            player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.main.GIL_RATE*3000)
             player:addItem(17041)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 17041)
             player:tradeComplete()

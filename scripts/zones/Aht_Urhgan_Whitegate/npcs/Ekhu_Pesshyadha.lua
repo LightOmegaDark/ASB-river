@@ -3,7 +3,7 @@
 --  NPC: Ekhu Pesshyadha
 -- !pos -13.043 0.999 103.423 50
 -----------------------------------
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/quests")
 require("scripts/globals/keyitems")
 local ID = require("scripts/zones/Aht_Urhgan_Whitegate/IDs")

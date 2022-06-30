@@ -2,7 +2,7 @@
 -- Spell: Absorb-STR
 -- Steals an enemy's strength.
 -----------------------------------
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
@@ -32,8 +32,8 @@ spellObject.onSpellCast = function(caster, target, spell)
             spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         else
             spell:setMsg(xi.msg.basic.MAGIC_ABSORB_STR)
-            caster:addStatusEffect(xi.effect.STR_BOOST, xi.settings.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.ABSORB_SPELL_TICK, xi.settings.ABSORB_SPELL_AMOUNT*xi.settings.ABSORB_SPELL_TICK) -- caster gains STR
-            target:addStatusEffect(xi.effect.STR_DOWN, xi.settings.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.ABSORB_SPELL_TICK, xi.settings.ABSORB_SPELL_AMOUNT*xi.settings.ABSORB_SPELL_TICK)    -- target loses STR
+            caster:addStatusEffect(xi.effect.STR_BOOST, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, xi.settings.main.ABSORB_SPELL_AMOUNT*xi.settings.main.ABSORB_SPELL_TICK) -- caster gains STR
+            target:addStatusEffect(xi.effect.STR_DOWN, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, xi.settings.main.ABSORB_SPELL_AMOUNT*xi.settings.main.ABSORB_SPELL_TICK)    -- target loses STR
         end
     end
 

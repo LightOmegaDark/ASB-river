@@ -6,7 +6,7 @@
 -- Duration: 00:01:00
 -----------------------------------
 require("scripts/globals/jobpoints")
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}

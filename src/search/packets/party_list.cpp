@@ -140,7 +140,7 @@ uint8* CPartyListPacket::GetData()
     fileBufferHere.close();
 
     uint8* packet = (uint8*)m_content;
-    ShowMessage("done work ");
+    ShowInfo("done work ");
 
     memcpy(m_data, packet, 588);*/
 

@@ -15,7 +15,7 @@
 -- 0.6875    0.6875      0.6875
 -----------------------------------
 require("scripts/globals/status")
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/weaponskills")
 -----------------------------------
 local weaponskillObject = {}
@@ -32,7 +32,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
     params.atk100 = 1.0 params.atk200 = 1.0 params.atk300 = 1.0
 
-    if xi.settings.USE_ADOULIN_WEAPON_SKILL_CHANGES then
+    if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.ftp100 = 1 params.ftp200 = 1 params.ftp300 = 1
         params.dex_wsc = 0.7 + (player:getMerit(xi.merit.BLADE_SHUN) * 0.03)
         params.atk100 = 1.0 params.atk200 = 2.0 params.atk300 = 3.0 -- http://wiki.ffo.jp/html/25610.html

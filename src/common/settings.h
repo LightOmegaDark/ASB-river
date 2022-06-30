@@ -37,7 +37,6 @@ namespace settings
     template <class... Ts>
     struct overloaded : Ts...
     {
-        // cppcheck-suppress syntaxError
         using Ts::operator()...;
     };
     // explicit deduction guide (not needed as of C++20)
@@ -97,7 +96,7 @@ namespace settings
                     }
                     else if constexpr (std::is_same_v<T, std::string>)
                     {
-                        out = std::string(arg ? "true" : "false");
+                        out = arg ? "true" : "false";
                     }
                 },
                 [&](double const& arg)
@@ -154,7 +153,7 @@ namespace settings
             // clang-format on
         }
 
-        ShowError(fmt::format("Settings: Failed to look up key: {}, using default value: \"{}\"", name, out));
+        ShowError(fmt::format("Settings: Failed to look up key: {}, using default value: \"{}\"", name, out).c_str());
         return T();
     }
 } // namespace settings

@@ -2,7 +2,7 @@
 -- Armor Piercer
 -----------------------------------
 require("scripts/globals/status")
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/automatonweaponskills")
 
 -----------------------------------
@@ -38,7 +38,7 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
         chr_wsc = 0.0
     }
 
-    if xi.settings.USE_ADOULIN_WEAPON_SKILL_CHANGES then
+    if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.ftp100 = 4.0
         params.ftp200 = 5.5
         params.ftp300 = 7.0

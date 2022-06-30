@@ -3,7 +3,7 @@
 -----------------------------------
 require("scripts/globals/mobskills")
 require("scripts/globals/msg")
-require("scripts/settings/main")
+require("scripts/globals/settings")
 -----------------------------------
 local mobskillObject = {}
 

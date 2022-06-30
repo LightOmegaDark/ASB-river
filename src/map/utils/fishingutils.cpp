@@ -1650,7 +1650,7 @@ namespace fishingutils
         return 1;
         */
 
-        return 0; // Remove when chatching chests is enabled.
+        return 0; // Remove when catching chests is enabled.
     }
 
     /************************************************************************
@@ -1784,7 +1784,7 @@ namespace fishingutils
         maxChance = std::max(4, distMod + lowerLevelBonus - skillLevelPenalty);
 
         // Configuration multiplier.
-        maxChance = maxChance * map_config.fishing_skill_multiplier;
+        maxChance = maxChance * settings::get<float>("map.FISHING_SKILL_MULTIPLIER");
 
         // Moon phase skillup modifiers
         uint8 phase         = CVanaTime::getInstance()->getMoonPhase();
@@ -1904,7 +1904,7 @@ namespace fishingutils
 
     void StartFishing(CCharEntity* PChar)
     {
-        if (map_config.fishing_enable == 0)
+        if (!settings::get<bool>("map.FISHING_ENABLE"))
         {
             ShowWarning("Fishing is currently disabled");
             PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, "Fishing is currently disabled"));
@@ -2622,7 +2622,7 @@ namespace fishingutils
 
     void FishingAction(CCharEntity* PChar, FISHACTION action, uint16 stamina, uint32 special)
     {
-        if (map_config.fishing_enable == 0)
+        if (!settings::get<bool>("map.FISHING_ENABLE"))
         {
             ShowWarning("Fishing is currently disabled, but somehow we have someone commencing a fishing action");
             // Unlikely anyone can get here legit, since we already disabled "startFishing"

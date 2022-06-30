@@ -3,7 +3,7 @@
 --  NPC: qm1 (???)
 -- !pos -282.339 0.001 261.707 200
 -----------------------------------
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/keyitems")
 require("scripts/globals/quests")
 local ID = require("scripts/zones/Garlaige_Citadel/IDs")

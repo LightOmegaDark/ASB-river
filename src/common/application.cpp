@@ -40,12 +40,12 @@ Application::Application(std::string serverName, std::unique_ptr<argparse::Argum
 #endif
 
     logging::InitializeLog(serverName, fmt::format("log/{}-server.log", serverName), false);
-    ShowStatus("Begin %s-server initialisation...", serverName);
+    ShowInfo("Begin %s-server initialisation...", serverName);
 
     debug::init();
 
-    ShowStatus("The %s-server is ready to work...", serverName);
-    ShowStatus("=======================================================================");
+    ShowInfo("The %s-server is ready to work...", serverName);
+    ShowInfo("=======================================================================");
 
     gConsoleService = std::make_unique<ConsoleService>();
 }

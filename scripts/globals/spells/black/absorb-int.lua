@@ -2,7 +2,7 @@
 -- Spell: Absorb-INT
 -- Steals an enemy's intelligence.
 -----------------------------------
-require("scripts/settings/main")
+require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
@@ -32,8 +32,8 @@ spellObject.onSpellCast = function(caster, target, spell)
             spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         else
             spell:setMsg(xi.msg.basic.MAGIC_ABSORB_INT)
-            caster:addStatusEffect(xi.effect.INT_BOOST, xi.settings.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.ABSORB_SPELL_TICK, xi.settings.ABSORB_SPELL_AMOUNT*xi.settings.ABSORB_SPELL_TICK) -- caster gains INT
-            target:addStatusEffect(xi.effect.INT_DOWN, xi.settings.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.ABSORB_SPELL_TICK, xi.settings.ABSORB_SPELL_AMOUNT*xi.settings.ABSORB_SPELL_TICK)    -- target loses INT
+            caster:addStatusEffect(xi.effect.INT_BOOST, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, xi.settings.main.ABSORB_SPELL_AMOUNT*xi.settings.main.ABSORB_SPELL_TICK) -- caster gains INT
+            target:addStatusEffect(xi.effect.INT_DOWN, xi.settings.main.ABSORB_SPELL_AMOUNT*resist*((100+(caster:getMod(xi.mod.AUGMENTS_ABSORB)))/100), xi.settings.main.ABSORB_SPELL_TICK, xi.settings.main.ABSORB_SPELL_AMOUNT*xi.settings.main.ABSORB_SPELL_TICK)    -- target loses INT
         end
     end
 
