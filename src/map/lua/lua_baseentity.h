@@ -843,15 +843,10 @@ public:
 
     uint32 getHistory(uint8 index);
 
-    auto getChocoboRaisingInfo() -> sol::table;
-    bool setChocoboRaisingInfo(sol::table table);
-    bool deleteRaisedChocobo();
-
-    void  setMannequinPose(uint16 itemID, uint8 race, uint8 pose);
-    uint8 getMannequinPose(uint16 itemID);
-
-    void addPacketMod(uint16 packetId, uint16 offset, uint8 value);
-    void clearPacketMods();
+    int32 setAnimPath(lua_State*);
+    int32 setAnimStart(lua_State*);
+    int32 setAnimBegin(lua_State*);
+    int32 sendUpdateToZoneCharsInRange(lua_State*);
 
     static void Register();
 };

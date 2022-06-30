@@ -4928,89 +4928,30 @@ INSERT INTO `mob_spell_lists` VALUES ('Hakutaku',486,204,1,255); -- flare (1~255
 INSERT INTO `mob_spell_lists` VALUES ('Hakutaku',486,235,1,255); -- burn (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Hakutaku',486,249,1,255); -- blaze_spikes (1~255)
 
--- Shen (487)
-INSERT INTO `mob_spell_lists` VALUES ('Shen',487,172,1,255); -- water_iv (1~255)
-INSERT INTO `mob_spell_lists` VALUES ('Shen',487,201,1,255); -- waterga_iii (1~255)
-INSERT INTO `mob_spell_lists` VALUES ('Shen',487,240,1,255); -- drown (1-255)
+-- Blackbeard (487)
+INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 487, 166, 1, 255); -- thunder iii
+INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 487, 195, 1, 255); -- thundaga ii
+INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 487, 201, 1, 255); -- waterga iii
+INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 487, 206, 1, 255); -- freeze
+INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 487, 212, 1, 255); -- burst
+INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 487, 214, 1, 255); -- flood
+INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 487, 250, 1, 255); -- ice spikes
+INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 487, 252, 1, 255); -- stun
+INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 487, 274, 1, 255); -- sleepga ii
 
--- Shen's Filtrate (488)
-INSERT INTO `mob_spell_lists` VALUES ('Shens_Filtrate',488,172,1,255); -- water_iv (1~255)
-INSERT INTO `mob_spell_lists` VALUES ('Shens_Filtrate',488,201,1,255); -- waterga_iii (1~255)
-INSERT INTO `mob_spell_lists` VALUES ('Shens_Filtrate',488,214,1,255); -- flood (1~255)
+-- Silverhook (488)
+INSERT INTO `mob_spell_lists` VALUES('Silverhook', 488, 151, 1, 255); -- blizzard iii
+INSERT INTO `mob_spell_lists` VALUES('Silverhook', 488, 180, 1, 255); -- blizzaga ii
+INSERT INTO `mob_spell_lists` VALUES('Silverhook', 488, 201, 1, 255); -- waterga iii
+INSERT INTO `mob_spell_lists` VALUES('Silverhook', 488, 206, 1, 255); -- freeze
+INSERT INTO `mob_spell_lists` VALUES('Silverhook', 488, 212, 1, 255); -- burst
+INSERT INTO `mob_spell_lists` VALUES('Silverhook', 488, 214, 1, 255); -- flood
+INSERT INTO `mob_spell_lists` VALUES('Silverhook', 488, 250, 1, 255); -- ice spikes
+INSERT INTO `mob_spell_lists` VALUES('Silverhook', 488, 252, 1, 255); -- stun
+INSERT INTO `mob_spell_lists` VALUES('Silverhook', 488, 253, 1, 255); -- sleep
+INSERT INTO `mob_spell_lists` VALUES('Silverhook', 488, 274, 1, 255); -- sleepga ii
 
--- Cherukiki (489)
-INSERT INTO `mob_spell_lists` VALUES('Cherukiki_COP', 489, 4, 1, 255); -- Cure IV (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Cherukiki_COP', 489, 21, 1, 255); -- Holy (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Cherukiki_COP', 489, 34, 1, 255); -- Diaga II (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Cherukiki_COP', 489, 39, 1, 255); -- Banishga II (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Cherukiki_COP', 489, 46, 1, 255); -- Protect IV (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Cherukiki_COP', 489, 50, 1, 255); -- Shell III (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Cherukiki_COP', 489, 56, 1, 255); -- Slow (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Cherukiki_COP', 489, 57, 1, 255); -- Haste (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Cherukiki_COP', 489, 58, 1, 255); -- Paralyze (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Cherukiki_COP', 489, 59, 1, 255); -- Silence (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Cherukiki_COP', 489, 111, 1, 255); -- Regen III (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Cherukiki_COP', 489, 112, 1, 255); -- Flash (1~255)
-
--- Kukki Chebukki (490)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 146, 1, 255); -- Fire III (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 151, 1, 255); -- Blizzard III (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 161, 1, 255); -- Stone III (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 166, 1, 255); -- Thunder III (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 175, 1, 255); -- Firaga II (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 191, 1, 255); -- Stonega III (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 195, 1, 255); -- Thundaga II (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 201, 1, 255); -- Waterga III (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 226, 1, 255); -- Poisonga II (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 232, 1, 255); -- Bio III (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 235, 1, 255); -- Burn (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 236, 1, 255); -- Frost (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 237, 1, 255); -- Choke (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 238, 1, 255); -- Rasp (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 239, 1, 255); -- Shock (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 240, 1, 255); -- Drown (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 245, 1, 255); -- Drain (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 247, 1, 255); -- Aspir (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 258, 1, 255); -- Bind (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Kukki_Chebukki_COP', 490, 274, 1, 255); -- Sleepga II (1~255)
-
--- Blackbeard (491)
-INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 491, 166, 1, 255); -- thunder iii (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 491, 195, 1, 255); -- thundaga ii (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 491, 201, 1, 255); -- waterga iii (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 491, 206, 1, 255); -- freeze (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 491, 212, 1, 255); -- burst (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 491, 214, 1, 255); -- flood (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 491, 250, 1, 255); -- ice spikes (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 491, 252, 1, 255); -- stun (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Blackbeard', 491, 274, 1, 255); -- sleepga ii (1~255)
-
--- Silverhook (492)
-INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 151, 1, 255); -- blizzard iii (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 180, 1, 255); -- blizzaga ii (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 201, 1, 255); -- waterga iii (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 206, 1, 255); -- freeze (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 212, 1, 255); -- burst (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 214, 1, 255); -- flood (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 250, 1, 255); -- ice spikes (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 252, 1, 255); -- stun (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 253, 1, 255); -- sleep (1~255)
-INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 274, 1, 255); -- sleepga ii (1~255)
-INSERT INTO `mob_spell_lists` VALUES ('Cemetery_Cherry',498,274,1,255); -- Sleepga II
-INSERT INTO `mob_spell_lists` VALUES ('Cemetery_Cherry',498,356,1,255); -- Paralyga
-INSERT INTO `mob_spell_lists` VALUES ('Cemetery_Cherry',498,366,1,255); -- Graviga
-
--- Zoredonite (498)
-INSERT INTO `mob_spell_lists` VALUES ('Zoredonite',498,3,1,255);   -- cure_iii (1~255)
-INSERT INTO `mob_spell_lists` VALUES ('Zoredonite',498,30,1,255);  -- banish_iii (1~255)
-INSERT INTO `mob_spell_lists` VALUES ('Zoredonite',498,112,1,255); -- flash (1~255)
-
--- Slendlix Spindlethumb (498)
-INSERT INTO `mob_spell_lists` VALUES ('Slendlix_Spindlethumb',499,3,1,255);  -- cure_iii (1~255)
-INSERT INTO `mob_spell_lists` VALUES ('Slendlix_Spindlethumb',499,23,1,255); -- dia (1~255)
-INSERT INTO `mob_spell_lists` VALUES ('Slendlix_Spindlethumb',499,33,1,255); -- diaga (1~255)
-
--- Next Available: 500
+-- Next Available: 489
 
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;
