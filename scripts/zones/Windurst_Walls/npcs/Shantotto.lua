@@ -3,6 +3,9 @@
 --  NPC: Shantotto
 -- !pos 122 -2 112 239
 -----------------------------------
+local ID = require("scripts/zones/Windurst_Walls/IDs")
+require("scripts/globals/keyitems")
+require("scripts/settings/main")
 require("scripts/globals/quests")
 require("scripts/globals/utils")
 -----------------------------------

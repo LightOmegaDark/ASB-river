@@ -5,7 +5,8 @@
 -- Recast Time: 5:00
 -- Duration: Random
 -----------------------------------
-require("scripts/globals/job_utils/thief")
+require("scripts/settings/main")
+require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 
@@ -13,8 +14,10 @@ abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-abilityObject.onUseAbility = function(player, target, ability)
-    xi.job_utils.thief.useHide(player, target, ability)
+ability_object.onUseAbility = function(player, target, ability)
+    local duration = math.random(30, 300)
+    duration = duration * (1 + player:getMod(xi.mod.HIDE_DURATION)/100)
+    player:addStatusEffect(xi.effect.HIDE, 1, 0, math.floor(duration * xi.settings.SNEAK_INVIS_DURATION_MULTIPLIER))
 end
 
 return abilityObject

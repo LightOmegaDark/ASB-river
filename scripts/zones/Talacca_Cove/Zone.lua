@@ -1,7 +1,11 @@
 -----------------------------------
 -- Zone: Talacca_Cove (57)
 -----------------------------------
-local ID = require('scripts/zones/Talacca_Cove/IDs')
+local ID = require("scripts/zones/Talacca_Cove/IDs")
+require("scripts/globals/keyitems")
+require("scripts/globals/missions")
+require("scripts/settings/main")
+require("scripts/globals/titles")
 -----------------------------------
 local zoneObject = {}
 

@@ -5,7 +5,10 @@
 -- Cast Time: Instant
 -- Recast Time: 00:03:00
 -----------------------------------
-require("scripts/globals/job_utils/dark_knight")
+require("scripts/globals/jobpoints")
+require("scripts/settings/main")
+require("scripts/globals/status")
+require("scripts/globals/msg")
 -----------------------------------
 local abilityObject = {}
 

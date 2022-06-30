@@ -5,7 +5,8 @@
 -- Recast Time: 00:01:00
 -- Duration: 0:01:00
 -----------------------------------
-require("scripts/globals/job_utils/white_mage")
+require("scripts/settings/main")
+require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 

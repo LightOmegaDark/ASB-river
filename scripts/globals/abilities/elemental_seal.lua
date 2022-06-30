@@ -5,7 +5,8 @@
 -- Recast Time: 10:00
 -- Duration: 1 Spell or 60 seconds, whichever occurs first.
 -----------------------------------
-require("scripts/globals/job_utils/black_mage")
+require("scripts/settings/main")
+require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 

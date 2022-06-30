@@ -3,6 +3,8 @@
 --  NPC: Goltata
 --  Involved in Quests: Wonder Wands
 -----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/keyitems")
 require("scripts/globals/quests")
 -----------------------------------
 local entity = {}

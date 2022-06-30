@@ -3,7 +3,7 @@
 -- Item: Lucid Ether I
 -- Item Effect: Restores 250 MP
 -----------------------------------
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/msg")
 -----------------------------------
 local itemObject = {}
@@ -16,8 +16,8 @@ itemObject.onItemCheck = function(target)
     return 0
 end
 
-itemObject.onItemUse = function(target)
-    target:messageBasic(xi.msg.basic.RECOVERS_MP, 0, target:addMP(250 * xi.settings.main.ITEM_POWER))
+item_object.onItemUse = function(target)
+    target:messageBasic(xi.msg.basic.RECOVERS_MP, 0, target:addMP(250*xi.settings.ITEM_POWER))
 end
 
 return itemObject

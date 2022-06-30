@@ -4,7 +4,7 @@
 -- Starts Lufet's Lake Salt
 -----------------------------------
 local ID = require("scripts/zones/Port_San_dOria/IDs")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/quests")
 require("scripts/globals/titles")
 -----------------------------------
@@ -45,11 +45,7 @@ entity.onEventFinish = function(player, csid, option)
     if csid == 12 and option == 1 then
         player:addQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.LUFET_S_LAKE_SALT)
     elseif csid == 11 then
-        player:tradeComplete()
-        player:addFame(xi.quest.fame_area.SANDORIA, 30)
-        player:addTitle(xi.title.BEAN_CUISINE_SALTER)
-        npcUtil.giveCurrency(player, 'gil', 600)
-        player:completeQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.LUFET_S_LAKE_SALT)
+        player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE*600)
     end
 end
 

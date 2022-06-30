@@ -3,6 +3,7 @@
 -- Description: Cone Attack damage and Defense Down, strips Utsusemi (xi.mobskills.shadowBehavior.WIPE_SHADOWS)
 -----------------------------------
 require("scripts/globals/mobskills")
+require("scripts/settings/main")
 require("scripts/globals/status")
 -----------------------------------
 local mobskillObject = {}

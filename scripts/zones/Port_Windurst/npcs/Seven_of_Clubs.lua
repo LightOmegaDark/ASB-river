@@ -1,6 +1,9 @@
 -----------------------------------
 -- Area: Port Windurst
 --  NPC: Seven of Clubs
+-- Working 100%
+-----------------------------------
+require("scripts/settings/main")
 -----------------------------------
 local entity = {}
 

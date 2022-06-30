@@ -2,6 +2,8 @@
 --  Auroral Uppercut
 -----------------------------------
 local ID = require("scripts/zones/Empyreal_Paradox/IDs")
+require("scripts/settings/main")
+require("scripts/globals/status")
 require("scripts/globals/mobskills")
 require("scripts/globals/status")
 -----------------------------------

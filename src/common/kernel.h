@@ -24,7 +24,6 @@
 
 #include "cbasetypes.h"
 #include "console_service.h"
-#include "settings.h"
 
 extern std::atomic<bool> gRunFlag;
 

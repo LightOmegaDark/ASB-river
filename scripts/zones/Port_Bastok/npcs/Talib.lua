@@ -2,6 +2,13 @@
 -- Area: Port Bastok
 --  NPC: Talib
 -- Starts Quest: Beauty and the Galka
+-- Starts & Finishes Quest: Shady Business
+-----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/keyitems")
+require("scripts/globals/shop")
+require("scripts/globals/quests")
+local ID = require("scripts/zones/Port_Bastok/IDs")
 -----------------------------------
 local entity = {}
 

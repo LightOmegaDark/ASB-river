@@ -131,11 +131,11 @@ entity.onEventFinish = function(player, csid, option)
     elseif csid == 5068 then
         -- Trading him gruel after Quest: 'All The Way To The Bank'
         player:tradeComplete()
-        local gilObtained = 0
-        if option == 1 then
-            gilObtained = 39432
+        local gil_obtained = 0
+        if (option == 1) then
+            gil_obtained = 39432 * xi.settings.GIL_RATE
         else
-            gilObtained = 19716
+            gil_obtained = 19716 * xi.settings.GIL_RATE
         end
 
         npcUtil.giveCurrency(player, 'gil', gilObtained)

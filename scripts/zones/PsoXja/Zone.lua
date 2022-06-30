@@ -1,12 +1,12 @@
 -----------------------------------
 -- Zone: PsoXja (9)
 -----------------------------------
-local ID = require('scripts/zones/PsoXja/IDs')
-require('scripts/globals/conquest')
-require('scripts/globals/missions')
-require('scripts/globals/settings')
-require('scripts/globals/treasure')
-require('scripts/globals/status')
+local ID = require("scripts/zones/PsoXja/IDs")
+require("scripts/globals/conquest")
+require("scripts/globals/missions")
+require("scripts/settings/main")
+require("scripts/globals/treasure")
+require("scripts/globals/status")
 -----------------------------------
 local zoneObject = {}
 
@@ -59,7 +59,7 @@ zoneObject.afterZoneIn = function(player)
     player:entityVisualPacket("s123")
 
     -- ZONE WIDE LEVEL RESTRICTION
-    if xi.settings.main.ENABLE_COP_ZONE_CAP == 1 then
+    if xi.settings.ENABLE_COP_ZONE_CAP == 1 then
         local lvlCap = player:getCharVar("PSOXJA_RESTRICTION_LVL")
 
         if lvlCap > 0 then -- LV cap depends on entrance

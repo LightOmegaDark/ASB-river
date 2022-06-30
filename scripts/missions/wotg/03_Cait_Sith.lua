@@ -11,6 +11,8 @@
 -----------------------------------
 require('scripts/globals/keyitems')
 require('scripts/globals/missions')
+require('scripts/globals/quests')
+require('scripts/settings/main')
 require('scripts/globals/titles')
 require('scripts/globals/interaction/mission')
 require('scripts/globals/zone')

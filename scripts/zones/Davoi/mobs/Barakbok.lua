@@ -2,7 +2,7 @@
 -- Area: Davoi
 --  Mob: Barakbok
 -----------------------------------
-mixins = { require("scripts/mixins/job_special") }
+require("scripts/settings/main")
 -----------------------------------
 local entity = {}
 

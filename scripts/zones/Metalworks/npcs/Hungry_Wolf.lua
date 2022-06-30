@@ -3,6 +3,11 @@
 --  NPC: Hungry Wolf
 -- !pos -25.861 -11 -30.172 237
 -----------------------------------
+local ID = require("scripts/zones/Metalworks/IDs")
+require("scripts/globals/quests")
+require("scripts/settings/main")
+require("scripts/globals/titles")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

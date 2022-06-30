@@ -5,6 +5,8 @@
 -- Modifiers: STR:20%; AGI:50%
 -- Darkness/Gravitation skillchain properties, AoE damage
 -----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/status")
 require("scripts/globals/mobskills")
 require("scripts/globals/status")
 -----------------------------------

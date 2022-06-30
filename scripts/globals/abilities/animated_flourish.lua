@@ -5,7 +5,10 @@
 -- Finishing Moves Used: 1-2
 -- Recast Time: 00:30
 -----------------------------------
-require('scripts/globals/job_utils/dancer')
+require("scripts/globals/jobpoints")
+require("scripts/settings/main")
+require("scripts/globals/status")
+require("scripts/globals/msg")
 -----------------------------------
 local abilityObject = {}
 

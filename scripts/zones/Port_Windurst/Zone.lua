@@ -1,11 +1,10 @@
 -----------------------------------
 -- Zone: Port_Windurst (240)
 -----------------------------------
-local ID = require('scripts/zones/Port_Windurst/IDs')
-require('scripts/globals/conquest')
-require('scripts/globals/cutscenes')
-require('scripts/globals/settings')
-require('scripts/globals/zone')
+local ID = require("scripts/zones/Port_Windurst/IDs")
+require("scripts/globals/conquest")
+require("scripts/settings/main")
+require("scripts/globals/zone")
 -----------------------------------
 local zoneObject = {}
 
@@ -16,13 +15,17 @@ end
 zoneObject.onZoneIn = function(player, prevZone)
     local cs = { -1 }
 
-    if
-        player:getXPos() == 0 and
-        player:getYPos() == 0 and
-        player:getZPos() == 0
-    then
-        if prevZone == xi.zone.WINDURST_JEUNO_AIRSHIP then
-            cs = { 10004 }
+    -- FIRST LOGIN (START CS)
+    if player:getPlaytime(false) == 0 then
+        if xi.settings.NEW_CHARACTER_CUTSCENE == 1 then
+            cs = 305
+        end
+        player:setPos(-120, -5.5, 175, 48)
+        player:setHomePoint()
+    end
+    if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
+        if (prevZone == xi.zone.WINDURST_JEUNO_AIRSHIP) then
+            cs = 10004
             player:setPos(228.000, -3.000, 76.000, 160)
         else
             local position = math.random(1, 5) + 195

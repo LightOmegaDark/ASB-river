@@ -1,11 +1,11 @@
 -----------------------------------
 -- Zone: Southern_San_dOria_[S] (80)
 -----------------------------------
-local ID = require('scripts/zones/Southern_San_dOria_[S]/IDs')
-require('scripts/globals/chocobo')
-require('scripts/globals/quests')
-require('scripts/globals/zone')
-require('scripts/globals/extravaganza')
+local ID = require("scripts/zones/Southern_San_dOria_[S]/IDs")
+require("scripts/settings/main")
+require("scripts/globals/chocobo")
+require("scripts/globals/quests")
+require("scripts/globals/zone")
 -----------------------------------
 local zoneObject = {}
 

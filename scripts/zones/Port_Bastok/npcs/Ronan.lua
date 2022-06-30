@@ -1,6 +1,12 @@
 -----------------------------------
 -- Area: Port Bastok
 --  NPC: Ronan
+-- Start & Finishes Quest: Out of One's Shell
+-----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/titles")
+require("scripts/globals/quests")
+local ID = require("scripts/zones/Port_Bastok/IDs")
 -----------------------------------
 local entity = {}
 

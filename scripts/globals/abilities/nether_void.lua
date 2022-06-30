@@ -5,7 +5,8 @@
 -- Recast Time: 00:05:00
 -- Duration: 00:01:00 or the next Dark Magic cast
 -----------------------------------
-require("scripts/globals/job_utils/dark_knight")
+require("scripts/settings/main")
+require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 

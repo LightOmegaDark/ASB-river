@@ -1,12 +1,12 @@
 -----------------------------------
 -- Zone: The_Garden_of_RuHmet (35)
 -----------------------------------
-local ID = require('scripts/zones/The_Garden_of_RuHmet/IDs')
-require('scripts/globals/conquest')
-require('scripts/globals/settings')
-require('scripts/globals/status')
-require('scripts/globals/missions')
-require('scripts/globals/keyitems')
+local ID = require("scripts/zones/The_Garden_of_RuHmet/IDs")
+require("scripts/globals/conquest")
+require("scripts/settings/main")
+require("scripts/globals/status")
+require("scripts/globals/missions")
+require("scripts/globals/keyitems")
 -----------------------------------
 local zoneObject = {}
 

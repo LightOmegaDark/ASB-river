@@ -4,7 +4,7 @@
 -- Involved in Mission 1-3, Mission 7-2
 -- !pos 13 -9 -197 238
 -----------------------------------
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/missions")
 require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")
@@ -175,19 +175,15 @@ entity.onEventFinish = function(player, csid, option)
         player:delQuest(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.TRIAL_BY_LIGHTNING)
     elseif csid == 846 or csid == 850 then -- Turn-in event
         local reward = 0
-        if option == 1 then
-            reward = 18165 -- Fenrir's Stone
-        elseif option == 2 then
-            reward = 13572 -- Fenrir's Cape
-        elseif option == 3 then
-            reward = 13138 -- Fenrir's Torque
-        elseif option == 4 then
-            reward = 13399 -- Fenrir's Earring
-        elseif option == 5 then
-            reward = 1208 -- Ancient's Key
-        elseif option == 6 then
-            npcUtil.giveCurrency(player, 'gil', 15000)
-        elseif option == 7 then
+        if (option == 1) then reward = 18165 -- Fenrir's Stone
+        elseif (option == 2) then reward = 13572 -- Fenrir's Cape
+        elseif (option == 3) then reward = 13138 -- Fenrir's Torque
+        elseif (option == 4) then reward = 13399 -- Fenrir's Earring
+        elseif (option == 5) then reward = 1208 -- Ancient's Key
+        elseif (option == 6) then
+            player:addGil(xi.settings.GIL_RATE*15000)
+            player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE*15000) -- Gil
+        elseif (option == 7) then
             player:addSpell(297) -- Pact
         elseif option == 8 then
             player:addKeyItem(xi.ki.FENRIR_WHISTLE)

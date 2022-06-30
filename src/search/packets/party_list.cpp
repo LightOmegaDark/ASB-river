@@ -128,6 +128,22 @@ void CPartyListPacket::AddPlayer(SearchEntity* PPlayer)
 
 uint8* CPartyListPacket::GetData()
 {
+    /*
+    std::ifstream fileBufferHere("C:/party.dat", std::ios::in|std::ios::binary);
+    char *m_content = new char[588];
+
+    if(fileBufferHere.is_open())
+    {
+    fileBufferHere.seekg(0, std::ios::beg);
+    fileBufferHere.getline(m_content, 588);
+    }
+    fileBufferHere.close();
+
+    uint8* packet = (uint8*)m_content;
+    ShowMessage("done work ");
+
+    memcpy(m_data, packet, 588);*/
+
     return m_data;
 }
 

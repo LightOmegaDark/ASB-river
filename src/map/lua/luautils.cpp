@@ -128,6 +128,8 @@ void ReportErrorToPlayer(CBaseEntity* PEntity, std::string const& message = "") 
 
 namespace luautils
 {
+    sol::state lua;
+
     bool                                  contentRestrictionEnabled;
     std::unordered_map<std::string, bool> contentEnabledMap;
 
@@ -135,12 +137,16 @@ namespace luautils
 
     std::unordered_map<uint32, sol::table> customMenuContext;
 
-    /**
-     * @brief Initialization of Lua user classes and global functions.
-     */
+    /************************************************************************
+     *                                                                       *
+     *  Initialization of Lua user classes and global functions             *
+     *                                                                       *
+     ************************************************************************/
+
     int32 init()
     {
         TracyZoneScoped;
+        ShowStatus("luautils::init:lua initializing");
 
         lua = sol::state();
         TracyLuaRegister(lua.lua_state());
@@ -214,6 +220,7 @@ namespace luautils
         lua.set_function("SetCharVar", &luautils::SetCharVar);
         lua.set_function("ClearCharVarFromAll", &luautils::ClearCharVarFromAll);
         lua.set_function("SendEntityVisualPacket", &luautils::SendEntityVisualPacket);
+        lua.set_function("UpdateServerMessage", &luautils::UpdateServerMessage);
         lua.set_function("GetMobRespawnTime", &luautils::GetMobRespawnTime);
         lua.set_function("DisallowRespawn", &luautils::DisallowRespawn);
         lua.set_function("UpdateNMSpawnPoint", &luautils::UpdateNMSpawnPoint);
@@ -221,6 +228,7 @@ namespace luautils
         lua.set_function("NearLocation", &luautils::NearLocation);
         lua.set_function("GetFurthestValidPosition", &luautils::GetFurthestValidPosition);
         lua.set_function("Terminate", &luautils::Terminate);
+        lua.set_function("GetHealingTickDelay", &luautils::GetHealingTickDelay);
         lua.set_function("GetReadOnlyItem", &luautils::GetReadOnlyItem);
         lua.set_function("GetAbility", &luautils::GetAbility);
         lua.set_function("GetSpell", &luautils::GetSpell);
@@ -340,8 +348,8 @@ namespace luautils
         // NOTE: This is just requesting that an incremental step starts. There won't be a before/after change from
         //       this request!
 
-        ShowInfo("Garbage Collected (Step)");
-        ShowInfo("Current State Top: %d, Total Memory Used: %dkb", lua_gettop(lua.lua_state()), lua.memory_used() / 1024);
+        ShowScript("Garbage Collected (Step)");
+        ShowScript("Current State Top: %d, Total Memory Used: %dkb", lua_gettop(lua.lua_state()), lua.memory_used() / 1024);
 
         TracyReportLuaMemory(lua.lua_state());
 
@@ -359,8 +367,8 @@ namespace luautils
 
         auto after_mem_kb = lua.memory_used() / 1024;
 
-        ShowInfo("Garbage Collected (Full)");
-        ShowInfo("Current State Top: %d, Total Memory Used: %dkb -> %dkb", lua_gettop(lua.lua_state()), before_mem_kb, after_mem_kb);
+        ShowScript("Garbage Collected (Full)");
+        ShowScript("Current State Top: %d, Total Memory Used: %dkb -> %dkb", lua_gettop(lua.lua_state()), before_mem_kb, after_mem_kb);
 
         TracyReportLuaMemory(lua.lua_state());
 
@@ -4197,7 +4205,7 @@ namespace luautils
 
         // Bloodpact Skillups
         // TODO: This probably shouldn't be in here
-        if (PMob->objtype == TYPE_PET && settings::get<bool>("map.SKILLUP_BLOODPACT"))
+        if (PMob->objtype == TYPE_PET && map_config.skillup_bloodpact)
         {
             CPetEntity* PPet = (CPetEntity*)PMob;
             if (PPet->getPetType() == PET_TYPE::AVATAR && PPet->PMaster->objtype == TYPE_PC)
@@ -5017,6 +5025,12 @@ namespace luautils
         }
     }
 
+    uint8 GetHealingTickDelay()
+    {
+        TracyZoneScoped;
+        return map_config.healing_tick_delay;
+    }
+
     /***************************************************************************
      *                                                                          *
      *  Creates an item object of the type specified by the itemID.             *
@@ -5053,6 +5067,41 @@ namespace luautils
         TracyZoneScoped;
         CSpell* PSpell = spell::GetSpell(static_cast<SpellID>(id));
         return PSpell ? std::optional<CLuaSpell>(PSpell) : std::nullopt;
+    }
+
+    int32 UpdateServerMessage()
+    {
+        TracyZoneScoped;
+
+        int8  line[1024];
+        FILE* fp;
+
+        // Clear old messages..
+        map_config.server_message.clear();
+
+        // Load the English server message..
+        fp = fopen("./conf/server_message.conf", "rb");
+        if (fp == nullptr)
+        {
+            ShowError("Could not read English server message from: ./conf/server_message.conf");
+            return 1;
+        }
+
+        while (fgets((char*)line, sizeof(line), fp))
+        {
+            string_t sline((const char*)line);
+            map_config.server_message += sline;
+        }
+
+        fclose(fp);
+
+        // Ensure both messages have NULL terminates..
+        if (map_config.server_message.at(map_config.server_message.length() - 1) != 0x00)
+        {
+            map_config.server_message += (char)0x00;
+        }
+
+        return 0;
     }
 
     sol::table NearLocation(sol::table const& table, float radius, float theta)

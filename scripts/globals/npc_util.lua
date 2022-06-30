@@ -15,7 +15,7 @@
     npcUtil.castingAnimation(npc, magicType, phaseDuration, func)
     npcUtil.fishingAnimation(npc, phaseDuration, func)
 --]]
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/status")
 require("scripts/globals/msg")
 
@@ -30,7 +30,7 @@ npcUtil = {}
         if set, spawn mobs randomly within radius of NPC
     claim (boolean, default true)
         do spawned mobs automatically aggro the player
-    hide (number, default xi.settings.main.FORCE_SPAWN_QM_RESET_TIME)
+    hide (number, default xi.settings.FORCE_SPAWN_QM_RESET_TIME)
         how long to hide the QM for after mobs die
     message (number)
         if set a message will play if a entity spawns
@@ -49,7 +49,7 @@ function npcUtil.popFromQM(player, qm, mobId, params)
     end
 
     if params.hide == nil or type(params.hide) ~= "number" then
-        params.hide = xi.settings.main.FORCE_SPAWN_QM_RESET_TIME
+        params.hide = xi.settings.FORCE_SPAWN_QM_RESET_TIME
     end
 
     -- get list of mobs to pop
@@ -376,8 +376,8 @@ function npcUtil.giveCurrency(player, currency, amount)
 
     local currencyTypes =
     {
-        ["gil"]   = { "GIL_OBTAINED", xi.settings.main.GIL_RATE },
-        ["bayld"] = { "BAYLD_OBTAINED", xi.settings.main.BAYLD_RATE }
+        ["gil"]   = {"GIL_OBTAINED", xi.settings.GIL_RATE},
+        ["bayld"] = {"BAYLD_OBTAINED", xi.settings.BAYLD_RATE}
     }
 
     local currencyType = currencyTypes[currency]
@@ -494,17 +494,17 @@ function npcUtil.giveReward(player, params)
     end
 
     if params["gil"] ~= nil and type(params["gil"]) == "number" then
-        player:addGil(params["gil"] * xi.settings.main.GIL_RATE)
-        player:messageSpecial(ID.text.GIL_OBTAINED, params["gil"] * xi.settings.main.GIL_RATE)
+        player:addGil(params["gil"] * xi.settings.GIL_RATE)
+        player:messageSpecial(ID.text.GIL_OBTAINED, params["gil"] * xi.settings.GIL_RATE)
     end
 
     if params["bayld"] ~= nil and type(params["bayld"]) == "number" then
-        player:addCurrency('bayld', params["bayld"] * xi.settings.main.BAYLD_RATE)
-        player:messageSpecial(ID.text.BAYLD_OBTAINED, params["bayld"] * xi.settings.main.BAYLD_RATE)
+        player:addCurrency('bayld', params["bayld"] * xi.settings.BAYLD_RATE)
+        player:messageSpecial(ID.text.BAYLD_OBTAINED, params["bayld"] * xi.settings.BAYLD_RATE)
     end
 
     if params["xp"] ~= nil and type(params["xp"]) == "number" then
-        player:addExp(params["xp"] * xi.settings.main.EXP_RATE)
+        player:addExp(params["xp"] * xi.settings.EXP_RATE)
     end
 
     if params["title"] ~= nil then
@@ -579,21 +579,21 @@ function npcUtil.completeQuest(player, area, quest, params)
     end
 
     if params["gil"] ~= nil and type(params["gil"]) == "number" then
-        player:addGil(params["gil"] * xi.settings.main.GIL_RATE)
-        player:messageSpecial(ID.text.GIL_OBTAINED, params["gil"] * xi.settings.main.GIL_RATE)
+        player:addGil(params["gil"] * xi.settings.GIL_RATE)
+        player:messageSpecial(ID.text.GIL_OBTAINED, params["gil"] * xi.settings.GIL_RATE)
     end
 
     if params["bayld"] ~= nil and type(params["bayld"]) == "number" then
-        player:addCurrency('bayld', params["bayld"] * xi.settings.main.BAYLD_RATE)
-        player:messageSpecial(ID.text.BAYLD_OBTAINED, params["bayld"] * xi.settings.main.BAYLD_RATE)
+        player:addCurrency('bayld', params["bayld"] * xi.settings.BAYLD_RATE)
+        player:messageSpecial(ID.text.BAYLD_OBTAINED, params["bayld"] * xi.settings.BAYLD_RATE)
     end
 
     -- TODO: Find a more elegant way to handle this, but allow for xp vs exp keys.  This should
     -- be one or the other, not both.
     if params["exp"] ~= nil and type(params["exp"]) == "number" then
-        player:addExp(params["exp"] * xi.settings.main.EXP_RATE)
+        player:addExp(params["exp"] * xi.settings.EXP_RATE)
     elseif params["xp"] ~= nil and type(params["xp"]) == "number" then
-        player:addExp(params["xp"] * xi.settings.main.EXP_RATE)
+        player:addExp(params["xp"] * xi.settings.EXP_RATE)
     end
 
     if params["title"] ~= nil then
@@ -669,21 +669,21 @@ function npcUtil.completeMission(player, logId, missionId, params)
     end
 
     if params["gil"] ~= nil and type(params["gil"]) == "number" then
-        player:addGil(params["gil"] * xi.settings.main.GIL_RATE)
-        player:messageSpecial(ID.text.GIL_OBTAINED, params["gil"] * xi.settings.main.GIL_RATE)
+        player:addGil(params["gil"] * xi.settings.GIL_RATE)
+        player:messageSpecial(ID.text.GIL_OBTAINED, params["gil"] * xi.settings.GIL_RATE)
     end
 
     if params["bayld"] ~= nil and type(params["bayld"]) == "number" then
-        player:addCurrency('bayld', params["bayld"] * xi.settings.main.BAYLD_RATE)
-        player:messageSpecial(ID.text.BAYLD_OBTAINED, params["bayld"] * xi.settings.main.BAYLD_RATE)
+        player:addCurrency('bayld', params["bayld"] * xi.settings.BAYLD_RATE)
+        player:messageSpecial(ID.text.BAYLD_OBTAINED, params["bayld"] * xi.settings.BAYLD_RATE)
     end
 
     -- TODO: Find a more elegant way to handle this, but allow for xp vs exp keys.  This should
     -- be one or the other, not both.
     if params["exp"] ~= nil and type(params["exp"]) == "number" then
-        player:addExp(params["exp"] * xi.settings.main.EXP_RATE)
+        player:addExp(params["exp"] * xi.settings.EXP_RATE)
     elseif params["xp"] ~= nil and type(params["xp"]) == "number" then
-        player:addExp(params["xp"] * xi.settings.main.EXP_RATE)
+        player:addExp(params["xp"] * xi.settings.EXP_RATE)
     end
 
     if params["title"] ~= nil then

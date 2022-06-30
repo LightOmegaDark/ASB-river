@@ -4,7 +4,8 @@
 -- Obtained: BLM Level 87
 -- Recast Time: 0:10:00
 -----------------------------------
-require("scripts/globals/job_utils/black_mage")
+require("scripts/settings/main")
+require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 

@@ -3,6 +3,11 @@
 --  NPC: Salimah
 -- !pos -31.687 -6.824 -73.282 235
 -----------------------------------
+require("scripts/globals/quests")
+require("scripts/globals/titles")
+local ID = require("scripts/zones/Bastok_Markets/IDs")
+require("scripts/settings/main")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

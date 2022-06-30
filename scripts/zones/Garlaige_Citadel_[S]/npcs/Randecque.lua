@@ -4,6 +4,10 @@
 -- !pos 61 -6 137 164
 -- Notes: Gives Red Letter required to start "Steamed Rams"
 -----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/keyitems")
+local ID = require("scripts/zones/Garlaige_Citadel_[S]/IDs")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

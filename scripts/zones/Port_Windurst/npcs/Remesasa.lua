@@ -1,6 +1,9 @@
 -----------------------------------
 -- Area: Port Windurst
 --  NPC: Remesasa
+-- Working 100%
+-----------------------------------
+require("scripts/settings/main")
 -----------------------------------
 local entity = {}
 

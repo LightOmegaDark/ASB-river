@@ -1,7 +1,15 @@
 -----------------------------------
 -- Area: Bastok Markets
 --  NPC: Gwill
--- !pos -317.829 -15.948 -177.375 235
+-- Starts & Ends Quest: The Return of the Adventurer
+-- Involved in Quests: The Cold Light of Day, Riding on the Clouds
+-- !pos ? ? ? 235
+-----------------------------------
+local ID = require("scripts/zones/Bastok_Markets/IDs")
+require("scripts/settings/main")
+require("scripts/globals/keyitems")
+require("scripts/globals/quests")
+require("scripts/globals/titles")
 -----------------------------------
 local entity = {}
 

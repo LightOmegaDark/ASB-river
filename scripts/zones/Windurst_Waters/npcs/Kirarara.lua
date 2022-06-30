@@ -3,6 +3,11 @@
 --  NPC: Kirarara
 -- !pos 132 -7 172 238
 -----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/keyitems")
+require("scripts/globals/quests")
+require("scripts/globals/titles")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

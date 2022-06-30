@@ -4,6 +4,8 @@
 --  Description: Deals water damage to enemies within a fan-shaped area originating from the caster. Additional effect: Lowers target's Magic Defense.
 --  Type: Magical (Water)
 -----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/status")
 require("scripts/globals/mobskills")
 require("scripts/globals/status")
 -----------------------------------

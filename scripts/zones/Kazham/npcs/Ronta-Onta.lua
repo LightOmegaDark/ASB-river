@@ -4,7 +4,7 @@
 -- Starts and Finishes Quest: Trial by Fire
 -- !pos 100 -15 -97 250
 -----------------------------------
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/keyitems")
 require("scripts/globals/shop")
 require("scripts/globals/quests")
@@ -85,9 +85,10 @@ entity.onEventFinish = function(player, csid, option)
         if player:getFreeSlotsCount() == 0 and (option ~= 5 or option ~= 6) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, item)
         else
-            if option == 5 then
-                npcUtil.giveCurrency(player, 'gil', 10000)
-            elseif option == 6 then
+            if (option == 5) then
+                player:addGil(xi.settings.GIL_RATE * 10000)
+                player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE * 10000) -- Gil
+            elseif (option == 6) then
                 player:addSpell(298) -- Ifrit Spell
                 player:messageSpecial(ID.text.IFRIT_UNLOCKED, 0, 0, 0)
             else

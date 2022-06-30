@@ -9,7 +9,7 @@
 --         ALL 1.0
 -----------------------------------
 require("scripts/globals/status")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/weaponskills")
 -----------------------------------
 local weaponskillObject = {}
@@ -28,7 +28,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     -- TODO: Verify the params.formless check
     params.formless = true
 
-    if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
+    if xi.settings.USE_ADOULIN_WEAPON_SKILL_CHANGES == true then
         params.mnd_wsc = 0.7 + (player:getMerit(xi.merit.REQUIESCAT) * 0.03)
         params.multiHitfTP = true
     end

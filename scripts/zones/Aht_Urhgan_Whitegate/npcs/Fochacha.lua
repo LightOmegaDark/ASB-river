@@ -2,6 +2,12 @@
 -- Area: Aht Urhgan Whitegate
 --  NPC: Fochacha
 -- !pos 2.897 -1 -10.781 50
+--  Quest: Delivering the Goods
+-----------------------------------
+require("scripts/globals/quests")
+require("scripts/globals/npc_util")
+require("scripts/settings/main")
+local ID = require("scripts/zones/Aht_Urhgan_Whitegate/IDs")
 -----------------------------------
 local entity = {}
 

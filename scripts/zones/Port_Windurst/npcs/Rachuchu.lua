@@ -3,6 +3,7 @@
 --  NPC: Rachuchu
 -----------------------------------
 require("scripts/globals/npc_util")
+require("scripts/settings/main")
 require("scripts/globals/magic")
 -----------------------------------
 local entity = {}

@@ -7,7 +7,7 @@
 -- !pos -108 -5 94 240
 -----------------------------------
 local ID = require("scripts/zones/Port_Windurst/IDs")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/quests")
 require("scripts/globals/titles")
 require("scripts/globals/status")
@@ -75,13 +75,16 @@ entity.onEventFinish = function(player, csid, option)
         player:needToZone(true)
         if player:hasStatusEffect(xi.effect.MUTE) then
             player:delStatusEffect(xi.effect.MUTE)
-            npcUtil.giveCurrency(player, 'gil', 1000)
-        elseif player:hasStatusEffect(xi.effect.BANE) then
+            player:addGil(xi.settings.GIL_RATE*1000)
+            player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE*1000)
+        elseif (player:hasStatusEffect(xi.effect.BANE) == true) then
             player:delStatusEffect(xi.effect.BANE)
-            npcUtil.giveCurrency(player, 'gil', 1200)
-        elseif player:hasStatusEffect(xi.effect.PLAGUE) then
+            player:addGil(xi.settings.GIL_RATE*1200)
+            player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE*1200)
+        elseif (player:hasStatusEffect(xi.effect.PLAGUE) == true) then
             player:delStatusEffect(xi.effect.PLAGUE)
-            npcUtil.giveCurrency(player, 'gil', 1500)
+            player:addGil(xi.settings.GIL_RATE*1500)
+            player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE*1500)
         end
 
         player:setCharVar("QuestCatchItIfYouCan_var", 0)

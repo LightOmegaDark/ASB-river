@@ -5,7 +5,8 @@
 -- Recast Time: 2:00 minutes
 -- Duration: 1:00 minutes
 -----------------------------------
-require("scripts/globals/job_utils/thief")
+require("scripts/settings/main")
+require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 

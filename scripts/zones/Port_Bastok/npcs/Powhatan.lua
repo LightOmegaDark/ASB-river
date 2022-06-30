@@ -1,6 +1,13 @@
 -----------------------------------
 -- Area: Port Bastok
 --  NPC: Powhatan
+-- Starts & Ends Quest: Welcome to Bastok, Guest of Hauteur
+-----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/keyitems")
+require("scripts/globals/titles")
+require("scripts/globals/quests")
+local ID = require("scripts/zones/Port_Bastok/IDs")
 -----------------------------------
 local entity = {}
 

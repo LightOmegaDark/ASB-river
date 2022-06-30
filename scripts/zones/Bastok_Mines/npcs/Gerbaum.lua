@@ -1,6 +1,12 @@
 -----------------------------------
 -- Area: Bastok Mines
 --  NPC: Gerbaum
+-- Starts & Finishes Repeatable Quest: Minesweeper
+-----------------------------------
+local ID = require("scripts/zones/Bastok_Mines/IDs")
+require("scripts/globals/titles")
+require("scripts/globals/quests")
+require("scripts/settings/main")
 -----------------------------------
 local entity = {}
 

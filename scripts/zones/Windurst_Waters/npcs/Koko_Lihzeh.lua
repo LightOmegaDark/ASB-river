@@ -3,6 +3,11 @@
 --  NPC: Koko Lihzeh
 -- !pos 135 -6 162 238
 -----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/titles")
+require("scripts/globals/quests")
+local ID = require("scripts/zones/Windurst_Waters/IDs")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

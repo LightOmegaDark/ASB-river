@@ -66,7 +66,8 @@ CMenuMeritPacket::CMenuMeritPacket(CCharEntity* PChar)
     ref<uint16>(0x0A) |= ((atMaxLevelLimit && hasCappedXp) || PChar->MeritMode) << 14; // XP is capped, or player is in Merit Mode
     ref<uint16>(0x0A) |= (canUseMeritMode && PChar->MeritMode) << 15;                  // Merit Mode Enabled, and Current Job is eligible
 
-    this->setSize(0xDC);
+    ref<uint8>(0x0C) = map_config.max_merit_points + PChar->PMeritPoints->GetMeritValue(MERIT_MAX_MERIT, PChar);
+}
 
     memset(data + 4, 0, PACKET_SIZE - 4);
 

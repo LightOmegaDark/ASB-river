@@ -3,6 +3,10 @@
 --  NPC: Chomoro-Kyotoro
 -- !pos 133 -5 167 238
 -----------------------------------
+require("scripts/globals/quests")
+require("scripts/globals/keyitems")
+require("scripts/settings/main")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

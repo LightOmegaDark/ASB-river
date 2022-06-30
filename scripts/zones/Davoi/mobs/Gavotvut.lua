@@ -2,7 +2,8 @@
 -- Area: Davoi
 --  Mob: Gavotvut
 -----------------------------------
-mixins = { require("scripts/mixins/job_special") }
+require("scripts/settings/main")
+require("scripts/globals/quests")
 -----------------------------------
 local entity = {}
 

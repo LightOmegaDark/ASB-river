@@ -1,29 +1,18 @@
 -----------------------------------
--- MAIN SETTINGS
+-- GLOBAL SETTINGS
 -----------------------------------
--- All settings are attached to the `xi.settings` object. This is published globally, and be accessed from C++ and any script.
---
--- This file is concerned mainly with content, balance, and gameplay tweaking.
+-- This is to allow server operators to further customize their servers.  As more features are added to the server, the list will surely expand.
+-- Anything scripted can be customized with proper script editing.
+
+-- PLEASE REQUIRE THIS SCRIPT IN ANY SCRIPTS USING SETTINGS: ADD THIS LINE TO THE TOP!!!!
+-- require("scripts/settings/main")
+-- With this script added to yours, you can pull variables from it!!
 -----------------------------------
 
 xi = xi or {}
-xi.settings = xi.settings or {}
 
-xi.settings.main =
+xi.settings =
 {
-    -- Server name (not longer than 15 characters)
-    SERVER_NAME = "Nameless",
-
-    SERVER_MESSAGE =
-        "Please visit https://github.com/LandSandBoat/server for the latest information on the project.\n" ..
-        "Thank you, and we hope you enjoy sailing the sands!",
-
-    -- Setting to lock content more accurately to the expansions defined below.
-    -- This generally results in a more accurate presentation of your selected expansions,
-    -- as well as a less confusing player experience for things that are disabled (things that are disabled are not loaded).
-    -- This feature correlates to the content_tag column in the SQL files.
-    RESTRICT_CONTENT = 0,
-
     -- Enable Expansion (1 = Enabled, 0 = Disabled)
     ENABLE_COP       = 1,
     ENABLE_TOAU      = 1,
@@ -51,7 +40,7 @@ xi.settings.main =
     GOBBIE_BOX_MIN_AGE = 45, -- Minimum character age in days before a character can sign up for Gobbie Mystery Box
 
     -- Records of Eminence
-    ENABLE_ROE            = 1, -- Enable Records of Eminence
+    ENABLE_ROE            = 1,
     ENABLE_ROE_TIMED      = 1, -- Enable 4-hour timed records
     ENABLE_EXCHANGE_LIMIT = 1, -- Enable Maximum limit of sparks spent per Week (default retail behavior: 1)
 

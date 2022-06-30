@@ -1,6 +1,10 @@
 -----------------------------------
 -- Area: Windurst Waters
 --  NPC: Tauwawa
+-- Working 100%
+-----------------------------------
+require("scripts/globals/quests")
+require("scripts/settings/main")
 -----------------------------------
 local entity = {}
 

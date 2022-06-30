@@ -2,7 +2,7 @@
 -- Energy Drain
 -----------------------------------
 require("scripts/globals/status")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/weaponskills")
 require("scripts/globals/msg")
 -----------------------------------
@@ -16,20 +16,13 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local multiplier = 0
 
-    if tp >= 3000 then
-        multiplier = fTPAnchors[3]
-    else
-        local basefTP   = fTPAnchors[startingAnchor]
-        local nextfTP   = fTPAnchors[startingAnchor + 1]
-        local multPerTP = (nextfTP - basefTP) / 1000 * (tp - 1000 * startingAnchor)
-        -- TP = 1250; multiplier = 1.25 + ( (2.5 - 1.25) / 1000 * (1250 - (1000 * 1))
-        --            multiplier = 1.25 + (1.25 / 1000) * 250)
-        --            multiplier = 1.25 + 0.3125 = 1.5625
-        multiplier = basefTP + multPerTP
+    local damagemod = damage * ((tp - 1000) / 2000 + 1) -- Simplified formula for getting difference in tp return from 1000 tp to 3000 tp
+
+    if xi.settings.USE_ADOULIN_WEAPON_SKILL_CHANGES then
+        damagemod = damagemod + player:getStat(xi.mod.MND)
     end
 
-    local skill = player:getSkillLevel(xi.skill.DAGGER)
-    local wsc   = player:getStat(xi.mod.MND) * 1.0
+    damagemod = damagemod * xi.settings.WEAPON_SKILL_POWER
 
     local mpRestored = math.floor((math.floor(skill * 0.11) + wsc) * multiplier)
 

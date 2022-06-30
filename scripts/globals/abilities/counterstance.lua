@@ -5,7 +5,8 @@
 -- Recast Time: 5:00
 -- Duration: 5:00
 -----------------------------------
-require("scripts/globals/job_utils/monk")
+require("scripts/settings/main")
+require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 

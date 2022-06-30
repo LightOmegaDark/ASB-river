@@ -1,6 +1,9 @@
 -----------------------------------
 -- Area: Windurst Waters
 --  NPC: Arukoko
+-- Working 100%
+-----------------------------------
+require("scripts/settings/main")
 -----------------------------------
 local entity = {}
 

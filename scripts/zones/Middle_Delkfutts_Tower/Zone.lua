@@ -1,13 +1,13 @@
 -----------------------------------
 -- Zone: Middle_Delkfutts_Tower
 -----------------------------------
-local ID = require('scripts/zones/Middle_Delkfutts_Tower/IDs')
-require('scripts/globals/conquest')
-require('scripts/globals/npc_util')
-require('scripts/globals/settings')
-require('scripts/globals/treasure')
-require('scripts/globals/quests')
-require('scripts/globals/titles')
+local ID = require("scripts/zones/Middle_Delkfutts_Tower/IDs")
+require("scripts/globals/conquest")
+require("scripts/globals/npc_util")
+require("scripts/settings/main")
+require("scripts/globals/treasure")
+require("scripts/globals/quests")
+require("scripts/globals/titles")
 -----------------------------------
 local zoneObject = {}
 

@@ -12,8 +12,7 @@
 -- Magic Bursts on: Compression, Gravitation, Darkness
 -- Combos: None
 -----------------------------------
-require("scripts/globals/bluemagic")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/status")
 require("scripts/globals/magic")
 -----------------------------------
@@ -31,7 +30,27 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.skillType = xi.skill.BLUE_MAGIC
     params.dmgMultiplier = 3.5
 
-    return xi.spells.blue.useDrainSpell(caster, target, spell, params, 165, true)
+    if (dmg < 0) then
+        dmg = 0
+    end
+
+    dmg = dmg * xi.settings.BLUE_POWER
+
+    if (target:isUndead()) then
+        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- No effect
+        return dmg
+    end
+
+    if (target:getMP() > dmg) then
+        caster:addMP(dmg)
+        target:delMP(dmg)
+    else
+        dmg = target:getMP()
+        caster:addMP(dmg)
+        target:delMP(dmg)
+    end
+
+    return dmg
 end
 
 return spellObject

@@ -4,6 +4,12 @@
 -- Type: Quest NPC
 -- !pos  258.643, -33.249, 99.901 175
 -----------------------------------
+local ID = require("scripts/zones/The_Eldieme_Necropolis_[S]/IDs")
+require("scripts/globals/keyitems")
+require("scripts/settings/main")
+require("scripts/globals/quests")
+require("scripts/globals/npc_util")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

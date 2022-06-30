@@ -4,6 +4,10 @@
 -- Involved in Quests: Tuning Out
 -- !pos 105 -20 140 111
 -----------------------------------
+require("scripts/globals/quests")
+require("scripts/settings/main")
+local ID = require("scripts/zones/Beaucedine_Glacier/IDs")
+require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")
 -----------------------------------
 local entity = {}

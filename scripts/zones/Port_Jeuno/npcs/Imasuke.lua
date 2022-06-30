@@ -3,6 +3,10 @@
 --  NPC: Imasuke
 -- !pos -165 11 94 246
 -----------------------------------
+local ID = require("scripts/zones/Port_Jeuno/IDs")
+require("scripts/settings/main")
+require("scripts/globals/titles")
+require("scripts/globals/keyitems")
 require("scripts/globals/quests")
 -----------------------------------
 local entity = {}

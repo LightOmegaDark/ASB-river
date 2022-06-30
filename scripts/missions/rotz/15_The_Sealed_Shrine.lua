@@ -10,7 +10,7 @@
 require('scripts/globals/interaction/mission')
 require('scripts/globals/keyitems')
 require('scripts/globals/missions')
-require('scripts/globals/settings')
+require('scripts/settings/main')
 require('scripts/globals/titles')
 require('scripts/globals/zone')
 -----------------------------------
@@ -26,7 +26,8 @@ mission.sections =
 {
     {
         check = function(player, currentMission, missionStatus, vars)
-            return currentMission == mission.missionId
+            return currentMission == mission.missionId and missionStatus == 0 and
+                getNumDMEarrings(player) <= xi.settings.NUMBER_OF_DM_EARRINGS
         end,
 
         [xi.zone.NORG] =
@@ -78,7 +79,17 @@ mission.sections =
             onZoneIn =
             {
                 function(player, prevZone)
-                    if player:getMissionStatus(mission.areaId) == 1 then
+                     -- Entered through the Main Gate
+                     -- TODO: This should probably be a region
+                    local xPos = player:getXPos()
+                    local yPos = player:getYPos()
+                    local zPos = player:getZPos()
+
+                    if
+                        xPos >= -45 and yPos >= -4 and zPos >= -240 and
+                        xPos <= -33 and yPos <= 0 and zPos <= -226 and
+                        getNumDMEarrings(player) <= xi.settings.NUMBER_OF_DM_EARRINGS
+                    then
                         return 51
                     end
                 end,

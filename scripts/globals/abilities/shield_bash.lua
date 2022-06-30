@@ -5,7 +5,10 @@
 -- Recast Time: 1:00 minute (3:00 for Valoredge version)
 -- Duration: Instant
 -----------------------------------
-require("scripts/globals/job_utils/paladin")
+require("scripts/globals/jobpoints")
+require("scripts/settings/main")
+require("scripts/globals/status")
+require("scripts/globals/msg")
 -----------------------------------
 local abilityObject = {}
 

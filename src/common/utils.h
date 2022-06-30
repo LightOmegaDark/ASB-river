@@ -86,14 +86,7 @@ void        DecodeStringSignature(const std::string& signature, char* target);
 void        PackSoultrapperName(std::string name, uint8 output[]);
 std::string UnpackSoultrapperName(uint8 input[]);
 
-auto escape(std::string const& s) -> std::string;
-auto split(std::string const& s, std::string const& delimiter = " ") -> std::vector<std::string>;
-auto to_lower(std::string const& s) -> std::string;
-auto to_upper(std::string const& s) -> std::string;
-auto trim(const std::string& str, const std::string& whitespace = " \t") -> std::string;
-bool matches(std::string const& target, std::string const& pattern, std::string const& wildcard = "%");
-bool starts_with(std::string const& target, std::string const& pattern);
-auto replace(std::string const& target, std::string const& search, std::string const& replace) -> std::string;
+std::string escape(std::string const& s);
 
 auto   split(std::string const& s, std::string const& delimiter = " ") -> std::vector<std::string>;
 auto   trim(const std::string& str, const std::string& whitespace = " \t") -> std::string ;

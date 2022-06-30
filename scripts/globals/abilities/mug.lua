@@ -4,7 +4,10 @@
 -- Obtained: Thief Level 35
 -- Recast Time: 5:00
 -----------------------------------
-require("scripts/globals/job_utils/thief")
+require("scripts/globals/jobpoints")
+require("scripts/settings/main")
+require("scripts/globals/status")
+require("scripts/globals/msg")
 -----------------------------------
 local abilityObject = {}
 

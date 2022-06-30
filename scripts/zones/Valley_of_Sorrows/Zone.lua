@@ -1,13 +1,18 @@
 -----------------------------------
 -- Zone: Valley_of_Sorrows (128)
 -----------------------------------
-local ID = require('scripts/zones/Valley_of_Sorrows/IDs')
-require('scripts/globals/conquest')
-require('scripts/globals/zone')
+local ID = require("scripts/zones/Valley_of_Sorrows/IDs")
+require("scripts/globals/conquest")
+require("scripts/settings/main")
+require("scripts/globals/zone")
 -----------------------------------
 local zoneObject = {}
 
-zoneObject.onInitialize = function(zone)
+zone_object.onInitialize = function(zone)
+    if (xi.settings.LandKingSystem_NQ ~= 1) then
+        UpdateNMSpawnPoint(ID.mob.ADAMANTOISE)
+        GetMobByID(ID.mob.ADAMANTOISE):setRespawnTime(900 + math.random(0, 6) * 1800)
+    end
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

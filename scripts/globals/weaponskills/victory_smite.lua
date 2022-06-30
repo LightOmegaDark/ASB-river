@@ -17,7 +17,7 @@
 -- 10%        25%        45%
 -----------------------------------
 require("scripts/globals/aftermath")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/status")
 require("scripts/globals/weaponskills")
 -----------------------------------
@@ -34,9 +34,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
     params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
-    if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
-        params.multiHitfTP = true -- http://wiki.ffo.jp/html/21093.html
-        params.ftp100 = 1.50 params.ftp200 = 1.50 params.ftp300 = 1.50
+    if xi.settings.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.str_wsc = 0.8
     end
 

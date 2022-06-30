@@ -3,6 +3,11 @@
 --  NPC: Sharzalion
 -- !pos 95 0 111 230
 -----------------------------------
+require("scripts/globals/status")
+require("scripts/settings/main")
+require("scripts/globals/titles")
+require("scripts/globals/keyitems")
+require("scripts/globals/shop")
 require("scripts/globals/quests")
 -----------------------------------
 local entity = {}
@@ -15,10 +20,19 @@ entity.onTrigger = function(player, npc)
     local peaceForTheSpirit   = player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.PEACE_FOR_THE_SPIRIT)
     local peaceForTheSpiritCS = player:getCharVar("peaceForTheSpiritCS")
 
-    if
-        envelopedInDarkness == QUEST_COMPLETED and
-        peaceForTheSpirit == QUEST_AVAILABLE
-    then
+    if (player:getMainJob() == xi.job.RDM and player:getMainLvl() >= xi.settings.AF1_QUEST_LEVEL and theCrimsonTrial == QUEST_AVAILABLE) then
+        if (player:getCharVar("has_seen_rdmaf1_quest_already") == 0) then
+            player:startEvent(70)
+        else
+            player:startEvent(71)
+        end
+    elseif (theCrimsonTrial == QUEST_ACCEPTED and orcishDriedFood == false) then
+        player:startEvent(74)
+    elseif (orcishDriedFood == true) then
+        player:startEvent(75)
+    elseif (theCrimsonTrial == QUEST_COMPLETED and envelopedInDarkness == QUEST_AVAILABLE) then
+        player:startEvent(68)
+    elseif (envelopedInDarkness == QUEST_COMPLETED and peaceForTheSpirit == QUEST_AVAILABLE) then
         player:startEvent(69)
     elseif peaceForTheSpirit == QUEST_ACCEPTED and peaceForTheSpiritCS == 0 then
         player:startEvent(64)

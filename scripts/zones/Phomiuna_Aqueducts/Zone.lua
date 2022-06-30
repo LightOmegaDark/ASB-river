@@ -1,9 +1,9 @@
 -----------------------------------
 -- Zone: Phomiuna_Aqueducts (27)
 -----------------------------------
-local ID = require('scripts/zones/Phomiuna_Aqueducts/IDs')
-require('scripts/globals/settings')
-require('scripts/globals/status')
+local ID = require("scripts/zones/Phomiuna_Aqueducts/IDs")
+require("scripts/settings/main")
+require("scripts/globals/status")
 -----------------------------------
 local zoneObject = {}
 
@@ -28,7 +28,10 @@ zoneObject.onZoneIn = function(player, prevZone)
     return cs
 end
 
-zoneObject.afterZoneIn = function(player)
+zone_object.afterZoneIn = function(player)
+    if (xi.settings.ENABLE_COP_ZONE_CAP == 1) then -- ZONE WIDE LEVEL RESTRICTION
+        player:addStatusEffect(xi.effect.LEVEL_RESTRICTION, 40, 0, 0) -- LV40 cap
+    end
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)

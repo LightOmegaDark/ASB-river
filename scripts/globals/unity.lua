@@ -121,8 +121,8 @@ function xi.unity.onTrigger(player, npc)
     local zoneId             = player:getZoneID()
     local hasAllForOne       = player:hasEminenceRecord(5)
     local allForOneCompleted = player:getEminenceCompleted(5)
-    local accolades          = player:getCurrency("unity_accolades")
-    local remainingLimit     = xi.settings.main.WEEKLY_EXCHANGE_LIMIT - player:getCharVar("weekly_accolades_spent")
+    local accolades = player:getCurrency("unity_accolades")
+    local remainingLimit = xi.settings.WEEKLY_EXCHANGE_LIMIT - player:getCharVar("weekly_accolades_spent")
 
     -- Check player total records completed
     if player:getNumEminenceCompleted() < 10 then
@@ -148,9 +148,9 @@ function xi.unity.onEventUpdate(player, csid, option)
     local ID                   = require(string.format("scripts/zones/%s/IDs", zoneEventIds[zoneId][5]))
     local accolades            = player:getCurrency("unity_accolades")
     local weeklyAccoladesSpent = player:getCharVar("weekly_sparks_spent")
-    local remainingLimit       = xi.settings.main.WEEKLY_EXCHANGE_LIMIT - player:getCharVar("weekly_accolades_spent")
-    local category             = bit.band(option, 0xF)
-    local selection            = bit.band(bit.rshift(option, 5), 0xFF)
+    local remainingLimit = xi.settings.WEEKLY_EXCHANGE_LIMIT - player:getCharVar("weekly_accolades_spent")
+    local category  = bit.band(option, 0xF)
+    local selection = bit.band(bit.rshift(option, 5), 0xFF)
 
     if csid == zoneEventIds[zoneId][4] then
         if option == 10 then

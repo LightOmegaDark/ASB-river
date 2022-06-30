@@ -796,7 +796,7 @@ namespace message
         }
         catch (zmq::error_t& err)
         {
-            ShowCritical("Message: Unable to connect chat socket: %s", err.what());
+            ShowFatalError("Message: Unable to connect chat socket: %s", err.what());
         }
     }
 

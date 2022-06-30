@@ -3,7 +3,7 @@
 -- Item: Ether Drop
 -- Item Effect: Restores 15 MP
 -----------------------------------
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------
@@ -17,8 +17,8 @@ itemObject.onItemCheck = function(target)
     return 0
 end
 
-itemObject.onItemUse = function(target)
-    target:addMP(15 * xi.settings.main.ITEM_POWER)
+item_object.onItemUse = function(target)
+    target:addMP(15*xi.settings.ITEM_POWER)
     target:addStatusEffect(xi.effect.MEDICINE, 0, 0, 300)
 end
 

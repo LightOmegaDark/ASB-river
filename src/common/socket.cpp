@@ -200,7 +200,7 @@ int32 makeConnection(uint32 ip, uint16 port, int32 type)
     remote_address.sin_addr.s_addr = htonl(ip);
     remote_address.sin_port        = htons(port);
 
-    ShowInfo(fmt::format("Connecting to {}:{}", ip2str(ip), port));
+    ShowStatus("Connecting to %d.%d.%d.%d:%i", CONVIP(ip), port);
 
     result = sConnect(fd, (struct sockaddr*)(&remote_address), sizeof(struct sockaddr_in));
     if (result == SOCKET_ERROR)
@@ -1034,12 +1034,10 @@ void socket_init_tcp()
         return;
     }
 
-    // setup our socket
-    socket_tcp_setup();
-
-    // sessions[0] is now currently used for disconnected sessions of the map
-    // server, and as such, should hold enough buffer (it is a vacuum so to
-    // speak) as it is never flushed. [Skotlex]
+    const char* SOCKET_CONF_FILENAME = "./conf/packet_tcp.conf";
+    socket_config_read(SOCKET_CONF_FILENAME);
+    // sessions[0] is now currently used for disconnected sessions of the map server, and as such,
+    // should hold enough buffer (it is a vacuum so to speak) as it is never flushed. [Skotlex]
     create_session(0, null_recv, null_send, null_parse);
 
     // Delete old connection history every 5 minutes
@@ -1239,9 +1237,8 @@ void socket_init_udp()
     {
         return;
     }
-
-    // setup our socket
-    socket_udp_setup();
+    const char* SOCKET_CONF_FILENAME = "./conf/packet_udp.conf";
+    socket_config_read(SOCKET_CONF_FILENAME);
 }
 
 void do_close_udp(int32 fd)

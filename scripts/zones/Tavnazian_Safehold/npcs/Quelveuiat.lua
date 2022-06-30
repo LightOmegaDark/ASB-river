@@ -3,6 +3,11 @@
 --  NPC: Quelveuiat
 -- !pos -3.177 -22.750 -25.970 26
 -----------------------------------
+require("scripts/globals/quests")
+require("scripts/settings/main")
+require("scripts/globals/keyitems")
+local ID = require("scripts/zones/Tavnazian_Safehold/IDs")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

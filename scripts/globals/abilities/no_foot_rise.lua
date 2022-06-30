@@ -5,7 +5,8 @@
 -- Recast Time: 3 minutes
 -- Duration: Instant
 -----------------------------------
-require('scripts/globals/job_utils/dancer')
+require("scripts/settings/main")
+require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 

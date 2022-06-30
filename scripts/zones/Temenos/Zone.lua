@@ -1,10 +1,10 @@
 -----------------------------------
 -- Zone: Temenos (37)
 -----------------------------------
-local ID = require('scripts/zones/Temenos/IDs')
-require('scripts/globals/conquest')
-require('scripts/globals/settings')
-require('scripts/globals/status')
+local ID = require("scripts/zones/Temenos/IDs")
+require("scripts/globals/conquest")
+require("scripts/settings/main")
+require("scripts/globals/status")
 -----------------------------------
 local zoneObject = {}
 

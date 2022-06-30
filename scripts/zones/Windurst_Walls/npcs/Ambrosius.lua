@@ -5,7 +5,7 @@
 -- Quest NPC for "The Postman Always KOs Twice"
 -----------------------------------
 require("scripts/globals/quests")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 -----------------------------------
 local entity = {}
 
@@ -47,27 +47,27 @@ entity.onTrade = function(player, npc, trade)
         if trade:getItemCount() == reward then
             if reward == 1 then
                 if postman == QUEST_ACCEPTED then
-                    player:startEvent(52, xi.settings.main.GIL_RATE * 50)
+                    player:startEvent(52, xi.settings.GIL_RATE * 50)
                 elseif postman == QUEST_COMPLETED then
-                    player:startEvent(57, xi.settings.main.GIL_RATE * 50)
+                    player:startEvent(57, xi.settings.GIL_RATE * 50)
                 end
             elseif reward == 2 then
                 if postman == QUEST_ACCEPTED then
-                    player:startEvent(53, xi.settings.main.GIL_RATE * 150, 2)
+                    player:startEvent(53, xi.settings.GIL_RATE * 150, 2)
                 elseif postman == QUEST_COMPLETED then
-                    player:startEvent(58, xi.settings.main.GIL_RATE * 150, 2)
+                    player:startEvent(58, xi.settings.GIL_RATE * 150, 2)
                 end
             elseif reward == 3 then
                 if postman == QUEST_ACCEPTED then
-                    player:startEvent(54, xi.settings.main.GIL_RATE * 250, 3)
+                    player:startEvent(54, xi.settings.GIL_RATE * 250, 3)
                 elseif postman == QUEST_COMPLETED then
-                    player:startEvent(59, xi.settings.main.GIL_RATE * 250, 3)
+                    player:startEvent(59, xi.settings.GIL_RATE * 250, 3)
                 end
             elseif reward == 4 then
                 if postman == QUEST_ACCEPTED then
-                    player:startEvent(55, xi.settings.main.GIL_RATE * 500, 4)
+                    player:startEvent(55, xi.settings.GIL_RATE * 500, 4)
                 elseif postman == QUEST_COMPLETED then
-                    player:startEvent(60, xi.settings.main.GIL_RATE * 500, 4)
+                    player:startEvent(60, xi.settings.GIL_RATE * 500, 4)
                 end
             end
         end

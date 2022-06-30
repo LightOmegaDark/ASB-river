@@ -6,6 +6,9 @@
 -- This NPC participates in Quests and Missions
 -- !pos -8 1 1 230
 -----------------------------------
+local ID = require("scripts/zones/Southern_San_dOria/IDs")
+require("scripts/settings/main")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
@@ -23,9 +26,10 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 655 then
+    if (csid == 655) then
+        player:addGil(xi.settings.GIL_RATE*50)
         player:tradeComplete()
-        npcUtil.giveCurrency(player, 'gil', 50)
+        player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE*50)
     end
 end
 

@@ -114,7 +114,7 @@ sol::table CLuaBattlefield::getPlayers()
 
 sol::table CLuaBattlefield::getMobs(bool required, bool adds)
 {
-    auto table = lua.create_table();
+    auto table = luautils::lua.create_table();
 
     if (required && !m_PLuaBattlefield->m_RequiredEnemyList.empty())
     {

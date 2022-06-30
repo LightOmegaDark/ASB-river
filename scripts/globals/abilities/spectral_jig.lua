@@ -7,7 +7,7 @@
 -- Duration: 3 minutes
 -----------------------------------
 require("scripts/globals/jobpoints")
-require("scripts/globals/msg")
+require("scripts/settings/main")
 require("scripts/globals/status")
 require("scripts/globals/utils")
 -----------------------------------
@@ -20,7 +20,7 @@ end
 abilityObject.onUseAbility = function(player, target, ability)
     local baseDuration       = 180 + player:getJobPointLevel(xi.jp.JIG_DURATION)
     local durationMultiplier = 1.0 + utils.clamp(player:getMod(xi.mod.JIG_DURATION), 0, 50) / 100
-    local finalDuration      = math.floor(baseDuration * durationMultiplier * xi.settings.main.SNEAK_INVIS_DURATION_MULTIPLIER)
+    local finalDuration = math.floor(baseDuration * durationMultiplier * xi.settings.SNEAK_INVIS_DURATION_MULTIPLIER)
 
     if not player:hasStatusEffect(xi.effect.SNEAK) then
         player:addStatusEffect(xi.effect.SNEAK, 0, 10, finalDuration)

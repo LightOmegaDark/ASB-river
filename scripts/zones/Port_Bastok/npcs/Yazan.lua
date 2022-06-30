@@ -1,6 +1,12 @@
 -----------------------------------
 -- Area: Port Bastok
 --  NPC: Yazan
+-- Starts Quests: Bite the Dust (100%)
+-----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/titles")
+require("scripts/globals/quests")
+local ID = require("scripts/zones/Port_Bastok/IDs")
 -----------------------------------
 local entity = {}
 

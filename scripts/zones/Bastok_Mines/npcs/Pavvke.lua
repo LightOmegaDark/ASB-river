@@ -1,6 +1,11 @@
 -----------------------------------
 -- Area: Bastok Mines
 --  NPC: Pavvke
+-- Starts Quests: Fallen Comrades (100%)
+-----------------------------------
+local ID = require("scripts/zones/Bastok_Mines/IDs")
+require("scripts/globals/quests")
+require("scripts/settings/main")
 -----------------------------------
 local entity = {}
 

@@ -4,6 +4,8 @@
 --  Description:  Single-target ranged Light damage (~700-1500), ignores Utsusemi.
 --  Type: Magical
 -----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/status")
 require("scripts/globals/mobskills")
 require("scripts/globals/status")
 -----------------------------------

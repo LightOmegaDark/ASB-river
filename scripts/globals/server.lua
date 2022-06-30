@@ -1,6 +1,5 @@
 -----------------------------------
-require("scripts/globals/settings")
-require("scripts/globals/events/handler")
+require("scripts/settings/main")
 -----------------------------------
 
 xi = xi or {}

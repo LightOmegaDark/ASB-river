@@ -81,7 +81,6 @@ public:
     /// Establishes a connection.
     ///
     /// @return SQL_SUCCESS or SQL_ERROR
-    SqlConnection();
     SqlConnection(const char* user, const char* passwd, const char* host, uint16 port, const char* db);
     ~SqlConnection();
 

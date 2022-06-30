@@ -3,6 +3,10 @@
 --  NPC: Valah Molkot
 -- !pos 59 8 -221 236
 -----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/quests")
+local ID = require("scripts/zones/Port_Bastok/IDs")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

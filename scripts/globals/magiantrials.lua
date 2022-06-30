@@ -362,28 +362,18 @@ xi.magian.deliveryCrateOnEventFinish = function(player, csid, option)
     local nbTrialsPlayer    = player:getLocalVar("storeNbTrialsPlayer")
     local itemId            = player:getLocalVar("storeItemId")
 
-    if csid == 10134 then
-        if optionMod == 0 then
-            player:addItem(itemTrialId, itemTrialQuantity)
-            player:messageSpecial(msg.RETURN_ITEM, itemTrialId)
-        elseif optionMod == 102 then
-            checkAndSetProgression(player, trialId, { itemId = itemTrialId, quantity = itemTrialQuantity }, xi.settings.main.MAGIAN_TRIALS_TRADE_MULTIPLIER)
-        end
+    if csid == 10134 and optionMod == 0 then
+        player:addItem(itemTrialId, itemTrialQuantity)
+        player:messageSpecial(msg.RETURN_ITEM, itemTrialId)
 
-        if
-            optionMod == 0 or
-            optionMod == 102
-        then
-            if itemId ~= 0 and nbTrialsPlayer > 0 then
-                local t = GetMagianTrial(trialId)
-                player:addItem(t.reqItem, 1, t.reqItemAug1, t.reqItemAugValue1, t.reqItemAug2, t.reqItemAugValue2, t.reqItemAug3, t.reqItemAugValue3, t.reqItemAug4, t.reqItemAugValue4, trialId)
-            end
+    elseif csid == 10134 and optionMod == 102 then
+        checkAndSetProgression(player, trialId, { itemId = itemTrialId, quantity = itemTrialQuantity }, xi.settings.MAGIAN_TRIALS_TRADE_MULTIPLIER)
+    end
 
-            player:setLocalVar("storeTrialId", 0)
-            player:setLocalVar("storeItemId", 0)
-            player:setLocalVar("storeItemTrialId", 0)
-            player:setLocalVar("storeItemTrialQty", 0)
-            player:setLocalVar("storeNbTrialsPlayer", 0)
+    if  csid == 10134 and (optionMod == 0 or optionMod == 102) then
+        if itemId ~= 0 and nbTrialsPlayer > 0 then
+            local t = GetMagianTrial(trialId)
+            player:addItem(t.reqItem, 1, t.reqItemAug1, t.reqItemAugValue1, t.reqItemAug2, t.reqItemAugValue2, t.reqItemAug3, t.reqItemAugValue3, t.reqItemAug4, t.reqItemAugValue4, trialId)
         end
     end
 end
@@ -394,7 +384,7 @@ xi.magian.checkMagianTrial = function(player, conditions)
         local trialIdOnItem = player:getEquippedItem(slot) and player:getEquippedItem(slot):getTrialNumber()
 
         if trialIdOnItem ~= 0 then
-            checkAndSetProgression(player, trialIdOnItem, conditions, xi.settings.main.MAGIAN_TRIALS_MOBKILL_MULTIPLIER)
+            checkAndSetProgression(player, trialIdOnItem, conditions, xi.settings.MAGIAN_TRIALS_MOBKILL_MULTIPLIER)
         end
     end
 end

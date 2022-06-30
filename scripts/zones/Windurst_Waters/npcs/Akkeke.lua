@@ -3,6 +3,11 @@
 --  NPC: Akkeke
 -- !pos 135 -6 165 238
 -----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/keyitems")
+require("scripts/globals/quests")
+require("scripts/globals/titles")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

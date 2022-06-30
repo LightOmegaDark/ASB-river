@@ -6,8 +6,7 @@
 -- !pos -90 -4 -108 235
 -----------------------------------
 local ID = require("scripts/zones/Bastok_Markets/IDs")
-require("scripts/globals/settings")
-require('scripts/globals/items')
+require("scripts/settings/main")
 require("scripts/globals/keyitems")
 require("scripts/globals/equipment")
 require("scripts/globals/status")

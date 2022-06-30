@@ -1,6 +1,11 @@
 -----------------------------------
 -- Area: Port Bastok
 --  NPC: Corann
+-- Start & Finishes Quest: The Quadav's Curse
+-----------------------------------
+require("scripts/globals/quests")
+require("scripts/settings/main")
+local ID = require("scripts/zones/Port_Bastok/IDs")
 -----------------------------------
 local entity = {}
 

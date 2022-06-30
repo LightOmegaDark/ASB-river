@@ -6,6 +6,10 @@
 -- Lion Springs Door : !pos 96 0 106 80
 -----------------------------------
 require('scripts/globals/missions')
+require('scripts/globals/npc_util')
+require('scripts/globals/quests')
+require('scripts/settings/main')
+require('scripts/globals/titles')
 require('scripts/globals/interaction/mission')
 require('scripts/globals/zone')
 -----------------------------------

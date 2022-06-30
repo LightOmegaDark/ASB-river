@@ -3,7 +3,7 @@
 --  NPC: Moari-Kaaori
 -----------------------------------
 local ID = require("scripts/zones/Windurst_Waters/IDs")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/quests")
 require("scripts/globals/titles")
 -----------------------------------
@@ -17,7 +17,7 @@ entity.onTrade = function(player, npc, trade)
     if flowerProgress == 3 then
         if trade:hasItemQty(950, 1) and trade:getItemCount() == 1 then
             if sayFlowers == QUEST_COMPLETED then
-                player:startEvent(525, xi.settings.main.GIL_RATE * 400)
+                player:startEvent(525, xi.settings.GIL_RATE*400)
             else
                 player:startEvent(520)
             end

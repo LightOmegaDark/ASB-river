@@ -1,7 +1,7 @@
 require("scripts/globals/spell_data")
 require("scripts/globals/jobpoints")
 require("scripts/globals/magicburst")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/status")
 require("scripts/globals/utils")
 require("scripts/globals/msg")
@@ -709,13 +709,13 @@ function finalMagicAdjustments(caster, target, spell, dmg)
 
     local skill = spell:getSkillType()
     if skill == xi.skill.ELEMENTAL_MAGIC then
-        dmg = dmg * xi.settings.main.ELEMENTAL_POWER
+        dmg = dmg * xi.settings.ELEMENTAL_POWER
     elseif skill == xi.skill.DARK_MAGIC then
-        dmg = dmg * xi.settings.main.DARK_POWER
+        dmg = dmg * xi.settings.DARK_POWER
     elseif skill == xi.skill.NINJUTSU then
-        dmg = dmg * xi.settings.main.NINJUTSU_POWER
+        dmg = dmg * xi.settings.NINJUTSU_POWER
     elseif skill == xi.skill.DIVINE_MAGIC then
-        dmg = dmg * xi.settings.main.DIVINE_POWER
+        dmg = dmg * xi.settings.DIVINE_POWER
     end
 
     dmg = target:magicDmgTaken(dmg)
@@ -1073,6 +1073,160 @@ function canOverwrite(target, effect, power, mod)
     end
 
     return true
+end
+
+function doElementalNuke(caster, spell, target, spellParams)
+    local dmg = 0
+    local dINT = caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+    local baseValue = 0
+    local tierMultiplier = 0
+
+    if xi.settings.USE_OLD_MAGIC_DAMAGE and spellParams.V ~= nil and spellParams.M ~= nil then
+        baseValue = spellParams.V -- Base value
+        tierMultiplier = spellParams.M -- Tier multiplier
+        local inflectionPoint = spellParams.I -- Inflection point
+        local cap = inflectionPoint * 2 + baseValue -- Base damage soft cap
+
+        if dINT < 0 then
+            -- If dINT is a negative value the tier multiplier is always 1
+            dmg = baseValue + dINT
+
+            -- Check/ set lower limit of 0 damage for negative dINT
+            if dmg < 1 then
+                return 0
+            end
+
+        elseif dINT < inflectionPoint then
+             -- If dINT > 0 but below inflection point I
+            dmg = baseValue + dINT * tierMultiplier
+
+        else
+             -- Above inflection point I additional dINT is only half as effective
+            dmg = baseValue + inflectionPoint + ((dINT - inflectionPoint) * (tierMultiplier / 2))
+        end
+
+        -- Check/ set damage soft cap
+        if dmg > cap then
+            dmg = cap
+        end
+
+    else
+        local mDMG = caster:getMod(xi.mod.MAGIC_DAMAGE)
+
+        -- BLM Job Point: Manafont Elemental Magic Damage +3
+        if caster:hasStatusEffect(xi.effect.MANAFONT) then
+            mDMG = mDMG + (caster:getJobPointLevel(xi.jp.MANAFONT_EFFECT) * 3)
+        end
+
+        -- BLM Job Point: With Manawell mDMG +1
+        if caster:hasStatusEffect(xi.effect.MANAWELL) then
+            mDMG = mDMG + caster:getJobPointLevel(xi.jp.MANAWELL_EFFECT)
+            caster:delStatusEffectSilent(xi.effect.MANAWELL)
+        end
+
+        -- BLM Job Point: Magic Damage Bonus
+        mDMG = mDMG + caster:getJobPointLevel(xi.jp.MAGIC_DMG_BONUS)
+
+        --[[
+                Calculate base damage:
+                D = mDMG + V + (dINT × M)
+                D is then floored
+                For dINT reduce by amount factored into the V value (example: at 134 INT, when using V100 in the calculation, use dINT = 134-100 = 34)
+        ]]
+
+        if dINT <= 49 then
+            baseValue = spellParams.V0
+            tierMultiplier = spellParams.M0
+            dmg = math.floor(dmg + mDMG + baseValue + (dINT * tierMultiplier))
+
+            if dmg <= 0 then
+                return 0
+            end
+
+        elseif dINT >= 50 and dINT <= 99 then
+            baseValue = spellParams.V50
+            tierMultiplier = spellParams.M50
+            dmg = math.floor(dmg + mDMG + baseValue + ((dINT - 50) * tierMultiplier))
+
+        elseif dINT >= 100 and dINT <= 199 then
+            baseValue = spellParams.V100
+            tierMultiplier = spellParams.M100
+            dmg = math.floor(dmg + mDMG + baseValue + ((dINT - 100) * tierMultiplier))
+
+        elseif dINT > 199 then
+            baseValue = spellParams.V200
+            tierMultiplier = spellParams.M200
+            dmg = math.floor(dmg + mDMG + baseValue + ((dINT - 200) * tierMultiplier))
+        end
+    end
+
+    --get resist multiplier (1x if no resist)
+    local params = {}
+    params.attribute = xi.mod.INT
+    params.skillType = xi.skill.ELEMENTAL_MAGIC
+    -- params.resistBonus = resistBonus
+
+    local resist = applyResistance(caster, target, spell, params)
+
+    --get the resisted damage
+    dmg = dmg * resist
+
+    --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
+    dmg = addBonuses(caster, spell, target, dmg, spellParams)
+
+    --add in target adjustment
+    local ele = spell:getElement()
+    dmg = adjustForTarget(target, dmg, ele)
+
+    --add in final adjustments
+    dmg = finalMagicAdjustments(caster, target, spell, dmg)
+
+    return dmg
+end
+
+function doDivineNuke(caster, target, spell, params)
+    params.skillType = xi.skill.DIVINE_MAGIC
+    params.attribute = xi.mod.MND
+
+    return doNuke(caster, target, spell, params)
+end
+
+function doNinjutsuNuke(caster, target, spell, params)
+    local mabBonus = params.bonusmab
+
+    mabBonus = mabBonus or 0
+
+    mabBonus = mabBonus + caster:getMod(xi.mod.NIN_NUKE_BONUS) -- "enhances ninjutsu damage" bonus
+    if caster:hasStatusEffect(xi.effect.INNIN) and caster:isBehind(target, 23) then -- Innin mag atk bonus from behind, guesstimating angle at 23 degrees
+        mabBonus = mabBonus + caster:getStatusEffect(xi.effect.INNIN):getPower()
+    end
+    params.skillType = xi.skill.NINJUTSU
+    params.attribute = xi.mod.INT
+    params.bonusmab = mabBonus
+
+    return doNuke(caster, target, spell, params)
+end
+
+function doDivineBanishNuke(caster, target, spell, params)
+    params.skillType = xi.skill.DIVINE_MAGIC
+    params.attribute = xi.mod.MND
+
+    --calculate raw damage
+    local dmg = calculateMagicDamage(caster, target, spell, params)
+    --get resist multiplier (1x if no resist)
+    local resist = applyResistance(caster, target, spell, params)
+    --get the resisted damage
+    dmg = dmg*resist
+
+    --add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
+    dmg = addBonuses(caster, spell, target, dmg, params)
+    --add in target adjustment
+    dmg = adjustForTarget(target, dmg, spell:getElement())
+    --handling afflatus misery
+    dmg = handleAfflatusMisery(caster, spell, dmg)
+    --add in final adjustments
+    dmg = finalMagicAdjustments(caster, target, spell, dmg)
+    return dmg
 end
 
 function calculateDurationForLvl(duration, spellLvl, targetLvl)

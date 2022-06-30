@@ -1650,7 +1650,7 @@ namespace fishingutils
         return 1;
         */
 
-        return 0; // Remove when catching chests is enabled.
+        return 0; // Remove when chatching chests is enabled.
     }
 
     /************************************************************************
@@ -1784,7 +1784,7 @@ namespace fishingutils
         maxChance = std::max(4, distMod + lowerLevelBonus - skillLevelPenalty);
 
         // Configuration multiplier.
-        maxChance = maxChance * settings::get<float>("map.FISHING_SKILL_MULTIPLIER");
+        maxChance = maxChance * map_config.fishing_skill_multiplier;
 
         // Moon phase skillup modifiers
         uint8 phase         = CVanaTime::getInstance()->getMoonPhase();

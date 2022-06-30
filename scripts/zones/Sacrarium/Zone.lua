@@ -1,11 +1,11 @@
 -----------------------------------
 -- Zone: Sacrarium (28)
 -----------------------------------
-local ID = require('scripts/zones/Sacrarium/IDs')
-require('scripts/globals/conquest')
-require('scripts/globals/settings')
-require('scripts/globals/treasure')
-require('scripts/globals/status')
+local ID = require("scripts/zones/Sacrarium/IDs")
+require("scripts/globals/conquest")
+require("scripts/settings/main")
+require("scripts/globals/treasure")
+require("scripts/globals/status")
 -----------------------------------
 local zoneObject = {}
 
@@ -30,7 +30,10 @@ zoneObject.onZoneIn = function(player, prevZone)
     return cs
 end
 
-zoneObject.afterZoneIn = function(player)
+zone_object.afterZoneIn = function(player)
+    if xi.settings.ENABLE_COP_ZONE_CAP == 1 then -- ZONE WIDE LEVEL RESTRICTION
+        player:addStatusEffect(xi.effect.LEVEL_RESTRICTION, 50, 0, 0) -- LV50 cap
+    end
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

@@ -3,6 +3,11 @@
 --  NPC: Baudin
 -- !pos -75 0 80 244
 -----------------------------------
+local ID = require("scripts/zones/Upper_Jeuno/IDs")
+require("scripts/settings/main")
+require("scripts/globals/titles")
+require("scripts/globals/quests")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

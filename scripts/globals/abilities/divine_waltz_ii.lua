@@ -5,7 +5,9 @@
 -- TP Required: 80%
 -- Recast Time: 00:20
 -----------------------------------
-require('scripts/globals/job_utils/dancer')
+require("scripts/settings/main")
+require("scripts/globals/status")
+require("scripts/globals/msg")
 -----------------------------------
 local abilityObject = {}
 

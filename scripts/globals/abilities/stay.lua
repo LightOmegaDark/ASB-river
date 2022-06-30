@@ -5,6 +5,8 @@
 -- Recast Time: 5 seconds
 -- Duration: Instant
 -----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/status")
 require("scripts/globals/msg")
 require("scripts/globals/status")
 -----------------------------------

@@ -1,6 +1,12 @@
 -----------------------------------
 -- Area: Port Bastok
 --  NPC: Gudav
+-- Starts Quests: A Foreman's Best Friend
+-----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/keyitems")
+require("scripts/globals/quests")
+local ID = require("scripts/zones/Port_Bastok/IDs")
 -----------------------------------
 local entity = {}
 

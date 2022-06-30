@@ -1,14 +1,13 @@
 -----------------------------------
 -- Zone: Southern_San_dOria (230)
 -----------------------------------
-local ID = require('scripts/zones/Southern_San_dOria/IDs')
-require('scripts/globals/events/harvest_festivals')
-require('scripts/quests/flyers_for_regine')
-require('scripts/globals/conquest')
-require('scripts/globals/cutscenes')
-require('scripts/globals/settings')
-require('scripts/globals/chocobo')
-require('scripts/globals/zone')
+local ID = require("scripts/zones/Southern_San_dOria/IDs")
+require("scripts/globals/events/harvest_festivals")
+require("scripts/quests/flyers_for_regine")
+require("scripts/globals/conquest")
+require("scripts/settings/main")
+require("scripts/globals/chocobo")
+require("scripts/globals/zone")
 -----------------------------------
 local zoneObject = {}
 
@@ -20,7 +19,18 @@ zoneObject.onInitialize = function(zone)
     xi.conquest.toggleRegionalNPCs(zone)
 end
 
-zoneObject.onZoneIn = function(player, prevZone)
+zone_object.onZoneIn = function(player, prevZone)
+    local cs = -1
+
+    -- FIRST LOGIN (START CS)
+    if player:getPlaytime(false) == 0 then
+        if xi.settings.NEW_CHARACTER_CUTSCENE == 1 then
+            cs = 503
+        end
+        player:setPos(-96, 1, -40, 224)
+        player:setHomePoint()
+    end
+
     -- MOG HOUSE EXIT
     if
         player:getXPos() == 0 and

@@ -3,6 +3,14 @@
 --  NPC: Moreno-Toeno
 -- !pos 169 -1.25 159 238
 -----------------------------------
+local ID = require("scripts/zones/Windurst_Waters/IDs")
+require("scripts/settings/main")
+require("scripts/globals/keyitems")
+require("scripts/globals/missions")
+require("scripts/globals/npc_util")
+require("scripts/globals/quests")
+require("scripts/globals/titles")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

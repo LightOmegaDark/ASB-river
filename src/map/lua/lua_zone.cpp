@@ -190,31 +190,10 @@ void CLuaZone::reloadNavmesh()
     }
 }
 
-bool CLuaZone::isNavigablePoint(const sol::table& point)
-{
-    // clang-format off
-    position_t position
-    {
-        point["x"].get_or<float>(0),
-        point["y"].get_or<float>(0),
-        point["z"].get_or<float>(0),
-        point["moving"].get_or<uint16>(0),
-        point["rot"].get_or<uint8>(0)
-    };
-    // clang-format on
-
-    if (m_pLuaZone->m_navMesh)
-    {
-        return m_pLuaZone->m_navMesh->validPosition(position);
-    }
-    else // No navmesh, just nod and smile
-    {
-        return true;
-    }
-}
-
 std::optional<CLuaBaseEntity> CLuaZone::insertDynamicEntity(sol::table table)
 {
+    auto& lua = luautils::lua;
+
     CBaseEntity* PEntity = nullptr;
     if (table.get_or<uint8>("objtype", TYPE_NPC) == TYPE_NPC)
     {
@@ -328,8 +307,8 @@ std::optional<CLuaBaseEntity> CLuaZone::insertDynamicEntity(sol::table table)
     }
     else if (table["look"].get_type() == sol::type::string)
     {
-        auto lookStr  = table.get<std::string>("look");
-        PEntity->look = stringToLook(lookStr);
+        auto look = stringToLook(table.get<std::string>("look"));
+        std::memcpy(&PEntity->look, &look, sizeof(PEntity->look));
     }
 
     PEntity->updatemask |= UPDATE_ALL_CHAR;
@@ -454,7 +433,6 @@ void CLuaZone::Register()
     SOL_REGISTER("battlefieldsFull", CLuaZone::battlefieldsFull);
     SOL_REGISTER("getWeather", CLuaZone::getWeather);
     SOL_REGISTER("reloadNavmesh", CLuaZone::reloadNavmesh);
-    SOL_REGISTER("isNavigablePoint", CLuaZone::isNavigablePoint);
     SOL_REGISTER("insertDynamicEntity", CLuaZone::insertDynamicEntity);
 
     SOL_REGISTER("getSoloBattleMusic", CLuaZone::getSoloBattleMusic);

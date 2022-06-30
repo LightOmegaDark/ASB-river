@@ -225,7 +225,7 @@ int32 CBattleEntity::GetMaxMP() const
 uint8 CBattleEntity::GetSpeed()
 {
     // Note: retail treats mounted speed as double what it actually is! 40 is in fact retail accurate!
-    int16 startingSpeed = isMounted() ? 40 + settings::get<int8>("map.MOUNT_SPEED_MOD") : speed;
+    int16 startingSpeed = isMounted() ? 40 + map_config.mount_speed_mod : speed;
     // Mod::MOVE (169)
     // Mod::MOUNT_MOVE (972)
     Mod mod = isMounted() ? Mod::MOUNT_MOVE : Mod::MOVE;
@@ -478,7 +478,7 @@ int16 CBattleEntity::addTP(int16 tp)
 
         if (objtype == TYPE_PC)
         {
-            TPMulti = settings::get<float>("map.PLAYER_TP_MULTIPLIER");
+            TPMulti = map_config.player_tp_multiplier;
         }
         else if (objtype == TYPE_PET || (objtype == TYPE_MOB && this->PMaster)) // normal pet or charmed pet
         {
@@ -486,15 +486,18 @@ int16 CBattleEntity::addTP(int16 tp)
         }
         else if (objtype == TYPE_MOB)
         {
-            TPMulti = settings::get<float>("map.MOB_TP_MULTIPLIER");
+            TPMulti = map_config.mob_tp_multiplier;
         }
         else if (objtype == TYPE_TRUST)
         {
-            TPMulti = settings::get<float>("map.TRUST_TP_MULTIPLIER");
-        }
-        else if (objtype == TYPE_FELLOW)
-        {
-            TPMulti = settings::get<float>("map.FELLOW_TP_MULTIPLIER");
+            if (static_cast<CPetEntity*>(this)->getPetType() != PET_TYPE::AUTOMATON || !this->PMaster)
+            {
+                TPMulti = map_config.mob_tp_multiplier * 3;
+            }
+            else
+            {
+                TPMulti = map_config.player_tp_multiplier;
+            }
         }
 
         tp = (int16)(tp * TPMulti);
@@ -866,7 +869,7 @@ void CBattleEntity::SetMLevel(uint8 mlvl)
 void CBattleEntity::SetSLevel(uint8 slvl)
 {
     TracyZoneScoped;
-    if (!settings::get<bool>("map.INCLUDE_MOB_SJ") && this->objtype == TYPE_MOB && this->objtype != TYPE_PET)
+    if (!map_config.include_mob_sj && (this->objtype == TYPE_MOB && this->objtype != TYPE_PET))
     {
         // Technically, we shouldn't be assuming mobs even have a ratio they must adhere to.
         // But there is no place in the DB to set subLV right now.
@@ -874,10 +877,9 @@ void CBattleEntity::SetSLevel(uint8 slvl)
     }
     else
     {
-        auto ratio = settings::get<uint8>("map.SUBJOB_RATIO");
-        switch (ratio)
+        switch (map_config.subjob_ratio)
         {
-            case 0: // no SJ
+            case 0: // no SJ...Where is your Altana now?
                 m_slvl = 0;
                 break;
             case 1: // 1/2 (75/37, 99/49)
@@ -890,7 +892,7 @@ void CBattleEntity::SetSLevel(uint8 slvl)
                 m_slvl = (slvl > m_mlvl ? (m_mlvl == 1 ? 1 : m_mlvl) : slvl);
                 break;
             default: // Error
-                ShowError("Error setting subjob level: Invalid ratio '%s' check your settings file!", ratio);
+                ShowError("Error setting subjob level: Invalid ratio '%s' check your map.conf file!", map_config.subjob_ratio);
                 break;
         }
     }
@@ -1886,7 +1888,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 
             if (PTarget->objtype == TYPE_PC)
             {
-                if (attack.IsGuarded() || !settings::get<bool>("map.GUARD_OLD_SKILLUP_STYLE"))
+                if (attack.IsGuarded() || ((map_config.newstyle_skillups & NEWSTYLE_GUARD) > 0))
                 {
                     if (battleutils::GetGuardRate(this, PTarget) > 0)
                     {
@@ -1894,7 +1896,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                     }
                 }
 
-                if (attack.IsBlocked() || !settings::get<bool>("map.BLOCK_OLD_SKILLUP_STYLE"))
+                if (attack.IsBlocked() || ((map_config.newstyle_skillups & NEWSTYLE_BLOCK) > 0))
                 {
                     if (battleutils::GetBlockRate(this, PTarget) > 0)
                     {
@@ -1902,7 +1904,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                     }
                 }
 
-                if (attack.IsParried() || !settings::get<bool>("map.PARRY_OLD_SKILLUP_STYLE"))
+                if (attack.IsParried() || ((map_config.newstyle_skillups & NEWSTYLE_PARRY) > 0))
                 {
                     if (battleutils::GetParryRate(this, PTarget) > 0)
                     {

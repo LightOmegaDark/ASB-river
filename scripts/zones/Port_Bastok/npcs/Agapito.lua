@@ -3,6 +3,12 @@
 --  NPC: Agapito
 -- !pos -72.093 -3.097 9.309 236
 -----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/titles")
+require("scripts/globals/keyitems")
+require("scripts/globals/quests")
+local ID = require("scripts/zones/Port_Bastok/IDs")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

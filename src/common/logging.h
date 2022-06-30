@@ -31,6 +31,8 @@
 //     : levels for different things.
 #define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
 
+#define SPDLOG_NO_THREAD_ID
+
 #include "spdlog/spdlog.h"
 
 #include "spdlog/fmt/bundled/chrono.h"
@@ -39,8 +41,7 @@
 #include "spdlog/fmt/bundled/printf.h"
 #include "spdlog/fmt/fmt.h"
 
-// Forward declaration
-namespace settings
+enum MSGTYPE
 {
     MSG_STANDARD   = 0x0001,
     MSG_STATUS     = 0x0002,
@@ -65,19 +66,11 @@ namespace logging
     void SetFilters(int _filterMask);
 } // namespace logging
 
-// clang-format off
+// TODO: Build helpers around this macro (so function and line info can be preserved)
+// #define SPDLOG_LOGGER_CALL(logger, level, ...) (logger)->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, level, __VA_ARGS__)
 
-// NOTE: In order to preserve the ability for Tracy and spdlog to track the source location of
-//     : logging calls, we have to stack a lot of macros. This leads to some strangeness with
-//     : the output of Tracy: Each logging call creates its own scope, and will have its own
-//     : entry in the Tracy statistics. This is a low price to pay for the ability to profile
-//     : logging calls, and everything else, and still have all the information we want delivered
-//     : to the logging system.
-#define BEGIN_CATCH_HANDLER  \
-    {                        \
-        TracyZoneNamed(Log); \
-        try                  \
-        {
+// Legacy support
+// TODO: Remove/replace these
 
 // Generic
 // clang-format off

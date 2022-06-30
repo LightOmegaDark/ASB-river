@@ -40,14 +40,12 @@ Application::Application(std::string serverName, std::unique_ptr<argparse::Argum
 #endif
 
     logging::InitializeLog(serverName, fmt::format("log/{}-server.log", serverName), false);
-    lua_init();
-    settings::init();
-    ShowInfo("Begin %s-server initialisation...", serverName);
+    ShowStatus("Begin %s-server initialisation...", serverName);
 
     debug::init();
 
-    ShowInfo("The %s-server is ready to work...", serverName);
-    ShowInfo("=======================================================================");
+    ShowStatus("The %s-server is ready to work...", serverName);
+    ShowStatus("=======================================================================");
 
     gConsoleService = std::make_unique<ConsoleService>();
 }

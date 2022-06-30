@@ -12,7 +12,7 @@ require("scripts/globals/keyitems")
 require("scripts/globals/magic")
 require("scripts/globals/missions")
 require("scripts/globals/npc_util")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/quests")
 require("scripts/globals/status")
 require("scripts/globals/titles")
@@ -60,9 +60,9 @@ entity.onTrade = function(player, npc, trade)
         local mihgosAmigo = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.MIHGO_S_AMIGO)
 
         if mihgosAmigo == QUEST_ACCEPTED then
-            player:startEvent(88, xi.settings.main.GIL_RATE * 200)
+            player:startEvent(88, xi.settings.GIL_RATE * 200)
         elseif mihgosAmigo == QUEST_COMPLETED then
-            player:startEvent(494, xi.settings.main.GIL_RATE * 200)
+            player:startEvent(494, xi.settings.GIL_RATE * 200)
         end
     end
 end
@@ -142,7 +142,7 @@ entity.onEventFinish = function(player, csid, option)
         player:addQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.ROCK_RACKETEER)
         npcUtil.giveKeyItem(player, xi.ki.SHARP_GRAY_STONE)
     elseif csid == 98 then
-        player:delGil(10 * xi.settings.main.GIL_RATE)
+        player:delGil(10 * xi.settings.GIL_RATE)
         player:setCharVar("rockracketeer_sold", 3)
 
     -- MIHGO'S AMIGO

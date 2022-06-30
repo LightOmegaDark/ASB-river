@@ -3,7 +3,7 @@
 -- Item: Lucid Potion III
 -- Item Effect: Restores 2000 HP
 -----------------------------------
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/msg")
 -----------------------------------
 local itemObject = {}
@@ -16,8 +16,8 @@ itemObject.onItemCheck = function(target)
     return 0
 end
 
-itemObject.onItemUse = function(target)
-    target:messageBasic(xi.msg.basic.RECOVERS_HP, 0, target:addHP(2000 * xi.settings.main.ITEM_POWER))
+item_object.onItemUse = function(target)
+    target:messageBasic(xi.msg.basic.RECOVERS_HP, 0, target:addHP(2000*xi.settings.ITEM_POWER))
 end
 
 return itemObject

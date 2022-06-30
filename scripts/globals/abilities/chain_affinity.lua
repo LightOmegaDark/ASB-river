@@ -6,6 +6,7 @@
 -- Duration: 30 seconds or one Blue Magic spell
 -- May be used with Sneak Attack and Trick Attack.
 -----------------------------------
+require("scripts/settings/main")
 require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}

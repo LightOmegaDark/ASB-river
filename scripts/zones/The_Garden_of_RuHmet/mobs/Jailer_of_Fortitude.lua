@@ -3,8 +3,8 @@
 --   NM: Jailer of Fortitude
 -----------------------------------
 local ID = require("scripts/zones/The_Garden_of_RuHmet/IDs")
-mixins = { require("scripts/mixins/job_special") }
-require("scripts/globals/settings")
+mixins = {require("scripts/mixins/job_special")}
+require("scripts/settings/main")
 require("scripts/globals/limbus")
 require("scripts/globals/status")
 require("scripts/globals/magic")

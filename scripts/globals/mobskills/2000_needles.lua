@@ -4,6 +4,7 @@
 -- Description: Shoots multiple needles at enemies within range.
 -----------------------------------
 require("scripts/globals/mobskills")
+require("scripts/settings/main")
 require("scripts/globals/status")
 -----------------------------------
 local mobskillObject = {}

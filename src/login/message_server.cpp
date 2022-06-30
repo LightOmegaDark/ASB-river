@@ -245,16 +245,21 @@ void message_server_init(const bool& requestExit)
 {
     TracySetThreadName("Message Server (ZMQ)");
 
-    zmqSql = std::make_unique<SqlConnection>();
+    zmqSql = std::make_unique<SqlConnection>(login_config.mysql_login.c_str(),
+                                             login_config.mysql_password.c_str(),
+                                             login_config.mysql_host.c_str(),
+                                             login_config.mysql_port,
+                                             login_config.mysql_database.c_str());
 
     zContext = zmq::context_t(1);
     zSocket  = std::make_unique<zmq::socket_t>(zContext, zmq::socket_type::router);
 
     zSocket->set(zmq::sockopt::rcvtimeo, 500);
 
-    auto server = fmt::format("tcp://{}:{}",
-                              settings::get<std::string>("network.ZMQ_IP"),
-                              settings::get<std::string>("network.ZMQ_PORT"));
+    string_t server = "tcp://";
+    server.append(login_config.msg_server_ip);
+    server.append(":");
+    server.append(std::to_string(login_config.msg_server_port));
 
     try
     {
@@ -262,7 +267,7 @@ void message_server_init(const bool& requestExit)
     }
     catch (zmq::error_t& err)
     {
-        ShowCritical(fmt::format("Unable to bind chat socket: {}", err.what()));
+        ShowFatalError("Unable to bind chat socket: %s", err.what());
     }
 
     message_server_listen(requestExit);

@@ -13,7 +13,7 @@
 -- 2.50      2.75      3.00
 -----------------------------------
 require("scripts/globals/status")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/weaponskills")
 -----------------------------------
 local weaponskillObject = {}
@@ -29,10 +29,9 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
     params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
-    if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
-        params.multiHitfTP = true -- http://wiki.ffo.jp/html/2422.html
-        params.ftp100 = 2.05 params.ftp200 = 3.55 params.ftp300 = 5.75
-        params.str_wsc = 0.2 params.vit_wsc = 0.5
+    if (xi.settings.USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
+        params.ftp200 = 4.75 params.ftp300 = 8
+        params.str_wsc = 0.2 params.dex_wsc = 0.5 params.vit_wsc = 0.0
     end
 
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)

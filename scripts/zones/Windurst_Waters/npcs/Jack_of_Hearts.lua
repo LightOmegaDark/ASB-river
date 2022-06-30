@@ -3,14 +3,14 @@
 --  NPC: Jack of Hearts
 -- Adventurer's Assistant
 -----------------------------------
-require("scripts/globals/settings")
+require("scripts/settings/main")
 -----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    if trade:getItemCount() == 1 and trade:hasItemQty(536, 1) then
-        player:startEvent(10012, xi.settings.main.GIL_RATE * 50)
-        player:addGil(xi.settings.main.GIL_RATE * 50)
+    if (trade:getItemCount() == 1 and trade:hasItemQty(536, 1) == true) then
+        player:startEvent(10012, xi.settings.GIL_RATE*50)
+        player:addGil(xi.settings.GIL_RATE*50)
         player:tradeComplete()
     end
 end

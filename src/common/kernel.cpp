@@ -20,11 +20,6 @@
 */
 
 #include "common/kernel.h"
-
-#include "common/debug.h"
-#include "common/logging.h"
-#include "common/lua.h"
-#include "common/settings.h"
 #include "common/socket.h"
 #include "common/taskmgr.h"
 #include "common/timer.h"
@@ -36,6 +31,9 @@
 #define BACKWARD_HAS_BFD 1
 #include "../../ext/backward/backward.hpp"
 #endif
+
+#include "debug.h"
+#include "logging.h"
 
 #include <csignal>
 #include <cstdio>
@@ -311,10 +309,6 @@ int main(int argc, char** argv)
     usercheck();
     signals_init();
     timer_init();
-
-    lua_init();
-    settings::init();
-
     socket_init();
 
     do_init(argc, argv);

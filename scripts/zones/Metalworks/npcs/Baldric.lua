@@ -3,6 +3,10 @@
 --  NPC: Baldric
 -- !pos -50.858 1.777 -31.141 237
 -----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/quests")
+local ID = require("scripts/zones/Metalworks/IDs")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
@@ -21,6 +25,15 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
+
+    if (csid == 554) then
+        player:addQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.STARDUST)
+    elseif (csid == 555) then
+        player:tradeComplete()
+        player:addGil(xi.settings.GIL_RATE * 300)
+        player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE * 300)
+        player:completeQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.STARDUST)
+    end
 end
 
 return entity

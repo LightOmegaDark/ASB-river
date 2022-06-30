@@ -20,9 +20,7 @@
 */
 
 #include "logging.h"
-#include "settings.h"
 #include "tracy.h"
-#include "utils.h"
 
 #include "spdlog/common.h"
 
@@ -34,24 +32,12 @@
 
 namespace logging
 {
-    const std::vector<std::string> logNames = {
-        "critical",
-        "error",
-        "lua",
-        "warn",
-        "info",
-        "debug",
-        "trace",
-    };
-
-    void InitializeLog(std::string const& serverName, std::string const& logFile, bool appendDate)
+    void InitializeLog(std::string serverName, std::string logFile, bool appendDate)
     {
         ServerName = serverName;
 
         // If you create more than one worker thread, messages may be delivered out of order
         spdlog::init_thread_pool(8192, 1);
-        spdlog::flush_on(spdlog::level::warn);
-        spdlog::flush_every(std::chrono::seconds(5));
 
         // Sink to console
         auto                          stdout_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
@@ -60,7 +46,7 @@ namespace logging
         // Daily Sink, creating new files at midnight
         if (appendDate)
         {
-            sinks.push_back(std::make_shared<spdlog::sinks::daily_file_sink_mt>(logFile, 0, 0, false, 0));
+            sinks.push_back(std::make_shared<spdlog::sinks::daily_file_sink_mt>(logFile, 0, 00, false, 0));
         }
         // Basic sink, sink to file with name specified in main routine
         else
@@ -68,13 +54,22 @@ namespace logging
             sinks.push_back(std::make_shared<spdlog::sinks::basic_file_sink_mt>(logFile));
         }
 
-        for (auto& name : logNames)
-        {
-            auto logger = std::make_shared<spdlog::async_logger>(name, sinks.begin(), sinks.end(), spdlog::thread_pool());
-            spdlog::register_logger(logger);
-        }
+        // https://github.com/gabime/spdlog/wiki/3.-Custom-formatting
+        // [date time:ms][server name][log level][logger name] message (func_name:func_line)
+        //                            ^---  level colour  ---^
+        auto defaultPattern = fmt::format("[%D %T:%e][{}]%^[%l][%n]%$ %v (%!:%#)", serverName);
 
-        spdlog::set_level(spdlog::level::debug);
+        auto createLogger = [&](std::string const& name)
+        {
+            auto logger = std::make_shared<spdlog::async_logger>(name, sinks.begin(), sinks.end(), spdlog::thread_pool(), spdlog::async_overflow_policy::block);
+            logger->set_pattern(defaultPattern);
+            spdlog::register_logger(logger);
+            return logger;
+        };
+
+        // Create a series of loggers with different names, all sinking to the file and console sinks
+        // Each name serves as the tag in the log
+        // TODO: There is duplication here between the tag and the severity, FIXME
 
         // direct printf replacement
         auto standardLogger = createLogger("standard");
@@ -134,7 +129,7 @@ namespace logging
         spdlog::shutdown();
     }
 
-    void SetPattern(std::string const& str)
+    void SetFilters(int filterMask)
     {
         TracyZoneScoped;
 

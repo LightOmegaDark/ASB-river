@@ -1,13 +1,13 @@
 -----------------------------------
 -- Zone: Bastok_Mines (234)
 -----------------------------------
-local ID = require('scripts/zones/Bastok_Mines/IDs')
-require('scripts/globals/events/harvest_festivals')
-require('scripts/globals/conquest')
-require('scripts/globals/cutscenes')
-require('scripts/globals/settings')
-require('scripts/globals/chocobo')
-require('scripts/globals/zone')
+local ID = require("scripts/zones/Bastok_Mines/IDs")
+require("scripts/globals/events/harvest_festivals")
+require("scripts/globals/conquest")
+require("scripts/globals/missions")
+require("scripts/settings/main")
+require("scripts/globals/chocobo")
+require("scripts/globals/zone")
 -----------------------------------
 local zoneObject = {}
 
@@ -18,7 +18,18 @@ zoneObject.onInitialize = function(zone)
     xi.chocobo.initZone(zone)
 end
 
-zoneObject.onZoneIn = function(player, prevZone)
+zone_object.onZoneIn = function(player, prevZone)
+    local cs = -1
+
+    -- FIRST LOGIN (START CS)
+    if player:getPlaytime(false) == 0 then
+        if xi.settings.NEW_CHARACTER_CUTSCENE == 1 then
+            cs = 1
+        end
+        player:setPos(-45, -0, 26, 213)
+        player:setHomePoint()
+    end
+
     -- MOG HOUSE EXIT
     if
         player:getXPos() == 0 and

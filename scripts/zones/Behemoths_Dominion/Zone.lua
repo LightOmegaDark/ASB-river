@@ -1,13 +1,17 @@
 -----------------------------------
 -- Zone: Behemoths_Dominion (127)
 -----------------------------------
-local ID = require('scripts/zones/Behemoths_Dominion/IDs')
-require('scripts/globals/conquest')
-require('scripts/globals/zone')
+local ID = require("scripts/zones/Behemoths_Dominion/IDs")
+require("scripts/settings/main")
+require("scripts/globals/zone")
 -----------------------------------
 local zoneObject = {}
 
-zoneObject.onInitialize = function(zone)
+zone_object.onInitialize = function(zone)
+    if (xi.settings.LandKingSystem_NQ ~= 1) then
+        UpdateNMSpawnPoint(ID.mob.BEHEMOTH)
+        GetMobByID(ID.mob.BEHEMOTH):setRespawnTime(900 + math.random(0, 6) * 1800)
+    end
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

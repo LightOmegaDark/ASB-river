@@ -3,7 +3,7 @@
 -- Item: Hyper-Potion
 -- Item Effect: Restores 250 HP
 -----------------------------------
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------
@@ -19,8 +19,8 @@ itemObject.onItemCheck = function(target)
     return 0
 end
 
-itemObject.onItemUse = function(target)
-    target:messageBasic(xi.msg.basic.RECOVERS_HP, 0, target:addHP(250 * xi.settings.main.ITEM_POWER))
+item_object.onItemUse = function(target)
+    target:messageBasic(xi.msg.basic.RECOVERS_HP, 0, target:addHP(250*xi.settings.ITEM_POWER))
     target:addStatusEffect(xi.effect.MEDICINE, 0, 0, 300)
 end
 

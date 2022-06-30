@@ -1,6 +1,14 @@
 -----------------------------------
 -- Area: Bastok Markets
 --  NPC: Nbu Latteh
+-- Starts & Finishes Quest: Mom, The Adventurer?
+-- Starts Quest: The Signpost Marks the Spot
+-----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/keyitems")
+require("scripts/globals/titles")
+require("scripts/globals/quests")
+local ID = require("scripts/zones/Bastok_Markets/IDs")
 -----------------------------------
 local entity = {}
 

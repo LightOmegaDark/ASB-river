@@ -3,6 +3,14 @@
 --  NPC: Naji
 -- !pos 64 -14 -4 237
 -----------------------------------
+require("scripts/settings/main");
+require("scripts/globals/keyitems");
+require("scripts/globals/titles");
+require("scripts/globals/quests");
+require("scripts/globals/missions");
+require("scripts/globals/npc_util")
+local ID = require("scripts/zones/Metalworks/IDs");
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

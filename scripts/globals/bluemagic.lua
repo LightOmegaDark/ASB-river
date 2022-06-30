@@ -348,7 +348,8 @@ xi.spells.blue.applySpellDamage = function(caster, target, spell, dmg, params)
         dmg = 0
     end
 
-    dmg = dmg * xi.settings.main.BLUE_POWER
+    dmg = dmg * xi.settings.BLUE_POWER
+
     local attackType = params.attackType or xi.attackType.NONE
     local damageType = params.damageType or xi.damageType.NONE
 

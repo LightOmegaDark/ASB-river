@@ -4,7 +4,7 @@
 -- Involved in the repeatable quest "Creepy Crawlies"
 -----------------------------------
 require("scripts/globals/npc_util")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/quests")
 require("scripts/globals/titles")
 -----------------------------------
@@ -39,7 +39,7 @@ entity.onEventFinish = function(player, csid, option)
     elseif csid == 335 then
         player:completeQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CREEPY_CRAWLIES)
         player:addTitle(xi.title.CRAWLER_CULLER)
-        player:addGil(600 * xi.settings.main.GIL_RATE)
+        player:addGil(600 * xi.settings.GIL_RATE)
         player:confirmTrade()
     end
 end

@@ -4,6 +4,12 @@
 -- Finishes Quest: Enveloped in Darkness
 -- !pos 59 0.1 66 197
 -----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/keyitems")
+require("scripts/globals/quests")
+require("scripts/globals/npc_util")
+local ID = require("scripts/zones/Crawlers_Nest/IDs")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

@@ -1,12 +1,12 @@
 -----------------------------------
 -- Zone: Port_Jeuno (246)
 -----------------------------------
-local ID = require('scripts/zones/Port_Jeuno/IDs')
-require('scripts/globals/conquest')
-require('scripts/globals/settings')
-require('scripts/globals/chocobo')
-require('scripts/globals/quests')
-require('scripts/globals/zone')
+local ID = require("scripts/zones/Port_Jeuno/IDs")
+require("scripts/globals/conquest")
+require("scripts/settings/main")
+require("scripts/globals/chocobo")
+require("scripts/globals/quests")
+require("scripts/globals/zone")
 -----------------------------------
 local zoneObject = {}
 

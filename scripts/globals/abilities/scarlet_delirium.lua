@@ -5,7 +5,8 @@
 -- Recast Time: 00:01:30
 -- Duration: 00:01:30
 -----------------------------------
-require("scripts/globals/job_utils/dark_knight")
+require("scripts/settings/main")
+require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 

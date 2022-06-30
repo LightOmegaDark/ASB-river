@@ -3,7 +3,7 @@
 -- Restores target's HP.
 -- Shamelessly stolen from http://members.shaw.ca/pizza_steve/cure/Cure_Calculator.html
 -----------------------------------
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
@@ -23,7 +23,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     local final = 0
 
     local minCure = 450
-    if xi.settings.main.USE_OLD_CURE_FORMULA then
+    if (xi.settings.USE_OLD_CURE_FORMULA == true) then
         power = getCurePowerOld(caster)
         divisor = 0.6666
         constant = 330
@@ -68,7 +68,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     end
 
     if isValidHealTarget(caster, target) then -- e.g. is a PC and not a monster (?)
-        if xi.settings.main.USE_OLD_CURE_FORMULA then
+        if (xi.settings.USE_OLD_CURE_FORMULA == true) then
             basecure = getBaseCureOld(power, divisor, constant)
         else
             basecure = getBaseCure(power, divisor, constant, basepower)
@@ -131,7 +131,7 @@ spellObject.onSpellCast = function(caster, target, spell)
             spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
         else
             -- e.g. monsters healing themselves.
-            if xi.settings.main.USE_OLD_CURE_FORMULA then
+            if (xi.settings.USE_OLD_CURE_FORMULA == true) then
                 basecure = getBaseCureOld(power, divisor, constant)
             else
                 basecure = getBaseCure(power, divisor, constant, basepower)

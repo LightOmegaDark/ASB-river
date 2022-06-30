@@ -9,7 +9,7 @@
 -- +10 Subtle Blow for a short duration after using the weapon skill. (Not implemented)
 -----------------------------------
 require("scripts/globals/aftermath")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/status")
 require("scripts/globals/weaponskills")
 -----------------------------------
@@ -35,7 +35,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     -- attack multiplier (only some WSes use this, this varies the actual ratio value, see Tachi: Kasha) 1 is default.
     params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
 
-    if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
+    if xi.settings.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.vit_wsc = 0.8
         -- as of 02.03.2022 the ws doesnt yet apply ftp to all stage, was delaied to be done in line with other relic ws
         -- http://wiki.ffo.jp/html/2426.html and https://forum.square-enix.com/ffxi/threads/55998-October-2019-FINAL-FANTASY-XI-Digest?highlight=2019+update

@@ -7,7 +7,7 @@
 -----------------------------------
 require("scripts/globals/quests")
 require("scripts/globals/titles")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/keyitems")
 local ID = require("scripts/zones/Windurst_Waters/IDs")
 -----------------------------------
@@ -88,8 +88,9 @@ entity.onEventFinish = function(player, csid, option)
         player:addQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TORAIMARAI_TURMOIL)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.RHINOSTERY_CERTIFICATE)
         player:addKeyItem(xi.ki.RHINOSTERY_CERTIFICATE) -- Rhinostery Certificate
-    elseif csid == 791 and turmoil == QUEST_ACCEPTED then -- Completes Toraimarai turmoil - first time
-        npcUtil.giveCurrency(player, 'gil', 4500)
+    elseif (csid == 791 and turmoil == QUEST_ACCEPTED) then -- Completes Toraimarai turmoil - first time
+        player:addGil(xi.settings.GIL_RATE*4500)
+        player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE*4500)
         player:completeQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TORAIMARAI_TURMOIL)
         player:addFame(xi.quest.fame_area.WINDURST, 100)
         player:addTitle(xi.title.CERTIFIED_RHINOSTERY_VENTURER)

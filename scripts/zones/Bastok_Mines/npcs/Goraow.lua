@@ -3,6 +3,12 @@
 --  NPC: Goraow
 -- !pos 38 .1 14 234
 -----------------------------------
+local ID = require("scripts/zones/Bastok_Mines/IDs")
+require("scripts/settings/main")
+require("scripts/globals/quests")
+require("scripts/globals/titles")
+require("scripts/globals/utils")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

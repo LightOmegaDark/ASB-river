@@ -1,6 +1,10 @@
 -----------------------------------
 -- Area: Port Bastok
 --  NPC: Tete
+-- Continues Quest: The Wisdom Of Elders
+-----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/quests")
 -----------------------------------
 local entity = {}
 

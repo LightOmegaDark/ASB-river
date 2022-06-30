@@ -3,6 +3,12 @@
 --  NPC: Mighty Fist
 -- !pos -47 2 -30 237
 -----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/keyitems")
+require("scripts/globals/shop")
+require("scripts/globals/quests")
+local ID = require("scripts/zones/Metalworks/IDs")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

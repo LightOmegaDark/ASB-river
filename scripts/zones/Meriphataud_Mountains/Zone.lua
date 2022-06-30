@@ -42,7 +42,7 @@ zoneObject.onZoneIn = function(player, prevZone)
     end
 
     -- AMK06/AMK07
-    if xi.settings.main.ENABLE_AMK == 1 then
+    if xi.settings.ENABLE_AMK == 1 then
         xi.amk.helpers.tryRandomlyPlaceDiggingLocation(player)
     end
 

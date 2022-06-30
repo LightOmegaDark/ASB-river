@@ -34,7 +34,28 @@ spellObject.onSpellCast = function(caster, target, spell)
     local isGaze = true
     local isConal = true
 
-    return xi.spells.blue.useEnfeeblingSpell(caster, target, spell, params, power, tick, duration, resistThreshold, isGaze, isConal)
+    if (target:hasStatusEffect(xi.effect.STR_DOWN)) then
+        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
+    elseif (target:isFacing(caster)) then
+        -- local dINT = caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+        local params = {}
+        params.diff = nil
+        params.attribute = xi.mod.INT
+        params.skillType = xi.skill.BLUE_MAGIC
+        params.bonus = 0
+        params.effect = nil
+        local resist = applyResistance(caster, target, spell, params)
+        if (resist <= 0) then
+            spell:setMsg(xi.msg.basic.MAGIC_RESIST)
+        else
+            spell:setMsg(xi.msg.basic.MAGIC_ERASE)
+            target:addStatusEffect(xi.effect.STR_DOWN, xi.settings.ABSORB_SPELL_AMOUNT*resist, xi.settings.ABSORB_SPELL_TICK, xi.settings.ABSORB_SPELL_AMOUNT*xi.settings.ABSORB_SPELL_TICK) -- target loses STR
+        end
+    else
+        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
+    end
+
+    return xi.effect.STR_DOWN
 end
 
 return spellObject

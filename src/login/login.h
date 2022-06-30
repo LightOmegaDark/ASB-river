@@ -80,6 +80,30 @@ extern maint_config_t maint_config;
 
 extern std::unique_ptr<SqlConnection> sql;
 
-int32 do_init(int32 argc, char** argv);
+/*======================================================
+ * Login-Server Version Screen [venom]
+ *------------------------------------------------------*/
+void login_helpscreen(int32 flag);
+/*======================================================
+ * Login-Server Version Screen [venom]
+ *------------------------------------------------------*/
+void login_versionscreen(int32 flag);
+/*==========================================
+ * Login-Server Config [venom]
+ *------------------------------------------*/
 
-#endif // _LOGIN_H
+void login_config_read(const char* key, const char* value);
+void login_config_default();
+void login_config_read_from_env();
+
+void version_info_read(const char* key, const char* value);
+void version_info_default();
+
+void        maint_config_read(const char* key, const char* value);
+void        maint_config_default();
+std::string maint_config_write(const char* key);
+
+int32 config_read(const char* fileName, const char* config, const std::function<void(const char*, const char*)>& method);
+int32 config_write(const char* fileName, const char* config, const std::function<std::string(const char*)>& method);
+
+#endif

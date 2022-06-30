@@ -4,7 +4,8 @@
 -- Obtained: THF Level 96
 -- Recast Time: 01:00:00
 -----------------------------------
-require("scripts/globals/job_utils/thief")
+require("scripts/settings/main")
+require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 

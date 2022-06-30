@@ -6,6 +6,9 @@
 -- Recast Time: 0:30
 -- Duration: 0:05
 -----------------------------------
+require("scripts/globals/weaponskills")
+require("scripts/settings/main")
+require("scripts/globals/status")
 require("scripts/globals/msg")
 require("scripts/globals/status")
 require("scripts/globals/weaponskills")

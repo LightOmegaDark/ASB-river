@@ -5,7 +5,8 @@
 -- Recast Time: 00:10:00 or the next spell cast
 -- Duration: 0:01:00
 -----------------------------------
-require("scripts/globals/job_utils/black_mage")
+require("scripts/settings/main")
+require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 

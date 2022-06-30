@@ -6,6 +6,8 @@
 -- Duration: 00:30
 -----------------------------------
 require("scripts/globals/jobpoints")
+require("scripts/settings/main")
+require("scripts/globals/status")
 require("scripts/globals/msg")
 require("scripts/globals/status")
 -----------------------------------

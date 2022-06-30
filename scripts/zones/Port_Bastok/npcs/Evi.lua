@@ -1,6 +1,12 @@
 -----------------------------------
 -- Area: Port Bastok
 --  NPC: Evi
+-- Starts Quests: Past Perfect (100%)
+-----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/keyitems")
+require("scripts/globals/quests")
+local ID = require("scripts/zones/Port_Bastok/IDs")
 -----------------------------------
 local entity = {}
 

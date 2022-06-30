@@ -10,6 +10,8 @@
 -- Using two Finishing Moves boosts both the Accuracy and Attack of your next weapon skill.
 -- Using three Finishing Moves boosts the Accuracy, Attack and Critical Hit Rate of your next weapon skill.
 -----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/status")
 require("scripts/globals/msg")
 require("scripts/globals/status")
 -----------------------------------

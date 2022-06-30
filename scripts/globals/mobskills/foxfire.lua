@@ -5,7 +5,7 @@
 --  Type: Physical (Blunt)
 -- RDM, THF, PLD, BST, BRD, RNG, NIN, and COR fomors).
 -----------------------------------
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/status")
 require("scripts/globals/mobskills")
 -----------------------------------

@@ -3,6 +3,11 @@
 --  NPC: Tami
 -- !pos 62.617 0.000 -68.222 234
 -----------------------------------
+local ID = require("scripts/zones/Bastok_Mines/IDs")
+require("scripts/globals/keyitems")
+require("scripts/settings/main")
+require("scripts/globals/quests")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

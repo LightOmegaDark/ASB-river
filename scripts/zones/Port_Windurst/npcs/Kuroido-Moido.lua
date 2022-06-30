@@ -8,7 +8,7 @@
 require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 require("scripts/globals/quests")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/titles")
 local ID = require("scripts/zones/Port_Windurst/IDs")
 -----------------------------------
@@ -43,10 +43,10 @@ entity.onTrigger = function(player, npc)
         end
     elseif makingAmens == QUEST_ACCEPTED and not brokenWand then -- Reminder for Making Amens!
         player:startEvent(283)
-    elseif makingAmens == QUEST_ACCEPTED and brokenWand then -- Complete Making Amens!
-        player:startEvent(284, xi.settings.main.GIL_RATE * 6000)
-    elseif makingAmens == QUEST_COMPLETED then
-        if wonderWands == QUEST_ACCEPTED then -- During Wonder Wands dialogue
+    elseif (makingAmens == QUEST_ACCEPTED and brokenWand) then -- Complete Making Amens!
+        player:startEvent(284, xi.settings.GIL_RATE*6000)
+    elseif (makingAmens == QUEST_COMPLETED) then
+        if (wonderWands == QUEST_ACCEPTED) then -- During Wonder Wands dialogue
             player:startEvent(261)
         elseif wonderWands == QUEST_COMPLETED then -- Post Wonder Wands dialogue
             player:startEvent(266)

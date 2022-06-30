@@ -3,7 +3,7 @@
 -- Item: Lucid Elixir I
 -- Item Effect: Restores 50% of HP and MP
 -----------------------------------
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/msg")
 -----------------------------------
 local itemObject = {}
@@ -19,9 +19,9 @@ itemObject.onItemCheck = function(target)
     return 0
 end
 
-itemObject.onItemUse = function(target)
-    target:addHP(target:getMaxHP() * 0.5 * xi.settings.main.ITEM_POWER)
-    target:addMP(target:getMaxMP() * 0.5 * xi.settings.main.ITEM_POWER)
+item_object.onItemUse = function(target)
+    target:addHP(target:getMaxHP()*0.5*xi.settings.ITEM_POWER)
+    target:addMP(target:getMaxMP()*0.5*xi.settings.ITEM_POWER)
     target:messageBasic(xi.msg.basic.RECOVERS_HP_AND_MP)
 end
 

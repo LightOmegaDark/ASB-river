@@ -80,57 +80,57 @@ std::thread messageThread;
 
 std::unique_ptr<SqlConnection> sql;
 
-uint8 ver_lock   = 0;
-uint8 maint_mode = 0;
-
-bool requestExit = false;
-
 int32 do_init(int32 argc, char** argv)
 {
-    login_fd = makeListenBind_tcp(settings::get<std::string>("network.LOGIN_AUTH_IP").c_str(), settings::get<uint16>("network.LOGIN_AUTH_PORT"), connect_client_login);
-    ShowInfo(fmt::format("The login-server-auth is ready (Server is listening on the port {}).", settings::get<uint16>("network.LOGIN_AUTH_PORT")));
+    int32 i;
+    LOGIN_CONF_FILENAME   = "conf/login.conf";
+    VERSION_INFO_FILENAME = "conf/version.conf";
+    MAINT_CONF_FILENAME   = "conf/maint.conf";
 
-    login_lobbydata_fd = makeListenBind_tcp(settings::get<std::string>("network.LOGIN_DATA_IP").c_str(), settings::get<uint16>("network.LOGIN_DATA_PORT"), connect_client_lobbydata);
-    ShowInfo(fmt::format("The login-server-lobbydata is ready (Server is listening on the port {}).", settings::get<uint16>("network.LOGIN_DATA_PORT")));
-
-    login_lobbyview_fd = makeListenBind_tcp(settings::get<std::string>("network.LOGIN_VIEW_IP").c_str(), settings::get<uint16>("network.LOGIN_VIEW_PORT"), connect_client_lobbyview);
-    ShowInfo(fmt::format("The login-server-lobbyview is ready (Server is listening on the port {}).", settings::get<uint16>("network.LOGIN_VIEW_PORT")));
-
-#ifndef __APPLE__
-    epollHandle = epoll_create1(0);
-
-    loginEpollEvent.data.fd           = login_fd;
-    login_lobbydataEpollEvent.data.fd = login_lobbydata_fd;
-    login_lobbyviewEpollEvent.data.fd = login_lobbyview_fd;
-#ifdef WIN32
-    epoll_ctl(epollHandle, EPOLL_CTL_ADD, sock_arr[login_fd], &loginEpollEvent);
-    epoll_ctl(epollHandle, EPOLL_CTL_ADD, sock_arr[login_lobbydata_fd], &login_lobbydataEpollEvent);
-    epoll_ctl(epollHandle, EPOLL_CTL_ADD, sock_arr[login_lobbyview_fd], &login_lobbyviewEpollEvent);
-#else
-    epoll_ctl(epollHandle, EPOLL_CTL_ADD, login_fd, &loginEpollEvent);
-    epoll_ctl(epollHandle, EPOLL_CTL_ADD, login_lobbydata_fd, &login_lobbydataEpollEvent);
-    epoll_ctl(epollHandle, EPOLL_CTL_ADD, login_lobbyview_fd, &login_lobbyviewEpollEvent);
-
-    struct rlimit limits;
-
-    // Get old limits
-    if (getrlimit(RLIMIT_NOFILE, &limits) == 0)
+    for (i = 1; i < argc; i++)
     {
-        // Increase open file limit, which includes sockets, to MAX_FD. This only effects the current process and child processes
-        limits.rlim_cur = MAX_FD;
-        if (setrlimit(RLIMIT_NOFILE, &limits) == -1)
+        if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "--h") == 0 || strcmp(argv[i], "--?") == 0 || strcmp(argv[i], "/?") == 0)
         {
-            ShowError("Failed to increase rlim_cur to %d", MAX_FD);
+            login_helpscreen(1);
+        }
+        else if (strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "--v") == 0 || strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "/v") == 0)
+        {
+            login_versionscreen(1);
+        }
+        else if (strcmp(argv[i], "--login_config") == 0 || strcmp(argv[i], "--login-config") == 0)
+        {
+            LOGIN_CONF_FILENAME = argv[i + 1];
+        }
+        else if (strcmp(argv[i], "--run_once") == 0)
+        { // close the map-server as soon as its done.. for testing [Celest]
+            gRunFlag = false;
         }
     }
-#endif
-#endif
 
-    // NOTE: See login_conf.h for more information about what happens on this port
-    // login_lobbyconf_fd = makeListenBind_tcp(settings::get<std::string>("network.LOGIN_CONF_IP").c_str(), settings::get<uint16>("network.LOGIN_CONF_PORT"), connect_client_lobbyconf);
-    // ShowInfo("The login-server-lobbyconf is ready (Server is listening on the port %u).", settings::get<uint16>("network.LOGIN_CONF_PORT"));
+    login_config_default();
+    config_read(LOGIN_CONF_FILENAME, "login", login_config_read);
+    login_config_read_from_env();
 
-    sql = std::make_unique<SqlConnection>();
+    version_info_default();
+    config_read(VERSION_INFO_FILENAME, "version info", version_info_read);
+
+    maint_config_default();
+    config_read(MAINT_CONF_FILENAME, "maint", maint_config_read);
+
+    login_fd = makeListenBind_tcp(login_config.login_auth_ip.c_str(), login_config.login_auth_port, connect_client_login);
+    ShowStatus("The login-server-auth is ready (Server is listening on the port %u).", login_config.login_auth_port);
+
+    login_lobbydata_fd = makeListenBind_tcp(login_config.login_data_ip.c_str(), login_config.login_data_port, connect_client_lobbydata);
+    ShowStatus("The login-server-lobbydata is ready (Server is listening on the port %u).", login_config.login_data_port);
+
+    login_lobbyview_fd = makeListenBind_tcp(login_config.login_view_ip.c_str(), login_config.login_view_port, connect_client_lobbyview);
+    ShowStatus("The login-server-lobbyview is ready (Server is listening on the port %u).", login_config.login_view_port);
+
+    sql = std::make_unique<SqlConnection>(login_config.mysql_login.c_str(),
+                                          login_config.mysql_password.c_str(),
+                                          login_config.mysql_host.c_str(),
+                                          login_config.mysql_port,
+                                          login_config.mysql_database.c_str());
 
     const char* fmtQuery = "OPTIMIZE TABLE `accounts`,`accounts_banned`, `accounts_sessions`, `chars`,`char_equip`, \
                            `char_inventory`, `char_jobs`,`char_look`,`char_stats`, `char_vars`, `char_bazaar_msg`, \
@@ -141,31 +141,25 @@ int32 do_init(int32 argc, char** argv)
         ShowError("do_init: Impossible to optimise tables");
     }
 
-    if (!settings::get<bool>("login.ACCOUNT_CREATION"))
+    if (!login_config.account_creation)
     {
-        ShowInfo("New account creation is currently disabled.");
-    }
-
-    if (!settings::get<bool>("login.CHARACTER_DELETION"))
-    {
-        ShowInfo("Character deletion is currently disabled.");
+        ShowStatus("New account creation is disabled in login_config.");
     }
 
     messageThread = std::thread(message_server_init, std::ref(requestExit));
     // clang-format off
     gConsoleService = std::make_unique<ConsoleService>();
 
-    // TODO: Writing back to settings files
     gConsoleService->RegisterCommand(
     "verlock", "Cycle between version lock acceptance modes.",
     [&](std::vector<std::string> inputs)
     {
-        // handle wrap around from 2 -> 3 as 0
-        auto temp = (ver_lock + 1) % 3;
-        ver_lock  = temp;
+        // handle wrap around from 2->3 as 0
+        auto temp             = (version_info.ver_lock + 1) % 3;
+        version_info.ver_lock = temp;
 
         const char* value = "";
-        switch (ver_lock)
+        switch (version_info.ver_lock)
         {
             case 0:
                 value = "disabled";
@@ -177,15 +171,16 @@ int32 do_init(int32 argc, char** argv)
                 value = "enabled - greater than or equal";
                 break;
         }
-        fmt::printf("Version lock mode: %i - %s\n", ver_lock, value);
+        fmt::printf("Version lock mode: %i - %s\n", version_info.ver_lock, value);
     });
 
     gConsoleService->RegisterCommand(
     "maint_mode", "Cycle between maintenance modes.",
     [&](std::vector<std::string> inputs)
     {
-        maint_mode = (maint_mode + 1) % 2;
-        fmt::printf("Maintenance mode changed to %i\n", maint_mode);
+        maint_config.maint_mode = (maint_config.maint_mode + 1) % 2;
+        config_write(MAINT_CONF_FILENAME, "maint", maint_config_write);
+        fmt::printf("Maintenance mode changed to %i\n", maint_config.maint_mode);
     });
 
     gConsoleService->RegisterCommand(
@@ -205,8 +200,8 @@ int32 do_init(int32 argc, char** argv)
     });
     // clang-format on
 
-    ShowInfo("The login-server is ready to work!");
-    ShowInfo("=======================================================================");
+    ShowStatus("The login-server is ready to work!");
+    ShowMessage("=======================================================================");
 
     return 0;
 }
@@ -259,7 +254,7 @@ int do_sockets(fd_set* rfd, duration next)
     {
         if (sErrno != S_EINTR)
         {
-            ShowCritical(fmt::format("do_sockets: select() failed, error code {}!", sErrno));
+            ShowFatalError("do_sockets: select() failed, error code %d!", sErrno);
             exit(EXIT_FAILURE);
         }
         return 0; // interrupted by a signal, just loop and try again

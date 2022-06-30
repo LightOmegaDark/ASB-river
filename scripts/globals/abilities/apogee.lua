@@ -5,6 +5,8 @@
 -- Recast Time: 5 Minutes
 -- Duration: 1 Blood Pact or 60 seconds, whichever occurs first.
 -----------------------------------
+require("scripts/settings/main")
+require("scripts/globals/status")
 require("scripts/globals/msg")
 require("scripts/globals/status")
 -----------------------------------

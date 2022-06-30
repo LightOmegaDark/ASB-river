@@ -5,7 +5,7 @@
 -- !pos -721 -7 102 103
 -----------------------------------
 local ID = require("scripts/zones/Valkurm_Dunes/IDs")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 require("scripts/globals/status")
 require("scripts/globals/titles")
 require("scripts/globals/quests")
@@ -33,8 +33,9 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 2 then
-        npcUtil.giveCurrency(player, 'gil', 3000)
+    if (csid == 2) then
+        player:addGil(xi.settings.GIL_RATE*3000)
+        player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.GIL_RATE*3000)
         player:addTitle(xi.title.WANDERING_MINSTREL)
         player:unlockJob(xi.job.BRD) -- Bard
         player:messageSpecial(ID.text.UNLOCK_BARD)  --You can now become a bard!

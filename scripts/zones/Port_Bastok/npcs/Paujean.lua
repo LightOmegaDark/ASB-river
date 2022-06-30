@@ -3,6 +3,12 @@
 --  NPC: Paujean
 -- !pos -93.738 4.649 34.373 236
 -----------------------------------
+local ID = require("scripts/zones/Port_Bastok/IDs")
+require("scripts/settings/main")
+require("scripts/globals/quests")
+require("scripts/globals/titles")
+require("scripts/globals/utils")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

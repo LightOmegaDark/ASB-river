@@ -3,15 +3,15 @@
 --  NPC: Splintery Chest
 -----------------------------------
 local ID = require("scripts/zones/RuLude_Gardens/IDs")
-require("scripts/globals/settings")
+require("scripts/settings/main")
 -----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
 end
 
-entity.onTrigger = function(player, npc)
-    if xi.settings.main.ENABLE_MAGIAN_TRIALS ~= 1 then
+entity.onTrigger = function(player,npc)
+    if xi.settings.ENABLE_MAGIAN_TRIALS ~= 1 then
         return
     end
 

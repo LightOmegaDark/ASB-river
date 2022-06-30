@@ -7,7 +7,7 @@
 -- Darcia : !pos -36 -1 -15 245
 -----------------------------------
 require('scripts/globals/missions')
-require('scripts/globals/settings')
+require('scripts/settings/main')
 require('scripts/globals/interaction/mission')
 require('scripts/globals/utils')
 require('scripts/globals/zone')
@@ -24,17 +24,7 @@ mission.sections =
 {
     {
         check = function(player, currentMission, missionStatus, vars)
-            -- Hack: don't display until first character intro CS is shown.
-            -- This is needed because this mission sorts before hidden quests and gets checked first
-
-            if
-                xi.settings.main.NEW_CHARACTER_CUTSCENE == 1 and
-                player:getCharVar("HQuest[newCharacterCS]notSeen") == 1
-            then
-                return false
-            end
-
-            return currentMission == mission.missionId and xi.settings.main.ENABLE_SOA == 1
+            return currentMission == mission.missionId and xi.settings.ENABLE_SOA == 1
         end,
 
         [xi.zone.LOWER_JEUNO] =

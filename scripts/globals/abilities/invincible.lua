@@ -5,7 +5,9 @@
 -- Recast Time: 1:00:00
 -- Duration: 0:00:30
 -----------------------------------
-require("scripts/globals/job_utils/paladin")
+require("scripts/globals/jobpoints")
+require("scripts/settings/main")
+require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 
