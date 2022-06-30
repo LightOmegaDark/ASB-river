@@ -156,12 +156,6 @@ global_objects=(
 
     AbilityFinalAdjustments
 
-    getSummoningSkillOverCap
-    AvatarFinalAdjustments
-    AvatarPhysicalHit
-    AvatarPhysicalMove
-    avatarMiniFightCheck
-
     MOBSKILL_MAGICAL
     MOBSKILL_PHYSICAL
 

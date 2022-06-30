@@ -282,6 +282,22 @@ namespace luautils
         CacheLuaObjectFromFile("./scripts/globals/pets/luopan.lua");
         CacheLuaObjectFromFile("./scripts/globals/pets/wyvern.lua");
 
+        if (gLoadAllLua) // Load all lua files (for sanity testing, no need for during regular use)
+        {
+            for (auto entry : std::filesystem::recursive_directory_iterator("./scripts"))
+            {
+                if (entry.path().extension() == ".lua")
+                {
+                    auto result = lua.safe_script_file(entry.path().relative_path().generic_string(), &sol::script_pass_on_error);
+                    if (!result.valid())
+                    {
+                        sol::error err = result;
+                        ShowError(err.what());
+                    }
+                }
+            }
+        }
+
         // Handle settings
         contentRestrictionEnabled = settings::get<bool>("main.RESTRICT_CONTENT");
 
@@ -579,6 +595,21 @@ namespace luautils
             }
 
             ShowInfo("[FileWatcher] GLOBAL %s -> \"%s\"", filename, requireName);
+            return;
+        }
+
+        // Handle Commands then return
+        if (parts.size() == 2 && parts[0] == "commands")
+        {
+            auto result = lua.safe_script_file(filename, &sol::script_pass_on_error);
+            if (!result.valid())
+            {
+                sol::error err = result;
+                ShowError("luautils::CacheLuaObjectFromFile: Load command error: %s: %s", filename, err.what());
+                return;
+            }
+
+            ShowInfo("[FileWatcher] COMMAND %s", filename);
             return;
         }
 

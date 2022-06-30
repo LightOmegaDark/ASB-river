@@ -41,6 +41,7 @@ CBaseEntity::CBaseEntity()
 , speedsub(50)                                     // Retail does NOT adjust this when speed is adjusted.
 , namevis(0)
 , allegiance(ALLEGIANCE_TYPE::MOB)
+, spawnAnimation(SPAWN_ANIMATION::NORMAL)
 , PAI(nullptr)
 , PBattlefield(nullptr)
 , PInstance(nullptr)

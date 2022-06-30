@@ -6,17 +6,17 @@
 require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------
-local itemObject = {}
+local item_object = {}
 
-itemObject.onItemCheck = function(target)
+item_object.onItemCheck = function(target)
     return 0
 end
 
-itemObject.onItemUse = function(target)
+item_object.onItemUse = function(target)
     local duration = 7200
     target:delStatusEffect(xi.effect.RERAISE)
     target:addStatusEffect(xi.effect.RERAISE, 1, 0, duration)
     target:messageBasic(xi.msg.basic.GAINS_EFFECT_OF_STATUS, xi.effect.RERAISE)
 end
 
-return itemObject
+return item_object
