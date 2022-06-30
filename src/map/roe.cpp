@@ -96,6 +96,7 @@ namespace roeutils
     void init()
     {
         TracyZoneScoped;
+        roeutils::RoeSystem.RoeEnabled   = lua["xi"]["settings"]["ENABLE_ROE"].get_or(0);
         lua["RoeParseRecords"] = &roeutils::ParseRecords;
         lua["RoeParseTimed"]   = &roeutils::ParseTimedSchedule;
         RoeHandlers.fill(RoeCheckHandler());
@@ -215,7 +216,7 @@ namespace roeutils
     bool event(ROE_EVENT eventID, CCharEntity* PChar, const RoeDatagramList& payload)
     {
         TracyZoneScoped;
-        if (!settings::get<bool>("main.ENABLE_ROE") || !PChar || PChar->objtype != TYPE_PC)
+        if (!RoeSystem.RoeEnabled || !PChar || PChar->objtype != TYPE_PC)
         {
             return false;
         }
@@ -439,7 +440,7 @@ namespace roeutils
     void onCharLoad(CCharEntity* PChar)
     {
         TracyZoneScoped;
-        if (!settings::get<bool>("main.ENABLE_ROE"))
+        if (!RoeSystem.RoeEnabled)
         {
             return;
         }
@@ -585,7 +586,7 @@ namespace roeutils
     void CycleTimedRecords()
     {
         TracyZoneScoped;
-        if (!settings::get<bool>("main.ENABLE_ROE"))
+        if (!RoeSystem.RoeEnabled)
         {
             return;
         }
@@ -607,7 +608,7 @@ namespace roeutils
     void CycleDailyRecords()
     {
         TracyZoneScoped;
-        if (!settings::get<bool>("main.ENABLE_ROE"))
+        if (!RoeSystem.RoeEnabled)
         {
             return;
         }
@@ -664,7 +665,7 @@ namespace roeutils
     void CycleWeeklyRecords()
     {
         TracyZoneScoped;
-        if (!settings::get<bool>("main.ENABLE_ROE"))
+        if (!RoeSystem.RoeEnabled)
         {
             return;
         }

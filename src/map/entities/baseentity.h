@@ -197,12 +197,6 @@ enum NAMEVIS : uint8
     VIS_GHOST_PHASE = 0x80,
 };
 
-enum class SPAWN_ANIMATION : uint8
-{
-    NORMAL  = 0,
-    SPECIAL = 1,
-};
-
 // TODO:it is possible to make this structure part of the class, instead of the current ID and Targid, but without the Clean method
 
 struct EntityID_t
@@ -318,10 +312,6 @@ public:
     bool manualConfig;                  // Is this entity configured with script
 
     bool isRenamed; // tracks if the entity's name has been overidden. Defaults to false.
-
-    bool m_bReleaseTargIDOnDisappear;
-
-    SPAWN_ANIMATION spawnAnimation;
 
     std::unique_ptr<CAIContainer> PAI;          // AI container
     CBattlefield*                 PBattlefield; // pointer to battlefield (if in one)

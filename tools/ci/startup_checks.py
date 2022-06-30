@@ -9,15 +9,9 @@ import time
 def main():
     print("Running exe startup checks...({})".format(platform.system()))
 
-    p0 = subprocess.Popen(
-        ["xi_connect", "--log", "connect-server.log"], stdout=subprocess.PIPE
-    )
-    p1 = subprocess.Popen(
-        ["xi_search", "--log", "search-server.log"], stdout=subprocess.PIPE
-    )
-    p2 = subprocess.Popen(
-        ["xi_map", "--log", "game-server.log", "--load_all"], stdout=subprocess.PIPE
-    )
+    p0 = subprocess.Popen(["xi_connect","--log","connect-server.log"], stdout=subprocess.PIPE)
+    p1 = subprocess.Popen(["xi_search","--log","search-server.log"], stdout=subprocess.PIPE)
+    p2 = subprocess.Popen(["xi_map","--log","game-server.log"], stdout=subprocess.PIPE)
 
     print("Sleeping for 5 minutes...")
 

@@ -318,11 +318,6 @@ std::optional<CLuaBaseEntity> CLuaZone::insertDynamicEntity(sol::table table)
 
         PMob->m_isAggroable = table["isAggroable"].get_or(false);
 
-        PMob->spawnAnimation = static_cast<SPAWN_ANIMATION>(table["specialSpawnAnimation"].get_or(false) ? 1 : 0);
-
-        uint32 flags  = table.get_or<uint32>("entityFlags", 0);
-        PMob->m_flags = flags == 0 ? PMob->m_flags : flags;
-
         // Ensure mobs get a function for onMobDeath
         auto onMobDeath = table["onMobDeath"].get<sol::function>();
         if (!onMobDeath.valid())

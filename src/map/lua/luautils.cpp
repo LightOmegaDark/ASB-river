@@ -282,22 +282,6 @@ namespace luautils
         CacheLuaObjectFromFile("./scripts/globals/pets/luopan.lua");
         CacheLuaObjectFromFile("./scripts/globals/pets/wyvern.lua");
 
-        if (gLoadAllLua) // Load all lua files (for sanity testing, no need for during regular use)
-        {
-            for (auto const& entry : sorted_directory_iterator<std::filesystem::recursive_directory_iterator>("./scripts"))
-            {
-                if (entry.extension() == ".lua")
-                {
-                    auto result = lua.safe_script_file(entry.relative_path().generic_string());
-                    if (!result.valid())
-                    {
-                        sol::error err = result;
-                        ShowError(err.what());
-                    }
-                }
-            }
-        }
-
         // Handle settings
         contentRestrictionEnabled = settings::get<bool>("main.RESTRICT_CONTENT");
 
@@ -595,37 +579,6 @@ namespace luautils
             }
 
             ShowInfo("[FileWatcher] GLOBAL %s -> \"%s\"", filename, requireName);
-            return;
-        }
-
-        // Handle Commands then return
-        if (parts.size() == 2 && parts[0] == "commands")
-        {
-            auto result = lua.safe_script_file(filename);
-            if (!result.valid())
-            {
-                sol::error err = result;
-                ShowError("luautils::CacheLuaObjectFromFile: Load command error: %s: %s", filename, err.what());
-                return;
-            }
-
-            ShowInfo("[FileWatcher] COMMAND %s", filename);
-            return;
-        }
-
-        // Handle IDs then return
-        if (parts.size() == 3 && parts[2] == "IDs")
-        {
-            auto result = lua.safe_script_file(filename, &sol::script_pass_on_error);
-            if (!result.valid())
-            {
-                sol::error err = result;
-                ShowError("luautils::CacheLuaObjectFromFile: Load command error: %s: %s", filename, err.what());
-                return;
-            }
-
-            PopulateIDLookups();
-            ShowInfo("[FileWatcher] IDs %s", filename);
             return;
         }
 

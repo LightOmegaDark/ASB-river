@@ -5,6 +5,7 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/mobskills")
 require("scripts/globals/magic")
+
 -----------------------------------
 local abilityObject = {}
 
@@ -17,12 +18,12 @@ abilityObject.onPetAbility = function(target, pet, skill)
     local tp     = pet:getTP() / 10
     local master = pet:getMaster()
     local merits = 0
-    if master ~= nil and master:isPC() then
+    if (master ~= nil and master:isPC()) then
         merits = master:getMerit(xi.merit.WIND_BLADE)
     end
 
     tp = tp + (merits - 40)
-    if tp > 300 then
+    if (tp > 300) then
         tp = 300
     end
 
@@ -31,7 +32,7 @@ abilityObject.onPetAbility = function(target, pet, skill)
     damage = damage + (dINT * 1.5)
     damage = xi.mobskills.mobMagicalMove(pet, target, skill, damage, xi.magic.ele.WIND, 1, xi.mobskills.magicalTpBonus.NO_EFFECT, 0)
     damage = xi.mobskills.mobAddBonuses(pet, target, damage.dmg, xi.magic.ele.WIND)
-    damage = xi.summon.avatarFinalAdjustments(damage, pet, skill, target, xi.attackType.MAGICAL, xi.damageType.WIND, 1)
+    damage = AvatarFinalAdjustments(damage, pet, skill, target, xi.attackType.MAGICAL, xi.damageType.WIND, 1)
 
     target:takeDamage(damage, pet, xi.attackType.MAGICAL, xi.damageType.WIND)
     target:updateEnmityFromDamage(pet, damage)
