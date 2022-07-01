@@ -15,8 +15,8 @@ zoneObject.onInitialize = function(zone)
     SetExplorerMoogles(ID.npc.EXPLORER_MOOGLE)
 end
 
-zoneObject.onGameHour = function(zone)
-    SetServerVariable("Selbina_Deastination", math.random(1, 100))
+zone_object.onGameHour = function(zone)
+    SetServerVariable("Selbina_Destination", math.random(1, 100))
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -61,7 +61,7 @@ end
 
 zoneObject.onEventFinish = function(player, csid, option)
     if csid == 200 then
-        if GetServerVariable("Selbina_Deastination") >= 0 then
+        if GetServerVariable("Selbina_Destination") >= 0 then
             player:setPos(0, 0, 0, 0, xi.zone.SHIP_BOUND_FOR_MHAURA_PIRATES)
         else
             player:setPos(0, 0, 0, 0, xi.zone.SHIP_BOUND_FOR_MHAURA)
