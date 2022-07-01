@@ -39,9 +39,7 @@ end
 
 -- potential lottery placeholder was killed
 xi.mob.phOnDespawn = function(ph, phList, chance, cooldown, immediate)
-    if type(immediate) ~= "boolean" then
-        immediate = false
-    end
+    if type(immediate) ~= "boolean" then immediate = false end
 
     if xi.settings.main.NM_LOTTERY_CHANCE then
         chance = xi.settings.main.NM_LOTTERY_CHANCE >= 0 and (chance * xi.settings.main.NM_LOTTERY_CHANCE) or 100

@@ -293,6 +293,22 @@ def check_protected():
     if import_protected:
         express_enabled = True
 
+def check_protected():
+    global import_protected, express_enabled
+    if not cur:
+        connect()
+    import_protected.clear()
+    for table in player_data:
+        import_protected.append("'" + table[:-4] + "'")
+    cur.execute("SELECT TABLE_NAME FROM `information_schema`.`tables` WHERE `TABLE_SCHEMA` = '{}' AND `TABLE_NAME` IN ({})".format(database,', '.join(import_protected)))
+    tables = cur.fetchall()
+    import_protected.clear()
+    for value in tables:
+        import_protected.append(''.join(value) + '.sql')
+    import_protected = [value for value in player_data if value not in import_protected]
+    if import_protected:
+        express_enabled = True
+
 def fetch_files(express=False):
     import_files.clear()
     if express:

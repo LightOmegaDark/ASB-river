@@ -4294,6 +4294,8 @@ namespace charutils
 
         capacityPoints = (uint32)(capacityPoints * settings::get<float>("map.EXP_RATE"));
 
+        // uint16 currentCapacity = PChar->PJobPoints->GetCapacityPoints();
+
         if (capacityPoints > 0)
         {
             // Capacity Chains start at lv100 mobs

@@ -329,10 +329,8 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
                     PChar->GetName(), PChar->loc.zone->GetName(), PChar->loc.zone->GetID());
 
         // TODO: work out how to drop player in moghouse that exits them to the zone they were in before this happened, like we used to.
-        ShowWarning("packet_system::SmallPacket0x00A dumping player `%s` to a valid zone!", PChar->GetName());
-        auto prevZone          = PChar->loc.prevzone ? PChar->loc.prevzone : (uint16)ZONE_VALKURM_DUNES;
-        PChar->loc.destination = prevZone;
-        sql->Query("UPDATE chars SET pos_zone = %u WHERE charid = %u", prevZone, PChar->id);
+        ShowWarning("packet_system::SmallPacket0x00A dumping player `%s` to homepoint!", PChar->GetName());
+        charutils::HomePoint(PChar);
     }
 
     // Only release client from "Downloading Data" if the packet sequence came in without a drop on 0x00D

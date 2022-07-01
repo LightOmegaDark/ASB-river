@@ -31,12 +31,6 @@
 #include "common/version.h"
 #include "common/watchdog.h"
 
-#include <sstream>
-#if defined(__linux__) || defined(__APPLE__)
-#define BACKWARD_HAS_BFD 1
-#include "../../ext/backward/backward.hpp"
-#endif
-
 #include <csignal>
 #include <cstdio>
 #include <cstdlib>

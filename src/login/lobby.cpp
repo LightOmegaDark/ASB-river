@@ -98,6 +98,9 @@ int32 lobbydata_parse(int32 fd)
         auto maintMode  = settings::get<uint8>("login.MAINT_MODE");
         auto searchPort = settings::get<uint16>("network.SEARCH_PORT");
 
+        auto maintMode  = settings::get<uint8>("login.MAINT_MODE");
+        auto searchPort = settings::get<uint16>("network.SEARCH_PORT");
+
         int32 code = ref<uint8>(buff, 0);
         switch (code)
         {

@@ -107,6 +107,11 @@ int32 do_init(int32 argc, char** argv)
         ShowInfo("Character deletion is currently disabled.");
     }
 
+    if (!settings::get<bool>("login.CHARACTER_DELETION"))
+    {
+        ShowInfo("Character deletion is currently disabled.");
+    }
+
     messageThread = std::thread(message_server_init, std::ref(requestExit));
     // clang-format off
     gConsoleService = std::make_unique<ConsoleService>();
@@ -142,22 +147,6 @@ int32 do_init(int32 argc, char** argv)
     {
         maint_mode = (maint_mode + 1) % 2;
         fmt::printf("Maintenance mode changed to %i\n", maint_mode);
-    });
-
-    gConsoleService->RegisterCommand(
-    "show_fds", "Print current amount of File Descriptors in use.",
-    [&](std::vector<std::string> inputs)
-    {
-        fmt::printf("Total fds in use: %i (4 are reserved for login itself)\n", fd_max);
-    });
-
-    gConsoleService->RegisterCommand("exit", "Terminate the program.",
-    [&](std::vector<std::string> inputs)
-    {
-        fmt::print("> Goodbye!\n");
-        // gConsoleService->stop(); // Kernel calls this, uncomment when decoupled from kernel
-        gRunFlag = false;
-        //do_final(EXIT_SUCCESS); // Kernel calls this, uncomment or replace when decoupled from kernel
     });
     // clang-format on
 
