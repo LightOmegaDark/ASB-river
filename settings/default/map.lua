@@ -29,9 +29,9 @@ xi.settings.map =
     -- Game settings
     -- --------------------------------
 
-    -- PacketGuard will block and report any packets that aren't in the allow-list for a
-    -- player's current state.
-    PACKETGUARD_ENABLED = true,
+    --  PacketGuard will block and report any packets that aren't in the allow-list for a
+    --  player's current state.
+    PACKETGUARD_ENABLED = 1,
 
     -- Minimal number of 0x3A packets which uses for detect lightluggage (set 0 for disable)
     LIGHTLUGGAGE_BLOCK = 4,
@@ -54,7 +54,7 @@ xi.settings.map =
     -- Misc EXP related settings
     EXP_RATE                = 1.0,
     EXP_LOSS_RATE           = 1.0,
-    EXP_PARTY_GAP_PENALTIES = true,
+    EXP_PARTY_GAP_PENALTIES = 1,
 
     -- Capacity Point Settings
     CAPACITY_RATE = 1.0,
@@ -75,10 +75,10 @@ xi.settings.map =
     EXP_LOSS_LEVEL = 31,
 
     -- Enable/disable Level Sync
-    LEVEL_SYNC_ENABLE = true,
+    LEVEL_SYNC_ENABLE = 1,
 
     -- Disables ability to equip higher level gear when level cap/sync effect is on player.
-    DISABLE_GEAR_SCALING = false,
+    DISABLE_GEAR_SCALING = 0,
 
     -- Weaponskill point base (before skillchain) for breaking latent - whole numbers only. retail is 1.
     WS_POINTS_BASE = 1,
@@ -88,7 +88,7 @@ xi.settings.map =
     WS_POINTS_SKILLCHAIN = 1,
 
     -- Enable/disable jobs other than BST and RNG having widescan
-    ALL_JOBS_WIDESCAN = true,
+    ALL_JOBS_WIDESCAN = 1,
 
     -- Modifier to apply to player speed. 0 is the retail accurate default. Negative numbers will reduce it.
     SPEED_MOD = 0,
@@ -108,14 +108,14 @@ xi.settings.map =
     SKILLUP_AMOUNT_MULTIPLIER = 1,
     CRAFT_AMOUNT_MULTIPLIER   = 1,
 
-    -- Gardening Factors. DO NOT change defaults without verifiable proof that your change IS how retail does it. Myths need to be optional.
-    GARDEN_DAY_MATTERS       = false,
-    GARDEN_MOONPHASE_MATTERS = false,
-    GARDEN_POT_MATTERS       = false,
-    GARDEN_MH_AURA_MATTERS   = false,
+    -- Gardening Factors        = DO NOT change defaults without verifiable proof that your change IS how retail does it. Myths need to be optional.
+    GARDEN_DAY_MATTERS       = 0,
+    GARDEN_MOONPHASE_MATTERS = 0,
+    GARDEN_POT_MATTERS       = 0,
+    GARDEN_MH_AURA_MATTERS   = 0,
 
     -- Use current retail skill up rates and margins (Retail = High Skill-Up rate; Skill-Up when at or under 10 levels above synth recipe level.)
-    CRAFT_MODERN_SYSTEM = true,
+    CRAFT_MODERN_SYSTEM = 1,
 
     -- Craft level limit from witch specialization points beginning to count. (Retail = 700; Level 75 era:600)
     CRAFT_COMMON_CAP = 700,
@@ -123,14 +123,14 @@ xi.settings.map =
     -- Amount of points allowed in crafts over the level defined above. Points are shared across all crafting skills. (Retail = 400; All skills can go to max = 3200)
     CRAFT_SPECIALIZATION_POINTS = 400,
 
-    -- Enables fishing. 0 = Disabled. 1 = Enable. ENABLE AT YOUR OWN RISK.
-    FISHING_ENABLE = false,
+    -- Enables fishing. 0 = Disbaled. 1 = Enable. ENABLE AT YOUR OWN RISK.
+    FISHING_ENABLE     = 0,
 
     -- Multiplier for fishing skill-up chance. Default = 1.0, very hard.
     FISHING_SKILL_MULTIPLIER = 1.0,
 
     -- Enable/disable skill-ups from bloodpacts
-    SKILLUP_BLOODPACT = true,
+    SKILLUP_BLOODPACT = 1,
 
     -- Adjust rate of TP gain for mobs, pets (includes charmed pets), fellows, trusts and players.
     -- Acts as a multiplier, so default is 1.
@@ -178,7 +178,7 @@ xi.settings.map =
     ABILITY_RECAST_MULTIPLIER = 1.0,
 
     -- Enable/disable shared blood pact timer
-    BLOOD_PACT_SHARED_TIMER = false,
+    BLOOD_PACT_SHARED_TIMER = 0,
 
     -- Adjust mob drop rate. Acts as a multiplier, so default is 1.
     DROP_RATE_MULTIPLIER = 1.0,
@@ -192,8 +192,8 @@ xi.settings.map =
     -- Maximum total bonus gil that can be dropped. Default 9999 gil.
     MAX_GIL_BONUS = 9999,
 
-    -- Allow mobs to walk back home instead of despawning
-    MOB_NO_DESPAWN = false,
+    --  Allow mobs to walk back home instead of despawning
+    MOB_NO_DESPAWN = 0,
 
     -- Adds extra time to mob despawn in seconds. Base time is 25s, so a setting of 5 here would be a total of 30 seconds.
     MOB_ADDITIONAL_TIME_TO_DEAGGRO = 0,
@@ -223,28 +223,28 @@ xi.settings.map =
 
     -- Command Audit [logging] commands with lower permission than this will not be logged.
     -- Zero for no logging at all. Commands given to non GMs are not logged.
-    AUDIT_GM_CMD = false,
+    AUDIT_GM_CMD = 0,
 
     -- Todo = other logging including anti-cheat messages
 
     -- Chat Audit[logging] settings
-    AUDIT_CHAT      = false,
-    AUDIT_SAY       = false,
-    AUDIT_SHOUT     = false,
-    AUDIT_TELL      = false,
-    AUDIT_YELL      = false,
-    AUDIT_LINKSHELL = false,
-    AUDIT_UNITY     = false,
-    AUDIT_PARTY     = false,
+    AUDIT_CHAT      = 0,
+    AUDIT_SAY       = 0,
+    AUDIT_SHOUT     = 0,
+    AUDIT_TELL      = 0,
+    AUDIT_YELL      = 0,
+    AUDIT_LINKSHELL = 0,
+    AUDIT_UNITY     = 0,
+    AUDIT_PARTY     = 0,
 
     -- Seconds between healing ticks. Default is 10
     HEALING_TICK_DELAY = 10,
 
     -- Set to 1 to enable server side anti-cheating measurements
-    ANTICHEAT_ENABLED = true,
+    ANTICHEAT_ENABLED = 1,
 
     -- Set to 1 to completely disable auto-jailing offenders
-    ANTICHEAT_JAIL_DISABLE = false,
+    ANTICHEAT_JAIL_DISABLE = 0,
 
     -- Enable/disable keeping jug pets through zoning
     KEEP_JUGPET_THROUGH_ZONING = false,

@@ -281,10 +281,9 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
 
         if (destination >= MAX_ZONEID)
         {
-            // TODO: work out how to drop player in moghouse that exits them to the zone they were in before this happened, like we used to.
             ShowWarning("packet_system::SmallPacket0x00A player tried to enter zone out of range: %d", destination);
-            ShowWarning("packet_system::SmallPacket0x00A dumping player `%s` to homepoint!", PChar->GetName());
-            charutils::HomePoint(PChar);
+            ShowWarning("packet_system::SmallPacket0x00A dumping player `%s` to a valid zone!", PChar->GetName());
+            PChar->loc.destination = destination = (uint16)ZONE_SELBINA;
         }
 
         zoneutils::GetZone(destination)->IncreaseZoneCounter(PChar);
@@ -321,15 +320,12 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
             }
         }
 
-        charutils::SaveCharPosition(PChar);
-        charutils::SaveZonesVisited(PChar);
-        charutils::SavePlayTime(PChar);
-
-        if (PChar->m_moghouseID != 0)
-        {
-            PChar->m_charHistory.mhEntrances++;
-            gardenutils::UpdateGardening(PChar, false);
-        }
+        // Write a sane location for them
+        // TODO: work out how to drop player in moghouse that exits them to the zone they were in before this happened, like we used to.
+        ShowWarning("packet_system::SmallPacket0x00A dumping player `%s` to a valid zone!", PChar->GetName());
+        auto prevZone          = PChar->loc.prevzone ? PChar->loc.prevzone : (uint16)ZONE_VALKURM_DUNES;
+        PChar->loc.destination = prevZone;
+        sql->Query("UPDATE chars SET pos_zone = %u WHERE charid = %u", prevZone, PChar->id);
     }
 
     // Only release client from "Downloading Data" if the packet sequence came in without a drop on 0x00D
