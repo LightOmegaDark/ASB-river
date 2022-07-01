@@ -38,10 +38,11 @@ zoneObject.onZoneIn = function(player, prevZone)
         end
     end
 
-    if
-        player:hasKeyItem(xi.ki.SEANCE_STAFF) and
-        player:getCharVar("Enagakure_Killed") == 1
-    then
+    if player:getZPos() < -59.5 then -- fixing player position if logged off / crashed on ship
+        player:setPos(18.05, -1.38, -56.75)
+    end
+
+    if player:hasKeyItem(xi.ki.SEANCE_STAFF) and player:getCharVar("Enagakure_Killed") == 1 then
         cs = 1101
     end
 
@@ -61,7 +62,7 @@ end
 
 zoneObject.onEventFinish = function(player, csid, option)
     if csid == 200 then
-        if GetServerVariable("Selbina_Destination") >= 0 then
+        if GetServerVariable("Selbina_Destination") >= 89 then
             player:setPos(0, 0, 0, 0, xi.zone.SHIP_BOUND_FOR_MHAURA_PIRATES)
         else
             player:setPos(0, 0, 0, 0, xi.zone.SHIP_BOUND_FOR_MHAURA)

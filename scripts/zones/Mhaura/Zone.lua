@@ -47,12 +47,11 @@ zoneObject.onZoneIn = function(player, prevZone)
         end
     end
 
-    if
-        player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.DAWN and
-        player:getCharVar("PromathiaStatus") == 3 and
-        player:getCharVar("Promathia_kill_day") < os.time() and
-        player:getCharVar("COP_shikarees_story") == 0
-    then
+    if player:getZPos() < 1.6 then -- fixing player position if logged off / crashed on ship
+        player:setPos(8.23, -1.3, 4.48)
+    end
+
+    if player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.DAWN and player:getCharVar("PromathiaStatus")==3 and player:getCharVar("Promathia_kill_day") < os.time() and player:getCharVar("COP_shikarees_story")== 0 then
         cs = 322
     end
 
@@ -87,7 +86,7 @@ zoneObject.onEventFinish = function(player, csid, option)
         local DepartureTime = VanadielHour()
 
         if DepartureTime % 8 == 0 then
-            if GetServerVariable("Mhaura_Destination") >= 0 then
+            if GetServerVariable("Mhaura_Destination") >= 89 then
                 player:setPos(0, 0, 0, 0, xi.zone.SHIP_BOUND_FOR_SELBINA_PIRATES)
             else
                 player:setPos(0, 0, 0, 0, xi.zone.SHIP_BOUND_FOR_SELBINA)

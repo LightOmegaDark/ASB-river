@@ -8,11 +8,6 @@ require("scripts/globals/sea_creatures")
 -----------------------------------
 local zoneObject = {}
 
-local function spawnBoatMob(mob)
-    mob:spawn()
-    mob:setLocalVar("maxVerticalAggro", 4)
-end
-
 zone_object.onInitialize = function(zone)
     xi.pirates.init(ID)
 end
@@ -28,7 +23,10 @@ zone_object.onZoneIn = function(player, prevZone, zone)
     then
         local position = math.random(-2, 2) + 0.150
         player:setPos(position, -2.100, 3.250, 64)
-        if player:getGMLevel() == 0 and GetZone(zoneID):getLocalVar('stateSet') == 0 then
+        if
+            player:getGMLevel() == 0 and
+            GetZone(zoneID):getLocalVar('stateSet') == 0
+        then
             GetZone(zoneID):setLocalVar('stateSet', 1)
             GetZone(zoneID):setLocalVar('state', 2)
             GetZone(zoneID):setLocalVar('transportTime', os.time())
@@ -40,9 +38,15 @@ end
 
 zone_object.onGameHour = function()
     local hour = VanadielHour()
-    if hour >= 20 or hour < 4 then
-        if math.random() < 0.20 and not GetMobByID(ID.mob.PHANTOM):isSpawned() then
-            spawnBoatMob(GetMobByID(ID.mob.PHANTOM))
+    if
+        hour >= 20 or
+        hour < 4
+    then
+        if
+            math.random() < 0.20 and
+            not GetMobByID(ID.mob.PHANTOM):isSpawned()
+        then
+            GetMobByID(ID.mob.PHANTOM):spawn()
         end
     elseif GetMobByID(ID.mob.PHANTOM):isSpawned() then
         DespawnMob(ID.mob.PHANTOM)
@@ -62,7 +66,7 @@ zone_object.onZoneTick = function(zone)
         xi.sea_creatures.checkSpawns(ID, 5, 1) -- 5 percent on init
     end
 
-    if (os.time() - zone:getLocalVar('transportTime')) % 60 then
+    if os.time() - zone:getLocalVar('transportTime') % 60 then
         xi.sea_creatures.checkSpawns(ID, 1, 2) -- 1 percent per vana minute, 2 total mobs
     end
 
