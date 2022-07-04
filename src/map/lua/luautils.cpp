@@ -1702,6 +1702,19 @@ namespace luautils
 
     /************************************************************************
      *                                                                       *
+     *  Get a Variable From Settings.lua                                     *
+     *                                                                       *
+     ************************************************************************/
+
+    uint8 GetSettingsVariable(const char* variable)
+    {
+        TracyZoneScoped;
+        TracyZoneCString(variable);
+        return lua["xi"]["settings"]["main"][variable].valid() ? lua["xi"]["settings"]["main"][variable].get<uint8>() : 0;
+    }
+
+    /************************************************************************
+     *                                                                       *
      *  Check if an something is restricted in Settings.lua                  *
      *  ENABLE_ is subject to RESTRICT_BY_EXPANSION                          *
      *  ALLOW_ is NOT subject to RESTRICT_BY_EXPANSION                       *
