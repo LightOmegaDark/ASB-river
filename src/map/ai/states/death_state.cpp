@@ -37,7 +37,8 @@ CDeathState::CDeathState(CBattleEntity* PEntity, duration death_time)
 : CState(PEntity, PEntity->targid)
 , m_PEntity(PEntity)
 , m_deathTime(death_time)
-, m_raiseTime(GetEntryTime() + TIME_TO_SEND_RERAISE_MENU)
+, m_lastRaiseSent(GetEntryTime())
+, m_raiseTime(GetEntryTime())
 {
     m_PEntity->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DEATH, true);
 
@@ -60,13 +61,15 @@ bool CDeathState::Update(time_point tick)
         Complete();
         m_PEntity->OnDeathTimer();
     }
-    else if (m_PEntity->objtype == TYPE_PC && tick > m_raiseTime && !IsCompleted() && !m_raiseSent && m_PEntity->isDead())
+    else if (m_PEntity->objtype == TYPE_PC && tick > m_lastRaiseSent + 8s && !IsCompleted() && m_PEntity->isDead())
     {
         auto* PChar = static_cast<CCharEntity*>(m_PEntity);
         if (PChar->m_hasRaise)
         {
+            // client does not mind receiving redundant raise menu packets
+            // TODO: figure out how the server actually decides to resend these packets
             PChar->pushPacket(new CRaiseTractorMenuPacket(PChar, TYPE_RAISE));
-            m_raiseSent = true;
+            m_lastRaiseSent = tick;
         }
     }
     return false;
