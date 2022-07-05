@@ -6,6 +6,8 @@ local ID = require("scripts/zones/Bibiki_Bay/IDs")
 -----------------------------------
 local entity = {}
 
+-- TODO: Going into shell mechanic isn't 100% precise, could use more research
+
 local function enterShell(mob)
     mob:setAnimationSub(1)
     mob:SetAutoAttackEnabled(false)
@@ -33,7 +35,7 @@ local function exitShell(mob)
 end
 
 entity.onMobSpawn = function(mob)
-    mob:setLocalVar("shellTimer", os.time() + 60)
+    mob:setLocalVar("shellTimer", os.time() + 90)
     mob:setLocalVar("petCooldown", os.time() + 20)
     exitShell(mob)
 
@@ -91,8 +93,7 @@ entity.onSpellPrecast = function(mob, spell)
         for i = 1, 2 do
             local pet = GetMobByID(mob:getID()+i)
             if not pet:isSpawned() then
-                SpawnMob(pet:getID())
-                pet:updateEnmity(target)
+                SpawnMob(pet:getID()):updateEnmity(target)
                 pet:setPos(pos.x, pos.y, pos.z, pos.rot)
                 break
             end
@@ -101,13 +102,15 @@ entity.onSpellPrecast = function(mob, spell)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
-    local mobId = mob:getID()
-    for i = 1, 2 do
-        local petID = GetMobByID(mobId+i)
-        petID:setHP(0)
+    if isKiller then
+        local mobId = mob:getID()
+        for i = 1, 2 do
+            local petID = GetMobByID(mobId+i)
+            petID:setHP(0)
+        end
+        mob:resetLocalVars()
+        mob:removeListener("SHEN_MAGIC_EXIT")
     end
-    mob:resetLocalVars()
-    mob:removeListener("SHEN_MAGIC_EXIT")
 end
 
 return entity

@@ -12,11 +12,12 @@ local entity = {}
 entity.onTrade = function(player, npc, trade)
     if npcUtil.tradeHasExactly(trade, xi.items.SHRIMP_LANTERN) and npcUtil.popFromQM(player, npc, ID.mob.SHEN) then
         player:confirmTrade()
+        player:messageSpecial(ID.text.SHEN_SPAWN)
     end
 end
 
 entity.onTrigger = function(player, npc)
-    player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
+    player:messageSpecial(ID.text.SHEN_QM)
 end
 
 entity.onEventUpdate = function(player, csid, option)
