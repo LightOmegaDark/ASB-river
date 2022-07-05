@@ -18,10 +18,7 @@ entity.onMobSpawn = function(mob)
     })
 
     -- Takes half damage from all attacks
-    mob:addMod(xi.mod.UDMGPHYS,-5000)
-    mob:addMod(xi.mod.UDMGRANGE,-5000)
-    mob:addMod(xi.mod.UDMGMAGIC,-5000)
-    mob:addMod(xi.mod.UDMGBREATH,-5000)
+    mob:addMod(xi.mod.DMG, -5000)
 
     -- May spawn in a party with two other Orcs
     if math.random(1,2) == 1 then
