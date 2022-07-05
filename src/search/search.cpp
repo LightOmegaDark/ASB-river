@@ -545,7 +545,7 @@ void HandleGroupListRequest(CTCPRequestPacket& PTCPRequest)
 
 void HandleSearchComment(CTCPRequestPacket& PTCPRequest)
 {
-    uint8* data     = (uint8*)PTCPRequest.GetData();
+    uint8* data     = PTCPRequest.GetData();
     uint32 playerId = ref<uint32>(data, 0x10);
 
     CDataLoader PDataLoader;
