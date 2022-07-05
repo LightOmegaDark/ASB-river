@@ -554,14 +554,18 @@ xi.spells.damage.calculateResist = function(caster, target, spell, skillType, sp
     -----------------------------------
     -- Apply level correction.
     -----------------------------------
-    local levelDiff = utils.clamp(caster:getMainLvl() - target:getMainLvl(), -5, 5)
-    magicAcc        = magicAcc + levelDiff * 3
+    local levelDiff = caster:getMainLvl() - target:getMainLvl()
 
     -----------------------------------
     -- STEP 2: Get target magic evasion
     -- Base magic evasion (base magic evasion plus resistances(players), plus elemental defense(mobs)
     -----------------------------------
-    magicEva = target:getMod(xi.mod.MEVA) + resMod
+    if target:isPC() then
+        magiceva = target:getMod(xi.mod.MEVA) + resMod
+    else
+        dLvl = utils.clamp(dLvl, 0, 99) -- Mobs should not have a disadvantage when targeted
+        magiceva = target:getMod(xi.mod.MEVA) + (4 * levelDiff) + resMod
+    end
 
     -----------------------------------
     -- STEP 3: Get Magic Hit Rate
@@ -585,15 +589,6 @@ xi.spells.damage.calculateResist = function(caster, target, spell, skillType, sp
         if randomVar <= (1 - magicHitRate / 100) ^ tierVar then
             resistTier = tierVar
             break
-        end
-    end
-
-    -- Apply extra roll for elemental resistance boons. Testimonial. This needs retail testing.
-    if randomVar > 0.5 then
-        if resMod > 0 then
-            resistTier = resistTier + 1
-        elseif resMod < 0 then
-            resistTier = resistTier - 1
         end
     end
 
