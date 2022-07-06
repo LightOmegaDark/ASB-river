@@ -487,39 +487,7 @@ xi.job_utils.dragoon.useSuperJump = function(player, target, ability)
         wyvern:getHP() > 0 and
         wyvern:isEngaged()
     then
-        wyvern:useJobAbility(xi.jobAbility.SUPER_CLIMB, wyvern)
-    end
-
-    -- Handle Spirit Surge -50% enmity reduction on super jump to closest party member behind the dragoon
-    if player:hasStatusEffect(xi.effect.SPIRIT_SURGE) then
-        local minDistance = 9999
-        local closestPartyMember = nil
-
-        -- Find the closest party member
-        local party = player:getPartyWithTrusts()
-        for _, member in pairs(party) do
-            local distance = member:checkDistance(player)
-            if
-                member:getID() ~= player:getID() and
-                not member:isDead() and
-                (distance < minDistance or closestPartyMember == nil)
-            then
-                closestPartyMember = member
-                minDistance = distance
-            end
-        end
-
-        -- TODO: verify conditions for how close the dragoon needs to be to the mob, if at all
-        -- It doesn't matter what direction the dragoon is facing http://wiki.ffo.jp/html/3367.html#comment_1
-        if
-            closestPartyMember and
-            closestPartyMember:isBehind(player) and
-            (player:checkDistance(target) < closestPartyMember:checkDistance(target)) -- Verify dragoon is closer than the party member that we want to reduce the enmity of
-        then
-            if target:isMob() then
-                target:lowerEnmity(closestPartyMember, 50)
-            end
-        end
+        wyvern:useJobAbility(652, wyvern)
     end
 end
 
