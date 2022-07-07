@@ -1813,19 +1813,23 @@ xi.mod =
     AUGMENT_BLU_MAGIC      = 1036, -- Percent chance for BLU magic to receive 3x WSC value for spell (BLU AF3 Sets)
     GEOMANCY_MP_NO_DEPLETE = 1037, -- Percent chance for Geomancy to cost 0 MP (GEO AF3 Sets)
 
-    -- Job Point Gifts
-    SIC_READY_RECAST        = 1052, -- TODO: SIC/Ready recast reduction (seconds)
-    TRUE_SHOT_EFFECT        = 1053, -- TODO: True Shot Ranged Damage increase (percent)
-    DEAD_AIM_EFFECT         = 1054, -- TODO: Dead Aim Critical Damage increase (percent)
-    THIRD_EYE_BONUS         = 1055, -- TODO: Bonus Third Eye Evasions (count)
-    WYVERN_ATTRIBUTE_DA     = 1056, -- Adds an amount of Double Attack to Dragoon each time Wyverns Attributes Increase (percent)
-    DRAGOON_BREATH_RECAST   = 1057, -- Restoring/Smithing Breath Recast Reduction (seconds)
-    BLUE_JOB_TRAIT_BONUS    = 1058, -- TODO: Increases job traits gained from equipped blue magic (percent)
-    BLUE_MAGIC_EFFECT       = 1059, -- TODO: Bonus to Attribute Value of spell (percent)
-    QUICK_DRAW_RECAST       = 1060, -- TODO: Quick Draw Charge Reduction (seconds)
-
-    DIG_BYPASS_FATIGUE      = 1074, -- Chocobo digging modifier found in "Blue Race Silks". Modifier works as a direct percent.
-    BREATH_DMG_DEALT        = 1075, -- Breath damage dealt
+    -- Permenant Resistance Build Modifiers
+    SLEEPRESBUILD                 = 1138,
+    POISONRESBUILD                = 1139,
+    PARALYZERESBUILD              = 1140,
+    BLINDRESBUILD                 = 1141,
+    SILENCERESBUILD               = 1142,
+    VIRUSRESBUILD                 = 1143,
+    PETRIFYRESBUILD               = 1144,
+    BINDRESBUILD                  = 1145,
+    CURSERESBUILD                 = 1146,
+    GRAVITYRESBUILD               = 1147,
+    SLOWRESBUILD                  = 1148,
+    STUNRESBUILD                  = 1149,
+    CHARMRESBUILD                 = 1150,
+    AMNESIARESBUILD               = 1151,
+    LULLABYRESBUILD               = 1152,
+    DEATHRESBUILD                 = 1153,
 
     -- IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN src/map/modifier.h ASWELL!
 
