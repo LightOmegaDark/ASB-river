@@ -22,7 +22,23 @@ spellObject.onSpellCast = function(caster, target, spell)
         -- You'd have to script the use of every individual spell in Amnaf's list..
     end
 
-    return xi.spells.enfeebling.useEnfeeblingSpell(caster, target, spell)
+    if resist >= 0.5 then
+        local resduration = duration * resist
+
+        resduration = calculateBuildDuration(target, duration, params.effect)
+
+        if resduration == 0 then
+            spell:setMsg(xi.msg.basic.NONE)
+        elseif target:addStatusEffect(params.effect, 1, 0, resduration) then
+            spell:setMsg(xi.msg.basic.MAGIC_ENFEEB_IS)
+        else
+            spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- No effect
+        end
+    else
+        spell:setMsg(xi.msg.basic.MAGIC_RESIST)
+    end
+
+    return params.effect
 end
 
 return spellObject
