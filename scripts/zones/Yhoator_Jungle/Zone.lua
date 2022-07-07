@@ -73,7 +73,13 @@ end
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
-zoneObject.onEventUpdate = function(player, csid, option, npc)
+zone_object.onZoneOut = function(player)
+    if player:hasStatusEffect(xi.effect.BATTLEFIELD) then
+        player:delStatusEffect(xi.effect.BATTLEFIELD)
+	end
+end
+
+zone_object.onEventUpdate = function( player, csid, option)
     if csid == 2 then
         quests.rainbow.onEventUpdate(player)
     end
