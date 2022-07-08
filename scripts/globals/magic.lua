@@ -68,10 +68,13 @@ end
 local function getSpellBonusAcc(caster, target, spell, params)
     local magicAccBonus  = 0
     local castersWeather = caster:getWeather()
-    local skill          = spell:getSkillType()
-    local spellGroup     = spell:getSpellGroup()
-    local element        = spell:getElement()
-    local casterJob      = caster:getMainJob()
+    local skill = xi.skill.NONE
+    if spell ~= nil then
+        skill = spell:getSkillType()
+    end
+    local spellGroup = spell:getSpellGroup()
+    local element = spell:getElement()
+    local casterJob = caster:getMainJob()
 
     if
         caster:hasStatusEffect(xi.effect.ALTRUISM) and
@@ -465,14 +468,13 @@ function applyResistanceEffect(caster, target, spell, params)
     local skill  = params.skillType
     local bonus  = params.bonus
     local effect = params.effect
+    local element = params.element -- Will be nil if this isn't specified.
+    local magicaccbonus = 0
+    local effectRes = 0
 
-    if effect ~= nil then -- Dispel's script doesn't have an "effect" to send here, nor should it.
-        -- If Stymie is active, as long as the mob is not immune then the effect is not resisted
-        if
-            skill == xi.skill.ENFEEBLING_MAGIC and
-            caster:hasStatusEffect(xi.effect.STYMIE) and
-            target:canGainStatusEffect(effect)
-        then
+    -- If Stymie is active, as long as the mob is not immune then the effect is not resisted
+    if effect ~= nil and skill ~= nil then -- Dispel's script doesn't have an "effect" to send here, nor should it.
+        if skill == xi.skill.ENFEEBLING_MAGIC and caster:hasStatusEffect(xi.effect.STYMIE) and target:canGainStatusEffect(effect) then
             caster:delStatusEffect(xi.effect.STYMIE)
             return 1
         -- Fealty allows the PLD to resist all status inflicting spells except Threnody and Requiem
@@ -486,9 +488,15 @@ function applyResistanceEffect(caster, target, spell, params)
         end
     end
 
-    local element = spell:getElement()
-    local effectRes = 0
-    local magicaccbonus = getSpellBonusAcc(caster, target, spell, params)
+    if element == nil and skill~= nil and skill >= 32 and skill <= 45 then -- Covers all magic
+        element = spell:getElement()
+    elseif element == nil then -- Cover mobskills
+        element = xi.element.NONE
+    end
+
+    if spell ~= nil then
+        magicaccbonus = getSpellBonusAcc(caster, target, spell, params)
+    end
 
     if bonus ~= nil then
         magicaccbonus = magicaccbonus + bonus
