@@ -580,14 +580,14 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
     end
 
     if skillType ~= xi.skill.SINGING and skillType ~= nil then -- If not a bard song
-        if caster:isPC() then
+        if target:isPC() then
             local gearBonus = caster:getMod(xi.mod.MACC) + caster:getILvlMacc()
             magicacc = caster:getSkillLevel(skillType) + gearBonus + dStatAcc
         else
             magicacc = utils.getSkillLvl(1, caster:getMainLvl()) + dStatAcc
         end
     elseif skillType ~= nil then -- If a bard song
-        if caster:isPC() then
+        if target:isPC() then
             local secondarySkill = 0
             local gearBonus = caster:getMod(xi.mod.MACC) + caster:getILvlMacc()
 
@@ -603,12 +603,8 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
         else
             magicacc = utils.getSkillLvl(1, caster:getMainLvl()) + dStatAcc
         end
-    elseif caster:isMob() and skillType == nil then
-        magicacc = dStatAcc + utils.getMobSkillLvl(1, caster:getMainLvl())
-    elseif caster:isPet() and skillType == nil then
-        magicacc = dStatAcc + utils.getMobSkillLvl(3, caster:getMainLvl())
     else
-        magicacc = utils.getSkillLvl(4, caster:getMainLvl()) + dStatAcc
+        magicacc = dStatAcc
     end
 
     if element ~= xi.magic.ele.NONE then
