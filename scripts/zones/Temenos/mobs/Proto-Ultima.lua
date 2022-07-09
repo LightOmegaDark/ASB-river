@@ -9,11 +9,15 @@ local ID = require("scripts/zones/Temenos/IDs")
 local entity = {}
 
 entity.onMobSpawn = function(mob)
-    mob:setMagicCastingEnabled(false)
-    mob:setAutoAttackEnabled(true)
-    mob:setMobAbilityEnabled(true)
-    mob:setMobMod(xi.mobMod.DRAW_IN, 0)
-    mob:setMobMod(xi.mobMod.SKILL_LIST, 729)
+    mob:SetMagicCastingEnabled(false)
+    mob:SetAutoAttackEnabled(true)
+    mob:SetMobAbilityEnabled(true)
+    mob:setMobMod(xi.mobMod.DRAW_IN, 1)
+    mob:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 20)
+end
+
+entity.onMobEngaged = function(mob, target)
+    xi.limbus.setupArmouryCrates(mob:getBattlefieldID(), true)
 end
 
 entity.onMobFight = function(mob, target)

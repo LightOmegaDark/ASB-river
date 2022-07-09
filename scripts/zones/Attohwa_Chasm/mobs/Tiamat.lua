@@ -20,9 +20,11 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
-    -- Reset animation so it starts grounded.
-    mob:setMobSkillAttack(0)
-    mob:setAnimationSub(0)
+    mob:SetMobSkillAttack(0) -- resetting so it doesn't respawn in flight mode.
+    mob:setAnimationSub(0) -- subanim 0 is only used when it spawns until first flight.
+    mob:setMobMod(xi.mobMod.DRAW_IN, 1)
+    mob:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 15)
+    mob:setMobMod(xi.mobMod.DRAW_IN_FRONT, 1)
 end
 
 entity.onMobFight = function(mob, target)
