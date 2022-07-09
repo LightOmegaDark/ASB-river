@@ -16616,7 +16616,6 @@ INSERT INTO `mob_droplist` VALUES (2045,0,0,1000,3504,@UNCOMMON); -- Peapuk Wing
 -- ZoneID: 117 - Pygmaioi
 INSERT INTO `mob_droplist` VALUES (2046,0,0,1000,834,@UNCOMMON);  -- Ball Of Saruta Cotton (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2046,0,0,1000,4368,@UNCOMMON); -- Two-Leaf Mandragora Bud (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (2046,0,0,1000,9083,@UNCOMMON); -- Mandragora Dewdrop (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2046,0,0,1000,934,@RARE);      -- Pinch Of Yuhtunga Sulfur (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2046,0,0,1000,4369,@RARE);     -- Four-Leaf Mandragora Bud (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2046,2,0,1000,834,0);          -- Ball Of Saruta Cotton (Steal)
