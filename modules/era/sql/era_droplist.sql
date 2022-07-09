@@ -17485,13 +17485,10 @@ INSERT INTO `mob_droplist` VALUES (2163,0,0,1000,1741,@VRARE);     -- High-Quali
 -- ZoneID: 167 - Nachtmahr
 INSERT INTO `mob_droplist` VALUES (2164,0,0,1000,829,@VCOMMON);   -- Square Of Silk Cloth (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (2164,0,0,1000,940,@VCOMMON);   -- Revival Tree Root (Very Common, 24%)
-INSERT INTO `mob_droplist` VALUES (2164,0,0,1000,3541,@UNCOMMON); -- Seasoning Stone (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (2164,0,0,1000,3543,@UNCOMMON); -- Fossilized Fang (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2164,0,0,1000,4105,@URARE);    -- Ice Cluster (Ultra Rare, 0.1%)
 
 -- ZoneID: 167 - Blind Bat
 INSERT INTO `mob_droplist` VALUES (2165,0,0,1000,922,@VCOMMON);   -- Bat Wing (Very Common, 24%)
-INSERT INTO `mob_droplist` VALUES (2165,0,0,1000,3543,@UNCOMMON); -- Fossilized Fang (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2165,0,0,1000,924,@VRARE);     -- Vial Of Fiend Blood (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (2165,0,0,1000,4106,@URARE);    -- Wind Cluster (Ultra Rare, 0.1%)
 
@@ -18941,8 +18938,6 @@ INSERT INTO `mob_droplist` VALUES (2375,0,0,1000,914,@COMMON);     -- Vial Of Me
 INSERT INTO `mob_droplist` VALUES (2375,0,0,1000,939,@COMMON);     -- Hecteyes Eye (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (2375,0,0,1000,15222,@UNCOMMON); -- Spelunkers Hat (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2375,0,1,1000,4717,@ALWAYS);    -- Scroll Of Refresh (Group 1 - Always, 100%)
-INSERT INTO `mob_droplist` VALUES (2375,0,1,1000,4850,@RARE);      -- Scroll Of Refresh Ii (Group 1 - Rare, 5%)
-
 -- ZoneID: 204 - Talos
 INSERT INTO `mob_droplist` VALUES (2376,0,0,1000,914,@RARE);  -- Vial Of Mercury (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2376,0,0,1000,1165,@RARE); -- Doll Shard (Rare, 5%)
@@ -20197,7 +20192,6 @@ INSERT INTO `mob_droplist` VALUES (2529,2,0,1000,825,0);         -- Square Of Co
 -- ZoneID: 204 - Wekufe
 INSERT INTO `mob_droplist` VALUES (2530,0,0,1000,825,@VCOMMON); -- Square Of Cotton Cloth (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (2530,0,0,1000,940,@COMMON);  -- Revival Tree Root (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (2530,0,0,1000,3541,@COMMON); -- Seasoning Stone (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (2530,0,0,1000,529,@VRARE);   -- Luminicloth (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (2530,2,0,1000,825,0);        -- Square Of Cotton Cloth (Steal)
 
@@ -23452,24 +23446,18 @@ INSERT INTO `mob_droplist` VALUES (2813,2,0,1000,748,0);           -- Gold Beast
 
 -- ZoneID: 153 - Snaggletooth Peapuk
 INSERT INTO `mob_droplist` VALUES (2814,0,0,1000,3504,@VCOMMON);  -- Peapuk Wing (Very Common, 24%)
-INSERT INTO `mob_droplist` VALUES (2814,0,0,1000,3541,@COMMON);   -- Seasoning Stone (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (2814,0,0,1000,5569,@COMMON);   -- Puk Egg (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (2814,0,0,1000,2229,@UNCOMMON); -- Vial Of Chimera Blood (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (2814,0,0,1000,3542,@UNCOMMON); -- Fossilized Bone (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2814,0,0,1000,4106,@URARE);    -- Wind Cluster (Ultra Rare, 0.1%)
 INSERT INTO `mob_droplist` VALUES (2814,4,0,1000,5569,0);         -- Puk Egg (Despoil)
 
 -- ZoneID: 212 - Pygmytoise
-INSERT INTO `mob_droplist` VALUES (2815,0,0,1000,3541,@COMMON); -- Seasoning Stone (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (2815,0,0,1000,646,@RARE);    -- Chunk Of Adaman Ore (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (2815,0,0,1000,3543,@RARE);   -- Fossilized Fang (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2815,0,0,1000,4107,@URARE);  -- Earth Cluster (Ultra Rare, 0.1%)
 
 -- ZoneID: 212 - Boulder Eater
 INSERT INTO `mob_droplist` VALUES (2816,0,0,1000,640,@VCOMMON); -- Chunk Of Copper Ore (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (2816,0,0,1000,641,@COMMON);  -- Chunk Of Tin Ore (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (2816,0,0,1000,3541,@COMMON); -- Seasoning Stone (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (2816,0,0,1000,3543,@RARE);   -- Fossilized Fang (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2816,0,0,1000,738,@VRARE);   -- Chunk Of Platinum Ore (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (2816,0,0,1000,4107,@URARE);  -- Earth Cluster (Ultra Rare, 0.1%)
 
@@ -24022,7 +24010,6 @@ INSERT INTO `mob_droplist` VALUES (2877,0,0,1000,940,@VRARE);    -- Revival Tree
 -- ZoneID: 167 - Dabilla
 INSERT INTO `mob_droplist` VALUES (2878,0,0,1000,858,@COMMON); -- Wolf Hide (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (2878,0,0,1000,940,@COMMON); -- Revival Tree Root (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (2878,0,0,1000,3543,@RARE);  -- Fossilized Fang (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2878,0,0,1000,4111,@URARE); -- Dark Cluster (Ultra Rare, 0.1%)
 
 -- ZoneID: 167 - Manes
@@ -24045,8 +24032,6 @@ INSERT INTO `mob_droplist` VALUES (2881,0,0,1000,12473,@SRARE); -- Poets Circlet
 INSERT INTO `mob_droplist` VALUES (2881,0,0,1000,12857,@SRARE); -- Linen Slops (Super Rare, 0.5%)
 
 -- ZoneID: 167 - Wurdalak
-INSERT INTO `mob_droplist` VALUES (2882,0,0,1000,3541,@COMMON); -- Seasoning Stone (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (2882,0,0,1000,3543,@RARE);   -- Fossilized Fang (Rare, 5%)
 
 -- ZoneID: 195 - Shade War
 -- ZoneID: 195 - Shade Rng
@@ -24691,15 +24676,11 @@ INSERT INTO `mob_droplist` VALUES (3006,4,0,1000,838,0);    -- Spider Web (Despo
 -- ZoneID: 153 - Mourning Crawler
 INSERT INTO `mob_droplist` VALUES (3007,0,0,1000,839,@VCOMMON);   -- Piece Of Crawler Cocoon (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (3007,0,0,1000,816,@COMMON);    -- Spool Of Silk Thread (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3007,0,0,1000,3541,@COMMON);   -- Seasoning Stone (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3007,0,0,1000,3542,@UNCOMMON); -- Fossilized Bone (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (3007,0,0,1000,3550,@UNCOMMON); -- Spool Of Wyrdstrand (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (3007,0,0,1000,4107,@URARE);    -- Earth Cluster (Ultra Rare, 0.1%)
 INSERT INTO `mob_droplist` VALUES (3007,2,0,1000,839,0);          -- Piece Of Crawler Cocoon (Steal)
 
 -- ZoneID: 197 - King Crawler
 INSERT INTO `mob_droplist` VALUES (3008,0,0,1000,816,141);  -- Spool Of Silk Thread (14.1%)
-INSERT INTO `mob_droplist` VALUES (3008,0,0,1000,3550,119); -- Spool Of Wyrdstrand (11.9%)
 INSERT INTO `mob_droplist` VALUES (3008,4,0,1000,839,0);    -- Piece Of Crawler Cocoon (Despoil)
 INSERT INTO `mob_droplist` VALUES (3008,4,0,1000,4357,0);   -- Crawler Egg (Despoil)
 
@@ -24756,14 +24737,12 @@ INSERT INTO `mob_droplist` VALUES (3023,0,0,1000,15852,55); -- Nasatyas Ring (5.
 
 -- ZoneID:  88 - Drachenlizard
 INSERT INTO `mob_droplist` VALUES (3024,0,0,1000,926,200); -- Lizard Tail (20.0%)
-INSERT INTO `mob_droplist` VALUES (3024,0,0,1000,3552,70); -- Squamous Hide (7.0%)
 INSERT INTO `mob_droplist` VALUES (3024,0,0,1000,4362,60); -- Lizard Egg (6.0%)
 INSERT INTO `mob_droplist` VALUES (3024,0,0,1000,852,40);  -- Lizard Skin (4.0%)
 INSERT INTO `mob_droplist` VALUES (3024,2,0,1000,926,0);   -- Lizard Tail (Steal)
 
 -- ZoneID:  91 - Champion Crawler
 INSERT INTO `mob_droplist` VALUES (3025,0,0,1000,816,253);  -- Spool Of Silk Thread (25.3%)
-INSERT INTO `mob_droplist` VALUES (3025,0,0,1000,3550,115); -- Spool Of Wyrdstrand (11.5%)
 
 -- ZoneID:  61 - Ignamoth
 INSERT INTO `mob_droplist` VALUES (3026,0,0,1000,19232,@UNCOMMON); -- Octant (Uncommon, 10%)
@@ -25066,8 +25045,6 @@ INSERT INTO `mob_droplist` VALUES (3106,0,0,1000,5384,@UNCOMMON); -- Spissatus C
 
 -- ZoneID: 178 - Aura Sculpture
 INSERT INTO `mob_droplist` VALUES (3107,0,0,1000,644,@VCOMMON);   -- Chunk Of Mythril Ore (Very Common, 24%)
-INSERT INTO `mob_droplist` VALUES (3107,0,0,1000,3541,@COMMON);   -- Seasoning Stone (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3107,0,0,1000,3543,@UNCOMMON); -- Fossilized Fang (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (3107,0,0,1000,955,@RARE);      -- Golem Shard (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (3107,0,0,1000,4110,@URARE);    -- Light Cluster (Ultra Rare, 0.1%)
 
@@ -25075,8 +25052,6 @@ INSERT INTO `mob_droplist` VALUES (3107,0,0,1000,4110,@URARE);    -- Light Clust
 INSERT INTO `mob_droplist` VALUES (3108,0,0,1000,846,@VCOMMON); -- Insect Wing (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (3108,0,0,1000,889,@VCOMMON); -- Beetle Shell (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (3108,0,0,1000,894,@COMMON);  -- Beetle Jaw (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3108,0,0,1000,3542,@COMMON); -- Fossilized Bone (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3108,0,0,1000,3541,@RARE);   -- Seasoning Stone (Rare, 5%)
 
 -- ZoneID: 185 - Bladeburner Rokgevok
 INSERT INTO `mob_droplist` VALUES (3109,0,0,1000,3405,@ALWAYS);  -- Fiendish Tome Chapter 2 (Always, 100%)
@@ -25628,8 +25603,6 @@ INSERT INTO `mob_droplist` VALUES (3143,0,0,1000,2384,80); -- Smoke-Filled Flask
 
 -- ZoneID: 167 - Panna Cotta
 INSERT INTO `mob_droplist` VALUES (3144,0,0,1000,637,@COMMON); -- Vial Of Slime Oil (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3144,0,0,1000,3541,@RARE);  -- Seasoning Stone (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (3144,0,0,1000,3543,@RARE);  -- Fossilized Fang (Rare, 5%)
 
 -- ZoneID: 134 - Hydra Ranger
 -- ZoneID: 134 - Hydra Ranger
@@ -25765,8 +25738,6 @@ INSERT INTO `mob_droplist` VALUES (3149,0,0,1000,16349,@VRARE); -- Commodore Tre
 INSERT INTO `mob_droplist` VALUES (3149,2,0,1000,1452,0);       -- Ordelle Bronzepiece (Steal)
 
 -- ZoneID: 191 - Goblin Bladesmith
-INSERT INTO `mob_droplist` VALUES (3150,0,0,1000,3541,@UNCOMMON); -- Seasoning Stone (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (3150,0,0,1000,3543,@RARE);     -- Fossilized Fang (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (3150,0,0,1000,12432,@RARE);    -- Faceguard (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (3150,0,0,1000,12688,@RARE);    -- Scale Finger Gauntlets (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (3150,0,0,1000,12944,@VRARE);   -- Scale Greaves (Very Rare, 1%)
@@ -25822,8 +25793,6 @@ INSERT INTO `mob_droplist` VALUES (3166,0,0,1000,3379,@UNCOMMON); -- Supernal Go
 
 -- ZoneID: 191 - Goblin Bushwhacker
 INSERT INTO `mob_droplist` VALUES (3167,0,0,1000,937,@UNCOMMON);  -- Block Of Animal Glue (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (3167,0,0,1000,3541,@UNCOMMON); -- Seasoning Stone (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (3167,0,0,1000,3543,@UNCOMMON); -- Fossilized Fang (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (3167,0,0,1000,12696,@RARE);    -- Leather Gloves (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (3167,0,0,1000,12824,@RARE);    -- Leather Trousers (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (3167,0,0,1000,12440,@URARE);   -- Leather Bandana (Ultra Rare, 0.1%)
@@ -26252,8 +26221,6 @@ INSERT INTO `mob_droplist` VALUES (3186,0,0,1000,1261,@SRARE);     -- Chunk Of L
 INSERT INTO `mob_droplist` VALUES (3186,0,0,1000,1262,@SRARE);     -- Chunk Of Dark Ore (Super Rare, 0.5%)
 
 -- ZoneID: 191 - Goblin Conjurer
-INSERT INTO `mob_droplist` VALUES (3187,0,0,1000,3541,@RARE);   -- Seasoning Stone (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (3187,0,0,1000,3543,@RARE);   -- Fossilized Fang (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (3187,0,0,1000,12857,@RARE);  -- Linen Slops (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (3187,0,0,1000,12473,@URARE); -- Poets Circlet (Ultra Rare, 0.1%)
 INSERT INTO `mob_droplist` VALUES (3187,0,0,1000,12729,@URARE); -- Linen Cuffs (Ultra Rare, 0.1%)
@@ -26262,111 +26229,81 @@ INSERT INTO `mob_droplist` VALUES (3187,0,0,1000,12985,@URARE); -- Holly Clogs (
 -- ZoneID: 191 - Natty Gibbon
 INSERT INTO `mob_droplist` VALUES (3188,0,0,1000,17296,@VCOMMON); -- Pebble (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (3188,0,0,1000,4468,@COMMON);   -- Bunch Of Pamamas (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3188,0,0,1000,3541,@RARE);     -- Seasoning Stone (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (3188,0,0,1000,3543,@RARE);     -- Fossilized Fang (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (3188,0,0,1000,4108,@URARE);    -- Lightning Cluster (Ultra Rare, 0.1%)
 
 -- ZoneID: 191 - Trimmer
 INSERT INTO `mob_droplist` VALUES (3189,0,0,1000,4400,@VCOMMON); -- Slice Of Land Crab Meat (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (3189,0,0,1000,881,@COMMON);   -- Crab Shell (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3189,0,0,1000,3541,@RARE);    -- Seasoning Stone (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (3189,0,0,1000,3543,@RARE);    -- Fossilized Fang (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (3189,0,0,1000,1193,@VRARE);   -- High-Quality Crab Shell (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (3189,0,0,1000,4109,@URARE);   -- Water Cluster (Ultra Rare, 0.1%)
 
 -- ZoneID: 204 - Balayang
 INSERT INTO `mob_droplist` VALUES (3190,0,0,1000,922,@VCOMMON);   -- Bat Wing (Very Common, 24%)
-INSERT INTO `mob_droplist` VALUES (3190,0,0,1000,3541,@UNCOMMON); -- Seasoning Stone (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (3190,0,0,1000,924,@VRARE);     -- Vial Of Fiend Blood (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (3190,0,0,1000,4106,@URARE);    -- Wind Cluster (Ultra Rare, 0.1%)
 
 -- ZoneID: 204 - Sentient Carafe
 INSERT INTO `mob_droplist` VALUES (3191,0,0,1000,954,@COMMON);    -- Magic Pot Shard (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (3191,0,0,1000,914,@UNCOMMON);  -- Vial Of Mercury (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (3191,0,0,1000,3541,@UNCOMMON); -- Seasoning Stone (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (3191,0,0,1000,4110,@URARE);    -- Light Cluster (Ultra Rare, 0.1%)
 
 -- ZoneID: 174 - Kuftal Delver
 INSERT INTO `mob_droplist` VALUES (3192,0,0,1000,768,@VCOMMON);   -- Flint Stone (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (3192,0,0,1000,640,@COMMON);    -- Chunk Of Copper Ore (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3192,0,0,1000,3541,@UNCOMMON); -- Seasoning Stone (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (3192,0,0,1000,3542,@UNCOMMON); -- Fossilized Bone (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (3192,0,0,1000,737,@VRARE);     -- Chunk Of Gold Ore (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (3192,0,0,1000,4107,@URARE);    -- Earth Cluster (Ultra Rare, 0.1%)
 
 -- ZoneID: 174 - Machairodus
 INSERT INTO `mob_droplist` VALUES (3193,0,0,1000,2518,@COMMON);   -- Smilodon Hide (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3193,0,0,1000,3541,@COMMON);   -- Seasoning Stone (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3193,0,0,1000,3542,@UNCOMMON); -- Fossilized Bone (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (3193,0,0,1000,5668,@RARE);     -- Smilodon Liver (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (3193,0,0,1000,4108,@URARE);    -- Lightning Cluster (Ultra Rare, 0.1%)
 
 -- ZoneID: 213 - Babaulas
 INSERT INTO `mob_droplist` VALUES (3194,0,0,1000,880,@COMMON);   -- Bone Chip (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3194,0,0,1000,3541,@COMMON);  -- Seasoning Stone (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (3194,0,0,1000,940,@UNCOMMON); -- Revival Tree Root (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (3194,0,0,1000,3543,@VRARE);   -- Fossilized Fang (Very Rare, 1%)
 
 -- ZoneID: 213 - Boribaba
 INSERT INTO `mob_droplist` VALUES (3195,0,0,1000,880,@COMMON);    -- Bone Chip (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (3195,0,0,1000,940,@UNCOMMON);  -- Revival Tree Root (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (3195,0,0,1000,3541,@UNCOMMON); -- Seasoning Stone (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (3195,0,0,1000,3543,@UNCOMMON); -- Fossilized Fang (Uncommon, 10%)
 
 -- ZoneID: 166 - Hovering Oculus
 INSERT INTO `mob_droplist` VALUES (3196,0,0,1000,921,@VCOMMON);   -- Bottle Of Ahriman Tears (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (3196,0,0,1000,557,@COMMON);    -- Ahriman Lens (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (3196,0,0,1000,935,@UNCOMMON);  -- Ahriman Wing (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (3196,0,0,1000,3541,@UNCOMMON); -- Seasoning Stone (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (3196,0,0,1000,3542,@UNCOMMON); -- Fossilized Bone (Uncommon, 10%)
 
 -- ZoneID: 153 - Viseclaw
 INSERT INTO `mob_droplist` VALUES (3197,0,0,1000,4400,@VCOMMON);  -- Slice Of Land Crab Meat (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (3197,0,0,1000,881,@COMMON);    -- Crab Shell (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3197,0,0,1000,3541,@COMMON);   -- Seasoning Stone (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3197,0,0,1000,3542,@UNCOMMON); -- Fossilized Bone (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (3197,0,0,1000,1193,@RARE);     -- High-Quality Crab Shell (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (3197,0,0,1000,4109,@URARE);    -- Water Cluster (Ultra Rare, 0.1%)
 
 -- ZoneID: 169 - Deviling Bats
 INSERT INTO `mob_droplist` VALUES (3198,0,0,1000,922,@VCOMMON);   -- Bat Wing (Very Common, 24%)
-INSERT INTO `mob_droplist` VALUES (3198,0,0,1000,3542,@UNCOMMON); -- Fossilized Bone (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (3198,0,0,1000,3541,@RARE);     -- Seasoning Stone (Rare, 5%)
 
 -- ZoneID: 169 - Drowned Bones
 INSERT INTO `mob_droplist` VALUES (3199,0,0,1000,880,@VCOMMON); -- Bone Chip (Very Common, 24%)
-INSERT INTO `mob_droplist` VALUES (3199,0,0,1000,3541,@COMMON); -- Seasoning Stone (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (3199,0,0,1000,4107,@VRARE);  -- Earth Cluster (Very Rare, 1%)
 
 -- ZoneID: 169 - Plunderer Crab
 INSERT INTO `mob_droplist` VALUES (3200,0,0,1000,936,@VCOMMON);   -- Chunk Of Rock Salt (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (3200,0,0,1000,4400,@COMMON);   -- Slice Of Land Crab Meat (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3200,0,0,1000,3542,@UNCOMMON); -- Fossilized Bone (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (3200,0,0,1000,3541,@RARE);     -- Seasoning Stone (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (3200,0,0,1000,881,@VRARE);     -- Crab Shell (Very Rare, 1%)
 
 -- ZoneID: 169 - Poroggo Excavator
-INSERT INTO `mob_droplist` VALUES (3201,0,0,1000,3541,@UNCOMMON); -- Seasoning Stone (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (3201,0,0,1000,3542,@UNCOMMON); -- Fossilized Bone (Uncommon, 10%)
 
 -- ZoneID: 169 - Rapier Scorpion
 INSERT INTO `mob_droplist` VALUES (3202,0,0,1000,897,@VCOMMON);   -- Scorpion Claw (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (3202,0,0,1000,896,@UNCOMMON);  -- Scorpion Shell (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (3202,0,0,1000,3541,@UNCOMMON); -- Seasoning Stone (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (3202,0,0,1000,1473,@RARE);     -- High-Quality Scorpion Shell (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (3202,0,0,1000,3542,@VRARE);    -- Fossilized Bone (Very Rare, 1%)
 
 -- ZoneID: 169 - Sodden Bones
 INSERT INTO `mob_droplist` VALUES (3203,0,0,1000,880,@VCOMMON);   -- Bone Chip (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (3203,0,0,1000,940,@COMMON);    -- Revival Tree Root (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3203,0,0,1000,3541,@UNCOMMON); -- Seasoning Stone (Uncommon, 10%)
 
 -- ZoneID: 169 - Blackwater Pugil
 INSERT INTO `mob_droplist` VALUES (3204,0,0,1000,868,@COMMON);    -- Handful Of Pugil Scales (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (3204,0,0,1000,3542,@UNCOMMON); -- Fossilized Bone (Uncommon, 10%)
 
 -- ZoneID: 169 - Flume Toad
-INSERT INTO `mob_droplist` VALUES (3205,0,0,1000,3542,@RARE);  -- Fossilized Bone (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (3205,0,0,1000,4109,@URARE); -- Water Cluster (Ultra Rare, 0.1%)
 
 -- ZoneID:  52 - Marid
