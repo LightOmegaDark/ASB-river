@@ -62,7 +62,8 @@ zones[xi.zone.CAPE_TERIGGAN] =
     },
     npc =
     {
-        OVERSEER_BASE    = 17240472,
+        CASKET_BASE      = 17240445,
+        OVERSEER_BASE    = 17240472, -- Salimardi_RK in npc_list
         CERMET_HEADSTONE = 17240497,
     },
 }
