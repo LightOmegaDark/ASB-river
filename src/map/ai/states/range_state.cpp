@@ -172,7 +172,7 @@ bool CRangeState::CanUseRangedAttack(CBattleEntity* PTarget, bool isEndOfAttack)
             m_errorMsg = std::make_unique<CMessageBasicPacket>(PChar, PChar, 0, 0, MSGBASIC_NO_RANGED_WEAPON);
             return false;
         }
-
+        
         auto SkillType = PRanged ? PRanged->getSkillType() : PAmmo->getSkillType();
 
         switch (SkillType)
