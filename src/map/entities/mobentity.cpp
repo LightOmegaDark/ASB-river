@@ -931,17 +931,17 @@ int16 CMobEntity::ApplyTH(int16 m_THLvl, int16 rate)
         }
         else if (m_THLvl < 12)
         {
-            multi = 7.00f + (1.00f * (m_THLvl - 6));
+            multi = 4.00f + (1.00f * (m_THLvl - 6));
             return multi;
         }
         else if (m_THLvl < 14)
         {
-            multi = 10.00f + (1.00f * (m_THLvl - 11));
+            multi = 9.00f + (1.50f * (m_THLvl - 11));
             return multi;
         }
         else
         {
-            multi = 13.00f + (2.00f * (m_THLvl - 14));
+            multi = 13.50f + (2.00f * (m_THLvl - 14));
             return multi;
         }
     }
@@ -954,22 +954,22 @@ int16 CMobEntity::ApplyTH(int16 m_THLvl, int16 rate)
         }
         else if (m_THLvl < 8)
         {
-            multi = 2.40f + (0.40f * (m_THLvl - 2));
+            multi = 2.00f + (0.40f * (m_THLvl - 2));
             return multi;
         }
         else if (m_THLvl < 10)
         {
-            multi = 5.20f + (0.60f * (m_THLvl - 7));
+            multi = 4.00f + (0.60f * (m_THLvl - 7));
             return multi;
         }
         else if (m_THLvl < 11)
         {
-            multi = 7.00f + (0.80f * (m_THLvl - 9));
+            multi = 5.20f + (0.80f * (m_THLvl - 9));
             return multi;
         }
         else
         {
-            multi = 9.00f + (1.00f * (m_THLvl - 10));
+            multi = 9.20f + (1.00f * (m_THLvl - 10));
             return multi;
         }
     }
@@ -982,22 +982,22 @@ int16 CMobEntity::ApplyTH(int16 m_THLvl, int16 rate)
         }
         else if (m_THLvl < 8)
         {
-            multi = 1.50f + (0.10f * (m_THLvl - 2));
+            multi = 1.40f + (0.10f * (m_THLvl - 2));
             return multi;
         }
         else if (m_THLvl < 12)
         {
-            multi = 2.10f + (0.20f * (m_THLvl - 7));
+            multi = 1.90f + (0.20f * (m_THLvl - 7));
             return multi;
         }
         else if (m_THLvl < 14)
         {
-            multi = 3.10f + (0.40f * (m_THLvl - 11));
+            multi = 2.70f + (0.40f * (m_THLvl - 11));
             return multi;
         }
         else
         {
-            multi = 4.00f + (0.50f * (m_THLvl - 13));
+            multi = 3.50f + (0.50f * (m_THLvl - 13));
             return multi;
         }
     }
@@ -1005,27 +1005,27 @@ int16 CMobEntity::ApplyTH(int16 m_THLvl, int16 rate)
     {
         if (m_THLvl < 3)
          {
-             multi = 1.00f + (0.50f * m_THLvl);
+             multi = 1.00f + (0.20f * m_THLvl);
              return multi;
          }
          else if (m_THLvl < 8)
          {
-             multi = 2.40f + (0.40f * (m_THLvl - 2));
+             multi = 1.40f + (0.10f * (m_THLvl - 2));
              return multi;
          }
-         else if (m_THLvl < 10)
+         else if (m_THLvl < 12)
          {
-             multi = 5.20f + (0.60f * (m_THLvl - 7));
+             multi = 1.90f + (0.20f * (m_THLvl - 7));
              return multi;
          }
-         else if (m_THLvl < 11)
+         else if (m_THLvl < 14)
          {
-             multi = 7.00f + (0.80f * (m_THLvl - 9));
+             multi = 2.70f + (0.40f * (m_THLvl - 11));
              return multi;
          }
          else
          {
-             multi = 9.00f + (1.00f * (m_THLvl - 10));
+             multi = 3.50f + (0.50f * (m_THLvl - 13));
              return multi;
          }
     }
@@ -1036,9 +1036,14 @@ int16 CMobEntity::ApplyTH(int16 m_THLvl, int16 rate)
             multi = 1.00f + (0.20f * m_THLvl);
             return multi;
         }
+        else if (m_THLvl < 3)
+        {
+            multi = 1.20f + (0.30f * (m_THLvl - 1));
+            return multi;
+        }
         else if (m_THLvl < 4)
         {
-            multi = 1.20f + (0.15f * (m_THLvl - 1));
+            multi = 1.50f + (0.15f * (m_THLvl - 1));
             return multi;
         }
         else if (m_THLvl < 8)
@@ -1048,7 +1053,7 @@ int16 CMobEntity::ApplyTH(int16 m_THLvl, int16 rate)
         }
         else if (m_THLvl < 10)
         {
-            multi = 2.40f + (0.15f * (m_THLvl - 7));
+            multi = 2.10f + (0.15f * (m_THLvl - 7));
             return multi;
         }
         else if (m_THLvl < 11)
@@ -1069,9 +1074,14 @@ int16 CMobEntity::ApplyTH(int16 m_THLvl, int16 rate)
             multi = 1.00f + (1.00f * m_THLvl);
             return multi;
         }
+        else if (m_THLvl < 3)
+        {
+            multi = 2.00f + (0.66f * (m_THLvl - 1));
+            return multi;
+        }
         else
         {
-            multi = 2.00f + (0.17f * (m_THLvl - 1));
+            multi = 2.66f + (0.16f * (m_THLvl - 2));
             return multi;
         }
     }
@@ -1084,42 +1094,42 @@ int16 CMobEntity::ApplyTH(int16 m_THLvl, int16 rate)
         }
         else if (m_THLvl < 3)
         {
-            multi = 2.00f + (0.33f * (m_THLvl - 1));
+            multi = 2.00f + (0.50f * (m_THLvl - 1));
             return multi;
         }
         else if (m_THLvl < 5)
         {
-            multi = 2.33f + (0.17f * (m_THLvl - 2));
+            multi = 2.50f + (0.16f * (m_THLvl - 2));
             return multi;
         }
         else if (m_THLvl < 6)
         {
-            multi = 2.67f + (0.11f * (m_THLvl - 4));
+            multi = 2.82f + (0.11f * (m_THLvl - 4));
             return multi;
         }
         else if (m_THLvl < 7)
         {
-            multi = 2.78f + (0.05f * (m_THLvl - 5));
+            multi = 2.93f + (0.05f * (m_THLvl - 5));
             return multi;
         }
         else if (m_THLvl < 8)
         {
-            multi = 2.83f + (0.04f * (m_THLvl - 6));
+            multi = 2.98f + (0.04f * (m_THLvl - 6));
             return multi;
         }
         else if (m_THLvl < 11)
         {
-            multi = 2.87f + (0.62f * (m_THLvl - 7));
+            multi = 3.02f + (0.06f * (m_THLvl - 7));
             return multi;
         }
         else if (m_THLvl < 12)
         {
-            multi = 3.06f + (0.02f * (m_THLvl - 10));
+            multi = 3.20f + (0.03f * (m_THLvl - 10));
             return multi;
         }
         else
         {
-            multi = 3.08f + (0.08f * (m_THLvl - 11));
+            multi = 3.23f + (0.10f * (m_THLvl - 11));
             return multi;
         }
     }
