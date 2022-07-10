@@ -665,7 +665,6 @@ function getMagicResist(magicHitRate)
         resist = 1.0
     end
 
-    print(resist)
     return resist
 end
 
