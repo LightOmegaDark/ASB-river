@@ -7,9 +7,11 @@ local ID = require("scripts/zones/Uleguerand_Range/IDs")
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:SetMobSkillAttack(1460) -- replace melee attack with special auto attack
-    mob:setMod(xi.mod.REGAIN, 100)
+    mob:SetMobSkillAttack(1183) -- replace melee attack with special auto attack
+    mob:setMobMod(xi.mobMod.NO_STANDBACK, 1)
+    mob:setMod(xi.mod.REGAIN, 400)
     mob:setMod(xi.mod.MOVE, 12)
+    mob:setMobMod(xi.mobMod.MAGIC_COOL, 20)
 end
 
 entity.onMobSpawn = function(mob)
@@ -21,6 +23,20 @@ entity.onMobFight = function(mob, target)
     if os.time() > counterTime then
         mob:useMobAbility(603) -- Counterstance with 2hr dust cloud
         mob:setLocalVar("counterTime", os.time() + math.random(120, 240)) -- 2hrs every 2 to 4 min
+    end
+end
+
+entity.onMobWeaponSkillPrepare = function(mob, target)
+    mob:setLocalVar("skill_tp", mob:getTP())
+end
+
+entity.onMobWeaponSkill = function(target, mob, skill)
+    if skill:getID() == 603 or skill:getID() == 1460 then
+        if skill:getID() == 603 then
+            mob:messageText(target, ID.text.GEUSH_COUNTER, false)
+        end
+        mob:addTP(mob:getLocalVar("skill_tp"))
+        mob:setLocalVar("skill_tp", 0)
     end
 end
 

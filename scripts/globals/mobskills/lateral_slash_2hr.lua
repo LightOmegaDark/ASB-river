@@ -13,14 +13,12 @@ mobskill_object.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskill_object.onMobWeaponSkill = function(target, mob, skill)
-    if mob:getPool() == 1507 then -- Guesh Urvan
-        local power = 50
-        local duration = 60
-        local typeEffect = tpz.effect.COUNTERSTANCE
-    
-        skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, duration))
-    
-        return typeEffect
+    if mob:getPool() == 1507 then -- Geush Urvan
+        local typeEffect = xi.effect.COUNTERSTANCE
+
+        xi.mobskills.mobBuffMove(mob, typeEffect, 10, 0, 60)
+        skill:setMsg(xi.msg.basic.NONE)
+        return 0
     else
         skill:setMsg(xi.msg.basic.NONE)
         return 0

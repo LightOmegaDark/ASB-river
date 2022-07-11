@@ -9,9 +9,10 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMod(xi.mod.DOUBLE_ATTACK, 20)
-    automaton:addListener("MAGIC_STATE_EXIT", "SKVADER_MAGIC_EXIT", function(pet, spell)
+    mob:addListener("MAGIC_USE", "SKVADER_MAGIC_USE", function(mobArg, target, spell, action)
+        -- Hate reset after casting Banishga III
         if spell:getID() == 40 then
-            mob:resetEnmity(target)
+            mobArg:resetEnmity(target)
         end
     end)
 end

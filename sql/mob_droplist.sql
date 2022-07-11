@@ -2317,9 +2317,9 @@ INSERT INTO `mob_droplist` VALUES (228,0,0,1000,838,170); -- Spider Web (17.0%)
 INSERT INTO `mob_droplist` VALUES (228,2,0,1000,838,0);   -- Spider Web (Steal)
 
 -- ZoneID: 162 - Baronet Romwe
-INSERT INTO `mob_droplist` VALUES (229,0,0,1000,902,110);         -- Demon Horn (11.0%)
-INSERT INTO `mob_droplist` VALUES (229,0,0,1000,16711,@UNCOMMON); -- Demons Axe (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (229,0,0,1000,886,@RARE);       -- Demon Skull (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (229,0,0,1000,902,@VCOMMON);   -- Demon Horn (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (229,0,0,1000,16711,@VCOMMON); -- Demons Axe (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (229,0,0,1000,886,@VCOMMON);   -- Demon Skull (Very Common, 24%)
 
 -- ZoneID:  40 - Barong
 INSERT INTO `mob_droplist` VALUES (230,0,0,1000,5899,850);    -- Shadescale Femur (85.0%)
@@ -2357,10 +2357,10 @@ INSERT INTO `mob_droplist` VALUES (231,0,0,1000,891,70);     -- Bat Fang (7.0%)
 INSERT INTO `mob_droplist` VALUES (231,0,0,1000,930,@VRARE); -- Vial Of Beastman Blood (Very Rare, 1%)
 
 -- ZoneID: 162 - Baron Vapula
-INSERT INTO `mob_droplist` VALUES (232,0,0,1000,902,110);   -- Demon Horn (11.0%)
-INSERT INTO `mob_droplist` VALUES (232,0,0,1000,4803,80);   -- Scroll Of Thundaga Ii (8.0%)
-INSERT INTO `mob_droplist` VALUES (232,0,0,1000,886,@RARE); -- Demon Skull (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (232,0,0,1000,4794,30);   -- Scroll Of Aeroga Iii (3.0%)
+INSERT INTO `mob_droplist` VALUES (232,0,0,1000,902,@VCOMMON);  -- Demon Horn (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (232,0,0,1000,4803,@VCOMMON); -- Scroll Of Thundaga Ii (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (232,0,0,1000,886,@RARE);     -- Demon Skull (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (232,0,0,1000,4794,@VCOMMON); -- Scroll Of Aeroga Iii (Very Common, 24%)
 
 -- ZoneID: 218 - Barrens Treant
 INSERT INTO `mob_droplist` VALUES (233,0,0,1000,923,650);     -- Dryad Root (65.0%)
@@ -4673,10 +4673,10 @@ INSERT INTO `mob_droplist` VALUES (517,2,0,1000,880,0);          -- Bone Chip (S
 INSERT INTO `mob_droplist` VALUES (517,4,0,1000,880,0);          -- Bone Chip (Despoil)
 
 -- ZoneID: 162 - Count Bifrons
-INSERT INTO `mob_droplist` VALUES (518,0,0,1000,902,500);   -- Demon Horn (50.0%)
-INSERT INTO `mob_droplist` VALUES (518,0,0,1000,16792,250); -- Goshishos Scythe (25.0%)
-INSERT INTO `mob_droplist` VALUES (518,0,0,1000,886,167);   -- Demon Skull (16.7%)
-INSERT INTO `mob_droplist` VALUES (518,0,0,1000,4875,83);   -- Scroll Of Absorb-Dex (8.3%)
+INSERT INTO `mob_droplist` VALUES (518,0,0,1000,902,@VCOMMON);   -- Demon Horn (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (518,0,0,1000,16792,@VCOMMON); -- Goshishos Scythe (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (518,0,0,1000,886,@COMMON);    -- Demon Skull (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (518,0,0,1000,4875,@RARE);     -- Scroll Of Absorb-Dex (Rare, 5%)
 
 -- ZoneID: 135 - Baron Avnas
 -- ZoneID: 135 - Count Raum
@@ -6053,11 +6053,11 @@ INSERT INTO `mob_droplist` VALUES (715,0,0,1000,1450,@VRARE);   -- Lungo-Nango J
 INSERT INTO `mob_droplist` VALUES (715,0,0,1000,1452,@VRARE);   -- Ordelle Bronzepiece (Very Rare, 1%)
 
 -- ZoneID: 161 - Duke Haborym
-INSERT INTO `mob_droplist` VALUES (716,0,0,1000,902,327);     -- Demon Horn (32.7%)
-INSERT INTO `mob_droplist` VALUES (716,0,0,1000,16786,317);   -- Barbarians Scythe (31.7%)
-INSERT INTO `mob_droplist` VALUES (716,0,0,1000,4875,298);    -- Scroll Of Absorb-Dex (29.8%)
-INSERT INTO `mob_droplist` VALUES (716,0,0,1000,886,202);     -- Demon Skull (20.2%)
-INSERT INTO `mob_droplist` VALUES (716,0,0,1000,4111,@VRARE); -- Dark Cluster (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (716,0,0,1000,902,@VCOMMON);   -- Demon Horn (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (716,0,0,1000,16786,@VCOMMON); -- Barbarians Scythe (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (716,0,0,1000,4875,@VCOMMON);  -- Scroll Of Absorb-Dex (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (716,0,0,1000,886,@COMMON);    -- Demon Skull (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (716,0,0,1000,4111,@VRARE);    -- Dark Cluster (Very Rare, 1%)
 
 -- ZoneID: 135 - Duke Scox
 INSERT INTO `mob_droplist` VALUES (717,0,0,1000,4249,@ALWAYS);  -- Copy Of Schultz Stratagems (Always, 100%)
@@ -10142,9 +10142,9 @@ INSERT INTO `mob_droplist` VALUES (1212,0,0,1000,4377,20);   -- Slice Of Coeurl 
 INSERT INTO `mob_droplist` VALUES (1212,0,0,1000,5152,20);   -- Slice Of Buffalo Meat (2.0%)
 
 -- ZoneID: 161 - Grand Duke Batym
-INSERT INTO `mob_droplist` VALUES (1213,0,0,1000,902,110);         -- Demon Horn (11.0%)
-INSERT INTO `mob_droplist` VALUES (1213,0,0,1000,16787,@UNCOMMON); -- Demonslicer (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (1213,0,0,1000,886,@RARE);       -- Demon Skull (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (1213,0,0,1000,902,@VCOMMON);   -- Demon Horn (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (1213,0,0,1000,16787,@VCOMMON); -- Demonslicer (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (1213,0,0,1000,886,@COMMON);    -- Demon Skull (Common, 15%)
 
 -- ZoneID:  51 - Grand Marid
 -- ZoneID:  52 - Grand Marid
@@ -12501,7 +12501,7 @@ INSERT INTO `mob_droplist` VALUES (1521,0,0,1000,4110,400);     -- Light Cluster
 INSERT INTO `mob_droplist` VALUES (1521,0,0,1000,4110,@COMMON); -- Light Cluster (Common, 15%)
 
 -- ZoneID: 161 - Likho
-INSERT INTO `mob_droplist` VALUES (1522,0,0,1000,2849,378); -- Likho Talon (37.8%)
+INSERT INTO `mob_droplist` VALUES (1522,0,0,1000,2849,@VCOMMON); -- Likho Talon (Very Common, 24%)
 
 -- ZoneID:  54 - Lil Apkallu
 INSERT INTO `mob_droplist` VALUES (1523,0,0,1000,2637,@ALWAYS); -- Lil Apkallus Egg (Always, 100%)
@@ -13185,18 +13185,18 @@ INSERT INTO `mob_droplist` VALUES (1621,0,0,1000,2523,70); -- Peiste Skin (7.0%)
 INSERT INTO `mob_droplist` VALUES (1621,0,0,1000,2524,30); -- Peiste Stinger (3.0%)
 
 -- ZoneID: 161 - Marquis Allocen
-INSERT INTO `mob_droplist` VALUES (1622,0,0,1000,902,110);         -- Demon Horn (11.0%)
-INSERT INTO `mob_droplist` VALUES (1622,0,0,1000,16757,@UNCOMMON); -- Corsairs Knife (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (1622,0,0,1000,886,@RARE);       -- Demon Skull (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (1622,0,0,1000,902,@VCOMMON);   -- Demon Horn (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (1622,0,0,1000,16757,@VCOMMON); -- Corsairs Knife (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (1622,0,0,1000,886,@COMMON);    -- Demon Skull (Common, 15%)
 
 -- ZoneID: 161 - Marquis Amon
-INSERT INTO `mob_droplist` VALUES (1623,0,0,1000,902,110);         -- Demon Horn (11.0%)
-INSERT INTO `mob_droplist` VALUES (1623,0,0,1000,17232,@UNCOMMON); -- Lion Crossbow (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (1623,0,0,1000,4754,90);         -- Scroll Of Fire Iii (9.0%)
-INSERT INTO `mob_droplist` VALUES (1623,0,0,1000,886,@RARE);       -- Demon Skull (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (1623,0,0,1000,4784,@RARE);      -- Scroll Of Firaga Iii (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (1623,0,0,1000,4755,30);         -- Scroll Of Fire Iv (3.0%)
-INSERT INTO `mob_droplist` VALUES (1623,0,0,1000,4812,30);         -- Scroll Of Flare (3.0%)
+INSERT INTO `mob_droplist` VALUES (1623,0,0,1000,902,@VCOMMON);   -- Demon Horn (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (1623,0,0,1000,17232,@VCOMMON); -- Lion Crossbow (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (1623,0,0,1000,4754,@UNCOMMON); -- Scroll Of Fire Iii (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (1623,0,0,1000,886,@COMMON);    -- Demon Skull (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (1623,0,0,1000,4784,@RARE);     -- Scroll Of Firaga Iii (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (1623,0,0,1000,4755,@VRARE);    -- Scroll Of Fire Iv (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (1623,0,0,1000,4812,@VRARE);    -- Scroll Of Flare (Very Rare, 1%)
 
 -- ZoneID: 135 - Marquis Andras
 INSERT INTO `mob_droplist` VALUES (1624,0,0,1000,4249,@ALWAYS);  -- Copy Of Schultz Stratagems (Always, 100%)
@@ -21488,9 +21488,9 @@ INSERT INTO `mob_droplist` VALUES (2581,0,0,1000,2524,120); -- Peiste Stinger (1
 INSERT INTO `mob_droplist` VALUES (2581,0,0,1000,2523,70);  -- Peiste Skin (7.0%)
 
 -- ZoneID: 162 - Viscount Morax
-INSERT INTO `mob_droplist` VALUES (2582,0,0,1000,886,300);  -- Demon Skull (30.0%)
-INSERT INTO `mob_droplist` VALUES (2582,0,0,1000,902,300);  -- Demon Horn (30.0%)
-INSERT INTO `mob_droplist` VALUES (2582,0,0,1000,4903,250); -- Dark Spirit Pact (25.0%)
+INSERT INTO `mob_droplist` VALUES (2582,0,0,1000,886,@VCOMMON);  -- Demon Skull (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (2582,0,0,1000,902,@COMMON);  -- Demon Horn (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (2582,0,0,1000,4903,@VCOMMON); -- Dark Spirit Pact (Very Common, 24%)
 
 -- ZoneID:   1 - Vodyanoi
 INSERT INTO `mob_droplist` VALUES (2583,0,0,1000,14335,370);       -- Nokizaru Hakama (37.0%)
@@ -24845,7 +24845,7 @@ INSERT INTO `mob_droplist` VALUES (3045,0,0,1000,18453,@UNCOMMON); -- Unshomaru 
 INSERT INTO `mob_droplist` VALUES (3046,0,0,1000,16298,@UNCOMMON); -- Knack Pendant (Uncommon, 10%)
 
 -- ZoneID: 161 - Marquis Sabnock
-INSERT INTO `mob_droplist` VALUES (3047,0,0,1000,19239,105); -- Astrolabe (10.5%)
+INSERT INTO `mob_droplist` VALUES (3047,0,0,1000,19239,@COMMON); -- Astrolabe (Common, 15%)
 
 -- ZoneID: 114 - Donnergugi
 INSERT INTO `mob_droplist` VALUES (3048,0,0,1000,2833,212); -- Piece Of Thunder Coral (21.2%)
@@ -24982,7 +24982,7 @@ INSERT INTO `mob_droplist` VALUES (3087,0,0,1000,15944,249); -- Selemnus Belt (2
 INSERT INTO `mob_droplist` VALUES (3088,0,0,1000,17969,@UNCOMMON); -- Fendoir (Uncommon, 10%)
 
 -- ZoneID: 161 - Marquis Naberius
-INSERT INTO `mob_droplist` VALUES (3089,0,0,1000,2831,539); -- Yellow Brass Chain (53.9%)
+INSERT INTO `mob_droplist` VALUES (3089,0,0,1000,2831,@VCOMMON); -- Yellow Brass Chain (Very Common, 24%)
 
 -- ZoneID: 114 - Sabotender Corrido
 INSERT INTO `mob_droplist` VALUES (3090,0,0,1000,2818,172); -- Aptant Of Ishis (17.2%)

@@ -24,6 +24,11 @@ zones[xi.zone.ULEGUERAND_RANGE] =
         SOMETHING_GLITTERING     = 7341, -- You see something glittering beneath the surface of the ice.
         WHAT_LIES_BENEATH        = 7342, -- There are many cold <item> scattered around the area. Could someone be trying to melt the ice to retrieve what lies beneath?
         SOMETHING_GLITTERING_BUT = 7343, -- You see something glittering below the surface here, but the ice encases it completely.
+        FLUTTERING_CLOTH         = 7395, -- A scrap of cloth flutters wildly in the wind...<
+        SPAWN_GEUSH              = 7396, -- A huge beast is charging towards the <item>!
+        GEUSH_COUNTER            = 7398, -- Geush Urvan uses Counterstance!
+        GEUSH_COUNTER_OFF        = 7399, -- Geush Urvan's Counterstance effect wears off.
+        RABBIT_TRACKS            = 7400, -- There are fresh rabbit tracks here. The creature must still be in the vicinity.
         HOMEPOINT_SET            = 8335, -- Home point set!
     },
     mob =
