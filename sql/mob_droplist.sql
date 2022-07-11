@@ -7706,9 +7706,9 @@ INSERT INTO `mob_droplist` VALUES (929,0,0,1000,14948,@UNCOMMON); -- Genie Gages
 INSERT INTO `mob_droplist` VALUES (929,0,0,1000,15895,@UNCOMMON); -- Trance Belt (Uncommon, 10%)
 
 -- ZoneID: 111 - Gargantua
-INSERT INTO `mob_droplist` VALUES (930,0,0,1000,644,@ALWAYS); -- Chunk Of Mythril Ore (Always, 100%)
-INSERT INTO `mob_droplist` VALUES (930,0,0,1000,13115,270);   -- Elemental Charm (27.0%)
-INSERT INTO `mob_droplist` VALUES (930,0,0,1000,955,220);     -- Golem Shard (22.0%)
+INSERT INTO `mob_droplist` VALUES (930,0,0,1000,644,@ALWAYS);    -- Chunk Of Mythril Ore (Always, 100%)
+INSERT INTO `mob_droplist` VALUES (930,0,0,1000,13115,@VCOMMON); -- Elemental Charm (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (930,0,0,1000,955,@COMMON);    -- Golem Shard (Common, 15%)
 
 -- ZoneID: 136 - Gargouille
 INSERT INTO `mob_droplist` VALUES (931,0,0,1000,2748,420); -- Gargouille Shank (42.0%)
@@ -12035,9 +12035,9 @@ INSERT INTO `mob_droplist` VALUES (1452,2,0,1000,1452,0);        -- Ordelle Bron
 INSERT INTO `mob_droplist` VALUES (1452,2,0,1000,1455,0);        -- One Byne Bill (Steal)
 
 -- ZoneID: 111 - Kirata
-INSERT INTO `mob_droplist` VALUES (1453,0,0,1000,884,280);   -- Black Tiger Fang (28.0%)
-INSERT INTO `mob_droplist` VALUES (1453,0,0,1000,18359,280); -- Boreas Cesti (28.0%)
-INSERT INTO `mob_droplist` VALUES (1453,0,0,1000,861,230);   -- Black Tiger Hide (23.0%)
+INSERT INTO `mob_droplist` VALUES (1453,0,0,1000,884,@VCOMMON);   -- Black Tiger Fang (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (1453,0,0,1000,18359,@VCOMMON); -- Boreas Cesti (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (1453,0,0,1000,861,@UNCOMMON);  -- Black Tiger Hide (Uncommon, 10%)
 
 -- ZoneID:  62 - Kirlirger The Abhorrent
 INSERT INTO `mob_droplist` VALUES (1454,0,0,1000,15709,@UNCOMMON); -- Mercenarys Boots (Uncommon, 10%)
@@ -15002,11 +15002,11 @@ INSERT INTO `mob_droplist` VALUES (1826,0,0,1000,3172,30);         -- Orison Sea
 INSERT INTO `mob_droplist` VALUES (1826,0,0,1000,3186,30);         -- Navarchs Seal Legs (3.0%)
 
 -- ZoneID: 111 - Nue
-INSERT INTO `mob_droplist` VALUES (1827,0,0,1000,884,@ALWAYS); -- Black Tiger Fang (Always, 100%)
-INSERT INTO `mob_droplist` VALUES (1827,0,0,1000,861,250);     -- Black Tiger Hide (25.0%)
-INSERT INTO `mob_droplist` VALUES (1827,0,0,1000,1012,190);    -- Nue Fang (19.0%)
-INSERT INTO `mob_droplist` VALUES (1827,0,0,1000,861,130);     -- Black Tiger Hide (13.0%)
-INSERT INTO `mob_droplist` VALUES (1827,2,0,1000,4400,0);      -- Slice Of Land Crab Meat (Steal)
+INSERT INTO `mob_droplist` VALUES (1827,0,0,1000,884,@ALWAYS);   -- Black Tiger Fang (Always, 100%)
+INSERT INTO `mob_droplist` VALUES (1827,0,0,1000,861,@VCOMMON);  -- Black Tiger Hide (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (1827,0,0,1000,1012,@VCOMMON); -- Nue Fang (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (1827,0,0,1000,861,@COMMON);   -- Black Tiger Hide (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (1827,2,0,1000,4400,0);        -- Slice Of Land Crab Meat (Steal)
 
 -- ZoneID:  54 - Nuhn
 INSERT INTO `mob_droplist` VALUES (1828,0,0,1000,2632,@ALWAYS); -- Nuhns Esca (Always, 100%)
@@ -24436,7 +24436,7 @@ INSERT INTO `mob_droplist` VALUES (2935,0,0,1000,853,55);  -- Raptor Skin (5.5%)
 INSERT INTO `mob_droplist` VALUES (2936,0,0,1000,19123,200); -- Cinquedea (20.0%)
 
 -- ZoneID: 111 - Calcabrina
-INSERT INTO `mob_droplist` VALUES (2937,0,0,1000,2853,26); -- Malebolge Mandrel (2.6%)
+INSERT INTO `mob_droplist` VALUES (2937,0,0,1000,2853,@COMMON); -- Malebolge Mandrel (Common, 15%)
 
 -- ZoneID: 106 - Bedrock Barry
 INSERT INTO `mob_droplist` VALUES (2938,0,0,1000,2842,222); -- Flawed Garnet (22.2%)

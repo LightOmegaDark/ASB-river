@@ -7924,14 +7924,14 @@ INSERT INTO `mob_groups` VALUES (20,2043,111,'Ice_Elemental',330,4,1347,0,0,44,4
 INSERT INTO `mob_groups` VALUES (21,6549,111,'Ghast_war',330,0,953,0,0,40,40,0);
 INSERT INTO `mob_groups` VALUES (22,1511,111,'Ghast_blm',330,0,953,0,0,40,40,0);
 INSERT INTO `mob_groups` VALUES (23,2447,111,'Lugat',330,0,1546,0,0,39,42,0);
-INSERT INTO `mob_groups` VALUES (24,2919,111,'Nue',0,32,1827,0,0,41,42,0);
+INSERT INTO `mob_groups` VALUES (24,2919,111,'Nue',0,32,1827,2600,0,41,42,0);
 INSERT INTO `mob_groups` VALUES (25,1701,111,'Goblin_Poacher',330,0,1140,0,0,40,43,0);
 INSERT INTO `mob_groups` VALUES (26,1741,111,'Goblin_Trader',330,0,2864,0,0,40,43,0);
 INSERT INTO `mob_groups` VALUES (27,1709,111,'Goblin_Robber',330,0,1145,0,0,40,43,0);
 INSERT INTO `mob_groups` VALUES (28,1705,111,'Goblin_Reaper',330,0,1142,0,0,40,43,0);
 INSERT INTO `mob_groups` VALUES (29,3781,111,'Stone_Golem',330,0,2342,0,0,40,42,0);
-INSERT INTO `mob_groups` VALUES (30,2264,111,'Kirata',0,32,1453,0,0,41,41,0);
-INSERT INTO `mob_groups` VALUES (31,1461,111,'Gargantua',0,32,930,0,0,47,48,0);
+INSERT INTO `mob_groups` VALUES (30,2264,111,'Kirata',0,32,1453,3800,0,41,41,0);
+INSERT INTO `mob_groups` VALUES (31,1461,111,'Gargantua',0,32,930,6900,0,47,48,0);
 INSERT INTO `mob_groups` VALUES (32,5853,111,'Humbaba',0,128,3064,6500,0,62,62,0);
 INSERT INTO `mob_groups` VALUES (33,5313,111,'Calcabrina',5400,0,2937,4550,0,52,55,0);
 INSERT INTO `mob_groups` VALUES (34,1983,111,'Hobgoblin_Warrior',0,128,0,0,0,40,45,0);
