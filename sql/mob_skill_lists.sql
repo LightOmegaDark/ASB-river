@@ -3824,6 +3824,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Ash_Dragon',1177,642);
 INSERT INTO `mob_skill_lists` VALUES ('Ash_Dragon',1177,649);
 INSERT INTO `mob_skill_lists` VALUES ('Ash_Dragon',1177,647);
 INSERT INTO `mob_skill_lists` VALUES ('Mind_Hoarder',1180,524);
+INSERT INTO `mob_skill_lists` VALUES ('Barbaric_Weapon',1181,514);
 INSERT INTO `mob_skill_lists` VALUES ('ZmeyGorynych',1184,380);
 INSERT INTO `mob_skill_lists` VALUES ('Friar_Rush',1187,510);
 INSERT INTO `mob_skill_lists` VALUES ('Bayawak',1188,367);
