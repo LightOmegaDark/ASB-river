@@ -2872,9 +2872,9 @@ INSERT INTO `mob_droplist` VALUES (282,2,0,1000,880,0);     -- Bone Chip (Steal)
 INSERT INTO `mob_droplist` VALUES (283,2,0,1000,750,0); -- Silver Beastcoin (Steal)
 
 -- ZoneID:   5 - Black Coney
-INSERT INTO `mob_droplist` VALUES (284,0,0,1000,4358,140);        -- Slice Of Hare Meat (14.0%)
+INSERT INTO `mob_droplist` VALUES (284,0,0,1000,4358,@COMMON);    -- Slice Of Hare Meat (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (284,0,0,1000,17212,@UNCOMMON); -- Selenes Bow (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (284,0,0,1000,4382,60);         -- Frost Turnip (6.0%)
+INSERT INTO `mob_droplist` VALUES (284,0,0,1000,4382,@RARE);      -- Frost Turnip (Rare, 5%)
 
 -- ZoneID: 132 - Black Merino
 INSERT INTO `mob_droplist` VALUES (285,0,0,1000,878,250);        -- Karakul Skin (25.0%)
@@ -3249,10 +3249,10 @@ INSERT INTO `mob_droplist` VALUES (335,0,0,1000,3236,@UNCOMMON); -- Smoldering A
 INSERT INTO `mob_droplist` VALUES (335,0,0,1000,17316,80);       -- Bomb Arm (8.0%)
 
 -- ZoneID:   5 - Bonnacon
-INSERT INTO `mob_droplist` VALUES (336,0,0,1000,5152,430);  -- Slice Of Buffalo Meat (43.0%)
-INSERT INTO `mob_droplist` VALUES (336,0,0,1000,1628,290);  -- Buffalo Hide (29.0%)
-INSERT INTO `mob_droplist` VALUES (336,0,0,1000,18052,140); -- Tredecim Scythe (14.0%)
-INSERT INTO `mob_droplist` VALUES (336,0,0,1000,15323,120); -- Cure Clogs (12.0%)
+INSERT INTO `mob_droplist` VALUES (336,0,0,1000,5152,@VCOMMON);  -- Slice Of Buffalo Meat (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (336,0,0,1000,1628,@COMMON);  -- Buffalo Hide (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (336,0,0,1000,18052,@UNCOMMON); -- Tredecim Scythe (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (336,0,0,1000,15323,@UNCOMMON); -- Cure Clogs (Uncommon, 10%)
 
 -- ZoneID:  77 - Bonnacon
 INSERT INTO `mob_droplist` VALUES (337,0,0,1000,2196,@UNCOMMON); -- ??? Footwear (Uncommon, 10%)
@@ -6907,10 +6907,9 @@ INSERT INTO `mob_droplist` VALUES (818,0,0,1000,2898,130); -- Piceous Scale (13.
 -- ZoneID:  62 - Farlarder The Shrewd
 INSERT INTO `mob_droplist` VALUES (819,0,0,1000,15624,@UNCOMMON); -- Mercenarys Subligar (Uncommon, 10%)
 
--- ZoneID:   5 - Snow Maiden
 -- ZoneID:   5 - Father Frost
-INSERT INTO `mob_droplist` VALUES (820,0,0,1000,17306,370);       -- Snoll Arm (37.0%)
-INSERT INTO `mob_droplist` VALUES (820,0,0,1000,15507,@UNCOMMON); -- Purgatory Collar (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (820,0,0,1000,17306,@VCOMMON); -- Snoll Arm (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (820,0,0,1000,15507,@VCOMMON); -- Purgatory Collar (Very Common, 24%)
 
 -- ZoneID:   3 - Fatty Pugil
 INSERT INTO `mob_droplist` VALUES (821,0,0,1000,868,160); -- Handful Of Pugil Scales (16.0%)
@@ -7866,9 +7865,9 @@ INSERT INTO `mob_droplist` VALUES (950,2,0,1000,825,0);      -- Square Of Cotton
 
 -- ZoneID:   5 - Geush Urvan
 INSERT INTO `mob_droplist` VALUES (951,0,0,1000,15465,@ALWAYS); -- Toreadors Cape (Always, 100%)
-INSERT INTO `mob_droplist` VALUES (951,0,0,1000,5152,230);      -- Slice Of Buffalo Meat (23.0%)
-INSERT INTO `mob_droplist` VALUES (951,0,0,1000,1615,80);       -- Buffalo Horn (8.0%)
-INSERT INTO `mob_droplist` VALUES (951,0,0,1000,1628,30);       -- Buffalo Hide (3.0%)
+INSERT INTO `mob_droplist` VALUES (951,0,0,1000,5152,@COMMON);  -- Slice Of Buffalo Meat (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (951,0,0,1000,1615,@RARE);    -- Buffalo Horn (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (951,0,0,1000,1628,@RARE);    -- Buffalo Hide (Rare, 5%)
 
 -- ZoneID: 191 - Geyser Lizard
 INSERT INTO `mob_droplist` VALUES (952,0,0,1000,12567,160); -- Steam Scale Mail (16.0%)
@@ -13935,9 +13934,9 @@ INSERT INTO `mob_droplist` VALUES (1742,0,0,1000,1052,60);     -- Boyahda Coffer
 INSERT INTO `mob_droplist` VALUES (1743,0,0,1000,897,560); -- Scorpion Claw (56.0%)
 
 -- ZoneID:   5 - Mountain Worm
-INSERT INTO `mob_droplist` VALUES (1744,0,0,1000,1885,80);    -- Chunk Of Zincite (8.0%)
-INSERT INTO `mob_droplist` VALUES (1744,0,0,1000,1885,80);    -- Chunk Of Zincite (8.0%)
-INSERT INTO `mob_droplist` VALUES (1744,0,0,1000,642,@VRARE); -- Chunk Of Zinc Ore (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (1744,0,0,1000,1885,@VCOMMON); -- Chunk Of Zincite (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (1744,0,0,1000,642,@COMMON);   -- Chunk Of Zinc Ore (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (1744,0,0,1000,643,@VRARE);    -- Chunk Of Iron Ore (Very Rare, 1%)
 
 -- ZoneID:  74 - Mourioche
 INSERT INTO `mob_droplist` VALUES (1745,0,0,1000,5382,@UNCOMMON); -- Mediocris Cell (Uncommon, 10%)
@@ -22052,9 +22051,9 @@ INSERT INTO `mob_droplist` VALUES (2647,0,0,1000,3125,@UNCOMMON); -- Mavi Seal H
 INSERT INTO `mob_droplist` VALUES (2647,0,0,1000,19190,70);       -- Fluid Crossbow (7.0%)
 
 -- ZoneID:   5 - White Coney
-INSERT INTO `mob_droplist` VALUES (2648,0,0,1000,4358,300);  -- Slice Of Hare Meat (30.0%)
-INSERT INTO `mob_droplist` VALUES (2648,0,0,1000,17212,120); -- Selenes Bow (12.0%)
-INSERT INTO `mob_droplist` VALUES (2648,0,0,1000,4382,70);   -- Frost Turnip (7.0%)
+INSERT INTO `mob_droplist` VALUES (2648,0,0,1000,4358,@COMMON);    -- Slice Of Hare Meat (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (2648,0,0,1000,17212,@UNCOMMON); -- Selenes Bow (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (2648,0,0,1000,4382,@RARE);      -- Frost Turnip (Rare, 5%)
 
 -- ZoneID: 124 - White Lizard
 INSERT INTO `mob_droplist` VALUES (2649,0,0,1000,926,280);  -- Lizard Tail (28.0%)
@@ -24924,11 +24923,11 @@ INSERT INTO `mob_droplist` VALUES (3071,0,0,1000,2817,200); -- Aptant Of Pera (2
 INSERT INTO `mob_droplist` VALUES (3071,0,0,1000,2820,200); -- Aptant Of Geoc (20.0%)
 
 -- ZoneID:   5 - Skvader
-INSERT INTO `mob_droplist` VALUES (3072,0,0,1000,2820,200); -- Aptant Of Geoc (20.0%)
-INSERT INTO `mob_droplist` VALUES (3072,0,0,1000,2821,200); -- Aptant Of Haelan (20.0%)
+INSERT INTO `mob_droplist` VALUES (3072,0,0,1000,2820,@COMMON);   -- Aptant Of Geoc (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (3072,0,0,1000,2821,@UNCOMMON); -- Aptant Of Haelan (Uncommon, 10%)
 
 -- ZoneID:   5 - Magnotaur
-INSERT INTO `mob_droplist` VALUES (3073,0,0,1000,18770,167); -- Pygme Sainti (16.7%)
+INSERT INTO `mob_droplist` VALUES (3073,0,0,1000,18770,@COMMON); -- Pygme Sainti (Common, 15%)
 
 -- ZoneID: 125 - Calchas
 INSERT INTO `mob_droplist` VALUES (3074,0,0,1000,19278,250); -- Fuchingiri (25.0%)
@@ -26797,6 +26796,10 @@ INSERT INTO `mob_droplist` VALUES (3228,0,0,1000,2830,@UNCOMMON); -- Bastet Fang
 -- ZoneID: 122 - Nargun
 INSERT INTO `mob_droplist` VALUES (3229,0,0,1000,2815,@VCOMMON); -- Aptant of Arkhe (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (3229,0,0,1000,2817,@RARE);    -- Aptant of Pera (Rare, 5%)
+
+-- ZoneID:   5 - Snow Maiden
+INSERT INTO `mob_droplist` VALUES (3230,0,0,1000,17306,@VCOMMON);  -- Snoll Arm (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (3230,0,0,1000,15507,@UNCOMMON); -- Purgatory Collar (Uncommon, 10%)
 
 -- ZoneID: 125 - Zmey Gorynych
 INSERT INTO `mob_droplist` VALUES (3232,0,0,1000,2811,@COMMON);   -- Aptant of Primus (Common, 15%)

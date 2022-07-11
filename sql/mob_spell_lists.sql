@@ -5032,6 +5032,12 @@ INSERT INTO `mob_spell_lists` VALUES('PyuuTheSpatemaker',502,172,1,255); -- wate
 -- Mucoid Mass (503)
 INSERT INTO `mob_spell_lists` VALUES('Mucoid_Mass', 503, 242, 1, 255); -- absorb-acc (1~255)
 
+-- Guesh Urvan (503)
+INSERT INTO `mob_spell_lists` VALUES('Guesh_Urvan', 503, 152, 1, 255); -- blizzard iv (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Guesh_Urvan', 503, 181, 1, 255); -- blizzaga iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Guesh_Urvan', 503, 356, 1, 255); -- paralyga (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Guesh_Urvan', 503, 362, 1, 255); -- bindga (1~255)
+
 -- Next Avail 504
 
 -- AirSkyBoat Specific Starts at 5000

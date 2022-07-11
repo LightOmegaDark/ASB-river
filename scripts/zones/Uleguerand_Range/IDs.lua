@@ -46,10 +46,14 @@ zones[xi.zone.ULEGUERAND_RANGE] =
             [16798054] = 16798056, -- -631.268 -40.257 0.709
             [16798055] = 16798056, -- -513.999 -40.541 -34.928
         },
-        JORMUNGAND  = 16797969,
-        GEUSH_URVAN = 16798078,
-        WHITE_CONEY = 16798079,
-        BLACK_CONEY = 16798080,
+        JORMUNGAND       = 16797969,
+        GEUSH_URVAN      = 16798078,
+        WHITE_CONEY      = 16798079,
+        BLACK_CONEY      = 16798080,
+        MAIDEN_PH        = 16797808,
+        SNOW_MAIDEN      = 16797809,
+        FATHER_FROST     = 16797810,
+        MOUNTAIN_WORM_NM = 16798031,
     },
     npc =
     {
