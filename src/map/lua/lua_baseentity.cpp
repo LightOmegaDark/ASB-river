@@ -2114,16 +2114,14 @@ bool CLuaBaseEntity::sendGuild(uint16 guildID, uint8 open, uint8 close, uint8 ho
     XI_DEBUG_BREAK_IF(open > close);
 
     uint8 VanadielHour = (uint8)CVanaTime::getInstance()->getHour();
+    uint8 VanadielDay = (uint8)CVanaTime::getInstance()->getWeekday();
 
     GUILDSTATUS status = GUILD_OPEN;
 
-    // Guild holiday - Removed in 2014
-    // uint8 vanadielDay = (uint8)CVanaTime::getInstance()->getWeekday();
-    //
-    // if (vanadielDay == holiday)
-    // {
-    //     status = GUILD_HOLYDAY;
-    // }
+    if (VanadielDay == holiday)
+    {
+        status = GUILD_HOLIDAY;
+    }
 
     if ((VanadielHour < open) || (VanadielHour >= close))
     {
