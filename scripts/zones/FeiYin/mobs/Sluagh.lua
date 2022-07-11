@@ -12,7 +12,6 @@ entity.onMobFight = function(mob, target)
     mob:setMod(xi.mod.STORETP, power)
 end
 
-
 entity.onMobDeath = function(mob, player, isKiller)
     xi.hunts.checkHunt(mob, player, 349)
 end

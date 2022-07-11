@@ -5029,10 +5029,10 @@ INSERT INTO `mob_spell_lists` VALUES('Sacrificial_Goblet', 501, 226, 1, 255); --
 INSERT INTO `mob_spell_lists` VALUES('PyuuTheSpatemaker',502,201,1,255); -- waterga iii (1~255)
 INSERT INTO `mob_spell_lists` VALUES('PyuuTheSpatemaker',502,172,1,255); -- water iv (1~255)
 
--- Mucoid Mass (500)
-INSERT INTO `mob_spell_lists` VALUES('Mucoid_Mass', 500, 242, 1, 255); -- absorb-acc (1~255)
+-- Mucoid Mass (503)
+INSERT INTO `mob_spell_lists` VALUES('Mucoid_Mass', 503, 242, 1, 255); -- absorb-acc (1~255)
 
--- Next Avail 501
+-- Next Avail 504
 
 -- AirSkyBoat Specific Starts at 5000
 -- 5000 -> 5010 is Era Dynamis
