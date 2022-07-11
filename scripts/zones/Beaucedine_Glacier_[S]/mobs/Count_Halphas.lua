@@ -24,7 +24,7 @@ entity.onMobDespawn = function(mob)
     end
 end
 
-entity.onMobDeath = function(mob, player, optParams)
+entity.onMobDeath = function(mob, player, isKiller)
     local nmId = mob:getID()
 
     for mobId = nmId + 1, nmId + 4 do

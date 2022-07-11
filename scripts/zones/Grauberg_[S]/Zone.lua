@@ -30,7 +30,6 @@ end
 
 zoneObject.onZoneWeatherChange = function(weather)
     local npc = GetNPCByID(ID.npc.INDESCRIPT_MARKINGS)
-
     if npc ~= nil then
         if
             weather == xi.weather.WIND or

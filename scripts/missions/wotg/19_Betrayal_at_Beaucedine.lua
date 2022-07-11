@@ -58,7 +58,7 @@ mission.sections =
 
             ['Count_Halphas'] =
             {
-                onMobDeath = function(mob, player, optParams)
+                onMobDeath = function(mob, player, isKiller, noKiller)
                     if mission:getVar(player, 'Status') == 1 then
                         mission:setVar(player, 'Status', 2)
                     end

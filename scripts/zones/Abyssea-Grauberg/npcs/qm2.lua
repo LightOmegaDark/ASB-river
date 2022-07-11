@@ -1,12 +1,10 @@
 -----------------------------------
--- Zone: Abyssea-Altepa
---  NPC: qm_orthus_2 (???)
--- Spawns Orthrus
--- !pos -400 0.9 97 218
+-- Zone: Abyssea-Grauberg
+--  NPC: qm2 (???)
+-- Spawns Ningishzida
+-- !pos 380 -31 239 254
 -----------------------------------
-local ID = require('scripts/zones/Abyssea-Altepa/IDs')
-require('scripts/globals/abyssea')
-require('scripts/globals/keyitems')
+require("scripts/globals/abyssea")
 -----------------------------------
 local entity = {}
 
@@ -19,11 +17,9 @@ entity.onTrigger = function(player, npc)
 end
 
 entity.onEventUpdate = function(player, csid, option)
-    xi.abyssea.qmOnEventUpdate(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    xi.abyssea.qmOnEventFinish(player, csid, option)
 end
 
 return entity

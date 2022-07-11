@@ -156,7 +156,7 @@ bool CMobController::CheckLock(CBattleEntity* PTarget)
 bool CMobController::CheckDetection(CBattleEntity* PTarget)
 {
     TracyZoneScoped;
-    if (CanPursueTarget(PTarget) || CanDetectTarget(PTarget) ||
+    if (CanDetectTarget(PTarget) || CanPursueTarget(PTarget) ||
         PMob->StatusEffectContainer->HasStatusEffect({ EFFECT_BIND, EFFECT_SLEEP, EFFECT_SLEEP_II, EFFECT_LULLABY, EFFECT_PETRIFICATION }))
     {
         TapDeaggroTime();
@@ -721,23 +721,6 @@ void CMobController::Move()
                     PMob->PAI->PathFind->PathInRange(PTarget->loc.p, attack_range - 0.2f, PATHFLAG_WALLHACK | PATHFLAG_RUN);
                 }
                 PMob->PAI->PathFind->FollowPath();
-                if (!PMob->PAI->PathFind->IsFollowingPath())
-                {
-                    // out of melee range, try to path towards
-                    if (currentDistance > PMob->GetMeleeRange())
-                    {
-                        // try to find path towards target
-                        PMob->PAI->PathFind->PathInRange(PTarget->loc.p, attack_range - 0.2f, PATHFLAG_WALLHACK | PATHFLAG_RUN);
-                    }
-                }
-                else if (distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10)
-                {
-                    // try to find path towards target
-                    PMob->PAI->PathFind->PathInRange(PTarget->loc.p, attack_range - 0.2f, PATHFLAG_WALLHACK | PATHFLAG_RUN);
-                }
-
-                PMob->PAI->PathFind->FollowPath(m_Tick);
-
                 if (!PMob->PAI->PathFind->IsFollowingPath())
                 {
                     bool needToMove = false;

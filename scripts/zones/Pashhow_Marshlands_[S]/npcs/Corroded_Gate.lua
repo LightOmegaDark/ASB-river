@@ -7,10 +7,11 @@ require("scripts/globals/zone")
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
+    -- xi.abyssea.qmOnTrade(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    player:startEvent(102)
+    -- xi.abyssea.qmOnTrigger(player, npc)
 end
 
 entity.onEventUpdate = function(player, csid, option)

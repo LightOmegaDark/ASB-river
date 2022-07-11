@@ -603,8 +603,12 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
         else
             magicacc = utils.getSkillLvl(1, caster:getMainLvl()) + dStatAcc
         end
+    elseif caster:isMob() and skillType == nil then
+        magicacc = dStatAcc + utils.getMobSkillLvl(1, caster:getMainLvl())
+    elseif caster:isPet() and skillType == nil then
+        magicacc = dStatAcc + utils.getMobSkillLvl(3, caster:getMainLvl())
     else
-        magicacc = dStatAcc
+        magicacc = utils.getSkillLvl(4, caster:getMainLvl()) + dStatAcc
     end
 
     if element ~= xi.magic.ele.NONE then
