@@ -8,7 +8,11 @@ require("scripts/globals/regimes")
 -----------------------------------
 local entity = {}
 
-entity.onMobDeath = function(mob, player, optParams)
+entity.onMobInitialize = function(mob)
+    mob:setMod(xi.mod.PARALYZERES, 80)
+end
+
+entity.onMobDeath = function(mob, player, isKiller)
     xi.hunts.checkHunt(mob, player, 427)
     xi.regime.checkRegime(player, mob, 812, 2, xi.regime.type.GROUNDS)
     xi.regime.checkRegime(player, mob, 813, 2, xi.regime.type.GROUNDS)

@@ -20,22 +20,22 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 */
 
 #include "mob_controller.h"
-
-#include "ai/ai_container.h"
-#include "ai/helpers/targetfind.h"
-#include "ai/states/ability_state.h"
-#include "ai/states/magic_state.h"
-#include "ai/states/weaponskill_state.h"
-#include "common/utils.h"
-#include "enmity_container.h"
-#include "entities/mobentity.h"
-#include "mob_modifier.h"
-#include "mob_spell_container.h"
-#include "mobskill.h"
-#include "party.h"
-#include "status_effect_container.h"
-#include "utils/battleutils.h"
-#include "utils/petutils.h"
+#include "../../../common/utils.h"
+#include "../../enmity_container.h"
+#include "../../entities/mobentity.h"
+#include "../../mob_modifier.h"
+#include "../../mob_spell_container.h"
+#include "../../mobskill.h"
+#include "../../party.h"
+#include "../../status_effect_container.h"
+#include "../../utils/battleutils.h"
+#include "../../utils/petutils.h"
+#include "../../utils/zoneutils.h"
+#include "../ai_container.h"
+#include "../helpers/targetfind.h"
+#include "../states/ability_state.h"
+#include "../states/magic_state.h"
+#include "../states/weaponskill_state.h"
 
 CMobController::CMobController(CMobEntity* PEntity)
 : CController(PEntity)
@@ -220,6 +220,18 @@ void CMobController::TryLink()
                 }
             }
         }
+    }
+
+    if (PMob->getMobMod(MOBMOD_ATTRACT_FAMILY_NM))
+    {
+        zoneutils::GetZone(PMob->getZone())->ForEachMob([&](CMobEntity* PNm)
+                                                        {
+            if (PNm->PAI->IsRoaming() && PMob->m_Family == PNm->m_Family &&
+                PNm->CanLink(&PMob->loc.p, PNm->getMobMod(MOBMOD_SUPERLINK)))
+            {
+                PNm->PEnmityContainer->AddBaseEnmity(PTarget);
+                PNm->PAI->Engage(PTarget->targid);
+            } });
     }
 
     // ask my master for help

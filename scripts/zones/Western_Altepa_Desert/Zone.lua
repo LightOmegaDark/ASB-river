@@ -66,21 +66,30 @@ end
 zoneObject.onEventFinish = function(player, csid, option)
 end
 
-zoneObject.onZoneWeatherChange = function(weather)
-    local kvMob = GetMobByID(ID.mob.KING_VINEGARROON)
-
+zone_object.onZoneWeatherChange = function(weather)
+    local dahu = GetMobByID(ID.mob.DAHU)
     if
-        kvMob:getCurrentAction() == xi.act.DESPAWN and
-        (weather == xi.weather.DUST_STORM or weather == xi.weather.SAND_STORM)
+        not dahu:isSpawned() and os.time() > dahu:getLocalVar("cooldown")
+        and (weather == xi.weather.DUST_STORM or weather == xi.weather.SAND_STORM)
     then
-        kvMob:spawn()
-    elseif
-        kvMob:getCurrentAction() == xi.act.ROAMING and
-        weather ~= xi.weather.DUST_STORM and
-        weather ~= xi.weather.SAND_STORM
-    then
-        DespawnMob(ID.mob.KING_VINEGARROON)
+        DisallowRespawn(dahu:getID(), false)
+        dahu:setRespawnTime(math.random(30, 150)) -- pop 30-150 sec after wind weather starts
     end
+
+    local kingV = GetMobByID(ID.mob.KING_VINEGARROON)
+    local kvre = kingV:getLocalVar("respawn")
+    if not kingV:isSpawned() and os.time() > kvre and weather == xi.weather.DUST_STORM then
+        -- 10% chance for KV pop at start of single earth weather
+        local chance = math.random(1, 10)
+        if chance == 1 then
+            DisallowRespawn(kingV:getID(), false)
+            SpawnMob(ID.mob.KING_VINEGARROON)
+        end
+    elseif not kingV:isSpawned() and os.time() > kvre and weather == xi.weather.SAND_STORM then
+        DisallowRespawn(kingV:getID(), false)
+        SpawnMob(ID.mob.KING_VINEGARROON)
+    end
+
 end
 
 return zoneObject
