@@ -169,47 +169,15 @@ end
 
 entity.onPath = function(mob)
     if not mob:isFollowingPath() then
-        if mob:getLocalVar("isPaused") ~= 0 then
-            local currentPath = "pathFind" .. mob:getLocalVar("mobPath")
-            local reversePath = mob:getLocalVar("reversePath")
-            local pathNodes = {}
-            mob:setLocalVar("isPaused", 0)
-            mob:clearPath()
-            pathNodes = pathFind[currentPath](mob, reversePath)
-            local newReverse = mob:getLocalVar("reversePath")
-            if newReverse == 0 then
-                mob:pathThrough(pathNodes, xi.path.flag.COORDS)
-            else
-                mob:pathThrough(pathNodes, bit.bor(xi.path.flag.COORDS, xi.path.flag.REVERSE))
-            end
-        else
-            -- Guivre is paused, he will wait and rotate
-            -- a random amount of times before resuming his path
-            mob:clearPath()
-            local x = mob:getXPos()
-            local y = mob:getYPos()
-            local z = mob:getZPos()
-            local rotations = {}
-            local count = math.random(2, 6)
-            for i = 0, count do
-                local wait = math.random(1500, 3000)
-                rotations[i + 1] =
-                {
-                    x = x, y = y, z = z, rotation = math.random(0, 255), wait = wait
-                }
-            end
-
-            mob:pathThrough(rotations, xi.path.flag.COORDS)
-            mob:setLocalVar("isPaused", 1)
-        end
+        xi.path.pathToNearest(mob, pathNodes)
     end
 end
 
-entity.onMobRoam = function(mob)
-    local despawnCheck = mob:getLocalVar("despawnTime")
-    if despawnCheck <= os.time() then
-        DespawnMob(mob:getID())
-    end
+entity.onMobDisengage = function(mob)
+    xi.path.pathToNearest(mob, pathNodes)
+end
+
+entity.onMobDeath = function(mob, player, isKiller)
 end
 
 entity.onMobDespawn = function(mob)
