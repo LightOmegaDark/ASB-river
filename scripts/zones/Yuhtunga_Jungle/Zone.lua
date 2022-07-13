@@ -16,7 +16,10 @@ zoneObject.onChocoboDig = function(player, precheck)
     return xi.chocoboDig.start(player, precheck)
 end
 
-zoneObject.onInitialize = function(zone)
+zone_object.onInitialize = function(zone)
+    UpdateNMSpawnPoint(ID.mob.MEWW_THE_TURTLERIDER)
+    GetMobByID(ID.mob.MEWW_THE_TURTLERIDER):setRespawnTime(math.random(900, 10800))
+
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
 
     xi.helm.initZone(zone, xi.helm.type.HARVESTING)
@@ -59,7 +62,7 @@ end
 zone_object.onZoneOut = function(player)
     if player:hasStatusEffect(xi.effect.BATTLEFIELD) then
         player:delStatusEffect(xi.effect.BATTLEFIELD)
-	end
+    end
 end
 
 zone_object.onRegionEnter = function( player, region)
