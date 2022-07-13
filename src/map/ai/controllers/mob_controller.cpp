@@ -35,6 +35,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../states/ability_state.h"
 #include "../states/magic_state.h"
 #include "../states/weaponskill_state.h"
+#include "../../utils/zoneutils.h"
 
 CMobController::CMobController(CMobEntity* PEntity)
 : CController(PEntity)
@@ -207,6 +208,27 @@ void CMobController::TryLink()
                 }
             }
         }
+    }
+
+    if (PMob->getMobMod(MOBMOD_ATTRACT_FAMILY_NM))
+    {
+        uint16 family = PMob->m_Family;
+        position_t locp = PMob->loc.p;
+        int16 superlink = PMob->getMobMod(MOBMOD_SUPERLINK);
+        CBattleEntity* PTarg = PTarget;
+        zoneutils::GetZone(PMob->getZone())->ForEachMob([&family, &locp, &superlink, &PTarg](CMobEntity* Pnm)
+            {
+            if (Pnm->m_Type & MOBTYPE_NOTORIOUS && Pnm->m_Family == family && Pnm->PAI->IsRoaming() &&
+                Pnm->CanLink(&locp, superlink))
+            {
+                Pnm->PEnmityContainer->AddBaseEnmity(PTarg);
+
+                if (Pnm->m_roamFlags & ROAMFLAG_IGNORE)
+                {
+                    Pnm->PAI->Engage(PTarg->targid);
+                }
+            }
+            });
     }
 
     // ask my master for help

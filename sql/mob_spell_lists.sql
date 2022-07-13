@@ -5023,7 +5023,12 @@ INSERT INTO `mob_spell_lists` VALUES('Sacrificial_Goblet', 501, 245, 1, 255); --
 INSERT INTO `mob_spell_lists` VALUES('Sacrificial_Goblet', 501, 247, 1, 255); -- aspir (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Sacrificial_Goblet', 501, 226, 1, 255); -- poisonga ii (1~255)
 
--- Next Avail 501
+-- Donnergugi (505)
+INSERT INTO `mob_spell_lists` VALUES('Donnergugi', 505, 161, 1, 255); -- stone iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Donnergugi', 505, 190, 1, 255); -- stonega ii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Donnergugi', 505, 238, 1, 255); -- rasp (1~255)
+
+-- Next Avail 506
 
 -- AirSkyBoat Specific Starts at 5000
 -- 5000 -> 5010 is Era Dynamis
@@ -5050,6 +5055,8 @@ INSERT INTO `mob_spell_lists` VALUES('Silverhook', 5022, 250, 1, 255); -- ice sp
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 5022, 252, 1, 255); -- stun
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 5022, 253, 1, 255); -- sleep
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 5022, 274, 1, 255); -- sleepga ii
+
+-- Next Avail 504
 
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;

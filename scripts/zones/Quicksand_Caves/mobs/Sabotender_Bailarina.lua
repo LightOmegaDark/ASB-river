@@ -7,6 +7,8 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
+-- TODO: Check if it kick attacks
+
 entity.onMobFight = function(mob, target)
     local lifePercent = mob:getHPP()
     local phase = mob:getLocalVar("phase")

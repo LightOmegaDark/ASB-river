@@ -700,6 +700,72 @@ INSERT INTO `mob_spawn_mods` VALUES (17617013,15,3000,1); -- Mug gil 3000
 INSERT INTO `mob_spawn_mods` VALUES (17616999,1,3000,1);  -- Min gil 3000
 INSERT INTO `mob_spawn_mods` VALUES (17616999,2,9000,1);  -- Max gil 9000
 INSERT INTO `mob_spawn_mods` VALUES (17616999,15,2000,1); -- Mug gil 2000
+-- [Antican Consul]
+-- Data taken from wiki (http://ffxiclopedia.wikia.com/wiki/Antican_Consul)
+INSERT INTO `mob_spawn_mods` VALUES (17629641,1,4000,1); -- min gil 4000
+INSERT INTO `mob_spawn_mods` VALUES (17629641,2,8000,1); -- max gil 8000
+
+-- [Antican Legatus]
+-- Data taken from wiki (http://ffxiclopedia.wikia.com/wiki/Antican_Legatus)
+INSERT INTO `mob_spawn_mods` VALUES (17629640,1,4000,1); -- min gil 4000
+INSERT INTO `mob_spawn_mods` VALUES (17629640,2,8000,1); -- max gil 8000
+
+-- [Antican Magister]
+-- Data taken from wiki (http://ffxiclopedia.wikia.com/wiki/Antican_Magister)
+INSERT INTO `mob_spawn_mods` VALUES (17629412,1,2000,1); -- min gil 2000
+INSERT INTO `mob_spawn_mods` VALUES (17629412,2,6000,1); -- max gil 6000
+
+-- [Antican Praefectus]
+-- Data taken from wiki (http://ffxiclopedia.wikia.com/wiki/Antican_Praefectus)
+INSERT INTO `mob_spawn_mods` VALUES (17629281,1,2000,1); -- min gil 2000
+INSERT INTO `mob_spawn_mods` VALUES (17629281,2,6000,1); -- max gil 6000
+
+-- [Antican Praetor]
+-- Data taken from wiki (http://ffxiclopedia.wikia.com/wiki/Antican_Praetor)
+INSERT INTO `mob_spawn_mods` VALUES (17629621,1,4000,1); -- min gil 4000
+INSERT INTO `mob_spawn_mods` VALUES (17629621,2,8000,1); -- max gil 8000
+INSERT INTO `mob_spawn_mods` VALUES (17629639,1,4000,1); -- min gil 4000
+INSERT INTO `mob_spawn_mods` VALUES (17629639,2,8000,1); -- max gil 8000
+
+-- [Antican Praefectus]
+-- Data taken from wiki (http://ffxiclopedia.wikia.com/wiki/Antican_Praefectus)
+INSERT INTO `mob_spawn_mods` VALUES (17629421,1,2000,1); -- min gil 2000
+INSERT INTO `mob_spawn_mods` VALUES (17629421,2,6000,1); -- max gil 6000
+
+-- [Centurio X-I]
+-- Data taken from wiki (http://ffxiclopedia.wikia.com/wiki/Centurio_X-I)
+INSERT INTO `mob_spawn_mods` VALUES (17629238,1,2000,1); -- min gil 2000
+INSERT INTO `mob_spawn_mods` VALUES (17629238,2,6000,1); -- max gil 6000
+INSERT INTO `mob_spawn_mods` VALUES (17629238,15,700,1); -- max gil 700
+
+-- [Diamond Daig]
+-- Data taken from wiki (http://ffxiclopedia.wikia.com/wiki/Diamond_Daig)
+INSERT INTO `mob_spawn_mods` VALUES (17629430,1,1000,1); -- min gil 1000
+INSERT INTO `mob_spawn_mods` VALUES (17629430,2,2000,1); -- max gil 2000
+
+-- [Nussknacker]
+-- Data taken from wiki (http://ffxiclopedia.wikia.com/wiki/Nussknacker)
+INSERT INTO `mob_spawn_mods` VALUES (17093048,1,4000,1);  -- min gil 4000
+INSERT INTO `mob_spawn_mods` VALUES (17093048,2,8000,1);  -- max gil 8000
+INSERT INTO `mob_spawn_mods` VALUES (17093048,15,2000,1); -- mug gil 2000
+
+-- [Sabotender Bailarina]
+-- Data taken from wiki (http://ffxiclopedia.wikia.com/wiki/Sabotender_Bailarina)
+INSERT INTO `mob_spawn_mods` VALUES (17093048,1,12000,1); -- min gil 12000
+INSERT INTO `mob_spawn_mods` VALUES (17093048,2,20000,1); -- max gil 20000
+INSERT INTO `mob_spawn_mods` VALUES (17093048,15,3000,1); -- mug gil 3000
+
+-- [Triarius X-XV]
+-- Data taken from wiki (http://ffxiclopedia.wikia.com/wiki/Triarius_X-XV)
+INSERT INTO `mob_spawn_mods` VALUES (17629524,1,6000,1);  -- min gil 6000
+INSERT INTO `mob_spawn_mods` VALUES (17629524,2,9300,1);  -- max gil 9300
+INSERT INTO `mob_spawn_mods` VALUES (17629524,15,2500,1); -- mug gil 2500
+
+-- [Tribunus VII-I]
+-- Data taken from wiki (http://ffxiclopedia.wikia.com/wiki/Tribunus_VII-I)
+INSERT INTO `mob_spawn_mods` VALUES (17629643,1,6000,1);  -- min gil 6000
+INSERT INTO `mob_spawn_mods` VALUES (17629643,2,9300,1);  -- max gil 9300
+INSERT INTO `mob_spawn_mods` VALUES (17629643,15,4000,1); -- mug gil 4000
 
 /*!40000 ALTER TABLE `mob_spawn_mods` ENABLE KEYS */;
 UNLOCK TABLES;

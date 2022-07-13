@@ -1243,13 +1243,10 @@ INSERT INTO `mob_skill_lists` VALUES ('Serket',273,721);
 INSERT INTO `mob_skill_lists` VALUES ('Serket',273,722);
 INSERT INTO `mob_skill_lists` VALUES ('Serket',273,723);
 INSERT INTO `mob_skill_lists` VALUES ('Serket',273,724);
-INSERT INTO `mob_skill_lists` VALUES ('KingV',274,353);
 INSERT INTO `mob_skill_lists` VALUES ('KingV',274,354);
-INSERT INTO `mob_skill_lists` VALUES ('KingV',274,355);
-INSERT INTO `mob_skill_lists` VALUES ('KingV',274,719);
-INSERT INTO `mob_skill_lists` VALUES ('KingV',274,720);
 INSERT INTO `mob_skill_lists` VALUES ('KingV',274,722);
 INSERT INTO `mob_skill_lists` VALUES ('KingV',274,723);
+INSERT INTO `mob_skill_lists` VALUES ('KingV',274,355);
 -- 275: Matamata
 -- 276: Crepuscular Worm
 INSERT INTO `mob_skill_lists` VALUES ('Genbu',277,805);
@@ -3818,11 +3815,14 @@ INSERT INTO `mob_skill_lists` VALUES ('Ash_Dragon',1177,645);
 INSERT INTO `mob_skill_lists` VALUES ('Ash_Dragon',1177,642);
 INSERT INTO `mob_skill_lists` VALUES ('Ash_Dragon',1177,649);
 INSERT INTO `mob_skill_lists` VALUES ('Ash_Dragon',1177,647);
+INSERT INTO `mob_skill_lists` VALUES ('Dahu',1185,802); -- Great_Sandstorm
+INSERT INTO `mob_skill_lists` VALUES ('Picolaton',1186,403); -- Stormwind
 
--- Next available ID: 1178
+-- Next available ID: 1187
 
 -- AirSkyBoat Skill Lists Start at 5000
 -- 5000 -> 5020 is Era Dynamis
+
 
 -- ------------------------------------------------------------
 -- Start of Ambuscade section

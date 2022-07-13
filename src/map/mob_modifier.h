@@ -104,6 +104,7 @@ enum MOBMODIFIER : int
     MOBMOD_DRAW_IN_CUSTOM_RANGE      = 73, // override the default range of MeleeRange*2 of when players start to get drawn-in
     MOBMOD_DRAW_IN_MAXIMUM_REACH     = 74, // players further than this range (yalms) will be unaffected by the draw-in. default (0) is whole zone
     MOBMOD_DRAW_IN_IGNORE_STATIONARY = 75, // stationary mobs draw-in the moment they cannot attack you anymore (out of range). put this mobmod on stationary mobs that have draw-in but use ranged attacks instead of melee attacks so that they will ignore this behavior (i.e. KSNM99 Wyrm or ToAU Mission Alexander)
+    MOBMOD_ATTRACT_FAMILY_NM         = 76, // NMs within the same family will link onto this mob (used on Sabotenders for Cactrot Rapido)
 };
 
 #endif
