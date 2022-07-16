@@ -2114,7 +2114,7 @@ bool CLuaBaseEntity::sendGuild(uint16 guildID, uint8 open, uint8 close, uint8 ho
     XI_DEBUG_BREAK_IF(open > close);
 
     uint8 VanadielHour = (uint8)CVanaTime::getInstance()->getHour();
-    uint8 VanadielDay = (uint8)CVanaTime::getInstance()->getWeekday();
+    uint8 VanadielDay  = (uint8)CVanaTime::getInstance()->getWeekday();
 
     GUILDSTATUS status = GUILD_OPEN;
 
@@ -2686,7 +2686,6 @@ void CLuaBaseEntity::warp()
     auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
 
     PChar->loc.boundary    = 0;
-    PChar->m_moghouseID    = 0;
     PChar->loc.p           = PChar->profile.home_point.p;
     PChar->loc.destination = PChar->profile.home_point.destination;
 
@@ -2694,7 +2693,7 @@ void CLuaBaseEntity::warp()
     PChar->animation = ANIMATION_NONE;
 
     PChar->clearPacketList();
-    charutils::SendToZone(PChar, 2, zoneutils::GetZoneIPP(m_PBaseEntity->loc.destination));
+    charutils::SendToZone(PChar, 2, zoneutils::GetZoneIPP(PChar->loc.destination));
 }
 
 /************************************************************************
@@ -4845,7 +4844,7 @@ void CLuaBaseEntity::setAnimationSub(uint8 animationsub)
 void CLuaBaseEntity::setAnimPath(uint8 animPath)
 {
     m_PBaseEntity->manualConfig = true;
-    m_PBaseEntity->animPath = animPath;
+    m_PBaseEntity->animPath     = animPath;
 }
 
 /************************************************************************
@@ -11700,7 +11699,14 @@ int CLuaBaseEntity::getRACC()
 
     auto* PEntity = static_cast<CBattleEntity*>(m_PBaseEntity);
 
-    return PEntity->RACC(weapon->getSkillType(), distance(PEntity->loc.p, PEntity->GetBattleTarget()->loc.p),  weapon->getILvlSkill());
+    if (PEntity->GetBattleTarget() != nullptr)
+    {
+        return PEntity->RACC(weapon->getSkillType(), distance(PEntity->loc.p, PEntity->GetBattleTarget()->loc.p), weapon->getILvlSkill());
+    }
+    else
+    {
+        return PEntity->RACC(weapon->getSkillType(), distance(PEntity->loc.p, PEntity->loc.p), weapon->getILvlSkill());
+    }
 }
 
 /************************************************************************
@@ -11724,7 +11730,14 @@ uint16 CLuaBaseEntity::getRATT()
 
     auto* PEntity = static_cast<CBattleEntity*>(m_PBaseEntity);
 
-    return PEntity->RATT(weapon->getSkillType(), distance(PEntity->loc.p, PEntity->GetBattleTarget()->loc.p),  weapon->getILvlSkill());
+    if (PEntity->GetBattleTarget() != nullptr)
+    {
+        return PEntity->RATT(weapon->getSkillType(), distance(PEntity->loc.p, PEntity->GetBattleTarget()->loc.p), weapon->getILvlSkill());
+    }
+    else
+    {
+        return PEntity->RATT(weapon->getSkillType(), distance(PEntity->loc.p, PEntity->loc.p), weapon->getILvlSkill());
+    }
 }
 
 /************************************************************************
@@ -14271,6 +14284,57 @@ void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
 }
 
 /************************************************************************
+ *  Function: triggerDrawIn()
+ *  Purpose : Forces a mob to use DrawIn on the mob's current target
+ *  Example : mob:triggerDrawIn(bool includeParty, CLuaBaseEntity* PEntity)
+ *  Note    : Params can assume a default value by passing nil
+ *          : e.g. triggerDrawIn(true) to pull in a party/alliance
+ ************************************************************************/
+inline int32 CLuaBaseEntity::triggerDrawIn(CLuaBaseEntity* PMobEntity, sol::object const& includePt, sol::object const& drawRange, sol::object const& maxReach, sol::object const& target)
+{
+    XI_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    auto*          PMob    = static_cast<CMobEntity*>(PMobEntity->m_PBaseEntity);
+    CBattleEntity* PTarget = PMob->GetBattleTarget();
+
+    // Default values
+    uint8  drawInRange  = PMob->GetMeleeRange() * 2;
+    uint16 maximumReach = 0xFFFF;
+    bool   includeParty = false;
+    float  offset       = PMob->GetMeleeRange() - 0.2f;
+
+    if ((drawRange != sol::lua_nil) && drawRange.is<uint8>())
+    {
+        drawInRange = drawRange.as<uint8>();
+    }
+
+    if ((maxReach != sol::lua_nil) && maxReach.is<uint16>())
+    {
+        maximumReach = maxReach.as<uint16>();
+    }
+
+    if ((target != sol::lua_nil) && target.is<CLuaBaseEntity*>())
+    {
+        CLuaBaseEntity* PTargetEntity = target.as<CLuaBaseEntity*>();
+        PTarget                       = dynamic_cast<CBattleEntity*>(PTargetEntity->m_PBaseEntity);
+    }
+
+    if (includePt != sol::lua_nil)
+    {
+        includeParty = includePt.as<bool>();
+    }
+
+    if (PTarget)
+    {
+        // Draw in requires a target
+        battleutils::DrawIn(PTarget, PMob, offset, drawInRange, maximumReach, includeParty);
+    }
+
+    return 0;
+}
+
+/************************************************************************
  *  Function: hasTPMoves()
  *  Purpose : Returns true if a Mob has TP moves in its skill list
  *  Example : if mob:hasTPMoves() then
@@ -15816,10 +15880,10 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("getPlayerTriggerAreaInZone", CLuaBaseEntity::getPlayerTriggerAreaInZone);
     SOL_REGISTER("updateToEntireZone", CLuaBaseEntity::updateToEntireZone);
 
-    SOL_REGISTER("setAnimPath",CLuaBaseEntity::setAnimPath);
-    SOL_REGISTER("setAnimStart",CLuaBaseEntity::setAnimStart);
-    SOL_REGISTER("setAnimBegin",CLuaBaseEntity::setAnimBegin);
-    SOL_REGISTER("sendUpdateToZoneCharsInRange",CLuaBaseEntity::sendUpdateToZoneCharsInRange);
+    SOL_REGISTER("setAnimPath", CLuaBaseEntity::setAnimPath);
+    SOL_REGISTER("setAnimStart", CLuaBaseEntity::setAnimStart);
+    SOL_REGISTER("setAnimBegin", CLuaBaseEntity::setAnimBegin);
+    SOL_REGISTER("sendUpdateToZoneCharsInRange", CLuaBaseEntity::sendUpdateToZoneCharsInRange);
 
     // Abyssea
     SOL_REGISTER("getAvailableTraverserStones", CLuaBaseEntity::getAvailableTraverserStones);
