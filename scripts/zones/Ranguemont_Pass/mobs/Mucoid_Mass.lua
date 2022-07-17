@@ -6,7 +6,15 @@ require("scripts/globals/hunts")
 -----------------------------------
 local entity = {}
 
-entity.onMobDeath = function(mob, player, optParams)
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+end
+
+entity.onAdditionalEffect = function(mob, target, damage)
+    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.BLIND)
+end
+
+entity.onMobDeath = function(mob, player, isKiller)
     xi.hunts.checkHunt(mob, player, 345)
 end
 
