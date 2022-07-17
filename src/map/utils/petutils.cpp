@@ -1913,7 +1913,133 @@ namespace petutils
 
         if (PPet->getPetType() == PET_TYPE::AVATAR)
         {
-            CalculateAvatarStats(PMaster, PPet);
+            uint8 mLvl = PMaster->GetMLevel();
+
+            if (PMaster->GetMJob() == JOB_SMN)
+            {
+                mLvl += PMaster->getMod(Mod::AVATAR_LVL_BONUS);
+
+                if (PetID == PETID_CARBUNCLE)
+                {
+                    mLvl += PMaster->getMod(Mod::CARBUNCLE_LVL_BONUS);
+                }
+                else if (PetID == PETID_CAIT_SITH)
+                {
+                    mLvl += PMaster->getMod(Mod::CAIT_SITH_LVL_BONUS);
+                }
+
+                PPet->SetMLevel(mLvl);
+            }
+            else if (PMaster->GetSJob() == JOB_SMN)
+            {
+                PPet->SetMLevel(PMaster->GetSLevel());
+            }
+            else
+            { // should never happen
+                ShowDebug("%s summoned an avatar but is not SMN main or SMN sub! Please report. ", PMaster->GetName());
+                PPet->SetMLevel(1);
+            }
+            LoadAvatarStats(PMaster, PPet); // follows PC calcs (w/o SJ)
+
+            PPet->m_SpellListContainer = mobSpellList::GetMobSpellList(PPetData->spellList);
+
+            PPet->setModifier(Mod::DMGPHYS, -5000); //-50% PDT
+
+            PPet->setModifier(Mod::CRIT_DMG_INCREASE, 8); // Avatars have Crit Att Bonus II for +8 crit dmg
+
+            if (mLvl >= 70)
+            {
+                PPet->setModifier(Mod::MATT, 32);
+            }
+            else if (mLvl >= 50)
+            {
+                PPet->setModifier(Mod::MATT, 28);
+            }
+            else if (mLvl >= 30)
+            {
+                PPet->setModifier(Mod::MATT, 24);
+            }
+            else if (mLvl >= 10)
+            {
+                PPet->setModifier(Mod::MATT, 20);
+            }
+            ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (320.0f / 60.0f))));
+
+            if (PetID == PETID_FENRIR)
+            {
+                ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0 * (280.0f / 60.0f))));
+            }
+
+            // In a 2014 update SE updated Avatar base damage
+            // Based on testing this value appears to be Level now instead of Level * 0.74f
+            uint16 weaponDamage = 1 + mLvl;
+            if (PetID == PETID_CARBUNCLE || PetID == PETID_CAIT_SITH)
+            {
+                weaponDamage = static_cast<uint16>(floor(PPet->GetMLevel() * 0.74f));
+            }
+
+            ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage(weaponDamage);
+
+            // Set B+ weapon skill (assumed capped for level derp)
+            // attack is madly high for avatars (roughly x2)
+            if (PetID == PETID_FENRIR)
+            {
+                PPet->setModifier(Mod::ATT, 2.6 * battleutils::GetMaxSkill(SKILL_CLUB, JOB_WHM, PPet->GetMLevel())); // Fenrir has been proven to have an additional 30% ATK
+            }
+            else
+            {
+                PPet->setModifier(Mod::ATT, 2 * battleutils::GetMaxSkill(SKILL_CLUB, JOB_WHM, PPet->GetMLevel()));
+            }
+
+            PPet->setModifier(Mod::ACC, battleutils::GetMaxSkill(SKILL_CLUB, JOB_WHM, PPet->GetMLevel()));
+            // Set E evasion and def
+            PPet->setModifier(Mod::EVA, battleutils::GetMaxSkill(SKILL_THROWING, JOB_WHM, PPet->GetMLevel()));
+
+            if (PetID == PETID_DIABOLOS)
+            {
+                PPet->setModifier(Mod::DEF, 1.3 * battleutils::GetMaxSkill(SKILL_THROWING, JOB_WHM, PPet->GetMLevel())); // Diabolos has been proven to have an additional 30% DEF
+            }
+            else
+            {
+                PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(SKILL_THROWING, JOB_WHM, PPet->GetMLevel()));
+            }
+
+            // cap all magic skills so they play nice with spell scripts
+            for (int i = SKILL_DIVINE_MAGIC; i <= SKILL_BLUE_MAGIC; i++)
+            {
+                uint16 maxSkill = battleutils::GetMaxSkill((SKILLTYPE)i, PPet->GetMJob(), mLvl > 99 ? 99 : mLvl);
+                if (maxSkill != 0)
+                {
+                    PPet->WorkingSkills.skill[i] = maxSkill;
+                }
+                else // if the mob is WAR/BLM and can cast spell
+                {
+                    // set skill as high as main level, so their spells won't get resisted
+                    uint16 maxSubSkill = battleutils::GetMaxSkill((SKILLTYPE)i, PPet->GetSJob(), mLvl > 99 ? 99 : mLvl);
+
+                    if (maxSubSkill != 0)
+                    {
+                        PPet->WorkingSkills.skill[i] = maxSubSkill;
+                    }
+                }
+            }
+
+            if (PMaster->objtype == TYPE_PC)
+            {
+                CCharEntity* PChar = (CCharEntity*)PMaster;
+                PPet->addModifier(Mod::MATT, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_MAGICAL_ATTACK, PChar));
+                PPet->addModifier(Mod::ATT, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_PHYSICAL_ATTACK, PChar));
+                PPet->addModifier(Mod::MACC, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_MAGICAL_ACCURACY, PChar));
+                PPet->addModifier(Mod::ACC, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_PHYSICAL_ACCURACY, PChar));
+
+                PPet->addModifier(Mod::ACC, PChar->PJobPoints->GetJobPointValue(JP_SUMMON_ACC_BONUS));
+                PPet->addModifier(Mod::MACC, PChar->PJobPoints->GetJobPointValue(JP_SUMMON_MAGIC_ACC_BONUS));
+                PPet->addModifier(Mod::ATT, PChar->PJobPoints->GetJobPointValue(JP_SUMMON_PHYS_ATK_BONUS) * 2);
+                PPet->addModifier(Mod::MAGIC_DAMAGE, PChar->PJobPoints->GetJobPointValue(JP_SUMMON_MAGIC_DMG_BONUS) * 5);
+                PPet->addModifier(Mod::BP_DAMAGE, PChar->PJobPoints->GetJobPointValue(JP_BLOOD_PACT_DMG_BONUS) * 3);
+            }
+
+            PMaster->addModifier(Mod::AVATAR_PERPETUATION, PerpetuationCost(PetID, mLvl));
         }
         else if (PPet->getPetType() == PET_TYPE::JUG_PET)
         {
