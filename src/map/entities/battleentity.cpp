@@ -86,7 +86,7 @@ CBattleEntity::CBattleEntity()
     m_Immunity   = 0;
     isCharmed    = false;
     m_unkillable = false;
-    m_dmgType = DAMAGE_TYPE::NONE;
+    m_dmgType    = DAMAGE_TYPE::NONE;
 
     m_DeathType = DEATH_TYPE::NONE;
 
@@ -641,8 +641,8 @@ uint16 CBattleEntity::ATT(uint16 slot)
     }
     //else if (weapon && weapon->isHandToHand())
     //{
-    //    ATT += (STR() * 5) / 8;
-    //}
+    //     ATT += (STR() * 5) / 8;
+    // }
     else
     {
         ATT += STR() / 2;
