@@ -6,7 +6,9 @@ mixins = { require("scripts/mixins/job_special") }
 -----------------------------------
 local entity = {}
 
-entity.onMobDeath = function(mob, player, optParams)
+-- TODO: Check if it has an ele pet
+
+entity.onMobDeath = function(mob, player, isKiller)
 end
 
 return entity
