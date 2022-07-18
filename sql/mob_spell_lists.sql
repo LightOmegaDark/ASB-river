@@ -4998,6 +4998,10 @@ INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 252, 1, 255); -- stun (1
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 253, 1, 255); -- sleep (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 274, 1, 255); -- sleepga ii (1~255)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c06d01098d (BCNM Royal Jelly Implementation)
 -- Princess Jelly (493)
 INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 235, 1, 255); -- burn (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 144, 1, 255); -- fire (1~255)
