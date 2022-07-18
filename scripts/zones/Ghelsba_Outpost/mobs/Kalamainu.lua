@@ -13,8 +13,8 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onMobEngaged = function(mob, target)
-    mob:setMobMod(xi.mobMod.NO_MOVE, 0) -- unlock from moving
-    mob:useMobAbility(373) -- use secretion
+    mob:setMobMod(xi.mobMod.NO_MOVE, 0) -- unlock mob
+    mob:useMobAbility(373) -- secretion
 end
 
 entity.onMobWeaponSkill = function(mob, target, skill)
