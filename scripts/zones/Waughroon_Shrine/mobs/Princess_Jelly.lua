@@ -100,7 +100,6 @@ local function spawnQueenJelly(bfNum,target)
         queen:setHP(princessesTotalHP(bfNum))
         queen:setPos(centers[bfNum][1], centers[bfNum][2], centers[bfNum][3], 0)
         queen:setLocalVar('target',target:getID())
-
         queen:timer(3000, function(queenArg)
             local player = GetPlayerByID(queenArg:getLocalVar('target'))
             if player ~= nil and player:isAlive() then
