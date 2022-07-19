@@ -848,6 +848,8 @@ public:
     void setAnimBegin(uint32);
     void sendUpdateToZoneCharsInRange(float);
 
+    bool clearSession(std::string const& playerName);
+
     static void Register();
 };
 

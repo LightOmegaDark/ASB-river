@@ -2571,7 +2571,18 @@ uint8 CLuaBaseEntity::getRotPos()
 
 void CLuaBaseEntity::setRotation(uint8 rotation)
 {
+    if (m_PBaseEntity == nullptr)
+    {
+        return;
+    }
+
     m_PBaseEntity->loc.p.rotation = rotation;
+
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        ((CCharEntity*)m_PBaseEntity)->pushPacket(new CPositionPacket((CCharEntity*)m_PBaseEntity));
+    }
+
     m_PBaseEntity->updatemask |= UPDATE_POS;
 }
 
@@ -15022,89 +15033,23 @@ bool CLuaBaseEntity::deleteRaisedChocobo()
     return true;
 }
 
-void CLuaBaseEntity::setMannequinPose(uint16 itemID, uint8 race, uint8 pose)
+/************************************************************************
+ *  Function: clearSession()
+ *  Purpose : Delete player's account session
+ *  Example : player:clearSession()
+ ************************************************************************/
+
+bool CLuaBaseEntity::clearSession(std::string const& playerName)
 {
-    TracyZoneScoped;
+    const char* charName = playerName.c_str();
+    const char* Query    = "DELETE FROM accounts_sessions WHERE charid IN (SELECT charid from chars where charname = '%s')";
 
-    // Find the item in the player inventory and update the extra values
-    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
+    if (sql->Query(Query, charName) == SQL_SUCCESS && sql->AffectedRows() > 0)
     {
-        for (uint8 i = 0; i < CONTAINER_ID::MAX_CONTAINER_ID; ++i)
-        {
-            if (auto slot = PChar->getStorage(i)->SearchItem(itemID); slot != ERROR_SLOTID)
-            {
-                auto* item = PChar->getStorage(i)->GetItem(slot);
-                if (item && item->getID() == itemID && item->isMannequin())
-                {
-                    if (auto* PMannequin = dynamic_cast<CItemFurnishing*>(item))
-                    {
-                        PMannequin->setMannequinRace(race);
-                        PMannequin->setMannequinPose(pose);
-
-                        // Include the update into the database
-                        char        extra[sizeof(PMannequin->m_extra) * 2 + 1];
-                        const char* fmtQuery = "UPDATE char_inventory  \
-                               SET extra = '%s' \
-                               WHERE charid = %u AND itemId = %u;";
-
-                        sql->EscapeStringLen(extra, (const char*)PMannequin->m_extra, sizeof(PMannequin->m_extra));
-                        if (sql->Query(fmtQuery, extra, PChar->id, PMannequin->getID()) == SQL_ERROR)
-                        {
-                            ShowError("lua_baseentity::setMannequinPose: Cannot insert item to database");
-                        }
-                    }
-                    return; // We can exit here, since we found a matching mannequin and they can have only one of each
-                }
-            }
-        }
-    }
-}
-
-uint8 CLuaBaseEntity::getMannequinPose(uint16 itemID)
-{
-    TracyZoneScoped;
-
-    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
-    {
-        for (uint8 i = 0; i < CONTAINER_ID::MAX_CONTAINER_ID; ++i)
-        {
-            if (auto slot = PChar->getStorage(i)->SearchItem(itemID); slot != ERROR_SLOTID)
-            {
-                auto* item = PChar->getStorage(i)->GetItem(slot);
-                if (item && item->getID() == itemID && item->isMannequin())
-                {
-                    if (auto* PMannequin = dynamic_cast<CItemFurnishing*>(item))
-                    {
-                        return PMannequin->getMannequinPose();
-                    }
-                }
-            }
-        }
+        return true;
     }
 
-    return 0;
-}
-
-void CLuaBaseEntity::addPacketMod(uint16 packetId, uint16 offset, uint8 value)
-{
-    TracyZoneScoped;
-
-    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
-    {
-        ShowInfo(fmt::format("Adding Packet Mod ({}): 0x{:04X}: 0x{:04X}: 0x{:02X}",
-                             PChar->name, packetId, offset, value));
-        PacketMods[PChar->id][packetId].emplace_back(std::make_pair(offset, value));
-    }
-}
-
-void CLuaBaseEntity::clearPacketMods()
-{
-    TracyZoneScoped;
-
-    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
-    {
-        PacketMods[PChar->id].clear();
-    }
+    return false;
 }
 
 //==========================================================//
@@ -15898,15 +15843,7 @@ void CLuaBaseEntity::Register()
 
     SOL_REGISTER("getHistory", CLuaBaseEntity::getHistory);
 
-    SOL_REGISTER("getChocoboRaisingInfo", CLuaBaseEntity::getChocoboRaisingInfo);
-    SOL_REGISTER("setChocoboRaisingInfo", CLuaBaseEntity::setChocoboRaisingInfo);
-    SOL_REGISTER("deleteRaisedChocobo", CLuaBaseEntity::deleteRaisedChocobo);
-
-    SOL_REGISTER("setMannequinPose", CLuaBaseEntity::setMannequinPose);
-    SOL_REGISTER("getMannequinPose", CLuaBaseEntity::getMannequinPose);
-
-    SOL_REGISTER("addPacketMod", CLuaBaseEntity::addPacketMod);
-    SOL_REGISTER("clearPacketMods", CLuaBaseEntity::clearPacketMods);
+    SOL_REGISTER("clearSession", CLuaBaseEntity::clearSession);
 }
 
 std::ostream& operator<<(std::ostream& os, const CLuaBaseEntity& entity)
