@@ -19,11 +19,12 @@ entity.onTrigger = function(player, npc)
         not GetMobByID(ID.mob.TALEKEEPERS_GIFT_OFFSET + 1):isSpawned() and
         not GetMobByID(ID.mob.TALEKEEPERS_GIFT_OFFSET + 2):isSpawned()
     then
-        player:messageSpecial(ID.text.SYMBOLS_INSCRIBED)
-        player:startEvent(100)
-        player:setCharVar("theTalekeepersGiftKilledNM", 0)
+        player:messageSpecial(ID.text.SENSE_OF_FOREBODING)
+        SpawnMob(ID.mob.TALEKEEPERS_GIFT_OFFSET + 0):updateClaim(player) -- Picklix_Longindex
+        SpawnMob(ID.mob.TALEKEEPERS_GIFT_OFFSET + 1):updateClaim(player) -- Moxnix_Nightgoggle
+        SpawnMob(ID.mob.TALEKEEPERS_GIFT_OFFSET + 2):updateClaim(player) -- Doglix_Muttsnout
     else
-        player:messageSpecial(ID.text.SYMBOLS_INSCRIBED)
+        player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
     end
 end
 
@@ -31,14 +32,6 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if (csid == 100 and option == 0) then
-        player:messageSpecial(ID.text.NOISE_BEHIND_YOU)
-        SpawnMob(ID.mob.TALEKEEPERS_GIFT_OFFSET + 0):updateClaim(player) -- Picklix_Longindex
-        SpawnMob(ID.mob.TALEKEEPERS_GIFT_OFFSET + 1):updateClaim(player) -- Moxnix_Nightgoggle
-        SpawnMob(ID.mob.TALEKEEPERS_GIFT_OFFSET + 2):updateClaim(player) -- Doglix_Muttsnout
-    else
-        return
-    end
 end
 
 return entity

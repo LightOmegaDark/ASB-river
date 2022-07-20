@@ -64,7 +64,6 @@ zones[xi.zone.BASTOK_MINES] =
         ODOBA_SHOP_DIALOG              = 10924, -- Welcome to the Alchemists' Guild. How may I help you?
         VIRNAGE_DIALOG_1               = 10995, -- They stayed in a citadel on the Sauromugue Champaign. The paint may be there still! I have heard people here say you are a great adventurer. Please, help the Goddess in Her hour of need!
         VIRNAGE_DIALOG_2               = 11001, -- Hand my letter to Eperdur in the San d'Oria Cathedral to claim your reward.
-        COME_TOMORROW                  = 11013, -- I'm sorry. I have no way to repay you now. Could you please come back tomorrow?
         CONQUEST                       = 11124, -- You've earned conquest points!
         GALDEO_OPEN_DIALOG             = 11484, -- Come! Take a look at all the wonderful goods from Li'Telor.
         AULAVIA_OPEN_DIALOG            = 11485, -- May I interest you in some specialty goods from Vollbow?
