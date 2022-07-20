@@ -10,7 +10,7 @@ entity.onMobInitialize = function(mob)
     mob:addMod(xi.mod.UDMGPHYS, -75)
     mob:addMod(xi.mod.UDMGRANGE, -75)
     mob:addMod(xi.mod.UDMGMAGIC, -75)
-	mob:addMod(xi.mod.UDMGBREATH, -75)
+    mob:addMod(xi.mod.UDMGBREATH, -75)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
