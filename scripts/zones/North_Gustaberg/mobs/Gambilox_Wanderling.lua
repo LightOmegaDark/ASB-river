@@ -3,10 +3,13 @@
 --  Mob: Gambilox Wanderling
 -- Quest NM - "As Thick as Thieves"
 -----------------------------------
+mixins = {require("scripts/mixins/job_special")}
+-----------------------------------
 local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
+    mob:setMobMod(xi.mobMod.REGAIN, 50)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)

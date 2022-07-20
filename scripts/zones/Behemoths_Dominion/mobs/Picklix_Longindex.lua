@@ -8,6 +8,16 @@ require("scripts/globals/quests")
 -----------------------------------
 local entity = {}
 
+entity.onMobSpawn = function(mob)
+    mob:setMod(xi.mod.STORETP, 500)
+end 
+
+entity.onMobFight = function(mob, target)
+    if mob:getHPP() <= 25 then 
+        mob:setMod(xi.mod.STORETP, 1000)
+    end
+end
+
 entity.onMobDeath = function(mob, player, isKiller)
     if player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_TALEKEEPER_S_GIFT) == QUEST_ACCEPTED then
         player:incrementCharVar("theTalekeepersGiftKilledNM", 1)

@@ -34,7 +34,8 @@ entity.onTrigger = function(player, npc)
         VanadielDayOfTheYear() ~= player:getCharVar("theDoorman_time")
     then
         player:startEvent(153) -- The doorman notification, go to naji
-
+        elseif (player:getCharVar("theDoormanCS") == 2 and VanadielDayOfTheYear() == player:getCharVar("theDoorman_time")) then
+            player:messageSpecial(ID.text.COME_TOMORROW) -- Must wait longer
     elseif
         theDoorman == QUEST_COMPLETED and
         player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.THE_TALEKEEPER_S_TRUTH) == QUEST_AVAILABLE

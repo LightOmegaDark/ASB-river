@@ -1,22 +1,16 @@
 -----------------------------------
--- Area: Davoi
---  Mob: Gavotvut
--- Involved in Quest: The Doorman
+-- Area: Castle Oztroja
+--   NM: Odontotyrannus
+-- Involved in Quest: A Boy's Dream
 -----------------------------------
 mixins = {require("scripts/mixins/job_special")}
-require("scripts/globals/settings")
 require("scripts/globals/quests")
+require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
-end
-
-entity.onMobDeath = function(mob, player, isKiller)
-    if (player:getCharVar("theDoormanMyMob") == 1) then
-        player:incrementCharVar("theDoormanKilledNM", 1)
-    end
 end
 
 return entity
