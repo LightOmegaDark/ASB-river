@@ -12,7 +12,7 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
-	mob:setMod(xi.mod.SILENCERES, 1650) -- add to mob pools
+    mob:setMod(xi.mod.SILENCERES, 1650) -- add to mob pools
     mob:setMod(xi.mod.DEF, 600)
 end 
 
