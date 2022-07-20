@@ -10,11 +10,8 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
-end
-
-entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.STORETP, 500)
-end 
+end
 
 entity.onMobFight = function(mob, target)
     if mob:getHPP() <= 25 then 
