@@ -21,7 +21,7 @@ entity.onAdditionalEffect = function(mob, target, damage)
 end
 
 entity.onMobSpawn = function(mob)
-    -- add accuracy
+    mob:setMod(xi.mod.ACC, 175)
 end 
 
 entity.onMobFight = function(mob, target)

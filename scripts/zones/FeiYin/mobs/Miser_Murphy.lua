@@ -12,6 +12,8 @@ local entity = {}
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+    mob:setMobMod(xi.mobMod.NO_STANDBACK, 1)
+    mob:setMobMod(xi.mobMod.MAGIC_COOL, 30)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
@@ -19,8 +21,6 @@ entity.onAdditionalEffect = function(mob, target, damage)
 end
 
 entity.onMobSpawn = function(mob)
-    mob:setMobMod(xi.mobMod.NO_STANDBACK, 1)
-    mob:setMobMod(xi.mobMod.MAGIC_COOL, 30)
     mob:setMod(xi.mod.MACC, 80)
     mob:setMod(xi.mod.UFASTCAST, 50)
     mob:setMod(xi.mod.BINDRESTRAIT, 50)

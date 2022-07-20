@@ -8,6 +8,10 @@ require("scripts/globals/quests")
 -----------------------------------
 local entity = {}
 
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
+end
+
 entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.STORETP, 500)
 end 

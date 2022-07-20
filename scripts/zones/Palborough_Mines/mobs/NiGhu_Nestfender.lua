@@ -12,8 +12,8 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
-    mob:setMod(xi.mod.SILENCERES, 1650) -- add to mob pools
-    mob:setMod(xi.mod.DEF, 600)
+    mob:setMod(xi.mod.SILENCERES, 150)
+    mob:setMod(xi.mod.DMGPHYS, -50)
 end 
 
 entity.onMobMagicPrepare = function(mob, target, spellId)

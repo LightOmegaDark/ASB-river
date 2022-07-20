@@ -15,8 +15,6 @@ end
 entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.PARALYZERESTRAIT, 75)
     mob:setMod(xi.mod.COUNTER, 30)
-    mob:setMod(xi.mod.ACC, 275)
-    mob:setMod(xi.mod.DEF, 300)
 end 
 
 entity.onMobDeath = function(mob, player, isKiller)
