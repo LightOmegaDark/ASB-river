@@ -8,12 +8,9 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobInitialize = function(mob)
-   mob:setMobMod(xi.mobMod.DOUBLE_ATTACK, 10)
-end
-
 entity.onMobSpawn = function(mob)
     GetMobByID(ID.mob.CHANDELIER):setRespawnTime(0)
+    mob:setMod(xi.mod.DOUBLE_ATTACK, 10)
     mob:addMod(xi.mod.ATT, 175)
 end
 

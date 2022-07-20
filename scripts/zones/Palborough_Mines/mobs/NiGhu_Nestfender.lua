@@ -13,6 +13,11 @@ entity.onMobInitialize = function(mob)
     mob:setMod(xi.mod.DMGPHYS, -50)
 end
 
+entity.onMobSpawn = function(mob)
+    mob:setMod(xi.mod.DMGPHYS, -50)
+    mob:addMod(xi.mod.SILENCERES, 150)
+end 
+
 entity.onMobMagicPrepare = function(mob, target, spellId)
     local rnd = math.random()
 

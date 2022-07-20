@@ -13,6 +13,10 @@ entity.onMobInitialize = function(mob)
     mob:setMod(xi.mod.STORETP, 500)
 end
 
+entity.onMobSpawn = function(mob)
+    mob:setMod(xi.mod.STORETP, 500)
+end
+
 entity.onMobFight = function(mob, target)
     if mob:getHPP() <= 25 then 
         mob:setMod(xi.mod.STORETP, 1000)

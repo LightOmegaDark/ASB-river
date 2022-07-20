@@ -20,7 +20,7 @@ entity.onAdditionalEffect = function(mob, target, damage)
 end
 
 entity.onMobSpawn = function(mob)
-    mob:addMod(xi.mod.DMGMAGIC,-70)
+    mob:setMod(xi.mod.DMGMAGIC,-70)
     mob:addMod(xi.mod.ACC, 175)
 end 
 
