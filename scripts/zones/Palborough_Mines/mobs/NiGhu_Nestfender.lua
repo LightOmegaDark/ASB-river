@@ -9,12 +9,9 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
-end
-
-entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.SILENCERES, 150)
     mob:setMod(xi.mod.DMGPHYS, -50)
-end 
+end
 
 entity.onMobMagicPrepare = function(mob, target, spellId)
     local rnd = math.random()

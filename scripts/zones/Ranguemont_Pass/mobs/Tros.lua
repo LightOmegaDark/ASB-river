@@ -10,11 +10,8 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
-end
-
-entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.REGAIN, 50)
-end 
+end
 
 entity.onMobDeath = function(mob, player, isKiller)
     if (player:hasKeyItem(xi.ki.MERTAIRES_BRACELET)) then

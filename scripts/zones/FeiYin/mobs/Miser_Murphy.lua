@@ -14,6 +14,12 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
     mob:setMobMod(xi.mobMod.NO_STANDBACK, 1)
     mob:setMobMod(xi.mobMod.MAGIC_COOL, 30)
+    mob:setMod(xi.mod.MACC, 80)
+    mob:setMod(xi.mod.UFASTCAST, 50)
+    mob:setMod(xi.mod.BINDRESTRAIT, 50)
+    mob:setMod(xi.mod.STUNRESTRAIT, 50)
+    mob:setMod(xi.mod.SILENCERESTRAIT, 95)
+    mob:setMod(xi.mod.RESBUILD_GRAVITY, 10)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
@@ -21,13 +27,7 @@ entity.onAdditionalEffect = function(mob, target, damage)
 end
 
 entity.onMobSpawn = function(mob)
-    mob:setMod(xi.mod.MACC, 80)
-    mob:setMod(xi.mod.UFASTCAST, 50)
-    mob:setMod(xi.mod.BINDRESTRAIT, 50)
-    mob:setMod(xi.mod.STUNRESTRAIT, 50)
-    mob:setMod(xi.mod.SILENCERESTRAIT, 95)
-    mob:setMod(xi.mod.RESBUILD_GRAVITY, 10)
-    mob:setMod(xi.mod.ACC, 250)
+    mob:addMod(xi.mod.ACC, 175)
     mob:addStatusEffectEx(tpz.effect.ICE_SPIKES, 0, 60, 0, 0)
 end 
 

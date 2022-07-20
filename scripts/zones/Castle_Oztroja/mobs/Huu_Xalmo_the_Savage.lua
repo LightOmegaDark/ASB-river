@@ -10,12 +10,9 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
-end
-
-entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.PARALYZERESTRAIT, 75)
     mob:setMod(xi.mod.COUNTER, 30)
-end 
+end
 
 entity.onMobDeath = function(mob, player, isKiller)
 end
