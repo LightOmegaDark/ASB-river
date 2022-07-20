@@ -5,7 +5,6 @@
 -- !pos 15 -31 -94 143
 -----------------------------------
 local ID = require("scripts/zones/Palborough_Mines/IDs")
-require('scripts/globals/items')
 require("scripts/globals/npc_util")
 -----------------------------------
 local entity = {}
@@ -14,7 +13,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    if player:getCharVar("theTalekeeperTruthCS") == 3 and not player:hasItem(xi.items.MOTTLED_QUADAV_EGG) and npcUtil.popFromQM(player, npc, ID.mob.NI_GHU_NESTFENDER, {hide = 0}) then
+    if player:getCharVar("theTalekeeperTruthCS") == 3 and npcUtil.popFromQM(player, npc, ID.mob.NI_GHU_NESTFENDER, {hide = 0}) then
         player:messageSpecial(ID.text.SENSE_OF_FOREBODING)
     else
         player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
