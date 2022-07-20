@@ -12,6 +12,7 @@ local entity = {}
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+    mob:setMobMod(xi.mobMod.DOUBLE_ATTACK, 10)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
@@ -20,7 +21,6 @@ end
 
 entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.REGAIN, 150)
-    mob:addMod(xi.mod.DOUBLE_ATTACK, 10)
 end 
 
 entity.onMobFight = function(mob, target)

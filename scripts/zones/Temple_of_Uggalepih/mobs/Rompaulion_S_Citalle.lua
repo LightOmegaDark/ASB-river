@@ -7,6 +7,10 @@ mixins = {require("scripts/mixins/job_special")}
 -----------------------------------
 local entity = {}
 
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
+end
+
 entity.onMobDeath = function(mob, player, isKiller)
     -- check for Cleuvarion death
     if player:getCharVar("KnightStalker_Progress") == 4 and GetMobByID(mob:getID() - 1):isDead() then
