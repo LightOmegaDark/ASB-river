@@ -36,8 +36,8 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
-    if damage > 0 and not target:hasStatusEffect(xi.effect.BLINDNESS) then
-        local duration = 60 * applyResistanceAddEffect(player, target, xi.magic.ele.DARK, 0)
+    if (damage > 0 and target:hasStatusEffect(xi.effect.BLINDNESS) == false) then
+        local duration = 60 * applyResistanceAddEffect(player, target, xi.magic.ele.DARK, ((player:getMainLvl() / 7.5) * (tp / 1000)))
         target:addStatusEffect(xi.effect.BLINDNESS, 25, 0, duration)
     end
 
