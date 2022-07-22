@@ -408,17 +408,13 @@ local loot =
     [107] =
     {
         {
-            { itemid = 3339, droprate = 1000 }, -- Jug Of Honey Wine
-        },
-
-        {
-            { itemid =  1441, droprate = 312 }, -- Libation Abjuration
-            { itemid = 17694, droprate = 182 }, -- Guespiere
-            { itemid = 18047, droprate =  65 }, -- Havoc Scythe
-            { itemid = 17937, droprate =  43 }, -- Leopard Axe
-            { itemid = 18173, droprate = 181 }, -- Nokizaru Shuriken
-            { itemid = 17823, droprate = 217 }, -- Shinsoku
-            { itemid = 17575, droprate =  43 }, -- Somnus Signa
+            {itemid = 1441, droprate = 312}, -- Libation Abjuration
+            {itemid = 17694, droprate = 182}, -- Guespiere
+            {itemid = 18047, droprate = 65}, -- Havoc Scythe
+            {itemid = 17937, droprate = 43}, -- Leopard Axe
+            {itemid = 18173, droprate = 181}, -- Nokizaru Shuriken
+            {itemid = 17823, droprate = 217}, -- Shinsoku
+            {itemid = 17575, droprate = 43}, -- Somnus Signa
         },
 
         {

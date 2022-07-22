@@ -299,34 +299,34 @@ local battlefields =
 
     [xi.zone.BALGAS_DAIS] =
     {
-        {  0,   96,    0 },   -- The Rank 2 Final Mission (Mission 2-3)
-        {  1,   97, 1131 },   -- Steamed Sprouts (BS40)
-        {  2,   98, 1130 },   -- Divine Punishers (BS60)
-        {  3,   99,    0 },   -- Saintly Invitation (Windurst 6-2)
-        {  4,  100, 1177 },   -- Treasure and Tribulations (BS50)
-        {  5,  101, 1427 },   -- Shattering Stars (MNK LB5)
-        {  6,  102, 1428 },   -- Shattering Stars (WHM LB5)
-        {  7,  103, 1440 },   -- Shattering Stars (SMN LB5)
-        {  8,  104, 1552 },   -- Creeping Doom (BS30)
-        {  9,  105, 1551 },   -- Charming Trio (BS20)
-        { 10,  106, 1552 },   -- Harem Scarem (BS30)
-    --  { 11,  107, 1553 },   -- Early Bird Catches the Wyrm (KS99)
-        { 12,  108, 1131 },   -- Royal Succession (BS40)
-        { 13,  109, 1177 },   -- Rapid Raptors (BS50)
-        { 14,  110, 1130 },   -- Wild Wild Whiskers (BS60) -- TODO: should use petrifactive breath more often than other mobskill. Message before spellcasting.
-    --  { 15,  111, 1175 },   -- Seasons Greetings (KS30)
-    --  { 16,  112, 1178 },   -- Royale Ramble (KS30)
-    --  { 17,  113, 1180 },   -- Moa Constrictors (KS30)
-    --  { 18,  114, 3351 },   -- The V Formation (KC30)
-    --  { 19,  115, 3352 },   -- Avian Apostates (KC50)
-        { 20,  116,    0 },   -- Beyond Infinity (Quest)
-    --  { 21,    ?, 4062 },   -- *Steamed Sprouts (SKC10)
-    --  { 22,    ?, 4063 },   -- *Divine Punishers (SKC20)
-    --  { 23,    ?,    0 },   -- A Feast Most Dire (Quest)
-    --  { 24,    ?,    0 },   -- A.M.A.N. Trove (Mars)
-    --  { 25,    ?,    0 },   -- A.M.A.N. Trove (Venus)
-    --  { 26,    ?,    0 },   -- Inv. from Kupipi
-    --  { 27,    ?,    0 },   -- Inv. from Kupipi and Co.
+        { 0,   96,    0},   -- The Rank 2 Final Mission (Mission 2-3)
+        { 1,   97, 1131},   -- Steamed Sprouts (BS40)
+        { 2,   98, 1130},   -- Divine Punishers (BS60)
+        { 3,   99,    0},   -- Saintly Invitation (Windy 6-2)
+        { 4,  100, 1177},   -- Treasure and Tribulations (BS50)
+        { 5,  101, 1427},   -- Shattering Stars (MNK LB5)
+        { 6,  102, 1428},   -- Shattering Stars (WHM LB5)
+        { 7,  103, 1440},   -- Shattering Stars (SMN LB5)
+        { 8,  104, 1552},   -- Creeping Doom (BS30)
+        { 9,  105, 1551},   -- Charming Trio (BS20)
+        {10,  106, 1552},   -- Harem Scarem (BS30)
+        {11,  107, 1553},   -- Early Bird Catches the Wyrm (KS99)
+        {12,  108, 1131},   -- Royal Succession (BS40)
+        {13,  109, 1177},   -- Rapid Raptors (BS50)
+        {14,  110, 1130},   -- Wild Wild Whiskers (BS60) -- TODO: should use petrifactive breath more often than other mobskill. Message before spellcasting.
+     -- {15,  111, 1175},   -- Seasons Greetings (KS30)
+     -- {16,  112, 1178},   -- Royale Ramble (KS30)
+     -- {17,  113, 1180},   -- Moa Constrictors (KS30)
+     -- {18,  114, 3351},   -- The V Formation (KC30)
+     -- {19,  115, 3352},   -- Avian Apostates (KC50)
+        {20,  116,    0},   -- Beyond Infinity (Quest)
+     -- {21,    ?, 4062},   -- *Steamed Sprouts (SKC10)
+     -- {22,    ?, 4063},   -- *Divine Punishers (SKC20)
+     -- {23,    ?,    0},   -- A Feast Most Dire (Quest)
+     -- {24,    ?,    0},   -- A.M.A.N. Trove (Mars)
+     -- {25,    ?,    0},   -- A.M.A.N. Trove (Venus)
+     -- {26,    ?,    0},   -- Inv. from Kupipi
+     -- {27,    ?,    0},   -- Inv. from Kupipi and Co.
     },
 
     [xi.zone.THRONE_ROOM_S] =

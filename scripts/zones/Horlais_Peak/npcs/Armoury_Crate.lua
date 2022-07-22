@@ -469,19 +469,15 @@ local loot =
         },
 
         {
-            { itemid = 3341, droprate = 1000 }, -- Beastly Shank
-        },
-
-        {
-            { itemid =  4209, droprate = 169 }, -- Mind Potion
-            { itemid =  4207, droprate =  70 }, -- Intelligence Potion
-            { itemid =  4211, droprate = 113 }, -- Charisma Potion
-            { itemid =  4213, droprate = 155 }, -- Icarus Wing
-            { itemid = 17840, droprate = 254 }, -- Angel Lyre
-            { itemid =   785, droprate =  99 }, -- Emerald
-            { itemid =   804, droprate =  42 }, -- Spinel
-            { itemid =   786, droprate =  56 }, -- Ruby
-            { itemid =   787, droprate =  28 }, -- Diamond
+            {itemid = 4209, droprate = 169},  -- Mind Potion
+            {itemid = 4207, droprate = 70},   -- Intelligence Potion
+            {itemid = 4211, droprate = 113},  -- Charisma Potion
+            {itemid = 4213, droprate = 155},  -- Icarus Wing
+            {itemid = 17840, droprate = 254}, -- Angel Lyre
+            {itemid = 785, droprate = 99},    -- Emerald
+            {itemid = 804, droprate = 42},    -- Spinel
+            {itemid = 786, droprate = 56},    -- Ruby
+            {itemid = 787, droprate = 28},    -- Diamond
         },
 
         {

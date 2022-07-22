@@ -558,4 +558,7 @@
         "ranges": "cpp",
         "span": "cpp"
     },
+    "cSpell.ignoreWords": [
+        "PATHFLAG"
+    ],
 }
