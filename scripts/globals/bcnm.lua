@@ -224,34 +224,34 @@ local battlefields =
 
     [xi.zone.HORLAIS_PEAK] =
     {
-        {  0,    0,    0 },   -- The Rank 2 Final Mission (Mission 2-3)
-        {  1,    1, 1131 },   -- Tails of Woe (BS40)
-        {  2,    2, 1130 },   -- Dismemberment Brigade (BS60)
-        {  3,    3,    0 },   -- The Secret Weapon (San d'Oria 7-2)
-        {  4,    4, 1177 },   -- Hostile Herbivores (BS50)
-        {  5,    5, 1426 },   -- Shattering Stars (WAR LB5)
-        {  6,    6, 1429 },   -- Shattering Stars (BLM LB5)
-        {  7,    7, 1436 },   -- Shattering Stars (RNG LB5)
-        {  8,    8, 1552 },   -- Carapace Combatants (BS30)
-    --  {  9,    9, 1551 },   -- Shooting Fish (BS20) -- TODO: mobs use ranged attacks with knockback
-        { 10,   10, 1552 },   -- Dropping Like Flies (BS30)
-    --  { 11,   11, 1553 },   -- Horns of War (KS99) -- TODO: Chlevnik is unscripted
-        { 12,   12, 1131 },   -- Under Observation (BS40)
-        { 13,   13, 1177 },   -- Eye of the Tiger (BS50) -- TODO: Crossthrash mobskill
-    --  { 14,   14, 1130 },   -- Shots in the Dark (BS60) -- TODO: Warmachine combat behavior
-        { 15,   15, 1175 },   -- Double Dragonian (KS30) -- TODO: Chaos Blade strengthens after 2hr
-    --  { 16,   16, 1178 },   -- Today's Horoscope (KS30)
-        { 17,   17, 1180 },   -- Contaminated Colosseum (KS30)
-    --  { 18,   18, 3351 },   -- Kindergarten Cap (KC30)
-    --  { 19,   19, 3352 },   -- Last Orc-Shunned Hero (KC50)
-        { 20,   20,    0 },   -- Beyond Infinity (Quest)
-    --  { 21,    ?, 4062 },   -- *Tails of Woe (SKC10)
-    --  { 22,    ?, 4063 },   -- *Dismemberment Brigade (SKC20)
-    --  { 23,    ?,    0 },   -- A Feast Most Dire (Quest)
-    --  { 24,    ?,    0 },   -- A.M.A.N. Trove (Mars)
-    --  { 25,    ?,    0 },   -- A.M.A.N. Trove (Venus)
-    --  { 26,    ?,    0 },   -- Inv. from Excenmille
-    --  { 27,    ?,    0 },   -- Inv. from Excenmille and Co.
+        { 0,    0,    0},   -- The Rank 2 Final Mission (Mission 2-3)
+        { 1,    1, 1131},   -- Tails of Woe (BS40)
+        { 2,    2, 1130},   -- Dismemberment Brigade (BS60)
+        { 3,    3,    0},   -- The Secret Weapon (Sandy 7-2)
+     -- { 4,    4, 1177},   -- Hostile Herbivores (BS50) -- TODO: mobs need knockback on melee attacks
+        { 5,    5, 1426},   -- Shattering Stars (WAR LB5)
+        { 6,    6, 1429},   -- Shattering Stars (BLM LB5)
+        { 7,    7, 1436},   -- Shattering Stars (RNG LB5)
+        { 8,    8, 1552},   -- Carapace Combatants (BS30)
+     -- { 9,    9, 1551},   -- Shooting Fish (BS20) -- TODO: mobs use ranged attacks with knockback
+        {10,   10, 1552},   -- Dropping Like Flies (BS30)
+        {11,   11, 1553},   -- Horns of War (KS99)
+        {12,   12, 1131},   -- Under Observation (BS40)
+        {13,   13, 1177},   -- Eye of the Tiger (BS50) -- TODO: Crossthrash mobskill
+     -- {14,   14, 1130},   -- Shots in the Dark (BS60) -- TODO: Warmachine combat behavior
+        {15,   15, 1175},   -- Double Dragonian (KS30) -- TODO: Chaos Blade strengthens after 2hr
+     -- {16,   16, 1178},   -- Today's Horoscope (KS30)
+        {17,   17, 1180},   -- Contaminated Colosseum (KS30)
+     -- {18,   18, 3351},   -- Kindergarten Cap (KC30)
+     -- {19,   19, 3352},   -- Last Orc-Shunned Hero (KC50)
+        {20,   20,    0},   -- Beyond Infinity (Quest)
+     -- {21,    ?, 4062},   -- *Tails of Woe (SKC10)
+     -- {22,    ?, 4063},   -- *Dismemberment Brigade (SKC20)
+     -- {23,    ?,    0},   -- A Feast Most Dire (Quest)
+     -- {24,    ?,    0},   -- A.M.A.N. Trove (Mars)
+     -- {25,    ?,    0},   -- A.M.A.N. Trove (Venus)
+     -- {26,    ?,    0},   -- Inv. from Excenmille
+     -- {27,    ?,    0},   -- Inv. from Excenmille and Co.
     },
 
     [xi.zone.GHELSBA_OUTPOST] =
