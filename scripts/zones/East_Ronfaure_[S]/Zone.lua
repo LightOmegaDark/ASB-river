@@ -7,9 +7,11 @@ require('scripts/globals/zone')
 -----------------------------------
 local zoneObject = {}
 
-zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.MYRADROSH)
-    GetMobByID(ID.mob.MYRADROSH):setRespawnTime(math.random(5400, 7200))
+zone_object.onInitialize = function(zone)
+    if xi.settings.main.ENABLE_WOTG == 1 then
+        UpdateNMSpawnPoint(ID.mob.MYRADROSH)
+        GetMobByID(ID.mob.MYRADROSH):setRespawnTime(math.random(5400, 7200))
+    end
 
     xi.helm.initZone(zone, xi.helm.type.LOGGING)
     xi.voidwalker.zoneOnInit(zone)
