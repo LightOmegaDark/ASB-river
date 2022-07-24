@@ -51,7 +51,11 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onTriggerAreaEnter = function(player, triggerArea)
+zone_object.onGameDay = function()
+    SetServerVariable("[DIG]ZONE117_ITEMS", 0)
+end
+
+zone_object.onRegionEnter = function(player, region)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)

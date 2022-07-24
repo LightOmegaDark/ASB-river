@@ -52,6 +52,9 @@ zoneObject.onGameDay = function(zone)
     end
 
     GetNPCByID(ID.npc.QM2 + math.random(0, 5)):setLocalVar('Quest[2][70]Option', 1) -- Determine which QM is active today for THF AF2
+
+    -- Chocobo digging
+    SetServerVariable("[DIG]ZONE120_ITEMS", 0)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)

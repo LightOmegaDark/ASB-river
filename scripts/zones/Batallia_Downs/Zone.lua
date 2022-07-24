@@ -68,7 +68,11 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onTriggerAreaEnter = function(player, triggerArea)
+zone_object.onGameDay = function()
+    SetServerVariable("[DIG]ZONE105_ITEMS", 0)
+end
+
+zone_object.onRegionEnter = function(player, region)
     if player:hasStatusEffect(xi.effect.FULL_SPEED_AHEAD) then
         xi.fsa.onTriggerAreaEnter(player, triggerArea:GetTriggerAreaID())
     end
