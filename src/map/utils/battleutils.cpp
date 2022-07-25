@@ -5250,6 +5250,12 @@ namespace battleutils
             }
         }
 
+        //When set mob will only take 0 or 1 damage
+        if (PDefender->GetLocalVar("DAMAGE_NULL") != 0)
+        {
+            damage = PDefender->GetLocalVar("DAMAGE_DEALT");
+        }
+
         // ShowDebug(CL_CYAN"MagicDmgTaken: Element = %d", element);
         return damage;
     }
@@ -5292,6 +5298,12 @@ namespace battleutils
             damage = HandleFanDance(PDefender, damage);
         }
 
+        //When set mob will only take 0 or 1 damage
+        if (PDefender->GetLocalVar("DAMAGE_NULL") != 0)
+        {
+            damage = PDefender->GetLocalVar("DAMAGE_DEALT");
+        }
+
         return damage;
     }
 
@@ -5330,6 +5342,12 @@ namespace battleutils
             ConvertDmgToMP(PDefender, damage, IsCovered);
 
             damage = HandleFanDance(PDefender, damage);
+        }
+
+        //When set mob will only take 0 or 1 damage
+        if (PDefender->GetLocalVar("DAMAGE_NULL") != 0)
+        {
+            damage = PDefender->GetLocalVar("DAMAGE_DEALT");
         }
 
         return damage;
