@@ -693,29 +693,29 @@ local loot =
             {itemid = 19027, droprate = 100}, -- Claymore Grip
         },
         {
-            {itemid = 644, droprate = 800}, -- Mythril Ore
-            {itemid = 645, droprate = 200}, -- Darksteel ore
-            {itemid = 700, droprate = 200}, -- Mahogany Log
-            {itemid = 702, droprate = 200}, -- Ebony Log
-            {itemid = 703, droprate = 200}, -- Petrified Log
-            {itemid = 737, droprate = 800}, -- Gold ore
-            {itemid = 738, droprate = 800}, -- Platinum ore
-            {itemid = 823, droprate = 200}, -- Gold Thread
-            {itemid = 830, droprate = 200}, -- Rainbow Cloth
-            {itemid = 866, droprate = 200}, -- Wyvern Scales
-            {itemid = 887, droprate = 800}, -- Coral Fragment
-            {itemid = 895, droprate = 800}, -- Ram Horn
-            {itemid = 902, droprate = 800}, -- Demon Horn
-            {itemid = 4173, droprate = 800}, -- Hi-Reraiser
-            {itemid = 4174, droprate = 800}, -- Vile Elixer
+            {itemid = 644,  droprate =  60}, -- Mythril Ore
+            {itemid = 645,  droprate =  60}, -- Darksteel ore
+            {itemid = 700,  droprate =  60}, -- Mahogany Log
+            {itemid = 702,  droprate =  60}, -- Ebony Log
+            {itemid = 703,  droprate =  60}, -- Petrified Log
+            {itemid = 737,  droprate =  60}, -- Gold ore
+            {itemid = 738,  droprate =  60}, -- Platinum ore
+            {itemid = 823,  droprate =  60}, -- Gold Thread
+            {itemid = 830,  droprate = 110}, -- Rainbow Cloth
+            {itemid = 866,  droprate =  60}, -- Wyvern Scales
+            {itemid = 887,  droprate =  60}, -- Coral Fragment
+            {itemid = 895,  droprate =  60}, -- Ram Horn
+            {itemid = 902,  droprate = 110}, -- Demon Horn
+            {itemid = 4173, droprate =  60}, -- Hi-Reraiser
+            {itemid = 4174, droprate =  60}, -- Vile Elixer
         },
         {
-            {itemid = 658, droprate = 800}, -- Damascus Ingot
-            {itemid = 836, droprate = 800}, -- Damascene Cloth
-            {itemid = 1110, droprate = 200}, -- Beetle Blood
-            {itemid = 942, droprate = 200}, -- Philosopher's Stone
+            {itemid = 658,  droprate =  50}, -- Damascus Ingot
+            {itemid = 836,  droprate =  50}, -- Damascene Cloth
+            {itemid = 844,  droprate = 300}, -- Phoenix Feather
+            {itemid = 942,  droprate = 350}, -- Philosopher's Stone
+            {itemid = 1110, droprate =  50}, -- Beetle Blood
             {itemid = 1132, droprate = 200}, -- Raxa
-            {itemid = 844, droprate = 200}, -- Phoenix Feather
         },
     },
 }
