@@ -81,6 +81,7 @@ mobskill_object.onMobWeaponSkill = function(target, mob, skill)
                     mob:delStatusEffect(badEffects[y])
 
                     -- TODO: Fix messaging
+                    skill:setMsg(xi.msg.basic.SKILL_GAIN_EFFECT)
                 end
             end
         end
