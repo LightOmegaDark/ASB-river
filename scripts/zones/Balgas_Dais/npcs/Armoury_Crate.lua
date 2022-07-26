@@ -660,62 +660,62 @@ local loot =
     [113] =
     {
         {
-            {itemid = 0, droprate = 1000}, -- Cockatrice Skin
+            {itemid = 854, droprate = 1000}, -- Cockatrice Skin
         },
         {
-            {itemid = 0, droprate = 1000}, -- Cockatrice Skin
+            {itemid = 854, droprate = 1000}, -- Cockatrice Skin
         },
         {
-            {itemid = 0, droprate = 800}, -- Nothing
-            {itemid = 0, droprate = 200}, -- Dodo Skin
+            {itemid = 0,    droprate = 800}, -- Nothing
+            {itemid = 1014, droprate = 200}, -- Dodo Skin
         },
         {
-            {itemid = 0, droprate = 800}, -- Expunger
-            {itemid = 0, droprate = 200}, -- Heart Snatcher
-            {itemid = 0, droprate = 200}, -- Morgenstern
-            {itemid = 0, droprate = 200}, -- Gravedigger
+            {itemid = 17207, droprate = 250}, -- Expunger
+            {itemid = 17451, droprate = 250}, -- Morgenstern
+            {itemid = 18005, droprate = 250}, -- Heart Snatcher
+            {itemid = 18053, droprate = 250}, -- Gravedigger
         },
         {
-            {itemid = 0, droprate = 800}, -- Evoker's Boots
-            {itemid = 0, droprate = 200}, -- Ostreger Mitts
-            {itemid = 0, droprate = 200}, -- Pineal Hat
-            {itemid = 0, droprate = 200}, -- Tracker's Kecks
+            {itemid = 14872, droprate = 250}, -- Ostreger Mitts
+            {itemid = 15181, droprate = 250}, -- Pineal Hat
+            {itemid = 15325, droprate = 250}, -- Evoker's Boots
+            {itemid = 15387, droprate = 250}, -- Tracker's Kecks
         },
         {
-            {itemid = 0, droprate = 800}, -- Absorbing Shield
-            {itemid = 0, droprate = 200}, -- Adaman Ingot
-            {itemid = 0, droprate = 200}, -- Orichalcum
+            {itemid = 655,   droprate = 250}, -- Adaman Ingot
+            {itemid = 747,   droprate = 350}, -- Orichalcum
+            {itemid = 12408, droprate = 350}, -- Absorbing Shield
         },
         {
-            {itemid = 0, droprate = 800}, -- Nothing
-            {itemid = 0, droprate = 800}, -- Pole Grip
-            {itemid = 0, droprate = 200}, -- Spear Strap
-            {itemid = 0, droprate = 200}, -- Claymore Grip
+            {itemid = 0,     droprate = 300}, -- Nothing
+            {itemid = 19025, droprate = 500}, -- Pole Grip
+            {itemid = 19026, droprate = 100}, -- Spear Strap
+            {itemid = 19027, droprate = 100}, -- Claymore Grip
         },
         {
-            {itemid = 0, droprate = 800}, -- Gold ore
-            {itemid = 0, droprate = 800}, -- Platinum ore
-            {itemid = 0, droprate = 200}, -- Darkstell ore
-            {itemid = 0, droprate = 200}, -- Rainbow Cloth
-            {itemid = 0, droprate = 800}, -- Ram Horn
-            {itemid = 0, droprate = 800}, -- Demon Horn
-            {itemid = 0, droprate = 200}, -- Ebony Log
-            {itemid = 0, droprate = 200}, -- Petrified Log
-            {itemid = 0, droprate = 800}, -- Vile Elixer
-            {itemid = 0, droprate = 800}, -- Coral Fragment
-            {itemid = 0, droprate = 200}, -- Gold Thread
-            {itemid = 0, droprate = 200}, -- Mahogany Log
-            {itemid = 0, droprate = 800}, -- Mythril Ore
-            {itemid = 0, droprate = 800}, -- Hi-Reraiser
-            {itemid = 0, droprate = 200}, -- Wyvern Scales
+            {itemid = 644, droprate = 800}, -- Mythril Ore
+            {itemid = 645, droprate = 200}, -- Darksteel ore
+            {itemid = 700, droprate = 200}, -- Mahogany Log
+            {itemid = 702, droprate = 200}, -- Ebony Log
+            {itemid = 703, droprate = 200}, -- Petrified Log
+            {itemid = 737, droprate = 800}, -- Gold ore
+            {itemid = 738, droprate = 800}, -- Platinum ore
+            {itemid = 823, droprate = 200}, -- Gold Thread
+            {itemid = 830, droprate = 200}, -- Rainbow Cloth
+            {itemid = 866, droprate = 200}, -- Wyvern Scales
+            {itemid = 887, droprate = 800}, -- Coral Fragment
+            {itemid = 895, droprate = 800}, -- Ram Horn
+            {itemid = 902, droprate = 800}, -- Demon Horn
+            {itemid = 4173, droprate = 800}, -- Hi-Reraiser
+            {itemid = 4174, droprate = 800}, -- Vile Elixer
         },
         {
-            {itemid = 0, droprate = 800}, -- Damascus Ingot
-            {itemid = 0, droprate = 800}, -- Damascene Cloth
-            {itemid = 0, droprate = 200}, -- Beetle Blood
-            {itemid = 0, droprate = 200}, -- Philosopher's Stone
-            {itemid = 0, droprate = 200}, -- Raxa
-            {itemid = 0, droprate = 200}, -- Phoenix Feather
+            {itemid = 658, droprate = 800}, -- Damascus Ingot
+            {itemid = 836, droprate = 800}, -- Damascene Cloth
+            {itemid = 1110, droprate = 200}, -- Beetle Blood
+            {itemid = 942, droprate = 200}, -- Philosopher's Stone
+            {itemid = 1132, droprate = 200}, -- Raxa
+            {itemid = 844, droprate = 200}, -- Phoenix Feather
         },
     },
 }
