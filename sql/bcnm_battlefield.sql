@@ -801,6 +801,24 @@ INSERT INTO `bcnm_battlefield` VALUES (512,3,17621010,0); -- Ancient Warrior
 INSERT INTO `bcnm_battlefield` VALUES (512,3,17621011,0); -- Ancient Warrior
 INSERT INTO `bcnm_battlefield` VALUES (512,3,17621012,0); -- Ancient Warrior
 INSERT INTO `bcnm_battlefield` VALUES (512,3,17621013,0); -- Ancient Warrior
+INSERT INTO `bcnm_battlefield` VALUES (514,1,17621227,3); -- E-vase-ive Action
+INSERT INTO `bcnm_battlefield` VALUES (514,1,17621228,3);
+INSERT INTO `bcnm_battlefield` VALUES (514,1,17621229,3);
+INSERT INTO `bcnm_battlefield` VALUES (514,1,17621230,3);
+INSERT INTO `bcnm_battlefield` VALUES (514,1,17621231,3);
+INSERT INTO `bcnm_battlefield` VALUES (514,1,17621232,3);
+INSERT INTO `bcnm_battlefield` VALUES (514,2,17621234,3);
+INSERT INTO `bcnm_battlefield` VALUES (514,2,17621235,3);
+INSERT INTO `bcnm_battlefield` VALUES (514,2,17621236,3);
+INSERT INTO `bcnm_battlefield` VALUES (514,2,17621237,3);
+INSERT INTO `bcnm_battlefield` VALUES (514,2,17621238,3);
+INSERT INTO `bcnm_battlefield` VALUES (514,2,17621239,3);
+INSERT INTO `bcnm_battlefield` VALUES (514,3,17621241,3);
+INSERT INTO `bcnm_battlefield` VALUES (514,3,17621242,3);
+INSERT INTO `bcnm_battlefield` VALUES (514,3,17621243,3);
+INSERT INTO `bcnm_battlefield` VALUES (514,3,17621244,3);
+INSERT INTO `bcnm_battlefield` VALUES (514,3,17621245,3);
+INSERT INTO `bcnm_battlefield` VALUES (514,3,17621246,3);
 INSERT INTO `bcnm_battlefield` VALUES (516,1,17621014,2); -- heir_to_the_light
 INSERT INTO `bcnm_battlefield` VALUES (516,1,17621015,2);
 INSERT INTO `bcnm_battlefield` VALUES (516,1,17621016,2);
