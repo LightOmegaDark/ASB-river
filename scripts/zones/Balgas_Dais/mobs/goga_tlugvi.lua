@@ -14,6 +14,7 @@ end
 
 entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.SUPERLINK, 0)
+    mob:setMobMod(xi.mobMod.NO_LINK, 1)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
@@ -21,8 +22,8 @@ entity.onAdditionalEffect = function(mob, target, damage)
 end
 
 entity.onMobWeaponSkill = function(target, mob, skill)
-    if skill:getID() == 690 then
-        GetMobByID(mob:getID()+1):updateEnmity(target)
+    if skill:getID() == xi.jsa.HUNDRED_FISTS then
+        GetMobByID(mob:getID()+1):updateEnmity(mob:getTarget())
     end
 end
 

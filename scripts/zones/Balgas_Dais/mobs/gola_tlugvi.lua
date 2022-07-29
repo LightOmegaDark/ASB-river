@@ -14,6 +14,7 @@ end
 
 entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.SUPERLINK, 0)
+    mob:setMobMod(xi.mobMod.NO_LINK, 1)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
@@ -21,8 +22,8 @@ entity.onAdditionalEffect = function(mob, target, damage)
 end
 
 entity.onMobWeaponSkill = function(target, mob, skill)
-    if skill:getID() == 695 then
-        GetMobByID(mob:getID()-3):updateEnmity(target)
+    if skill:getID() == xi.jsa.BLOOD_WEAPON then
+        GetMobByID(mob:getID()-3):updateEnmity(mob:getTarget())
     end
 end
 
