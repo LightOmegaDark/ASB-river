@@ -53,22 +53,18 @@ namespace mobutils
      *                                                                       *
      ************************************************************************/
 
-    uint16 GetWeaponDamage(CMobEntity* PMob)
+    uint16 GetWeaponDamage(CMobEntity* PMob, uint16 slot)
     {
         uint16 lvl   = PMob->GetMLevel();
         uint8  bonus = 0;
 
-        if (lvl >= 75)
+        if (slot == SLOT_RANGED)
         {
-            bonus = 3;
+            bonus = 5;
         }
-        else if (lvl >= 60)
+        else
         {
             bonus = 2;
-        }
-        else if (lvl >= 50)
-        {
-            bonus = 1;
         }
 
         uint16 damage = lvl + bonus;
@@ -382,7 +378,8 @@ namespace mobutils
             PMob->health.mp = PMob->GetMaxMP();
         }
 
-        ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetWeaponDamage(PMob));
+        ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetWeaponDamage(PMob, SLOT_MAIN));
+        ((CItemWeapon*)PMob->m_Weapons[SLOT_RANGED])->setDamage(GetWeaponDamage(PMob, SLOT_RANGED));
 
         // reduce weapon delay of MNK
         if (PMob->GetMJob() == JOB_MNK)
@@ -806,7 +803,8 @@ namespace mobutils
 
         // boost dynamis mobs weapon damage
         PMob->setMobMod(MOBMOD_WEAPON_BONUS, 135);
-        ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetWeaponDamage(PMob));
+        ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetWeaponDamage(PMob, SLOT_MAIN));
+        ((CItemWeapon*)PMob->m_Weapons[SLOT_RANGED])->setDamage(GetWeaponDamage(PMob, SLOT_RANGED));
 
         // job resist traits are much more powerful in dynamis
         // according to wiki
