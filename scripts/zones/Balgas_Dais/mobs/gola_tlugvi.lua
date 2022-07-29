@@ -10,11 +10,14 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+end
+
+entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.SUPERLINK, 0)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
-    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ABSORB_TP)
+    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.TP_DRAIN)
 end
 
 entity.onMobWeaponSkill = function(target, mob, skill)
