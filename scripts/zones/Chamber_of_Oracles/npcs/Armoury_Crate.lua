@@ -68,6 +68,14 @@ local loot =
             {itemid =  1257, droprate =   50}, -- chunk_of_wind_ore
         },
     },
+
+    -- Cactuar Suave
+    [197] =
+    {
+        {
+            {itemid = 0, droprate = 0},
+        },
+    },
     -- KSNM Eye of the Storm
     [198] =
     {
