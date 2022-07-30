@@ -654,6 +654,7 @@ local loot =
             {itemid = 844,  droprate = 300}, -- Phoenix Feather
             {itemid = 942,  droprate = 100}, -- Philosopher's Stone
             {itemid = 1110, droprate = 150}, -- Beetle Blood
+            {itemid = 1132, droprate = 350}, -- Raxa
         },
     },
 }
