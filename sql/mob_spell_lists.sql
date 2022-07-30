@@ -4995,6 +4995,22 @@ INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 252, 1, 255); -- stun (1
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 253, 1, 255); -- sleep (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 274, 1, 255); -- sleepga ii (1~255)
 
+-- Osschaart (493)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 494, 181, 1, 255); -- blizzaga iii(1~255)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 494, 191, 1, 255); -- stonega iii(1~255)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 494, 212, 1, 255); -- burst (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 494, 226, 1, 255); -- poisonga ii(1~255)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 494, 232, 1, 255); -- bio iii(1~255)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 494, 238, 1, 255); -- rasp (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 494, 240, 1, 255); -- drown (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 494, 254, 1, 255); -- blind (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 494, 258, 1, 255); -- bind (1~255)
+
+-- Slendlix Spindlethumb (498)
+INSERT INTO `mob_spell_lists` VALUES ('Slendlix_Spindlethumb',498,3,1,255);  -- cure_iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Slendlix_Spindlethumb',498,23,1,255); -- dia (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Slendlix_Spindlethumb',498,33,1,255); -- diaga (1~255)
+
 -- Bastet (499)
 INSERT INTO `mob_spell_lists` VALUES('Bastet', 499, 165, 1, 255); -- thunder ii (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Bastet', 499, 195, 1, 255); -- thundaga ii (1~255)
