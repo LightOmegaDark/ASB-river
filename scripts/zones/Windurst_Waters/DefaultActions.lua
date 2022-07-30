@@ -24,5 +24,5 @@ return {
     ['Sahgi_Konchumih'] = { event = 596 },
     ['Serukoko']        = { event = 373 },
     ['Sohdede']         = { event = 374 },
-    ['Tauwawa']         = { event = 424 },
+    ['Chamama']         = { event = 651 },
 }
