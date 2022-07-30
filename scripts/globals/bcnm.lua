@@ -462,32 +462,32 @@ local battlefields =
 
     [xi.zone.QUBIA_ARENA] =
     {
-        {  0,  512,    0 },   -- The Rank 5 Mission (Mission 5-1)
-    --  {  1,  513, 1175 },   -- Come Into My Parlor (KS30)
-    --  {  2,  514, 1178 },   -- E-vase-ive Action (KS30)
-    --  {  3,  515, 1180 },   -- Infernal Swarm (KS30)
-        {  4,  516,    0 },   -- The Heir to the Light (San d'Oria 9-2)
-        {  5,  517, 1432 },   -- Shattering Stars (PLD LB5)
-        {  6,  518, 1433 },   -- Shattering Stars (DRK LB5)
-        {  7,  519, 1435 },   -- Shattering Stars (BRD LB5)
-        {  8,  520, 1130 },   -- Demolition Squad (BS60)
-    --  {  9,  521, 1552 },   -- Die by the Sword (BS30) -- TODO: mob damage type rotation mobskills furious flurry, smite of fury, whispers of ire
-        { 10,  522, 1552 },   -- Let Sleeping Dogs Die (BS30)
-        { 11,  523, 1130 },   -- Brothers D'Aurphe (BS60)
-        { 12,  524, 1131 },   -- Undying Promise (BS40) -- TODO: model size increases with each reraise
-        { 13,  525, 1131 },   -- Factory Rejects (BS40) -- TODO: dolls grow size/power based on hidden timer. (wikis disagree on TP moves? factory immune? factory model?)
-        { 14,  526, 1177 },   -- Idol Thoughts (BS50)
-        { 15,  527, 1177 },   -- An Awful Autopsy (BS50) -- TODO: mobskill Infernal Pestilence
-    --  { 16,  528, 1130 },   -- Celery (BS60) -- TODO: mobs do not have their specific weaknesses. mobskill Bane.
-    --  { 17,  529,    0 },   -- Mirror Images (Quest)
-        { 18,  530, 2556 },   -- A Furious Finale (DNC LB5)
-    --  { 19,  531,    0 },   -- Clash of the Comrades (Quest)
-    --  { 20,  532,    0 },   -- Those Who Lurk in Shadows (ACP7)
-        { 21,  533,    0 },   -- Beyond Infinity (Quest)
-    --  { 22,    ?, 4062 },   -- *Factory Rejects (SKC10)
-    --  { 23,    ?, 4063 },   -- *Demolition Squad (SKC20)
-    --  { 24,    ?, 4063 },   -- *Brothers D'Aurphe (SKC20)
-    --  { 25,    ?,    0 },   -- Mumor's Encore (Sunbreeze Festival)
+        { 0,  512,    0},   -- The Rank 5 Mission (Mission 5-1)
+        { 1,  513, 1175},   -- Come Into My Parlor (KS30)
+     -- { 2,  514, 1178},   -- E-vase-ive Action (KS30)
+     -- { 3,  515, 1180},   -- Infernal Swarm (KS30)
+        { 4,  516,    0},   -- The Heir to the Light (Sandy 9-2)
+        { 5,  517, 1432},   -- Shattering Stars (PLD LB5)
+        { 6,  518, 1433},   -- Shattering Stars (DRK LB5)
+        { 7,  519, 1435},   -- Shattering Stars (BRD LB5)
+        { 8,  520, 1130},   -- Demolition Squad (BS60)
+     -- { 9,  521, 1552},   -- Die by the Sword (BS30) -- TODO: mob damage type rotation mobskills furious flurry, smite of fury, whispers of ire
+        {10,  522, 1552},   -- Let Sleeping Dogs Die (BS30)
+        {11,  523, 1130},   -- Brothers D'Aurphe (BS60)
+        {12,  524, 1131},   -- Undying Promise (BS40) -- TODO: model size increases with each reraise
+        {13,  525, 1131},   -- Factory Rejects (BS40) -- TODO: dolls grow size/power based on hidden timer. (wikis disagree on TP moves? factory immune? factory model?)
+        {14,  526, 1177},   -- Idol Thoughts (BS50)
+        {15,  527, 1177},   -- An Awful Autopsy (BS50) -- TODO: mobskill Infernal Pestilence
+     -- {16,  528, 1130},   -- Celery (BS60) -- TODO: mobs do not have their specific weaknesses. mobskill Bane.
+     -- {17,  529,    0},   -- Mirror Images (Quest)
+        {18,  530, 2556},   -- A Furious Finale (DNC LB5)
+     -- {19,  531,    0},   -- Clash of the Comrades (Quest)
+     -- {20,  532,    0},   -- Those Who Lurk in Shadows (ACP7)
+        {21,  533,    0},   -- Beyond Infinity (Quest)
+     -- {22,    ?, 4062},   -- *Factory Rejects (SKC10)
+     -- {23,    ?, 4063},   -- *Demolition Squad (SKC20)
+     -- {24,    ?, 4063},   -- *Brothers D'Aurphe (SKC20)
+     -- {25,    ?,    0},   -- Mumor's Encore (Sunbreeze Festival)
     },
 
     [xi.zone.CLOISTER_OF_FLAMES] =
