@@ -29,9 +29,8 @@ entity.onMobSpawn = function(mob)
 
     mob:addListener("TAKE_DAMAGE", "ANANSI_TAKE_DAMAGE", function(mobArg, amount, attacker, attackType, damageType)
         if amount > mobArg:getHP() then
-            local target = attacker
-            if target:isPet() then
-                target = target:getMaster()
+            if attacker:isPet() then
+                attacker = attacker:getMaster()
             end
 
             -- Recursively spawn the rest of the spiders
@@ -41,10 +40,6 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onMobDeath = function(mob)
-end
-
-entity.onMobDespawn = function(mob)
-    -- mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NONE))
 end
 
 return entity
