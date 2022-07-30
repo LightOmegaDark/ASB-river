@@ -23,7 +23,7 @@ local badEffects =
     xi.effect.PARALYSIS,
     xi.effect.BLINDNESS,
     xi.effect.SILENCE,
-    xi.effect.PETRIFICATION, -- Causes crash when absorbed
+    -- xi.effect.PETRIFICATION, -- Causes crash when absorbed
     xi.effect.DISEASE,
     xi.effect.CURSE_I,
     xi.effect.STUN,
@@ -229,7 +229,6 @@ mobskill_object.onMobWeaponSkill = function(target, mob, skill)
                         target:addStatusEffect(badEffects[y], power, 0, 60)
                         mob:delStatusEffect(badEffects[y])
 
-                        -- TODO: Fix messaging
                         skill:setMsg(xi.msg.basic.SKILL_GAIN_EFFECT)
                     end
                 end
