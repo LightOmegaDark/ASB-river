@@ -18,7 +18,12 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
+mobskill_object.onMobWeaponSkill = function(target, mob, skill)
+    if mob:getFamily() == 271 then -- Jailer of Love, uses only animation.
+        skill:setMsg(xi.msg.NONE)
+        return 0
+    end
+
     local currentHP = target:getHP()
     -- remove all by 5%
     local damage = 0
