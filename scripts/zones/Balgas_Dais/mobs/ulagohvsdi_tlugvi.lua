@@ -15,6 +15,7 @@ end
 entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.SUPERLINK, 0)
     mob:setMobMod(xi.mobMod.NO_LINK, 1)
+    mob:setMobMod(xi.mobMod.SPECIAL_SKILL, 0) -- ranged attacks disabled
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)

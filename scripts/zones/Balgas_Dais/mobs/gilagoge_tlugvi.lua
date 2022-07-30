@@ -18,8 +18,7 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
-    -- en-dispel not implemented
-    -- return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.DISPEL)
+    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.DISPEL)
 end
 
 entity.onMobWeaponSkill = function(target, mob, skill)
