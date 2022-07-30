@@ -30,8 +30,6 @@ local badEffects =
     xi.effect.BIND,
     xi.effect.WEIGHT,
     xi.effect.SLOW,
-    xi.effect.DOOM,
-    xi.effect.AMNESIA,
     xi.effect.SLEEP_II,
     xi.effect.CURSE_II,
     xi.effect.PLAGUE,
