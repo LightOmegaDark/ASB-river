@@ -655,6 +655,8 @@ local loot =
             {itemid = 942,  droprate = 100}, -- Philosopher's Stone
             {itemid = 1110, droprate = 150}, -- Beetle Blood
             {itemid = 1132, droprate = 350}, -- Raxa
+        },
+    },
 
     -- Moa Constrictors
     [113] =
