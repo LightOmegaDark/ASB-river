@@ -17,6 +17,7 @@ mobskill_object.onMobWeaponSkill = function(target, mob, skill)
     local accmod = 1
     local dmgmod = 2.2
     local power = math.ceil(mob:getMainLvl() / 5)
+    local poisonPower
 
     if mob:getPool() == 1532 then
         poisonPower = 30
