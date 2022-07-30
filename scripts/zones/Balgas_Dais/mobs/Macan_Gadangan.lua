@@ -30,7 +30,6 @@ entity.onMobSpawn = function(mob)
     end)
 end
 
-
 entity.onMobMagicPrepare = function(mob, target, spell)
     mob:setLocalVar("casts", mob:getLocalVar("casts") + 1)
 
