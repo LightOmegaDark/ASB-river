@@ -2293,8 +2293,6 @@ namespace battleutils
             PAttacker->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK);
         }
 
-
-
         return damage;
     }
 
