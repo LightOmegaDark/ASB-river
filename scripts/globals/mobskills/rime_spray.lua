@@ -17,9 +17,7 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    -- local typeEffect = xi.effect.FROST
-
+mobskill_object.onMobWeaponSkill = function(target, mob, skill)
     xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.FROST, 15, 3, 120)
     xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STR_DOWN, 20, 3, 60)
     xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.VIT_DOWN, 20, 3, 60)

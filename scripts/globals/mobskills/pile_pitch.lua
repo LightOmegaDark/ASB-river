@@ -19,9 +19,9 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local currentHP = target:getHP()
     local damage = currentHP * .90
     local typeEffect = xi.effect.BIND
-    local dmg = xi.mobskills.mobFinalAdjustments(damage, mob, skill, target, xi.attackType.MAGICAL, xi.damageType.NONE, xi.mobskills.shadowBehavior.IGNORE_SHADOWS)
-    xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, 1, 0, 30)
+    local dmg = xi.mobskills.mobFinalAdjustments(damage,mob,skill,target, xi.attackType.MAGICAL, xi.damageType.NONE,xi.mobskills.shadowBehavior.IGNORE_SHADOWS)
     target:takeDamage(dmg, mob, xi.attackType.MAGICAL, xi.damageType.NONE)
+    xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, 1, 0, 30)
     mob:resetEnmity(target)
     return dmg
 end
