@@ -258,7 +258,19 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
         return false;
     }
 
-    auto detects         = PMob->getMobMod(MOBMOD_DETECTION);
+    float verticalDistance = abs(PMob->loc.p.y - PTarget->loc.p.y);
+
+    if (PMob->m_Family != 6 && verticalDistance > 8.0f)
+    {
+        return false;
+    }
+
+    if (PTarget->loc.zone->HasReducedVerticalAggro() && verticalDistance > 3.5f)
+    {
+        return false;
+    }
+
+    auto detects         = PMob->m_Detects;
     auto currentDistance = distance(PTarget->loc.p, PMob->loc.p) + PTarget->getMod(Mod::STEALTH);
 
     bool detectSight  = (detects & DETECT_SIGHT) || forceSight;

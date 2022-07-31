@@ -608,7 +608,9 @@ public:
     virtual void ForEachTrustInstance(CBaseEntity* PEntity, std::function<void(CTrustEntity*)> func);
     virtual void ForEachNpc(std::function<void(CNpcEntity*)> func);
 
-    CZone(ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID, uint8 levelRestriction);
+    bool HasReducedVerticalAggro();
+
+    CZone(ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID);
     virtual ~CZone();
 
     CBattlefieldHandler* m_BattlefieldHandler; // BCNM Instances in this zone
@@ -659,6 +661,8 @@ private:
     void LoadZoneWeather();
 
     CTreasurePool* m_TreasurePool;
+
+    static const uint16 ReducedVerticalAggroZones[];
 
     time_point m_timeZoneEmpty; // The time_point when the last player left the zone
 
