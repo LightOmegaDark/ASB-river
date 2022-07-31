@@ -12,8 +12,8 @@ abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-abilityObject.onPetAbility = function(target, pet, skill)
-    local base = 47 + pet:getMainLvl() * 3
+ability_object.onPetAbility = function(target, pet, skill)
+    local base = 47 + pet:getMainLvl()*3
     local tp   = pet:getTP()
 
     if tp < 1000 then

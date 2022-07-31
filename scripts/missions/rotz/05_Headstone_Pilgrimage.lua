@@ -320,8 +320,6 @@ mission.sections =
                 onTrigger = function(player, npc)
                     if player:hasKeyItem(xi.ki.FIRE_FRAGMENT) then
                         player:messageName(yuhtungaJungleID.text.ALREADY_OBTAINED_FRAG, nil, xi.ki.FIRE_FRAGMENT)
-
-                        return mission:noAction()
                     elseif os.time() >= npc:getLocalVar('cooldown') then
                         if
                             not GetMobByID(yuhtungaJungleID.mob.TIPHA):isSpawned() and

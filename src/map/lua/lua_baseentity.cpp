@@ -12403,41 +12403,6 @@ std::string CLuaBaseEntity::addSimpleGambit(uint16 targ, uint16 cond, uint32 con
 }
 
 /************************************************************************
- *  Function: removeSimpleGambit()
- *  Purpose :
- *  Example : trust:removeSimpleGambit(id)
- *  Notes   : Removes a behaviour from the gambit system, using the id returned
- *          : from addSimpleGambit
- ************************************************************************/
-
-void CLuaBaseEntity::removeSimpleGambit(std::string const& id)
-{
-    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_TRUST);
-
-    auto* trust      = static_cast<CTrustEntity*>(m_PBaseEntity);
-    auto* controller = static_cast<CTrustController*>(trust->PAI->GetController());
-
-    controller->m_GambitsContainer->RemoveGambit(id);
-}
-
-/************************************************************************
- *  Function: removeAllSimpleGambits()
- *  Purpose :
- *  Example : trust:removeAllSimpleGambits()
- *  Notes   : Removes all gambits from a trust.
- ************************************************************************/
-
-void CLuaBaseEntity::removeAllSimpleGambits()
-{
-    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_TRUST);
-
-    auto* trust      = static_cast<CTrustEntity*>(m_PBaseEntity);
-    auto* controller = static_cast<CTrustController*>(trust->PAI->GetController());
-
-    controller->m_GambitsContainer->RemoveAllGambits();
-}
-
-/************************************************************************
  *  Function: setTrustTPSkillSettings(trigger, select, value)
  *  Purpose :
  *  Example : mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.HIGHEST, 1500)

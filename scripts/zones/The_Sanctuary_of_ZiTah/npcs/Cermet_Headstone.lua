@@ -16,10 +16,6 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    -- SOUL SEARCHING
-    if csid == 202 then
-        npcUtil.completeQuest(player, xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.SOUL_SEARCHING, {item = 13416, title = xi.title.GUIDER_OF_SOULS_TO_THE_SANCTUARY})
-    end
 end
 
 return entity
