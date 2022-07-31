@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Waughroon Shrine
---  Mob: Heavy Metal Crab
+-- Mob: Heavy Metal Crab
 -- BCNM: Crustacean Conundrum
 -----------------------------------
 require("scripts/globals/status")

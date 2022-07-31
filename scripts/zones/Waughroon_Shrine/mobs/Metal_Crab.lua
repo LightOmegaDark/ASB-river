@@ -1,8 +1,7 @@
 -----------------------------------
 -- Area: Waughroon Shrine
---  Mob: Heavy Metal Crab
+-- Mob: Metal Crab
 -- BCNM: Crustacean Conundrum
--- TODO: You can only do 0-2 damage no matter what your attack is.
 -----------------------------------
 require("scripts/globals/status")
 require("scripts/globals/mobs")
