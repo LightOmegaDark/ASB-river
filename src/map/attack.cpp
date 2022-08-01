@@ -363,24 +363,23 @@ bool CAttack::CheckAnticipated()
         return true;
     }
     else
-    {//do have seigan, decay anticipations correctly (guesstimated)
-        //5-6 anticipates is a 'lucky' streak, going to assume 15% decay per proc, with a 100% base w/ Seigan
-        if (xirand::GetRandomNumber(100) >= (100 - ((pastAnticipations+1) * 15) + m_victim->getMod(Mod::THIRD_EYE_ANTICIPATE_RATE)))
+    { // do have seigan, decay anticipations correctly (guesstimated)
+        // 5-6 anticipates is a 'lucky' streak, going to assume 15% decay per proc, with a 100% base w/ Seigan
+        if (xirand::GetRandomNumber(100) >= (100 - ((pastAnticipations + 1) * 15) + m_victim->getMod(Mod::THIRD_EYE_ANTICIPATE_RATE)))
         {
             m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_THIRD_EYE);
         }
 
-        //increment power and don't remove
+        // increment power and don't remove
         effect->SetPower(effect->GetPower() + 1);
-        //chance to counter - 25% base
+        // chance to counter - 25% base
         if (xirand::GetRandomNumber(100) < 25 + m_victim->getMod(Mod::THIRD_EYE_COUNTER_RATE))
         {
-
             if (m_victim->PAI->IsEngaged() && facing(m_victim->loc.p, m_attacker->loc.p, 40) && !m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_SLEEP) && !m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_LULLABY) &&
                 !m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_PETRIFICATION) && !m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_TERROR))
             {
                 m_isCountered = true;
-                m_isCritical = (xirand::GetRandomNumber(100) < battleutils::GetCritHitRate(m_victim, m_attacker, false));
+                m_isCritical  = (xirand::GetRandomNumber(100) < battleutils::GetCritHitRate(m_victim, m_attacker, false));
             }
         }
 

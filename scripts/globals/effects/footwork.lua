@@ -16,3 +16,5 @@ end
 effect_object.onEffectLose = function(target, effect)
     target:delMod(xi.mod.ATTP, 10)
 end
+
+return effect_object

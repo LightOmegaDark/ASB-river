@@ -227,17 +227,15 @@ function utils.thirdeye(target)
     if prevAnt == 0 or (math.random() * 100) < (80 - (prevAnt * 10)) then
         --anticipated!
         if seigan == nil or prevAnt == 6 or math.random()*100 > 100-(prevAnt+1)*15 then
-			target:delStatusEffect(xi.effect.THIRD_EYE)
-		else
-			teye:setPower(prevAnt + 1)
-		end
+            target:delStatusEffect(xi.effect.THIRD_EYE)
+        else
+            teye:setPower(prevAnt + 1)
+        end
         return true
     else
-		target:delStatusEffect(xi.effect.THIRD_EYE) -- how did we get here?  the previous clause checks for prevAnt == 6
+        target:delStatusEffect(xi.effect.THIRD_EYE) -- how did we get here?  the previous clause checks for prevAnt == 6
         return true
-	end
-
-    return false
+    end
 end
 
 -----------------------------------

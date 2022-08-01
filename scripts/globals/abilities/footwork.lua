@@ -16,3 +16,5 @@ end
 ability_object.onUseAbility = function(player, target, ability)
     player:addStatusEffect(xi.effect.FOOTWORK, 0, 0, 60*5)
 end
+
+return ability_object
