@@ -2562,7 +2562,7 @@ xi.mobMod =
     ASSIST              = 29, -- mobs will assist me
     SPECIAL_SKILL       = 30, -- give special skill (example: Gigas boulder ranged attack)
     ROAM_DISTANCE       = 31, -- distance allowed to roam from spawn
-    DONT_ROAM_HOME      = 32, -- Allow mobs to roam any distance from spawn. Useful for mobs with scripted roaming behavior.
+    -- 32 Available for use
     SPECIAL_COOL        = 33, -- cool down for special (example: Time between Gigas boulder ranged attacks)
     MAGIC_COOL          = 34, -- cool down for magic
     STANDBACK_COOL      = 35, -- cool down time for standing back (casting spell while not in attack range)

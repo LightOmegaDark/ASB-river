@@ -107,7 +107,7 @@ INSERT INTO `mob_skills` VALUES (270,14,'roar',1,10.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (271,15,'razor_fang',0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (272,16,'ranged_attack',0,25.0,2000,0,4,4,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (273,17,'claw_cyclone',4,15.0,2000,1500,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (274,6,'sheep_charge_hostile_herbivore',0,7.0,2000,0,4,0,0,1,0,0,0);
+INSERT INTO `mob_skills` VALUES (274,6,'sheep_charge',0,7.0,2000,1000,4,4,0,0,0,0,0); -- Sheep charge as melee attack
 INSERT INTO `mob_skills` VALUES (275,809,'sand_blast',1,8.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (276,810,'sand_pit',0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (277,811,'venom_spray',4,10.0,2000,1500,4,0,0,0,0,0,0);
@@ -783,7 +783,7 @@ INSERT INTO `mob_skills` VALUES (946,648,'tachi_yukikaze',0,7,2000,1,4,0,0,0,7,6
 INSERT INTO `mob_skills` VALUES (947,649,'tachi_gekko',0,7,2000,1,4,0,0,0,10,5,0);
 INSERT INTO `mob_skills` VALUES (948,650,'tachi_kasha',0,7,2000,1,4,0,0,0,11,2,0);
 -- INSERT INTO `mob_skills` VALUES (949,693,'flame_blast',0,7.0,2000,1500,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (950,652,'flame_blast_alt',0,30.0,2000,0,4,16,0,0,0,0,0); -- KS99_Wyrm regular airborne attack
+INSERT INTO `mob_skills` VALUES (950,652,'flame_blast_alt',0,30.0,2000,0,4,4,0,0,0,0,0); -- KS99_Wyrm regular airborne attack
 INSERT INTO `mob_skills` VALUES (951,653,'hurricane_wing',1,30.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (952,654,'spike_flail',1,23.0,2000,2000,4,0,0,0,0,0,0); -- Alliance only targeting version of spike flail
 INSERT INTO `mob_skills` VALUES (953,655,'dragon_breath',4,18.0,2000,1500,4,0,0,0,0,0,0);
