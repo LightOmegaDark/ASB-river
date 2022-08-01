@@ -2296,7 +2296,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Gerjis',497,270); -- roar
 INSERT INTO `mob_skill_lists` VALUES ('Gerjis',497,271); -- razor_fang
 INSERT INTO `mob_skill_lists` VALUES ('Gerjis',497,273); -- claw_cyclone
 INSERT INTO `mob_skill_lists` VALUES ('Gerjis',497,1322); -- gerjis_grip
--- INSERT INTO `mob_skill_lists` VALUES ('Gerjis',497,1681); -- crossthrash
+INSERT INTO `mob_skill_lists` VALUES ('Gerjis',497,1340); -- crossthrash
 -- 498: Cyranuce_M_Cutauleon
 -- 499 to 699: free
 INSERT INTO `mob_skill_lists` VALUES ('Mammet',503,347);
