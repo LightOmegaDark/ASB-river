@@ -13,8 +13,7 @@ require("scripts/globals/msg")
 -----------------------------------
 local mobskillObject = {}
 
-mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    mob:messageBasic(xi.msg.basic.READIES_WS, 0, 691 + 256)
+mobskill_object.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
