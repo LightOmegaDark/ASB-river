@@ -57,8 +57,33 @@
 #include "ai/states/range_state.h"
 #include "ai/states/weaponskill_state.h"
 
-#include "ability.h"
-#include "attack.h"
+#include "../ability.h"
+#include "../attack.h"
+#include "../battlefield.h"
+#include "../char_recast_container.h"
+#include "../conquest_system.h"
+#include "../item_container.h"
+#include "../items/item_furnishing.h"
+#include "../items/item_usable.h"
+#include "../items/item_weapon.h"
+#include "../job_points.h"
+#include "../latent_effect_container.h"
+#include "../mobskill.h"
+#include "../modifier.h"
+#include "../packets/char_job_extra.h"
+#include "../packets/status_effects.h"
+#include "../petskill.h"
+#include "../spell.h"
+#include "../status_effect_container.h"
+#include "../trade_container.h"
+#include "../treasure_pool.h"
+#include "../universal_container.h"
+#include "../utils/attackutils.h"
+#include "../utils/battleutils.h"
+#include "../utils/charutils.h"
+#include "../utils/gardenutils.h"
+#include "../utils/moduleutils.h"
+#include "../weapon_skill.h"
 #include "automatonentity.h"
 #include "battlefield.h"
 #include "char_recast_container.h"
@@ -1969,20 +1994,26 @@ void CCharEntity::OnRaise()
 
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CActionPacket(action));
 
-        uint8 mLevel = charutils::GetCharVar(this, "DeathLevel");
+        uint8 mLevel = this->m_raiseLevel;
 
-        // Do not return EXP to the player if they do not have a level at death set
-        if (mLevel != 0)
+        if (mLevel > 0)
         {
-            uint16 expLost = mLevel <= 67 ? (charutils::GetExpNEXTLevel(mLevel) * 8) / 100 : 2400;
-
+            uint16 expLost         = mLevel <= 67 ? (charutils::GetExpNEXTLevel(mLevel) * 8) / 100 : 2400;
             uint16 xpNeededToLevel = charutils::GetExpNEXTLevel(jobs.job[GetMJob()]) - jobs.exp[GetMJob()];
 
-        if (GetLocalVar("MijinGakure") == 0 && GetMLevel() >= settings::get<uint8>("map.EXP_LOSS_LEVEL"))
-        {
-            charutils::AddExperiencePoints(true, this, this, xpReturned);
+            // Exp is enough to level you and (you're not under a level restriction, or the level restriction is higher than your current main level).
+            if (xpNeededToLevel < expLost && (m_LevelRestriction == 0 || GetMLevel() < m_LevelRestriction))
+            {
+                // Player probably leveled down when they died.  Give they xp for the next level.
+                expLost = GetMLevel() <= 67 ? (charutils::GetExpNEXTLevel(jobs.job[GetMJob()] + 1) * 8) / 100 : 2400;
+            }
 
-            charutils::SetCharVar(this, "DeathLevel", 0);
+            uint16 xpReturned = (uint16)(ceil(expLost * ratioReturned));
+
+            if (GetLocalVar("MijinGakure") == 0 && GetMLevel() >= settings::get<uint8>("map.EXP_LOSS_LEVEL"))
+            {
+                charutils::AddExperiencePoints(true, this, this, xpReturned);
+            }
         }
 
         // If Arise was used then apply a reraise 3 effect on the target
@@ -2164,12 +2195,24 @@ void CCharEntity::Die()
     // influence for conquest system
     conquest::LoseInfluencePoints(this);
 
-    if (GetLocalVar("MijinGakure") == 0 &&
-        (PBattlefield == nullptr || (PBattlefield->GetRuleMask() & RULES_LOSE_EXP) == RULES_LOSE_EXP) &&
-        GetMLevel() >= settings::get<uint8>("map.EXP_LOSS_LEVEL"))
+    // we lose xp if we didn't use mijin gakure AND (we aren't in a battlefield OR battlefiled rules say we lose xp
+    if (GetLocalVar("MijinGakure") == 0 && (!PBattlefield || (PBattlefield->GetRuleMask() & RULES_LOSE_EXP)))
     {
         float retainPercent = std::clamp(settings::get<uint8>("map.EXP_RETAIN") + getMod(Mod::EXPERIENCE_RETAINED) / 100.0f, 0.0f, 1.0f);
         charutils::DelExperiencePoints(this, retainPercent, 0);
+
+        if (m_LevelRestriction != 0 && m_LevelRestriction < GetMLevel())
+        {
+            this->m_raiseLevel = this->m_LevelRestriction;
+        }
+        else
+        {
+            this->m_raiseLevel = this->GetMLevel();
+        }
+    }
+    else
+    {
+        this->m_raiseLevel = 0;
     }
 
     luautils::OnPlayerDeath(this);

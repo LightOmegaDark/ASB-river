@@ -12,32 +12,43 @@ require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 
-abilityObject.onAbilityCheck = function(player, target, ability)
+local tameSort =
+{
+    [75] = 12,
+    [50] = 9,
+    [25] = 6,
+    [1] = 2,
+}
+
+ability_object.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
     if player:getPet() ~= nil then
         ability:setMsg(xi.msg.basic.JA_NO_EFFECT)
-        target:addEnmity(player, 1, 0)
-
         return 0
     end
 
     if target:getMobMod(xi.mobMod.CHARMABLE) == 0 then
         ability:setMsg(xi.msg.basic.JA_NO_EFFECT)
-        target:addEnmity(player, 1, 0)
-
         return 0
     end
+    local tameBonus   = 0
+    local charmChance = player:getCharmChance(target, false)
 
-    local params = {diff = (player:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)), skillType = nil, bonus = 0, effect = xi.effect.NONE, element = xi.magic.element.NONE}
+    for chance, bonus in pairs(tameSort) do
+        if charmChance > chance then
+            tameBonus = bonus
+            break
+        end
+    end
+
+    local params = {diff = (player:getStat(xi.mod.INT) - target:getStat(xi.mod.INT) + player:getMod(xi.mod.TAME_SUCCESS_RATE)), skillType = nil, bonus = tameBonus, effect = xi.effect.NONE, element = xi.magic.element.NONE}
     local resist = applyResistanceAbility(player, target, ability:getID(), params)
 
     if resist <= 0.25 then
         ability:setMsg(xi.msg.basic.JA_MISS_2)
-        target:addEnmity(player, 1, 0)
-
         return 0
     else
         if target:isEngaged() then
@@ -46,14 +57,10 @@ abilityObject.onUseAbility = function(player, target, ability)
             for _, enmity in ipairs(enmitylist) do
                 if enmity.active and enmity.entity:getID() ~= player:getID() then
                     ability:setMsg(xi.msg.basic.JA_NO_EFFECT)
-                    target:addEnmity(player, 1, 0)
-
                     return 0
                 elseif enmity.entity:getID() == player:getID() then
                     if not enmity.tameable then
                         ability:setMsg(xi.msg.basic.JA_NO_EFFECT)
-                        target:addEnmity(player, 1, 0)
-
                         return 0
                     end
                 end

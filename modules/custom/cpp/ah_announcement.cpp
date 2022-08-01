@@ -51,7 +51,7 @@ class AHAnnouncementModule : public CPPModule
 
                 if (PChar->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() == 0)
                 {
-                    PChar->pushPacket(new CAuctionHousePacket(action, 0xE5, 0, 0));
+                    PChar->pushPacket(new CAuctionHousePacket(action, 0xE5, 0, 0, quantity));
                 }
                 else
                 {
@@ -65,7 +65,7 @@ class AHAnnouncementModule : public CPPModule
                             {
                                 if (PChar->getStorage(LocID)->SearchItem(itemid) != ERROR_SLOTID)
                                 {
-                                    PChar->pushPacket(new CAuctionHousePacket(action, 0xE5, 0, 0));
+                                    PChar->pushPacket(new CAuctionHousePacket(action, 0xE5, 0, 0, quantity));
                                     return;
                                 }
                             }
@@ -101,7 +101,7 @@ class AHAnnouncementModule : public CPPModule
                                 {
                                     charutils::UpdateItem(PChar, LOC_INVENTORY, 0, -(int32)(price));
 
-                                    PChar->pushPacket(new CAuctionHousePacket(action, 0x01, itemid, price));
+                                    PChar->pushPacket(new CAuctionHousePacket(action, 0x01, itemid, price, quantity));
                                     PChar->pushPacket(new CInventoryFinishPacket());
 
                                     ret = sql->Query(R"(
@@ -141,7 +141,7 @@ class AHAnnouncementModule : public CPPModule
                             }
                         }
                     }
-                    PChar->pushPacket(new CAuctionHousePacket(action, 0xC5, itemid, price));
+                    PChar->pushPacket(new CAuctionHousePacket(action, 0xC5, itemid, price, quantity));
                 }
             }
             else // Otherwise, call original handler
