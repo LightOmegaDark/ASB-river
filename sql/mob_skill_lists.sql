@@ -3040,7 +3040,14 @@ INSERT INTO `mob_skill_lists` VALUES ('Asanbosam',885,392); -- ultrasonics
 INSERT INTO `mob_skill_lists` VALUES ('Asanbosam',885,394); -- blood_drain
 INSERT INTO `mob_skill_lists` VALUES ('Asanbosam',885,1155); -- suibsonics
 INSERT INTO `mob_skill_lists` VALUES ('Asanbosam',885,1156); -- marrow_drain
--- 886 to 887: free
+INSERT INTO `mob_skill_lists` VALUES ('Colo-Colo',886,392); -- ultrasonics
+INSERT INTO `mob_skill_lists` VALUES ('Colo-Colo',886,394); -- blood_drain
+INSERT INTO `mob_skill_lists` VALUES ('Colo-Colo',886,1155); -- subsonics
+INSERT INTO `mob_skill_lists` VALUES ('Colo-Colo',886,1156); -- marrow_drain
+INSERT INTO `mob_skill_lists` VALUES ('Furies',887,395); -- jetstream
+INSERT INTO `mob_skill_lists` VALUES ('Furies',887,393); -- sonic_boom
+INSERT INTO `mob_skill_lists` VALUES ('Furies',887,1157); -- slipstream
+INSERT INTO `mob_skill_lists` VALUES ('Furies',887,1158); -- turbulence
 INSERT INTO `mob_skill_lists` VALUES ('Cep-Kamuy',888,1695); -- seismec_tail
 INSERT INTO `mob_skill_lists` VALUES ('Cep-Kamuy',888,1696); -- hypnic_lamp
 INSERT INTO `mob_skill_lists` VALUES ('Cep-Kamuy',888,1698); -- leeching_current
