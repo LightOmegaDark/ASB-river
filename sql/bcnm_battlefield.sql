@@ -1063,12 +1063,15 @@ INSERT INTO `bcnm_battlefield` VALUES (526,3,17621135,3);
 INSERT INTO `bcnm_battlefield` VALUES (527,1,17621167,3); -- awful_autopsy
 INSERT INTO `bcnm_battlefield` VALUES (527,1,17621168,2);
 INSERT INTO `bcnm_battlefield` VALUES (527,1,17621169,2);
+INSERT INTO `bcnm_battlefield` VALUES (527,1,17621170,2);
 INSERT INTO `bcnm_battlefield` VALUES (527,2,17621172,3);
 INSERT INTO `bcnm_battlefield` VALUES (527,2,17621173,2);
 INSERT INTO `bcnm_battlefield` VALUES (527,2,17621174,2);
+INSERT INTO `bcnm_battlefield` VALUES (527,1,17621175,2);
 INSERT INTO `bcnm_battlefield` VALUES (527,3,17621177,3);
 INSERT INTO `bcnm_battlefield` VALUES (527,3,17621178,2);
 INSERT INTO `bcnm_battlefield` VALUES (527,3,17621179,2);
+INSERT INTO `bcnm_battlefield` VALUES (527,1,17621180,2);
 INSERT INTO `bcnm_battlefield` VALUES (528,1,17621182,3); -- celery
 INSERT INTO `bcnm_battlefield` VALUES (528,1,17621183,3);
 INSERT INTO `bcnm_battlefield` VALUES (528,1,17621184,3);
