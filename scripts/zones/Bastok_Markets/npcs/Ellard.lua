@@ -24,14 +24,60 @@ local keyitems =
 
 local items =
 {
-    [0] = { id = xi.items.GOLDSMITHS_BELT,      rank = xi.crafting.rank.NOVICE,     cost =  10000 },
-    [1] = { id = xi.items.SHADED_SPECTACLES,    rank = xi.crafting.rank.JOURNEYMAN, cost =  70000 },
-    [2] = { id = xi.items.GOLDSMITHS_APRON,     rank = xi.crafting.rank.ARTISAN,    cost = 100000 },
-    [3] = { id = xi.items.STACK_OF_FOOLS_GOLD,  rank = xi.crafting.rank.VETERAN,    cost = 150000 },
-    [4] = { id = xi.items.GOLDSMITHS_SIGNBOARD, rank = xi.crafting.rank.VETERAN,    cost = 200000 },
-    [5] = { id = xi.items.GOLDSMITHS_RING,      rank = xi.crafting.rank.CRAFTSMAN,  cost =  80000 },
-    [6] = { id = xi.items.GEMSCOPE,             rank = xi.crafting.rank.ARTISAN,    cost =  50000 },
-    [7] = { id = xi.items.GOLDSMITHS_EMBLEM,    rank = xi.crafting.rank.VETERAN,    cost =  15000 },
+    [0] =
+    {
+        id = 15446,
+        rank = 3,
+        cost = 10000
+    },
+
+    [1] =
+    {
+        id = 13945,
+        rank = 5,
+        cost = 70000
+    },
+    [2] =
+    {
+        id = 14394, -- Goldsmith's Apron
+        rank = 7,
+        cost = 100000
+    },
+
+    [3] =
+    {
+        id = 151,
+        rank = 9,
+        cost = 150000
+    },
+
+    [4] =
+    {
+        id = 335,
+        rank = 9,
+        cost = 200000
+    },
+
+    [5] =
+    {
+        id = 15821,
+        rank = 6,
+        cost = 80000
+    },
+
+    [6] =
+    {
+        id = 3595,
+        rank = 7,
+        cost = 50000
+    },
+
+    [7] =
+    {
+        id = 3325,
+        rank = 9,
+        cost = 15000
+    }
 }
 
 entity.onTrade = function(player, npc, trade)

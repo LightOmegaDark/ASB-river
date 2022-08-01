@@ -21,14 +21,61 @@ local keyitems =
 
 local items =
 {
-    [0] = { id = xi.items.WEAVERS_BELT,          rank = xi.crafting.rank.NOVICE,     cost =  10000 },
-    [1] = { id = xi.items.MAGNIFYING_SPECTACLES, rank = xi.crafting.rank.JOURNEYMAN, cost =  70000 },
-    [2] = { id = xi.items.WEAVERS_APRON,         rank = xi.crafting.rank.ARTISAN,    cost = 100000 },
-    [3] = { id = xi.items.GILT_TAPESTRY,         rank = xi.crafting.rank.VETERAN,    cost = 150000 },
-    [4] = { id = xi.items.WEAVERS_SIGNBOARD,     rank = xi.crafting.rank.VETERAN,    cost = 200000 },
-    [5] = { id = xi.items.TAILORS_RING,          rank = xi.crafting.rank.CRAFTSMAN,  cost =  80000 },
-    [6] = { id = xi.items.SPINNING_WHEEL,        rank = xi.crafting.rank.ARTISAN,    cost =  50000 },
-    [7] = { id = xi.items.WEAVERS_EMBLEM,        rank = xi.crafting.rank.VETERAN,    cost =  15000 },
+    [0] =
+    {
+        id = 15447, -- Weaver's Belt
+        rank = 4,
+        cost = 10000
+    },
+
+    [1] =
+    {
+        id = 13946, -- Magnifying Spectacles
+        rank = 5,
+        cost = 70000
+    },
+
+    [2] =
+    {
+        id = 14395, -- Weaver's Apron
+        rank = 7,
+        cost = 100000
+    },
+
+    [3] =
+    {
+        id = 198, -- Gilt Tapestry
+        rank = 9,
+        cost = 150000
+    },
+
+    [4] =
+    {
+        id = 337, -- Weaver's Signboard
+        rank = 9,
+        cost = 200000
+    },
+
+    [5] =
+    {
+        id = 15822, -- Tailor's Ring
+        rank = 6,
+        cost = 80000
+    },
+
+    [6] =
+    {
+        id = 3665, -- Spinning Wheel
+        rank = 7,
+        cost = 50000
+    },
+
+    [7] =
+    {
+        id = 3327, -- Weavers' Emblem
+        rank = 9,
+        cost = 15000
+    },
 }
 
 entity.onTrade = function(player, npc, trade)

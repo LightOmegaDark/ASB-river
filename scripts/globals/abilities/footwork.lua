@@ -3,7 +3,7 @@
 -- Makes kicks your primary mode of attack.
 -- Obtained: Monk Level 65
 -- Recast Time: 5:00
--- Duration: 1:00
+-- Duration: 5:00
 -----------------------------------
 require("scripts/globals/job_utils/monk")
 -----------------------------------
@@ -13,8 +13,8 @@ abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-abilityObject.onUseAbility = function(player, target, ability)
-    xi.job_utils.monk.useFootwork(player, target, ability)
+ability_object.onUseAbility = function(player, target, ability)
+    player:addStatusEffect(xi.effect.FOOTWORK, 0, 0, 60*5)
 end
 
 return abilityObject

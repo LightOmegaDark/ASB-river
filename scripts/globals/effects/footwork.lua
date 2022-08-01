@@ -6,21 +6,15 @@ require("scripts/globals/status")
 -----------------------------------
 local effectObject = {}
 
-effectObject.onEffectGain = function(target, effect)
-    local jpLevel = target:getJobPointLevel(xi.jp.FOOTWORK_EFFECT)
-
-    target:addMod(xi.mod.KICK_ATTACK_RATE, 20)
-    target:addMod(xi.mod.KICK_DMG, effect:getPower() + jpLevel)
+effect_object.onEffectGain = function(target, effect)
+    target:addMod(xi.mod.ATTP, 10)
 end
 
 effectObject.onEffectTick = function(target, effect)
 end
 
-effectObject.onEffectLose = function(target, effect)
-    local jpLevel = target:getJobPointLevel(xi.jp.FOOTWORK_EFFECT)
-
-    target:delMod(xi.mod.KICK_ATTACK_RATE, 20)
-    target:delMod(xi.mod.KICK_DMG, effect:getPower() + jpLevel)
+effect_object.onEffectLose = function(target, effect)
+    target:delMod(xi.mod.ATTP, 10)
 end
 
 return effectObject

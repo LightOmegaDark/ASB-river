@@ -14,8 +14,14 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    mob:spawnPet()
+mobskill_object.onMobWeaponSkill = function(target, mob, skill)
+    mob:entityAnimationPacket("casm")
+    mob:timer(3000, function(mobArg)
+        if mobArg:isAlive() then
+            mobArg:entityAnimationPacket("shsm")
+            mobArg:spawnPet()
+        end
+    end)
 
     skill:setMsg(xi.msg.basic.NONE)
 
