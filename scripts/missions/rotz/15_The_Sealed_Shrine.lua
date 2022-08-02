@@ -26,8 +26,7 @@ mission.sections =
 {
     {
         check = function(player, currentMission, missionStatus, vars)
-            return currentMission == mission.missionId and missionStatus == 0 and
-                getNumDMEarrings(player) <= xi.settings.main.NUMBER_OF_DM_EARRINGS
+            return currentMission == mission.missionId
         end,
 
         [xi.zone.NORG] =
@@ -36,7 +35,7 @@ mission.sections =
             {
                 onTrigger = function(player, npc)
                     if player:getMissionStatus(mission.areaId) == 0 then
-                        return mission:progressEvent(172)
+                         return mission:progressEvent(172)
                     end
                 end,
             },
@@ -79,17 +78,7 @@ mission.sections =
             onZoneIn =
             {
                 function(player, prevZone)
-                     -- Entered through the Main Gate
-                     -- TODO: This should probably be a region
-                    local xPos = player:getXPos()
-                    local yPos = player:getYPos()
-                    local zPos = player:getZPos()
-
-                    if
-                        xPos >= -45 and yPos >= -4 and zPos >= -240 and
-                        xPos <= -33 and yPos <= 0 and zPos <= -226 and
-                        getNumDMEarrings(player) <= xi.settings.main.NUMBER_OF_DM_EARRINGS
-                    then
+                    if player:getMissionStatus(mission.areaId) == 1 then
                         return 51
                     end
                 end,
