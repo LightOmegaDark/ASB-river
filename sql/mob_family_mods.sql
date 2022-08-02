@@ -56,8 +56,11 @@ INSERT INTO `mob_family_mods` VALUES (9,3,50,1); -- MP_BASE: 50
 -- Animatedweapon-Dagger
 INSERT INTO `mob_family_mods` VALUES (11,3,50,1); -- MP_BASE: 50
 
--- Animatedweapon-Greataxe
-INSERT INTO `mob_family_mods` VALUES (12,3,50,1); -- MP_BASE: 50
+-- Immunities
+INSERT INTO `mob_family_mods` VALUES (92,23,2039,1);
+INSERT INTO `mob_family_mods` VALUES (93,23,2039,1);
+INSERT INTO `mob_family_mods` VALUES (94,23,2039,1);
+INSERT INTO `mob_family_mods` VALUES (95,23,2039,1);
 
 -- Animatedweapon-Greatkatana
 INSERT INTO `mob_family_mods` VALUES (13,3,50,1); -- MP_BASE: 50
