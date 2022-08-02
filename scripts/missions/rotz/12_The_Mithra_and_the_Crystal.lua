@@ -94,7 +94,7 @@ mission.sections =
 
             ['Ancient_Vessel'] =
             {
-                onMobDeath = function(mob, player, optParams)
+                onMobDeath = function(mob, player, isKiller, noKiller)
                     mission:setLocalVar(player, 'nmDefeated', 1)
                 end,
             },
