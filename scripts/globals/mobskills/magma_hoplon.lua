@@ -9,8 +9,12 @@ require("scripts/globals/status")
 -----------------------------------
 local mobskillObject = {}
 
-mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    return 0
+mobskill_object.onMobSkillCheck = function(target, mob, skill)
+    if mob:hasStatusEffect(xi.effect.STONESKIN) then
+        return 1
+    else
+        return 0
+    end
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)

@@ -13,8 +13,12 @@ require("scripts/globals/mobskills")
 -----------------------------------
 local mobskillObject = {}
 
-mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    return 0
+mobskill_object.onMobSkillCheck = function(target, mob, skill)
+    if mob:getMainJob() == xi.job.RNG then
+        return 0
+    else
+        return 1
+    end
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
