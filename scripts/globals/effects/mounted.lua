@@ -17,6 +17,11 @@ effectObject.onEffectGain = function(target, effect)
         target:changeMusic(4, 84)
         target:setAnimation(xi.anim.MOUNT)
     end
+
+    -- No pets while on a chocobo
+    if target:getPet() ~= nil then
+        target:despawnPet()
+    end
 end
 
 effectObject.onEffectTick = function(target, effect)
