@@ -1157,11 +1157,13 @@ float CMobEntity::ApplyTH(int16 m_THLvl, int16 rate)
 void CMobEntity::DropItems(CCharEntity* PChar)
 {
     TracyZoneScoped;
-    // Adds an item to the treasure pool and returns true if the pool has been filled
+    // Adds an item to the treasure pool
     auto AddItemToPool = [this, PChar](uint16 ItemID, uint8 dropCount)
     {
         PChar->PTreasurePool->AddItem(ItemID, this);
-        return dropCount >= TREASUREPOOL_SIZE;
+        // This used to cap the number of drops a mob can produce at 10, but
+        // that's not the correct behavior.
+        return false; //dropCount >= TREASUREPOOL_SIZE;
     };
 
     // Limit number of items that can drop to the treasure pool size
