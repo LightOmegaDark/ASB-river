@@ -7,10 +7,6 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
-    mob:setMod(xi.mod.MEVA, -250)
-end
-
 entity.onMobEngaged = function(mob, target)
     local mobId = mob:getID()
     DespawnMob(mobId + 1)

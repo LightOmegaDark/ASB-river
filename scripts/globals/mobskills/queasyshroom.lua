@@ -15,7 +15,7 @@ require("scripts/globals/mobskills")
 local mobskill_object = {}
 
 mobskill_object.onMobSkillCheck = function(target, mob, skill)
-    if mob:getAnimationSub() == 0 or mob:getAnimationSub() == 4  then
+    if mob:getAnimationSub() == 0 then
         return 0
     end
     return 1
