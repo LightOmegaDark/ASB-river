@@ -3376,6 +3376,7 @@ xi.items =
     SWORD_STRAP                     = 19024,
     POLE_GRIP                       = 19025,
     SPEAR_STRAP                     = 19026,
+    CLAYMORE_GRIP                   = 19027,
     ROSE_STRAP                      = 19041,
     ARIESIAN_GRIP                   = 19042,
     TRAINEE_KNIFE                   = 19101,
