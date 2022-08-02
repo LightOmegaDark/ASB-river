@@ -1,59 +1,47 @@
 -----------------------------------
 -- Area: Ghelsba Outpost
---  Mob: Toadsquab
+-- Mob: Toadsquab
 -- BCNM: Toadal Recall
 -----------------------------------
 local entity = {}
 
 local shroomAbilities =
 {
-    {310, 3}, -- queasyshroom
-    {311, 2}, -- numbshroom
-    {312, 1}, -- shakeshroom
+    {310, 0}, -- queasyshroom
+    {311, 1}, -- numbshroom
+    {312, 2}, -- shakeshroom
 }
 
 local function resetTimer(mob)
-    mob:setLocalVar("timer", os.time() + math.random(1,20))
-end
-
-local function resetShrooms(mob)
-    mob:useMobAbility(626)
-    mob:setModMod(xi.mobMod.VAR, 3)
+    mob:setLocalVar("timer", os.time() + math.random(5,20))
 end
 
 entity.onMobSpawn = function(mob)
-    mob:setLocalVar("shrooms", 3)
     mob:setLocalVar("control", 0)
     mob:setMobMod(xi.mobMod.NO_MOVE, 1)
 end
 
 entity.onMobEngaged = function(mob)
     mob:setMobMod(xi.mobMod.NO_MOVE, 0)
-    mob:setLocalVar("timer", os.time() + 5)
+    resetTimer(mob)
 end
 
-entity.onMobWeaponSkill = function(target, mob, skill)
-    for _, v in pairs(shroomAbilities) do
-        if v[1] == skill:getID() and mob:getLocalVar("shrooms") > 0 then
-            mob:setLocalVar("shrooms", mob:getLocalvar("shrooms") - 1)
-        end
-    end
-end
-
-entity.onMobFight = function(mob, targhet)
-    if mob:getLocalVar("control") == 0 and mob:getLocalVar("shrooms") == 0 then
+entity.onMobFight = function(mob, target)
+    if mob:getLocalVar("control") == 0 and mob:getAnimationSub() == 3 then
         mob:setLocalVar("control", 1)
-        mob:timer(1000 * math.random(50,70), function(mobArg)
-            resetShrooms(mob)
-            mob:setLocalVar("control", 0)
+        mob:timer(1000 * math.random(60,120), function(mobArg)
+            mobArg:useMobAbility(626)
+            mobArg:setLocalVar("control", 0)
+            mobArg:setAnimationSub(0)
+            resetTimer(mob)
         end)
     end
 
-    if mob:getLocalVar("timer") < os.time() and mob:getLocalVar("shrooms") > 0 then
+    if mob:getLocalVar("timer") < os.time() and mob:getAnimationSub() ~= 3 then
         for _, v in pairs(shroomAbilities) do
-            if mob:getLocalVar("shrooms") == v[2] then
+            if mob:getAnimationSub() == v[2] then
                 mob:queue(0, function(mobArg)
-                    mobArg:useMobAbilitiy(v[1])
+                    mobArg:useMobAbility(v[1])
                     resetTimer(mobArg)
                 end)
                 break
