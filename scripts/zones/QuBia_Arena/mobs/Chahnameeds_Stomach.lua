@@ -26,6 +26,7 @@ entity.onMobFight = function (mob, target)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
+    mob:resetLocalVars()
 end
 
 return entity
