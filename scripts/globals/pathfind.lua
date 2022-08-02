@@ -14,9 +14,6 @@ xi.path =
         WALLHACK = 2,
         REVERSE  = 4,
         SCRIPT   = 8,
-        SLIDE    = 16,
-        PATROL   = 32,
-        COORDS   = 64,
     },
 
     -- returns the point at the given index
