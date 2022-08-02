@@ -5036,7 +5036,6 @@ INSERT INTO `mob_spell_lists` VALUES('Osschaart', 496, 240, 1, 255); -- drown (1
 INSERT INTO `mob_spell_lists` VALUES('Osschaart', 496, 254, 1, 255); -- blind (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Osschaart', 496, 258, 1, 255); -- bind (1~255)
 
-
 -- Slendlix Spindlethumb (498)
 INSERT INTO `mob_spell_lists` VALUES ('Slendlix_Spindlethumb',498,3,1,255);  -- cure_iii (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Slendlix_Spindlethumb',498,23,1,255); -- dia (1~255)
