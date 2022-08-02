@@ -3814,9 +3814,14 @@ INSERT INTO `mob_skill_lists` VALUES ('Ash_Dragon',1177,645);
 INSERT INTO `mob_skill_lists` VALUES ('Ash_Dragon',1177,642);
 INSERT INTO `mob_skill_lists` VALUES ('Ash_Dragon',1177,649);
 INSERT INTO `mob_skill_lists` VALUES ('Ash_Dragon',1177,647);
-INSERT INTO `mob_skill_lists` VALUES('Infernal_Swarm',1178,334); -- sharp_sting
-INSERT INTO `mob_skill_lists` VALUES('Infernal_Swarm',1178,335); -- pollen
--- Next Available ID: 1179
+INSERT INTO `mob_skill_lists` VALUES ('Infernal_Swarm',1178,334); -- sharp_sting
+INSERT INTO `mob_skill_lists` VALUES ('Infernal_Swarm',1178,335); -- pollen
+INSERT INTO `mob_skill_lists` VALUES ('Celery_Ghosts',1179,472); -- grave reel
+INSERT INTO `mob_skill_lists` VALUES ('Celery_Ghosts',1179,473); -- ectosmash
+INSERT INTO `mob_skill_lists` VALUES ('Celery_Ghosts',1179,474); -- fear touch
+INSERT INTO `mob_skill_lists` VALUES ('Celery_Ghosts',1179,475); -- terror touch
+INSERT INTO `mob_skill_lists` VALUES ('Celery_Ghosts',1179,477); -- dark sphere
+-- INSERT INTO `mob_skill_lists` VALUES ('Celery_Ghosts',1179,1339); -- bane
 INSERT INTO `mob_skill_lists` VALUES ('Mind_Hoarder',1180,524);
 INSERT INTO `mob_skill_lists` VALUES ('Barbaric_Weapon',1181,514);
 INSERT INTO `mob_skill_lists` VALUES ('Marquis_Sabnock',1182,1149);
