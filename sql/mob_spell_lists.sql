@@ -5148,7 +5148,11 @@ INSERT INTO `mob_spell_lists` VALUES('Kurrea', 509, 463, 1, 255); -- foe_lullaby
 
 -- Pilwiz (510)
 INSERT INTO `mob_spell_lists` VALUES('Pilwiz', 510, 190, 1, 255); -- Stonega II (1~255)
--- Next Available 511
+
+-- Generic Doll (511)
+INSERT INTO `mob_spell_lists` VALUES('Generic_Doll', 511, 194, 1, 255); -- Thundaga (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Generic_Doll', 511, 251, 1, 255); -- Shock Spikes (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Generic_Doll', 511, 356, 1, 255); -- Paralyga (1~255)
 
 -- AirSkyBoat Specific Starts at 5000
 -- 5000 -> 5010 is Era Dynamis
