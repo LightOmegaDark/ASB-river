@@ -9,8 +9,8 @@ require("scripts/globals/msg")
 -----------------------------------
 local mobskillObject = {}
 
-mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    if target:isBehind(mob, 48) then
+mobskill_object.onMobSkillCheck = function(target, mob, skill)
+    if target:isBehind(mob, 96) then
         return 1
     elseif mob:getAnimationSub() == 1 then
         return 1
