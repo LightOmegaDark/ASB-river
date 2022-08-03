@@ -5,16 +5,15 @@
 -- Recast Time: 1:00:00
 -- Duration: 0:00:45
 -----------------------------------
-require("scripts/globals/settings")
-require("scripts/globals/status")
+require("scripts/globals/job_utils/monk")
 -----------------------------------
 local abilityObject = {}
 
-abilityObject.onAbilityCheck = function(player, target, ability)
+ability_object.onAbilityCheck = function(player, target, ability)
     return xi.job_utils.monk.checkHundredFists(player, target, ability)
 end
 
-abilityObject.onUseAbility = function(player, target, ability)
+ability_object.onUseAbility = function(player, target, ability)
     xi.job_utils.monk.useHundredFists(player, target, ability)
 end
 

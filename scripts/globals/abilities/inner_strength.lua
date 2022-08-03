@@ -5,16 +5,15 @@
 -- Recast Time: 01:00:00
 -- Duration: 0:00:30
 -----------------------------------
-require("scripts/globals/settings")
-require("scripts/globals/status")
+require("scripts/globals/job_utils/monk")
 -----------------------------------
 local abilityObject = {}
 
-abilityObject.onAbilityCheck = function(player, target, ability)
+ability_object.onAbilityCheck = function(player, target, ability)
     return xi.job_utils.monk.checkInnerStrength(player, target, ability)
 end
 
-abilityObject.onUseAbility = function(player, target, ability)
+ability_object.onUseAbility = function(player, target, ability)
     xi.job_utils.monk.useInnerStrength(player, target, ability)
 end
 
