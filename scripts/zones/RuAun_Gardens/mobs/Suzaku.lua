@@ -37,8 +37,10 @@ entity.onAdditionalEffect = function(mob, target, damage)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
-    mob:messageText(mob, ID.text.SKY_GOD_OFFSET + 8)
-    GetNPCByID(ID.npc.PORTAL_TO_SUZAKU):setAnimation(xi.anim.OPEN_DOOR)
+    if isKiller then
+        mob:messageText(mob, ID.text.SKY_GOD_OFFSET + 8)
+        GetNPCByID(ID.npc.PORTAL_TO_SUZAKU):setAnimation(xi.anim.OPEN_DOOR)
+    end
 end
 
 entity.onMobDespawn = function(mob)
