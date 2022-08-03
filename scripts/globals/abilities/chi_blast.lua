@@ -14,7 +14,7 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 ability_object.onUseAbility = function(player, target, ability)
-    xi.job_utils.monk.useChiBlast(player, target, ability)
+    return xi.job_utils.monk.useChiBlast(player, target, ability)
 end
 
 return abilityObject
