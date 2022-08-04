@@ -857,6 +857,7 @@ public:
     void sendUpdateToZoneCharsInRange(float);
 
     bool clearSession(std::string const& playerName);
+    void sendNpcEmote(CLuaBaseEntity* PBaseEntity, sol::object const& p0, sol::object const& p1, sol::object const& p2);
 
     static void Register();
 };
