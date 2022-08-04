@@ -88,7 +88,8 @@ local path =
 }
 
 entity.onMobSpawn = function(mob)
-    entity.onMobRoam(mob)
+    xi.path.patrol(mob, path)
+    mob:setMod(xi.mod.REGAIN, 200)
 end
 
 entity.onPath = function(mob)
@@ -96,10 +97,14 @@ entity.onPath = function(mob)
 end
 
 entity.onMobRoam = function(mob)
-    -- move to start position if not moving
-    if mob:isFollowingPath() == false then
-        mob:pathThrough(xi.path.first(path), xi.path.flag.RUN)
+    -- move to nearest path if not moving
+    if not mob:isFollowingPath() then
+        xi.path.pathToNearest(mob, path)
     end
+end
+
+entity.onMobDisengage = function(mob)
+    xi.path.pathToNearest(mob, path)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)

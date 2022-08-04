@@ -3852,8 +3852,9 @@ INSERT INTO `mob_skill_lists` VALUES ('Jailer_of_Hope', 1202, 1353);
 INSERT INTO `mob_skill_lists` VALUES ('Jailer_of_Hope', 1202, 1355);
 INSERT INTO `mob_skill_lists` VALUES ('Jailer_of_Hope', 1202, 1356);
 INSERT INTO `mob_skill_lists` VALUES ('Jailer_of_Hope', 1202, 1358);
+INSERT INTO `mob_skill_lists` VALUES ('Zipacna',1203,678);
 
--- Next available ID: 1177
+-- Next available ID: 1204
 
 -- ------------------------------------------------------------
 -- Start of Ambuscade section
