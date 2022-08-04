@@ -368,7 +368,7 @@ INSERT INTO `mob_skills` VALUES (532,902,'envoutement',0,7.0,2000,1500,4,0,0,0,0
 INSERT INTO `mob_skills` VALUES (533,903,'danse_macabre',0,10.0,2000,2000,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (534,278,'kartstrahl',0,15.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (535,279,'blitzstrahl',0,15.0,2000,1500,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (536,280,'panzerfaust',0,7.0,2000,1500,4,0,0,2,0,0,0);
+INSERT INTO `mob_skills` VALUES (536,280,'panzerfaust',0,7.0,500,100,4,0,0,2,0,0,0);
 INSERT INTO `mob_skills` VALUES (537,281,'berserk',0,7.0,2000,1500,1,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (538,282,'panzerschreck',0,15.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (539,283,'typhoon',1,10.0,2000,1500,4,0,0,1,0,0,0);
