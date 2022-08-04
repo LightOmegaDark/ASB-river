@@ -56,6 +56,8 @@ entity.onMobDeath = function(mob, player, isKiller)
 
             if allyID ~= mob:getID() and scorpion:isAlive() then
                 scorpion:setLocalVar("wildRagePower", GetMobByID(allyID):getLocalVar("wildRagePower") + 1)
+                scorpion:addMod(xi.mod.SLEEPRESBUILD, 200)
+                scorpion:addMod(xi.mod.LULLABYRESBUILD, 200)
             end
         end
     end
