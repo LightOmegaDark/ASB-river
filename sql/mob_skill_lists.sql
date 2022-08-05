@@ -1055,7 +1055,10 @@ INSERT INTO `mob_skill_lists` VALUES ('Structure_Exoplate',237,998);
 INSERT INTO `mob_skill_lists` VALUES ('Structure_Exoplate',237,999);
 INSERT INTO `mob_skill_lists` VALUES ('Structure_Exoplate',237,1000);
 INSERT INTO `mob_skill_lists` VALUES ('Structure_Exoplate',237,1001);
-INSERT INTO `mob_skill_lists` VALUES ('Ullikummi',238,1035);
+INSERT INTO `mob_skill_lists` VALUES ('COP+_Bats',238,393); -- jetstream
+INSERT INTO `mob_skill_lists` VALUES ('COP+_Bats',238,395); -- sonic_boom
+INSERT INTO `mob_skill_lists` VALUES ('COP+_Bats',238,1157); -- slipstream
+INSERT INTO `mob_skill_lists` VALUES ('COP+_Bats',238,1158); -- turbulence
 INSERT INTO `mob_skill_lists` VALUES ('Thunderclaw_Thuban',239,378); -- thunderbolt
 INSERT INTO `mob_skill_lists` VALUES ('Tauri',240,498);
 INSERT INTO `mob_skill_lists` VALUES ('Tauri',240,499);
@@ -1104,7 +1107,8 @@ INSERT INTO `mob_skill_lists` VALUES ('Troll',246,1746);
 -- INSERT INTO `mob_skill_lists` VALUES ('Troll',246,1748);
 -- INSERT INTO `mob_skill_lists` VALUES ('Troll',246,1749);
 -- 247: Tube
--- 248 to 249: free
+-- 248: free
+INSERT INTO `mob_skill_lists` VALUES ('Ullikummi',249,1035);
 INSERT INTO `mob_skill_lists` VALUES ('Uragnite_shell',250,1571); -- gas_shell
 INSERT INTO `mob_skill_lists` VALUES ('Uragnite_shell',250,1572); -- venom_shell
 INSERT INTO `mob_skill_lists` VALUES ('Uragnite',251,1573); -- palsynyxis
