@@ -5,17 +5,17 @@
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
-local itemObject = {}
+local item_object = {}
 
-itemObject.onItemCheck = function(target)
+item_object.onItemCheck = function(target)
     return 0
 end
 
-itemObject.onItemUse = function(target)
+item_object.onItemUse = function(target)
     local power = 75
     local duration = 1800
 
     target:addStatusEffect(xi.effect.PROTECT, power, 0, duration)
 end
 
-return itemObject
+return item_object
