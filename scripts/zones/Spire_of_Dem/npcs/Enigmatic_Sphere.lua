@@ -1,6 +1,6 @@
 -----------------------------------
--- Area: Spire of Vahzl
--- NPC:  Enigmatic Sphere
+-- Area: Spire of Dem
+-- NPC: Enigmatic Sphere
 -----------------------------------
 require("scripts/globals/battlefield")
 require("scripts/globals/bcnm")

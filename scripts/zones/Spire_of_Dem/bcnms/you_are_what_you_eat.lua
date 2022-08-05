@@ -1,5 +1,5 @@
 -----------------------------------
--- You Are What You Eat
+-- ENM: You Are What You Eat
 -- Zone: Spire of Dem
 -----------------------------------
 require("scripts/globals/battlefield")
@@ -40,7 +40,6 @@ end
 battlefield_object.onEventFinish = function(player, csid, option)
     if csid == 32001 then
         player:addExp(3000)
-        xi.teleport.to(player, xi.teleport.id.EXITPROMDEM)
     end
 end
 
