@@ -25,14 +25,18 @@ end
 
 entity.onMobSpawn = function(mob ,target)
     GetNPCByID(ID.npc.PORTAL_TO_GENBU):setAnimation(xi.anim.CLOSE_DOOR)
+    mob:SetMagicCastingEnabled(false)
 end
 
 entity.onMobEngaged = function(mob, target)
     mob:messageText(mob, ID.text.SKY_GOD_OFFSET + 5)
+    mob:timer(5000, function(mobArg)
+        mobArg:SetMagicCastingEnabled(true)
+    end)
 end
 
 entity.onMobFight = function(mob, target)
-    local attack = mob:getLocalVar(xi.mod.ATT)
+    local attack = mob:getMod(xi.mod.ATT)
     -- Appears to gain +10 attack per 1% HP lost
     local hp = mob:getHPP()
     local power = (100 - hp) * 10
