@@ -14,7 +14,7 @@ abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-abilityObject.onUseAbility = function(player, target, ability)
+ability_object.onUseAbility = function(player, target, ability)
     xi.job_utils.white_mage.useAfflatusSolace(player, target, ability)
 end
 

@@ -7,13 +7,13 @@
 -----------------------------------
 require("scripts/globals/job_utils/white_mage")
 -----------------------------------
-local abilityObject = {}
+local ability_object = {}
 
-abilityObject.onAbilityCheck = function(player, target, ability)
+ability_object.onAbilityCheck = function(player, target, ability)
     return xi.job_utils.white_mage.checkBenediction(player, target, ability)
 end
 
-abilityObject.onUseAbility = function(player, target, ability)
+ability_object.onUseAbility = function(player, target, ability)
     return xi.job_utils.white_mage.useBenediction(player, target, ability)
 end
 
