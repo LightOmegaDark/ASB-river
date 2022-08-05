@@ -613,7 +613,7 @@ void SmallPacket0x011(map_session_data_t* const PSession, CCharEntity* const PCh
         }
     }
 
-    PChar->PAI->QueueAction(queueAction_t(4000ms, false, zoneutils::AfterZoneIn));
+    PChar->PAI->QueueAction(queueAction_t(4000ms, false, luautils::AfterZoneIn));
 
     // todo: kill player til theyre dead and bsod
     const char* fmtQuery = "SELECT version_mismatch FROM accounts_sessions WHERE charid = %u";
