@@ -47,17 +47,19 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
-    if mob:getLocalVar("deathControl") == 0 then
-        mob:setLocalVar("deathControl", 1)
-        local bf = mob:getBattlefield():getArea()
+    if isKiller then
+        if mob:getLocalVar("deathControl") == 0 then
+            mob:setLocalVar("deathControl", 1)
+            local bf = mob:getBattlefield():getArea()
 
-        for _, allyID in pairs(ID.operationDesertSwarm[bf]) do
-            local scorpion = GetMobByID(allyID)
+            for _, allyID in pairs(ID.operationDesertSwarm[bf]) do
+                local scorpion = GetMobByID(allyID)
 
-            if allyID ~= mob:getID() and scorpion:isAlive() then
-                scorpion:setLocalVar("wildRagePower", GetMobByID(allyID):getLocalVar("wildRagePower") + 1)
-                scorpion:addMod(xi.mod.SLEEPRESBUILD, 200)
-                scorpion:addMod(xi.mod.LULLABYRESBUILD, 200)
+                if allyID ~= mob:getID() and scorpion:isAlive() then
+                    scorpion:setLocalVar("wildRagePower", GetMobByID(allyID):getLocalVar("wildRagePower") + 1)
+                    scorpion:addMod(xi.mod.SLEEPRESBUILD, 200)
+                    scorpion:addMod(xi.mod.LULLABYRESBUILD, 200)
+                end
             end
         end
     end
