@@ -12,10 +12,6 @@ local shroomAbilities =
     {312, 2}, -- shakeshroom
 }
 
-local function resetTimer(mob)
-    mob:setLocalVar("timer", os.time() + math.random(5,20))
-end
-
 entity.onMobSpawn = function(mob)
     mob:setLocalVar("control", 0)
     mob:setMobMod(xi.mobMod.NO_MOVE, 1)
@@ -25,7 +21,7 @@ end
 
 entity.onMobEngaged = function(mob)
     mob:setMobMod(xi.mobMod.NO_MOVE, 0)
-    resetTimer(mob)
+    mob:setLocalVar("timer", os.time() + math.random(5,20))
 end
 
 entity.onMobFight = function(mob, target)
@@ -35,7 +31,7 @@ entity.onMobFight = function(mob, target)
             mobArg:useMobAbility(626)
             mobArg:setLocalVar("control", 0)
             mobArg:setAnimationSub(0)
-            resetTimer(mob)
+            mob:setLocalVar("timer", os.time() + math.random(5,20))
         end)
     end
 
@@ -44,7 +40,7 @@ entity.onMobFight = function(mob, target)
             if mob:getAnimationSub() == v[2] then
                 mob:queue(0, function(mobArg)
                     mobArg:useMobAbility(v[1])
-                    resetTimer(mobArg)
+                    mob:setLocalVar("timer", os.time() + math.random(5,20))
                 end)
                 break
             end
