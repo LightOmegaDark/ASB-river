@@ -1,7 +1,7 @@
 -----------------------------------
--- Area: Spire of Dem
--- Mob: Ingester
--- ENM: You Are What You Eat
+-- Area: Spire of Holla
+-- Mob: Cojitator
+-- ENM: Simulant
 -----------------------------------
 local entity = {}
 
