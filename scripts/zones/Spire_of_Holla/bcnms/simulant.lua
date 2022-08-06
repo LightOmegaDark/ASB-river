@@ -20,8 +20,8 @@ battlefield_object.onBattlefieldRegister = function(player, battlefield)
 end
 
 battlefield_object.onBattlefieldEnter = function(player, battlefield)
-    if player:hasKeyItem(xi.ki.CENSER_OF_ANTIPATHY) then
-        player:delKeyItem(xi.ki.CENSER_OF_ANTIPATHY)
+    if player:hasKeyItem(xi.ki.CENSER_OF_ABANDONMENT) then
+        player:delKeyItem(xi.ki.CENSER_OF_ABANDONMENT)
     end
 end
 

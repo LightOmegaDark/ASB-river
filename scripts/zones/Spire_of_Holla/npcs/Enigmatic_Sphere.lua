@@ -9,7 +9,7 @@ local entity = {}
 
 local loot =
 {
-    -- ENM: You are what you eat
+    -- ENM: Simulant
     [769] =
     {
         {
