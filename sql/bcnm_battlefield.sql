@@ -1288,6 +1288,18 @@ INSERT INTO `bcnm_battlefield` VALUES (801,3,16855072,2);
 INSERT INTO `bcnm_battlefield` VALUES (832,1,16863233,3); -- ancient_flames_backon
 INSERT INTO `bcnm_battlefield` VALUES (832,2,16863234,3);
 INSERT INTO `bcnm_battlefield` VALUES (832,3,16863235,3);
+INSERT INTO `bcnm_battlefield` VALUES (833,1,16863236,3); -- Playing Host
+INSERT INTO `bcnm_battlefield` VALUES (833,1,16863237,2);
+INSERT INTO `bcnm_battlefield` VALUES (833,1,16863238,2);
+INSERT INTO `bcnm_battlefield` VALUES (833,1,16863239,2);
+INSERT INTO `bcnm_battlefield` VALUES (833,2,16863241,3);
+INSERT INTO `bcnm_battlefield` VALUES (833,2,16863242,2);
+INSERT INTO `bcnm_battlefield` VALUES (833,2,16863243,2);
+INSERT INTO `bcnm_battlefield` VALUES (833,2,16863244,2);
+INSERT INTO `bcnm_battlefield` VALUES (833,3,16863246,3);
+INSERT INTO `bcnm_battlefield` VALUES (833,3,16863247,2);
+INSERT INTO `bcnm_battlefield` VALUES (833,3,16863248,2);
+INSERT INTO `bcnm_battlefield` VALUES (833,3,16863249,2);
 INSERT INTO `bcnm_battlefield` VALUES (864,1,16871425,3); -- desires_of_emptiness
 INSERT INTO `bcnm_battlefield` VALUES (864,1,16871426,3);
 INSERT INTO `bcnm_battlefield` VALUES (864,1,16871427,0);

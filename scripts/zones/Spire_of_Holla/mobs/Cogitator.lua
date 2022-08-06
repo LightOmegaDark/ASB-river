@@ -6,7 +6,6 @@
 local entity = {}
 
 entity.onMobEngaged = function(mob)
-    mob:setMod(xi.mod.REGAIN, 100)
     mob:setLocalVar("timer", os.time() + math.random(20, 90))
 end
 
