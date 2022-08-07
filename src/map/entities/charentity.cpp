@@ -1898,6 +1898,11 @@ bool CCharEntity::IsMobOwner(CBattleEntity* PBattleTarget)
         return true;
     }
 
+    if (PBattleTarget->isInDynamis())
+    {
+        return true;
+    }
+
     bool found = false;
 
     // clang-format off
