@@ -55,7 +55,7 @@ entity.onMobFight = function(mob, target)
         spawnDoll(mob, id)
     end
 
-    if mob:getLocalVar("dollAlive") == 1 then
+    if mob:getLocalVar("dollsLeft") > 1 then
         immunity(mob, id)
     end
 
@@ -67,11 +67,6 @@ entity.onMobFight = function(mob, target)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
-    if isKiller then
-        if mob:getLocalVar("dollsLeft") > 0 then
-            mob:getBattlefield():lose()
-        end
-    end
 end
 
 return entity
