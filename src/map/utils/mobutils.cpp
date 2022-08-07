@@ -1392,17 +1392,20 @@ Usage:
     {
         CMobEntity* PMob = new CMobEntity();
 
-        const char* Query = "SELECT zoneid, mob_groups.name, packet_name, \
-        respawntime, spawntype, dropid, mob_groups.HP, mob_groups.MP, minLevel, maxLevel, \
-        modelid, mJob, sJob, cmbSkill, cmbDmgMult, cmbDelay, behavior, links, mobType, immunity, \
-        ecosystemID, mobradius, speed, \
-        STR, DEX, VIT, AGI, `INT`, MND, CHR, EVA, DEF, ATT, ACC, \
-        slash_sdt, pierce_sdt, h2h_sdt, impact_sdt, \
-        fire_sdt, ice_sdt, wind_sdt, earth_sdt, lightning_sdt, water_sdt, light_sdt, dark_sdt, \
-        fire_res_rank, ice_res_rank, wind_res_rank, earth_res_rank, lightning_res_rank, water_res_rank, light_res_rank, dark_res_rank, \
-        Element, mob_pools.familyid, name_prefix, entityFlags, animationsub, \
-        (mob_family_system.HP / 100), (mob_family_system.MP / 100), hasSpellScript, spellList, mob_groups.poolid, \
-        allegiance, namevis, aggro, mob_pools.skill_list_id, mob_pools.true_detection, mob_family_system.detects \
+        const char* Query = "SELECT mob_groups.zoneid, mob_groups.`name`, mob_groups.packet_name, \
+        mob_groups.respawntime, mob_groups.spawntype, mob_groups.dropid, mob_groups.HP, mob_groups.MP, mob_groups.minLevel, mob_groups.maxLevel, \
+        mob_pools.modelid, mob_pools.mJob, mob_pools.sJob, mob_pools.cmbSkill, mob_pools.cmbDmgMult, mob_pools.cmbDelay, mob_pools.behavior, mob_pools.links, mob_pools.mobType, mob_pools.immunity, \
+        mob_family_system.ecosystemID, mob_family_system.mobradius, mob_family_system.speed, \
+        mob_family_system.STR, mob_family_system.DEX, mob_family_system.VIT, mob_family_system.AGI, mob_family_system.`INT`, mob_family_system.MND, mob_family_system.CHR, mob_family_system.EVA, mob_family_system.DEF, mob_family_system.ATT, mob_family_system.ACC, \
+        mob_resistances.slash_sdt, mob_resistances.pierce_sdt, mob_resistances.h2h_sdt, mob_resistances.impact_sdt, \
+        mob_resistances.fire_sdt, mob_resistances.ice_sdt, mob_resistances.wind_sdt, mob_resistances.earth_sdt, mob_resistances.lightning_sdt, mob_resistances.water_sdt, mob_resistances.light_sdt, mob_resistances.dark_sdt, \
+        mob_resistances.fire_meva, mob_resistances.ice_meva, mob_resistances.wind_meva, mob_resistances.earth_meva, mob_resistances.lightning_meva, mob_resistances.water_meva, mob_resistances.light_meva, mob_resistances.dark_meva, \
+        mob_family_system.Element, mob_pools.familyid, mob_pools.name_prefix, mob_pools.entityFlags, mob_pools.animationsub, \
+        (mob_family_system.HP / 100), (mob_family_system.MP / 100), mob_pools.hasSpellScript, mob_pools.spellList, mob_groups.poolid, \
+        mob_groups.allegiance, namevis, aggro, mob_pools.skill_list_id, mob_pools.true_detection, mob_family_system.detects, \
+        mob_family_system.charmable, \
+        mob_resistances.fire_eem, mob_resistances.ice_eem, mob_resistances.wind_eem, mob_resistances.earth_eem, mob_resistances.lightning_eem, mob_resistances.water_eem, \
+        mob_resistances.light_eem, mob_resistances.dark_eem \
         FROM mob_groups INNER JOIN mob_pools ON mob_groups.poolid = mob_pools.poolid \
         INNER JOIN mob_resistances ON mob_pools.resist_id = mob_resistances.resist_id \
         INNER JOIN mob_family_system ON mob_pools.familyid = mob_family_system.familyID \
@@ -1476,14 +1479,34 @@ Usage:
                 PMob->setModifier(Mod::LIGHT_SDT, (int16)sql->GetIntData(44));   // Modifier 60, base 10000 stored as signed integer. Positives signify less damage.
                 PMob->setModifier(Mod::DARK_SDT, (int16)sql->GetIntData(45));    // Modifier 61, base 10000 stored as signed integer. Positives signify less damage.
 
-                PMob->setModifier(Mod::FIRE_RES, (int16)(sql->GetIntData(46))); // These are stored as signed integers which
-                PMob->setModifier(Mod::ICE_RES, (int16)(sql->GetIntData(47)));  // is directly the modifier starting value.
-                PMob->setModifier(Mod::WIND_RES, (int16)(sql->GetIntData(48))); // Positives signify increased resist chance.
-                PMob->setModifier(Mod::EARTH_RES, (int16)(sql->GetIntData(49)));
-                PMob->setModifier(Mod::THUNDER_RES, (int16)(sql->GetIntData(50)));
-                PMob->setModifier(Mod::WATER_RES, (int16)(sql->GetIntData(51)));
-                PMob->setModifier(Mod::LIGHT_RES, (int16)(sql->GetIntData(52)));
-                PMob->setModifier(Mod::DARK_RES, (int16)(sql->GetIntData(53)));
+                PMob->setModifier(Mod::FIRE_EEM, (int16)sql->GetIntData(71));    // Modifier 1157, base 100 stored as signed integer. Positives signify modified meva for that element.
+                PMob->setModifier(Mod::ICE_EEM, (int16)sql->GetIntData(72));     // Modifier 1158, base 100 stored as signed integer. Positives signify modified meva for that element.
+                PMob->setModifier(Mod::WIND_EEM, (int16)sql->GetIntData(73));    // Modifier 1159, base 100 stored as signed integer. Positives signify modified meva for that element.
+                PMob->setModifier(Mod::EARTH_EEM, (int16)sql->GetIntData(74));   // Modifier 1160, base 100 stored as signed integer. Positives signify modified meva for that element.
+                PMob->setModifier(Mod::THUNDER_EEM, (int16)sql->GetIntData(75)); // Modifier 1161, base 100 stored as signed integer. Positives signify modified meva for that element.
+                PMob->setModifier(Mod::WATER_EEM, (int16)sql->GetIntData(76));   // Modifier 1162, base 100 stored as signed integer. Positives signify modified meva for that element.
+                PMob->setModifier(Mod::LIGHT_EEM, (int16)sql->GetIntData(77));   // Modifier 1163, base 100 stored as signed integer. Positives signify modified meva for that element.
+                PMob->setModifier(Mod::DARK_EEM, (int16)sql->GetIntData(78));    // Modifier 1164, base 100 stored as signed integer. Positives signify modified meva for that element.
+
+                PMob->setModifier(Mod::FIRE_MEVA, (int16)(sql->GetIntData(46))); // These are stored as signed integers which
+                PMob->setModifier(Mod::ICE_MEVA, (int16)(sql->GetIntData(47)));  // is directly the modifier starting value.
+                PMob->setModifier(Mod::WIND_MEVA, (int16)(sql->GetIntData(48))); // Positives signify increased resist chance.
+                PMob->setModifier(Mod::EARTH_MEVA, (int16)(sql->GetIntData(49)));
+                PMob->setModifier(Mod::THUNDER_MEVA, (int16)(sql->GetIntData(50)));
+                PMob->setModifier(Mod::WATER_MEVA, (int16)(sql->GetIntData(51)));
+                PMob->setModifier(Mod::LIGHT_MEVA, (int16)(sql->GetIntData(52)));
+                PMob->setModifier(Mod::DARK_MEVA, (int16)(sql->GetIntData(53)));
+
+                /* Todo: hook this up, seems to force resist tiering
+                PMob->setModifier(Mod::FIRE_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::ICE_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::WIND_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::EARTH_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::THUNDER_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::WATER_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::LIGHT_RES_RANK, (int16)(sql->GetIntData(??)));
+                PMob->setModifier(Mod::DARK_RES_RANK, (int16)(sql->GetIntData(??)));
+                */
 
                 PMob->m_Element     = (uint8)sql->GetIntData(54);
                 PMob->m_Family      = (uint16)sql->GetIntData(55);
@@ -1509,6 +1532,15 @@ Usage:
                 PMob->m_MobSkillList  = sql->GetUIntData(67);
                 PMob->m_TrueDetection = sql->GetUIntData(68);
                 PMob->setMobMod(MOBMOD_DETECTION, sql->GetUIntData(69));
+
+                PMob->setMobMod(MOBMOD_CHARMABLE, sql->GetUIntData(70));
+                // Overwrite base family charmables depending on mob type. Disallowed mobs which should be charmable
+                // can be set in mob_spawn_mods or in their onInitialize
+                if (PMob->m_Type & MOBTYPE_EVENT || PMob->m_Type & MOBTYPE_FISHED || PMob->m_Type & MOBTYPE_BATTLEFIELD ||
+                    PMob->m_Type & MOBTYPE_NOTORIOUS)
+                {
+                    PMob->setMobMod(MOBMOD_CHARMABLE, 0);
+                }
 
                 // must be here first to define mobmods
                 mobutils::InitializeMob(PMob, zoneutils::GetZone(targetZoneId));
