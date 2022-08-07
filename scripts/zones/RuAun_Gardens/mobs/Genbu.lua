@@ -9,8 +9,6 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
--- TODO: Should wait 5 seconds to cast anything on spawn but MAGIC_DELAY doesnt seem to be working
-
 entity.onMobInitialize = function(mob)
     -- Based on tested stats found at https://docs.google.com/spreadsheets/d/1YBoveP-weMdidrirY-vPDzHyxbEI2ryECINlfCnFkLI/edit#gid=1789487472
     mob:setMod(xi.mod.SILENCERES, 90)
@@ -19,7 +17,6 @@ entity.onMobInitialize = function(mob)
     mob:addMod(xi.mod.DOUBLE_ATTACK, 10)
     mob:setDamage(120)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
-    mob:setMobMod(xi.mobMod.MAGIC_DELAY, 5)
     mob:setMobMod(xi.mobMod.MAGIC_COOL, 35)
 end
 

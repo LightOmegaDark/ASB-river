@@ -18,7 +18,6 @@ entity.onMobInitialize = function(mob)
     mob:addMod(xi.mod.DOUBLE_ATTACK, 10)
     mob:setDamage(145)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
-    mob:setMobMod(xi.mobMod.MAGIC_DELAY, 5)
     mob:setMobMod(xi.mobMod.MAGIC_COOL, 35)
 end
 

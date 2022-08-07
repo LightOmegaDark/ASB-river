@@ -9,6 +9,8 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
+-- TODO: MG Slave Gloves follow her weirdly due to a 3 second delay in onMobRoam. This needs to be cleaned up somehow.
+
 local pathNodes =
 {
     { x = 880.16, y =  -99.81, z = -550.50},
@@ -69,7 +71,7 @@ local function calculateValidSlaveGlobePositions(zone, mgPos, spacingDistance)
 
     for slavePositionSlot, _ in ipairs(slaveGlobes) do
         local xOffset = spacingDistance * slavePositionSlot
-        local slavePosition =  utils.lateralTranslateWithOriginRotation(mgPos, {x = xOffset - 2, y = 0, z = 0})
+        local slavePosition =  utils.lateralTranslateWithOriginRotation(mgPos, {x = xOffset, y = 0, z = 0})
 
         if zone:isNavigablePoint(slavePosition) then
             table.insert(slavePositions, slavePosition)

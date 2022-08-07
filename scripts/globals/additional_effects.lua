@@ -122,7 +122,6 @@ xi.additionalEffect.attack = function(attacker, defender, baseAttackDamage, item
         SELF_BUFF = 11,
         DEATH = 12,
         BRIGAND = 13,
-        WARP = 14,
     }
 
     -- If we're not going to proc, lets not execute all those checks!
