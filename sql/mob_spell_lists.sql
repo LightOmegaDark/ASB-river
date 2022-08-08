@@ -5146,6 +5146,14 @@ INSERT INTO `mob_spell_lists` VALUES('Kurrea',509,112,1,255); -- flash (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Kurrea',509,376,1,255); -- horde_lullaby (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Kurrea',509,463,1,255); -- foe_lullaby (1~255)
 
+-- Pilwiz (510)
+INSERT INTO `mob_spell_lists` VALUES('Pilwiz', 510, 190, 1, 255); -- Stonega II (1~255)
+
+-- Generic Doll (511)
+INSERT INTO `mob_spell_lists` VALUES('Generic_Doll', 511, 194, 1, 255); -- Thundaga (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Generic_Doll', 511, 251, 1, 255); -- Shock Spikes (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Generic_Doll', 511, 356, 1, 255); -- Paralyga (1~255)
+
 -- Hamadryad (512)
 INSERT INTO `mob_spell_lists` VALUES('Hamadryad',512,145,1,255); -- fire_ii (1~255)
 
@@ -5221,6 +5229,11 @@ INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Dark',5031,232,1,255); -- 
 INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Dark',5031,274,1,255); -- Sleepga II (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Dark',5031,360,1,255); -- Dispelga (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Dark',5031,361,1,255); -- Blindga (1~255)
+
+-- Ullikummi (5032)
+INSERT INTO `mob_spell_lists` VALUES('Ullikummi', 5032, 34, 1, 255); -- Diaga II
+INSERT INTO `mob_spell_lists` VALUES('Ullikummi', 5032, 40, 1, 255); -- Banishga III
+INSERT INTO `mob_spell_lists` VALUES('Ullikummi', 5032, 112, 1, 255); -- Flash
 
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;
