@@ -8,7 +8,7 @@ require("scripts/globals/status")
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:setMod(xi.mod.ADD_EFFECT, 1)
+    mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
@@ -45,10 +45,11 @@ end
 
 entity.onMobDeath = function(mob, player, isKiller)
     local id = mob:getID()
-
-    for i = 1, 4 do
-        if GetMobByID(id+i):isAlive() then
-            GetMobByID(id+i):setHP(0)
+    if isKiller then
+        for i = 1, 4 do
+            if GetMobByID(id+i):isAlive() then
+                GetMobByID(id+i):setHP(0)
+            end
         end
     end
 end

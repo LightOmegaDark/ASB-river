@@ -36,9 +36,11 @@ end
 entity.onMobDeath = function(mob, player, isKiller)
     local id = mob:getID()
 
-    for i = 1, 3 do
-        if GetMobByID(id+i):isAlive() then
-            GetMobByID(id+i):setHP(0)
+    if isKiller then
+        for i = 1, 3 do
+            if GetMobByID(id+i):isAlive() then
+                GetMobByID(id+i):setHP(0)
+            end
         end
     end
 end
