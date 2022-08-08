@@ -7,18 +7,6 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-local elements =
-{
-    xi.damageType.EARTH,
-    xi.damageType.WATER,
-    xi.damageType.WIND,
-    xi.damageType.FIRE,
-    xi.damageType.ICE,
-    xi.damageType.THUNDER,
-    xi.damageType.LIGHT,
-    xi.damageType.DARK,
-}
-
 entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.REGEN, 20)
     mob:setLocalVar("phalanxControl", 1)
