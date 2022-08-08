@@ -9,38 +9,39 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob, target)
-    GetNPCByID(ID.npc.PORTAL_TO_SUZAKU):setAnimation(xi.anim.CLOSE_DOOR)
-end
-
 entity.onMobInitialize = function(mob)
+    -- Based on tested stats found at https://docs.google.com/spreadsheets/d/1YBoveP-weMdidrirY-vPDzHyxbEI2ryECINlfCnFkLI/edit#gid=1789487472
+    mob:setMod(xi.mod.SILENCERES, 90)
+    mob:addMod(xi.mod.ATT, 150)
+    mob:addMod(xi.mod.DEF, 140)
+    mob:addMod(xi.mod.EVA, 100)
+    mob:addMod(xi.mod.VIT, 90)
+    mob:setDamage(145)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+    mob:setMobMod(xi.mobMod.MAGIC_COOL, 35)
 end
 
--- Return the selected spell ID.
-entity.onMobMagicPrepare = function(mob, target, spellId)
-    -- Suzaku uses     Burn, Fire IV, Firaga III, Flare
-    -- Let's give -ga3 a higher distribution than the others.
-    local rnd = math.random()
+entity.onMobSpawn = function(mob ,target)
+    GetNPCByID(ID.npc.PORTAL_TO_SUZAKU):setAnimation(xi.anim.CLOSE_DOOR)
+    mob:SetMagicCastingEnabled(false)
+end
 
-    if rnd < 0.5 then
-        return 176 -- firaga 3
-    elseif rnd < 0.7 then
-        return 147 -- fire 4
-    elseif rnd < 0.9 then
-        return 204 -- flare
-    else
-        return 235 -- burn
-    end
+entity.onMobEngaged = function(mob, target)
+    mob:messageText(mob, ID.text.SKY_GOD_OFFSET + 7)
+    mob:timer(5000, function(mobArg)
+        mobArg:SetMagicCastingEnabled(true)
+    end)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
     return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENFIRE)
 end
 
-entity.onMobDeath = function(mob, player, optParams)
-    player:showText(mob, ID.text.SKY_GOD_OFFSET + 8)
-    GetNPCByID(ID.npc.PORTAL_TO_SUZAKU):setAnimation(xi.anim.OPEN_DOOR)
+entity.onMobDeath = function(mob, player, isKiller)
+    if isKiller then
+        mob:messageText(mob, ID.text.SKY_GOD_OFFSET + 8)
+        GetNPCByID(ID.npc.PORTAL_TO_SUZAKU):setAnimation(xi.anim.OPEN_DOOR)
+    end
 end
 
 entity.onMobDespawn = function(mob)
