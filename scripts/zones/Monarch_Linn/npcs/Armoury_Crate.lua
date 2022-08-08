@@ -28,6 +28,26 @@ local loot =
             {itemid = 13549, droprate = 300}, -- Ether Ring
         },
     },
+
+    -- ENM: Bad Seed
+    [963] =
+    {
+        {
+            {itemid =    0, droprate = 950}, -- Nothing
+            {itemid = 1842, droprate =  50}, -- Cloud Evoker
+        },
+        {
+            {itemid =     0, droprate = 500}, -- Nothing
+            {itemid = 15433, droprate = 250}, -- Reverend Sash
+            {itemid = 15434, droprate = 250}, -- Vanguard Belt
+        },
+        {
+            {itemid =     0, droprate = 350}, -- Nothing
+            {itemid = 13550, droprate = 200}, -- Crossbowman's Ring
+            {itemid = 14675, droprate = 150}, -- Woodsman Ring
+            {itemid = 13549, droprate = 300}, -- Ether Ring
+        },
+    },
 }
 
 entity.onTrade = function(player, npc, trade)
