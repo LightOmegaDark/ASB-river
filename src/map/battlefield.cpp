@@ -347,16 +347,10 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool enter, BATTLEFIELDMOB
                 m_EnteredPlayers.emplace(PEntity->id);
                 PChar->ClearTrusts();
                 luautils::OnBattlefieldEnter(PChar, this);
-
-                if (m_showTimer)
+                // Show timer except in Temenos and Apollyon
+                if (this->GetZoneID() != 37 && this->GetZoneID() != 38)
                 {
                     charutils::SendTimerPacket(PChar, GetRemainingTime());
-                }
-
-                // Try to add the player's pet in case they have one that can
-                if (PChar->PPet != nullptr)
-                {
-                    InsertEntity(PChar->PPet, true);
                 }
             }
             else if (!IsRegistered(PChar))
