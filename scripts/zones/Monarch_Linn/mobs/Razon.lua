@@ -25,7 +25,6 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, -7500)
     mob:addStatusEffect(xi.effect.STONESKIN, 150, 0, 300)
 
-
     mob:setLocalVar("triggerElement1", elements[math.random(1,8)])
     mob:setLocalVar("triggerElement2", elements[math.random(1,8)])
 
