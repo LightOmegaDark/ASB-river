@@ -1573,6 +1573,7 @@ xi.treasure.onTrade = function(player, npc, trade, chestType)
             not player:hasKeyItem(xi.ki.OLD_GAUNTLETS)
         then
             player:messageSpecial(msgBase)
+            player:delStatusEffectsByFlag(xi.effectFlag.DETECTABLE)
             npcUtil.giveKeyItem(player, xi.ki.OLD_GAUNTLETS)
             player:confirmTrade()
             moveChest(npc, zoneId, chestType)
@@ -1587,6 +1588,7 @@ xi.treasure.onTrade = function(player, npc, trade, chestType)
             not player:hasItem(info.af[mJob].reward)
         then
             player:messageSpecial(msgBase)
+            player:delStatusEffectsByFlag(xi.effectFlag.DETECTABLE)
             if npcUtil.giveItem(player, info.af[mJob].reward) then
                 player:confirmTrade()
                 moveChest(npc, zoneId, chestType)
@@ -1601,6 +1603,7 @@ xi.treasure.onTrade = function(player, npc, trade, chestType)
         for _, v in pairs(info.misc) do
             if v.test(player) then
                 player:messageSpecial(msgBase)
+                player:delStatusEffectsByFlag(xi.effectFlag.DETECTABLE)
                 v.code(player)
                 player:confirmTrade()
                 moveChest(npc, zoneId, chestType)
@@ -1612,6 +1615,7 @@ xi.treasure.onTrade = function(player, npc, trade, chestType)
     -- map
     if info.map and not player:hasKeyItem(info.map) then
         player:messageSpecial(msgBase)
+        player:delStatusEffectsByFlag(xi.effectFlag.DETECTABLE)
         npcUtil.giveKeyItem(player, info.map)
         player:confirmTrade()
         moveChest(npc, zoneId, chestType)
@@ -1624,6 +1628,9 @@ xi.treasure.onTrade = function(player, npc, trade, chestType)
         moveChest(npc, zoneId, chestType)
         return
     end
+
+    -- All options from this point forward are considered a success, so remove detectable status effects
+    player:delStatusEffectsByFlag(xi.effectFlag.DETECTABLE)
 
     -- non-quest reward
     player:messageSpecial(msgBase)
