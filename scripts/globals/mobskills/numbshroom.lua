@@ -11,16 +11,17 @@ require("scripts/globals/mobskills")
 -----------------------------------
 local mobskillObject = {}
 
-mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    if mob:getMobMod(xi.mobMod.VAR) == 1 then
+mobskill_object.onMobSkillCheck = function(target, mob, skill)
+    if mob:getAnimationSub() == 1 then
         return 0
     end
 
     return 1
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    mob:setMobMod(xi.mobMod.VAR, 2)
+mobskill_object.onMobWeaponSkill = function(target, mob, skill)
+    mob:setAnimationSub(2)
+
     local numhits = 1
     local accmod = 1
     local dmgmod = 2

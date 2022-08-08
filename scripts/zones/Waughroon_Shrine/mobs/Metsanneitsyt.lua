@@ -11,7 +11,13 @@ entity.onMobInitialize = function(mob)
     mob:setMod(xi.mod.SLEEP_MEVA, 50)
 end
 
-entity.onMobDeath = function(mob, player, optParams)
+entity.onMobEngaged = function(mob, target)
+    mob:timer(3000, function(mobArg)
+        mobArg:useMobAbility(686)
+    end)
+end
+
+entity.onMobDeath = function(mob, player, isKiller)
 end
 
 return entity

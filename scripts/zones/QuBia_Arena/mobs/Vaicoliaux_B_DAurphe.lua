@@ -7,7 +7,12 @@ mixins = { require("scripts/mixins/job_special") }
 -----------------------------------
 local entity = {}
 
-entity.onMobDeath = function(mob, player, optParams)
+entity.onMobSpawn = function(mob)
+    mob:setMod(xi.mod.LULLABYRES, 85)
+    mob:setMod(xi.mod.SLEEPRES, 15)
+end
+
+entity.onMobDeath = function(mob, player, isKiller)
 end
 
 return entity

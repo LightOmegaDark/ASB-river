@@ -5,7 +5,11 @@
 -----------------------------------
 local entity = {}
 
-entity.onMobDeath = function(mob, player, optParams)
+entity.onMobSpawn = function(mob)
+    mob:setMobMod(xi.mobMod.NO_STANDBACK, 1)
+end
+
+entity.onMobDeath = function(mob, player, isKiller)
 end
 
 return entity

@@ -38,11 +38,12 @@ local function removeTentacle(mob, tentacles)
 
     mob:addMod(xi.mod.ATT, 50)
     mob:addMod(xi.mod.REGAIN, 50)
-    mob:addMod(xi.mod.BIND_MEVA, 10)
-    mob:addMod(xi.mod.BLIND_MEVA, 10)
-    mob:addMod(xi.mod.SLEEP_MEVA, 10)
-    mob:addMod(xi.mod.LULLABY_MEVA, 10)
-    mob:addMod(xi.mod.GRAVITY_MEVA, 10)
+    mob:addMod(xi.mod.BINDRES, 10)
+    mob:addMod(xi.mod.BLINDRES, 10)
+    mob:addMod(xi.mod.SLEEPRES, 10)
+    mob:addMod(xi.mod.LULLABYRES, 10)
+    mob:addMod(xi.mod.GRAVITYRES, 10)
+    mob:addMod(xi.mod.DELAY, -150)
 end
 
 entity.onMobFight = function(mob, target)
