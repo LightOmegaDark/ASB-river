@@ -13,9 +13,9 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local CD = player:getCharVar("[ENM]MonarchBeard")
+    local cd = player:getCharVar("[ENM]MonarchBeard")
 
-    if player:getCurrentMission(xi.mission.log_id.COP) > xi.mission.id.cop.AN_ETERNAL_MELODY and CD < os.time() then
+    if player:getCurrentMission(xi.mission.log_id.COP) > xi.mission.id.cop.AN_ETERNAL_MELODY and cd < os.time() then
         if player:hasKeyItem(xi.ki.MONARCH_BEARD) then
             print(520)
             player:startEvent(520)
