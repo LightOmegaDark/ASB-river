@@ -33,9 +33,9 @@ entity.onMobSpawn = function(mob)
         if attackType == xi.attackType.MAGICAL and
             (damageType == mob:getLocalVar("triggerElement1") or damageType == mob:getLocalVar("triggerElement2"))
         then
-            local TP = mobArg:getTP()
+            local tp = mobArg:getTP()
             mobArg:useMobAbility(626) -- dust cloud
-            mobArg:setTP(TP)
+            mobArg:setTP(tp)
 
             if mobArg:getAnimationSub() == 4 then
                 mobArg:useMobAbility(575) -- self destruct

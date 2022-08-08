@@ -18,19 +18,16 @@ entity.onMobSpawn = function(mob)
     mob:addListener("TAKE_DAMAGE", "RAZON_TAKE_DAMAGE", function(mobArg, amount, attacker, attackType, damageType)
         if attackType == xi.attackType.MAGICAL then
             if damageType == mob:getLocalVar("phalanxTrigger") then
-                print("Phalanx Trigger hit!")
                 mobArg:setLocalVar("phalanxControl", 0)
                 mobArg:setLocalVar("phalanxTimer", os.time() + math.random(10, 60))
                 mobArg:delStatusEffectSilent(xi.effect.PHALANX)
             end
             if damageType == mob:getLocalVar("spikesTrigger") then
-                print("Spikes Trigger hit!")
                 mobArg:setLocalVar("spikesControl", 0)
                 mobArg:setLocalVar("spikesTimer", os.time() + math.random(10, 60))
                 mobArg:delStatusEffectSilent(xi.effect.BLAZE_SPIKES)
             end
             if damageType == mob:getLocalVar("enfireTrigger") then
-                print("Enfire Trigger hit!")
                 mobArg:setLocalVar("enfireControl", 0)
                 mobArg:setLocalVar("enfireTimer", os.time() + math.random(10, 60))
                 mobArg:delStatusEffectSilent(xi.effect.ENFIRE)
