@@ -17,42 +17,49 @@ local controlBombs =
 entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.SLEEPRES, 75)
     mob:setMod(xi.mod.LULLABYRES, 75)
-    mob:setLocalVar("mobsDead", 0)
 
-    for bf = 1, 3 do
+    mob:timer(1, function(mobArg)
+        local bfNum = mobArg:getBattlefield():getArea()
+        local bf = mobArg:getBattlefield()
+
         for i = 1, 2 do
-            if mob:getID() == controlBombs[bf][i] then
-                mob:setLocalVar("controlBombID", controlBombs[bf][i])
-                mob:setLocalVar("adds", math.random(0,2))
-                if mob:getLocalVar("wave") == 0 then
-                    mob:setLocalVar("adds", 2)
-                end
+            if mobArg:getID() == controlBombs[bfNum][i] then
+                bf:setLocalVar("mobsDead", 0)
+                bf:setLocalVar("controlBombID", controlBombs[bfNum][i])
+                bf:setLocalVar("adds", math.random(0,2))
 
-                for y = 1, mob:getLocalVar("adds") do
-                    SpawnMob(mob:getID() + y)
+                if bf:getLocalVar("wave") == 0 then
+                    bf:setLocalVar("adds", 2)
+                else
+                    for y = 1, bf:getLocalVar("adds") do
+                        SpawnMob(mobArg:getID() + y)
+                    end
                 end
-                break
             end
         end
-    end
+    end)
+
+    mob:addListener("TAKE_DAMAGE", "DEVIL_TAKE_DAMAGE", function(mobArg, amount, attacker, attackType, damageType)
+        if amount > mobArg:getHP() then
+            local bfNum = mob:getBattlefield():getArea()
+            local bf = mob:getBattlefield()
+            bf:setLocalVar("mobsDead", bf:getLocalVar("mobsDead") + 1)
+            if
+                bf:getLocalVar("mobsDead") >= bf:getLocalVar("adds") + 1 and
+                bf:getLocalVar("wave") < 3
+            then
+                bf:setLocalVar("wave", bf:getLocalVar("wave") + 1)
+                if bf:getLocalVar("controlBombID") == controlBombs[bfNum][1] then
+                    SpawnMob(controlBombs[bfNum][2])
+                else
+                    SpawnMob(controlBombs[bfNum][1])
+                end
+            end
+        end
+    end)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
-    if isKiller then
-        mob:setLocalVar("mobsDead", mob:getLocalVar("mobsDead") + 1)
-        if
-            mob:getLocalVar("mobsDead") >= mob:getLocalVar("adds") + 1 and
-            mob:getLocalVar("wave") < 4
-        then
-            mob:setLocalVar("wave", mob:getLocalVar("wave") + 1)
-            local bfNum = mob:getBattlefield():getArea()
-            if mob:getLocalVar("controlBombID") == controlBombs[bfNum][1] then
-                SpawnMob(controlBombs[bfNum][2])
-            else
-                SpawnMob(controlBombs[bfNum][1])
-            end
-        end
-    end
 end
 
 return entity
