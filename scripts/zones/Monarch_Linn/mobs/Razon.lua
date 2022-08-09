@@ -24,6 +24,7 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGPHYS, -7500)
     mob:setMod(xi.mod.UDMGRANGE, -7500)
     mob:addStatusEffect(xi.effect.STONESKIN, 150, 0, 300)
+    mob:setLocalVar("loseControl", 0)
 
     mob:setLocalVar("triggerElement1", elements[math.random(1,8)])
     mob:setLocalVar("triggerElement2", elements[math.random(1,8)])
@@ -37,7 +38,7 @@ entity.onMobSpawn = function(mob)
             mobArg:setTP(tp)
 
             if mobArg:getAnimationSub() == 4 then
-                mobArg:useMobAbility(575) -- self destruct
+                mobArg:useMobAbility(575)
             elseif mobArg:getAnimationSub() == 5 then
                 mobArg:useMobAbility(573)
             else
@@ -45,6 +46,14 @@ entity.onMobSpawn = function(mob)
             end
         end
     end)
+end
+
+entity.onMobWeaponSkill = function(target, mob, skill)
+    if skill:getID() == 571 then
+        mob:timer(7000, function(mobArg)
+            mobArg:getBattlefield():lose()
+        end)
+    end
 end
 
 entity.onMobDeath = function(mob)
