@@ -65,21 +65,21 @@ local battlefields =
     [xi.zone.SPIRE_OF_HOLLA] =
     {
         { 0,  768,    0},   -- Ancient Flames Beckon (PM1-3)
-     -- { 1,  769,    0},   -- Simulant (ENM)
+        { 1,  769,    0},   -- Simulant (ENM)
      -- { 2,  770, 3351},   -- Empty Hopes (KC30)
     },
 
     [xi.zone.SPIRE_OF_DEM] =
     {
         { 0,  800,    0},   -- Ancient Flames Beckon (PM1-3)
-     -- { 1,  801,    0},   -- You Are What You Eat (ENM)
+        { 1,  801,    0},   -- You Are What You Eat (ENM)
      -- { 2,  802, 3351},   -- Empty Dreams (KC30)
     },
 
     [xi.zone.SPIRE_OF_MEA] =
     {
         { 0,  832,    0},   -- Ancient Flames Beckon (PM1-3)
-     -- { 1,  833,    0},   -- Playing Host (ENM)
+        { 1,  833,    0},   -- Playing Host (ENM)
      -- { 2,  834, 3351},   -- Empty Desires (KC30)
     },
 
@@ -105,8 +105,8 @@ local battlefields =
     {
         { 0,  960,    0},   -- Ancient Vows (PM2-5)
         { 1,  961,    0},   -- The Savage (PM4-2)
-     -- { 2,  962,    0},   -- Fire in the Sky (ENM)
-     -- { 3,  963,    0},   -- Bad Seed (ENM)
+        { 2,  962,    0},   -- Fire in the Sky (ENM)
+        { 3,  963,    0},   -- Bad Seed (ENM)
      -- { 4,  964,    0},   -- Bugard in the Clouds (ENM)
      -- { 5,  965,    0},   -- Beloved of the Atlantes (ENM)
         { 6,  966,    0},   -- Uninvited Guests (Quest)

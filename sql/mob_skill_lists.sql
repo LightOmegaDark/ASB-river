@@ -1107,7 +1107,10 @@ INSERT INTO `mob_skill_lists` VALUES ('Troll',246,1746);
 -- INSERT INTO `mob_skill_lists` VALUES ('Troll',246,1748);
 -- INSERT INTO `mob_skill_lists` VALUES ('Troll',246,1749);
 -- 247: Tube
--- 248: free
+INSERT INTO `mob_skill_lists` VALUES ('Razon',248,567);
+INSERT INTO `mob_skill_lists` VALUES ('Razon',248,568);
+INSERT INTO `mob_skill_lists` VALUES ('Razon',248,569);
+INSERT INTO `mob_skill_lists` VALUES ('Razon',248,570);
 INSERT INTO `mob_skill_lists` VALUES ('Ullikummi',249,1035);
 INSERT INTO `mob_skill_lists` VALUES ('Uragnite_shell',250,1571); -- gas_shell
 INSERT INTO `mob_skill_lists` VALUES ('Uragnite_shell',250,1572); -- venom_shell
@@ -1939,7 +1942,11 @@ INSERT INTO `mob_skill_lists` VALUES ('Capricious_Cassie',411,726);
 INSERT INTO `mob_skill_lists` VALUES ('Capricious_Cassie',411,727);
 INSERT INTO `mob_skill_lists` VALUES ('Capricious_Cassie',411,728);
 INSERT INTO `mob_skill_lists` VALUES ('Shooting_Fish',412,1865); -- knockback splashbreath
--- 413 to 431: free
+INSERT INTO `mob_skill_lists` VALUES ('Cogitator',413,1242); -- empty cutter
+INSERT INTO `mob_skill_lists` VALUES ('Cogitator',413,1243); -- trinary tap
+INSERT INTO `mob_skill_lists` VALUES ('Cogitator',413,1251); -- trinary tap
+INSERT INTO `mob_skill_lists` VALUES ('Cogitator',413,1252); -- shadow spread
+-- 414 to 431: free
 INSERT INTO `mob_skill_lists` VALUES ('Gilagoge_Tlugvi',432,332); -- entangle
 INSERT INTO `mob_skill_lists` VALUES ('Goga_Tlugvi',433,2162); -- leafstorm
 INSERT INTO `mob_skill_lists` VALUES ('Ulagohvsdi_Tlugvi',434,2162); -- pinecone bomb
