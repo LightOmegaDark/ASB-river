@@ -5154,6 +5154,11 @@ INSERT INTO `mob_spell_lists` VALUES('Generic_Doll', 511, 194, 1, 255); -- Thund
 INSERT INTO `mob_spell_lists` VALUES('Generic_Doll', 511, 251, 1, 255); -- Shock Spikes (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Generic_Doll', 511, 356, 1, 255); -- Paralyga (1~255)
 
+-- Snow Devil (513)
+INSERT INTO `mob_spell_lists` VALUES('Snow_Devil', 513, 152, 1, 255); -- Blizzard IV (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Snow_Devil', 513, 181, 1, 255); -- Blizzaga III (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Snow_Devil', 513, 455, 1, 255); -- Ice Threnody (1~255)
+
 -- AirSkyBoat Specific Starts at 5000
 -- 5000 -> 5010 is Era Dynamis
 
