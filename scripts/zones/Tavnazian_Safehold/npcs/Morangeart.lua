@@ -17,14 +17,11 @@ entity.onTrigger = function(player, npc)
 
     if player:getCurrentMission(xi.mission.log_id.COP) > xi.mission.id.cop.AN_ETERNAL_MELODY and cd < os.time() then
         if player:hasKeyItem(xi.ki.MONARCH_BEARD) then
-            print(520)
             player:startEvent(520)
         else
-            print(521)
             player:startEvent(521)
         end
     else
-        print(523)
         player:startEvent(523)
     end
 end
@@ -33,8 +30,6 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    print ("csid is: ")
-    print(csid)
     if csid == 521 then
         player:addKeyItem(xi.ki.MONARCH_BEARD)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.MONARCH_BEARD)
