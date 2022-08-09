@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: Monarch Linn
--- Mob: Razon
--- ENM: Fire in the Sky
+-- Mob: Hamadryad
+-- ENM: Bad Seed
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
@@ -15,7 +15,7 @@ entity.onMobSpawn = function(mob)
     mob:setLocalVar("spikesTrigger",  math.random(6,13))
     mob:setLocalVar("enfireTrigger",  math.random(6,13))
 
-    mob:addListener("TAKE_DAMAGE", "RAZON_TAKE_DAMAGE", function(mobArg, amount, attacker, attackType, damageType)
+    mob:addListener("TAKE_DAMAGE", "HAMADRYAD_TAKE_DAMAGE", function(mobArg, amount, attacker, attackType, damageType)
         if attackType == xi.attackType.MAGICAL then
             if damageType == mob:getLocalVar("phalanxTrigger") then
                 mobArg:setLocalVar("phalanxControl", 0)
