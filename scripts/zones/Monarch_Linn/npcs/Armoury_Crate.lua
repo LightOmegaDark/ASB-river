@@ -48,6 +48,34 @@ local loot =
             {itemid = 13549, droprate = 300}, -- Ether Ring
         },
     },
+
+    -- ENM: Bugard in the Clouds
+    [964] =
+    {
+        {
+            {itemid = 678, droprate = 1000},-- Aluminum Ore
+        },
+        {
+            {itemid = 678, droprate = 1000}, -- Aluminum Ore
+        },
+        {
+            {itemid =    0, droprate = 950}, -- Nothing
+            {itemid = 1842, droprate =  50}, -- Cloud Evoker
+        },
+        {
+            {itemid =     0, droprate = 700}, -- Nothing
+            {itemid = 17133, droprate = 100}, -- Chanter's Staff
+            {itemid = 16965, droprate = 100}, -- Koryukagemitsu
+            {itemid = 18411, droprate = 100}, -- Buboso
+        },
+        {
+            {itemid =     0, droprate = 600}, -- Nothing
+            {itemid = 14682, droprate = 100}, -- Kshama Ring No. 2
+            {itemid = 14683, droprate = 100}, -- Kshama Ring No. 4
+            {itemid = 14685, droprate = 100}, -- Kshama Ring No. 5
+            {itemid = 14686, droprate = 100}, -- Kshama Ring No. 9
+        },
+    },
 }
 
 entity.onTrade = function(player, npc, trade)
