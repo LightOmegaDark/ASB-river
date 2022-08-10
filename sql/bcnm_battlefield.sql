@@ -1168,6 +1168,12 @@ INSERT INTO `bcnm_battlefield` VALUES (643,3,16801848,3);
 INSERT INTO `bcnm_battlefield` VALUES (644,1,16801850,3);
 INSERT INTO `bcnm_battlefield` VALUES (644,2,16801852,3);
 INSERT INTO `bcnm_battlefield` VALUES (644,3,16801854,3);
+INSERT INTO `bcnm_battlefield` VALUES (665,1,16904217,3); -- Beloved of the Atlantes
+INSERT INTO `bcnm_battlefield` VALUES (665,1,16904218,2);
+INSERT INTO `bcnm_battlefield` VALUES (665,2,16904220,3);
+INSERT INTO `bcnm_battlefield` VALUES (665,2,16904221,2);
+INSERT INTO `bcnm_battlefield` VALUES (665,3,16904223,3);
+INSERT INTO `bcnm_battlefield` VALUES (665,3,16904224,2);
 INSERT INTO `bcnm_battlefield` VALUES (672,1,16809987,3); -- head_wind
 INSERT INTO `bcnm_battlefield` VALUES (672,1,16809986,3);
 INSERT INTO `bcnm_battlefield` VALUES (672,1,16809985,3);
