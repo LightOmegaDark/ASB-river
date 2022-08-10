@@ -12509,7 +12509,7 @@ INSERT INTO `mob_groups` VALUES (18,3942,190,'Tomb_Bat',660,0,2423,0,0,17,19,0);
 INSERT INTO `mob_groups` VALUES (19,857,190,'Crypt_Ghost',0,128,544,0,0,20,21,0);
 INSERT INTO `mob_groups` VALUES (20,3152,190,'Plague_Bats',660,2,80,0,0,15,17,0);
 INSERT INTO `mob_groups` VALUES (21,5726,190,'Ankou',3600,1,2989,650,650,21,21,0);
-INSERT INTO `mob_groups` VALUES (22,4569,190,'Barbastelle',0,128,2971,0,0,16,19,0);
+INSERT INTO `mob_groups` VALUES (22,4569,190,'Barbastelle',0,128,2971,550,0,16,19,0);
 INSERT INTO `mob_groups` VALUES (23,1690,190,'Goblin_Mugger',660,0,1118,0,0,21,23,0);
 INSERT INTO `mob_groups` VALUES (24,1683,190,'Goblin_Leecher',660,0,1106,0,0,21,23,0);
 INSERT INTO `mob_groups` VALUES (25,1666,190,'Goblin_Gambler',660,0,1080,0,0,21,23,0);
@@ -12523,7 +12523,7 @@ INSERT INTO `mob_groups` VALUES (32,3719,190,'Spartoi_Sorcerer',960,0,2301,0,0,8
 INSERT INTO `mob_groups` VALUES (33,2388,190,'Locus_Lemures',960,0,1506,0,0,80,82,0);
 INSERT INTO `mob_groups` VALUES (34,709,190,'Cherry_Sapling',0,128,462,0,0,62,64,0);
 INSERT INTO `mob_groups` VALUES (35,671,190,'Cemetery_Cherry',0,128,442,40000,10000,72,73,0);
-INSERT INTO `mob_groups` VALUES (36,244,190,'Locus_Armet_Beetle',330,0,169,302500,0,134,136,0);
+INSERT INTO `mob_groups` VALUES (36,244,190,'Bonnet_Beetle',330,0,169,0,0,79,83,0);
 INSERT INTO `mob_groups` VALUES (37,4261,190,'Vrtra',0,128,2592,100000,0,90,90,0);
 INSERT INTO `mob_groups` VALUES (38,3124,190,'Pey',0,128,0,0,0,76,76,0);
 INSERT INTO `mob_groups` VALUES (39,2105,190,'Iruci',0,128,0,0,0,76,76,0);

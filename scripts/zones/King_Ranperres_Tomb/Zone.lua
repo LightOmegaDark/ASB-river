@@ -53,7 +53,7 @@ end
 zoneObject.onEventFinish = function(player, csid, option)
 end
 
-zoneObject.onGameHour = function(zone)
+zone_object.onGameHour = function(zone)
     -- Don't allow Ankou to spawn outside of night
     if VanadielHour() >= 4 and VanadielHour() < 20 then
         DisallowRespawn(ID.mob.ANKOU, true)
@@ -62,4 +62,4 @@ zoneObject.onGameHour = function(zone)
     end
 end
 
-return zoneObject
+return zone_object

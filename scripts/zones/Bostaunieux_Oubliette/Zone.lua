@@ -41,7 +41,7 @@ end
 zoneObject.onEventFinish = function(player, csid, option)
 end
 
-zoneObject.onGameHour = function(zone)
+zone_object.onGameHour = function(zone)
     -- Don't allow Manes or Shii to spawn outside of night
     if VanadielHour() >= 6 and VanadielHour() < 18 then
         DisallowRespawn(ID.mob.MANES, true)
@@ -52,4 +52,4 @@ zoneObject.onGameHour = function(zone)
     end
 end
 
-return zoneObject
+return zone_object

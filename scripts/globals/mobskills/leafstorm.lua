@@ -16,12 +16,8 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    if
-        mob:getName() == "Cernunnos" or
-        mob:getPool() == 671 or
-        mob:getPool() == 1346
-    then
+mobskill_object.onMobWeaponSkill = function(target, mob, skill)
+    if mob:getName() == "Cernunnos" or mob:getPool() == 671 or mob:getPool() == 1346 then
         xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SLOW, 128, 3, 120)
 
         local count = target:dispelAllStatusEffect(bit.bor(xi.effectFlag.DISPELABLE, xi.effectFlag.FOOD))
