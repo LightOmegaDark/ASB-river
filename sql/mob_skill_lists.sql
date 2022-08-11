@@ -325,10 +325,11 @@ INSERT INTO `mob_skill_lists` VALUES ('Dhalmel',80,284);
 INSERT INTO `mob_skill_lists` VALUES ('Dhalmel',80,285);
 INSERT INTO `mob_skill_lists` VALUES ('Dhalmel',80,286);
 INSERT INTO `mob_skill_lists` VALUES ('Dhalmel',80,287);
-INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,362);
-INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,363);
-INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,364);
-INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,365);
+INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,362); -- double claw
+INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,363); -- grapple
+INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,364); -- filamented hold
+INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,365); -- spinning top
+INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,1361); -- Viscid Secretion
 INSERT INTO `mob_skill_lists` VALUES ('Djinn',82,2216);
 INSERT INTO `mob_skill_lists` VALUES ('Djinn',82,2217);
 INSERT INTO `mob_skill_lists` VALUES ('Djinn',82,2218);
@@ -3881,6 +3882,7 @@ INSERT INTO `mob_skill_lists` VALUES ('DynastBeetle',1205,341);
 INSERT INTO `mob_skill_lists` VALUES ('Swamfisk',1206,452); -- Screwdriver
 INSERT INTO `mob_skill_lists` VALUES ('Swamfisk',1206,453); -- Water Wall
 INSERT INTO `mob_skill_lists` VALUES ('Barbastelle',1207,392); -- Ultrasonics
+INSERT INTO `mob_skill_lists` VALUES ('Blighting_Brand',1208,398);
 
 -- Next available ID: 1208
 
