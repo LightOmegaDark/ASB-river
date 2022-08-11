@@ -3,20 +3,42 @@
 --  NPC: Pia
 -- Working 100%
 -----------------------------------
-require("scripts/globals/settings")
+require("scripts/globals/pathfind")
 -----------------------------------
 local entity = {}
 
-local pathNodes =
+local path =
 {
-    { x = -32.439, y = -2.500, z = -108.308, wait = 6000 },
-    { x = -27.034, z = -113.642, wait = 6000 },
+    -32.439, -2.500, -108.308,
+    -32.439, -2.500, -108.308,
+    -32.439, -2.500, -108.308,
+    -32.439, -2.500, -108.308,
+    -32.439, -2.500, -108.308,
+    -32.439, -2.500, -108.308,
+    -32.439, -2.500, -108.308,
+    -32.439, -2.500, -108.308,
+    -32.439, -2.500, -108.308,
+    -32.439, -2.500, -108.308,
+    -27.034, -2.500, -113.642,
+    -27.034, -2.500, -113.642,
+    -27.034, -2.500, -113.642,
+    -27.034, -2.500, -113.642,
+    -27.034, -2.500, -113.642,
+    -27.034, -2.500, -113.642,
+    -27.034, -2.500, -113.642,
+    -27.034, -2.500, -113.642,
+    -27.034, -2.500, -113.642,
+    -27.034, -2.500, -113.642,
+    -27.034, -2.500, -113.642,
 }
 
 entity.onSpawn = function(npc)
     npc:initNpcAi()
-    npc:setPos(xi.path.first(pathNodes))
-    npc:pathThrough(pathNodes, xi.path.flag.PATROL)
+    npc:setPos(xi.path.first(path))
+end
+
+entity.onPath = function(npc)
+    xi.path.patrol(npc, path)
 end
 
 entity.onTrade = function(player, npc, trade)

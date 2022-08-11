@@ -3,22 +3,39 @@
 --  NPC: Mosusu
 -- Working 100%
 -----------------------------------
-require("scripts/globals/settings")
+require("scripts/globals/pathfind")
 -----------------------------------
 local entity = {}
 
-local pathNodes =
+local path =
 {
-    { x = -41.726, y = -5.760, z = 138.836 },
-    { x = -41.662, z = 138.717, wait = 6000 },
-    { x = -41.726, z = 138.836 },
-    { x = -41.861, z = 138.824, wait = 6000 },
+    -41.726, -5.760, 138.836,
+    -41.662, -5.757, 138.717,
+    -41.662, -5.757, 138.717,
+    -41.662, -5.757, 138.717,
+    -41.662, -5.757, 138.717,
+    -41.662, -5.757, 138.717,
+    -41.662, -5.757, 138.717,
+    -41.662, -5.757, 138.717,
+    -41.662, -5.757, 138.717,
+    -41.726, -5.760, 138.836,
+    -41.861, -5.760, 138.824,
+    -41.861, -5.760, 138.824,
+    -41.861, -5.760, 138.824,
+    -41.861, -5.760, 138.824,
+    -41.861, -5.760, 138.824,
+    -41.861, -5.760, 138.824,
+    -41.861, -5.760, 138.824,
+    -41.861, -5.760, 138.824,
 }
 
 entity.onSpawn = function(npc)
     npc:initNpcAi()
-    npc:setPos(xi.path.first(pathNodes))
-    npc:pathThrough(pathNodes, xi.path.flag.PATROL)
+    npc:setPos(xi.path.first(path))
+end
+
+entity.onPath = function(npc)
+    xi.path.patrol(npc, path)
 end
 
 entity.onTrade = function(player, npc, trade)

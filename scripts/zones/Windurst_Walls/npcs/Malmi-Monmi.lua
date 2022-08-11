@@ -2,18 +2,36 @@
 -- Area: Windurst Walls
 --  NPC: Malmi-Monmi
 -----------------------------------
+require("scripts/globals/pathfind")
+-----------------------------------
 local entity = {}
 
-local pathNodes =
+local path =
 {
-    { x = -101.174, y = -5.450, z = 148.387, wait = 6000 },
-    { x = -103.634, y = -5.478, z = 146.359, wait = 6000 },
+    -101.174, -5.450, 148.387,
+    -101.174, -5.450, 148.387,
+    -101.174, -5.450, 148.387,
+    -101.174, -5.450, 148.387,
+    -101.174, -5.450, 148.387,
+    -101.174, -5.450, 148.387,
+    -101.174, -5.450, 148.387,
+    -103.634, -5.478, 146.359,
+    -103.634, -5.478, 146.359,
+    -103.634, -5.478, 146.359,
+    -103.634, -5.478, 146.359,
+    -103.634, -5.478, 146.359,
+    -103.634, -5.478, 146.359,
+    -103.634, -5.478, 146.359,
+    -101.140, -5.559, 148.788,
 }
 
 entity.onSpawn = function(npc)
     npc:initNpcAi()
-    npc:setPos(xi.path.first(pathNodes))
-    npc:pathThrough(pathNodes, xi.path.flag.PATROL)
+    npc:setPos(xi.path.first(path))
+end
+
+entity.onPath = function(npc)
+    xi.path.patrol(npc, path)
 end
 
 entity.onTrade = function(player, npc, trade)

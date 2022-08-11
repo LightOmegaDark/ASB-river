@@ -3,21 +3,49 @@
 --  NPC: Rabiri-Tabiri
 -- Working 100%
 -----------------------------------
-require("scripts/globals/settings")
+require("scripts/globals/pathfind")
 -----------------------------------
 local entity = {}
 
-local pathNodes =
+local path =
 {
-    { x = -109.833, y = -2.000, z = 49.970, rotation = 32, wait = 6000 },
-    { x = -97.530, z = 50.283, rotation = 118, wait = 6000 },
-    { x = -104.014, z = 42.639, rotation = 214, wait = 6000 },
+    -109.833, -2.000, 49.970,
+    -109.833, -2.000, 49.970,
+    -109.833, -2.000, 49.970,
+    -109.833, -2.000, 49.970,
+    -109.833, -2.000, 49.970,
+    -109.833, -2.000, 49.970,
+    -109.833, -2.000, 49.970,
+    -109.833, -2.000, 49.970,
+    -97.480, -2.000, 50.409, -- Force turn.
+    -97.530, -2.000, 50.283,
+    -97.530, -2.000, 50.283,
+    -97.530, -2.000, 50.283,
+    -97.530, -2.000, 50.283,
+    -97.530, -2.000, 50.283,
+    -97.530, -2.000, 50.283,
+    -97.530, -2.000, 50.283,
+    -97.530, -2.000, 50.283,
+    -103.792, -2.000, 42.469, -- Force turn.
+    -104.014, -2.000, 42.639,
+    -104.014, -2.000, 42.639,
+    -104.014, -2.000, 42.639,
+    -104.014, -2.000, 42.639,
+    -104.014, -2.000, 42.639,
+    -104.014, -2.000, 42.639,
+    -104.014, -2.000, 42.639,
+    -104.014, -2.000, 42.639,
+    -104.014, -2.000, 42.639,
+    -109.966, -2.000, 49.942, -- Force turn.
 }
 
 entity.onSpawn = function(npc)
     npc:initNpcAi()
-    npc:setPos(xi.path.first(pathNodes))
-    npc:pathThrough(pathNodes, bit.bor(xi.path.flag.PATROL, xi.path.flag.RUN))
+    npc:setPos(xi.path.first(path))
+end
+
+entity.onPath = function(npc)
+    xi.path.patrol(npc, path, xi.path.flag.RUN)
 end
 
 entity.onTrade = function(player, npc, trade)

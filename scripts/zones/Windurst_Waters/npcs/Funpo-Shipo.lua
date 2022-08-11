@@ -6,19 +6,38 @@
 -----------------------------------
 require("scripts/globals/quests")
 require("scripts/globals/utils")
+require("scripts/globals/pathfind")
 -----------------------------------
 local entity = {}
 
-local pathNodes =
+local path =
 {
-    { x = -27.810, y = -3.500, z = 40.957, wait = 6000 },
-    { x = -46.663, z = 41.850, wait = 6000 },
+    -27.810, -3.500, 40.957,
+    -27.810, -3.500, 40.957,
+    -27.810, -3.500, 40.957,
+    -27.810, -3.500, 40.957,
+    -27.810, -3.500, 40.957,
+    -27.810, -3.500, 40.957,
+    -27.810, -3.500, 40.957,
+    -27.810, -3.500, 40.957,
+    -46.663, -3.500, 41.850,
+    -46.663, -3.500, 41.850,
+    -46.663, -3.500, 41.850,
+    -46.663, -3.500, 41.850,
+    -46.663, -3.500, 41.850,
+    -46.663, -3.500, 41.850,
+    -46.663, -3.500, 41.850,
+    -46.663, -3.500, 41.850,
+    -46.663, -3.500, 41.850,
 }
 
 entity.onSpawn = function(npc)
     npc:initNpcAi()
-    npc:setPos(xi.path.first(pathNodes))
-    npc:pathThrough(pathNodes, xi.path.flag.PATROL)
+    npc:setPos(xi.path.first(path))
+end
+
+entity.onPath = function(npc)
+    xi.path.patrol(npc, path)
 end
 
 entity.onTrade = function(player, npc, trade)

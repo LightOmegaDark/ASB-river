@@ -6,21 +6,46 @@
 -----------------------------------
 require("scripts/globals/quests")
 require("scripts/globals/utils")
+require("scripts/globals/pathfind")
 -----------------------------------
 local entity = {}
 
-local pathNodes =
+local path =
 {
-    { x = -63.660, y = -12.500, z = 204.874, wait = 5000 },
-    { rotation = 68, wait = 1000 },
-    { x = -67.755, y = -12.348, z = 192.724, wait = 5000 },
-    { rotation = 196, wait = 1000 },
+    -63.660, -12.500, 204.874,
+    -63.660, -12.500, 204.874,
+    -63.660, -12.500, 204.874,
+    -63.660, -12.500, 204.874,
+    -63.660, -12.500, 204.874,
+    -63.937, -12.500, 204.913, -- Force turn.
+    -63.660, -12.500, 204.874,
+    -63.660, -12.500, 204.874,
+    -63.660, -12.500, 204.874,
+    -63.660, -12.500, 204.874,
+    -63.660, -12.500, 204.874,
+    -67.755, -12.348, 192.724,
+    -67.755, -12.348, 192.724,
+    -67.755, -12.348, 192.724,
+    -67.755, -12.348, 192.724,
+    -67.755, -12.348, 192.724,
+    -67.755, -12.348, 192.724,
+    -67.895, -12.344, 192.732, -- Force turn.
+    -67.755, -12.348, 192.724,
+    -67.755, -12.348, 192.724,
+    -67.755, -12.348, 192.724,
+    -67.755, -12.348, 192.724,
+    -67.699, -12.350, 192.853, -- Force turn.
+    -67.755, -12.348, 192.724,
+    -67.755, -12.348, 192.724,
 }
 
 entity.onSpawn = function(npc)
     npc:initNpcAi()
-    npc:setPos(xi.path.first(pathNodes))
-    npc:pathThrough(pathNodes, xi.path.flag.PATROL)
+    npc:setPos(xi.path.first(path))
+end
+
+entity.onPath = function(npc)
+    xi.path.patrol(npc, path)
 end
 
 entity.onTrade = function(player, npc, trade)

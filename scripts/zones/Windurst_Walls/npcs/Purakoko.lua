@@ -2,25 +2,47 @@
 -- Area: Windurst Walls
 --  NPC: Purakoko
 -----------------------------------
+require("scripts/globals/pathfind")
+-----------------------------------
 local entity = {}
 
-local paths =
+local path =
 {
-    { { x = -72.580, y = -10.500, z = 115.877, wait = 2000 } },
-    { { x = -65.567, y = -11.000, z = 120.000, wait = 2000 } },
-    { { x = -59.242, y = -12.500, z = 123.703, wait = 2000 } },
-    { { wait = 2000, rotation = 0 } },
+    -72.580, -10.000, 115.877,
+    -72.580, -10.000, 115.877,
+    -72.580, -10.000, 115.877,
+    -72.580, -10.000, 115.877,
+    -72.580, -10.000, 115.877,
+    -72.580, -10.000, 115.877,
+    -72.580, -10.000, 115.877,
+    -72.580, -10.000, 115.877,
+    -72.580, -10.000, 115.877,
+    -72.580, -10.000, 115.877,
+    -68.580, -10.002, 118.223,
+    -66.538, -10.505, 119.421,
+    -63.684, -11.289, 121.096,
+    -61.175, -11.926, 122.568,
+    -59.242, -12.416, 123.703,
+    -59.242, -12.416, 123.703,
+    -59.242, -12.416, 123.703,
+    -59.242, -12.416, 123.703,
+    -59.242, -12.416, 123.703,
+    -59.242, -12.416, 123.703,
+    -59.242, -12.416, 123.703,
+    -59.242, -12.416, 123.703,
+    -61.175, -11.926, 122.568,
+    -63.684, -11.289, 121.096,
+    -66.538, -10.505, 119.421,
+    -68.580, -10.002, 118.223,
 }
 
 entity.onSpawn = function(npc)
     npc:initNpcAi()
-    npc:setPos(xi.path.first(paths[1]))
-    npc:pathThrough(paths[1], xi.path.flag.PATROL)
+    npc:setPos(xi.path.first(path))
 end
 
-entity.onPathComplete = function(npc)
-    local index = math.random(1, #paths)
-    npc:pathThrough(paths[index], xi.path.flag.PATROL)
+entity.onPath = function(npc)
+    xi.path.patrol(npc, path)
 end
 
 entity.onTrade = function(player, npc, trade)
