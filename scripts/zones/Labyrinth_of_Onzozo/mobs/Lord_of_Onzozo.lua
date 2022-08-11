@@ -11,7 +11,7 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.DRAW_IN, 1)
 end
 
-entity.onMobDeath = function(mob, player, optParams)
+entity.onMobDeath = function(mob, player, isKiller)
     xi.regime.checkRegime(player, mob, 774, 1, xi.regime.type.GROUNDS)
 end
 
