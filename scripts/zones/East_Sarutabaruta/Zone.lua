@@ -15,9 +15,11 @@ zoneObject.onChocoboDig = function(player, precheck)
     return xi.chocoboDig.start(player, precheck)
 end
 
-zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.DUKE_DECAPOD)
-    GetMobByID(ID.mob.DUKE_DECAPOD):setRespawnTime(math.random(3600, 4200))
+zone_object.onInitialize = function(zone)
+    if xi.settings.main.ENABLE_WOTG == 1 then
+        UpdateNMSpawnPoint(ID.mob.DUKE_DECAPOD)
+        GetMobByID(ID.mob.DUKE_DECAPOD):setRespawnTime(math.random(3600, 4200))
+    end
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

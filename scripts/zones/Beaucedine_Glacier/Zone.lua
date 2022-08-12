@@ -8,9 +8,11 @@ require('scripts/globals/zone')
 -----------------------------------
 local zoneObject = {}
 
-zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.HUMBABA)
-    GetMobByID(ID.mob.HUMBABA):setRespawnTime(math.random(3600, 4200))
+zone_object.onInitialize = function(zone)
+    if xi.settings.main.ENABLE_WOTG == 1 then
+        UpdateNMSpawnPoint(ID.mob.HUMBABA)
+        GetMobByID(ID.mob.HUMBABA):setRespawnTime(math.random(3600, 4200))
+    end
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.voidwalker.zoneOnInit(zone)
@@ -41,7 +43,7 @@ end
 zone_object.onZoneOut = function(player)
     if player:hasStatusEffect(xi.effect.BATTLEFIELD) then
         player:delStatusEffect(xi.effect.BATTLEFIELD)
-	end
+    end
 end
 
 zone_object.onConquestUpdate = function(zone, updatetype)
