@@ -10,6 +10,13 @@ local ID = require("scripts/zones/Metalworks/IDs")
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
+
+    if (player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.STARDUST) ~= QUEST_AVAILABLE) and not player:needToZone() then
+        if (trade:hasItemQty(503, 1) and trade:getItemCount() == 1) then
+            player:startEvent(555)
+        end
+    end
+
 end
 
 entity.onTrigger = function(player, npc)
@@ -30,6 +37,7 @@ entity.onEventFinish = function(player, csid, option)
         player:addQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.STARDUST)
     elseif (csid == 555) then
         player:tradeComplete()
+        player:needToZone(true)
         player:addGil(xi.settings.main.GIL_RATE * 300)
         player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.main.GIL_RATE * 300)
         player:completeQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.STARDUST)
