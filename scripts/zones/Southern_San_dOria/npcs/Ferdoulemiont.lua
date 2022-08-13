@@ -5,21 +5,47 @@
 -----------------------------------
 local ID = require("scripts/zones/Southern_San_dOria/IDs")
 require("scripts/globals/shop")
+require("scripts/globals/pathfind")
 -----------------------------------
 local entity = {}
 
-local pathNodes =
+local path =
 {
-    { x = 10.886, y = 2.200, z = -95.739, rotation = 224, wait = 8000 },
-    { rotation = 0, wait = 8000 },
-    { rotation = 224, wait = 8000 },
-    { rotation = 192, wait = 8000 },
+    10.886, 2.200, -95.739, -- Force turn.
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    10.9875, 2.200, -95.963, -- Force turn.
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
+    11.166, 2.200, -95.753,
 }
 
 entity.onSpawn = function(npc)
     npc:initNpcAi()
-    npc:setPos(xi.path.first(pathNodes))
-    npc:pathThrough(pathNodes, xi.path.flag.PATROL)
+    npc:setPos(xi.path.first(path))
+end
+
+entity.onPath = function(npc)
+    xi.path.patrol(npc, path)
 end
 
 entity.onTrade = function(player, npc, trade)
