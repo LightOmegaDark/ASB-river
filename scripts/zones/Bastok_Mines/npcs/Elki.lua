@@ -23,10 +23,9 @@ entity.onTrigger = function(player, npc)
 
     -- The eleventh's hour
     elseif
-        Hearts == QUEST_COMPLETED and
-        Elevenths == QUEST_AVAILABLE and
-        player:getFameLevel(xi.quest.fame_area.BASTOK) >=2 and
-        player:needToZone() == false
+        hearts == QUEST_COMPLETED and
+        elevenths == QUEST_AVAILABLE and
+        player:getFameLevel(xi.quest.fame_area.BASTOK) >=2
     then
         player:startEvent(43)
 
