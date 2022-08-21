@@ -2280,10 +2280,27 @@ namespace petutils
         }
         else if (PPet->getPetType() == PET_TYPE::JUG_PET)
         {
-            uint8 spawnLevel = static_cast<CCharEntity*>(PMaster)->petZoningInfo.petLevel;
-            PPet->setSpawnLevel(spawnLevel > 0 ? spawnLevel : UINT8_MAX);
-            PPet->setJugDuration(static_cast<int32>(PPetData->time));
-            CalculateJugPetStats(PMaster, PPet);
+            ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (240.0f / 60.0f))));
+
+            // Get the Jug pet cap level
+            uint8 highestLvl = PPetData->maxLevel;
+
+            // Increase the pet's level cal by the bonus given by BEAST AFFINITY merits.
+            CCharEntity* PChar = (CCharEntity*)PMaster;
+            highestLvl += PChar->PMeritPoints->GetMeritValue(MERIT_BEAST_AFFINITY, PChar);
+
+            // And cap it to the master's level
+            auto capLevel = PMaster->GetMLevel();
+            if (highestLvl > capLevel)
+            {
+                highestLvl = capLevel;
+            }
+
+            // Randomize: 0-2 lvls lower, less Monster Gloves(+1/+2) bonus
+            highestLvl -= xirand::GetRandomNumber(3 - std::clamp<int16>(PChar->getMod(Mod::JUG_LEVEL_RANGE), 0, 2));
+
+            PPet->SetMLevel(highestLvl);
+            LoadJugStats(PPet, PPetData); // follow monster calcs (w/o SJ)
         }
         else if (PPet->getPetType() == PET_TYPE::WYVERN)
         {
