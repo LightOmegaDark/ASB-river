@@ -15,8 +15,10 @@ zone_object.onChocoboDig = function(player, precheck)
 end
 
 zone_object.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.HARVESTMAN)
-    GetMobByID(ID.mob.HARVESTMAN):setRespawnTime(math.random(900, 10800))
+    if xi.settings.main.ENABLE_TOAU == 1 then
+        UpdateNMSpawnPoint(ID.mob.HARVESTMAN)
+        GetMobByID(ID.mob.HARVESTMAN):setRespawnTime(math.random(900, 10800))
+    end
 
     xi.helm.initZone(zone, xi.helm.type.HARVESTING)
 end
@@ -35,6 +37,10 @@ end
 zone_object.afterZoneIn = function(player)
     player:entityVisualPacket("1pb1")
     player:entityVisualPacket("2pb1")
+end
+
+zone_object.onGameDay = function()
+    SetServerVariable("[DIG]ZONE52_ITEMS", 0)
 end
 
 zone_object.onRegionEnter = function(player, region)

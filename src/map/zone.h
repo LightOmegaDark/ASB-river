@@ -176,7 +176,7 @@ enum ZONEID : uint16
     ZONE_RUAUN_GARDENS                  = 130,
     ZONE_MORDION_GAOL                   = 131,
     ZONE_ABYSSEA_LA_THEINE              = 132,
-    ZONE_133                            = 133, // The zone background of char select. AKA "Lilliput" because of tiny villages.
+    ZONE_OUTER_RAKAZNAR_U2              = 133,
     ZONE_DYNAMIS_BEAUCEDINE             = 134,
     ZONE_DYNAMIS_XARCABARD              = 135,
     ZONE_BEAUCEDINE_GLACIER_S           = 136,
@@ -272,7 +272,7 @@ enum ZONEID : uint16
     ZONE_KAZHAM_JEUNO_AIRSHIP           = 226,
     ZONE_SHIP_BOUND_FOR_SELBINA_PIRATES = 227,
     ZONE_SHIP_BOUND_FOR_MHAURA_PIRATES  = 228,
-    ZONE_229                            = 229,
+    ZONE_THRONE_ROOM_V                  = 229,
     ZONE_SOUTHERN_SANDORIA              = 230,
     ZONE_NORTHERN_SANDORIA              = 231,
     ZONE_PORT_SANDORIA                  = 232,
@@ -318,7 +318,7 @@ enum ZONEID : uint16
     ZONE_DHO_GATES                      = 272,
     ZONE_WOH_GATES                      = 273,
     ZONE_OUTER_RAKAZNAR                 = 274,
-    ZONE_OUTER_RAKAZNAR_U               = 275,
+    ZONE_OUTER_RAKAZNAR_U1              = 275,
     ZONE_RAKAZNAR_INNER_COURT           = 276,
     ZONE_RAKAZNAR_TURRIS                = 277,
     ZONE_278                            = 278,
@@ -603,6 +603,8 @@ public:
     virtual void ForEachTrustInstance(CBaseEntity* PEntity, std::function<void(CTrustEntity*)> func);
     virtual void ForEachNpc(std::function<void(CNpcEntity*)> func);
 
+    bool HasReducedVerticalAggro();
+
     CZone(ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID);
     virtual ~CZone();
 
@@ -612,6 +614,16 @@ public:
     CNavMesh* m_navMesh; // zones navmesh for finding paths
 
     time_point m_LoadedAt; // time zone was loaded
+
+    void SetZoneDirection(uint8 direction);
+    void SetZoneAnimation(uint8 animation);
+    void SetZoneAnimStartTime(uint32 startTime);
+    void SetZoneAnimLength(uint16 length);
+
+    uint8  GetZoneDirection();
+    uint8  GetZoneAnimation();
+    uint32 GetZoneAnimStartTime();
+    uint16 GetZoneAnimLength();
 
 private:
     ZONEID         m_zoneID; // ID зоны
@@ -645,7 +657,14 @@ private:
 
     CTreasurePool* m_TreasurePool; // глобальный TreasuerPool
 
+    static const uint16 ReducedVerticalAggroZones[];
+
     time_point m_timeZoneEmpty; // The time_point when the last player left the zone
+
+    uint8  m_ZoneDirection;     // which direction for transport to travel (0 or 4)
+    uint8  m_ZoneAnimation;     // which zone animation to use (i.e. manaclipper)
+    uint32 m_ZoneAnimStartTime; // zone animation start time (i.e. boats)
+    uint16 m_ZoneAnimLength;    // zone animation length in seconds
 
 protected:
     CTaskMgr::CTask* ZoneTimer; // указатель на созданный таймер - ZoneServer. необходим для возможности его остановки

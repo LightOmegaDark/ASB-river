@@ -3,6 +3,8 @@
 -----------------------------------
 require("scripts/globals/status")
 require("scripts/globals/msg")
+require("scripts/globals/weaponskills")
+require("scripts/globals/damage")
 -----------------------------------
 xi = xi or {}
 xi.summon = xi.summon or {}
@@ -41,55 +43,6 @@ local function getDexCritRate(source, target)
     return math.min(critRate, 15) * sign
 end
 
-local function getRandRatio(wRatio)
-    local qRatio = wRatio
-    local upperLimit = 0
-    local lowerLimit = 0
-    -- 4.25 for Avatars, they count as 1H but same as mobs don't have a non-crit cap
-    local maxRatio = 4.25
-
-    if wRatio < 0.5 then
-        upperLimit = math.max(wRatio + 0.5, 0.5)
-    elseif wRatio < 0.7 then
-        upperLimit = 1
-    elseif wRatio < 1.2 then
-        upperLimit = wRatio + 0.3
-    elseif wRatio < 1.5 then
-        upperLimit = wRatio * 1.25
-    else
-        upperLimit = math.min(wRatio + 0.375, maxRatio)
-    end
-
-    if wRatio < 0.38 then
-        lowerLimit = math.max(wRatio, 0.5)
-    elseif wRatio < 1.25 then
-        lowerLimit = (wRatio * (1176/1024)) - (448/1024)
-    elseif wRatio < 1.51 then
-        lowerLimit = 1
-    elseif wRatio < 2.44 then
-        lowerLimit = (wRatio * (1176/1024)) - (755/1024)
-    else
-        lowerLimit = math.min(wRatio - 0.375, maxRatio)
-    end
-    -- Randomly pick a value between lower and upper limits for qRatio
-    qRatio = lowerLimit + (math.random() * (upperLimit - lowerLimit))
-
-    return qRatio
-end
-
-local function avatarFTP(tp, ftp1, ftp2, ftp3)
-    if tp < 1000 then
-        tp = 1000
-    end
-    if tp >= 1000 and tp < 2000 then
-        return ftp1 + (ftp2 - ftp1) / 100 * (tp - 1000)
-    elseif tp >= 2000 and tp <= 3000 then
-        -- generate a straight line between ftp2 and ftp3 and find point @ tp
-        return ftp2 + (ftp3 - ftp2) / 100 * (tp - 2000)
-    end
-    return 1 -- no ftp mod
-end
-
 local function getAvatarFSTR(weaponDmg, avatarStr, targetVit)
     -- https://www.bluegartr.com/threads/114636-Monster-Avatar-Pet-damage
     -- fSTR for avatars has no cap and a lower bound of floor(weaponDmg/9)
@@ -117,11 +70,14 @@ local function getAvatarFSTR(weaponDmg, avatarStr, targetVit)
     return math.max(-min, fSTR)
 end
 
-local function avatarHitDmg(weaponDmg, fSTR, pDif)
+local function avatarHitDmg(weaponDmg, fSTR, pDif, attacker, target)
     -- https://www.bg-wiki.com/bg/Physical_Damage
     -- Physical Damage = Base Damage * pDIF
     -- where Base Damange is defined as Weapon Damage + fSTR
-    return (weaponDmg + fSTR) * pDif
+    local dmg = (weaponDmg + fSTR) * pDif
+
+    dmg = handleBlock(attacker, target, dmg)
+    return dmg
 end
 
 xi.summon.getSummoningSkillOverCap = function(avatar)
@@ -132,26 +88,19 @@ xi.summon.getSummoningSkillOverCap = function(avatar)
     return math.max(summoningSkill - maxSkill, 0)
 end
 
-xi.summon.avatarPhysicalMove = function(avatar, target, skill, numberofhits, accmod, dmgmod, dmgmodsubsequent, tpeffect, mtp100, mtp200, mtp300)
+xi.summon.avatarPhysicalMove = function(avatar, target, skill, numberofhits, accmod, dmgmod, dmgmodsubsequent, tpeffect, mtp100, mtp200, mtp300, wSC)
     local returninfo = {}
 
-    -- I have never read a limit on accuracy bonus from summoning skill which can currently go far past 200 over cap
-    -- current retail is over +250 skill so I am removing the cap, my SMN is at 695 total skill
-    local acc = avatar:getACC() + xi.summon.getSummoningSkillOverCap(avatar)
-    local eva = target:getEVA()
-
-    -- Level correction does not happen in Adoulin zones, Legion, or zones in Escha/Reisenjima
-    -- https://www.bg-wiki.com/bg/PDIF#Level_Correction_Function_.28cRatio.29
-    local zoneId = avatar:getZone():getID()
-
-    local shouldApplyLevelCorrection = (zoneId < 256) and zoneId ~= 183
+    if wSC == nil then
+        wSC = 0
+    end
 
     -- https://forum.square-enix.com/ffxi/threads/45365?p=534537#post534537
     -- https://www.bg-wiki.com/bg/Hit_Rate
     -- https://www.bluegartr.com/threads/114636-Monster-Avatar-Pet-damage
     -- As of December 10th 2015 pet hit rate caps at 99% (familiars, wyverns, avatars and automatons)
     -- increased from 95%
-    local maxHitRate = 0.99
+    local maxHitRate = 0.95
     local minHitRate = 0.2
 
     -- Hit Rate (%) = 75 + floor( (Accuracy - Evasion)/2 ) + 2*(dLVL)
@@ -159,30 +108,14 @@ xi.summon.avatarPhysicalMove = function(avatar, target, skill, numberofhits, acc
     -- bonuses cap at level diff of 38 based on this testing:
     -- https://www.bluegartr.com/threads/114636-Monster-Avatar-Pet-damage
     -- If there are penalties they seem to be applied differently similarly to monsters.
-    local baseHitRate = 75
+    local baseHitRate = getHitRate(avatar, target, 0, xi.summon.getSummoningSkillOverCap(avatar))
     -- First hit gets a +100 ACC bonus which translates to +50 hit
-    local firstHitAccBonus = 50
-    local hitrateFirst = 0
-    local hitrateSubsequent = 0
-    -- Max level diff is 38
-    local levelDiff = math.min(avatar:getMainLvl() - target:getMainLvl(), 38)
-    -- Only bonuses are applied for avatar level correction
-    local levelCorrection = 0
-    if shouldApplyLevelCorrection then
-        if levelDiff > 0 then
-            levelCorrection = math.max((levelDiff*2), 0)
-        end
-    end
-    -- Delta acc / 2 for hit rate
-    local dAcc = math.floor((acc - eva)/2)
+    local firstHitAccBonus = 0.5
 
     -- Normal hits computed first
-    hitrateSubsequent = baseHitRate + dAcc + levelCorrection
+    local hitrateSubsequent = baseHitRate
     -- First hit gets bonus hit rate
     hitrateFirst = hitrateSubsequent + firstHitAccBonus
-
-    hitrateSubsequent = hitrateSubsequent / 100
-    hitrateFirst = hitrateFirst / 100
 
     hitrateSubsequent = utils.clamp(hitrateSubsequent, minHitRate, maxHitRate)
     hitrateFirst = utils.clamp(hitrateFirst, minHitRate, maxHitRate)
@@ -193,13 +126,20 @@ xi.summon.avatarPhysicalMove = function(avatar, target, skill, numberofhits, acc
     local numHitsProcessed = 1
     local finaldmg = 0
 
-    if math.random() < hitrateFirst then
+    local missChance = math.random()
+
+    missChance = handleParry(avatar, target, missChance, false)
+
+    if missChance < hitrateFirst then
         firstHitLanded = true
         numHitsLanded = numHitsLanded + 1
     end
 
     while numHitsProcessed < numberofhits do
-        if math.random() < hitrateSubsequent then
+        missChance = math.random()
+        missChance = handleParry(avatar, target, missChance, false)
+
+        if missChance < hitrateSubsequent then
             numHitsLanded = numHitsLanded + 1
         end
         numHitsProcessed = numHitsProcessed + 1
@@ -209,6 +149,9 @@ xi.summon.avatarPhysicalMove = function(avatar, target, skill, numberofhits, acc
         -- Missed everything we can exit early
         finaldmg = 0
         skill:setMsg(xi.msg.basic.SKILL_MISS)
+        returninfo.dmg = finaldmg
+        returninfo.hitslanded = numHitsLanded
+        return returninfo
     else
         -- https://www.bg-wiki.com/bg/Critical_Hit_Rate
         -- Crit rate has a base of 5% and no cap, 0-100% are valid
@@ -217,79 +160,62 @@ xi.summon.avatarPhysicalMove = function(avatar, target, skill, numberofhits, acc
         local maxCritRate = 1 -- 100%
         local minCritRate = 0 -- 0%
 
-        local critRate = baseCritRate + getDexCritRate(avatar, target) + avatar:getMod(xi.mod.CRITHITRATE)
-        critRate = critRate / 100
+        local critRate = (baseCritRate + getDexCritRate(avatar, target) + avatar:getMod(xi.mod.CRITHITRATE)) / 100
         critRate = utils.clamp(critRate, minCritRate, maxCritRate)
 
         local weaponDmg = avatar:getWeaponDmg()
+        weaponDmg = weaponDmg + wSC
 
         local fSTR = getAvatarFSTR(weaponDmg, avatar:getStat(xi.mod.STR), target:getStat(xi.mod.VIT))
 
-        -- https://www.bg-wiki.com/bg/PDIF
-        -- https://www.bluegartr.com/threads/127523-pDIF-Changes-(Feb.-10th-2016)
-        local ratio = avatar:getStat(xi.mod.ATT) / target:getStat(xi.mod.DEF)
-        local cRatio = ratio
-
-        if shouldApplyLevelCorrection then
-            -- Mobs, Avatars and pets only get bonuses, no penalties (or they are calculated differently)
-            if levelDiff > 0 then
-                local correction = levelDiff * 0.05;
-                local cappedCorrection = math.min(correction, 1.9)
-                cRatio = cRatio + cappedCorrection
-            end
+        -- Calculating with the known era pdif ratio for weaponskills.
+        if mtp100 == nil or mtp200 == nil or mtp300 == nil then -- Nil gate for cMeleeRatio, will default mtp for each level to 1.
+            mtp100 = 1.0
+            mtp200 = 1.0
+            mtp300 = 1.0
         end
+
+        local tp = avatar:getTP()
+        local params = {atk100 = mtp100, atk200 = mtp200, atk300 = mtp300,}
+        local pDifTable = cMeleeRatio(avatar, target, params, 0, tp, xi.slot.MAIN)
+        local pDif = pDifTable[1]
+        local pDifCrit = pDifTable[2]
 
         --Everything past this point is randomly computed per hit
 
         numHitsProcessed = 0
 
-        local critAttackBonus = 1 + ((avatar:getMod(xi.mod.CRIT_DMG_INCREASE) - target:getMod(xi.mod.CRIT_DEF_BONUS)) / 100)
-
         if firstHitLanded then
-            local wRatio = cRatio
             local isCrit = math.random() < critRate
-            if isCrit then
-                wRatio = wRatio + 1
-            end
-            -- get a random ratio from min and max
-            local qRatio = getRandRatio(wRatio)
-
-            --Final pDif is qRatio randomized with a 1-1.05 multiplier
-            local pDif = qRatio * (1 + (math.random() * 0.05))
 
             if isCrit then
-                pDif = pDif * critAttackBonus
+                pDif = pDifCrit
             end
 
-            finaldmg = avatarHitDmg(weaponDmg, fSTR, pDif) * dmgmod
+            finaldmg = avatarHitDmg(weaponDmg, fSTR, pDif, avatar, target) * dmgmod
             numHitsProcessed = 1
         end
 
         while numHitsProcessed < numHitsLanded do
-            local wRatio = cRatio
             local isCrit = math.random() < critRate
-            if isCrit then
-                wRatio = wRatio + 1
-            end
-            -- get a random ratio from min and max
-            local qRatio = getRandRatio(wRatio)
-
-            --Final pDif is qRatio randomized with a 1-1.05 multiplier
-            local pDif = qRatio * (1 + (math.random() * 0.05))
+            pDifTable = cMeleeRatio(avatar, target, params, 0, tp, xi.slot.MAIN)
+            pDif = pDifTable[1]
+            pDifCrit = pDifTable[2]
 
             if isCrit then
-                pDif = pDif * critAttackBonus
+                pDif = pDifCrit
             end
 
-            finaldmg = finaldmg + (avatarHitDmg(weaponDmg, fSTR, pDif) * dmgmodsubsequent)
+            finaldmg = finaldmg + (avatarHitDmg(weaponDmg, fSTR, pDif, avatar, target) * dmgmodsubsequent)
             numHitsProcessed = numHitsProcessed + 1
         end
-
-        -- apply ftp bonus
-        if tpeffect == xi.mobskills.magicalTpBonus.DMG_BONUS then
-            finaldmg = finaldmg * avatarFTP(skill:getTP(), mtp100, mtp200, mtp300)
-        end
     end
+
+    if target:getMod(xi.mod.PET_DMG_TAKEN_PHYSICAL) ~= 0 then
+        finaldmg = finaldmg * (target:getMod(xi.mod.PET_DMG_TAKEN_PHYSICAL) / 100)
+    end
+
+    finaldmg = xi.damage.applyDamageTaken(target, finaldmg, xi.attackType.PHYSICAL)
 
     returninfo.dmg = finaldmg
     returninfo.hitslanded = numHitsLanded
@@ -366,19 +292,16 @@ xi.summon.avatarFinalAdjustments = function(dmg, mob, skill, target, skilltype, 
         return 0
     end
 
+    -- handle super jump
+    if target:hasStatusEffect(xi.effect.ALL_MISS) and target:getStatusEffect(xi.effect.ALL_MISS):getPower() > 1 then
+        skill:setMsg(xi.msg.basic.JA_MISS_2)
+        return 0
+    end
+
     -- Calculate Blood Pact Damage before stoneskin
     dmg = dmg + dmg * mob:getMod(xi.mod.BP_DAMAGE) / 100
 
     -- handle One For All, Liement
-    if skilltype == xi.attackType.MAGICAL then
-        local targetMagicDamageAdjustment = xi.spells.damage.calculateTMDA(mob, target, damagetype) -- Apply checks for Liement, MDT/MDTII/DT
-
-        dmg = math.floor(dmg * targetMagicDamageAdjustment)
-        if dmg < 0 then
-            return dmg
-        end
-        dmg = utils.oneforall(target, dmg)
-    end
 
     -- Handle Phalanx
     if dmg > 0 then
@@ -391,6 +314,11 @@ xi.summon.avatarFinalAdjustments = function(dmg, mob, skill, target, skilltype, 
 
     -- handling stoneskin
     dmg = utils.stoneskin(target, dmg)
+
+    if dmg > 0 then
+        target:updateEnmityFromDamage(mob, dmg)
+        target:handleAfflatusMiseryDamage(dmg)
+    end
 
     return dmg
 end

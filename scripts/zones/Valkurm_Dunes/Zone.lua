@@ -54,8 +54,18 @@ zone_object.onZoneIn = function(player, prevZone)
     return cs
 end
 
+zone_object.onZoneOut = function(player)
+    if player:hasStatusEffect(xi.effect.BATTLEFIELD) then
+        player:delStatusEffect(xi.effect.BATTLEFIELD)
+    end
+end
+
 zone_object.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
+end
+
+zone_object.onGameDay = function()
+    SetServerVariable("[DIG]ZONE103_ITEMS", 0)
 end
 
 zone_object.onRegionEnter = function(player, region)
@@ -85,7 +95,7 @@ end
 
 zone_object.onZoneWeatherChange = function(weather)
     local qm1 = GetNPCByID(ID.npc.SUNSAND_QM) -- Quest: An Empty Vessel
-    if weather == xi.weather.DUST_STORM then
+    if weather == xi.weather.DUST_STORM or weather == xi.weather.SAND_STORM then
         qm1:setStatus(xi.status.NORMAL)
     else
         qm1:setStatus(xi.status.DISAPPEAR)

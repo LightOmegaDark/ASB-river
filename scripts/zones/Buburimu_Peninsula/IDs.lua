@@ -37,6 +37,7 @@ zones[xi.zone.BUBURIMU_PENINSULA] =
         SIGN_5                         = 7403,  -- West: Mhaura Northwest: Tahrongi Canyon
         LOGGING_IS_POSSIBLE_HERE       = 7404,  -- Logging is possible here if you have <item>.
         CONQUEST                       = 7420,  -- You've earned conquest points!
+        GARRISON_BASE                  = 7801,  -- Hm? What is this? %? How do I know this is not some [San d'Orian/Bastokan/Windurstian] trick?
         YOU_CANNOT_ENTER_DYNAMIS       = 7907,  -- You cannot enter Dynamis - [Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia] for <number> [day/days] (Vana'diel time).
         PLAYERS_HAVE_NOT_REACHED_LEVEL = 7909,  -- Players who have not reached level <number> are prohibited from entering Dynamis.
         DYNA_NPC_DEFAULT_MESSAGE       = 8031,  -- There is a strange symbol drawn here. A haunting chill sweeps through you as you gaze upon it...
@@ -53,18 +54,11 @@ zones[xi.zone.BUBURIMU_PENINSULA] =
         BACKOO        = 17260613,
         HELLDIVER_PH  =
         {
-            [17260886] = 17260907, -- 439.685 -0.200 -271.203
             [17260906] = 17260907, -- 509.641 0.151 -267.664
-            [17260905] = 17260907, -- 503.268 -0.981 -211.204
-            [17260868] = 17260907, -- 395.297 -0.037 -149.776
-            [17260887] = 17260907, -- 445.199 -0.323 -306.818
         },
         BUBURIMBOO_PH =
         {
-            [17261000] = 17261003, -- 443.429 19.500 135.322
             [17261002] = 17261003, -- 442.901 19.500 109.075
-            [17261001] = 17261003, -- 443.004 19.500 96.000
-            [17260999] = 17261003, -- 444.224 19.499 76.000
         },
     },
     npc =

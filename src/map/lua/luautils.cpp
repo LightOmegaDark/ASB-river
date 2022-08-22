@@ -859,11 +859,11 @@ namespace luautils
         CBaseEntity* PNpc{ nullptr };
         if (PInstance)
         {
-            PNpc = PInstance->GetEntity(npcid & 0xFFF, TYPE_NPC);
+            PNpc = PInstance->GetEntity(npcid & 0xFFF, TYPE_NPC | TYPE_SHIP);
         }
         else
         {
-            PNpc = zoneutils::GetEntity(npcid, TYPE_NPC);
+            PNpc = zoneutils::GetEntity(npcid, TYPE_NPC | TYPE_SHIP);
         }
 
         if (!PNpc)
@@ -2523,6 +2523,15 @@ namespace luautils
             return -1;
         }
 
+        if (PUser != nullptr)
+        {
+            auto* PEntity = static_cast<CBattleEntity*>(PUser);
+            if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_INVISIBLE))
+            {
+                PEntity->StatusEffectContainer->DelStatusEffect(EFFECT_INVISIBLE);
+            }
+        }
+
         auto result = onItemUse(CLuaBaseEntity(PTarget), CLuaBaseEntity(PUser), CLuaItem(PItem));
         if (!result.valid())
         {
@@ -2658,8 +2667,6 @@ namespace luautils
         {
             return -1;
         }
-
-        PTarget->PAI->EventHandler.triggerListener("MAGIC_TAKE", CLuaBaseEntity(PTarget), CLuaBaseEntity(PCaster), CLuaSpell(PSpell));
 
         sol::function onMagicHit = getEntityCachedFunction(PTarget, "onMagicHit");
         if (!onMagicHit.valid())

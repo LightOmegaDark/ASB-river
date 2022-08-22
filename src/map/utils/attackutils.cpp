@@ -237,7 +237,7 @@ namespace attackutils
      ************************************************************************/
     bool IsParried(CBattleEntity* PAttacker, CBattleEntity* PDefender)
     {
-        if (facing(PDefender->loc.p, PAttacker->loc.p, 64))
+        if (!PDefender->StatusEffectContainer->HasPreventActionEffect() && facing(PDefender->loc.p, PAttacker->loc.p, 64))
         {
             return (xirand::GetRandomNumber(100) < battleutils::GetParryRate(PAttacker, PDefender));
         }
@@ -265,7 +265,7 @@ namespace attackutils
      ************************************************************************/
     bool IsBlocked(CBattleEntity* PAttacker, CBattleEntity* PDefender)
     {
-        if (facing(PDefender->loc.p, PAttacker->loc.p, 64) && !PDefender->StatusEffectContainer->HasPreventActionEffect())
+        if (!PDefender->StatusEffectContainer->HasPreventActionEffect() && facing(PDefender->loc.p, PAttacker->loc.p, 64))
         {
             return (xirand::GetRandomNumber(100) < battleutils::GetBlockRate(PAttacker, PDefender));
         }

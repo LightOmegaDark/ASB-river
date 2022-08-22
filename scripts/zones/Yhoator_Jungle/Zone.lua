@@ -23,8 +23,10 @@ zone_object.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.WOODLAND_SAGE)
     GetMobByID(ID.mob.WOODLAND_SAGE):setRespawnTime(math.random(900, 10800))
 
-    UpdateNMSpawnPoint(ID.mob.POWDERER_PENNY)
-    GetMobByID(ID.mob.POWDERER_PENNY):setRespawnTime(math.random(5400, 7200))
+    if xi.settings.main.ENABLE_WOTG == 1 then
+        UpdateNMSpawnPoint(ID.mob.POWDERER_PENNY)
+        GetMobByID(ID.mob.POWDERER_PENNY):setRespawnTime(math.random(5400, 7200))
+    end
 
     UpdateNMSpawnPoint(ID.mob.BISQUE_HEELED_SUNBERRY)
     GetMobByID(ID.mob.BISQUE_HEELED_SUNBERRY):setRespawnTime(math.random(900, 10800))
@@ -43,6 +45,9 @@ end
 
 zone_object.onGameDay = function()
     xi.bmt.updatePeddlestox(xi.zone.YHOATOR_JUNGLE, ID.npc.PEDDLESTOX)
+
+    -- Chocobo Digging.
+    SetServerVariable("[DIG]ZONE124_ITEMS", 0)
 end
 
 zone_object.onConquestUpdate = function(zone, updatetype)
@@ -69,6 +74,12 @@ zone_object.onZoneIn = function( player, prevZone)
 end
 
 zone_object.onRegionEnter = function( player, region)
+end
+
+zone_object.onZoneOut = function(player)
+    if player:hasStatusEffect(xi.effect.BATTLEFIELD) then
+        player:delStatusEffect(xi.effect.BATTLEFIELD)
+    end
 end
 
 zone_object.onEventUpdate = function( player, csid, option)

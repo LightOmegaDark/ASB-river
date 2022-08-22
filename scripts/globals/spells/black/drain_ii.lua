@@ -41,10 +41,6 @@ spell_object.onSpellCast = function(caster, target, spell)
         dmg = 0
     end
 
-    if (target:getHP() < dmg) then
-        dmg = target:getHP()
-    end
-
     if (target:isUndead()) then
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- No effect
         return dmg
@@ -53,13 +49,17 @@ spell_object.onSpellCast = function(caster, target, spell)
     dmg = finalMagicAdjustments(caster, target, spell, dmg)
 
     local leftOver = (caster:getHP() + dmg) - caster:getMaxHP()
+    local overHeal = (leftOver/caster:getMaxHP())*100
+    if caster:hasStatusEffect(xi.effect.WEAKNESS) then
+        overHeal = (leftOver/(caster:getBaseHP() + caster:getMod(xi.mod.HP)))*100
+    end
 
-    if (leftOver > 0) then
-        caster:addStatusEffect(xi.effect.MAX_HP_BOOST, (leftOver/caster:getMaxHP())*100, 0, 60)
+    if leftOver > 0 then
+        caster:addStatusEffect(xi.effect.MAX_HP_BOOST, overHeal, 0, 60)
     end
 
     caster:addHP(dmg)
-    spell:setMsg(xi.msg.basic.MAGIC_DRAIN_HP) --change msg to 'xxx hp drained from the yyyy.'
+
     return dmg
 end
 

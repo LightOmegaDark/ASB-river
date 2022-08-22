@@ -61,8 +61,6 @@ zones[xi.zone.LABYRINTH_OF_ONZOZO] =
         NARASIMHA_PH            =
         {
             [17649783] = 17649784, -- -119.897 0.275 127.060
-            [17649787] = 17649784, -- -126.841 -0.554 129.681
-            [17649790] = 17649784, -- -140.000 -0.955 144.000
         },
         HELLION_PH              =
         {
@@ -86,6 +84,7 @@ zones[xi.zone.LABYRINTH_OF_ONZOZO] =
         MYSTICMAKER_PROFBLIX    = 17649693,
         UBUME                   = 17649860,
         MEGAPOD_MEGALOPS        = 17649861,
+        ONZOZO_PH               = 17649730,
     },
     npc =
     {

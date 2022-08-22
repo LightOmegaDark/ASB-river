@@ -29,6 +29,7 @@ entity.onMobInitialize = function(IxAernDrkMob)
             mob:setMobMod(xi.mobMod.NO_DROPS, 1)
             mob:timer(9000, function(mobArg)
                 mobArg:setHP(mob:getMaxHP())
+                mobArg:setMP(mob:getMaxMP())
                 mobArg:setAnimationSub(3)
                 mobArg:resetAI()
                 mobArg:stun(3000)
@@ -61,8 +62,10 @@ entity.onMobInitialize = function(IxAernDrkMob)
         else
             -- death
             mob:setMobMod(xi.mobMod.NO_DROPS, 0)
-            -- DespawnMob(QnAernA)
-            -- DespawnMob(QnAernB)
+            for i = mob:getID() + 1, mob:getID() + 2 do
+                local aernPet = GetMobByID(i)
+                DespawnMob(aernPet)
+            end
         end
     end)
 

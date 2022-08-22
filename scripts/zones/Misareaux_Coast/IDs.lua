@@ -25,11 +25,13 @@ zones[xi.zone.MISAREAUX_COAST] =
         DOOR_CLOSED              = 7355, -- The door is locked tight.
         SNOWMINT_POINT_LOCKED    = 7358, -- This gate leads to Snowmint Point. However, it seems to be locked...
         BEEP_BEEP                = 7580, -- Beep...beep...beep...beep...
-        BEEP_CLICK_WHIR          = 7581, -- Beeep. Click, whirrr...
-        BUZZ_BEEP_BEEP           = 7582, -- Buzz... Beep... beep...
+        BEEP_CLICK_WHIR          = 7581, -- Beeeep. Click, whirrr...
+        BUZZ_BEEP_BEEP           = 7582, -- Buzz... Beep beep!
         CREATURE_HAS_APPEARED    = 7607, -- A creature has appeared out of nowhere!
         NOTHING_ELSE_OF_INTEREST = 7608, -- There is nothing else of interest here.
         LOGGING_IS_POSSIBLE_HERE = 7609, -- Logging is possible here if you have <item>.
+        SHATTERED_SHIELD         = 7663, -- "The ground here is littered with the pieces of a shattered shield..."
+        SNATCHED_AWAY            = 7664, -- "The <item> is suddenly snatched away!"
         NOTHING_HERE_YET         = 7668, -- There is nothing here yet. Check again in the morning.
         ALREADY_BAITED           = 7669, -- The trap already contains <item>.
         APPEARS_TO_BE_TRAP       = 7670, -- There appears to be some kind of trap here. Bits of fish are lying around the area.
@@ -44,11 +46,16 @@ zones[xi.zone.MISAREAUX_COAST] =
         {
             [16879839] = 16879847,
         },
+        ODQAN_PH =
+        {
+            [16879722] = 16879737,
+            [16879833] = 16879758,
+        },
         PM6_2_MOB_OFFSET = 16879893,
         BOGGELMANN       = 16879897,
         GRATION          = 16879899,
         ZIPHIUS          = 16879900,
-
+        ODQAN            = 16879737,
     },
     npc =
     {
@@ -62,6 +69,7 @@ zones[xi.zone.MISAREAUX_COAST] =
             16879977,
         },
         ZIPHIUS_QM_BASE  = 16879919,
+        GRATION_QM       = 16879918,
     },
 }
 

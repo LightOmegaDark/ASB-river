@@ -18,8 +18,10 @@ end
 zone_object.onInitialize = function(zone)
     local hour = VanadielHour()
 
-    if hour >= 6 and hour < 16 then
-        GetMobByID(ID.mob.BACKOO):setRespawnTime(1)
+    if xi.settings.main.ENABLE_WOTG == 1 then
+        if hour >= 6 and hour < 16 then
+            GetMobByID(ID.mob.BACKOO):setRespawnTime(1)
+        end
     end
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
@@ -46,8 +48,18 @@ zone_object.onZoneIn = function(player, prevZone)
     return cs
 end
 
+zone_object.onZoneOut = function(player)
+    if player:hasStatusEffect(xi.effect.BATTLEFIELD) then
+        player:delStatusEffect(xi.effect.BATTLEFIELD)
+    end
+end
+
 zone_object.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
+end
+
+zone_object.onGameDay = function()
+    SetServerVariable("[DIG]ZONE118_ITEMS", 0)
 end
 
 zone_object.onRegionEnter = function(player, region)

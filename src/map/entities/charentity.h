@@ -334,7 +334,7 @@ public:
     std::vector<CTrustEntity*> PTrusts; // Active trusts
 
     template <typename F, typename... Args>
-    void ForPartyWithTrusts(F func, Args&&... args)
+    void ForPartyWithTrusts(F const& func, Args&&... args)
     {
         if (PParty)
         {
@@ -438,6 +438,7 @@ public:
     uint8      m_hasAutoTarget;   // возможность использования AutoTarget функции
     position_t m_StartActionPos;  // action start position (item use, shooting start, tractor position)
     position_t m_ActionOffsetPos; // action offset position from the action packet(currently only used for repositioning of luopans)
+    uint8      m_raiseLevel;      // Used to dictate whether we need to level up on raise in battlefield and to determine excess XP.
 
     location_t m_previousLocation;
 
@@ -468,6 +469,7 @@ public:
     bool       m_EquipSwap; // true if equipment was recently changed
     bool       m_EffectsChanged;
     time_point m_LastSynthTime;
+    time_point m_LastRangedAttackTime;
 
     CHAR_SUBSTATE m_Substate;
 
@@ -511,6 +513,7 @@ public:
     virtual void addTrait(CTrait*) override;
     virtual void delTrait(CTrait*) override;
 
+    bool         IsMobOwner(CBattleEntity* PTarget);
     virtual bool ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags) override;
     virtual bool CanUseSpell(CSpell*) override;
 
@@ -571,7 +574,6 @@ public:
     ~CCharEntity();
 
 protected:
-    bool IsMobOwner(CBattleEntity* PTarget);
     void TrackArrowUsageForScavenge(CItemWeapon* PAmmo);
 
 private:
