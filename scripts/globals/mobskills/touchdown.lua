@@ -10,8 +10,12 @@ require("scripts/globals/mobskills")
 -----------------------------------
 local mobskillObject = {}
 
-mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    return 1
+mobskill_object.onMobSkillCheck = function(target, mob, skill)
+    if mob:getAnimationSub() ~= 1 then
+        return 1
+    end
+
+    return 0
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
