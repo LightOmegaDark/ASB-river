@@ -332,8 +332,9 @@ namespace luautils
     bool HasCustomMenuContext(CCharEntity* PChar);
     void HandleCustomMenu(CCharEntity* PChar, std::string selection);
 
-    // Retrive the first itemId that matches a name
-    uint16 GetItemIDByName(std::string const& name);
+    uint16 GetItemIDByName(std::string const& name);  // Retrieve the first itemId that matches a name
+    uint32 GetStaticMobID(std::string const& name);  // Get a mob ID from the static table
+
 }; // namespace luautils
 
 #endif // _LUAUTILS_H -

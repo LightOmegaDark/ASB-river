@@ -182,6 +182,7 @@ namespace luautils
         lua.set_function("GetCachedInstanceScript", &luautils::GetCachedInstanceScript);
         lua.set_function("GetItemIDByName", &luautils::GetItemIDByName);
         lua.set_function("SendLuaFuncStringToZone", &luautils::SendLuaFuncStringToZone);
+        lua.set_function("GetStaticMobID", &luautils::GetStaticMobID);
 
         // This binding specifically exists to forcefully crash the server.
         // clang-format off
@@ -4936,6 +4937,23 @@ namespace luautils
         {
             // 0xFFFF is gil, so we will always return a value less than that as a warning
             id = 0xFFFF - sql->NumRows() + 1;
+        }
+
+        return id;
+    }
+
+    uint32 GetStaticMobID(std::string const& name)
+    {
+        uint32      id    = 0;
+        const char* Query = "SELECT mobid FROM static_mobs WHERE static_name = '%s';";
+        int32       ret   = sql->Query(Query, name);
+
+        if (ret != SQL_ERROR && sql->NumRows() == 1) // Found a single result
+        {
+            while (sql->NextRow() == SQL_SUCCESS)
+            {
+                id = sql->GetIntData(0);
+            }
         }
 
         return id;

@@ -18,8 +18,8 @@ local entity = {}
 -- Note: Diabolos Prime fight drops all tiles at once.
 
 entity.onMobSpawn = function(mob)
-    local dBase = ID.mob.DIABOLOS_OFFSET
-    local dPrimeBase = dBase + 27
+    local dBase = GetStaticMobID('diabolos_cop')
+    local dPrimeBase = GetStaticMobID('diabolos_prime')
 
     -- Only add these for the CoP Diabolos NOT Prime
     if mob:getID() >= dBase and mob:getID() <= dBase + 14 then  -- three possible instances of Diabolos
