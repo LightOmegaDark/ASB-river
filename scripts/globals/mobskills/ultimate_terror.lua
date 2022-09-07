@@ -19,21 +19,39 @@ mobskill_object.onMobWeaponSkill = function(target, mob, skill)
     local drained = 0
     local threshold = 3/7
 
-    local effects = {
-        {xi.effect.STR_DOWN, 10, 3, 60},
-        {xi.effect.DEX_DOWN, 10, 3, 60},
-        {xi.effect.VIT_DOWN, 10, 3, 60},
-        {xi.effect.AGI_DOWN, 10, 3, 60},
-        {xi.effect.INT_DOWN, 10, 3, 60},
-        {xi.effect.MND_DOWN, 10, 3, 60},
-        {xi.effect.CHR_DOWN, 10, 3, 60}
-    }
+    if math.random() < threshold then
+        skill:setMsg(xi.mobskills.mobDrainAttribute(mob, target, xi.effect.STR_DOWN, 10, 3, 60))
+        drained = drained + 1
+    end
+    
+    if math.random() < threshold then
+        skill:setMsg(xi.mobskills.mobDrainAttribute(mob, target, xi.effect.DEX_DOWN, 10, 3, 60))
+        drained = drained + 1
+    end
 
-    for _, eff in pairs(effects) do
-        if math.random() < threshold then
-            skill:setMsg(xi.mobskills.mobDrainAttribute(mob, target, eff[1], eff[2], eff[3], eff[4]))
-            drained = drained + 1
-        end 
+    if math.random() < threshold then
+        skill:setMsg(xi.mobskills.mobDrainAttribute(mob, target, xi.effect.VIT_DOWN, 10, 3, 60))
+        drained = drained + 1
+    end
+
+    if math.random() < threshold then
+        skill:setMsg(xi.mobskills.mobDrainAttribute(mob, target, xi.effect.AGI_DOWN, 10, 3, 60))
+        drained = drained + 1
+    end
+
+    if math.random() < threshold then
+        skill:setMsg(xi.mobskills.mobDrainAttribute(mob, target, xi.effect.INT_DOWN, 10, 3, 60))
+        drained = drained + 1
+    end
+
+    if math.random() < threshold then
+        skill:setMsg(xi.mobskills.mobDrainAttribute(mob, target, xi.effect.MND_DOWN, 10, 3, 60))
+        drained = drained + 1
+    end
+
+    if math.random() < threshold then
+        skill:setMsg(xi.mobskills.MobDrainAttribute(mob, target, xi.effect.CHR_DOWN, 10, 3, 60))
+        drained = drained + 1
     end
 
     return drained
