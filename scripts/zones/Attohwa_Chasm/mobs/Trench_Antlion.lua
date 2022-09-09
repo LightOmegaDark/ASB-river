@@ -9,7 +9,13 @@ require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
 
-entity.onMobDeath = function(mob, player, optParams)
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.ROAM_TURNS, 0)
+    mob:setMobMod(xi.mobMod.ROAM_RATE, 0)
+    mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 0)
+end
+
+entity.onMobDeath = function(mob, player, isKiller)
 end
 
 entity.onMobDespawn = function(mob)
