@@ -9,8 +9,9 @@ require("scripts/globals/mobskills")
 -----------------------------------
 local mobskillObject = {}
 
-mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    if mob:getMainJob() ~= xi.job.WAR then
+mobskill_object.onMobSkillCheck = function(target, mob, skill)
+    local mobSkin = mob:getModelId() --Mobskill based on modelid, this is for all h2h models
+    if mobSkin == 271 or mobSkin == 642 or mobSkin == 643 or mobSkin == 709 or mobSkin == 711 then
         return 0
     end
 
