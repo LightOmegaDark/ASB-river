@@ -45,7 +45,11 @@ end
 
 zoneObject.onEventFinish = function(player, csid, option)
     if csid == 45 and option == 1 then
-        player:setPos(-379.947, 48.045, 334.059, 192, 9) -- To Pso'Xja (R)
+        player:setPos(-379.947, 48.045, 334.059, 192, 9) -- To Pso'Xja {R}
+    elseif csid >= 30 and csid <= 44 then
+        for _, entry in pairs(player:getNotorietyList()) do
+            entry:clearEnmity(player) -- reset hate on player after teleporting
+        end
     end
 end
 
