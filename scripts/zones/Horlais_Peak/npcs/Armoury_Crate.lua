@@ -54,48 +54,48 @@ local loot =
         },
 
         {
-            { itemid = 4896, droprate = 174 }, -- firespirit
-            { itemid = 4751, droprate =  16 }, -- vile elixir
-            { itemid = 4714, droprate = 114 }, -- icespikes
-            { itemid = 4874, droprate = 174 }, -- refresh
-            { itemid = 4947, droprate = 138 }, -- utsusemi ni
-            { itemid =  772, droprate =  18 }, -- green rock
-            { itemid =  775, droprate =  18 }, -- black rock
-            { itemid =  770, droprate =  17 }, -- blue rock
-            { itemid =  769, droprate =  16 }, -- red rock
-            { itemid =  774, droprate =  16 }, -- purple rock
-            { itemid =  776, droprate =  16 }, -- white rock
-            { itemid =  771, droprate =  17 }, -- yellow rock
-            { itemid =  773, droprate =  17 }, -- translucent rock
-            { itemid = 4172, droprate =  21 }, -- reraiser
-            { itemid =  699, droprate =  22 }, -- oak log
-            { itemid =  701, droprate =  18 }, -- rosewood log
-            { itemid =  748, droprate = 120 }, -- gold beastcoin
-            { itemid =  749, droprate = 102 }, -- mythril beastcoin
-            { itemid =  792, droprate =  21 }, -- pearl
-            { itemid =  798, droprate =  23 }, -- Turquoise
-            { itemid =  808, droprate =  19 }, -- Goshenite
-            { itemid =  793, droprate =  18 }, -- Black pearl
-            { itemid =  815, droprate =  17 }, -- sphene
-            { itemid =  790, droprate =  20 }, -- garnet
-            { itemid =  811, droprate =  18 }, -- ametrine
-            { itemid =    0, droprate =   0 }, -- nothing
+            {itemid = 4896, droprate = 174}, -- firespirit
+            {itemid = 4174, droprate =  16}, -- vile elixir
+            {itemid = 4714, droprate = 114}, -- icespikes
+            {itemid = 4717, droprate = 174}, -- refresh
+            {itemid = 4947, droprate = 138}, -- utsusemi ni
+            {itemid = 772,  droprate =  18}, -- green rock
+            {itemid = 775,  droprate =  18}, -- black rock
+            {itemid = 770,  droprate =  17}, -- blue rock
+            {itemid = 769,  droprate =  16}, -- red rock
+            {itemid = 774,  droprate =  16}, -- purple rock
+            {itemid = 776,  droprate =  16}, -- white rock
+            {itemid = 771,  droprate =  17}, -- yellow rock
+            {itemid = 773,  droprate =  17}, -- translucent rock
+            {itemid = 4172, droprate =  21}, -- reraiser
+            {itemid = 699,  droprate =  22}, -- oak log
+            {itemid = 701,  droprate =  18}, -- rosewood log
+            {itemid = 748,  droprate = 120}, -- gold beastcoin
+            {itemid = 749,  droprate = 102}, -- mythril beastcoin
+            {itemid = 792,  droprate =  21}, -- pearl
+            {itemid = 798,  droprate =  23}, -- Turquoise
+            {itemid = 808,  droprate =  19}, -- Goshenite
+            {itemid = 793,  droprate =  18}, -- Black pearl
+            {itemid = 815,  droprate =  17}, -- sphene
+            {itemid = 790,  droprate =  20}, -- garnet
+            {itemid = 811,  droprate =  18}, -- ametrine
+            {itemid = 0,    droprate =   0}, -- nothing
         },
 
         {
-            { itemid = 4714, droprate = 87 }, -- icespikes
-            { itemid = 4874, droprate = 75 }, -- refresh
-            { itemid = 4947, droprate = 75 }, -- utsusemi ni
-            { itemid =  699, droprate = 80 }, -- oak log
-            { itemid =  701, droprate = 97 }, -- rosewood log
-            { itemid =  792, droprate = 86 }, -- pearl
-            { itemid =  798, droprate = 88 }, -- Turquoise
-            { itemid =  808, droprate = 79 }, -- Goshenite
-            { itemid =  793, droprate = 93 }, -- Black pearl
-            { itemid =  815, droprate = 79 }, -- sphene
-            { itemid =  790, droprate = 71 }, -- garnet
-            { itemid =  811, droprate = 90 }, -- ametrine
-            { itemid =    0, droprate =  0 }, -- nothing
+            {itemid = 4714, droprate = 87}, -- icespikes
+            {itemid = 4717, droprate = 75}, -- refresh
+            {itemid = 4947, droprate = 75}, -- utsusemi ni
+            {itemid =  699, droprate = 80}, -- oak log
+            {itemid =  701, droprate = 97}, -- rosewood log
+            {itemid =  792, droprate = 86}, -- pearl
+            {itemid =  798, droprate = 88}, -- Turquoise
+            {itemid =  808, droprate = 79}, -- Goshenite
+            {itemid =  793, droprate = 93}, -- Black pearl
+            {itemid =  815, droprate = 79}, -- sphene
+            {itemid =  790, droprate = 71}, -- garnet
+            {itemid =  811, droprate = 90}, -- ametrine
+            {itemid =    0, droprate =  0}, -- nothing
         },
     },
 
