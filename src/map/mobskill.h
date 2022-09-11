@@ -98,7 +98,7 @@ public:
     const std::string& getName();
     void               setName(const std::string& name);
 
-    uint8  m_Aoe;               // не используется
+    uint8 m_Aoe; // не используется
 
 private:
     uint16 m_ID;
