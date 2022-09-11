@@ -539,12 +539,13 @@ bool CAIContainer::QueueEmpty()
     return ActionQueue.isEmpty();
 }
 
-void CAIContainer::checkQueueImmediately()
+void CAIContainer::ClearActionQueue()
 {
-    ActionQueue.checkAction(server_clock::now());
+    ActionQueue.clearQueue();
 }
 
-bool CAIContainer::Internal_Despawn(bool instantDespawn)
+
+bool CAIContainer::Internal_Despawn()
 {
     if (!IsCurrentState<CDespawnState>() && !IsCurrentState<CRespawnState>())
     {
