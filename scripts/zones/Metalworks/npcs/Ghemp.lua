@@ -83,6 +83,8 @@ entity.onEventFinish = function(player, csid, option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 4096) -- Fire Crystal
             xi.crafting.signupGuild(player, xi.crafting.guild.SMITHING)
         end
+    elseif (csid == 101 and option > 900) then
+        player:resetLocalVars()
     else
         if player:getLocalVar("SmithingTraded") == 1 then
             player:tradeComplete()
