@@ -227,10 +227,11 @@ enum SPELLAOE
 
 enum SPELLFLAG
 {
-    SPELLFLAG_NONE           = 0x00,
-    SPELLFLAG_HIT_ALL        = 0x01, // Hit all targets in range regardless of party
-    SPELLFLAG_WIPE_SHADOWS   = 0x02, // Wipe shadows even if single target and miss/resist (example: "Maiden's Virelai")
-    SPELLFLAG_IGNORE_SHADOWS = 0x04  // Ignore shadows and hit player anyways (example: Mobs "Death" spell)
+    SPELLFLAG_NONE            = 0x00,
+    SPELLFLAG_HIT_ALL         = 0x01, // Hit all targets in range regardless of party
+    SPELLFLAG_WIPE_SHADOWS    = 0x02, // Wipe shadows even if single target and miss/resist (example: "Maiden's Virelai")
+    SPELLFLAG_IGNORE_SHADOWS  = 0x04,  // Ignore shadows and hit player anyways (example: Mobs "Death" spell)
+    SPELLFLAG_ATTACKER_RADIUS = 0x08, // Center the AoE around the attacker; the default is the target.
 };
 
 // clang-format off
@@ -1051,45 +1052,45 @@ public:
     bool isSevere();          // damage spells that have severe effects like Death or Impact
     bool dealsDamage() const; // checks if the spell deals hp damage to target, this is relative to message
 
-    uint16             getTotalTargets() const;
-    SpellID            getID();
-    uint8              getJob(JOBTYPE JobID);
-    uint16             getMPCost() const;
-    uint32             getCastTime() const;
-    uint32             getRecastTime() const;
-    uint16             getValidTarget() const;
-    uint16             getAnimationID() const;
-    uint16             getAnimationTime() const;
-    SPELLGROUP         getSpellGroup();
-    SPELLFAMILY        getSpellFamily();
-    uint8              getSkillType() const;
-    uint16             getZoneMisc() const;
-    uint8              getAOE() const;
-    uint16             getBase() const;
-    uint16             getElement() const;
-    float              getMultiplier() const;
-    uint16             getMessage() const;
-    uint16             getDefaultMessage();
-    uint16             getMagicBurstMessage() const;
-    uint16             getCE() const;
-    uint16             getVE() const;
-    uint32             getModifiedRecast() const;
-    float              getRadius() const;
-    uint16             getAoEMessage() const; // returns the single target message for AoE moves
-    uint8              getRequirements() const;
-    uint16             getMeritId() const;
-    uint8              getFlag() const;
-    const std::string& getContentTag();
-    float              getRange() const;
-    uint32             getPrimaryTargetID() const;
-    bool               tookEffect() const; // returns true if the spell landed, not resisted or missed
-    bool               hasMPCost();        // checks if spell costs mp to use
-    bool               isHeal();           // is a heal spell
-    bool               isCure();           // is a Cure spell
-    bool               isDebuff();         // is a debuff spell
-    bool               isNa();             // is a -na spell
-    bool               isRaise();          // is a raise spell (e.g. Trust: Ferreous Coffin)
-    bool               canHitShadow();     // check if spell ignores shadows
+    uint16      getTotalTargets() const;
+    SpellID     getID();
+    uint8       getJob(JOBTYPE JobID);
+    uint16      getMPCost() const;
+    uint32      getCastTime() const;
+    uint32      getRecastTime() const;
+    uint16      getValidTarget() const;
+    uint16      getAnimationID() const;
+    uint16      getAnimationTime() const;
+    SPELLGROUP  getSpellGroup();
+    SPELLFAMILY getSpellFamily();
+    uint8       getSkillType() const;
+    uint16      getZoneMisc() const;
+    uint8       getAOE() const;
+    uint16      getBase() const;
+    uint16      getElement() const;
+    float       getMultiplier() const;
+    uint16      getMessage() const;
+    uint16      getDefaultMessage();
+    uint16      getMagicBurstMessage() const;
+    uint16      getCE() const;
+    uint16      getVE() const;
+    uint32      getModifiedRecast() const;
+    float       getRadius() const;
+    uint16      getAoEMessage() const; // returns the single target message for AoE moves
+    uint8       getRequirements() const;
+    uint16      getMeritId() const;
+    uint8       getFlag() const;
+    int8*       getContentTag();
+    float       getRange() const;
+    uint16      getConeAngle();
+    bool        tookEffect() const; // returns true if the spell landed, not resisted or missed
+    bool        hasMPCost();        // checks if spell costs mp to use
+    bool        isHeal();           // is a heal spell
+    bool        isCure();           // is a Cure spell
+    bool        isDebuff();         // is a debuff spell
+    bool        isNa();             // is a -na spell
+    bool        isRaise();          // is a raise spell (e.g. Trust: Ferreous Coffin)
+    bool        canHitShadow();     // check if spell ignores shadows
 
     void setRadius(float radius);
     void setTotalTargets(uint16 total);
@@ -1123,6 +1124,7 @@ public:
     void setFlag(uint8 flag);
     void setContentTag(const std::string& contentTag);
     void setRange(float range);
+    void setConeAngle(uint16 angle);
 
     const std::string& getName();
     void               setName(const std::string& name);
@@ -1141,6 +1143,7 @@ private:
     uint8       m_skillType{};
     float       m_range{};
     float       m_radius{};
+    uint16      m_coneAngle {};
     uint16      m_totalTargets{};
     uint16      m_mpCost{};                        // mpCost/itemId for ninjitsu tool
     uint8       m_job[MAX_JOBTYPE]{};              // job
@@ -1176,6 +1179,7 @@ namespace spell
     bool    CanUseSpell(CBattleEntity* PCaster, CSpell* PSpell);
     bool    CanUseSpellWith(SpellID spellId, JOBTYPE job, uint8 level);
     float   GetSpellRadius(CSpell* spellId, CBattleEntity* PCaster);
+    float   GetSpellConeAngle(CSpell* spellId, CBattleEntity* PCaster);
 }; // namespace spell
 
 #endif
