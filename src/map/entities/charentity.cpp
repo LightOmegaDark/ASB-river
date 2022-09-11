@@ -62,6 +62,7 @@
 #include "../battlefield.h"
 #include "../char_recast_container.h"
 #include "../conquest_system.h"
+#include "../enmity_container.h"
 #include "../item_container.h"
 #include "../items/item_furnishing.h"
 #include "../items/item_usable.h"
@@ -88,22 +89,7 @@
 #include "battlefield.h"
 #include "char_recast_container.h"
 #include "charentity.h"
-#include "conquest_system.h"
-#include "item_container.h"
-#include "items/item_furnishing.h"
-#include "items/item_usable.h"
-#include "items/item_weapon.h"
-#include "job_points.h"
-#include "latent_effect_container.h"
-#include "mobskill.h"
-#include "modifier.h"
-#include "packets/char_job_extra.h"
-#include "packets/status_effects.h"
-#include "petskill.h"
-#include "spell.h"
-#include "status_effect_container.h"
-#include "trade_container.h"
-#include "treasure_pool.h"
+#include "mobentity.h"
 #include "trustentity.h"
 #include "universal_container.h"
 #include "utils/attackutils.h"
@@ -1874,6 +1860,11 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         }
 
         StatusEffectContainer->DelStatusEffect(EFFECT_SANGE);
+    }
+    else if (!hitOccured && PTarget->objtype == TYPE_MOB)
+    {
+        // 1 ce for a missed attack for TH application
+        ((CMobEntity*)PTarget)->PEnmityContainer->UpdateEnmity((CBattleEntity*)this, 1, 0);
     }
 
     battleutils::ClaimMob(PTarget, this);
