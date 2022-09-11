@@ -46,8 +46,8 @@ entity.onTrigger = function(player, npc)
         end
     elseif lvl >= 7 and lvl < 15 then
         player:startEvent(671)
-    elseif lvl >= 15 and aSquiresTestII ~= QUEST_COMPLETED then
-        local hasStalactiteDew = player:hasKeyItem(xi.ki.STALACTITE_DEW)
+    elseif (lvl >= 10 and aSquiresTestII ~= QUEST_COMPLETED) then
+        local stalactiteDew = player:hasKeyItem(xi.ki.STALACTITE_DEW)
 
         if aSquiresTestII == QUEST_AVAILABLE then
             player:startEvent(625)

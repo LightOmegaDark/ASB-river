@@ -98,8 +98,8 @@ entity.onEventFinish = function(player, csid, option)
         player:addQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.CHASING_QUOTAS)
     elseif csid == 17 then
         player:setCharVar("ChasingQuotas_Progress", 1)
-        player:setCharVar("ChasingQuotas_date", os.time() + 60)
-    elseif csid == 7 then
+        player:setCharVar("ChasingQuotas_date", getMidnight())
+    elseif (csid == 7) then
         player:setCharVar("ChasingQuotas_Progress", 2)
         player:setCharVar("ChasingQuotas_date", 0)
     elseif csid == 15 then
