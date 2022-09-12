@@ -3084,7 +3084,7 @@ namespace battleutils
             pDIF = xirand::GetRandomNumber(lowerLimit, upperLimit);
         }
 
-        pDIF = std::clamp<float>(pDIF, 0, 3.0);
+        // pDIF = std::clamp<float>(pDIF, 0, 3.0);
         pDIF = pDIF * xirand::GetRandomNumber(1.0f, 1.05f);
 
         if (isCritical)
@@ -3097,6 +3097,7 @@ namespace battleutils
             pDIF *= ((100 + criticaldamage) / 100.0f);
         }
 
+        pDIF = std::clamp<float>(pDIF, 0, maxRatio);
         return pDIF;
     }
 

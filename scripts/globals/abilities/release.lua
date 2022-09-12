@@ -13,8 +13,8 @@ abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-abilityObject.onUseAbility = function(player, target, ability)
-    target:despawnPet()
+ability_object.onUseAbility = function(player, target, ability)
+    player:despawnPet()
 end
 
 return abilityObject

@@ -50,7 +50,9 @@ CPetEntity::CPetEntity(PET_TYPE petType)
     m_PetID        = 0;
     m_IsClaimable  = false;
 
-    PAI            = std::make_unique<CAIContainer>(this, std::make_unique<CPathFind>(this), std::make_unique<CPetController>(this), std::make_unique<CTargetFind>(this));
+    memset(&m_TraitList, 0, sizeof(m_TraitList));
+
+    PAI = std::make_unique<CAIContainer>(this, std::make_unique<CPathFind>(this), std::make_unique<CPetController>(this), std::make_unique<CTargetFind>(this));
 }
 
 CPetEntity::~CPetEntity() = default;
@@ -242,43 +244,16 @@ void CPetEntity::Spawn()
     luautils::OnMobSpawn(this);
 }
 
-bool CPetEntity::shouldDespawn(time_point tick)
+void CPetEntity::addTrait(CTrait* PTrait)
 {
-    // This check was moved from the original call site when this method was added.
-    // It is in theory not needed, but we are not removing it without further testing.
-    // TODO: Consider removing this when possible.
-    if (isCharmed && tick > charmTime)
-    {
-        return true;
-    }
-
-    if (PMaster != nullptr &&
-        PAI->IsSpawned() &&
-        m_PetType == PET_TYPE::JUG_PET &&
-        tick > m_jugSpawnTime + m_jugDuration)
-    {
-        return true;
-    }
-
-    return false;
+    TraitList.push_back(PTrait);
+    addModifier(PTrait->getMod(), PTrait->getValue());
 }
 
-void CPetEntity::loadPetZoningInfo()
+void CPetEntity::delTrait(CTrait* PTrait)
 {
-    XI_DEBUG_BREAK_IF(!PAI->IsSpawned())
-
-    if (auto* master = dynamic_cast<CCharEntity*>(PMaster))
-    {
-        health.tp = static_cast<uint16>(master->petZoningInfo.petTP);
-        health.hp = master->petZoningInfo.petHP;
-        health.mp = master->petZoningInfo.petMP;
-
-        if (m_PetType == PET_TYPE::JUG_PET)
-        {
-            setJugDuration(master->petZoningInfo.jugDuration);
-            setJugSpawnTime(master->petZoningInfo.jugSpawnTime);
-        }
-    }
+    TraitList.erase(std::remove(TraitList.begin(), TraitList.end(), PTrait), TraitList.end());
+    delModifier(PTrait->getMod(), PTrait->getValue());
 }
 
 void CPetEntity::OnAbility(CAbilityState& state, action_t& action)
