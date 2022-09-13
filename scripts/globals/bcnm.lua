@@ -1106,7 +1106,6 @@ xi.bcnm.onEventUpdate = function(player, csid, option, extras)
         local battlefieldId    = getBattlefieldIdByBit(player, battlefieldIndex)
         local id               = battlefieldId or player:getBattlefieldID()
         local skip             = checkSkip(player, id)
-        local pet = player:getPet()
 
         local clearTime = 1
         local name      = "Meme"
