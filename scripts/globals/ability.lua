@@ -750,7 +750,7 @@ function AbilityFinalAdjustments(dmg, mob, skill, target, skilltype, skillparam,
     then
         --remove 'shadowbehav' shadows.
 
-        dmg = utils.takeShadows(target, dmg, shadowbehav)
+        dmg = utils.takeShadows(target, mob, dmg, shadowbehav)
 
         -- dealt zero damage, so shadows took hit
         if dmg == 0 then

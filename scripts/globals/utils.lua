@@ -192,7 +192,7 @@ function utils.oneforall(target, dmg)
     return dmg
 end
 
-function utils.takeShadows(target, dmg, shadowbehav)
+function utils.takeShadows(target, mob, dmg, shadowbehav)
     if shadowbehav == nil then
         shadowbehav = 1
     end
@@ -252,7 +252,11 @@ function utils.takeShadows(target, dmg, shadowbehav)
             end
         end
 
-        target:setMod(shadowType, shadowsLeft)
+        if mob and mob:isMob() then
+            target:addEnmity(mob, -25 * shadowbehav, 0)
+        end
+
+        target:setMod(shadowType, shadowsLeft);
 
         if shadowsLeft <= 0 then
             target:delStatusEffect(xi.effect.COPY_IMAGE)
