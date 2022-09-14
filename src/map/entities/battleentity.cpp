@@ -1797,18 +1797,8 @@ void CBattleEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGB
         actionTarget.animation       = 0;
         actionTarget.param           = static_cast<uint16>(PSpell->getID());
 
-        if (blockedCast)
-        {
-            // In a cutscene or otherwise, it seems the target "evades" the cast, despite the ID being set to the caster?
-            // No message is sent in this case
-            actionTarget.reaction = REACTION::EVADE;
-        }
-        else
-        {
-            actionTarget.reaction = REACTION::HIT;
-            // For some reason, despite the system supporting interrupted message in the action packet (like auto attacks, JA), an 0x029 message is sent for spells.
-            loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, state.GetTarget() ? state.GetTarget() : this, 0, 0, msg));
-        }
+        this->PAI->EventHandler.triggerListener("MAGIC_INTERRUPTED", CLuaBaseEntity(this));
+        loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, state.GetTarget() ? state.GetTarget() : this, 0, 0, msg));
     }
 }
 
