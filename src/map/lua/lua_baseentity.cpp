@@ -1625,9 +1625,27 @@ bool CLuaBaseEntity::pathThrough(sol::table const& pointsTable, sol::object cons
     if (flags & PATHFLAG_PATROL)
     {
         // Grab points from array and store in points array
-        for (std::size_t i = 1; i < pointsTable.size(); i += 4)
+        float x, y, z = -1;
+        for (std::size_t i = 1; i <= pointsTable.size(); ++i)
         {
-            points.push_back({ { (float)pointsTable[i], (float)pointsTable[i + 1], (float)pointsTable[i + 2], 0, 0 }, (uint32)pointsTable[i + 3] });
+            sol::table pointData = pointsTable[i];
+            pathpoint_t point;
+            x = pointData.get_or("x", x);
+            y = pointData.get_or("y", y);
+            z = pointData.get_or("z", z);
+            point.position = { x, y, z, 0, 0 };
+
+            auto rotation = pointData["rotation"];
+            if (rotation.valid()) {
+                point.position.rotation = rotation.get<uint8>();
+                point.setRotation       = true;
+            }
+
+            auto wait = pointData["wait"];
+            if (wait.valid()) {
+                point.wait = wait.get<uint32>();
+            }
+            points.push_back(std::move(point));
         }
     }
     else
@@ -1675,8 +1693,7 @@ void CLuaBaseEntity::clearPath(sol::object const& pauseObj)
     {
         m_PBaseEntity->SetLocalVar("pauseNPCPathing", 1);
     }
-
-    if (PBattle->PAI->PathFind != nullptr)
+    else if (PBattle->PAI->PathFind != nullptr)
     {
         PBattle->PAI->PathFind->Clear();
     }

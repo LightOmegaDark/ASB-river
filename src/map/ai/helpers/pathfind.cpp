@@ -82,7 +82,7 @@ bool CPathFind::RoamAround(const position_t& point, float maxRadius, uint8 maxTu
             return false;
         }
 
-        m_points.push_back({{ point.x - 1 + rand() % 2, point.y, point.z - 1 + rand() % 2, 0, 0 }, 0});
+        m_points.push_back({ { point.x - 1 + rand() % 2, point.y, point.z - 1 + rand() % 2, 0, 0 }, 0 });
     }
 
     return true;
@@ -131,7 +131,7 @@ bool CPathFind::PathTo(const position_t& point, uint8 pathFlags, bool clear)
             Clear();
         }
 
-        m_points.push_back({point, 0});
+        m_points.push_back({ point, 0 });
     }
 
     return true;
@@ -204,7 +204,7 @@ bool CPathFind::WarpTo(const position_t& point, float maxDistance)
 
 void CPathFind::ResumePatrol()
 {
-    if (m_pathFlags & PATHFLAG_PATROL)
+    if (m_patrolFlags & PATHFLAG_PATROL)
     {
         m_pathFlags        = m_patrolFlags;
         m_points           = m_patrol;
@@ -318,6 +318,11 @@ void CPathFind::FollowPath(time_point tick)
         if (AtPoint(targetPoint.position))
         {
             m_onPoint = true;
+            if (targetPoint.setRotation)
+            {
+                m_POwner->loc.p.rotation = targetPoint.position.rotation;
+                m_POwner->updatemask |= UPDATE_POS;
+            }
             if (targetPoint.wait != 0 && m_timeAtPoint.time_since_epoch().count() == 0)
             {
                 m_timeAtPoint = tick + std::chrono::milliseconds(targetPoint.wait);
@@ -329,7 +334,6 @@ void CPathFind::FollowPath(time_point tick)
         {
             break;
         }
-
     }
 
     StepTo(targetPoint.position, m_pathFlags & PATHFLAG_RUN);
@@ -476,7 +480,7 @@ bool CPathFind::FindClosestPath(const position_t& start, const position_t& end)
 
     m_points       = m_POwner->loc.zone->m_navMesh->findPath(start, end);
     m_currentPoint = 0;
-    m_points.push_back({end, 0}); // this prevents exploits with navmesh / impassible terrain
+    m_points.push_back({ end, 0 }); // this prevents exploits with navmesh / impassible terrain
 
     /* this check requirement is never met as intended since m_points are never empty when mob has a path
     if (m_points.empty())
@@ -622,8 +626,13 @@ void CPathFind::AddPoints(std::vector<pathpoint_t>&& points, bool reverse)
 
     if (m_pathFlags & PATHFLAG_PATROL)
     {
-        m_patrol = m_points;
+        m_patrol      = m_points;
         m_patrolFlags = m_pathFlags;
+    }
+    else
+    {
+        m_patrol.clear();
+        m_patrolFlags = 0;
     }
 }
 
@@ -644,7 +653,7 @@ void CPathFind::FinishedPath()
             Clear();
         }
     }
-    else if (m_pathFlags & PATHFLAG_PATROL)
+    else if (IsPatrolling())
     {
         m_currentPoint = 0;
         m_currentTurn  = 0;
