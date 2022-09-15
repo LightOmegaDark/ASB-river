@@ -8,293 +8,243 @@ local entity = {}
 
 local path =
 {
-    {x = 106, y = 0, z = -3},
-    {x = 106, y = 0, z = -4},
-    {x = 107, y = 0, z = -5},
-    {x = 107, y = 0, z = -6},
-    {x = 108, y = 0, z = -7},
-    {x = 108, y = 0, z = -9},
-    {x = 109, y = 0, z = -10},
-    {x = 109, y = 0, z = -11},
-    {x = 111, y = 0, z = -15},
-    {x = 112, y = 0, z = -16},
-    {x = 112, y = 0, z = -18},
-    {x = 113, y = 0, z = -18},
-    {x = 113, y = 0, z = -19},
-    {x = 114, y = 0, z = -21},
-    {x = 114, y = 0, z = -23},
-    {x = 115, y = 0, z = -24},
-    {x = 115, y = 0, z = -27},
-    {x = 116, y = 0, z = -32},
-    {x = 117, y = 0, z = -33},
-    {x = 117, y = 0, z = -38},
-    {x = 116, y = 0, z = -39},
-    {x = 116, y = 0, z = -40},
-    {x = 115, y = 0, z = -41},
-    {x = 115, y = 0, z = -43},
-    {x = 114, y = 0, z = -44},
-    {x = 113, y = 0, z = -45},
-    {x = 113, y = 0, z = -46},
-    {x = 112, y = 0, z = -46},
-    {x = 111, y = 0, z = -47},
-    {x = 111, y = 0, z = -48},
-    {x = 110, y = 0, z = -48},
-    {x = 109, y = 0, z = -49},
-    {x = 108, y = 0, z = -50},
-    {x = 107, y = 0, z = -50},
-    {x = 107, y = 0, z = -51},
-    {x = 105, y = 0, z = -51},
-    {x = 105, y = 0, z = -52},
-    {x = 104, y = 0, z = -52},
-    {x = 103, y = -1, z = -53},
-    {x = 101, y = -1, z = -54},
-    {x = 100, y = -1, z = -54},
-    {x = 98, y = -2, z = -55},
-    {x = 94, y = -4, z = -57},
-    {x = 93, y = -4, z = -57},
-    {x = 92, y = -5, z = -58},
-    {x = 89, y = -5, z = -58},
-    {x = 88, y = -6, z = -58},
-    {x = 87, y = -6, z = -59},
-    {x = 85, y = -7, z = -59},
-    {x = 84, y = -7, z = -59},
-    {x = 83, y = -8, z = -59},
-    {x = 79, y = -8, z = -59},
-    {x = 75, y = -9, z = -59},
-    {x = 74, y = -9, z = -59},
-    {x = 71, y = -8, z = -59},
-    {x = 70, y = -8, z = -59},
-    {x = 69, y = -8, z = -60},
-    {x = 69, y = -8, z = -60},
-    {x = 68, y = -8, z = -61},
-    {x = 67, y = -8, z = -61},
-    {x = 66, y = -8, z = -62},
-    {x = 65, y = -8, z = -62},
-    {x = 64, y = -8, z = -63},
-    {x = 64, y = -9, z = -64},
-    {x = 63, y = -9, z = -65},
-    {x = 63, y = -9, z = -66},
-    {x = 62, y = -9, z = -67},
-    {x = 62, y = -9, z = -68},
-    {x = 61, y = -9, z = -68},
-    {x = 61, y = -9, z = -70},
-    {x = 60, y = -9, z = -71},
-    {x = 60, y = -9, z = -72},
-    {x = 58, y = -8, z = -78},
-    {x = 58, y = -8, z = -79},
-    {x = 58, y = -8, z = -80},
-    {x = 57, y = -8, z = -81},
-    {x = 56, y = -8, z = -83},
-    {x = 55, y = -9, z = -88},
-    {x = 54, y = -9, z = -90},
-    {x = 53, y = -9, z = -93},
-    {x = 53, y = -9, z = -94},
-    {x = 52, y = -9, z = -94},
-    {x = 51, y = -9, z = -95},
-    {x = 51, y = -9, z = -96},
-    {x = 50, y = -9, z = -96},
-    {x = 49, y = -8, z = -97},
-    {x = 48, y = -8, z = -97},
-    {x = 47, y = -8, z = -98},
-    {x = 43, y = -8, z = -98},
-    {x = 42, y = -8, z = -99},
-    {x = 38, y = -8, z = -99},
-    {x = 37, y = -8, z = -98},
-    {x = 36, y = -8, z = -98},
-    {x = 35, y = -7, z = -98},
-    {x = 32, y = -6, z = -98},
-    {x = 30, y = -6, z = -98},
-    {x = 29, y = -5, z = -98},
-    {x = 27, y = -4, z = -97},
-    {x = 26, y = -4, z = -97},
-    {x = 24, y = -3, z = -97},
-    {x = 23, y = -3, z = -96},
-    {x = 21, y = -2, z = -96},
-    {x = 20, y = -2, z = -96},
-    {x = 19, y = -1, z = -95},
-    {x = 18, y = -1, z = -95},
-    {x = 17, y = -1, z = -94},
-    {x = 16, y = -1, z = -94},
-    {x = 14, y = 0, z = -93},
-    {x = 13, y = 0, z = -92},
-    {x = 13, y = 0, z = -92},
-    {x = 11, y = 0, z = -91},
-    {x = 8, y = 0, z = -89},
-    {x = 7, y = 0, z = -88},
-    {x = 6, y = 0, z = -88},
-    {x = 5, y = 0, z = -87},
-    {x = 4, y = 0, z = -87},
-    {x = 3, y = 0, z = -86},
-    {x = 3, y = 0, z = -85},
-    {x = 2, y = 0, z = -84},
-    {x = 1, y = 0, z = -84},
-    {x = 0, y = 0, z = -83},
-    {x = 0, y = 0, z = -81},
-    {x = -1, y = 0, z = -81},
-    {x = -2, y = 0, z = -80},
-    {x = -3, y = 0, z = -79},
-    {x = -3, y = 0, z = -78},
-    {x = -4, y = 0, z = -77},
-    {x = -5, y = 0, z = -76},
-    {x = -7, y = 0, z = -74},
-    {x = -8, y = 0, z = -72},
-    {x = -16, y = 0, z = -63},
-    {x = -26, y = 0, z = -51},
-    {x = -33, y = 0, z = -43},
-    {x = -36, y = 0, z = -41},
-    {x = -38, y = 0, z = -38},
-    {x = -39, y = 0, z = -37},
-    {x = -39, y = 0, z = -36},
-    {x = -40, y = 0, z = -35},
-    {x = -40, y = 0, z = -34},
-    {x = -41, y = 0, z = -33},
-    {x = -41, y = 0, z = -32},
-    {x = -42, y = 0, z = -31},
-    {x = -42, y = 0, z = -28},
-    {x = -43, y = 0, z = -27},
-    {x = -45, y = 0, z = -20},
-    {x = -46, y = 0, z = -16},
-    {x = -47, y = 0, z = -11},
-    {x = -48, y = 0, z = -8},
-    {x = -48, y = 0, z = -7},
-    {x = -49, y = 0, z = -6},
-    {x = -49, y = 0, z = -2},
-    {x = -49, y = 0, z = 0},
-    {x = -49, y = 0, z = 1},
-    {x = -50, y = 0, z = 2},
-    {x = -50, y = 0, z = 6},
-    {x = -49, y = 0, z = 7},
-    {x = -49, y = 0, z = 11},
-    {x = -48, y = 0, z = 12},
-    {x = -48, y = 0, z = 15},
-    {x = -47, y = 0, z = 16},
-    {x = -44, y = 0, z = 26},
-    {x = -43, y = 0, z = 30},
-    {x = -42, y = 0, z = 33},
-    {x = -43, y = 0, z = 32},
-    {x = -44, y = 0, z = 31},
-    {x = -44, y = 0, z = 15},
-    {x = -45, y = 0, z = 11},
-    {x = -45, y = 0, z = 7},
-    {x = -45, y = 0, z = 6},
-    {x = -45, y = 0, z = 5},
-    {x = -44, y = 0, z = 4},
-    {x = -44, y = 0, z = 1},
-    {x = -43, y = 0, z = -5},
-    {x = -42, y = 0, z = -9},
-    {x = -42, y = 0, z = -13},
-    {x = -41, y = 0, z = -19},
-    {x = -39, y = 0, z = -34},
-    {x = -38, y = 0, z = -35},
-    {x = -38, y = 0, z = -37},
-    {x = -37, y = 0, z = -38},
-    {x = -37, y = 0, z = -39},
-    {x = -36, y = 0, z = -41},
-    {x = -36, y = 0, z = -42},
-    {x = -35, y = 0, z = -43},
-    {x = -35, y = 0, z = -44},
-    {x = -34, y = 0, z = -45},
-    {x = -34, y = 0, z = -46},
-    {x = -33, y = 0, z = -47},
-    {x = -32, y = 0, z = -48},
-    {x = -31, y = 0, z = -49},
-    {x = -30, y = 0, z = -49},
-    {x = -30, y = 0, z = -50},
-    {x = -28, y = 0, z = -52},
-    {x = -22, y = 0, z = -57},
-    {x = -14, y = 0, z = -64},
-    {x = -9, y = 0, z = -69},
-    {x = 0, y = 0, z = -77},
-    {x = 8, y = 0, z = -84},
-    {x = 8, y = 0, z = -84},
-    {x = 13, y = -0, z = -88},
-    {x = 18, y = -1, z = -93},
-    {x = 20, y = -1, z = -94},
-    {x = 20, y = -2, z = -94},
-    {x = 22, y = -2, z = -95},
-    {x = 23, y = -3, z = -95},
-    {x = 24, y = -3, z = -95},
-    {x = 25, y = -4, z = -96},
-    {x = 29, y = -5, z = -97},
-    {x = 35, y = -7, z = -99},
-    {x = 36, y = -8, z = -99},
-    {x = 45, y = -8, z = -99},
-    {x = 46, y = -8, z = -98},
-    {x = 47, y = -8, z = -98},
-    {x = 48, y = -8, z = -97},
-    {x = 50, y = -8, z = -97},
-    {x = 51, y = -8, z = -96},
-    {x = 52, y = -9, z = -96},
-    {x = 53, y = -8, z = -95},
-    {x = 54, y = -9, z = -94},
-    {x = 54, y = -8, z = -93},
-    {x = 55, y = -8, z = -93},
-    {x = 56, y = -8, z = -92},
-    {x = 56, y = -8, z = -91},
-    {x = 57, y = -8, z = -90},
-    {x = 57, y = -8, z = -87},
-    {x = 58, y = -8, z = -86},
-    {x = 58, y = -8, z = -81},
-    {x = 57, y = -8, z = -80},
-    {x = 58, y = -8, z = -79},
-    {x = 58, y = -8, z = -77},
-    {x = 59, y = -8, z = -76},
-    {x = 59, y = -8, z = -75},
-    {x = 59, y = -9, z = -74},
-    {x = 60, y = -8, z = -73},
-    {x = 60, y = -9, z = -72},
-    {x = 61, y = -9, z = -71},
-    {x = 61, y = -9, z = -70},
-    {x = 62, y = -9, z = -69},
-    {x = 63, y = -9, z = -68},
-    {x = 63, y = -9, z = -67},
-    {x = 64, y = -9, z = -66},
-    {x = 64, y = -9, z = -65},
-    {x = 65, y = -9, z = -64},
-    {x = 65, y = -8, z = -64},
-    {x = 66, y = -8, z = -63},
-    {x = 67, y = -8, z = -62},
-    {x = 68, y = -8, z = -62},
-    {x = 69, y = -8, z = -61},
-    {x = 71, y = -8, z = -61},
-    {x = 72, y = -9, z = -60},
-    {x = 75, y = -9, z = -60},
-    {x = 76, y = -9, z = -59},
-    {x = 77, y = -8, z = -59},
-    {x = 80, y = -8, z = -59},
-    {x = 88, y = -6, z = -57},
-    {x = 92, y = -5, z = -56},
-    {x = 97, y = -3, z = -55},
-    {x = 101, y = -1, z = -54},
-    {x = 102, y = -1, z = -54},
-    {x = 103, y = -1, z = -53},
-    {x = 104, y = 0, z = -53},
-    {x = 105, y = 0, z = -52},
-    {x = 107, y = 0, z = -52},
-    {x = 108, y = 0, z = -51},
-    {x = 108, y = 0, z = -50},
-    {x = 109, y = 0, z = -50},
-    {x = 110, y = 0, z = -49},
-    {x = 110, y = 0, z = -48},
-    {x = 111, y = 0, z = -47},
-    {x = 111, y = 0, z = -45},
-    {x = 112, y = 0, z = -44},
-    {x = 112, y = 0, z = -41},
-    {x = 113, y = 0, z = -40},
-    {x = 113, y = 0, z = -18},
-    {x = 113, y = 0, z = -17},
-    {x = 112, y = 0, z = -16},
-    {x = 112, y = 0, z = -15},
-    {x = 110, y = 0, z = -7},
-    {x = 110, y = 0, z = -4},
-    {x = 109, y = 0, z = -2},
-    {x = 109, y = 0, z = -1},
-    {x = 108, y = 0, z = 1},
-    {x = 107, y = 0, z = 3},
+    a = {
+        102, -0.191, 3,
+        90.06, -0.28, 12.24,
+        67.60, -0.34, 12.42,
+        54.61, -4.11, 16.89,
+        25.03, -9.28, 23.12,
+        19.43, -7.95, 44.37,
+        18.80, -6.63, 47.77,
+        17.72, -5.14, 51.88,
+        16.93, -3.95, 55.33,
+        16.33, -3.09, 57.46,
+        14.76, -1.78, 60.84,
+        11.86, -0.60, 65.58,
+        -0.52, 0.00, 82.02,
+        3.06, 0.15, 125.56,
+        40.12, 0.000, 158.89,
+        60.35, -4.24, 143.23,
+        79.86, -8.75, 139.89,
+        85.86, -8.82, 138.11,
+        91.87, -8.83, 142.52,
+        101.60, -8.71, 143.17,
+        100.62, -8.75, 78.86,
+        108.29, -4.60, 54.26,
+        118.98, 0.00, 38.12,
+        102.61, 0.92, 1.60,
+        102, -0.191, 3,
+        102, -0.191, 3
+    },
+    b =
+    {
+        102, -0.191, 3,
+        109.49, 0.59, -0.07,
+        124.47, 0.00, -42.08,
+        91.93, -5.15, -58.24,
+        66.46, -8.81, -62.91,
+        60.86, -9.02, -73.80,
+        57.09, -9.37, -96.88,
+        38.39, -8.62, -98.74,
+        15.73, -1.02, -94.88,
+        -0.65, 0.00, -84.13,
+        -40.24, 0.00, -38.35,
+        -44.36, 0.68, 13.98,
+        -31.28, -0.23, 48.64,
+        -0.52, 0.00, 82.02,
+        3.06, 0.15, 125.56,
+        40.12, 0.000, 158.89,
+        60.35, -4.24, 143.23,
+        79.86, -8.75, 139.89,
+        85.86, -8.82, 138.11,
+        91.87, -8.83, 142.52,
+        101.60, -8.71, 143.17,
+        100.62, -8.75, 78.86,
+        108.29, -4.60, 54.26,
+        118.98, 0.00, 38.12,
+        102.61, 0.92, 1.60,
+        102, -0.191, 3,
+        102, -0.191, 3
+    }
 }
 
+entity.onPath = function(mob)
+    --Mob is on path node, let's check which path we need to route them to
+    local currentPath = mob:getLocalVar("mobPath")
+    local nextIndex = mob:getLocalVar("nextPatrolIndex")
+    local reverseCheck = mob:getLocalVar("pathReverse")
+    local pauseTime = mob:getLocalVar("pauseTime")
+    if pauseTime < os.time() then
+        if currentPath == 1 and reverseCheck == 0 then
+            --Let's check if the mob is at one of the pre-determined pause points.
+            if mob:atPoint({25.03, -9.28, 23.12}) or mob:atPoint({-0.52, 0.00, 82.02})
+            or mob:atPoint({40.12, 0.000, 158.89}) or mob:atPoint({101.60, -8.71, 143.17}) then
+                local pauseCheck = math.random(1,1)
+                if pauseCheck == 1 then
+                    local newPauseTime = math.random(8, 20) + os.time()
+                    mob:setLocalVar("pauseTime", newPauseTime)
+                    mob:setLocalVar("nextPatrolIndex", nextIndex + 1)
+                    mob:setMobMod(xi.mobMod.NO_MOVE, 1)
+                    return
+                end
+            end
+            xi.path.patrol(mob, pathNodes.a)
+        elseif currentPath == 2 and reverseCheck == 0 then
+            if mob:atPoint({57.09, -9.37, -96.88}) or mob:atPoint({-0.65, 0.00, -84.13})
+            or mob:atPoint({-40.24, 0.00, -38.35}) or mob:atPoint({-44.36, 0.68, 13.98})
+            or mob:atPoint({-0.52, 0.00, 82.02}) or mob:atPoint({40.12, 0.000, 158.89})
+            or mob:atPoint({101.60, -8.71, 143.17}) then
+                local pauseCheck = math.random(1,1)
+                if pauseCheck == 1 then
+                    local newPauseTime = math.random(8, 20) + os.time()
+                    mob:setLocalVar("pauseTime", newPauseTime)
+                    mob:setLocalVar("nextPatrolIndex", nextIndex + 1)
+                    mob:setMobMod(xi.mobMod.NO_MOVE, 1)
+                    return
+                end
+            end
+            xi.path.patrol(mob, pathNodes.b)
+        elseif currentPath == 1 and reverseCheck == 1 then
+            if mob:atPoint({25.03, -9.28, 23.12}) or mob:atPoint({-0.52, 0.00, 82.02})
+            or mob:atPoint({40.12, 0.000, 158.89}) or mob:atPoint({101.60, -8.71, 143.17}) then
+                local pauseCheck = math.random(1,1)
+                if pauseCheck == 1 then
+                    local newPauseTime = math.random(8, 20) + os.time()
+                    mob:setLocalVar("pauseTime", newPauseTime)
+                    mob:setLocalVar("nextPatrolIndex", nextIndex + 1)
+                    mob:setMobMod(xi.mobMod.NO_MOVE, 1)
+                    return
+                end
+            end
+            xi.path.patrol(mob, xi.path.fromEnd(pathNodes.a, 1))
+        elseif currentPath == 2 and reverseCheck == 1 then
+            if mob:atPoint({57.09, -9.37, -96.88}) or mob:atPoint({-0.65, 0.00, -84.13})
+            or mob:atPoint({-40.24, 0.00, -38.35}) or mob:atPoint({-44.36, 0.68, 13.98})
+            or mob:atPoint({-0.52, 0.00, 82.02}) or mob:atPoint({40.12, 0.000, 158.89})
+            or mob:atPoint({101.60, -8.71, 143.17}) then
+                local pauseCheck = math.random(1,1)
+                if pauseCheck == 1 then
+                    local newPauseTime = math.random(8, 20) + os.time()
+                    mob:setLocalVar("pauseTime", newPauseTime)
+                    mob:setLocalVar("nextPatrolIndex", nextIndex + 1)
+                    mob:setMobMod(xi.mobMod.NO_MOVE, 1)
+                    return
+                end
+            end
+            xi.path.patrol(mob, xi.path.fromEnd(pathNodes.b, 1))
+        end
+    else
+        xi.path.pathToNearest(mob, pathNodes.b)
+    end
+end
+
+entity.onMobInitialize = function(mob)
+    mob:setMod(xi.mod.MOVE, 150)
+    mob:setMobMod(xi.mobMod.SIGHT_RANGE, 30)
+    mob:setMod(xi.mod.DOUBLE_ATTACK, 35)
+    mob:setMod(xi.mod.TRIPLE_ATTACK, 15)
+end
+
 entity.onMobSpawn = function(mob)
-    mob:pathThrough(path, xi.path.flag.PATROL)
+    --Let's set a pauseTime for when/if mob pauses at a point.
+    --Mob can pause anywhere from 15 to 60 seconds generally (don't quote me on that).
+    --Since this is at spawn, let's set it a little shorter.
+    --Let's first set a path to memory as well as if that path is to be
+    --traversed in reverse or not.
+    --Path choice can be A, or B.
+    --1: Path A
+    --2: Path B
+    mob:setMod(xi.mod.MOVE, 150)
+    mob:setLocalVar("pauseTime", math.random(8,20) + os.time())
+    mob:setLocalVar("mobPath", math.random(1,2))
+    mob:setLocalVar("pathReverse", math.random(0,1))
+    --onMobRoam will fire next.
+end
+
+entity.onMobRoam = function(mob)
+    -- First, let's check if mob is at spawn and needs a new path.
+    local nextIndex = mob:getLocalVar("nextPatrolIndex")
+    local distance = mob:checkDistance(102, -0.191, 3)
+    if nextIndex >= 24 and distance < 3 then
+        mob:setLocalVar("nextPatrolIndex", 2)
+        entity.onMobSpawn(mob)
+        return
+    end
+    --Next, let's check if mob is currently set to pause.
+    local pauseCheck = mob:getLocalVar("pauseTime")
+    if pauseCheck > os.time() then
+        --Mob is currently set to pause and not move for the amount of pauseTime
+        mob:setMobMod(xi.mobMod.NO_MOVE, 1)
+        local rotationCheck = math.random(1,1)
+        --Guivre rotates while paused
+        if rotationCheck == 1 then
+            local angleCheck = math.random(0,2)
+            if angleCheck == 0 then
+                mob:setRotation(math.random(45, 180))
+            elseif angleCheck == 1 then
+                mob:setRotation(math.random(45, 180))
+            elseif angleCheck == 2 then
+                mob:setRotation(180)
+            end
+        end
+        return
+    else
+        --Mob is not set to pause.
+        mob:setMobMod(xi.mobMod.NO_MOVE, 0)
+        local currentPath = mob:getLocalVar("mobPath")
+        local reverseCheck = mob:getLocalVar("pathReverse")
+        if currentPath == 1 and reverseCheck == 0 then
+            xi.path.patrol(mob, pathNodes.a)
+            return
+        elseif currentPath == 1 and reverseCheck == 1 then
+            xi.path.patrol(mob,xi.path.fromEnd(pathNodes.a))
+            return
+        elseif currentPath == 2 and reverseCheck == 0 then
+            xi.path.patrol(mob, pathNodes.b)
+            return
+        elseif currentPath == 1 and reverseCheck == 1 then
+            xi.path.patrol(mob,xi.path.fromEnd(pathNodes.a, 1))
+            return
+        elseif currentPath == 2 and reverseCheck == 1 then
+            xi.path.patrol(mob,xi.path.fromEnd(pathNodes.b, 1))
+            return
+        end
+    end
+    --Next, let's check if a mob is currently on a path.
+    if mob:isFollowingPath() then
+        xi.path.pathToNearest(mob, pathNodes.b)
+        entity.onPath(mob)
+    else
+        --if not on pause or on a path, let's check if around path starting point
+        local distance = mob:checkDistance(102, -0.191, 3)
+        if distance < 3 then
+            local currentPath = mob:getLocalVar("mobPath")
+            if currentPath == 1 then
+                --mob is set to patrol Path A
+                xi.path.pathToNearest(mob, pathNodes.a)
+                entity.onPath(mob)
+            elseif currentPath == 2 then
+                --mob is set to patrol Path B
+                xi.path.pathToNearest(mob, pathNodes.b)
+                entity.onPath(mob)
+            end
+        end
+    end
+end
+
+entity.onMobEngage = function(mob)
+    mob:setMobMod(xi.mobMod.NO_MOVE, 0)
+end
+
+entity.onMobDisengage = function(mob)
+    local pathCheck = mob:getLocalVar("mobPath")
+    if pathCheck == 1 then
+        xi.path.pathToNearest(mob, pathNodes.a)
+        entity.onPath(mob)
+    elseif pathCheck == 2 then
+        xi.path.pathToNearest(mob, pathNodes.b)
+        entity.onPath(mob)
+    end
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
