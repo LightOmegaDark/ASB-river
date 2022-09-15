@@ -9,7 +9,11 @@ require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
 
-entity.onMobDeath = function(mob, player, optParams)
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.LEDGE_AGGRO, 1)
+end
+
+entity.onMobDeath = function(mob, player, isKiller)
     xi.regime.checkRegime(player, mob, 143, 2, xi.regime.type.FIELDS)
     xi.regime.checkRegime(player, mob, 144, 1, xi.regime.type.FIELDS)
     if optParams.isKiller then

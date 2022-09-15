@@ -2603,12 +2603,16 @@ xi.mobMod =
     ALLI_HATE           = 68, -- Range around target to add alliance member to enmity list.
     NO_LINK             = 69, -- If set, mob cannot link until unset.
     NO_REST             = 70, -- Mob cannot regain hp (e.g. re-burrowing antlions during ENM).
-    DRAW_IN_INCLUDE_PARTY     = 71, -- this will cause the mob's draw-in to also affect all party and alliance members
-    DRAW_IN_FRONT             = 72, -- Mob will draw in slightly in front of them instead of the center of their hitbox
-    DRAW_IN_CUSTOM_RANGE      = 73, -- override the default range of MeleeRange*2 of when players start to get drawn-in
-    DRAW_IN_MAXIMUM_REACH     = 74, -- players further than this range (yalms) will be unaffected by the draw-in. default (0) is whole zone
-    DRAW_IN_IGNORE_STATIONARY = 75, -- stationary or bound mobs draw-in the moment they cannot attack you anymore (out of range). Place this mob mod to stop that behavior.
-    ATTRACT_FAMILY_NM         = 76, -- NMs within the same family will link onto this mob (used on Sabotenders for Cactrot Rapido)
+    LEADER              = 71, -- Used for mobs that follow a defined "leader", such as Ul'xzomit mobs.
+
+    -- ASB Mod Start
+    DRAW_IN_INCLUDE_PARTY     = 100, -- This will cause the mob's draw-in to also affect all party and alliance members
+    DRAW_IN_FRONT             = 101, -- Mob will draw in slightly in front of them instead of the center of their hitbox
+    DRAW_IN_CUSTOM_RANGE      = 102, -- Override the default range of MeleeRange*2 of when players start to get drawn-in
+    DRAW_IN_MAXIMUM_REACH     = 103, -- Players further than this range (yalms) will be unaffected by the draw-in. default (0) is whole zone
+    DRAW_IN_IGNORE_STATIONARY = 104, -- Stationary mobs draw-in the moment they cannot attack you anymore (out of range). put this mobmod on stationary mobs that have draw-in but use ranged attacks instead of melee attacks so that they will ignore this behavior (i.e. KSNM99 Wyrm or ToAU Mission Alexander)
+    ATTRACT_FAMILY_NM         = 105, -- NMs within the same family will link onto this mob (used on Sabotenders for Cactrot Rapido)
+    LEDGE_AGGRO               = 106, -- Used to increase vertical aggro range
 }
 
 -----------------------------------
