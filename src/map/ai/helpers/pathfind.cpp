@@ -611,7 +611,7 @@ void CPathFind::Clear()
 
 void CPathFind::AddPoints(std::vector<pathpoint_t>&& points, bool reverse)
 {
-    if (points.size() > MAX_PATH_POINTS)
+    if (points.size() > MAX_PATH_POINTS && (m_pathFlags & PATHFLAG_PATROL) == 0)
     {
         ShowWarning("CPathFind::AddPoints Given too many points (%d). Limiting to max (%d)", points.size(), MAX_PATH_POINTS);
         points.resize(MAX_PATH_POINTS);
