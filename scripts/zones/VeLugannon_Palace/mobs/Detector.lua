@@ -8,7 +8,6 @@ require("scripts/globals/regimes")
 -----------------------------------
 local entity = {}
 
--- TODO(jmcmorris) test
 local scDetectorPaths =
 {
     ISLAND1 =
