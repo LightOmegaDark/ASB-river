@@ -1628,20 +1628,21 @@ bool CLuaBaseEntity::pathThrough(sol::table const& pointsTable, sol::object cons
         float x, y, z = -1;
         for (std::size_t i = 1; i <= pointsTable.size(); ++i)
         {
-            sol::table pointData = pointsTable[i];
+            sol::table  pointData = pointsTable[i];
             pathpoint_t point;
-            x = pointData.get_or("x", x);
-            y = pointData.get_or("y", y);
-            z = pointData.get_or("z", z);
+            x              = pointData.get_or("x", x);
+            y              = pointData.get_or("y", y);
+            z              = pointData.get_or("z", z);
             point.position = { x, y, z, 0, 0 };
 
             auto rotation = pointData["rotation"];
-            if (rotation.valid()) {
+            if (rotation.valid())
+            {
                 point.position.rotation = rotation.get<uint8>();
                 point.setRotation       = true;
             }
 
-            auto wait = pointData["wait"];
+            auto wait  = pointData["wait"];
             point.wait = wait.valid() ? wait.get<uint32>() : 0;
             points.push_back(std::move(point));
         }
