@@ -289,10 +289,8 @@ void CPathFind::FollowPath(time_point tick)
         {
             m_timeAtPoint = {};
             ++m_currentPoint;
-            luautils::OnPathPoint(m_POwner);
             if (m_currentPoint >= (int16)m_points.size())
             {
-                luautils::OnPathComplete(m_POwner);
                 FinishedPath();
             }
         }
@@ -301,9 +299,7 @@ void CPathFind::FollowPath(time_point tick)
 
     m_onPoint = false;
 
-    pathpoint_t targetPoint = m_points[m_currentPoint];
-
-    StepTo(targetPoint, m_pathFlags & PATHFLAG_RUN);
+    pathpoint_t& targetPoint = m_points[m_currentPoint];
 
     if (isNavMeshEnabled() && m_carefulPathing)
     {
@@ -337,8 +333,6 @@ void CPathFind::FollowPath(time_point tick)
                 m_timeAtPoint = tick + std::chrono::milliseconds(targetPoint.wait);
                 return;
             }
-
-            luautils::OnPathPoint(m_POwner);
             m_currentPoint++;
         }
         else
@@ -655,7 +649,7 @@ void CPathFind::FinishedPath()
             Clear();
         }
     }
-    else if (IsPatrolling() && m_POwner->PAI->IsRoaming())
+    else if (IsPatrolling())
     {
         m_currentPoint = 0;
         m_currentTurn  = 0;

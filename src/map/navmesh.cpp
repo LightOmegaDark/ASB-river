@@ -236,7 +236,7 @@ void CNavMesh::outputError(uint32 status)
     }
 }
 
-std::vector<position_t> CNavMesh::findPath(const position_t& start, const position_t& end)
+std::vector<pathpoint_t> CNavMesh::findPath(const position_t& start, const position_t& end)
 {
     TracyZoneScoped;
 

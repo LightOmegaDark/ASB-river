@@ -11,31 +11,14 @@ local entity = {}
 
 local pathNodes =
 {
-    -13.796, -10.000, -19.127,
-    -13.796, -10.000, -19.127,
-    -13.796, -10.000, -19.127,
-    -13.796, -10.000, -19.127,
-    -13.796, -10.000, -19.127,
-    -13.796, -10.000, -19.127,
-    -13.796, -10.000, -19.127,
-    -13.796, -10.000, -19.127,
-    -12.755, -10.000, -29.710, -- Force turn.
-    -12.339, -10.000, -29.710,
-    -12.339, -10.000, -29.710,
-    -12.339, -10.000, -29.710,
-    -12.339, -10.000, -29.710,
-    -12.339, -10.000, -29.710,
-    -12.339, -10.000, -29.710,
-    -12.339, -10.000, -29.710,
-    -12.339, -10.000, -29.710,
-    -12.339, -10.000, -29.710,
-    -13.656, -10.000, -19.133, -- Force turn.
+    {x = -13, y = -10.000, z = -19, rotation = 0, wait = 4000},
+    {z = -29, rotation = 0, wait = 4000},
 }
 
 entity.onSpawn = function(npc)
     npc:initNpcAi()
-    npc:setPos(xi.path.first(pathNodes))
-    npc:pathThrough(pathNodes, xi.path.flag.PATROL)
+    npc:setPos(xi.path.first(path))
+    npc:pathThrough(path, xi.path.flag.PATROL)
 end
 
 entity.onTrade = function(player, npc, trade)
