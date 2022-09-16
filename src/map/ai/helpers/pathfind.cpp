@@ -254,14 +254,13 @@ void CPathFind::PrunePathWithin(float within)
         return;
     }
 
-    position_t* targetPoint     = &m_points.back().position;
-    position_t* secondLastPoint = nullptr;
+    position_t targetPoint = m_points.back().position;
 
     while (m_points.size() > 1)
     {
-        secondLastPoint = &m_points.end()[-2].position;
+        position_t secondLastPoint = m_points[m_points.size() - 2].position;
 
-        if (distance(*targetPoint, *secondLastPoint) > within)
+        if (distance(targetPoint, secondLastPoint) > within)
         {
             break;
         }

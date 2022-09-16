@@ -1635,11 +1635,11 @@ bool CLuaBaseEntity::pathThrough(sol::table const& pointsTable, sol::object cons
             z              = pointData.get_or("z", z);
             point.position = { x, y, z, 0, 0 };
 
-            auto rotation = pointData["rotation"];
-            if (rotation.valid())
+            auto rotation     = pointData["rotation"];
+            point.setRotation = rotation.valid();
+            if (point.setRotation)
             {
                 point.position.rotation = rotation.get<uint8>();
-                point.setRotation       = true;
             }
 
             auto wait  = pointData["wait"];
