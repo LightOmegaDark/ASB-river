@@ -383,6 +383,19 @@ local additionalEffects =
         minDuration = 1,
         maxDuration = 30,
     },
+    [xi.mob.ae.SLOW] =
+    {
+        chance = 25,
+        ele = xi.magic.ele.EARTH,
+        sub = xi.subEffect.DEFENSE_DOWN,
+        msg = xi.msg.basic.ADD_EFFECT_STATUS,
+        applyEffect = true,
+        eff = xi.effect.SLOW,
+        power = 1000,
+        duration = 30,
+        minDuration = 1,
+        maxDuration = 45,
+    },
     [xi.mob.ae.STUN] =
     {
         chance = 20,

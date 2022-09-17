@@ -19,7 +19,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     local party = player:getParty()
     if #party > 1 then
         for _, v in ipairs(party) do
-            if player:getZone() == v:getZone() and v:getQuestStatus(2, 92) == QUEST_ACCEPTED then
+            if player:getZone() == v:getZone() and v:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.ONE_GOOD_DEED) == QUEST_ACCEPTED then
                 v:setCharVar("Quest[2][92]Prog", 1)
             end
         end
