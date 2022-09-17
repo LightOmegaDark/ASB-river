@@ -1,9 +1,9 @@
 -----------------------------------
--- Glyph Hanger
+-- All at Sea
 -----------------------------------
--- !addquest 2 30
--- Hariga-Origa : !pos -62 -6 105 238
--- Ipupu        : !pos 251.745 -5.5 35.539 115
+-- !addquest 2 23
+-- Paytah !pos
+-- Baren-Moren !pos
 -----------------------------------
 require('scripts/globals/interaction/quest')
 require('scripts/globals/keyitems')
@@ -12,12 +12,12 @@ require('scripts/globals/quests')
 require('scripts/globals/zone')
 -----------------------------------
 
-local quest = Quest:new(xi.quest.log_id.WINDURST, xi.quest.id.windurst.GLYPH_HANGER)
+local quest = Quest:new(xi.quest.log_id.WINDURST, xi.quest.id.windurst.ALL_AT_SEA)
 
 quest.reward =
 {
-    item = xi.items.LEATHER_RING,
-    fame = 25,
+    xp = 2000,
+    fame = 120,
     fameArea = xi.quest.fame_area.WINDURST,
     keyItem = xi.ki.MAP_OF_THE_HORUTOTO_RUINS,
 }
@@ -26,7 +26,8 @@ quest.sections =
 {
     {
         check = function(player, status, vars)
-            return status == QUEST_AVAILABLE
+            return status == QUEST_AVAILABLE and
+            player:getFameLevel(xi.quest.fame_area.WINDURST) >= 3
         end,
 
         [xi.zone.PORT_WINDURST] =
@@ -36,11 +37,10 @@ quest.sections =
             onEventFinish =
             {
                 [291] = function(player, csid, option, npc)
-                    player:delKeyItem(xi.ki.NOTE_FROM_HARIGA_ORIGA)
-                    npcUtil.giveKeyItem(player, xi.ki.NOTE_FROM_IPUPU)
+                    quest:begin(player)
                 end,
             },
-        }
+        },
     },
 
     {
@@ -50,52 +50,37 @@ quest.sections =
 
         [xi.zone.PORT_WINDURST] =
         {
-            ['Baren-Moren'] =
+            ['Paytah'] =
             {
+                onTrigger = function(player, npc)
+                    return quest:progressEvent(291)
+                end,
+
                 onTrade = function(player, npc, trade)
-                    if quest:getVar(player, 'Prog') == 0 then
-                        if trade:hasItemQty(xi.items.RIPPED_CAP, 1) and trade:getItemCount() == 1 then
-                            return quest:progressEvent(0)
-                        end
-                    elseif quest:getVar(player, 'Prog') == 1 then
-                        if trade:hasItemQty(xi.items.DHALMEL_HIDE, 4) and trade:getItemCount() == 1 then
-                            return quest:progressEvent(0)
-                        end
-                    end
                 end,
             },
 
             onEventFinish =
             {
-                [0] = function(player, csid, option, npc)
-                    player:tradeComplete()
-                    quest:setVar(player, 'Prog', 1)
-                end,
-
-                [1] = function(player, csid, option, npc)
-                    player:tradeComplete()
-                    npcUtil.addItem(player, xi.items.DHALMEL_MANTLE)
-                    quest:setVar(player, 'Prog', 2)
-                end,
             },
         },
 
-        [xi.zone.PORT_WINDURST] =
+        [xi.zone.WINDURST_WATERS] =
         {
-            ['Paytah'] =
+            ['Baren-Moren'] =
             {
+                onTrigger = function(player, npc)
+                    return quest:progressEvent(291)
+                end,
+
                 onTrade = function(player, npc, trade)
-                    if trade:hasItemQty(xi.items.SAILORS_CAP, 1) and trade:getItemCount() == 1 then
-                        return quest:progressEvent(0)
-                    end
                 end,
             },
 
             onEventFinish =
             {
-                [0] = function(player, csid, option, npc)
-                    player:tradeComplete()
-                    quest:complete(player)
+                [291] = function(player, csid, option, npc)
+                    quest:begin(player)
                 end,
             },
         },
