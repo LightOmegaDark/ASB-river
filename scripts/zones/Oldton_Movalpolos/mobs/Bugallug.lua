@@ -15,7 +15,7 @@ end
 
 entity.onMobDeath = function(mob, player, isKiller)
     if isKiller then
-        party = player:getParty()
+        local party = player:getParty()
 
         if #party > 1 then
             for _, v in ipairs(party) do
