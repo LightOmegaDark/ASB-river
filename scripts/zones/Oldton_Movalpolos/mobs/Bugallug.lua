@@ -14,18 +14,15 @@ entity.onMobEngaged = function(mob)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
-    if isKiller then
-        local party = player:getParty()
-
-        if #party > 1 then
-            for _, v in ipairs(party) do
-                if player:getZone() == v:getZone() and v:getQuestStatus(1, 77) == QUEST_ACCEPTED then
-                    v:setCharVar("Quest[1][77]Prog", 1)
-                end
+    local party = player:getParty()
+    if #party > 1 then
+        for _, v in ipairs(party) do
+            if player:getZone() == v:getZone() and v:getQuestStatus(1, 77) == QUEST_ACCEPTED then
+                v:setCharVar("Quest[1][77]Prog", 1)
             end
-        else
-            player:setCharVar("Quest[1][77]Prog", 1)
         end
+    else
+        player:setCharVar("Quest[1][77]Prog", 1)
     end
 end
 

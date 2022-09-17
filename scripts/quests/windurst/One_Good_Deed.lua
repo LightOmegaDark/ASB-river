@@ -72,7 +72,7 @@ quest.sections =
         },
         [xi.zone.BIBIKI_BAY] =
         {
-            ['qm_quest'] =
+            ['qm_deed'] =
             {
                 onTrigger = function(player, npc)
                     local check = true
