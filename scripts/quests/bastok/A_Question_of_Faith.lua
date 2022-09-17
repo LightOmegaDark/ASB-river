@@ -84,11 +84,14 @@ quest.sections =
             ['Rakorok'] =
             {
                 onTrigger = function(player, npc)
-                    if player:hasKeyItem(xi.ki.DAWN_TALISMAN) and quest:getVar(player, 'Prog') == 0 then
+                    if
+                        player:hasKeyItem(xi.ki.DAWN_TALISMAN) and
+                        quest:getVar(player, 'Prog') == 0 and
+                        not GetMobByID(16822456):isSpawned()
+                    then
                         npc:messageText(npc, 7733)
                         npc:messageText(npc, 7746)
                         SpawnMob(16822456):updateClaim(player)
-                        quest:setVar(player, 'Prog', 1)
 
                     elseif quest:getVar(player, 'Prog') == 1 and player:hasKeyItem(xi.ki.DAWN_TALISMAN) then
                         return quest:progressEvent(6)

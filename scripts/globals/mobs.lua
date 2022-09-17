@@ -180,6 +180,7 @@ xi.mob.additionalEffect =
     TP_DRAIN   = 21,
     WEIGHT     = 22,
     DISPEL     = 23,
+    SLEEP      = 24,
 }
 xi.mob.ae = xi.mob.additionalEffect
 
@@ -382,19 +383,6 @@ local additionalEffects =
         minDuration = 1,
         maxDuration = 30,
     },
-    [xi.mob.ae.SLOW] =
-    {
-        chance = 25,
-        ele = xi.magic.ele.EARTH,
-        sub = xi.subEffect.DEFENSE_DOWN,
-        msg = xi.msg.basic.ADD_EFFECT_STATUS,
-        applyEffect = true,
-        eff = xi.effect.SLOW,
-        power = 1000,
-        duration = 30,
-        minDuration = 1,
-        maxDuration = 45,
-    },
     [xi.mob.ae.STUN] =
     {
         chance = 20,
@@ -447,6 +435,19 @@ local additionalEffects =
         mod = xi.mod.INT,
         bonusAbilityParams = {bonusmab = 0, includemab = false},
         code = function(mob, target) target:dispelStatusEffect() end,
+    },
+    [xi.mob.ae.SLEEP] =
+    {
+        chance = 25,
+        ele = xi.magic.ele.DARK,
+        sub = xi.subEffect.SLEEP,
+        msg = xi.msg.basic.ADD_EFFECT_STATUS,
+        applyEffect = true,
+        eff = xi.effect.SLEEP,
+        power = 1000,
+        duration = 30,
+        minDuration = 1,
+        maxDuration = 45,
     },
 }
 
