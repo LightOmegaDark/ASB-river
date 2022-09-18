@@ -48,13 +48,14 @@ quest.sections =
         check = function(player, status, vars)
             return status == QUEST_ACCEPTED
         end,
+
         [xi.zone.PORT_WINDURST] =
         {
             ['Chipmy-Popmy'] =
             {
                 onTrigger = function(player, npc)
                     if quest:getVar(player, 'Prog') == 2 and player:hasKeyItem(xi.ki.DEED_TO_PURGONORGO_ISLE) then
-                        return quest:progressEvent(595, 0, 614)
+                        return quest:progressEvent(595, 0, xi.ki.DEED_TO_PURGONORGO_ISLE)
                     elseif quest:getVar(player, 'Prog') == 4 then
                         return quest:progressEvent(597) -- Complete Quest
                     end
@@ -67,8 +68,9 @@ quest.sections =
                 end,
                 [597] = function(player, csid, option, npc)
                     quest:complete(player)
-            end,
+                end,
             },
+
         },
         [xi.zone.BIBIKI_BAY] =
         {
@@ -95,6 +97,7 @@ quest.sections =
                     end
                 end,
             },
+
             onEventFinish =
             {
                 -- Killing mobs set prog to 1
@@ -114,17 +117,19 @@ quest.sections =
                     end
                 end,
             },
+
             onEventUpdate =
             {
                 [8] = function(player, csid, option, npc)
                     print(option)
                     if option == 100 then
-                        quest:progressEvent(8, 11, 614, 614, 263, 8, 8, 0, 0)
+                        quest:progressEvent(8, 11, xi.ki.DEED_TO_PURGONORGO_ISLE)
                     elseif option == 101 then
-                        quest:progressEvent(8, 64, 432, 614, 263, 8, 8, 0, 0)
+                        quest:progressEvent(8, 64, 0, xi.ki.DEED_TO_PURGONORGO_ISLE)
                     end
                 end,
             },
+
             onEventFinish =
             {
                 [8] = function(player, csid, option, npc)
