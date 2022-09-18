@@ -13992,6 +13992,27 @@ void CLuaBaseEntity::setDelay(uint16 delay)
 }
 
 /************************************************************************
+ *  Function: getDelay()
+ *  Purpose : Get current delay settings for a mob
+ *  Example : mob:getDelay()
+ ************************************************************************/
+
+int16 CLuaBaseEntity::getDelay()
+{
+    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    auto* PMobEntity = static_cast<CMobEntity*>(m_PBaseEntity);
+    auto* PItem      = static_cast<CItemWeapon*>(PMobEntity->m_Weapons[SLOT_MAIN]);
+
+    if (PItem)
+    {
+        return PItem->getDelay();
+    }
+
+    return 0;
+}
+
+/************************************************************************
  *  Function: setDamage()
  *  Purpose : Override default damage settings for a Mob
  *  Example : mob:setDamage(40)
@@ -14114,6 +14135,30 @@ void CLuaBaseEntity::setMobSkillAttack(int16 listId)
     }
 
     static_cast<CMobEntity*>(m_PBaseEntity)->setMobMod(MOBMOD_ATTACK_SKILL_LIST, listId);
+}
+
+/************************************************************************
+ *  Function: isMagicCastingEnabled()
+ *  Purpose : Returns true if magic casting is enabled
+ *  Example : mob:isMagicCastingEnabled()
+ *  Notes   :
+ ************************************************************************/
+
+bool CLuaBaseEntity::isMagicCastingEnabled()
+{
+    return m_PBaseEntity->PAI->GetController()->IsMagicCastingEnabled();
+}
+
+/************************************************************************
+ *  Function: isAutoAttackEnabled()
+ *  Purpose : Returns true if auto attack is enabled
+ *  Example : mob:isAutoAttackEnabled()
+ *  Notes   :
+ ************************************************************************/
+
+bool CLuaBaseEntity::isAutoAttackEnabled()
+{
+    return m_PBaseEntity->PAI->GetController()->IsAutoAttackEnabled();
 }
 
 /************************************************************************
@@ -16063,13 +16108,16 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("isAggroable", CLuaBaseEntity::isAggroable);
 
     SOL_REGISTER("setDelay", CLuaBaseEntity::setDelay);
+    SOL_REGISTER("getDelay", CLuaBaseEntity::getDelay);
     SOL_REGISTER("setDamage", CLuaBaseEntity::setDamage);
     SOL_REGISTER("hasSpellList", CLuaBaseEntity::hasSpellList);
     SOL_REGISTER("setSpellList", CLuaBaseEntity::setSpellList);
-    SOL_REGISTER("setAutoAttackEnabled", CLuaBaseEntity::setAutoAttackEnabled);
-    SOL_REGISTER("setMagicCastingEnabled", CLuaBaseEntity::setMagicCastingEnabled);
-    SOL_REGISTER("setMobAbilityEnabled", CLuaBaseEntity::setMobAbilityEnabled);
-    SOL_REGISTER("setMobSkillAttack", CLuaBaseEntity::setMobSkillAttack);
+    SOL_REGISTER("SetAutoAttackEnabled", CLuaBaseEntity::SetAutoAttackEnabled);
+    SOL_REGISTER("SetMagicCastingEnabled", CLuaBaseEntity::SetMagicCastingEnabled);
+    SOL_REGISTER("SetMobAbilityEnabled", CLuaBaseEntity::SetMobAbilityEnabled);
+    SOL_REGISTER("SetMobSkillAttack", CLuaBaseEntity::SetMobSkillAttack);
+    SOL_REGISTER("isMagicCastingEnabled", CLuaBaseEntity::isMagicCastingEnabled);
+    SOL_REGISTER("isAutoAttackEnabled", CLuaBaseEntity::isAutoAttackEnabled);
 
     SOL_REGISTER("getMobMod", CLuaBaseEntity::getMobMod);
     SOL_REGISTER("setMobMod", CLuaBaseEntity::setMobMod);
