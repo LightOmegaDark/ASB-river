@@ -13,6 +13,7 @@ local quest = Quest:new(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.A_JOB_FOR
 
 quest.reward =
 {
+    gil = 1000,
     fame = 25,
     fameArea = xi.quest.fame_area.NORG,
 }
@@ -25,7 +26,7 @@ quest.sections =
                 player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.THE_BRUGAIRE_CONSORTIUM) == QUEST_COMPLETED and
                 player:hasKeyItem(xi.ki.TENSHODO_MEMBERS_CARD) and
                 player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 5 and
-                player:getCharVar("AIRSHIP_BLOCK") < getMidnight()
+                quest:getVar(player, 'AIRSHIP_BLOCK') < getMidnight()
         end,
 
         [xi.zone.PORT_SAN_DORIA] =
@@ -54,17 +55,27 @@ quest.sections =
             ['Portaure'] =
             {
                 onTrigger = function(player, npc)
+                    -- Tell players to go at night
                     if player:hasKeyItem(xi.ki.BRUGAIRE_GOODS) then
-                        return quest:progressEvent(652) -- Additional Dialogue
-                    else
-                        return quest:progressEvent(1)
+                        return quest:progressEvent(652)
+
+                    -- Player was caught (Delete quest)
+                    elseif quest:getVar(player, 'Prog') == 1 then
+                        return quest:progressEvent(654)
+
+                    -- Player was successful (Complete quest)
+                    elseif quest:getVar(player, 'Prog') == 3 then
+                        return quest:progressEvent(653)
                     end
                 end,
             },
 
             onEventFinish =
             {
-                [1] = function(player, csid, option, npc)
+                [654] = function(player, csid, option, npc)
+                    player:delQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.A_JOB_FOR_THE_CONSORTIUM)
+                end,
+                [653] = function(player, csid, option, npc)
                     quest:complete(player)
                 end,
             },
@@ -90,10 +101,10 @@ quest.sections =
                 [54] = function(player, csid, option, npc)
                     if option == 1 then
                         player:delKeyItem(xi.ki.BRUGAIRE_GOODS)
-                        player:setCharVar("AIRSHIP_BLOCK", getMidnight())
-                        player:delQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.A_JOB_FOR_THE_CONSORTIUM)
-                    else
+                        quest:setVar(player, 'AIRSHIP_BLOCK', getMidnight())
                         quest:setVar(player, 'Prog', 1)
+                    else
+                        quest:setVar(player, 'Prog', 2)
                     end
                 end,
             },
@@ -104,7 +115,7 @@ quest.sections =
             ['Yin_Pocanakhu'] =
             {
                 onTrigger = function(player, npc)
-                    if player:hasKeyItem(xi.ki.BRUGAIRE_GOODS) and quest:getVar(player, 'Prog') == 1 then
+                    if player:hasKeyItem(xi.ki.BRUGAIRE_GOODS) and quest:getVar(player, 'Prog') == 2 then
                         return quest:progressEvent(0)
                     -- Player didn't take airship. Package is broken!
                     elseif quest:getVar(player, 'Prog') == 0 then
@@ -130,7 +141,7 @@ quest.sections =
     {
         check = function(player, status, vars)
             return status == QUEST_COMPLETED and
-                player:getCharVar("AIRSHIP_BLOCK") < getMidnight()
+                quest:getVar(player, 'AIRSHIP_BLOCK') < getMidnight()
         end,
 
         [xi.zone.PORT_SAN_DORIA] =

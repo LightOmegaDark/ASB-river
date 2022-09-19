@@ -15,7 +15,7 @@ end
 entity.onTrigger = function(player, npc)
     local kazhamPass = player:hasKeyItem(xi.ki.AIRSHIP_PASS_FOR_KAZHAM)
 
-    if player:getCharVar("AIRSHIP_BLOCK") > getMidnight() then
+    if player:getCharVar("Quest[0][67]AIRSHIP_BLOCK") > getMidnight() then
         player:startEvent(41)
     elseif not kazhamPass then
         player:startEvent(35) -- without pass
