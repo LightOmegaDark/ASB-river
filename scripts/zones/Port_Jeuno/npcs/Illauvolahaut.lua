@@ -15,7 +15,9 @@ end
 entity.onTrigger = function(player, npc)
     local kazhamPass = player:hasKeyItem(xi.ki.AIRSHIP_PASS_FOR_KAZHAM)
 
-    if not kazhamPass then
+    if player:getCharVar("AIRSHIP_BLOCK") > getMidnight() then
+        player:startEvent(41)
+    elseif not kazhamPass then
         player:startEvent(35) -- without pass
     elseif kazhamPass and player:getGil() < 200 then
         player:startEvent(45) -- Pass without money

@@ -11,7 +11,9 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    if
+    if player:getCharVar("AIRSHIP_BLOCK") > getMidnight() then
+        player:startEvent(42)
+    elseif
         player:hasKeyItem(xi.ki.AIRSHIP_PASS) and
         player:getGil() >= 200
     then

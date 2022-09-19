@@ -36,25 +36,25 @@ end
 
 entity.onTrigger = function(player, npc)
     local astralCovenantCD = player:getCharVar("[ENM]AstralCovenant")
-
-    if
-        player:getFameLevel(xi.quest.fame_area.JEUNO) >= 3 and
-        player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.TENSHODO_MEMBERSHIP) == QUEST_AVAILABLE
-    then
-        -- Start Quest: Tenshodo Membership
-        player:startEvent(106, 8)
-    elseif player:hasKeyItem(xi.ki.TENSHODO_APPLICATION_FORM) then
-        -- Finish Quest: Tenshodo Membership
-        player:startEvent(107)
-    elseif player:hasKeyItem(xi.ki.PSOXJA_PASS) and astralCovenantCD < os.time() then
-        player:startEvent(106, 0, 1, 1782, 604)
-    elseif player:hasKeyItem(xi.ki.PSOXJA_PASS) and astralCovenantCD >= os.time() then
-        player:startEvent(106, 4, 2, 675, VanadielTime() + (astralCovenantCD - os.time()))
-    elseif player:hasKeyItem(xi.ki.ASTRAL_COVENANT) then
-        player:startEvent(106, 4)
-    else
-        player:startEvent(106, 4)
-    end
+    player:startEvent(110)
+    -- if
+    --     player:getFameLevel(xi.quest.fame_area.JEUNO) >= 3 and
+    --     player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.TENSHODO_MEMBERSHIP) == QUEST_AVAILABLE
+    -- then
+    --     -- Start Quest: Tenshodo Membership
+    --     player:startEvent(106, 8)
+    -- elseif player:hasKeyItem(xi.ki.TENSHODO_APPLICATION_FORM) then
+    --     -- Finish Quest: Tenshodo Membership
+    --     player:startEvent(107)
+    -- elseif player:hasKeyItem(xi.ki.PSOXJA_PASS) and astralCovenantCD < os.time() then
+    --     player:startEvent(106, 0, 1, 1782, 604)
+    -- elseif player:hasKeyItem(xi.ki.PSOXJA_PASS) and astralCovenantCD >= os.time() then
+    --     player:startEvent(106, 4, 2, 675, VanadielTime() + (astralCovenantCD - os.time()))
+    -- elseif player:hasKeyItem(xi.ki.ASTRAL_COVENANT) then
+    --     player:startEvent(106, 4)
+    -- else
+    --     player:startEvent(106, 4)
+    -- end
 end
 
 entity.onEventUpdate = function(player, csid, option)
