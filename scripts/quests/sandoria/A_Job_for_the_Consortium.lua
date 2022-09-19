@@ -9,6 +9,8 @@ require('scripts/globals/quests')
 require('scripts/globals/titles')
 require('scripts/globals/items')
 ----------------------------------
+local ID = require("scripts/zones/Port_San_dOria/IDs")
+----------------------------------
 local quest = Quest:new(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.A_JOB_FOR_THE_CONSORTIUM)
 
 quest.reward =
@@ -25,13 +27,21 @@ quest.sections =
             return status == QUEST_AVAILABLE and
                 player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.THE_BRUGAIRE_CONSORTIUM) == QUEST_COMPLETED and
                 player:hasKeyItem(xi.ki.TENSHODO_MEMBERS_CARD) and
-                player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 5 and
-                quest:getVar(player, 'AIRSHIP_BLOCK') < getMidnight()
+                player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 5
         end,
 
         [xi.zone.PORT_SAN_DORIA] =
         {
-            ['Portaure'] = quest:progressEvent(651),
+            ['Portaure'] =
+            {
+                onTrigger = function(player, npc)
+                    if quest:getVar(player, 'AIRSHIP_BLOCK') < os.time() then
+                        quest:progressEvent(651)
+                    else
+                        npc:messageSpecial(player,ID.text.LAY_LOW)
+                    end
+                end,
+            },
 
             onEventFinish =
             {
@@ -115,22 +125,24 @@ quest.sections =
             ['Yin_Pocanakhu'] =
             {
                 onTrigger = function(player, npc)
+                    -- Player correctly brought the package
                     if player:hasKeyItem(xi.ki.BRUGAIRE_GOODS) and quest:getVar(player, 'Prog') == 2 then
-                        return quest:progressEvent(0)
-                    -- Player didn't take airship. Package is broken!
+                        return quest:progressEvent(219)
+
+                    -- Player didn't go through airship terminal. Package is broken!
                     elseif quest:getVar(player, 'Prog') == 0 then
-                        return quest:progressEvent(1)
+                        return quest:progressEvent(218)
                     end
                 end,
             },
 
             onEventFinish =
             {
-                [0] = function(player, csid, option, npc)
+                [219] = function(player, csid, option, npc)
                     player:delKeyItem(xi.ki.BRUGAIRE_GOODS)
-                    quest:setVar(player, 'Prog', 2)
+                    quest:setVar(player, 'Prog', 3)
                 end,
-                [1] = function(player, csid, option, npc)
+                [218] = function(player, csid, option, npc)
                     player:delKeyItem(xi.ki.BRUGAIRE_GOODS)
                     player:delQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.A_JOB_FOR_THE_CONSORTIUM)
                 end,
@@ -141,7 +153,7 @@ quest.sections =
     {
         check = function(player, status, vars)
             return status == QUEST_COMPLETED and
-                quest:getVar(player, 'AIRSHIP_BLOCK') < getMidnight()
+                quest:getVar(player, 'AIRSHIP_BLOCK') < os.time()
         end,
 
         [xi.zone.PORT_SAN_DORIA] =
