@@ -98,7 +98,7 @@ quest.sections =
                 end,
             },
 
-            ['Perifool'] =
+            ['Bugallug'] =
             {
                 onMobDeath = function(mob, player, isKiller, firstCall)
                     local party = player:getParty()
