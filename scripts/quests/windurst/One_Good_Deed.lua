@@ -64,7 +64,7 @@ quest.sections =
             onEventFinish =
             {
                 [595] = function(player, csid, option, npc)
-                        quest:setVar(player, 'Prog', 3)
+                    quest:setVar(player, 'Prog', 3)
                 end,
                 [597] = function(player, csid, option, npc)
                     quest:complete(player)
@@ -77,22 +77,23 @@ quest.sections =
             ['qm_deed'] =
             {
                 onTrigger = function(player, npc)
-                    local check = true
-
-                    for i = 0, 5 do
-                        if GetMobByID(16793711+i):isAlive() then
-                            check = false
-                        end
+                    if quest:getVar(player, 'Prog') == 0 then
+                        player:messageSpecial(bibikiID.text.YOU_ARE_NOT_ALONE)
+                        npcUtil.popFromQM(player, npc, bibikiID.mob.PERIFOOLS, {claim = true})
+                    elseif quest:getVar(player, 'Prog') == 1 then
+                        return quest:progressEvent(34)
                     end
+                end,
+            },
 
-                    if check then
-                        if quest:getVar(player, 'Prog') == 0 then
-                            player:messageSpecial(bibikiID.text.YOU_ARE_NOT_ALONE)
-                            for i = 0, 5 do
-                                SpawnMob(16793711+i):updateEnmity(player)
-                            end
-                        elseif quest:getVar(player, 'Prog') == 1 then
-                            return quest:progressEvent(34)
+            ['Perifool'] =
+            {
+                onMobDeath = function(mob, player, isKiller, firstCall)
+                    local party = player:getParty()
+
+                    for _, v in ipairs(party) do
+                        if player:getZone() == v:getZone() and quest:getVar(v, 'Prog') == 0 then
+                            quest:setVar(v, 'Prog', 1)
                         end
                     end
                 end,

@@ -15,6 +15,7 @@ require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 -----------------------------------
 ID = require('scripts/zones/Bastok_Markets/IDs')
+minesID = require('scripts/zones/Oldton_Movalpolos/IDs')
 -----------------------------------
 local quest = Quest:new(xi.quest.log_id.BASTOK, xi.quest.id.bastok.A_QUESTION_OF_FAITH)
 
@@ -86,15 +87,27 @@ quest.sections =
                 onTrigger = function(player, npc)
                     if
                         player:hasKeyItem(xi.ki.DAWN_TALISMAN) and
-                        quest:getVar(player, 'Prog') == 0 and
-                        not GetMobByID(16822456):isSpawned()
+                        quest:getVar(player, 'Prog') == 0
                     then
                         npc:messageText(npc, 7733)
                         npc:messageText(npc, 7746)
-                        SpawnMob(16822456):updateClaim(player)
+                        npcUtil.popFromQM(player, npc, 16822456, {claim = true})
 
                     elseif quest:getVar(player, 'Prog') == 1 and player:hasKeyItem(xi.ki.DAWN_TALISMAN) then
                         return quest:progressEvent(6)
+                    end
+                end,
+            },
+
+            ['Perifool'] =
+            {
+                onMobDeath = function(mob, player, isKiller, firstCall)
+                    local party = player:getParty()
+
+                    for _, v in ipairs(party) do
+                        if player:getZone() == v:getZone() and quest:getVar(v, 'Prog') == 0 then
+                            quest:setVar(v, 'Prog', 1)
+                        end
                     end
                 end,
             },
