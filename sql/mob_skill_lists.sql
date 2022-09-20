@@ -107,19 +107,9 @@ INSERT INTO `mob_skill_lists` VALUES ('Avatar-Fenrir',36,834);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Fenrir',36,835);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Fenrir',36,836);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Fenrir',36,837);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',37,867);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',37,868);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',37,869);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',37,870);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',37,871);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',37,872);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',37,873);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',37,874);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',38,840);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',38,841);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',38,842);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',38,843);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',38,844);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',38,845);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',38,846);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',38,847);
@@ -130,11 +120,6 @@ INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ixion',39,2336);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ixion',39,2337);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ixion',39,2338);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ixion',39,2369);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Leviathan',40,858);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Leviathan',40,859);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Leviathan',40,860);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Leviathan',40,861);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Leviathan',40,862);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Leviathan',40,863);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Leviathan',40,864);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Leviathan',40,865);
@@ -146,27 +131,12 @@ INSERT INTO `mob_skill_lists` VALUES ('Avatar-Leviathan',40,865);
 -- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Odin',41,2560);
 -- INSERT INTO `mob_skill_lists` VALUES ('Avatar-Odin',41,2561);
 -- 42: Dark Rider
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ramuh',43,885);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ramuh',43,886);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ramuh',43,887);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ramuh',43,888);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ramuh',43,889);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ramuh',43,890);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ramuh',43,891);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ramuh',43,892);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Shiva',44,876);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Shiva',44,877);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Shiva',44,878);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Shiva',44,879);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Shiva',44,880);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Shiva',44,881);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Shiva',44,882);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Shiva',44,883);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Titan',45,849);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Titan',45,850);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Titan',45,851);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Titan',45,852);
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Titan',45,853);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Titan',45,854);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Titan',45,855);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Titan',45,856);
@@ -1451,30 +1421,18 @@ INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,499); -- back_swish
 INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,500); -- mow
 INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,501); -- frightful_roar
 INSERT INTO `mob_skill_lists` VALUES ('Mindertaur',318,503); -- unblessed_armor
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Shiva',319,878); -- Waking the Beast, frost_armor
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Shiva',319,879); -- Waking the Beast, sleepga
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Shiva',319,882); -- Waking the Beast, rush
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Shiva',319,883); -- Waking the Beast, heavenly_strike
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ramuh',320,888); -- Waking the Beast, thunderspark
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ramuh',320,889); -- Waking the Beast, lightning_armor
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ramuh',320,891); -- Waking the Beast, chaotic_strike
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ramuh',320,892); -- Waking the Beast, thunderstorm
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Titan',321,852); -- Waking the Beast, megalith_throw
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Titan',321,853); -- Waking the Beast, earthern_ward
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Titan',321,856); -- Waking the Beast, geocrush
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Titan',321,857); -- Waking the Beast, earthen_fury
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',322,844); -- Waking the Beast, crimson_howl
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',322,846); -- Waking the Beast, flaming_crush
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',322,847); -- Waking the Beast, meteor_strike
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',322,848); -- Waking the Beast, inferno
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Leviathan',323,861); -- Waking the Beast, spring_water
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Leviathan',323,862); -- Waking the Beast, slowga
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Leviathan',323,864); -- Waking the Beast, spinning_dive
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Leviathan',323,865); -- Waking the Beast, grand_fall
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',324,869); -- Waking the Beast, whispering_wind
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',324,871); -- Waking the Beast, aerial_armor
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',324,873); -- Waking the Beast, predator_claws
-INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',324,874); -- Waking the Beast, wind_blade
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Shiva',319,876);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Shiva',319,877);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ramuh',320,885);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ramuh',320,886);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Titan',321,849);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Titan',321,850);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',322,840);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Ifrit',322,841);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Leviathan',323,858);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Leviathan',323,859);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',324,867);
+INSERT INTO `mob_skill_lists` VALUES ('Avatar-Garuda',324,868);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Fenrir',325,833);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Fenrir',325,835);
 INSERT INTO `mob_skill_lists` VALUES ('Avatar-Fenrir',325,836);
@@ -2419,27 +2377,7 @@ INSERT INTO `mob_skill_lists` VALUES ('MobWyvern',714,902);
 INSERT INTO `mob_skill_lists` VALUES ('MobWyvern',714,903);
 INSERT INTO `mob_skill_lists` VALUES ('MobWyvern',714,904);
 INSERT INTO `mob_skill_lists` VALUES ('MobWyvern',714,905);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Ifrit',715,843);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Ifrit',715,844);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Ifrit',715,846);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Titan',716,852);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Titan',716,853);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Titan',716,855);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Levi',717,860);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Levi',717,861);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Levi',717,864);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Garuda',718,869);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Garuda',718,871);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Garuda',718,873);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Shiva',719,878);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Shiva',719,880);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Shiva',719,882);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Ramuh',720,888);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Ramuh',720,889);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Ramuh',720,891);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Carbuncle',721,909);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Carbuncle',721,910);
-INSERT INTO `mob_skill_lists` VALUES ('Mob_Avatar_Carbuncle',721,911);
+-- Available: 715 to 721
 INSERT INTO `mob_skill_lists` VALUES ('Prune',722,325);
 INSERT INTO `mob_skill_lists` VALUES ('Prune',722,414);
 INSERT INTO `mob_skill_lists` VALUES ('Prune',722,415);
