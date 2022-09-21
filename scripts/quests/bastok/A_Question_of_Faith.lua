@@ -90,7 +90,7 @@ quest.sections =
                     then
                         npc:messageText(npc, 7733)
                         npc:messageText(npc, 7746)
-                        npcUtil.popFromQM(player, npc, 16822456, {claim = true})
+                        npcUtil.popFromQM(player, npc, 16822456, {claim = true, hide = 0})
 
                     elseif quest:getVar(player, 'Prog') == 1 and player:hasKeyItem(xi.ki.DAWN_TALISMAN) then
                         return quest:progressEvent(6)
@@ -101,12 +101,8 @@ quest.sections =
             ['Bugallug'] =
             {
                 onMobDeath = function(mob, player, isKiller, firstCall)
-                    local party = player:getParty()
-
-                    for _, v in ipairs(party) do
-                        if player:getZone() == v:getZone() and quest:getVar(v, 'Prog') == 0 then
-                            quest:setVar(v, 'Prog', 1)
-                        end
+                    if quest:getVar(player, 'Prog') == 0 then
+                        quest:setVar(player, 'Prog', 1)
                     end
                 end,
             },

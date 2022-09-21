@@ -79,7 +79,7 @@ quest.sections =
                 onTrigger = function(player, npc)
                     if quest:getVar(player, 'Prog') == 0 then
                         player:messageSpecial(bibikiID.text.YOU_ARE_NOT_ALONE)
-                        npcUtil.popFromQM(player, npc, bibikiID.mob.PERIFOOLS, {claim = true})
+                        npcUtil.popFromQM(player, npc, bibikiID.mob.PERIFOOLS, {claim = true, hide = 0})
                     elseif quest:getVar(player, 'Prog') == 1 then
                         return quest:progressEvent(34)
                     end
@@ -89,12 +89,8 @@ quest.sections =
             ['Perifool'] =
             {
                 onMobDeath = function(mob, player, isKiller, firstCall)
-                    local party = player:getParty()
-
-                    for _, v in ipairs(party) do
-                        if player:getZone() == v:getZone() and quest:getVar(v, 'Prog') == 0 then
-                            quest:setVar(v, 'Prog', 1)
-                        end
+                    if quest:getVar(player, 'Prog') == 0 then
+                        quest:setVar(player, 'Prog', 1)
                     end
                 end,
             },
