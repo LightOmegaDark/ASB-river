@@ -14,6 +14,8 @@ require('scripts/globals/status')
 require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 -----------------------------------
+local ID = require("scripts/zones/Misareaux_Coast/IDs")
+-----------------------------------
 local quest = Quest:new(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.THE_CALL_OF_THE_SEA)
 
 quest.reward =
@@ -33,7 +35,7 @@ quest.sections =
             ['Equette'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'equetteProg') == 0 then
+                    if quest:getVar(player, 'Stage') == 0 then
                         return quest:progressEvent(170)
                     end
                 end,
@@ -42,7 +44,7 @@ quest.sections =
             ['Leporaitceau'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'leporaitceauProg') == 0 then
+                    if quest:getVar(player, 'Option') == 0 then
                         return quest:progressEvent(171)
                     end
                 end,
@@ -62,12 +64,12 @@ quest.sections =
                 -- Equette
                 [170] = function(player, csid, option, npc)
                     quest:incrementVar(player, 'Prog', 1)
-                    quest:setVar(player, 'equetteProg', 1)
+                    quest:setVar(player, 'Stage', 1)
                 end,
                 -- Leporaitceau
                 [171] = function(player, csid, option, npc)
                     quest:incrementVar(player, 'Prog', 1)
-                    quest:setVar(player, 'leporaitceauProg', 1)
+                    quest:setVar(player, 'Option', 1)
                 end,
                 -- Anteurephiaux
                 [172] = function(player, csid, option, npc)
@@ -122,10 +124,13 @@ quest.sections =
             ['qm_bloody_coffin'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 2 then
-                        npcUtil.popFromQM(player, npc, 16879896, {claim = true, hide = 0})
+                    if
+                        quest:getVar(player, 'Prog') == 2 and
+                        npcUtil.popFromQM(player, npc, ID.mob.BLOODY_COFFING, {claim = true, hide = 0})
+                    then
+                        return quest:message(ID.text.FOUL_STENCH)
                     elseif quest:getVar(player, 'Prog') == 3 and not player:hasKeyItem(xi.ki.WHISPERING_CONCH) then
-                        npcUtil.giveKeyItem(player, xi.ki.WHISPERING_CONCH)
+                        return npcUtil.giveKeyItem(player, xi.ki.WHISPERING_CONCH)
                     end
                 end,
             },
