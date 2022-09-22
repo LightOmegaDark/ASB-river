@@ -89,8 +89,8 @@ quest.sections =
                         quest:getVar(player, 'Prog') == 0
                     then
                         if npcUtil.popFromQM(player, npc, ID.mob.BUGALLUG, {claim = true, hide = 0}) then
-                            quest:message(npc, ID.text.ALTANA_DIE)
-                            return quest:message(npc, ID.text.MONSTER_APPEARED)
+                            quest:message(ID.text.ALTANA_DIE)
+                            return quest:message(ID.text.MONSTER_APPEARED)
                         end
 
                     elseif quest:getVar(player, 'Prog') == 1 and player:hasKeyItem(xi.ki.DAWN_TALISMAN) then
