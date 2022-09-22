@@ -6,34 +6,72 @@ require("scripts/globals/hunts")
 ---------------------------------
 local entity = {}
 
-local pathNodesA =
+local pathStart =
 {
-    102, -0.191, 3,
-    90.06, -0.28, 12.24,
-    67.60, -0.34, 12.42,
-    54.61, -4.11, 16.89,
-    25.03, -9.28, 23.12,
-    19.43, -7.95, 44.37,
-    18.80, -6.63, 47.77,
-    17.72, -5.14, 51.88,
-    16.93, -3.95, 55.33,
-    16.33, -3.09, 57.46,
-    14.76, -1.78, 60.84,
-    11.86, -0.60, 65.58,
-    -0.52, 0.00, 82.02,
-    3.06, 0.15, 125.56,
-    40.12, 0.000, 158.89,
-    60.35, -4.24, 143.23,
-    79.86, -8.75, 139.89,
-    85.86, -8.82, 138.11,
-    91.87, -8.83, 142.52,
-    101.60, -8.71, 143.17,
-    100.62, -8.75, 78.86,
-    108.29, -4.60, 54.26,
-    118.98, 0.00, 38.12,
-    102.61, 0.92, 1.60,
-    102, -0.191, 3,
-    102, -0.191, 3
+    {x = 102.61, y = 0.92, z = 1.60}
+}
+
+local pathA =
+{
+    {x = 90.06, y = -0.28, z = 12.24},
+    {x = 67.60, y = -0.34, z = 12.42},
+    {x = 54.61, y = -4.11, z = 16.89},
+    {x = 25.03, y =  -9.28, z = 23.12},
+    {x = 19.43, y = -7.95, z = 44.37},
+    {x = 18.80, y = -6.63, z = 47.77},
+    {x = 17.72, y = -5.14, z = 51.88},
+    {x = 16.93, y = -3.95, z = 55.33},
+    {x = 16.33, y = -3.09, z = 57.46},
+    {x = 14.76, y = -1.78, z = 60.84},
+    {x = 11.86, y = -0.60, z = 65.58},
+    {x = -0.52, y = 0.00, z = 82.02}
+}
+
+local pathAb =
+{
+    {x = 3.06, y = 0.15, z = 125.56},
+    {x = 40.12, y = 0.000, z = 158.89},
+    {x = 60.35, y = -4.24, z = 143.23},
+    {x = 79.86, y = -8.75, z = 139.89},
+    {x = 85.86, y = -8.82, z = 138.11},
+    {x = 91.87, y = -8.83, z = 142.52},
+    {x = 101.60, y = -8.71, z = 143.17},
+    {x = 100.62, y = -8.75, z = 78.86},
+    {x = 108.29, y = -4.60, z = 54.26},
+    {x = 118.98, y = 0.00, z = 38.12},
+    {x = 102.61, y = 0.92, z = 1.60}
+}
+
+local pathB =
+{
+    {x = 109.49, y = 0.59, z = -0.07},
+    {x = 124.47, y = 0.00, z = -42.08},
+    {x = 91.93, y = -5.15, z = -58.24},
+    {x = 66.46, y = -8.81, z = -62.91},
+    {x = 60.86, y = -9.02, z = -73.80},
+    {x = 57.09, y = -9.37, z = -96.88},
+    {x = 38.39, y = -8.62, z = -98.74},
+    {x = 15.73, y = -1.02, z = -94.88},
+    {x = -0.65, y = 0.00, z = -84.13},
+    {x = -40.24, y = 0.00, z = -38.35},
+    {x = -44.36, y = 0.68, z = 13.98},
+    {x = -31.28, y = -0.23, z = 48.64},
+    {x = -0.52, y = 0.00, z = 82.02}
+}
+
+local pathBb =
+{
+    {x = 3.06, y = 0.15, z = 125.56},
+    {x = 40.12, y = 0.000, z = 158.89},
+    {x = 60.35, y = -4.24, z = 143.23},
+    {x = 79.86, y = -8.75, z = 139.89},
+    {x = 85.86, y = -8.82, z = 138.11},
+    {x = 91.87, y = -8.83, z = 142.52},
+    {x = 101.60, y = -8.71, z = 143.17},
+    {x = 100.62, y = -8.75, z = 78.86},
+    {x = 108.29, y = -4.60, z = 54.26},
+    {x = 118.98, y = 0.00, z = 38.12},
+    {x = 102.61, y = 0.92, z = 1.60}
 }
 
 local pathNodesB =
@@ -140,89 +178,83 @@ entity.onPath = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
-    --Let's set a pauseTime for when/if mob pauses at a point.
-    --Mob can pause anywhere from 15 to 60 seconds generally (don't quote me on that).
-    --Since this is at spawn, let's set it a little shorter.
-    --Let's first set a path to memory as well as if that path is to be
-    --traversed in reverse or not.
-    --Path choice can be A, B or to roam in general around spawn.
-    --1: Path A
-    --2: Path B
-    mob:setLocalVar("pauseTime", math.random(8,15) + os.time())
-    mob:setLocalVar("mobPath", math.random(1,2))
-    mob:setLocalVar("pathReverse", math.random(0,1))
-    --onMobRoam will fire next.
+    mob:setLocalVar("isPaused", 0)
+    mob:setLocalVar("mobPath", 0)
+    mob:pathThrough(pathStart, xi.path.flag.COORDS)
 end
 
-entity.onMobRoam = function(mob)
-    -- First, let's check if mob is at spawn and needs a new path.
-    local nextIndex = mob:getLocalVar("nextPatrolIndex")
-    if nextIndex >= 24 and mob:atPoint({102, -0.191, 3}) then
-        mob:setLocalVar("nextPatrolIndex", 2)
-        entity.onMobSpawn(mob)
-        return
-    end
-    --Next, let's check if mob is currently set to pause.
-    local pauseCheck = mob:getLocalVar("pauseTime")
-    if pauseCheck > os.time() then
-        --Mob is currently set to pause and not move for the amount of pauseTime
-        mob:setMobMod(xi.mobMod.NO_MOVE, 1)
-        return
-    else
-        mob:setMobMod(xi.mobMod.NO_MOVE, 0)
-        local currentPath = mob:getLocalVar("mobPath")
-        local reverseCheck = mob:getLocalVar("pathReverse")
-        if currentPath == 1 and reverseCheck == 0 then
-            xi.path.patrol(mob, pathNodesA)
-            return
-        elseif currentPath == 1 and reverseCheck == 1 then
-            xi.path.patrol(mob,xi.path.fromEnd(pathNodesA))
-            return
-        elseif currentPath == 2 and reverseCheck == 0 then
-            xi.path.patrol(mob, pathNodesB)
-            return
-        elseif currentPath == 1 and reverseCheck == 1 then
-            xi.path.patrol(mob,xi.path.fromEnd(pathNodesB))
-            return
-        end
-    end
-    --Next, let's check if a mob is currently on a path.
-    if mob:isFollowingPath() then
-        --continue following the chosen path.
-        xi.path.pathToNearest(mob, pathNodesA)
-        entity.onPath(mob)
-    else
-        --if not on pause or on a path, let's check if around spawn
-        local spawn = mob:getSpawnPos()
-        if mob:atPoint(spawn.x, spawn.y, spawn.z) then
-            entity.onMobSpawn(mob)
+entity.onPath = function(mob)
+    if not mob:isFollowingPath() then
+        if mob:getLocalVar("isPaused") ~= 0 then
             local currentPath = mob:getLocalVar("mobPath")
-            if currentPath == 1 then
-                --mob is set to patrol Path A
-                xi.path.pathToNearest(mob, pathNodesA)
-                entity.onPath(mob)
-            elseif currentPath == 2 then
-                --mob is set to patrol Path B
-                xi.path.pathToNearest(mob, pathNodesB)
-                entity.onPath(mob)
+            local reversePath = mob:getLocalVar("reversePath")
+            local path = {}
+            mob:setLocalVar("isPaused", 0)
+            mob:clearPath()
+            if reversePath == 0 then --forward path logic begin
+                switch (currentPath): caseof
+                {
+                    [0] = function() --Path A
+                        local pathRnd = math.random(0,3)
+                        local reverseCheck = math.random(0,2)
+                    end;
+                    [1] = function() --Path Ab
+                    end;
+                    [2] = function() -- Path B
+                        local pathRnd = math.random(0,3)
+                        local reverseCheck = math.random(0,2)
+                    end;
+                    [3] = function() -- Path Bb
+                    end;
+                }
+            else --reverse path logic begin
+                switch (currentPath): caseof
+                {
+                    [0] = function() --Path A
+                        local pathRnd = math.random(0,3)
+                        local reverseCheck = math.random(0,2)
+                    end;
+                    [1] = function() --Path Ab
+                    end;
+                    [2] = function() -- Path B
+                        local pathRnd = math.random(0,3)
+                        local reverseCheck = math.random(0,2)
+                    end;
+                    [3] = function() -- Path Bb
+                    end;
+                }
             end
+        else
+            --Amemet is paused, he will wait
+            --a random amount of times before resuming his path
+            mob:clearPath()
+            local x = mob:getXPos()
+            local y = mob:getYPos()
+            local z = mob:getZPos()
+            local pauses = {}
+            local count = math.random(0,6)
+            for i = 0, count do
+                local wait = math.random(1500,3000)
+                pauses[i+1] = {
+                x = x, y = y, z = z, wait = wait }
+            end
+            mob:timer(math.random(1500, 3000), function(mob)
+                mob:pathThrough(pauses, xi.path.flag.COORDS)
+                mob:setLocalVar("isPaused", 1)
+            end)
         end
     end
 end
 
-entity.onMobEngage = function(mob)
-    mob:setMobMod(xi.mobMod.NO_MOVE, 0)
+entity.onMobFight = function(mob)
+    --At 25% or less, Amemet receives regain.
+    if mob:getHPP() <= 25 then
+        mob:setMod(xi.mod.REGAIN, 10)
+    end
 end
 
-entity.onMobDisengage = function(mob)
-    local pathCheck = mob:getLocalVar("mobPath")
-    if pathCheck == 1 then
-        xi.path.pathToNearest(mob, pathNodesA)
-        entity.onPath(mob)
-    elseif pathCheck == 2 then
-        xi.path.pathToNearest(mob, pathNodesB)
-        entity.onPath(mob)
-    end
+entity.onMobDisengage = function (mob)
+    mob:setMod(xi.mod.REGAIN, 0)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
