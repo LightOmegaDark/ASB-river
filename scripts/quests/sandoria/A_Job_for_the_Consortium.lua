@@ -35,10 +35,10 @@ quest.sections =
             ['Portaure'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'AIRSHIP_BLOCK') < os.time() then
-                        quest:progressEvent(651)
+                    if quest:getVar(player, 'Stage') < os.time() then
+                        return quest:progressEvent(651)
                     else
-                        npc:messageSpecial(player,ID.text.LAY_LOW)
+                        return quest:message(player,ID.text.LAY_LOW)
                     end
                 end,
             },
@@ -98,9 +98,9 @@ quest.sections =
                 onTrigger = function(player, npc)
                     if player:hasKeyItem(xi.ki.BRUGAIRE_GOODS) then
                         if math.random() > 0.25 or (VanadielHour() > 6 and VanadielHour() < 18) then
-                            quest:progressEvent(54)
+                            return quest:progressEvent(54)
                         else
-                            quest:progressEvent(54, 1)
+                            return quest:event(54, 1)
                         end
                     end
                 end,
@@ -111,7 +111,7 @@ quest.sections =
                 [54] = function(player, csid, option, npc)
                     if option == 1 then
                         player:delKeyItem(xi.ki.BRUGAIRE_GOODS)
-                        quest:setVar(player, 'AIRSHIP_BLOCK', getMidnight())
+                        quest:setVar(player, 'Stage', getMidnight())
                         quest:setVar(player, 'Prog', 1)
                     else
                         quest:setVar(player, 'Prog', 2)
@@ -153,7 +153,7 @@ quest.sections =
     {
         check = function(player, status, vars)
             return status == QUEST_COMPLETED and
-                quest:getVar(player, 'AIRSHIP_BLOCK') < os.time()
+                quest:getVar(player, 'Stage') < os.time()
         end,
 
         [xi.zone.PORT_SAN_DORIA] =
