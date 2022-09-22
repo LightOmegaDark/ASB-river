@@ -10,7 +10,7 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onMobFight = function(mob, target)
-    if mob:getCurrentAction() == xi.act.MAGIC_CASTING then
+    if mob:getCurrentAction() == xi.act.MAGIC_CASTING or mob:getCurrentAction() == xi.act.MOBABILITY_USING then
         mob:setMod(xi.mod.UDMGPHYS, 0)
         mob:setMod(xi.mod.UDMGMAGIC, 0)
         mob:setMod(xi.mod.UDMGRANGE, 0)
