@@ -561,5 +561,4 @@
     "cSpell.ignoreWords": [
         "PATHFLAG"
     ],
-    "cmake.configureOnOpen": false,
 }
