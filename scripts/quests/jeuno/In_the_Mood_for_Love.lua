@@ -12,7 +12,7 @@ require("scripts/globals/missions")
 require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 -----------------------------------
-local quest = Quest:new(xi.quest.log_id.JEUNO, xi.quest.id.otherAreas.IN_THE_MOOD_FOR_LOVE)
+local quest = Quest:new(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.IN_THE_MOOD_FOR_LOVE)
 
 quest.reward =
 {
