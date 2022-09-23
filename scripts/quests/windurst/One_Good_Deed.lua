@@ -118,9 +118,9 @@ quest.sections =
             {
                 [8] = function(player, csid, option, npc)
                     if option == 100 then
-                        quest:startCutscene(8, 11, xi.ki.DEED_TO_PURGONORGO_ISLE)
+                        player:startCutscene(8, 11, xi.ki.DEED_TO_PURGONORGO_ISLE)
                     elseif option == 101 then
-                        quest:startCutscene(8, 64, 0, xi.ki.DEED_TO_PURGONORGO_ISLE)
+                        player:startCutscene(8, 64, 0, xi.ki.DEED_TO_PURGONORGO_ISLE)
                     end
                 end,
             },
