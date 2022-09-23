@@ -2,9 +2,10 @@
 -- Petals for Parelbriaux
 -----------------------------------
 -- Log ID: 4, Quest ID: 74
--- Parelbriaux : !pos
--- Chemioue    : !pos
--- Ondieulix   : !pos
+-- Parelbriaux : !pos 115 -41 43
+-- Chemioue    : !pos 82 -33 67
+-- Ondieulix   : !pos 6 -25 65
+-- ???         : !pos -210 -15 274
 -----------------------------------
 require('scripts/globals/items')
 require('scripts/globals/keyitems')
@@ -16,7 +17,7 @@ require('scripts/globals/interaction/quest')
 -----------------------------------
 local ID = require("scripts/zones/Lufaise_Meadows/IDs")
 -----------------------------------
-local quest = Quest:new(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.A_BITTER_PAST)
+local quest = Quest:new(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.PETALS_FOR_PARELBRIAUX)
 
 quest.reward =
 {
@@ -38,7 +39,7 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if quest:getVar(player, 'Prog') == 0 then
-                        return quest:progressEvent(000)
+                        return quest:progressEvent(512)
                     end
                 end,
             },
@@ -47,7 +48,7 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if quest:getVar(player, 'Prog') == 1 then
-                        return quest:progressEvent(111)
+                        return quest:progressEvent(513)
                     end
                 end,
             },
@@ -56,20 +57,20 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if quest:getVar(player, 'Prog') == 2 then
-                        return quest:progressEvent(222)
+                        return quest:progressEvent(514)
                     end
                 end,
             },
 
             onEventFinish =
             {
-                [000] = function(player, csid, option, npc)
+                [512] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 1)
                 end,
-                [111] = function(player, csid, option, npc)
+                [513] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 2)
                 end,
-                [222] = function(player, csid, option, npc)
+                [514] = function(player, csid, option, npc)
                     quest:begin(player)
                 end,
             },
@@ -83,43 +84,39 @@ quest.sections =
 
         [xi.zone.TAVNAZIAN_SAFEHOLD] =
         {
-            ['Chemioue'] =
-            {
-                onTrigger = function(player, npc)
-                end,
-            },
-
-            ['Parelbriaux'] =
-            {
-                onTrigger = function(player, npc)
-                end,
-            },
-
             ['Ondieulix'] =
             {
                 onTrigger = function(player, npc)
+                    if player:hasKeyItem(xi.ki.PARTICULARLY_POIGNANT_PETAL) then
+                        return quest:progressEvent(516)
+                    end
                 end,
             },
 
             onEventFinish =
             {
-                [152] = function(player, csid, option, npc)
-                    quest:setVar(player, 'Prog', 1)
+                [516] = function(player, csid, option, npc)
+                    if quest:complete(player) then
+                        player:delKeyItem(xi.ki.PARTICULARLY_POIGNANT_PETAL)
+                    end
                 end,
             },
         },
 
         [xi.zone.LUFAISE_MEADOWS] =
         {
-            ['qm'] =
+            ['qm_baumesel'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 2 and npcUtil.popFromQM(player, npc, ID.mob.BITTER_PAST_MOBS, {claim = true, hide = 0}) then
-                        return quest:messageText(ID.text.SENSE_OF_FOREBODING)
+                    if
+                        quest:getVar(player, 'Prog') == 2 and
+                        npcUtil.popFromQM(player, npc, ID.mob.BAUMESEL, { claim = true, hide = 0 }) and
+                        player:getWeather() == xi.weather.FOG
+                    then
+                        return quest:messageText(ID.text.SPINE_CHILLING_PRESENCE)
 
-                    elseif not player:hasKeyItem(xi.ki.TINY_WRISTLET) then
-                        player:addKeyItem(xi.ki.TINY_WRISTLET)
-                        return quest:messageText(ID.text.KEYITEM_OBTAINED)
+                    elseif quest:getVar(player, 'Prog') == 3 and not player:hasKeyItem(xi.ki.PARTICULARLY_POIGNANT_PETAL) then
+                        return quest:progressEvent(115)
                     end
                 end,
             },
@@ -130,6 +127,13 @@ quest.sections =
                     if quest:getVar(player, 'Prog') == 2 then
                         quest:setVar(player, 'Prog', 3)
                     end
+                end,
+            },
+
+            onEventFinish =
+            {
+                [115] = function(player, csid, option, npc)
+                    npcUtil.giveKeyItem(player, xi.ki.PARTICULARLY_POIGNANT_PETAL)
                 end,
             },
         },
