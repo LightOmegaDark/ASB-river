@@ -77,9 +77,8 @@ quest.sections =
             ['qm_deed'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 0 then
-                        player:messageSpecial(bibikiID.text.YOU_ARE_NOT_ALONE)
-                        npcUtil.popFromQM(player, npc, bibikiID.mob.PERIFOOLS, {claim = true, hide = 0})
+                    if quest:getVar(player, 'Prog') == 0 and npcUtil.popFromQM(player, npc, bibikiID.mob.PERIFOOLS, {claim = true, hide = 0}) then
+                        return quest:messageText(bibikiID.text.YOU_ARE_NOT_ALONE)
                     elseif quest:getVar(player, 'Prog') == 1 then
                         return quest:progressEvent(34)
                     end
@@ -118,11 +117,10 @@ quest.sections =
             onEventUpdate =
             {
                 [8] = function(player, csid, option, npc)
-                    print(option)
                     if option == 100 then
-                        quest:progressEvent(8, 11, xi.ki.DEED_TO_PURGONORGO_ISLE)
+                        quest:startCutscene(8, 11, xi.ki.DEED_TO_PURGONORGO_ISLE)
                     elseif option == 101 then
-                        quest:progressEvent(8, 64, 0, xi.ki.DEED_TO_PURGONORGO_ISLE)
+                        quest:startCutscene(8, 64, 0, xi.ki.DEED_TO_PURGONORGO_ISLE)
                     end
                 end,
             },
@@ -130,7 +128,6 @@ quest.sections =
             onEventFinish =
             {
                 [8] = function(player, csid, option, npc)
-                    print(option)
                     if option == 101 or option == 100 then
                         npcUtil.giveKeyItem(player, xi.ki.MAP_OF_THE_ATTOHWA_CHASM)
                         player:delKeyItem(xi.ki.DEED_TO_PURGONORGO_ISLE)
