@@ -32,7 +32,7 @@ quest.sections =
 
         [xi.zone.LOWER_JEUNO] =
         {
-            ['Odasel'] = quest:progressEvent(10035, 0, xi.items.CHAMELEON_DIAMOND),
+            ['Odasel'] = quest:progressEvent(10035, { [1] = xi.items.CHAMELEON_DIAMOND }),
 
             onEventFinish =
             {
@@ -53,20 +53,21 @@ quest.sections =
             ['Odasel'] =
             {
                 onTrigger = function(player, npc)
-                    return quest:progressEvent(10037, 0, xi.items.CHAMELEON_DIAMOND)
+                    return quest:event(10037, { [1] = xi.items.CHAMELEON_DIAMOND })
                 end,
 
                 onTrade = function(player, npc, trade)
                     if npcUtil.tradeHasExactly(trade, xi.items.CHAMELEON_DIAMOND) then
-                        return quest:progressEvent(10036, 0, xi.items.CHAMELEON_DIAMOND)
+                        return quest:progressEvent(10036, { [1] = xi.items.CHAMELEON_DIAMOND })
                     end
                 end,
             },
             onEventFinish =
             {
-                [0] = function(player, csid, option, npc)
+                [10036] = function(player, csid, option, npc)
                     if quest:complete(player) then
                         player:confirmTrade()
+                        quest:setVar(player, 'Option', 1)
                     end
                 end,
             },
@@ -85,7 +86,7 @@ quest.sections =
             ['Matoaka'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 0 then
+                    if quest:getVar(player, 'Option') == 1 then
                         -- Additional Cutscene
                         return quest:progressEvent(10039)
                     end
@@ -94,7 +95,7 @@ quest.sections =
             onEventFinish =
             {
                 [10039] = function(player, csid, option, npc)
-                    quest:setVar(player, 'Prog', 1)
+                    quest:setVar(player, 'Option', 0)
                 end,
             },
         },
