@@ -3097,6 +3097,7 @@ xi.items =
     EVOKERS_PIGACHES_P1             = 15366,
     TRACKERS_KECKS                  = 15387,
     ASTRAL_ROPE                     = 15431,
+    POWERFUL_ROPE                   = 15443,
     RED_SASH                        = 15455,
     DASH_SASH                       = 15456,
     SAFETY_MANTLE                   = 15463,
