@@ -130,7 +130,7 @@ quest.sections =
                         return quest:message(ID.text.FOUL_STENCH)
                     elseif quest:getVar(player, 'Prog') == 1 and not player:hasKeyItem(xi.ki.WHISPERING_CONCH) then
                         player:addKeyItem(xi.ki.WHISPERING_CONCH)
-                        return quest:messageText(ID.text.KEYITEM_OBTAINED)
+                        return quest:message(ID.text.KEYITEM_OBTAINED)
                     end
                 end,
             },
