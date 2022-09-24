@@ -71,6 +71,7 @@ quest.sections =
                 end,
                 -- Anteurephiaux
                 [172] = function(player, csid, option, npc)
+                    quest:setVar(player, 'Option', 0)
                     quest:begin(player)
                 end,
             },
