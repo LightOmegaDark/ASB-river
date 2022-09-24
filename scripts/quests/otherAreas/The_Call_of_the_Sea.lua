@@ -125,7 +125,7 @@ quest.sections =
                 onTrigger = function(player, npc)
                     if
                         quest:getVar(player, 'Prog') == 0 and
-                        npcUtil.popFromQM(player, npc, ID.mob.BLOODY_COFFING, {claim = true, hide = 0})
+                        npcUtil.popFromQM(player, npc, ID.mob.BLOODY_COFFIN, { claim = true, hide = 0 })
                     then
                         return quest:message(ID.text.FOUL_STENCH)
                     elseif quest:getVar(player, 'Prog') == 1 and not player:hasKeyItem(xi.ki.WHISPERING_CONCH) then
