@@ -114,7 +114,7 @@ quest.sections =
                         npcUtil.popFromQM(player, npc, ID.mob.BAUMESEL, { claim = true, hide = 0 }) and
                         player:getWeather() == xi.weather.FOG
                     then
-                        return quest:messageText(ID.text.SPINE_CHILLING_PRESENCE)
+                        return quest:message(ID.text.SPINE_CHILLING_PRESENCE)
 
                     elseif quest:getVar(player, 'Prog') == 1 and not player:hasKeyItem(xi.ki.PARTICULARLY_POIGNANT_PETAL) then
                         return quest:progressEvent(115)
