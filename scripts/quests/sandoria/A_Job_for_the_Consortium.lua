@@ -38,7 +38,7 @@ quest.sections =
                     if quest:getVar(player, 'Stage') < os.time() then
                         return quest:progressEvent(651)
                     else
-                        return quest:message(ID.text.LAY_LOW)
+                        return quest:message(ID.text.LAY_LOW):face(player)
                     end
                 end,
             },
@@ -47,6 +47,8 @@ quest.sections =
             {
                 [651] = function(player, csid, option, npc)
                     if option == 1 then
+                        -- Reset prog to 0 as delQuest doesn't reset vars
+                        quest:setVar(player, 'Prog', 0)
                         npcUtil.giveKeyItem(player, xi.ki.BRUGAIRE_GOODS)
                         quest:begin(player)
                     end
@@ -67,7 +69,7 @@ quest.sections =
                 onTrigger = function(player, npc)
                     -- Tell players to go at night
                     if player:hasKeyItem(xi.ki.BRUGAIRE_GOODS) then
-                        return quest:progressEvent(652)
+                        return quest:event(652)
 
                     -- Player was caught (Delete quest)
                     elseif quest:getVar(player, 'Prog') == 1 then
@@ -100,7 +102,7 @@ quest.sections =
                         if math.random() > 0.25 or (VanadielHour() > 6 and VanadielHour() < 18) then
                             return quest:progressEvent(54)
                         else
-                            return quest:event(54, 1)
+                            return quest:progressEvent(54, 1)
                         end
                     end
                 end,
