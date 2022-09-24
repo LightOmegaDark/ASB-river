@@ -3,15 +3,17 @@
 --  Mob: Ramuh Prime
 -- Involved in Quest: Trial by Lightning, Trial Size Trial by Lightning
 -----------------------------------
-mixins = {require("scripts/mixins/job_special")}
+mixins = { require("scripts/mixins/job_special") }
 -----------------------------------
 local entity = {}
 
 entity.onMobSpawn = function(mob)
+    mob:addMod(xi.mod.REGAIN, 50)
+
     xi.mix.jobSpecial.config(mob, {
         specials =
         {
-            {id = 893, hpp = math.random(30,55)}, -- uses Judgment Bolt once while near 50% HPP.
+            { id = 893, hpp = math.random(30,55) }, -- uses Judgment Bolt once while near 50% HPP.
         },
     })
 end
