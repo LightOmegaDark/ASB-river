@@ -173,32 +173,30 @@ entity.onMobSpawn = function(mob)
 
     -- https://www.bg-wiki.com/ffxi/Wyvern_(Dragoon_Pet)#Parameter_Increase
     master:addListener("EXPERIENCE_POINTS", "PET_WYVERN_EXP", function(player, exp)
-        xi.job_utils.dragoon.addWyvernExp(player, exp)
+        local pet = player:getPet()
+        local prev_exp = pet:getLocalVar("wyvern_exp")
+        if prev_exp < 1000 then
+            -- cap exp at 1000 to prevent wyvern leveling up many times from large exp awards
+            local currentExp = exp
+            if prev_exp + exp > 1000 then
+                currentExp = 1000 - prev_exp
+            end
+            local diff = math.floor((prev_exp + currentExp) / 200) - math.floor(prev_exp / 200)
+            if diff ~= 0 then
+                -- wyvern levelled up (diff is the number of level ups)
+                pet:addMod(xi.mod.ACC, 6 * diff)
+                pet:addMod(xi.mod.HPP, 6 * diff)
+                pet:addMod(xi.mod.ATTP, 5 * diff)
+                pet:setHP(pet:getMaxHP())
+                player:messageBasic(xi.msg.basic.STATUS_INCREASED, 0, 0, pet)
+            end
+            pet:setLocalVar("wyvern_exp", prev_exp + exp)
+        end
     end)
 end
 
-local function removeWyvernLevels(mob)
-    local master  = mob:getMaster()
-    local numLvls = mob:getLocalVar("level_Ups")
-
-    if numLvls ~= 0 then
-        local wyvernAttributeIncreaseEffectJP = master:getJobPointLevel(xi.jp.WYVERN_ATTR_BONUS)
-        local wyvernBonusDA = master:getMod(xi.mod.WYVERN_ATTRIBUTE_DA)
-
-        master:delMod(xi.mod.ATT, wyvernAttributeIncreaseEffectJP * numLvls)
-        master:delMod(xi.mod.DEF, wyvernAttributeIncreaseEffectJP * numLvls)
-        master:delMod(xi.mod.ATTP, 4 * numLvls)
-        master:delMod(xi.mod.DEFP, 4 * numLvls)
-        master:delMod(xi.mod.HASTE_ABILITY, 200 * numLvls)
-        master:delMod(xi.mod.DOUBLE_ATTACK, wyvernBonusDA * numLvls)
-        master:delMod(xi.mod.ALL_WSDMG_ALL_HITS, 2 * numLvls)
-    end
-end
-
 entity.onMobDeath = function(mob, player)
-    removeWyvernLevels(mob)
-
-    local master  = mob:getMaster()
+    local master = mob:getMaster()
     master:removeListener("PET_WYVERN_WS")
     master:removeListener("PET_WYVERN_MAGIC")
     master:removeListener("PET_WYVERN_ENGAGE")

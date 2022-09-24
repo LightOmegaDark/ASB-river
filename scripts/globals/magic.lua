@@ -573,6 +573,21 @@ function applyResistanceAddEffect(player, target, element, bonus)
     return getMagicResist(p, target, element)
 end
 
+function applyResistanceAddEffectWS(player, target, element, bonus)
+    local p = getMagicHitRate(player, target, 0, element, 0, bonus)
+    local resist = getMagicResist(p, target, element)
+
+    if resist < 0.5 then
+        resist = 0
+    elseif resist < 1 then
+        resist = 0.5
+    else
+        resist = 1
+    end
+
+    return resist
+end
+
 function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc, dStat)
     local magicacc = 0
     local magiceva = 0
@@ -613,7 +628,7 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
         skillType == xi.skill.SINGING or skillType == xi.skill.STRING_INSTRUMENT or
         skillType == xi.skill.HEALING_MAGIC or skillType == xi.skill.BLUE_MAGIC or
         skillType == xi.skill.DARK_MAGIC or skillType == xi.skill.NINJUTSU
-        then -- Max 10 dStat before squash.
+    then -- Max 10 dStat before squash.
         if dStat > 10 then -- >10 dStat should be suashed.
             local bonusDStat = dStat - 10
             dStatAcc = 10 + (bonusDStat / 2)
@@ -624,15 +639,22 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
         dStatAcc = dStat
     end
 
-    if skillType ~= xi.skill.SINGING and skillType ~= nil then -- If not a bard song
-        if target:isPC() then
+    if
+        skillType ~= nil and
+        skillType > xi.skill.STAFF and
+        (skillType > xi.skill.WIND_INSTRUMENT or skillType < xi.skill.SINGING)
+    then -- If not a bard song
+        if caster:isPC() then
             local gearBonus = caster:getMod(xi.mod.MACC) + caster:getILvlMacc()
             magicacc = caster:getSkillLevel(skillType) + gearBonus + dStatAcc
         else
             magicacc = utils.getSkillLvl(1, caster:getMainLvl()) + dStatAcc
         end
-    elseif skillType ~= nil then -- If a bard song
-        if target:isPC() then
+    elseif
+        skillType ~= nil and
+        (skillType >= xi.skill.SINGING and skillType <= xi.skill.WIND_INSTRUMENT)
+    then -- If a bard song
+        if caster:isPC() then
             local secondarySkill = 0
             local gearBonus = caster:getMod(xi.mod.MACC) + caster:getILvlMacc()
 
@@ -648,10 +670,12 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
         else
             magicacc = utils.getSkillLvl(1, caster:getMainLvl()) + dStatAcc
         end
+    elseif caster:isPC() and skillType <= xi.skill.STAFF then
+        magicacc = dStatAcc + caster:getSkillLevel(caster:getEquippedItem(xi.slot.MAIN):getSkillType())
     elseif caster:isMob() and skillType == nil then
         magicacc = dStatAcc + utils.getMobSkillLvl(1, caster:getMainLvl())
     elseif caster:isPet() and skillType == nil then
-        magicacc = dStatAcc + utils.getMobSkillLvl(3, caster:getMainLvl())
+        magicacc = dStatAcc + utils.getMobSkillLvl(1, caster:getMainLvl())
     else
         magicacc = utils.getSkillLvl(4, caster:getMainLvl()) + dStatAcc
     end
@@ -694,7 +718,7 @@ function getMagicResist(magicHitRate, target, element)
         local sortEvaMult = { 1.50, 1.30, 1.15, 1.00, 0.85, 0.70, 0.60, 0.50, 0.40, 0.30, 0.25, 0.20, 0.15, 0.10, 0.05 }
 
         for _, tier in pairs(sortEvaMult) do -- Finds the highest tier for the resist.
-            if evaMult > tier then
+            if evaMult >= tier then
                 evaMult = tier
                 break
             end
@@ -937,11 +961,10 @@ function finalMagicNonSpellAdjustments(caster, target, ele, dmg)
 end
 
 function adjustForTarget(target, dmg, ele)
-    if dmg > 0 and math.random(0, 99) < target:getMod(xi.magic.absorbMod[ele]) then
+    if dmg > 0 and xi.magic.absorbMod[ele] and math.random(0, 99) < target:getMod(xi.magic.absorbMod[ele]) then
         return -dmg
     end
-
-    if math.random(0, 99) < target:getMod(nullMod[ele]) then
+    if nullMod[ele] and math.random(0, 99) < target:getMod(nullMod[ele]) then
         return 0
     end
 
