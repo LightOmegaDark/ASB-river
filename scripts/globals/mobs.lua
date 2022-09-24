@@ -30,7 +30,7 @@ xi.mob.onMobDeathEx = function(mob, player, isKiller, isWeaponSkillKill)
         end
     end
 
-    xi.magian.checkMagianTrial(player, {['mob'] = mob, ['triggerWs'] = false})
+    xi.magian.checkMagianTrial(player, { ['mob'] = mob, ['triggerWs'] = false })
 end
 
 -----------------------------------
@@ -219,7 +219,7 @@ local additionalEffects =
         msg = xi.msg.basic.ADD_EFFECT_DMG,
         negMsg = xi.msg.basic.ADD_EFFECT_HEAL,
         mod = xi.mod.INT,
-        bonusAbilityParams = {bonusmab = 0, includemab = false},
+        bonusAbilityParams = { bonusmab = 0, includemab = false },
     },
     [xi.mob.ae.ENBLIZZARD] =
     {
@@ -228,7 +228,7 @@ local additionalEffects =
         msg = xi.msg.basic.ADD_EFFECT_DMG,
         negMsg = xi.msg.basic.ADD_EFFECT_HEAL,
         mod = xi.mod.INT,
-        bonusAbilityParams = {bonusmab = 0, includemab = false},
+        bonusAbilityParams = { bonusmab = 0, includemab = false },
     },
     [xi.mob.ae.ENDARK] =
     {
@@ -237,7 +237,7 @@ local additionalEffects =
         msg = xi.msg.basic.ADD_EFFECT_DMG,
         negMsg = xi.msg.basic.ADD_EFFECT_HEAL,
         mod = xi.mod.INT,
-        bonusAbilityParams = {bonusmab = 0, includemab = false},
+        bonusAbilityParams = { bonusmab = 0, includemab = false },
     },
     [xi.mob.ae.ENFIRE] =
     {
@@ -246,7 +246,7 @@ local additionalEffects =
         msg = xi.msg.basic.ADD_EFFECT_DMG,
         negMsg = xi.msg.basic.ADD_EFFECT_HEAL,
         mod = xi.mod.INT,
-        bonusAbilityParams = {bonusmab = 0, includemab = false},
+        bonusAbilityParams = { bonusmab = 0, includemab = false },
     },
     [xi.mob.ae.ENLIGHT] =
     {
@@ -255,7 +255,7 @@ local additionalEffects =
         msg = xi.msg.basic.ADD_EFFECT_DMG,
         negMsg = xi.msg.basic.ADD_EFFECT_HEAL,
         mod = xi.mod.INT,
-        bonusAbilityParams = {bonusmab = 0, includemab = false},
+        bonusAbilityParams = { bonusmab = 0, includemab = false },
     },
     [xi.mob.ae.ENSTONE] =
     {
@@ -264,7 +264,7 @@ local additionalEffects =
         msg = xi.msg.basic.ADD_EFFECT_DMG,
         negMsg = xi.msg.basic.ADD_EFFECT_HEAL,
         mod = xi.mod.INT,
-        bonusAbilityParams = {bonusmab = 0, includemab = false},
+        bonusAbilityParams = { bonusmab = 0, includemab = false },
     },
     [xi.mob.ae.ENTHUNDER] =
     {
@@ -273,7 +273,7 @@ local additionalEffects =
         msg = xi.msg.basic.ADD_EFFECT_DMG,
         negMsg = xi.msg.basic.ADD_EFFECT_HEAL,
         mod = xi.mod.INT,
-        bonusAbilityParams = {bonusmab = 0, includemab = false},
+        bonusAbilityParams = { bonusmab = 0, includemab = false },
     },
     [xi.mob.ae.ENWATER] =
     {
@@ -282,7 +282,7 @@ local additionalEffects =
         msg = xi.msg.basic.ADD_EFFECT_DMG,
         negMsg = xi.msg.basic.ADD_EFFECT_HEAL,
         mod = xi.mod.INT,
-        bonusAbilityParams = {bonusmab = 0, includemab = false},
+        bonusAbilityParams = { bonusmab = 0, includemab = false },
     },
     [xi.mob.ae.EVA_DOWN] =
     {
@@ -304,7 +304,7 @@ local additionalEffects =
         sub = xi.subEffect.HP_DRAIN,
         msg = xi.msg.basic.ADD_EFFECT_HP_DRAIN,
         mod = xi.mod.INT,
-        bonusAbilityParams = {bonusmab = 0, includemab = false},
+        bonusAbilityParams = { bonusmab = 0, includemab = false },
         code = function(mob, target, power) mob:addHP(power) end,
     },
     [xi.mob.ae.MP_DRAIN] =
@@ -314,7 +314,7 @@ local additionalEffects =
         sub = xi.subEffect.MP_DRAIN,
         msg = xi.msg.basic.ADD_EFFECT_MP_DRAIN,
         mod = xi.mod.INT,
-        bonusAbilityParams = {bonusmab = 0, includemab = false},
+        bonusAbilityParams = { bonusmab = 0, includemab = false },
         code = function(mob, target, power) local mp = math.min(power, target:getMP()) target:delMP(mp) mob:addMP(mp) end,
     },
     [xi.mob.ae.PARALYZE] =
@@ -423,7 +423,7 @@ local additionalEffects =
         sub = xi.subEffect.TP_DRAIN,
         msg = xi.msg.basic.ADD_EFFECT_TP_DRAIN,
         mod = xi.mod.INT,
-        bonusAbilityParams = {bonusmab = 0, includemab = false},
+        bonusAbilityParams = { bonusmab = 0, includemab = false },
         code = function(mob, target, power) local tp = math.min(power, target:getTP()) target:delTP(tp) mob:addTP(tp) end,
     },
     [xi.mob.ae.WEIGHT] =
@@ -446,7 +446,7 @@ local additionalEffects =
         sub = xi.subEffect.DISPEL,
         msg = xi.msg.basic.ADD_EFFECT_DISPEL,
         mod = xi.mod.INT,
-        bonusAbilityParams = {bonusmab = 0, includemab = false},
+        bonusAbilityParams = { bonusmab = 0, includemab = false },
         code = function(mob, target) target:dispelStatusEffect() end,
     },
     [xi.mob.ae.SLEEP] =

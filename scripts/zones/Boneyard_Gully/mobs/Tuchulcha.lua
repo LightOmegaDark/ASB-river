@@ -3,7 +3,7 @@
 --  Mob: Tuchulcha
 --  ENM: Sheep in Antlion's Clothing
 -----------------------------------
-mixins = {require("scripts/mixins/families/antlion_ambush")}
+mixins = { require("scripts/mixins/families/antlion_ambush") }
 local ID = require("scripts/zones/Boneyard_Gully/IDs")
 require("scripts/globals/status")
 -----------------------------------
@@ -15,7 +15,7 @@ entity.onMobSpawn = function(mob)
 
     -- Used with HPP to keep track of the number of Sandpits
     mob:setLocalVar("Sandpits", 0)
-    mob:setRoamFlags(xi.roamFlag.EVENT)
+    mob:setRoamFlags(xi.roamFlag.SCRIPTED)
 end
 
 -- Reset restHP when re-engaging after a sandpit
