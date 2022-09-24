@@ -38,7 +38,7 @@ quest.sections =
             ['Chemioue'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 0 then
+                    if not quest:isVarBitsSet(player, 'Option', 1) then
                         return quest:progressEvent(512)
                     end
                 end,
@@ -47,7 +47,7 @@ quest.sections =
             ['Parelbriaux'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 1 then
+                    if not quest:isVarBitsSet(player, 'Option', 2) then
                         return quest:progressEvent(513)
                     end
                 end,
@@ -56,7 +56,7 @@ quest.sections =
             ['Ondieulix'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 2 then
+                    if quest:isVarBitsSet(player, 'Option', 1, 2) then
                         return quest:progressEvent(514)
                     end
                 end,
@@ -65,12 +65,13 @@ quest.sections =
             onEventFinish =
             {
                 [512] = function(player, csid, option, npc)
-                    quest:setVar(player, 'Prog', 1)
+                    quest:setVarBit(player, 'Option', 1)
                 end,
                 [513] = function(player, csid, option, npc)
-                    quest:setVar(player, 'Prog', 2)
+                    quest:setVarBit(player, 'Option', 2)
                 end,
                 [514] = function(player, csid, option, npc)
+                    quest:setVar(player, 'Option', 0)
                     quest:begin(player)
                 end,
             },
@@ -109,13 +110,13 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if
-                        quest:getVar(player, 'Prog') == 2 and
+                        quest:getVar(player, 'Prog') == 0 and
                         npcUtil.popFromQM(player, npc, ID.mob.BAUMESEL, { claim = true, hide = 0 }) and
                         player:getWeather() == xi.weather.FOG
                     then
                         return quest:messageText(ID.text.SPINE_CHILLING_PRESENCE)
 
-                    elseif quest:getVar(player, 'Prog') == 3 and not player:hasKeyItem(xi.ki.PARTICULARLY_POIGNANT_PETAL) then
+                    elseif quest:getVar(player, 'Prog') == 1 and not player:hasKeyItem(xi.ki.PARTICULARLY_POIGNANT_PETAL) then
                         return quest:progressEvent(115)
                     end
                 end,
@@ -124,8 +125,8 @@ quest.sections =
             ['Baumesel'] =
             {
                 onMobDeath = function(mob, player)
-                    if quest:getVar(player, 'Prog') == 2 then
-                        quest:setVar(player, 'Prog', 3)
+                    if quest:getVar(player, 'Prog') == 0 then
+                        quest:setVar(player, 'Prog', 1)
                     end
                 end,
             },
