@@ -35,7 +35,7 @@ quest.sections =
             ['Equette'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Stage') == 0 then
+                    if not quest:isVarBitsSet(player, 'Option', 1) then
                         return quest:progressEvent(170)
                     end
                 end,
@@ -44,7 +44,7 @@ quest.sections =
             ['Leporaitceau'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Option') == 0 then
+                    if not quest:isVarBitsSet(player, 'Option', 2) then
                         return quest:progressEvent(171)
                     end
                 end,
@@ -53,7 +53,7 @@ quest.sections =
             ['Anteurephiaux'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 2 then
+                    if quest:isVarBitsSet(player, 'Option', 1, 2) then
                         return quest:progressEvent(172)
                     end
                 end,
@@ -63,13 +63,11 @@ quest.sections =
             {
                 -- Equette
                 [170] = function(player, csid, option, npc)
-                    quest:incrementVar(player, 'Prog', 1)
-                    quest:setVar(player, 'Stage', 1)
+                    quest:setVarBit(player, 'Option', 1)
                 end,
                 -- Leporaitceau
                 [171] = function(player, csid, option, npc)
-                    quest:incrementVar(player, 'Prog', 1)
-                    quest:setVar(player, 'Option', 1)
+                    quest:setVarBit(player, 'Option', 2)
                 end,
                 -- Anteurephiaux
                 [172] = function(player, csid, option, npc)
@@ -89,7 +87,7 @@ quest.sections =
             ['Equette'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 4 and player:hasKeyItem(xi.ki.WHISPERING_CONCH) then
+                    if quest:getVar(player, 'Prog') == 2 and player:hasKeyItem(xi.ki.WHISPERING_CONCH) then
                         return quest:progressEvent(174)
                     end
                 end,
@@ -98,7 +96,7 @@ quest.sections =
             ['Anteurephiaux'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 3 and player:hasKeyItem(xi.ki.WHISPERING_CONCH) then
+                    if quest:getVar(player, 'Prog') == 1 and player:hasKeyItem(xi.ki.WHISPERING_CONCH) then
                         return quest:progressEvent(173)
                     end
                 end,
@@ -114,7 +112,7 @@ quest.sections =
                 end,
                 -- Anteurephiaux
                 [173] = function(player, csid, option, npc)
-                    quest:setVar(player, 'Prog', 4)
+                    quest:setVar(player, 'Prog', 2)
                 end,
             },
         },
@@ -125,12 +123,13 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if
-                        quest:getVar(player, 'Prog') == 2 and
+                        quest:getVar(player, 'Prog') == 0 and
                         npcUtil.popFromQM(player, npc, ID.mob.BLOODY_COFFING, {claim = true, hide = 0})
                     then
                         return quest:message(ID.text.FOUL_STENCH)
-                    elseif quest:getVar(player, 'Prog') == 3 and not player:hasKeyItem(xi.ki.WHISPERING_CONCH) then
-                        return npcUtil.giveKeyItem(player, xi.ki.WHISPERING_CONCH)
+                    elseif quest:getVar(player, 'Prog') == 1 and not player:hasKeyItem(xi.ki.WHISPERING_CONCH) then
+                        player:addKeyItem(xi.ki.WHISPERING_CONCH)
+                        return quest:messageText(ID.text.KEYITEM_OBTAINED)
                     end
                 end,
             },
@@ -138,8 +137,8 @@ quest.sections =
             ['Bloody_Coffin'] =
             {
                 onMobDeath = function(mob, player, isKiller, firstCall)
-                    if quest:getVar(player, 'Prog') == 2 then
-                        quest:setVar(player, 'Prog', 3)
+                    if quest:getVar(player, 'Prog') == 0 then
+                        quest:setVar(player, 'Prog', 1)
                     end
                 end,
             },
