@@ -618,7 +618,17 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
                 auto* PPetEntity = dynamic_cast<CPetEntity*>(PEntity);
                 if (PPetEntity && (!PPetEntity->PMaster || PPetEntity->PMaster->objtype != TYPE_PC))
                 {
-                    PEntity->status = STATUS_TYPE::DISAPPEAR;
+                    if (PPetEntity->PMaster && PPetEntity->PMaster->objtype == TYPE_PC &&
+                        (PPetEntity->getPetType() == PET_TYPE::WYVERN ||
+                         PPetEntity->getPetType() == PET_TYPE::AUTOMATON))
+                    {
+                        return found;
+                    }
+
+                    if (PPetEntity->isAlive() && PPetEntity->PAI->IsSpawned())
+                    {
+                        PPetEntity->Die();
+                    }
                 }
 
                 if (auto* PMobEntity = dynamic_cast<CMobEntity*>(PEntity))

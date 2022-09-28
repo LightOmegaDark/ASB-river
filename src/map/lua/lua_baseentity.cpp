@@ -5806,11 +5806,16 @@ uint8 CLuaBaseEntity::levelRestriction(sol::object const& level)
                 PChar->updatemask |= UPDATE_HP;
             }
 
-            if (PChar->PPet)
+            if (PChar->PPet || PChar->PAutomaton)
             {
                 CPetEntity* PPet = static_cast<CPetEntity*>(PChar->PPet);
 
-                if (PPet->getPetType() == PET_TYPE::CHARMED_MOB)
+                if (PChar->PAutomaton)
+                {
+                    PPet = static_cast<CPetEntity*>(PChar->PAutomaton);
+                }
+
+                if (PPet->getPetType() == PET_TYPE::WYVERN)
                 {
                     // Charmed mobs only detach if they are above the level restriction
                     if (PPet->GetMLevel() > NewMLevel)
@@ -5819,18 +5824,21 @@ uint8 CLuaBaseEntity::levelRestriction(sol::object const& level)
                     }
                     return PChar->m_LevelRestriction;
                 }
+                else if (PPet->getPetType() == PET_TYPE::AUTOMATON)
+                {
+                    if (PChar->GetMJob() == JOB_PUP)
+                    {
+                        PPet->SetMLevel(PChar->GetMLevel());
+                    }
+                    else
+                    {
+                        PPet->SetMLevel(PChar->GetSLevel());
+                    }
 
-                // Preserve pet's HP and MP
-                int32 hp = PPet->health.hp;
-                int32 mp = PPet->health.mp;
-
-                // Reset pet to a clean slate
-                PPet->StatusEffectContainer->KillAllStatusEffect();
-                PPet->restoreModifiers();
-                PPet->restoreMobModifiers();
-                PPet->TraitList.clear();
-
-                switch (PPet->getPetType())
+                    PPet->SetSLevel(PPet->GetMLevel() / 2);
+                    puppetutils::LoadAutomatonStats(PChar);
+                }
+                else
                 {
                     case PET_TYPE::AVATAR:
                         petutils::CalculateAvatarStats(PChar, PPet);
@@ -5864,16 +5872,11 @@ uint8 CLuaBaseEntity::levelRestriction(sol::object const& level)
                         return PChar->m_LevelRestriction;
                 }
 
-                // Allow global pet script to handle the level restriction
-                luautils::OnPetLevelRestriction(PPet);
-
-                // Setup pet with master since traits, abilities and some status effects need to be reapplied
-                petutils::SetupPetWithMaster(PChar, PPet);
-
-                // Restore pet's HP and MP to what it was before the stat recalculation
-                PPet->health.hp = std::min(hp, PPet->GetMaxHP());
-                PPet->health.mp = std::min(mp, PPet->GetMaxMP());
-                PPet->updatemask |= UPDATE_HP;
+                if (PChar->PPet || PChar->PAutomaton)
+                {
+                    petutils::FinalizePetStatistics(PChar, PPet);
+                    PPet->updatemask |= UPDATE_HP;
+                }
             }
         }
     }
