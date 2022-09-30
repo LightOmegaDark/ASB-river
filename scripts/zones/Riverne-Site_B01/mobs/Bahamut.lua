@@ -104,6 +104,7 @@ entity.onMobFight = function(mob, target)
             end
 
             mob:useMobAbility(1552)
+            mob:setLocalVar("GigaFlare", 1)
             mob:setLocalVar("MegaFlareQueue", 0)
         end
     end
