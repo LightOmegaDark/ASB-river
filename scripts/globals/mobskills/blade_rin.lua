@@ -6,21 +6,22 @@ require("scripts/globals/status")
 require("scripts/globals/msg")
 require("scripts/globals/settings")
 -----------------------------------
-local mobskillObject = {}
+local mobskill_object = {}
 
 mobskill_object.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local numhits = 3
+mobskill_object.onMobWeaponSkill = function(target, mob, skill)
+    local numhits = 2
     local accmod = 1
-    local dmgmod = 1.8
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, xi.mobskills.physicalTpBonus.ACC_VARIES, 1, 2, 3)
+    local dmgmod = 1.5
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, xi.mobskills.physicalTpBonus.DMG_VARIES,2.5,2.75,3)
     local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.SLASHING, info.hitslanded)
 
+    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.PARALYSIS, 25, 0, 120))
     target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
     return dmg
 end
 
-return mobskillObject
+return mobskill_object
