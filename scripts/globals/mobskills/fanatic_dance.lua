@@ -14,8 +14,8 @@ require("scripts/globals/msg")
 -----------------------------------
 local mobskillObject = {}
 
-mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    if mob:isInDynamis() and mob:isMobType(xi.mobskills.mobType.NOTORIOUS) then
+mobskill_object.onMobSkillCheck = function(target, mob, skill)
+    if mob:isInDynamis() and mob:getLocalVar("MobIndex") ~= 0 then
         return 0
     end
 
