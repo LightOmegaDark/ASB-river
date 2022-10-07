@@ -8,7 +8,11 @@ require("scripts/globals/msg")
 -----------------------------------
 local itemObject = {}
 
-itemObject.onItemCheck = function(target)
+item_object.onItemCheck = function(target)
+    local effect = target:getStatusEffect(xi.effect.BLINK)
+    if effect ~= nil and effect:getSubType() == 15170 then
+        target:delStatusEffect(xi.effect.BLINK)
+    end
     return 0
 end
 
@@ -19,7 +23,7 @@ itemObject.onItemUse = function(target)
     then
         target:messageBasic(xi.msg.basic.NO_EFFECT)
     else
-        target:addStatusEffect(xi.effect.BLINK, 3, 0, 300)
+        target:addStatusEffect(xi.effect.BLINK, 3, 0, 300, 15170)
         target:messageBasic(xi.msg.basic.GAINS_EFFECT_OF_STATUS, xi.effect.BLINK)
     end
 end

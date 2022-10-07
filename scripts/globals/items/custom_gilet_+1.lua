@@ -9,7 +9,7 @@ require("scripts/globals/teleports")
 
 itemObject.onItemCheck = function(target)
     local result = 0
-    if not target:hasVisitedZone(4) then
+    if (target:isZoneVisited(xi.zone.BIBIKI_BAY) == false) then
         result = 56
     end
 

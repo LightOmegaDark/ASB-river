@@ -1,20 +1,22 @@
 -----------------------------------
--- ID: 16858
--- Item: Sacred Lance
--- Enchantment: Enlight
--- Duration: 3 minutes
+-- ID: 16550
+-- Item: Hallowed Sword
+-- Item Effect: Enlight
 -----------------------------------
-local itemObject = {}
+require("scripts/globals/status")
+require("scripts/globals/msg")
+-----------------------------------
+local item_object = {}
 
 item_object.onItemCheck = function(target)
     local effect = target:getStatusEffect(xi.effect.ENLIGHT)
-    if effect ~= nil and effect:getSubType() == 16858 then
+    if effect ~= nil and effect:getSubType() == 16550 then
         target:delStatusEffect(xi.effect.ENLIGHT)
     end
     return 0
 end
 
-itemObject.onItemUse = function(target)
+item_object.onItemUse = function(target)
     local effect = xi.effect.ENLIGHT
     local magicskill = target:getSkillLevel(xi.skill.ENHANCING_MAGIC)
     local potency = 0
@@ -27,7 +29,7 @@ itemObject.onItemUse = function(target)
 
     potency = utils.clamp(potency, 3, 25)
 
-    target:addStatusEffect(effect, potency, 0, 180, 16858)
+    target:addStatusEffect(effect, potency, 0, 180, 16550)
 end
 
-return itemObject
+return item_object

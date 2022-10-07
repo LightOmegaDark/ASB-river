@@ -8,7 +8,11 @@ require("scripts/globals/msg")
 -----------------------------------
 local itemObject = {}
 
-itemObject.onItemCheck = function(target)
+item_object.onItemCheck = function(target)
+    local effect = target:getStatusEffect(xi.effect.SHELL)
+    if effect ~= nil and effect:getSubType() == 12406 then
+        target:delStatusEffect(xi.effect.SHELL)
+    end
     return 0
 end
 
@@ -21,7 +25,7 @@ itemObject.onItemUse = function(target)
     end
 
     power = power + (bonus * tier)
-    if target:addStatusEffect(xi.effect.SHELL, power, 0, 1800, 0, 0, tier) then
+    if (target:addStatusEffect(xi.effect.SHELL, power, 0, 1800, 12406, 0, tier)) then
         target:messageBasic(xi.msg.basic.GAINS_EFFECT_OF_STATUS, xi.effect.SHELL)
     else
         target:messageBasic(xi.msg.basic.NO_EFFECT)

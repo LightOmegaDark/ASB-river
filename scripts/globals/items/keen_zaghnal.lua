@@ -9,24 +9,17 @@ require("scripts/globals/status")
 -----------------------------------
 local itemObject = {}
 
-itemObject.onItemCheck = function(target)
-    if target:getEquipID(xi.slot.MAIN) ~= 18067 then
-        target:delStatusEffect(xi.effect.ACCURACY_BOOST, 18067)
+item_object.onItemCheck = function(target)
+    local effect = target:getStatusEffect(xi.effect.ACCURACY_BOOST)
+    if effect ~= nil and effect:getSubType() == 18067 then
+        target:delStatusEffect(xi.effect.ACCURACY_BOOST)
     end
 
     return 0
 end
 
-itemObject.onItemUse = function(target)
-    target:addStatusEffect(xi.effect.ACCURACY_BOOST, 0, 0, 1800, 18067)
-end
-
-itemObject.onEffectGain = function(target, effect)
-    target:addMod(xi.mod.ACC, 3)
-end
-
-itemObject.onEffectLose = function(target, effect)
-    target:delMod(xi.mod.ACC, 3)
+item_object.onItemUse = function(target)
+    target:addStatusEffect(xi.effect.ACCURACY_BOOST, 3, 0, 1800, 18067)
 end
 
 return itemObject

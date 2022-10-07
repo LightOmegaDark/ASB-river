@@ -8,25 +8,17 @@ require("scripts/globals/status")
 -----------------------------------
 local itemObject = {}
 
-itemObject.onItemCheck = function(target)
-    local effect = target:getStatusEffect(xi.effect.ENCHANTMENT)
+item_object.onItemCheck = function(target)
+    local effect = target:getStatusEffect(xi.effect.REFRESH)
     if effect ~= nil and effect:getSubType() == 18241 then
-        target:delStatusEffect(xi.effect.ENCHANTMENT)
+        target:delStatusEffect(xi.effect.REFRESH)
     end
 
     return 0
 end
 
-itemObject.onItemUse = function(target)
-    target:addStatusEffectEx(xi.effect.ENCHANTMENT, xi.effect.REFRESH, 0, 0, 30, 18241)
-end
-
-itemObject.onEffectGain = function(target, effect)
-    target:addMod(xi.mod.REFRESH, 3)
-end
-
-itemObject.onEffectLose = function(target, effect)
-    target:delMod(xi.mod.REFRESH, 3)
+item_object.onItemUse = function(target)
+    target:addStatusEffect(xi.effect.REFRESH, 3, 3, 60, 18241)
 end
 
 return itemObject

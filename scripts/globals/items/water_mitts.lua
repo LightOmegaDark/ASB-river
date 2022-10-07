@@ -5,7 +5,11 @@
 -----------------------------------
 local itemObject = {}
 
-itemObject.onItemCheck = function(target)
+item_object.onItemCheck = function(target)
+    local effect = target:getStatusEffect(xi.effect.ENWATER)
+    if effect ~= nil and effect:getSubType() == 14992 then
+        target:delStatusEffect(xi.effect.ENWATER)
+    end
     return 0
 end
 
@@ -22,7 +26,7 @@ itemObject.onItemUse = function(target)
 
     potency = utils.clamp(potency, 3, 25)
 
-    target:addStatusEffect(effect, potency, 0, 180)
+    target:addStatusEffect(effect, potency, 0, 180, 14992)
 end
 
 return itemObject
