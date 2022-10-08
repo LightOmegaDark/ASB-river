@@ -10,11 +10,7 @@ require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 
-abilityObject.onAbilityCheck = function(player, target, ability)
-    if player:hasStatusEffect(xi.effect.SEIGAN) then
-        ability:setRecast(ability:getRecast() / 2)
-    end
-
+ability_object.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
