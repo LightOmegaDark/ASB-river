@@ -16,8 +16,11 @@ abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-abilityObject.onUseAbility = function(player, target, ability)
-    xi.job_utils.paladin.useRampart(player, target, ability)
+ability_object.onUseAbility = function(player, target, ability)
+    local duration = 30 + player:getMod(xi.mod.RAMPART_DURATION)
+    target:addStatusEffect(xi.effect.RAMPART, 2500, 0, duration)
+
+    return xi.effect.RAMPART
 end
 
 return abilityObject

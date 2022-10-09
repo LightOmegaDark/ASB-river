@@ -554,7 +554,6 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     calcParams.hybridHit = false
     calcParams.sneakApplicable = false
     calcParams.trickApplicable = false
-    dmg = base
 
     -- For items that apply bonus damage to the first hit of a weaponskill (but not later hits),
     -- store bonus damage for first hit, for use after other calculations are done
@@ -565,6 +564,8 @@ function calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcPar
     if not wsParams.multiHitfTP then
         ftp = 1
     end
+
+    base = (calcParams.weaponDamage[1] + calcParams.fSTR + wsMods) * ftp
 
     -- Do the extra hit for our offhand if applicable
     if calcParams.extraOffhandHit and finaldmg < targetHp then
