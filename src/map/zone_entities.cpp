@@ -990,6 +990,10 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
                 {
                     PMob->SetDespawnTime(1ms);
                     PMob->m_AllowRespawn = false;
+                    if (PMob->PPet)
+                    {
+                        dynamic_cast<CMobEntity*>(PMob->PPet)->SetDespawnTime(1ms);
+                    }
                 }
             }
         }
@@ -1006,6 +1010,10 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
                 {
                     PMob->SetDespawnTime(1ms);
                     PMob->m_AllowRespawn = false;
+                    if (PMob->PPet)
+                    {
+                        dynamic_cast<CMobEntity*>(PMob->PPet)->SetDespawnTime(1ms);
+                    }
                 }
             }
         }
