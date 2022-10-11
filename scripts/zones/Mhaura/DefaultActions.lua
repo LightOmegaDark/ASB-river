@@ -11,4 +11,5 @@ return {
     ['Tonasav']       = { event = 372 },
     ['Zexu']          = { event = 121 },
     ['Blandine']      = { event = 122 },
+    ['Katsunaga']     = { event = 190 },
 }
