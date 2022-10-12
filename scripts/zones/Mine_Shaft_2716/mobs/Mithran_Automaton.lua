@@ -18,11 +18,11 @@ entity.onMobSpawn = function(mob)
         end
     end)
 
-    mob:addListener("DEATH", "MITHRAN_AUTOMATON_DEATH", function(automaton, killer)
-        if GetMobByID(automaton:getID()+1):isAlive() then
-            GetMobByID(automaton:getID()+1):updateEnmity(killer)
+    mob:addListener("DEATH", "MITHRAN_AUTOMATON_DEATH", function(mobArg, amount, attacker)
+        if GetMobByID(mobArg:getID()+1):isAlive() then
+            GetMobByID(mobArg:getID()+1):updateEnmity(attacker)
         else
-            GetMobByID(automaton:getID()-3):updateEnmity(killer)
+            GetMobByID(mobArg:getID()-3):updateEnmity(attacker)
         end
     end)
 end
