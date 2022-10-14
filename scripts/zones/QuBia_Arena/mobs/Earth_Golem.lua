@@ -10,6 +10,7 @@ local entity = {}
 entity.onMobSpawn = function(mob)
     mob:addListener("WEAPONSKILL_STATE_ENTER", "GOLEM_WEAPONSKILL__STATE_ENTER", function(mobArg, skillID)
         local bfNum = mob:getBattlefield():getArea()
+        print(1)
 
         if mobArg:getLocalVar("control") == 0 then
             for i = 0, 3 do
@@ -18,7 +19,7 @@ entity.onMobSpawn = function(mob)
 
                 if golem:getID() ~= mobArg:getID() then
                     -- Crystal Weapon (Elemental)
-                    if skillID == 682 then
+                    if skillID == 679 then
                         golem:useMobAbility(679 + i)
 
                     -- Ice Break / Thunder Break
