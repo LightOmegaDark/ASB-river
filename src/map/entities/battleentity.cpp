@@ -1019,7 +1019,7 @@ uint8 CBattleEntity::GetDeathType()
 
 void CBattleEntity::addModifier(Mod type, int16 amount)
 {
-    if (type == Mod::MOVE)
+    if (type == Mod::MOVE && this->objtype == TYPE_PC)
     {
         m_MSNonItemValues.push_back(amount);
         m_modStat[type] = CalculateMSFromSources();

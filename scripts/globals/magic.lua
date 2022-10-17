@@ -170,12 +170,16 @@ local function getSpellBonusAcc(caster, target, spell, params)
         magicAccBonus = magicAccBonus + 75
     end
 
-    if casterJob == xi.job.RDM then
-        -- Add MACC for RDM group 1 merits
-        if element >= xi.magic.element.FIRE and element <= xi.magic.element.WATER then
-            magicAccBonus = magicAccBonus + caster:getMerit(rdmMerit[element])
-        end
-
+    switch(casterJob): caseof
+    {
+        [xi.job.RDM] = function()
+            -- Add MACC for RDM group 1 merits
+            if element >= xi.magic.element.FIRE and element <= xi.magic.element.WATER then
+                magicAccBonus = magicAccBonus + caster:getMerit(rdmMerit[element])
+            end
+            -- RDM Job Point: During saboteur, Enfeebling MACC +2
+            if skill == xi.skill.ENFEEBLING_MAGIC and caster:hasStatusEffect(xi.effect.SABOTEUR) then
+                local jpValue = caster:getJobPointLevel(xi.jp.SABOTEUR_EFFECT)
                 magicAccBonus = magicAccBonus + (jpValue * 2)
             end
 
