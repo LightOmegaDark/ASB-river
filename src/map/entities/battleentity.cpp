@@ -370,6 +370,12 @@ int16 CBattleEntity::GetRangedWeaponDelay(bool tp)
     {
         delay += PAmmo->getDelay() / 2;
     }
+
+    if (PAmmo != nullptr && PAmmo->isThrowing() && PAmmo->getDamage() != 0)
+    {
+        delay = PAmmo->getDelay() / 2;
+    }
+
     return delay;
 }
 
