@@ -50,7 +50,12 @@ zoneObject.onTriggerAreaLeave = function(player, triggerArea)
 end
 
 zoneObject.onTransportEvent = function(player, transport)
-    player:startEvent(700)
+    if player:getLocalVar('[AIRSHIP]Paid') == 1 then
+        player:startEvent(700)
+    else
+        player:setPos(-33.5104, -8.1500, 27.7711, 0)
+        player:setLocalVar('[AIRSHIP]Paid', 0)
+    end
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)
@@ -59,6 +64,8 @@ end
 zoneObject.onEventFinish = function(player, csid, option)
     if csid == 700 then
         player:setPos(0, 0, 0, 0, 223)
+    elseif csid == 518 and option == 0 then
+        player:setLocalVar('[AIRSHIP]Paid', 0)
     end
 end
 
