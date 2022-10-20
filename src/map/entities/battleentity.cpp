@@ -1095,7 +1095,7 @@ int16 CBattleEntity::CalculateMSFromSources()
         }
     }
 
-    return std::clamp((highestItemPositiveValue + totalItemReducedValue) + (highestNonItemPositve + totalNonItemReducedValue), 0, 255);
+    return (highestItemPositiveValue + totalItemReducedValue) + (highestNonItemPositve + totalNonItemReducedValue);
 }
 
 void CBattleEntity::addEquipModifiers(std::vector<CModifier>* modList, uint8 itemLevel, uint8 slotid)
