@@ -36,31 +36,32 @@
 #include "common/timer.h"
 #include "common/utils.h"
 
-#include "ability.h"
-#include "alliance.h"
-#include "battlefield.h"
-#include "daily_system.h"
-#include "enmity_container.h"
-#include "guild.h"
-#include "instance.h"
-#include "item_container.h"
-#include "latent_effect_container.h"
-#include "linkshell.h"
-#include "map.h"
-#include "message.h"
-#include "mob_modifier.h"
-#include "mob_spell_container.h"
-#include "mobskill.h"
-#include "notoriety_container.h"
-#include "recast_container.h"
-#include "roe.h"
-#include "spell.h"
-#include "status_effect_container.h"
-#include "timetriggers.h"
-#include "trade_container.h"
-#include "transport.h"
-#include "treasure_pool.h"
-#include "weapon_skill.h"
+#include "../ability.h"
+#include "../alliance.h"
+#include "../attack.h"
+#include "../battlefield.h"
+#include "../daily_system.h"
+#include "../enmity_container.h"
+#include "../guild.h"
+#include "../instance.h"
+#include "../item_container.h"
+#include "../latent_effect_container.h"
+#include "../linkshell.h"
+#include "../map.h"
+#include "../message.h"
+#include "../mob_modifier.h"
+#include "../mob_spell_container.h"
+#include "../mobskill.h"
+#include "../notoriety_container.h"
+#include "../recast_container.h"
+#include "../roe.h"
+#include "../spell.h"
+#include "../status_effect_container.h"
+#include "../timetriggers.h"
+#include "../trade_container.h"
+#include "../transport.h"
+#include "../treasure_pool.h"
+#include "../weapon_skill.h"
 
 #include "ai/ai_container.h"
 
@@ -151,20 +152,19 @@
 #include "packets/timer_bar_util.h"
 #include "packets/weather.h"
 
-#include "utils/battleutils.h"
-#include "utils/blueutils.h"
-#include "utils/charutils.h"
-#include "utils/guildutils.h"
-#include "utils/instanceutils.h"
-#include "utils/itemutils.h"
-#include "utils/jailutils.h"
-#include "utils/mobutils.h"
-#include "utils/petutils.h"
-#include "utils/puppetutils.h"
-#include "utils/trustutils.h"
-#include "utils/zoneutils.h"
-
-extern std::unordered_map<uint32, std::unordered_map<uint16, std::vector<std::pair<uint16, uint8>>>> PacketMods;
+#include "../utils/attackutils.h"
+#include "../utils/battleutils.h"
+#include "../utils/blueutils.h"
+#include "../utils/charutils.h"
+#include "../utils/guildutils.h"
+#include "../utils/instanceutils.h"
+#include "../utils/itemutils.h"
+#include "../utils/jailutils.h"
+#include "../utils/mobutils.h"
+#include "../utils/petutils.h"
+#include "../utils/puppetutils.h"
+#include "../utils/trustutils.h"
+#include "../utils/zoneutils.h"
 
 //======================================================//
 
@@ -8290,6 +8290,25 @@ void CLuaBaseEntity::takeDamage(int32 damage, sol::object const& attacker, sol::
     }
 }
 
+bool CLuaBaseEntity::checkThirdEye(CLuaBaseEntity* PLuaDefender)
+{
+    if (m_PBaseEntity == nullptr || PLuaDefender == nullptr)
+    {
+        return false;
+    }
+
+    auto* PAttacker = dynamic_cast<CBattleEntity*>(m_PBaseEntity);
+    auto* PDefender = dynamic_cast<CBattleEntity*>(PLuaDefender->GetBaseEntity());
+    auto  result    = 0;
+
+    if (PAttacker != nullptr && PDefender != nullptr)
+    {
+        result = attackutils::TryAnticipate(PDefender, PAttacker, PHYSICAL_ATTACK_TYPE::NORMAL);
+    }
+
+    return result > (uint8)ANTICIPATE_RESULT::FAIL;
+}
+
 /************************************************************************
  *  Function: hideHP()
  *  Purpose : Toggles the display of the Hit Points bar for a Mob or NPC
@@ -15848,6 +15867,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("restoreHP", CLuaBaseEntity::restoreHP);
     SOL_REGISTER("delHP", CLuaBaseEntity::delHP);
     SOL_REGISTER("takeDamage", CLuaBaseEntity::takeDamage);
+    SOL_REGISTER("checkThirdEye", CLuaBaseEntity::checkThirdEye);
     SOL_REGISTER("hideHP", CLuaBaseEntity::hideHP);
     SOL_REGISTER("getDeathType", CLuaBaseEntity::getDeathType);
     SOL_REGISTER("setDeathType", CLuaBaseEntity::setDeathType);
