@@ -2384,16 +2384,30 @@ namespace petutils
         PPet->SetMJob(JOB_DRG);
         PPet->SetMLevel(PMaster->GetMLevel());
 
-        LoadAvatarStats(PMaster, PPet);                                                                    // follows PC calcs (w/o SJ)
-        ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (320.0f / 60.0f)))); // 320 delay
-        ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(1 + floor(PPet->GetMLevel() * 0.9f)));
+        PPet->SetMLevel(mLvl + iLvl + PMaster->getMod(Mod::WYVERN_LVL_BONUS));
+        PPet->SetSLevel(PPet->GetMLevel() / 2);
+
+        LoadAvatarStats(PMaster, PPet);                                                                               // follows PC calcs (w/o SJ)
+        static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (320.0f / 60.0f)))); // 320 delay
+        static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setBaseDelay((uint16)(floor(1000.0f * (320.0f / 60.0f))));
+        static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(1 + floor(mLvl * 0.9f)));
         // Set A+ weapon skill
-        PPet->setModifier(Mod::ATT, battleutils::GetMaxSkill(SKILL_GREAT_AXE, JOB_WAR, PPet->GetMLevel()));
-        PPet->setModifier(Mod::ACC, battleutils::GetMaxSkill(SKILL_GREAT_AXE, JOB_WAR, PPet->GetMLevel()));
-        // Set D evasion and def
-        PPet->setModifier(Mod::EVA, battleutils::GetMaxSkill(SKILL_HAND_TO_HAND, JOB_WAR, PPet->GetMLevel()));
-        PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(SKILL_HAND_TO_HAND, JOB_WAR, PPet->GetMLevel()));
-        
+        PPet->setModifier(Mod::ATT, battleutils::GetMaxSkill(SKILL_GREAT_AXE, JOB_WAR, mLvl > 99 ? 99 : mLvl));
+        PPet->setModifier(Mod::ACC, battleutils::GetMaxSkill(SKILL_GREAT_AXE, JOB_WAR, mLvl > 99 ? 99 : mLvl));
+        PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(SKILL_GREAT_AXE, JOB_WAR, mLvl > 99 ? 99 : mLvl));
+        // Set D evasion
+        PPet->setModifier(Mod::EVA, battleutils::GetMaxSkill(SKILL_HAND_TO_HAND, JOB_WAR, mLvl > 99 ? 99 : mLvl));
+
+        // Psuedo add accuracy bonus
+        if (PPet->GetMLevel() >= 50)
+        {
+            PPet->addModifier(Mod::ACC, 22);
+        }
+        else if (PPet->GetMLevel() >= 10)
+        {
+            PPet->addModifier(Mod::ACC, 10);
+        }
+
         // Set wyvern damageType to slashing damage. "Wyverns do slashing damage..." https://www.bg-wiki.com/ffxi/Wyvern_(Dragoon_Pet)
         PPet->m_dmgType = DAMAGE_TYPE::SLASHING;
 
