@@ -68,10 +68,7 @@ zone_object.onZoneOut = function(player)
     end
 end
 
-zone_object.onRegionEnter = function( player, region)
-end
-
-zoneObject.onEventUpdate = function(player, csid, option, npc)
+zoneObject.onEventUpdate = function( player, csid, option)
     if csid == 11 then
         quests.rainbow.onEventUpdate(player)
     end
