@@ -25,14 +25,13 @@ end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
-    params.ecosystem = xi.ecosystem.BEAST
-    params.effect = xi.effect.SILENCE
-    local power = 1
-    local tick = 0
-    local duration = 120
-    local resistThreshold = 0.5
-    local isGaze = true
-    local isConal = false
+    params.diff = nil
+    params.attribute = xi.mod.INT
+    params.skillType = xi.skill.BLUE_MAGIC
+    params.bonus = 0
+    params.effect = typeEffect
+    local resist = xi.magic.applyResistanceEffect(caster, target, spell, params)
+    local duration = 180 * resist
 
     return xi.spells.blue.useEnfeeblingSpell(caster, target, spell, params, power, tick, duration, resistThreshold, isGaze, isConal)
 end

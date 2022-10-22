@@ -24,7 +24,14 @@ end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
-    params.ecosystem = xi.ecosystem.DEMON
+
+    params.diff = caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+    params.attribute = xi.mod.INT
+    params.skillType = xi.skill.BLUE_MAGIC
+    params.bonus = 1.0
+
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
+    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
     params.attackType = xi.attackType.BREATH
     params.damageType = xi.damageType.WIND
     params.diff = 0 -- no stat increases magic accuracy

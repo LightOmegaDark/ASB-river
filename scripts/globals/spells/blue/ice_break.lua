@@ -38,6 +38,9 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.int_wsc = 0.3
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
+    local damage = BlueMagicalSpell(caster, target, spell, params, INT_BASED)
+    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
     params.addedEffect = xi.effect.BIND
     local power = 1

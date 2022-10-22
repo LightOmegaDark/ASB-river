@@ -32,9 +32,9 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.hpMod = 5
     params.lvlMod = 0.75
 
-    local results = xi.spells.blue.useBreathSpell(caster, target, spell, params, true)
-    local damage = results[1]
-    local resist = results[2]
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
+    local damage = BlueMagicalSpell(caster, target, spell, params, MND_BASED)
+    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
     local duration = 60
     if resist >= 0.5 then

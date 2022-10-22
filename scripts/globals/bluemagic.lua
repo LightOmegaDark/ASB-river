@@ -293,6 +293,36 @@ xi.spells.blue.useDrainSpell = function(caster, target, spell, params, softCap, 
         end
     end
 
+    local statBonus = 0
+    local dStat = 0 -- Please make sure to add an additional stat check if there is to be a spell that uses neither INT, MND, or CHR. None currently exist.
+    if statMod == INT_BASED then -- Stat mod is INT
+        dStat = caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+        statBonus = dStat * params.tMultiplier
+    elseif statMod == CHR_BASED then -- Stat mod is CHR
+        dStat = caster:getStat(xi.mod.CHR) - target:getStat(xi.mod.CHR)
+        statBonus = dStat * params.tMultiplier
+    elseif statMod == MND_BASED then -- Stat mod is MND
+        dStat = caster:getStat(xi.mod.MND) - target:getStat(xi.mod.MND)
+        statBonus = dStat * params.tMultiplier
+    end
+
+    D = ((D + st) * params.multiplier * convergenceBonus) + statBonus
+
+    -- At this point according to wiki we apply standard magic attack calculations
+
+    local magicAttack = 1.0
+    local multTargetReduction = 1.0 -- TODO: Make this dynamically change, temp static till implemented.
+    magicAttack = math.floor(D * multTargetReduction)
+
+    local rparams = {}
+    rparams.diff = dStat
+    rparams.skillType = xi.skill.BLUE_MAGIC
+    magicAttack = math.floor(magicAttack * xi.magic.applyResistance(caster, target, spell, rparams))
+
+    local dmg = math.floor(xi.magic.addBonuses(caster, spell, target, magicAttack))
+
+    caster:delStatusEffectSilent(xi.effect.BURST_AFFINITY)
+
     return dmg
 end
 

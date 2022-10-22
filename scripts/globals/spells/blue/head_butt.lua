@@ -24,7 +24,13 @@ end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
-    params.ecosystem = xi.ecosystem.BEASTMEN
+    params.diff = nil
+    params.attribute = xi.mod.INT
+    params.skillType = xi.skill.BLUE_MAGIC
+    params.bonus = 0
+    params.effect = xi.effect.STUN
+    local resist = xi.magic.applyResistanceEffect(caster, target, spell, params)
+    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
     params.tpmod = TPMOD_DAMAGE
     params.attackType = xi.attackType.PHYSICAL
     params.damageType = xi.damageType.BLUNT

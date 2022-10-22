@@ -27,12 +27,8 @@ spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
     params.ecosystem = xi.ecosystem.LUMINIAN
     params.effect = xi.effect.STUN
-    local power = 2
-    local tick = 0
-    local duration = 5
-    local resistThreshold = 0.25
-    local isGaze = false
-    local isConal = false
+    local resist = xi.magic.applyResistanceEffect(caster, target, spell, params)
+    local duration = 5 * resist
 
     return xi.spells.blue.useEnfeeblingSpell(caster, target, spell, params, power, tick, duration, resistThreshold, isGaze, isConal)
 end

@@ -39,10 +39,11 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.mnd_wsc = 0.1
     params.chr_wsc = 0.0
 
-    params.addedEffect = xi.effect.STUN
-    local power = 1
-    local tick = 0
-    local duration = 5
+    params.diff = caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+    params.attribute = xi.mod.INT
+    params.skillType = xi.skill.BLUE_MAGIC
+    params.bonus = 1.0
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
 
     local damage = xi.spells.blue.useMagicalSpell(caster, target, spell, params)
     xi.spells.blue.useMagicalSpellAddedEffect(caster, target, spell, params, power, tick, duration)

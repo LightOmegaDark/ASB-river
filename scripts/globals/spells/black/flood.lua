@@ -12,7 +12,8 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    target:addStatusEffectEx(xi.effect.NINJUTSU_ELE_DEBUFF, 0, 30, 0, 10, 0, xi.mod.THUNDER_MEVA, 0)
+    -- no point in making a separate function for this if the only thing they won't have in common is the name
+    xi.magic.handleNinjutsuDebuff(caster, target, spell, 30, 10, xi.mod.THUNDER_MEVA)
 
     return xi.spells.damage.useDamageSpell(caster, target, spell)
 end

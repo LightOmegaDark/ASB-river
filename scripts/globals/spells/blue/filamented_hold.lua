@@ -25,8 +25,13 @@ end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
-    params.ecosystem = xi.ecosystem.VERMIN
-    params.effect = xi.effect.SLOW
+    params.diff = nil
+    params.attribute = xi.mod.INT
+    params.skillType = xi.skill.BLUE_MAGIC
+    params.bonus = 0
+    params.effect = typeEffect
+    local resist = xi.magic.applyResistanceEffect(caster, target, spell, params)
+    local duration = 90 * resist
     local power = 2500
     local tick = 0
     local duration = 90

@@ -28,8 +28,8 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.ecosystem = xi.ecosystem.BIRD
     params.attribute = xi.mod.INT
     params.skillType = xi.skill.BLUE_MAGIC
-    local power = 1500
-    local resistThreshold = 0.5
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
+    local power = 3000 * resist
 
     local resist = applyResistance(caster, target, spell, params)
     if resist >= resistThreshold then

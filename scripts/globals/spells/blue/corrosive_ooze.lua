@@ -40,6 +40,12 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
 
+    params.diff = caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
+    params.attribute = xi.mod.INT
+    params.skillType = xi.skill.BLUE_MAGIC
+    params.bonus = 1.0
+
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
     local typeEffectOne = xi.effect.DEFENSE_DOWN
     local typeEffectTwo = xi.effect.ATTACK_DOWN
     local power = 5

@@ -39,10 +39,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
 
-    params.addedEffect = xi.effect.ACCURACY_DOWN
-    local power = 25
-    local tick = 0
-    local duration = 60
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
 
     local damage = xi.spells.blue.useMagicalSpell(caster, target, spell, params)
     xi.spells.blue.useMagicalSpellAddedEffect(caster, target, spell, params, power, tick, duration)

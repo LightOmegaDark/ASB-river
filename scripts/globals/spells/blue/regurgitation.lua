@@ -49,7 +49,14 @@ spellObject.onSpellCast = function(caster, target, spell)
         damage = math.floor(damage * 1.25)
     end
 
-    xi.spells.blue.useMagicalSpellAddedEffect(caster, target, spell, params, power, tick, duration)
+    --TODO: Knockback? Where does that get handled? How much knockback does it have?
+
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
+    if (damage > 0 and resist > 0.125) then
+        local typeEffect = xi.effect.BIND
+        target:delStatusEffect(typeEffect)
+        target:addStatusEffect(typeEffect, 1, 0, getBlueEffectDuration(caster, resist, typeEffect))
+    end
 
     return damage
 end

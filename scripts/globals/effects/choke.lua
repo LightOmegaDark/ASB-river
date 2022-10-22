@@ -9,9 +9,7 @@ effectObject.onEffectGain = function(target, effect)
     local statReduction = (effect:getPower() - 1) * 2 + 5 -- Caster merits are included already.
 
     target:addMod(xi.mod.REGEN_DOWN, effect:getPower())
-    target:addMod(xi.mod.VIT, -statReduction)
-
-    target:delStatusEffect(xi.effect.RASP)
+    target:addMod(xi.mod.VIT, -xi.magic.getElementalDebuffStatDownFromDOT(effect:getPower()))
 end
 
 effectObject.onEffectTick = function(target, effect)
@@ -21,7 +19,7 @@ effectObject.onEffectLose = function(target, effect)
     local statReduction = (effect:getPower() - 1) * 2 + 5 -- Caster merits are included already.
 
     target:delMod(xi.mod.REGEN_DOWN, effect:getPower())
-    target:delMod(xi.mod.VIT, -statReduction)
+    target:delMod(xi.mod.VIT, -xi.magic.getElementalDebuffStatDownFromDOT(effect:getPower()))
 end
 
 return effectObject

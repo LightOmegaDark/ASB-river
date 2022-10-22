@@ -28,7 +28,15 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.attackType = xi.attackType.MAGICAL
     params.attribute = xi.mod.INT
     params.skillType = xi.skill.BLUE_MAGIC
-    params.dmgMultiplier = 3.5
+    params.bonus = 1.0
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
+    -- get the resisted damage
+    dmg = dmg*resist
+    -- add on bonuses (staff/day/weather/jas/mab/etc all go in this function)
+    dmg = xi.magic.addBonuses(caster, spell, target, dmg)
+    -- add in target adjustment
+    dmg = xi.magic.adjustForTarget(target, dmg, spell:getElement())
+    -- add in final adjustments
 
     if (dmg < 0) then
         dmg = 0

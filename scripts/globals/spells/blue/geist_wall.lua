@@ -28,8 +28,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.ecosystem = xi.ecosystem.LIZARD
     params.attribute = xi.mod.INT
     params.skillType = xi.skill.BLUE_MAGIC
-    params.effect = xi.effect.NONE
-    local resistThreshold = 0.25
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
     local effect = xi.effect.NONE
 
     local resist = applyResistance(caster, target, spell, params)

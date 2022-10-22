@@ -25,8 +25,13 @@ end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
-    params.ecosystem = xi.ecosystem.AQUAN
-    params.effect = xi.effect.POISON
+    params.diff = nil
+    params.attribute = xi.mod.INT
+    params.skillType = xi.skill.BLUE_MAGIC
+    params.bonus = 0
+    params.effect = typeEffect
+    local resist = xi.magic.applyResistanceEffect(caster, target, spell, params)
+    local duration = 180 * resist
     local power = 6
     local tick = 0
     local duration = 60

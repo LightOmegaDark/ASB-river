@@ -31,8 +31,9 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.effect = typeEffectOne
     params.attribute = xi.mod.INT
     params.skillType = xi.skill.BLUE_MAGIC
-    local duration = 30
-    local resistThreshold = 0.5
+    params.bonus = 1.0
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
+    local duration = 30 * resist
     local returnEffect = typeEffectOne
 
     local resist = applyResistance(caster, target, spell, params)

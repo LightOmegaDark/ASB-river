@@ -27,12 +27,9 @@ spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
     params.ecosystem = xi.ecosystem.undead
     params.effect = xi.effect.VIT_DOWN
-    local power = 10
-    local tick = 0
-    local duration = 60
-    local resistThreshold = 0.5
-    local isGaze = false
-    local isConal = false
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
+    local duration = 60 * resist
+    local power = 5
 
     return xi.spells.blue.useEnfeeblingSpell(caster, target, spell, params, power, tick, duration, resistThreshold, isGaze, isConal)
 end

@@ -29,10 +29,9 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.effect = xi.effect.FROST
     params.attribute = xi.mod.INT
     params.skillType = xi.skill.BLUE_MAGIC
-    local tick = 3
-    local duration = 60
-    local resistThreshold = 0.5
-    local resist = applyResistance(caster, target, spell, params)
+    params.bonus = 0
+    params.effect = nil
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
 
     -- Cannot apply if target has Burn
     if target:getStatusEffect(xi.effect.BURN) ~= nil then
@@ -45,7 +44,7 @@ spellObject.onSpellCast = function(caster, target, spell)
             target:delStatusEffect(xi.effect.CHOKE)
         end
         local sINT = caster:getStat(xi.mod.INT)
-        local DOT = getElementalDebuffDOT(sINT)
+        local DOT = xi.magic.getElementalDebuffDOT(sINT)
         local effect = target:getStatusEffect(typeEffect)
         local noeffect = false
         if (effect ~= nil) then

@@ -29,8 +29,23 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.damageType = xi.damageType.WATER
     params.diff = 0 -- no stat increases magic accuracy
     params.skillType = xi.skill.BLUE_MAGIC
-    params.hpMod = 10
-    params.lvlMod = 1.25
+    params.bonus = 1.0
+    -- This data should match information on http://wiki.ffxiclopedia.org/wiki/Calculating_Blue_Magic_Damage
+    params.multiplier = multi
+    params.tMultiplier = 1.5
+    params.duppercap = 69
+    params.str_wsc = 0.0
+    params.dex_wsc = 0.0
+    params.vit_wsc = 0.0
+    params.agi_wsc = 0.0
+    params.int_wsc = 0.0
+    params.mnd_wsc = 0.3
+    params.chr_wsc = 0.0
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
+    local casterHP = caster:getHP()
+    local casterLvl = caster:getMainLvl()
+    local damage = (casterHP / 10) + (casterLvl / 1.25)
+    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
 
     local results = xi.spells.blue.useBreathSpell(caster, target, spell, params, true)
     local damage = results[1]

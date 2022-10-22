@@ -26,8 +26,13 @@ end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
-    params.ecosystem = xi.ecosystem.LUMINION
-    params.effect = xi.effect.FLASH
+    params.diff = nil
+    params.attribute = xi.mod.INT
+    params.skillType = xi.skill.BLUE_MAGIC
+    params.bonus =  150
+    params.effect = nil
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
+    local duration = 20 * resist
     local power = 200
     local tick = 0
     local duration = 16

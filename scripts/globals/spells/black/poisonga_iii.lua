@@ -35,11 +35,11 @@ spell_object.onSpellCast = function(caster, target, spell)
 
     params.effect = effect
 
-    local resist = applyResistanceEffect(caster, target, spell, params)
+    local resist = xi.magic.applyResistanceEffect(caster, target, spell, params)
     if (resist == 1 or resist == 0.5) then -- effect taken
         local resduration = duration * resist
 
-        resduration = calculateBuildDuration(target, duration, params.effect, caster)
+        resduration = xi.magic.calculateBuildDuration(target, duration, params.effect, caster)
 
         if resduration == 0 then
             spell:setMsg(xi.msg.basic.NONE)

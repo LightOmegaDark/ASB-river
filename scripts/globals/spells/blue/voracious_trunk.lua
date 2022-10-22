@@ -23,9 +23,8 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local params = {}
-    params.attribute = xi.mod.INT
-    params.skillType = xi.skill.BLUE_MAGIC
+    local resist = xi.magic.applyResistanceAbility(caster, target, xi.magic.ele.WIND, 0, 0)
+    local stealChance = math.random(1, 100)
     local stolen = 0
 
     local resist = applyResistanceEffect(caster, target, spell, params)

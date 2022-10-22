@@ -25,8 +25,13 @@ end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
-    params.ecosystem = xi.ecosystem.BEASTMEN
-    params.effect = xi.effect.BLINDNESS
+    params.diff = nil
+    params.attribute = xi.mod.INT
+    params.skillType = xi.skill.BLUE_MAGIC
+    params.bonus = 0
+    params.effect = typeEffect
+    local resist = xi.magic.applyResistanceEffect(caster, target, spell, params)
+    local duration = 120 * resist
     local power = 25
     local tick = 0
     local duration = 120
