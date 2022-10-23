@@ -541,16 +541,11 @@ xi.weaponskills.calculateRawWSDmg = function(attacker, target, wsID, tp, action,
     -- store bonus damage for first hit, for use after other calculations are done
     local firstHitBonus = (finaldmg * attacker:getMod(xi.mod.ALL_WSDMG_FIRST_HIT)) / 100
 
-    -- Reset fTP if it's not supposed to carry over across all hits for this WS
-    ftp = 1 + calcParams.bonusfTP
-
-    base = (calcParams.weaponDamage[1] + calcParams.fSTR + wsMods) * ftp
-
-    calcParams.guaranteedHit = false -- Accuracy bonus from SA/TA applies only to first main and offhand hit
-    calcParams.tpHitsLanded = calcParams.hitsLanded -- Store number of TP hits that have landed thus far
-    calcParams.hitsLanded = 0 -- Reset counter to start tracking additional hits (from WS or Multi-Attacks)
-
     local hitsDone = 1
+
+    ftp = 1 + calcParams.bonusfTP
+    base = (calcParams.weaponDamage[1] + calcParams.fSTR + wsMods) * ftp
+    calcParams.guaranteedHit = false -- Accuracy bonus from SA/TA applies only to first main and offhand hit
 
     -- Do the extra hit for our offhand if applicable
     if calcParams.extraOffhandHit and finaldmg < targetHp and calcParams.skillType ~= xi.skill.HAND_TO_HAND then
@@ -577,6 +572,10 @@ xi.weaponskills.calculateRawWSDmg = function(attacker, target, wsID, tp, action,
         finaldmg = finaldmg + hitdmg
         hitsDone = hitsDone + 1
     end
+
+    -- Reset fTP if it's not supposed to carry over across all hits for this WS
+    calcParams.tpHitsLanded = calcParams.hitsLanded -- Store number of TP hits that have landed thus far
+    calcParams.hitsLanded = 0 -- Reset counter to start tracking additional hits (from WS or Multi-Attacks)
 
     -- Calculate additional hits if a multiHit WS (or we're supposed to get a DA/TA/QA proc from main hit)
     local numHits = utils.clamp(getMultiAttacks(attacker, target, wsParams.numHits), 0, 8)
@@ -706,7 +705,8 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
 
     finaldmg = finaldmg * xi.settings.main.WEAPON_SKILL_POWER -- Add server bonus
     calcParams.finalDmg = finaldmg
-    finaldmg = xi.weaponskills.takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
+
+    finaldmg = takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action, calcParams.tpHitsLanded, calcParams.extraHitsLanded * 10)
 
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end
