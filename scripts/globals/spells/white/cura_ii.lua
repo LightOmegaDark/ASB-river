@@ -42,8 +42,8 @@ spellObject.onSpellCast = function(caster, target, spell)
                 constant = 47.5
         end
     else
-        power = getCurePower(caster)
-        if power < 70 then
+        power = xi.magic.getCurePower(caster)
+        if (power < 70) then
             divisor = 1
             constant = 60
             basepower = 40

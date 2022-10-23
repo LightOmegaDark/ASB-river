@@ -82,24 +82,9 @@ global_objects=(
 
     onBattlefieldHandlerInitialise
 
-    doAutoPhysicalWeaponskill
-    doAutoRangedWeaponskill
-    doPhysicalWeaponskill
-    doRangedWeaponskill
-    doMagicWeaponskill
-    doesElementMatchWeaponskill
-    applyResistanceAddEffect
-    takeWeaponskillDamage
+    getRecommendedAssaultLevel
 
-    fTP
-    fSTR
-    fSTR2
-    calculateRawWSDmg
-    calculatedIgnoredDef
-    cMeleeRatio
-    generatePdif
-    getMeleeDmg
-    handleWSGorgetBelt
+    PATHFLAG_WALLHACK
 
     RoeParseTimed
     getRoeRecords
@@ -115,44 +100,18 @@ global_objects=(
     isHalloweenEnabled
     onHalloweenTrade
 
-    addBonuses
-    addBonusesAbility
-    applyResistance
-    applyResistanceAbility
-    applyResistanceEffect
-    adjustForTarget
-    calculateDuration
-    calculateDurationForLvl
-    calculateMagicDamage
-    calculatePotency
-    canOverwrite
-    doEnspell
-    finalMagicAdjustments
-    finalMagicNonSpellAdjustments
-    getBaseCure
-    getCurePower
-    getCurePowerOld
-    getCureFinal
-    getBaseCureOld
-    getEffectResistance
-    getElementalDamageReduction
-    getElementalDebuffDOT
     getFlourishAnimation
-    getHelixDuration
-    getHitRate
-    getMagicHitRate
-    getMagicResist
     getStepAnimation
-    getElementalDebuffStatDownFromDOT
-    handleAfflatusMisery
-    handleNinjutsuDebuff
-    handleThrenody
     hasSleepEffects
-    isValidHealTarget
+    skillchainCount
     takeAbilityDamage
+
+    doAutoRangedWeaponskill
+    doAutoPhysicalWeaponskill
 
     FormMagicBurst
     MobFormMagicBurst
+    doesElementMatchWeaponskill
 
     AbilityFinalAdjustments
 

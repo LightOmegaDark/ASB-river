@@ -158,7 +158,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
 
     --get dstr (bias to monsters, so no fSTR)
     if tpeffect == xi.mobskills.magicalTpBonus.RANGED then
-        fStr = fSTR2(mob:getStat(xi.mod.STR), target:getStat(xi.mod.VIT), mob:getWeaponDmgRank())
+        fStr = xi.weaponskills.fSTR2(mob:getStat(xi.mod.STR), target:getStat(xi.mod.VIT), mob:getWeaponDmgRank())
     else
         fStr = xi.weaponskills.fSTR(mob:getStat(xi.mod.STR), target:getStat(xi.mod.VIT), mob:getWeaponDmgRank())
     end
@@ -172,7 +172,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
     local lvldiff = mob:getMainLvl() - target:getMainLvl()
 
     --work out hit rate for mobs
-    local hitrate = getHitRate(mob, target, 0, 0)
+    local hitrate = xi.weaponskills.getHitRate(mob, target, 0, 0)
 
     hitrate = utils.clamp(hitrate, 0.2, 0.95)
 

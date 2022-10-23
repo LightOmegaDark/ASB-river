@@ -297,7 +297,7 @@ end
 local function doNuke(caster, target, spell, params)
     local skill = spell:getSpellGroup()
     --calculate raw damage
-    local dmg = calculateMagicDamage(caster, target, spell, params)
+    local dmg = xi.magic.calculateMagicDamage(caster, target, spell, params)
     --get resist multiplier (1x if no resist)
     local resist = xi.magic.applyResistance(caster, target, spell, params)
     --get the resisted damage
@@ -414,7 +414,7 @@ xi.magic.doEnspell = function(caster, target, spell, effect)
 end
 
 -----------------------------------
---   getCurePower returns the caster's cure power
+--   xi.magic.getCurePower returns the caster's cure power
 --   xi.magic.getCureFinal returns the final cure amount
 --   Source: http://members.shaw.ca/pizza_steve/cure/Cure_Calculator.html
 -----------------------------------
@@ -1461,7 +1461,7 @@ xi.magic.doDivineBanishNuke = function(caster, target, spell, params)
     params.attribute = xi.mod.MND
 
     --calculate raw damage
-    local dmg = calculateMagicDamage(caster, target, spell, params)
+    local dmg = xi.magic.calculateMagicDamage(caster, target, spell, params)
     --get resist multiplier (1x if no resist)
     local resist = xi.magic.applyResistance(caster, target, spell, params)
     --get the resisted damage
