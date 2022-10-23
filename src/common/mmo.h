@@ -497,7 +497,8 @@ struct search_t
 
 struct bazaar_t
 {
-    string_t message;
+    std::string message;
+    time_t      timer;
 
     bazaar_t()
     {
