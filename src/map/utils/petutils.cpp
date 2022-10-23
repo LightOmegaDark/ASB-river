@@ -999,7 +999,7 @@ namespace petutils
         uint8 grade;
 
         uint8   mlvl = PPet->GetMLevel();
-        uint8   slvl = PPet->GetSLevel();
+        uint8   slvl = PPet->GetSLevel() / 2;
         JOBTYPE mjob = PPet->GetMJob();
         JOBTYPE sjob = PPet->GetSJob();
 
@@ -2200,14 +2200,13 @@ namespace petutils
                 }
 
                 PPet->SetMLevel(mLvl);
-                // For now, assume subjob level is half of main job level
-                // PPet->SetSLevel(mLvl > 1 ? floor(mLvl / 2) : 1);
                 PPet->SetSLevel(mLvl);
             }
             else if (PMaster->GetSJob() == JOB_SMN)
             {
-                PPet->SetMLevel(PMaster->GetSLevel());
-                PPet->SetSLevel(PMaster->GetSLevel());
+                uint8 sLvl = PMaster->GetSLevel();
+                PPet->SetMLevel(sLvl);
+                PPet->SetSLevel(sLvl);
             }
             else
             { // should never happen
@@ -2358,7 +2357,49 @@ namespace petutils
         }
         else if (PPet->getPetType() == PET_TYPE::AUTOMATON && PMaster->objtype == TYPE_PC)
         {
-            CalculateAutomatonStats(PMaster, PPet);
+            CAutomatonEntity* PAutomaton = static_cast<CAutomatonEntity*>(PPet);
+            switch (PAutomaton->getFrame())
+            {
+                default: // case FRAME_HARLEQUIN:
+                    PPet->SetMJob(JOB_WAR);
+                    PPet->SetSJob(JOB_RDM);
+                    break;
+                case FRAME_VALOREDGE:
+                    PPet->SetMJob(JOB_PLD);
+                    PPet->SetSJob(JOB_WAR);
+                    break;
+                case FRAME_SHARPSHOT:
+                    PPet->SetMJob(JOB_RNG);
+                    PPet->SetSJob(JOB_PUP);
+                    break;
+                case FRAME_STORMWAKER:
+                    PPet->SetMJob(JOB_RDM);
+                    PPet->SetSJob(JOB_WHM);
+                    break;
+            }
+            // TEMP: should be MLevel when unsummoned, and PUP level when summoned
+            if (PMaster->GetMJob() == JOB_PUP)
+            {
+                PPet->SetMLevel(PMaster->GetMLevel() + PMaster->getMod(Mod::AUTOMATON_LVL_BONUS));
+                PPet->SetSLevel(PMaster->GetMLevel() / 2); // Todo: SetSLevel() already reduces the level?
+            }
+            else if (PMaster->GetSJob() == JOB_PUP)
+            {
+                PPet->SetMLevel(PMaster->GetSLevel());
+                PPet->SetSLevel(PMaster->GetSLevel() / 2); // Todo: SetSLevel() already reduces the level?
+            }
+            LoadAutomatonStats(static_cast<CCharEntity*>(PMaster), PPet, g_PPetList.at(PetID)); // temp
+            if (PMaster->objtype == TYPE_PC)
+            {
+                CCharEntity* PChar = static_cast<CCharEntity*>(PMaster);
+                PPet->addModifier(Mod::ATTP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
+                PPet->addModifier(Mod::DEFP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
+                PPet->addModifier(Mod::MATT, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
+                PPet->addModifier(Mod::ACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
+                PPet->addModifier(Mod::RACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
+                PPet->addModifier(Mod::EVA, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
+                PPet->addModifier(Mod::MDEF, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
+            }
         }
         else if (PPet->getPetType() == PET_TYPE::LUOPAN && PMaster->objtype == TYPE_PC)
         {
