@@ -54,4 +54,8 @@ zone_object.onEventFinish = function(player, csid, option)
     end
 end
 
-return zone_object
+zoneObject.onGameDay = function(zone)
+    xi.promyvion.zoneGameDay(zone)
+end
+
+return zoneObject
