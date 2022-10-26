@@ -622,7 +622,8 @@ xi.treasure.treasureInfo =
                 {
                     {
                         test = function(player) return player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.ENVELOPED_IN_DARKNESS) == QUEST_ACCEPTED and player:getCharVar("Quest[" .. xi.quest.log_id.SANDORIA .. "][" .. xi.quest.id.sandoria.ENVELOPED_IN_DARKNESS .. "]Prog") >= 2 and not player:hasKeyItem(xi.ki.CRAWLER_BLOOD) end,
-                        code = function(player) npcUtil.giveKeyItem(player, xi.ki.CRAWLER_BLOOD) end,                    },
+                        code = function(player) npcUtil.giveKeyItem(player, xi.ki.CRAWLER_BLOOD) end,
+                    },
                 },
                 points =
                 {
