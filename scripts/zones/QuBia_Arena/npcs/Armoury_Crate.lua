@@ -162,8 +162,26 @@ local loot =
             {itemid = xi.items.PHOENIX_FEATHER, droprate = 500},
         },
         {
-            {itemid = 0, droprate = 500}, -- nothing
-            {itemid = xi.items.PHOENIX_FEATHER, droprate = 500},
+            { itemid = 0, droprate = 500 }, -- nothing
+            { itemid = xi.items.PHOENIX_FEATHER, droprate = 500 },
+        },
+        {
+            { itemid = 0, droprate = 250 }, -- nothing
+            { itemid = xi.items.SOLDIERS_EARRING,  droprate = 50 },
+            { itemid = xi.items.KAMPFER_EARRING,   droprate = 50 },
+            { itemid = xi.items.MEDICINE_EARRING,  droprate = 50 },
+            { itemid = xi.items.SORCERERS_EARRING, droprate = 50 },
+            { itemid = xi.items.FENCERS_EARRING,   droprate = 50 },
+            { itemid = xi.items.ROGUES_EARRING,    droprate = 50 },
+            { itemid = xi.items.GUARDIAN_EARRING,  droprate = 50 },
+            { itemid = xi.items.SLAYERS_EARRING,   droprate = 50 },
+            { itemid = xi.items.TAMERS_EARRING,    droprate = 50 },
+            { itemid = xi.items.MINSTRELS_EARRING, droprate = 50 },
+            { itemid = xi.items.TRACKERS_EARRING,  droprate = 50 },
+            { itemid = xi.items.RONINS_EARRING,    droprate = 50 },
+            { itemid = xi.items.SHINOBI_EARRING,   droprate = 50 },
+            { itemid = xi.items.DRAKE_EARRING,     droprate = 50 },
+            { itemid = xi.items.CONJURER_EARRING,  droprate = 50 },
         },
         {
             { itemid = 0, droprate = 250 }, -- nothing
