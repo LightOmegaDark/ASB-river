@@ -11,18 +11,18 @@ xi.transport = xi.transport or {}
 xi.transport.message =
 {
     NEARING = 0,
-    DOCKING = 1
+    DOCKING = 1,
 }
 
 xi.transport.epochOffset =
 {
     NEARING = 265,
-    DOCKING = 290
+    DOCKING = 290,
 }
 
 xi.transport.messageTime =
 {
-    SILVER_SEA = 480
+    SILVER_SEA = 480,
 }
 
 xi.transport.trigger =
@@ -32,12 +32,7 @@ xi.transport.trigger =
         FERRY_ARRIVING_FROM_ALZAHBI = 0,
         FERRY_DEPARTING_TO_ALZAHBI  = 1,
         FERRY_ARRIVING_FROM_SELBINA = 2,
-        FERRY_DEPARTING_TO_SELBINA  = 3
-    },
-    selbina =
-    {
-        FERRY_ARRIVING_FROM_MHAURA = 0,
-        FERRY_DEPARTING_TO_MHAURA  = 1
+        FERRY_DEPARTING_TO_SELBINA  = 3,
     }
 }
 
@@ -46,11 +41,7 @@ xi.transport.interval =
     mhaura =
     {
         FROM_TO_ALZAHBI = 480,
-        FROM_TO_SELBINA = 480
-    },
-    selbina =
-    {
-        FROM_TO_MHAURA = 480
+        FROM_TO_SELBINA = 480,
     }
 }
 
@@ -61,12 +52,7 @@ xi.transport.offset =
         FERRY_ARRIVING_FROM_ALZAHBI = 159,
         FERRY_DEPARTING_TO_ALZAHBI  = 239,
         FERRY_ARRIVING_FROM_SELBINA = 399,
-        FERRY_DEPARTING_TO_SELBINA  = 479
-    },
-    selbina =
-    {
-        FERRY_ARRIVING_FROM_MHAURA = 399,
-        FERRY_DEPARTING_TO_MHAURA = 479
+        FERRY_DEPARTING_TO_SELBINA  = 479,
     }
 }
 
