@@ -2,8 +2,9 @@
 -- Area: Davoi
 --  Mob: Barakbok
 -----------------------------------
-require("scripts/globals/settings")
+mixins = { require("scripts/mixins/job_special") }
 -----------------------------------
+
 local entity = {}
 
 entity.onMobDeath = function(mob, player, optParams)
