@@ -1464,15 +1464,22 @@ namespace zoneutils
         return PChar->m_moghouseID != 0;
     }
 
-    void AfterZoneIn(CBaseEntity* PEntity)
-    {
-        CCharEntity* PChar = dynamic_cast<CCharEntity*>(PEntity);
-        if (PChar != nullptr && (PChar->PBattlefield == nullptr || !PChar->PBattlefield->isEntered(PChar)))
-        {
-            GetZone(PChar->getZone())->updateCharLevelRestriction(PChar);
-        }
+    /************************************************************************
+     *                                                                       *
+     *  Checks whether or not the zone is enabled                            *
+     *                                                                       *
+     ************************************************************************/
 
-        luautils::AfterZoneIn(PChar);
+    bool IsZoneActive(uint16 zoneId)
+    {
+        if (auto* PZone = GetZone(zoneId))
+        {
+            if (PZone->GetIP() == 0 || PZone->GetPort() == 0)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
 }; // namespace zoneutils
