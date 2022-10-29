@@ -12258,14 +12258,14 @@ uint8 CLuaBaseEntity::getParryRate(CLuaBaseEntity* PLuaBaseEntity)
  *  Notes   : Battleutils calculates via GetHitRate
  ************************************************************************/
 
-uint8 CLuaBaseEntity::getCHitRate(CLuaBaseEntity* PLuaBaseEntity, uint8 attackNum)
+uint8 CLuaBaseEntity::getCHitRate(CLuaBaseEntity* PLuaBaseEntity, uint8 attackNum, int8 accBonus)
 {
     XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
 
     CBattleEntity* PAttacker = static_cast<CBattleEntity*>(m_PBaseEntity);
     CBattleEntity* PDefender = static_cast<CBattleEntity*>(PLuaBaseEntity->GetBaseEntity());
 
-    return battleutils::GetHitRate(PAttacker, PDefender, attackNum);
+    return battleutils::GetHitRate(PAttacker, PDefender, attackNum, accBonus);
 }
 
 /************************************************************************
@@ -12275,14 +12275,14 @@ uint8 CLuaBaseEntity::getCHitRate(CLuaBaseEntity* PLuaBaseEntity, uint8 attackNu
  *  Notes   : Battleutils calculates via GetRangedHitRate
  ************************************************************************/
 
-uint8 CLuaBaseEntity::getCRangedHitRate(CLuaBaseEntity* PLuaBaseEntity)
+uint8 CLuaBaseEntity::getCRangedHitRate(CLuaBaseEntity* PLuaBaseEntity, int8 accBonus)
 {
     XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
 
     CBattleEntity* PAttacker = static_cast<CBattleEntity*>(m_PBaseEntity);
     CBattleEntity* PDefender = static_cast<CBattleEntity*>(PLuaBaseEntity->GetBaseEntity());
 
-    return battleutils::GetRangedHitRate(PAttacker, PDefender, false);
+    return battleutils::GetRangedHitRate(PAttacker, PDefender, false, accBonus);
 }
 
 /************************************************************************
