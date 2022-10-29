@@ -342,6 +342,7 @@ xi.summon.avatarFinalAdjustments = function(dmg, mob, skill, target, skilltype, 
 
     if skilltype == xi.attackType.MAGICAL then
         dmg = utils.oneforall(target, dmg)
+        dmg = utils.rampart(target, dmg)
     end
 
     -- handling stoneskin

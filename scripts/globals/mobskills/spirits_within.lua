@@ -45,6 +45,7 @@ mobskill_object.onMobWeaponSkill = function(target, mob, skill)
         return 0
     end
 
+    dmg = utils.rampart(target, dmg)
     dmg = utils.stoneskin(target, dmg)
 
     if dmg > 0 then

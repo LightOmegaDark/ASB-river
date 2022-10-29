@@ -394,6 +394,7 @@ xi.spells.blue.applySpellDamage = function(caster, target, spell, dmg, params)
         end
 
         dmg = utils.oneforall(target, dmg)
+        dmg = utils.rampart(target, dmg)
     end
 
     -- handle Phalanx
