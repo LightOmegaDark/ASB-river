@@ -2,6 +2,7 @@
 -- Zone: Port_Windurst (240)
 -----------------------------------
 local ID = require('scripts/zones/Port_Windurst/IDs')
+require('scripts/globals/events/starlight_celebrations')
 require('scripts/globals/conquest')
 require('scripts/globals/settings')
 require('scripts/globals/zone')
@@ -10,6 +11,7 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     SetExplorerMoogles(ID.npc.EXPLORER_MOOGLE)
+    applyStarlightDecorations(zone:getID())
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

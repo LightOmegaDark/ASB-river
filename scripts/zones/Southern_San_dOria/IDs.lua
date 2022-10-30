@@ -124,6 +124,41 @@ zones[xi.zone.SOUTHERN_SAN_DORIA] =
             [17719306] = 46, -- Apairemant
             [17719493] = 49, -- Pourette
         },
+        STARLIGHT_DECORATIONS =
+        {
+            [17719896] = 17719896,  -- Starlight Celebration Tree
+            [17719897] = 17719897,  -- Starlight Celebration Tree
+            [17719898] = 17719898,  -- Starlight Celebration Tree
+            [17719899] = 17719899,  -- Starlight Celebration Tree
+            [17719900] = 17719900,  -- Starlight Celebration Tree
+            [17719901] = 17719901,  -- Starlight Celebration Tree
+            [17719902] = 17719902,  -- Starlight Celebration Tree
+            [17719903] = 17719903,  -- Starlight Celebration Tree
+            [17719904] = 17719904,  -- Starlight Celebration Tree
+            [17719905] = 17719905,  -- Starlight Celebration Tree
+            [17719906] = 17719906,  -- Starlight Celebration Tree
+            [17719607] = 17719607,  -- Starlight Celebration Tree
+            [17719908] = 17719908,  -- Starlight Celebration Tree
+            [17719909] = 17719909,  -- Starlight Celebration Tree
+            [17719910] = 17719910,  -- Starlight Celebration Tree
+            [17719911] = 17719911,  -- Starlight Celebration Tree
+            [17719912] = 17719912,  -- Starlight Celebration Tree
+            [17719913] = 17719913,  -- Starlight Celebration Tree
+            [17719914] = 17719914,  -- Starlight Celebration Tree
+            [17719915] = 17719915,  -- Starlight Celebration Tree
+            [17719916] = 17719916,  -- Starlight Celebration Tree
+            [17719917] = 17719917,  -- Starlight Celebration Tree
+            [17719918] = 17719918,  -- Starlight Celebration Tree
+            [17719919] = 17719919,  -- Starlight Celebration Tree
+            [17719920] = 17719920,  -- Starlight Celebration Tree
+            [17719921] = 17719921,  -- Starlight Celebration Tree
+            [17719922] = 17719922,  -- Starlight Celebration Tree
+            [17719923] = 17719923,  -- Starlight Celebration Tree
+            [17719924] = 17719924,  -- Starlight Celebration Tree
+            [17719925] = 17719925,  -- Starlight Celebration Tree
+            [17719926] = 17719926,  -- Starlight Celebration Tree
+            [17719929] = 17719929,  -- Estiliphire
+        },
         LUSIANE  = 17719350,
         ARPETION = 17719409,
     },

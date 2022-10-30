@@ -2,6 +2,7 @@
 -- Zone: Bastok_Markets (235)
 -----------------------------------
 require('scripts/globals/events/harvest_festivals')
+require('scripts/globals/events/starlight_celebrations')
 require('scripts/globals/settings')
 require('scripts/globals/zone')
 local ID = require('scripts/zones/Bastok_Markets/IDs')
@@ -10,6 +11,7 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     applyHalloweenNpcCostumes(zone:getID())
+    applyStarlightDecorations(zone:getID())
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

@@ -3,6 +3,7 @@
 -----------------------------------
 local ID = require('scripts/zones/Bastok_Mines/IDs')
 require('scripts/globals/events/harvest_festivals')
+require('scripts/globals/events/starlight_celebrations')
 require('scripts/globals/conquest')
 require('scripts/globals/settings')
 require('scripts/globals/chocobo')
@@ -12,8 +13,8 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     SetExplorerMoogles(ID.npc.EXPLORER_MOOGLE)
-
     applyHalloweenNpcCostumes(zone:getID())
+    applyStarlightDecorations(zone:getID())
     xi.chocobo.initZone(zone)
 end
 

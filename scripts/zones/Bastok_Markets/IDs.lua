@@ -87,6 +87,34 @@ zones[xi.zone.BASTOK_MARKETS] =
         {
             [17739805] = 45, -- Olwyn
         },
+        STARLIGHT_DECORATIONS =
+        {
+            [17740161] = 17740161,  -- Starlight Celebration Center Fountain
+            [17740162] = 17740162,  -- Starlight Celebration Planter
+            [17740163] = 17740163,  -- Starlight Celebration Planter
+            [17740164] = 17740164,  -- Starlight Celebration Planter
+            [17740165] = 17740165,  -- Starlight Celebration Planter
+            [17740166] = 17740166,  -- Starlight Celebration Planter
+            [17740167] = 17740167,  -- Starlight Celebration Planter
+            [17740168] = 17740168,  -- Starlight Celebration Planter
+            [17740169] = 17740169,  -- Starlight Celebration Planter
+            [17740170] = 17740170,  -- Starlight Celebration Planter
+            [17740171] = 17740171,  -- Starlight Celebration Planter
+            [17740172] = 17740172,  -- Starlight Celebration Planter
+            [17740173] = 17740173,  -- Starlight Celebration Planter
+            [17740174] = 17740174,  -- Starlight Celebration Planter
+            [17740175] = 17740175,  -- Starlight Celebration Planter
+            [17740176] = 17740176,  -- Starlight Celebration Planter
+            [17740177] = 17740177,  -- Starlight Celebration Planter
+            [17740178] = 17740178,  -- Starlight Celebration Planter
+            [17740179] = 17740179,  -- Starlight Celebration Planter
+            [17740180] = 17740180,  -- Starlight Celebration Planter
+            [17740181] = 17740181,  -- Starlight Celebration Planter
+            [17740182] = 17740182,  -- Starlight Celebration Planter
+            [17740183] = 17740183,  -- Starlight Celebration Planter
+            [17740184] = 17740184,  -- Event Moogle
+        },
+
     },
 }
 

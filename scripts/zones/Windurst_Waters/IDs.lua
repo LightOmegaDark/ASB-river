@@ -80,7 +80,30 @@ zones[xi.zone.WINDURST_WATERS] =
             [17752102] = 63, -- Maqu Molpih
             [17752103] = 62, -- Ahyeekih
         },
-
+        STARLIGHT_DECORATIONS =
+        {
+            [17752530] = 17752530,  -- Starlight Celebration Tree
+            [17752531] = 17752531,  -- Starlight Celebration Tree
+            [17752532] = 17752532,  -- Starlight Celebration Tree
+            [17752533] = 17752533,  -- Starlight Celebration Tree
+            [17752534] = 17752534,  -- Starlight Celebration Tree
+            [17752535] = 17752535,  -- Starlight Celebration Tree
+            [17752536] = 17752536,  -- Starlight Celebration Tree
+            [17752537] = 17752537,  -- Starlight Celebration Tree
+            [17752538] = 17752538,  -- Starlight Celebration Tree
+            [17752539] = 17752539,  -- Starlight Celebration Tree
+            [17752540] = 17752540,  -- Starlight Celebration Tree
+            [17752541] = 17752541,  -- Starlight Celebration Tree
+            [17752542] = 17752542,  -- Starlight Celebration Tree
+            [17752543] = 17752543,  -- Starlight Celebration Tree
+            [17752544] = 17752544,  -- Starlight Celebration Tree
+            [17752545] = 17752545,  -- Starlight Celebration Tree
+            [17752546] = 17752546,  -- Starlight Celebration Tree
+            [17752547] = 17752547,  -- Starlight Celebration Tree
+            [17752548] = 17752548,  -- Starlight Celebration Tree
+            [17752549] = 17752549,  -- Starlight Celebration Tree
+            [17752529] = 17752529,  -- Atagei-Portagei
+        },
         LELEROON_GREEN_DOOR = 17752333,
     },
 }

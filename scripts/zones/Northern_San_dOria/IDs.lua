@@ -136,6 +136,31 @@ zones[xi.zone.NORTHERN_SAN_DORIA] =
             [17723492] = 52, -- Antonian
             [17723497] = 51, -- Attarena
         },
+        STARLIGHT_DECORATIONS =
+        {
+            [17723785] = 17723785,  -- Starlight Celebration Banner
+            [17723786] = 17723786,  -- Starlight Celebration Banner
+            [17723787] = 17723787,  -- Starlight Celebration Banner
+            [17723788] = 17723788,  -- Starlight Celebration Tree
+            [17723789] = 17723789,  -- Starlight Celebration Tree
+            [17723790] = 17723790,  -- Starlight Celebration Tree
+            [17723791] = 17723791,  -- Starlight Celebration Tree
+            [17723792] = 17723792,  -- Starlight Celebration Tree
+            [17723793] = 17723793,  -- Starlight Celebration Tree
+            [17723794] = 17723794,  -- Starlight Celebration Tree
+            [17723795] = 17723795,  -- Starlight Celebration Tree
+            [17723796] = 17723796,  -- Starlight Celebration Tree
+            [17723797] = 17723797,  -- Starlight Celebration Tree
+            [17723798] = 17723798,  -- Starlight Celebration Tree
+            [17723799] = 17723799,  -- Starlight Celebration Tree
+            [17723800] = 17723800,  -- Starlight Celebration Tree
+            [17723801] = 17723801,  -- Starlight Celebration Tree
+            [17723802] = 17723802,  -- Starlight Celebration Tree
+            [17723803] = 17723803,  -- Starlight Celebration Tree
+            [17723804] = 17723804,  -- Starlight Celebration Tree
+            [17723805] = 17723805,  -- Starlight Celebration Tree
+            [17723784] = 17723784,  -- Charmealaut
+        },
         EXPLORER_MOOGLE = 17723648,
     },
 }

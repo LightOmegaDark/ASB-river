@@ -2,6 +2,7 @@
 -- Zone: Windurst_Walls (239)
 -----------------------------------
 local ID = require('scripts/zones/Windurst_Walls/IDs')
+require('scripts/globals/events/starlight_celebrations')
 require('scripts/globals/conquest')
 require('scripts/globals/quests')
 require('scripts/globals/zone')
@@ -10,6 +11,7 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     zone:registerRegion(1, -2, -17, 140, 2, -16, 142)
+    applyStarlightDecorations(zone:getID())
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

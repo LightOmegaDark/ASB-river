@@ -102,6 +102,17 @@ zones[xi.zone.BASTOK_MINES] =
             [17735795] = 40, -- Proud Beard
             [17735818] = 44, -- Emaliveulaux
         },
+        STARLIGHT_DECORATIONS =
+        {
+            [17735996] = 17735996,  -- Starlight Celebration Planter
+            [17735997] = 17735997,  -- Starlight Celebration Planter
+            [17735998] = 17735998,  -- Starlight Celebration Planter
+            [17735999] = 17735999,  -- Starlight Celebration Planter
+            [17736000] = 17736000,  -- Starlight Celebration Planter
+            [17736001] = 17736001,  -- Starlight Celebration Planter
+            [17735995] = 17735995,  -- Christina
+            [17736002] = 17736002,  -- Event Moogle
+        },
         LELEROON_BLUE_DOOR = 17735847,
         EXPLORER_MOOGLE    = 17735856,
     },
