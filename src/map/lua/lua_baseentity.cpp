@@ -5996,7 +5996,7 @@ uint16 CLuaBaseEntity::getFame(sol::object const& areaObj)
     uint8  fameArea = areaObj.is<sol::table>() ? areaObj.as<sol::table>()["fame_area"] : areaObj.as<uint8>();
     uint16 fame     = 0;
 
-    if (fameArea <= 15)
+    if (fameArea <= 16)
     {
         float fameMultiplier = settings::get<float>("map.FAME_MULTIPLIER");
         auto* PChar          = static_cast<CCharEntity*>(m_PBaseEntity);
@@ -6032,6 +6032,9 @@ uint16 CLuaBaseEntity::getFame(sol::object const& areaObj)
             case 15: // Adoulin
                 fame = static_cast<uint16>(PChar->profile.fame[14] * fameMultiplier);
                 break;
+            case 16: // Holiday, Special Events
+                fame = static_cast<uint16>(PChar->profile.fame[fameArea]);
+                break;
         }
     }
     else
@@ -6055,7 +6058,7 @@ void CLuaBaseEntity::addFame(sol::object const& areaObj, uint16 fame)
 
     uint8 fameArea = areaObj.is<sol::table>() ? areaObj.as<sol::table>()["fame_area"] : areaObj.as<uint8>();
 
-    if (fameArea <= 15)
+    if (fameArea <= 16)
     {
         auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
 
@@ -6091,6 +6094,9 @@ void CLuaBaseEntity::addFame(sol::object const& areaObj, uint16 fame)
             case 15: // Adoulin
                 PChar->profile.fame[14] += fame;
                 break;
+            case 16: // Holiday, Special Events
+                PChar->profile.fame[fameArea] += fame;
+                break;
         }
         charutils::SaveFame(PChar);
     }
@@ -6113,7 +6119,7 @@ void CLuaBaseEntity::setFame(sol::object const& areaObj, uint16 fame)
 
     uint8 fameArea = areaObj.is<sol::table>() ? areaObj.as<sol::table>()["fame_area"] : areaObj.as<uint8>();
 
-    if (fameArea <= 15)
+    if (fameArea <= 16)
     {
         auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
 
@@ -6149,6 +6155,9 @@ void CLuaBaseEntity::setFame(sol::object const& areaObj, uint16 fame)
             case 15: // Adoulin
                 PChar->profile.fame[14] = fame;
                 break;
+            case 16: // Holiday, Special Events
+                PChar->profile.fame[fameArea] = fame;
+                break;
         }
 
         charutils::SaveFame(PChar);
@@ -6173,7 +6182,7 @@ uint8 CLuaBaseEntity::getFameLevel(sol::object const& areaObj)
     uint8 fameArea  = areaObj.is<sol::table>() ? areaObj.as<sol::table>()["fame_area"] : areaObj.as<uint8>();
     uint8 fameLevel = 1;
 
-    if (fameArea <= 15)
+    if (fameArea <= 16)
     {
         uint16 fame = this->getFame(areaObj);
 
