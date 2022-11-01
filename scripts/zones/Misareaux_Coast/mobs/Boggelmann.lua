@@ -4,10 +4,12 @@
 -----------------------------------
 local entity = {}
 
-entity.onMobDeath = function(mob, player, isKiller)
-    if (player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.CALM_BEFORE_THE_STORM and player:getCharVar("COP_Boggelmann_KILL") == 0) then
-        player:setCharVar("COP_Boggelmann_KILL", 1)
-    end
+entity.onMobSpawn = function(mob)
+    mob:setMP(0)
+    mob:setMod(xi.mod.SLEEP_MEVA, 80)
+end
+
+entity.onMobDeath = function(mob, player, optParams)
 end
 
 return entity
