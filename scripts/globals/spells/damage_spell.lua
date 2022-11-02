@@ -648,7 +648,6 @@ xi.spells.damage.calculateResist = function(caster, target, spell, skillType, sp
         end
     end
 
-    local sixteenthTrigger = false
     local eighthTrigger = false
     local quarterTrigger = false
 
@@ -656,50 +655,31 @@ xi.spells.damage.calculateResist = function(caster, target, spell, skillType, sp
         resMod = target:getMod(xi.magic.resistMod[element])
     end
 
-    local playerTriggerPoints =
+    local resTriggerPoints =
     {
-        resMod > 145,
-        resMod > 100,
+        resMod > 101,
         resMod >= 0,
     }
-    local mobTriggerPoints =
-    {
-        evaMult < 1.15,
-        evaMult < 1.30,
-        evaMult < 1.50,
-    }
-    local selectedTable = mobTriggerPoints
 
-    if target:isPC() then
-        selectedTable = playerTriggerPoints
-    end
-
-    if playerTriggerPoints[1] then
-        sixteenthTrigger = true
-    end
-
-    if selectedTable[2] then
+    if resTriggerPoints[1] then
         eighthTrigger = true
     end
 
-    if selectedTable[3] then
+    if resTriggerPoints[2] then
         quarterTrigger = true
     end
 
-    local p = utils.clamp(((magicHitRate * evaMult) / 100), 0.05, 3.00) -- clamp at minimum 0.05, clamp at max of 3.0 to be safe
+    local p = utils.clamp(((magicHitRate * evaMult) / 100), 0.05, 0.95) -- clamp at minimum 0.05, clamp at max of 3.0 to be safe
     local resistVal = 1
 
     -- Resistance thresholds based on p.  A higher p leads to lower resist rates, and a lower p leads to higher resist rates.
     local half      = (1 - p)
     local quart     = ((1 - p)^2)
     local eighth    = ((1 - p)^3)
-    local sixteenth = ((1 - p)^4)
     local resvar    = math.random()
 
     -- Determine final resist based on which thresholds have been crossed.
-    if resvar <= sixteenth and sixteenthTrigger then
-        resistVal = 0.0625
-    elseif resvar <= eighth and eighthTrigger then
+    if resvar <= eighth and eighthTrigger then
         resistVal = 0.125
     elseif resvar <= quart and quarterTrigger then
         resistVal = 0.25
@@ -707,6 +687,10 @@ xi.spells.damage.calculateResist = function(caster, target, spell, skillType, sp
         resistVal = 0.5
     else
         resistVal = 1.0
+    end
+
+    if evaMult <= 0.5 then
+        resistVal = resistVal / 2
     end
 
     return resistVal
@@ -1038,7 +1022,7 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     --finalDamage = math.floor(finalDamage * sdt)
     finalDamage = math.floor(finalDamage * resist)
 
-    if target:hasStatusEffect(xi.effect.SKILLCHAIN) and (target:getStatusEffect(xi.effect.SKILLCHAIN):getTier() > 0) then -- Gated since this is recalculated for each target.
+    if target:hasStatusEffect(xi.effect.SKILLCHAIN) and (magicBurst > 1) then -- Gated since this is recalculated for each target.
         finalDamage = math.floor(finalDamage * magicBurst)
         finalDamage = math.floor(finalDamage * magicBurstBonus)
     end
@@ -1082,7 +1066,7 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         end
 
         -- Add "Magic Burst!" message
-        if target:hasStatusEffect(xi.effect.SKILLCHAIN) and (target:getStatusEffect(xi.effect.SKILLCHAIN):getTier() > 0) then -- Gated as this is run per target.
+        if target:hasStatusEffect(xi.effect.SKILLCHAIN) and (magicBurst > 1) then -- Gated as this is run per target.
             spell:setMsg(spell:getMagicBurstMessage())
             caster:triggerRoeEvent(xi.roe.triggers.magicBurst)
         end
