@@ -25,15 +25,19 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     params.skillType = xi.skill.SCYTHE
     params.includemab = true
 
-    if (xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES == true) then
-        params.int_wsc = 0.7
-    end
+    local effectParams = {}
+    effectParams.element = xi.magic.ele.WATER
+    effectParams.effect = xi.effect.ATTACK_DOWN
+    effectParams.skillType = xi.skill.SCYTHE
+    effectParams.duration = tp / 1000 * 180
+    effectParams.power = 25
+    effectParams.tick = 0
+    effectParams.maccBonus = 0
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
 
-    if (damage > 0 and target:hasStatusEffect(xi.effect.ATTACK_DOWN) == false) then
-        local duration = (tp/1000 * 180) * xi.magic.applyResistanceAddEffectWS(player, target, xi.magic.ele.WATER, 0)
-        target:addStatusEffect(xi.effect.ATTACK_DOWN, 25, 0, duration)
+    if damage > 0 then
+        xi.magic.applyAbilityResistance(player, target, effectParams)
     end
 
     return tpHits, extraHits, criticalHit, damage
