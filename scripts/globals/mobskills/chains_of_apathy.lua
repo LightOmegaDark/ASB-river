@@ -15,11 +15,7 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     for i, v in pairs(targets) do
         if v.entity:isPC() then
             local race = v.entity:getRace()
-            if
-                (race == xi.race.HUME_M or race == xi.race.HUME_F) and
-                not v.entity:hasKeyItem(xi.ki.LIGHT_OF_VAHZL)
-            then
-                mob:showText(mob, ID.text.PROMATHIA_TEXT)
+            if (race == xi.race.HUME_M or race == xi.race.HUME_F) and not v.entity:hasKeyItem(xi.ki.LIGHT_OF_VAHZL) then
                 return 0
             end
         end
