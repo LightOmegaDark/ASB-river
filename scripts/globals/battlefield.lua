@@ -372,7 +372,7 @@ end
 --  - showTimer: Show the time remaining in the battlefield in the UI for the player. Defaults to true. (optional)
 --  - delayToExit: Amount of time to wait before exiting the battlefield. Defaults to 5 seconds. (optional)
 --  - requiredItems: Items required to be traded to enter the battlefield.
---                   Needs to be in the format of { itemid, quantity, useMessage = ID.text.*, wearMessage = ID.text.*, wornMessage = ID.text.* }. (optional)
+--    Needs to be in the format of { itemid, quantity, useMessage = ID.text.*, wearMessage = ID.text.*, wornMessage = ID.text.* }. (optional)
 --  - requiredKeyItems: Key items required to be able to enter the battlefield - these are removed upon entry unless 'keep = true' (optional)
 --  - title: Title given to players upon victory (optional)
 --  - grantXP: Amount of XP to grant upon victory (optional)
@@ -937,7 +937,6 @@ function Battlefield:onBattlefieldEnter(player, battlefield)
                         if not self.requiredKeyItems.keep then
                             player:delKeyItem(subitem)
                         end
-
                         table.insert(items, subitem)
                     end
                 end
@@ -945,7 +944,6 @@ function Battlefield:onBattlefieldEnter(player, battlefield)
                 if not self.requiredKeyItems.keep then
                     player:delKeyItem(item)
                 end
-
                 table.insert(items, item)
             end
         end
