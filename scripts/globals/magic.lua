@@ -980,10 +980,6 @@ xi.magic.getEffectResistance = function(target, effect, returnBuild, caster)
         return buildres
     end
 
-    if target:isMob() and target:isNM() and effectres ~= 0 then
-        xi.magic.tryBuildResistance(target, effectres, true, caster)
-    end
-
     if effectres ~= 0 then
         return target:getMod(effectres) + statusres
     end
@@ -1671,7 +1667,7 @@ end
 
 xi.magic.calculateBuildDuration = function(target, duration, effect, caster)
 
-    if target:isMob() then
+    if target:isMob() and target:isNM() then
         local buildRes = xi.magic.getEffectResistance(target, effect, true, caster)
 
         if target:getMod(buildRes) ~= nil then
