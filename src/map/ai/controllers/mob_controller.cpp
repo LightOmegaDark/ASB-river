@@ -886,8 +886,17 @@ void CMobController::Move()
             {
                 if ((!PMob->PAI->PathFind->IsFollowingPath() || distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10) && currentDistance > attack_range)
                 {
-                    // path to the target if we don't have a path already
-                    PMob->PAI->PathFind->PathInRange(PTarget->loc.p, attack_range - 0.2f, PATHFLAG_WALLHACK | PATHFLAG_RUN);
+                    // out of melee range, try to path towards
+                    if (currentDistance > PMob->GetMeleeRange())
+                    {
+                        // try to find path towards target
+                        PMob->PAI->PathFind->PathInRange(PTarget->loc.p, attack_range - 0.2f, PATHFLAG_RUN);
+                    }
+                }
+                else if (distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10)
+                {
+                    // try to find path towards target
+                    PMob->PAI->PathFind->PathInRange(PTarget->loc.p, attack_range - 0.2f, PATHFLAG_RUN);
                 }
                 PMob->PAI->PathFind->FollowPath(m_Tick);
                 if (!PMob->PAI->PathFind->IsFollowingPath())
@@ -917,7 +926,7 @@ void CMobController::Move()
 
                                 if (PMob->PAI->PathFind->ValidPosition(new_pos))
                                 {
-                                    PMob->PAI->PathFind->PathTo(new_pos, PATHFLAG_WALLHACK | PATHFLAG_RUN);
+                                    PMob->PAI->PathFind->PathTo(new_pos, PATHFLAG_RUN);
                                     needToMove = true;
                                 }
                                 break;
