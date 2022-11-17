@@ -548,218 +548,865 @@ local function checkReqs(player, npc, bfid, registrant)
         return zones[player:getZoneID()].npc.ENTRANCE_OFFSET + offset
     end
 
-    local function sameRace()
+    local function getPartyRace(player)
         for _, v in pairs(player:getParty()) do
             if v:getRace() ~= player:getRace() then
                 return false
             end
         end
-        return true
     end
 
     -- Requirements to register a battlefield
     local registerReqs =
     {
-        [   0] = function() return ( (basty == mi.bastok.THE_EMISSARY_SANDORIA2 or windy == mi.windurst.THE_THREE_KINGDOMS_SANDORIA2) and natStat == 9                     ) end, -- Mission 2-3
-        [   3] = function() return ( sandy == mi.sandoria.THE_SECRET_WEAPON and natStat == 2                                                                               ) end, -- Sandy 7-2: The Secret Weapon
-        [   5] = function() return ( mjob == xi.job.WAR and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (WAR LB5)
-        [   6] = function() return ( mjob == xi.job.BLM and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (BLM LB5)
-        [   7] = function() return ( mjob == xi.job.RNG and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (RNG LB5)
-        [  20] = function() return ( player:hasKeyItem(xi.ki.SOUL_GEM_CLASP)                                                                                               ) end, -- Quest: Beyond Infinity
-        [  32] = function() return ( sandy == mi.sandoria.SAVE_THE_CHILDREN and ((stc and natStat <= 2) or (not stc and natStat == 2))                                     ) end, -- Sandy 1-3: Save the Children
-        [  33] = function() return ( player:hasKeyItem(xi.ki.DRAGON_CURSE_REMEDY)                                                                                          ) end, -- Quest: The Holy Crest
-        [  64] = function() return ( (sandy == mi.sandoria.JOURNEY_TO_BASTOK2 or windy == mi.windurst.THE_THREE_KINGDOMS_BASTOK2) and natStat == 10                        ) end, -- Mission 2-3
-        [  67] = function() return ( basty == mi.bastok.ON_MY_WAY and natStat == 2                                                                                         ) end, -- Basty 7-2: On My Way
-        [  68] = function() return ( player:getCharVar("Quest[5][142]Prog") == 6                                                                                           ) end, -- Quest: A Thief in Norg!?
-        [  70] = function() return ( mjob == xi.job.RDM and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (RDM LB5)
-        [  71] = function() return ( mjob == xi.job.THF and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (THF LB5)
-        [  72] = function() return ( mjob == xi.job.BST and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (BST LB5)
-        [  85] = function() return ( player:hasKeyItem(xi.ki.SOUL_GEM_CLASP)                                                                                               ) end, -- Quest: Beyond Infinity
-        [  96] = function() return ( player:hasKeyItem(xi.ki.DARK_KEY)                                                                                                     ) end, -- Mission 2-3
-        [  99] = function() return ( windy == mi.windurst.SAINTLY_INVITATION and natStat == 1                                                                              ) end, -- Windy 6-2: A Saintly Invitation
-        [ 101] = function() return ( mjob == xi.job.MNK and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (MNK LB5)
-        [ 102] = function() return ( mjob == xi.job.WHM and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (WHM LB5)
-        [ 103] = function() return ( mjob == xi.job.SMN and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (SMN LB5)
-        [ 116] = function() return ( player:hasKeyItem(xi.ki.SOUL_GEM_CLASP)                                                                                               ) end, -- Quest: Beyond Infinity
-        [ 128] = function() return ( roz == mi.zilart.THE_TEMPLE_OF_UGGALEPIH                                                                                              ) end, -- ZM4: The Temple of Uggalepih
-        [ 160] = function() return ( nat == mi.nation.SHADOW_LORD and natStat == 3                                                                                         ) end, -- Mission 5-2
-        [ 161] = function() return ( basty == mi.bastok.WHERE_TWO_PATHS_CONVERGE and natStat == 1                                                                          ) end, -- Basty 9-2: Where Two Paths Converge
-        [ 163] = function() return ( mjob == xi.job.SCH and mlvl >= 66                                                                                                     ) end, -- Quest: Survival of the Wisest (SCH LB5)
-        [ 192] = function() return ( roz == mi.zilart.THROUGH_THE_QUICKSAND_CAVES and roz < mi.zilart.RETURN_TO_DELKFUTTS_TOWER                                            ) end, -- ZM6: Through the Quicksand Caves
-        [ 194] = function() return ( mjob == xi.job.SAM and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (SAM LB5)
-        [ 195] = function() return ( mjob == xi.job.NIN and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (NIN LB5)
-        [ 196] = function() return ( mjob == xi.job.DRG and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (DRG LB5)
-        [ 224] = function() return ( player:hasKeyItem(xi.ki.MOON_BAUBLE)                                                                                                  ) end, -- Quest: The Moonlit Path
-        [ 225] = function() return ( windy == mi.windurst.MOON_READING and natStat == 2                                                                                    ) end, -- Windy 9-2: Moon Reading
-        [ 226] = function() return ( player:hasKeyItem(xi.ki.EYE_OF_GALES) and player:hasKeyItem(xi.ki.EYE_OF_FLAMES) and player:hasKeyItem(xi.ki.EYE_OF_FROST) and
-                                     player:hasKeyItem(xi.ki.EYE_OF_STORMS) and player:hasKeyItem(xi.ki.EYE_OF_TIDES) and player:hasKeyItem(xi.ki.EYE_OF_TREMORS)          ) end, -- Quest: Waking the Beast
-        [ 256] = function() return ( roz == mi.zilart.RETURN_TO_DELKFUTTS_TOWER and rozStat == 3                                                                           ) end, -- ZM8: Return to Delkfutt's Tower
-        [ 288] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(0) and not player:hasKeyItem(xi.ki.SHARD_OF_APATHY)       ) end, -- ZM14: Ark Angels (Hume)
-        [ 289] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(1) and not player:hasKeyItem(xi.ki.SHARD_OF_COWARDICE)    ) end, -- ZM14: Ark Angels (Tarutaru)
-        [ 290] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(2) and not player:hasKeyItem(xi.ki.SHARD_OF_ENVY)         ) end, -- ZM14: Ark Angels (Mithra)
-        [ 291] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(3) and not player:hasKeyItem(xi.ki.SHARD_OF_ARROGANCE)    ) end, -- ZM14: Ark Angels (Elvaan)
-        [ 292] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(4) and not player:hasKeyItem(xi.ki.SHARD_OF_RAGE)         ) end, -- ZM14: Ark Angels (Galka)
-        [ 293] = function() return ( dm1 == QUEST_ACCEPTED or dm2 == QUEST_ACCEPTED                                                                                        ) end, -- ZM14 Divine Might
-        [ 320] = function() return ( roz == mi.zilart.THE_CELESTIAL_NEXUS                                                                                                  ) end, -- ZM16: The Celestial Nexus
-        [ 416] = function() return ( player:hasKeyItem(xi.ki.TUNING_FORK_OF_WIND)                                                                                          ) end, -- Quest: Trial by Wind
-        [ 417] = function() return ( player:getCharVar("CarbuncleDebacleProgress") == 6                                                                                    ) end, -- Quest: Carbuncle Debacle
-        [ 418] = function() return ( mjob == xi.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Wind
-        [ 419] = function() return ( player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and not player:hasKeyItem(xi.ki.EYE_OF_GALES)                                              ) end, -- Quest: Waking the Beast (Cloister of Gales)
-        [ 420] = function() return ( asa >= mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_EMERALD_SEAL)                                                ) end, -- ASA4: Sugar-coated Directive
-        [ 448] = function() return ( player:hasKeyItem(xi.ki.TUNING_FORK_OF_LIGHTNING)                                                                                     ) end, -- Quest: Trial by Lightning
-        [ 449] = function() return ( player:getCharVar("CarbuncleDebacleProgress") == 3                                                                                    ) end, -- Quest: Carbuncle Debacle
-        [ 450] = function() return ( mjob == xi.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Lightning
-        [ 451] = function() return ( player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and not player:hasKeyItem(xi.ki.EYE_OF_STORMS)                                             ) end, -- Quest: Waking the Beast (Cloister of Storms)
-        [ 452] = function() return ( asa >= mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_VIOLET_SEAL)                                                 ) end, -- ASA4: Sugar-coated Directive
-        [ 480] = function() return ( player:hasKeyItem(xi.ki.TUNING_FORK_OF_ICE)                                                                                           ) end, -- Quest: Trial by Ice
-        [ 481] = function() return ( player:getCharVar("ClassReunionProgress") == 5                                                                                        ) end, -- Quest: Class Reunion
-        [ 482] = function() return ( mjob == xi.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Ice
-        [ 483] = function() return ( player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and not player:hasKeyItem(xi.ki.EYE_OF_FROST)                                              ) end, -- Quest: Waking the Beast (Cloister of Frost)
-        [ 484] = function() return ( asa >= mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_AZURE_SEAL)                                                  ) end, -- ASA4: Sugar-coated Directive
-        [ 512] = function() return ( nat == mi.nation.ARCHLICH and natStat == 11                                                                                           ) end, -- Mission 5-1
-        [ 516] = function() return ( sandy == mi.sandoria.THE_HEIR_TO_THE_LIGHT and natStat == 3                                                                           ) end, -- Sandy 9-2: The Heir to the Light
-        [ 517] = function() return ( mjob == xi.job.PLD and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (PLD LB5)
-        [ 518] = function() return ( mjob == xi.job.DRK and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (DRK LB5)
-        [ 519] = function() return ( mjob == xi.job.BRD and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (BRD LB5)
-        [ 530] = function() return ( mjob == xi.job.DNC and mlvl >= 66                                                                                                     ) end, -- Quest: A Furious Finale (DNC LB5)
-        [ 533] = function() return ( player:hasKeyItem(xi.ki.SOUL_GEM_CLASP)                                                                                               ) end, -- Quest: Beyond Infinity
-        [ 544] = function() return ( player:hasKeyItem(xi.ki.TUNING_FORK_OF_FIRE)                                                                                          ) end, -- Quest: Trial by Fire
-        [ 545] = function() return ( mjob == xi.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Fire
-        [ 546] = function() return ( player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and not player:hasKeyItem(xi.ki.EYE_OF_FLAMES)                                             ) end, -- Quest: Waking the Beast (Cloister of Flames)
-        [ 547] = function() return ( asa >= mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_SCARLET_SEAL)                                                ) end, -- ASA4: Sugar-coated Directive
-        [ 576] = function() return ( player:hasKeyItem(xi.ki.TUNING_FORK_OF_EARTH)                                                                                         ) end, -- Quest: Trial by Earth
-        [ 577] = function() return ( player:getCharVar("ThePuppetMasterProgress") == 2                                                                                     ) end, -- Quest: The Puppet Master
-        [ 578] = function() return ( mjob == xi.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Earth
-        [ 579] = function() return ( player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and not player:hasKeyItem(xi.ki.EYE_OF_TREMORS)                                            ) end, -- Quest: Waking the Beast (Cloister of Tremors)
-        [ 580] = function() return ( asa >= mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_AMBER_SEAL)                                                  ) end, -- ASA4: Sugar-coated Directive
-        [ 608] = function() return ( player:hasKeyItem(xi.ki.TUNING_FORK_OF_WATER)                                                                                         ) end, -- Quest: Trial by Water
-        [ 609] = function() return ( mjob == xi.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Water
-        [ 610] = function() return ( player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and not player:hasKeyItem(xi.ki.EYE_OF_TIDES)                                              ) end, -- Quest: Waking the Beast (Cloister of Tides)
-        [ 611] = function() return ( asa >= mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(xi.ki.DOMINAS_CERULEAN_SEAL)                                               ) end, -- ASA4: Sugar-coated Directive
-        [ 640] = function() return ( cop == mi.cop.THREE_PATHS and player:getMissionStatus(xi.mission.log_id.COP, xi.mission.status.COP.ULMIA) == 8 and
-                                     npc:getXPos() > -721 and npc:getXPos() < 719                                                                                          ) end, -- PM5-3 U3: Flames for the Dead
-        [ 641] = function() return ( player:hasKeyItem(xi.ki.ZEPHYR_FAN)                                                                                                   ) end, -- ENM: Follow the White Rabbit
-        [ 642] = function() return ( player:hasKeyItem(xi.ki.ZEPHYR_FAN)                                                                                                   ) end, -- ENM: When Hell Freezes Over
-        [ 643] = function() return ( player:hasKeyItem(xi.ki.ZEPHYR_FAN)                                                                                                   ) end, -- ENM: Brothers
-        [ 644] = function() return ( player:hasKeyItem(xi.ki.ZEPHYR_FAN)                                                                                                   ) end, -- ENM: Holy Cow
-        [ 672] = function() return ( cop == mi.cop.THREE_PATHS and player:getMissionStatus(xi.mission.log_id.COP, xi.mission.status.COP.ULMIA) == 7                        ) end, -- PM5-3 U2: Head Wind
-        [ 673] = function() return ( player:hasKeyItem(xi.ki.MIASMA_FILTER)                                                                                                ) end, -- ENM: Like the Wind
-        [ 674] = function() return ( player:hasKeyItem(xi.ki.MIASMA_FILTER)                                                                                                ) end, -- ENM: Sheep in Antlion's Clothing
-        [ 675] = function() return ( player:hasKeyItem(xi.ki.MIASMA_FILTER)                                                                                                ) end, -- ENM: Shell We Dance?
-        [ 676] = function() return ( player:hasKeyItem(xi.ki.MIASMA_FILTER)                                                                                                ) end, -- ENM: Totentanz
-        [ 677] = function() return ( player:hasKeyItem(xi.ki.LETTER_FROM_SHIKAREE_X)                                                                                       ) end, -- Quest: Tango with a Tracker
-        [ 678] = function() return ( player:hasKeyItem(xi.ki.LETTER_FROM_SHIKAREE_Y) or player:hasKeyItem(xi.ki.LETTER_FROM_THE_MITHRAN_TRACKERS)                          ) end, -- Quest: Requiem of Sin
-        [ 704] = function() return ( cop == mi.cop.DARKNESS_NAMED and player:getCharVar('Mission[6][358]Status') == 4                                                      ) end, -- PM3-5: Darkness Named
-        [ 705] = function() return ( player:hasKeyItem(xi.ki.ASTRAL_COVENANT)                                                                                              ) end, -- ENM: Test Your Mite
-        [ 706] = function() return ( player:hasKeyItem(xi.ki.VIAL_OF_DREAM_INCENSE)                                                                                        ) end, -- Quest: Waking Dreams
-        [ 736] = function() return ( cop == mi.cop.THREE_PATHS and player:getMissionStatus(xi.mission.log_id.COP, xi.mission.status.COP.LOUVERANCE) == 8                   ) end, -- PM5-3 L3: A Century of Hardship
-        [ 737] = function() return ( player:getCharVar("Quest[1][78]prog") == 9                                                                                            ) end, -- Quest: Return to the Depths
-        [ 738] = function() return ( player:hasKeyItem(xi.ki.SHAFT_2716_OPERATING_LEVER)                                                                                   ) end, -- ENM: Bionic Bug
-        [ 739] = function() return ( player:hasKeyItem(xi.ki.SHAFT_GATE_OPERATING_DIAL) and mjob < xi.job.DNC                                                              ) end, -- ENM: Pulling The Strings
-        [ 740] = function() return ( player:hasKeyItem(xi.ki.SHAFT_GATE_OPERATING_DIAL) and sameRace()                                                                     ) end, -- ENM: Automaton Assault
-        [ 768] = function() return ( (cop == mi.cop.BELOW_THE_ARKS) or (cop == mi.cop.THE_MOTHERCRYSTALS and not player:hasKeyItem(xi.ki.LIGHT_OF_HOLLA))                  ) end, -- PM1-3: The Mothercrystals
-        [ 769] = function() return ( player:hasKeyItem(xi.ki.CENSER_OF_ABANDONMENT)                                                                                        ) end, -- ENM: Simulant
-        [ 800] = function() return ( (cop == mi.cop.BELOW_THE_ARKS) or (cop == mi.cop.THE_MOTHERCRYSTALS and not player:hasKeyItem(xi.ki.LIGHT_OF_DEM))                    ) end, -- PM1-3: The Mothercrystals
-        [ 801] = function() return ( player:hasKeyItem(xi.ki.CENSER_OF_ANTIPATHY)                                                                                          ) end, -- ENM: You Are What You Eat
-        [ 832] = function() return ( (cop == mi.cop.BELOW_THE_ARKS) or (cop == mi.cop.THE_MOTHERCRYSTALS and not player:hasKeyItem(xi.ki.LIGHT_OF_MEA))                    ) end, -- PM1-3: The Mothercrystals
-        [ 833] = function() return ( player:hasKeyItem(xi.ki.CENSER_OF_ANIMUS)                                                                                             ) end, -- ENM: Playing Host
-        [ 864] = function() return ( cop == mi.cop.DESIRES_OF_EMPTINESS and player:getCharVar('Mission[6][518]Status') == 2                                                ) end, -- PM5-2: Desires of Emptiness
-        [ 865] = function() return ( player:hasKeyItem(xi.ki.CENSER_OF_ACRIMONY)                                                                                           ) end, -- ENM: Pulling the Plug
-        [ 896] = function() return ( player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.STORMS_OF_FATE) == QUEST_ACCEPTED and
-                                     player:getCharVar("Quest[3][86]Status") >= 2                                                                                          ) end, -- Quest: Storms of Fate
-        [ 897] = function() return ( player:hasKeyItem(xi.ki.WHISPER_OF_THE_WYRMKING)                                                                                      ) end, -- Quest: The Wyrmking Descends
-        [ 960] = function() return ( cop == mi.cop.ANCIENT_VOWS and player:getCharVar('Mission[6][248]Status') == 2 and
-                                     player:getPreviousZone() == xi.zone.RIVERNE_SITE_A01                                                                                  ) end, -- PM2-5: Ancient Vows
-        [ 961] = function() return ( cop == mi.cop.THE_SAVAGE and player:getCharVar('Mission[6][418]Status') == 1 and player:getPreviousZone() == xi.zone.RIVERNE_SITE_B01 ) end, -- PM4-2: The Savage
-        [ 962] = function() return ( player:hasKeyItem(xi.ki.MONARCH_BEARD)                                                                                                ) end, -- ENM: Fire in the Sky
-        [ 963] = function() return ( player:hasKeyItem(xi.ki.MONARCH_BEARD)                                                                                                ) end, -- ENM: Bad Seed
-        [ 964] = function() return ( player:hasKeyItem(xi.ki.MONARCH_BEARD)                                                                                                ) end, -- ENM: Bugard in the Clouds
-        [ 965] = function() return ( player:hasKeyItem(xi.ki.MONARCH_BEARD)                                                                                                ) end, -- ENM: Beloved of the Atlantes
-        [ 966] = function() return ( player:hasKeyItem(xi.ki.MONARCH_LINN_PATROL_PERMIT)                                                                                   ) end, -- Quest: Uninvited Guest
-        [ 992] = function() return ( cop == mi.cop.ONE_TO_BE_FEARED and player:getCharVar('Mission[6][638]Status') >= 2                                                    ) end, -- PM6-4: One to be Feared
-        [ 993] = function() return ( cop == mi.cop.THE_WARRIORS_PATH and player:getCharVar('Mission[6][748]Status') >= 1                                                   ) end, -- PM7-5: The Warrior's Path
-        [1024] = function() return ( player:getCharVar('Mission[6][828]Status') == 4                                                                                       ) end, -- PM8-3: When Angels Fall
-        [1056] = function() return ( cop == mi.cop.DAWN and player:getCharVar('Mission[6][840]Status') == 2                                                                ) end, -- PM8-4: Dawn
-        [1057] = function() return ( player:getCharVar("Quest[3][89]Prog") == 3                                                                                            ) end, -- Apocalypse Nigh
-        [1090] = function() return ( player:hasKeyItem(xi.ki.TOGGLE_SWITCH)                                                                                                ) end, -- Quest: Puppetmaster Blues
-        [1091] = function() return ( mjob == xi.job.COR and mlvl >= 66                                                                                                     ) end, -- Quest: Breaking the Bonds of Fate (COR LB5)
-        [1092] = function() return ( toau == mi.toau.LEGACY_OF_THE_LOST                                                                                                    ) end, -- TOAU35: Legacy of the Lost
-        [1122] = function() return ( player:getQuestStatus(xi.quest.log_id.AHT_URHGAN,xi.quest.id.ahtUrhgan.OMENS) == QUEST_ACCEPTED and
-                                     xi.quest.getVar(player, xi.quest.log_id.AHT_URHGAN,xi.quest.id.ahtUrhgan.OMENS, 'Prog') == 0                                          ) end, -- Quest: Omens (BLU AF Quest 2)
-        [1123] = function() return ( mjob == xi.job.PUP and mlvl >= 66                                                                                                     ) end, -- Quest: Achieving True Power (PUP LB5)
-        [1124] = function() return ( toau == mi.toau.SHIELD_OF_DIPLOMACY and toauStat == 2                                                                                 ) end, -- TOAU22: Shield of Diplomacy
-        [1154] = function() return ( mjob == xi.job.BLU and mlvl >= 66                                                                                                     ) end, -- Quest: The Beast Within (BLU LB5)
-        [1156] = function() return ( toau == mi.toau.PUPPET_IN_PERIL and toauStat == 1                                                                                     ) end, -- TOAU29: Puppet in Peril
-        [1290] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.RED_CARD) and npcid == getEntranceOffset(0)                        ) end, -- NW Apollyon
-        [1291] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.RED_CARD) and npcid == getEntranceOffset(0)                        ) end, -- SW Apollyon
-        [1292] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.BLACK_CARD) and npcid == getEntranceOffset(1)                      ) end, -- NE Apollyon
-        [1293] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.BLACK_CARD) and npcid == getEntranceOffset(1)                      ) end, -- SE Apollyon
-        [1294] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and ((player:hasKeyItem(xi.ki.RED_CARD) and npcid == getEntranceOffset(0))
-                                                                            or (player:hasKeyItem(xi.ki.BLACK_CARD) and npcid == getEntranceOffset(1)))                    ) end, -- CS Apollyon
-        [1296] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and ((player:hasKeyItem(xi.ki.RED_CARD) and npcid == getEntranceOffset(0))
-                                                                            or (player:hasKeyItem(xi.ki.BLACK_CARD) and npcid == getEntranceOffset(1)))                    ) end, -- Central Apollyon
-        [1298] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.WHITE_CARD)                                                        ) end, -- Temenos Western Tower
-        [1299] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.WHITE_CARD)                                                        ) end, -- Temenos Northern Tower
-        [1300] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.WHITE_CARD)                                                        ) end, -- Temenos Eastern Tower
-        [1301] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.WHITE_CARD)                                                        ) end, -- Central Temenos Basement
-        [1303] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.WHITE_CARD)                                                        ) end, -- Central Temenos 1st Floor
-        [1304] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.WHITE_CARD)                                                        ) end, -- Central Temenos 2nd Floor
-        [1305] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.WHITE_CARD)                                                        ) end, -- Central Temenos 3rd Floor
-        [1306] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.WHITE_CARD)                                                        ) end, -- Central Temenos 4th Floor
-        [2721] = function() return ( wotg == mi.wotg.PURPLE_THE_NEW_BLACK and wotgStat == 1                                                                                ) end, -- WOTG07: Purple, The New Black
+        [0] = function() -- Mission 2-3
+            return nationStatus == 9 and
+                (
+                    bastokMission == xi.mission.id.bastok.THE_EMISSARY_SANDORIA2 or
+                    windurstMission == xi.mission.id.windurst.THE_THREE_KINGDOMS_SANDORIA2
+                )
+        end,
+
+        [3] = function() -- San d'Oria 7-2: The Secret Weapon
+            return sandoriaMission == xi.mission.id.sandoria.THE_SECRET_WEAPON and
+                nationStatus == 2
+        end,
+
+        [5] = function() -- Quest: Shattering Stars (WAR LB5)
+            return mainJob == xi.job.WAR and mainLevel >= 66
+        end,
+
+        [6] = function() -- Quest: Shattering Stars (BLM LB5)
+            return mainJob == xi.job.BLM and mainLevel >= 66
+        end,
+
+        [7] = function() -- Quest: Shattering Stars (RNG LB5)
+            return mainJob == xi.job.RNG and mainLevel >= 66
+        end,
+
+        [20] = function() -- Quest: Beyond Infinity
+            return player:hasKeyItem(xi.ki.SOUL_GEM_CLASP)
+        end,
+
+        [32] = function() -- San d'Oria 1-3: Save the Children
+            local hasCompletedSaveTheChildren = player:hasCompletedMission(xi.mission.log_id.SANDORIA, xi.mission.id.sandoria.SAVE_THE_CHILDREN)
+
+            return sandoriaMission == xi.mission.id.sandoria.SAVE_THE_CHILDREN and
+                (
+                    (hasCompletedSaveTheChildren and nationStatus <= 2) or
+                    (not hasCompletedSaveTheChildren and nationStatus == 2)
+                )
+        end,
+
+        [33] = function() -- Quest: The Holy Crest
+            return player:hasKeyItem(xi.ki.DRAGON_CURSE_REMEDY)
+        end,
+
+        [64] = function() -- Mission 2-3
+            return nationStatus == 10 and
+                (
+                    sandoriaMission == xi.mission.id.sandoria.JOURNEY_TO_BASTOK2 or
+                    windurstMission == xi.mission.id.windurst.THE_THREE_KINGDOMS_BASTOK2
+                )
+        end,
+
+        [67] = function() -- Bastok 7-2: On My Way
+            return bastokMission == xi.mission.id.bastok.ON_MY_WAY and nationStatus == 2
+        end,
+
+        [68] = function() -- Quest: A Thief in Norg!?
+            return player:getCharVar("Quest[5][142]Prog") == 6
+        end,
+
+        [70] = function() -- Quest: Shattering Stars (RDM LB5)
+            return mainJob == xi.job.RDM and mainLevel >= 66
+        end,
+
+        [71] = function() -- Quest: Shattering Stars (THF LB5)
+            return mainJob == xi.job.THF and mainLevel >= 66
+        end,
+
+        [72] = function() -- Quest: Shattering Stars (BST LB5)
+            return mainJob == xi.job.BST and mainLevel >= 66
+        end,
+
+        [85] = function() -- Quest: Beyond Infinity
+            return player:hasKeyItem(xi.ki.SOUL_GEM_CLASP)
+        end,
+
+        [96] = function() -- Mission 2-3
+            return player:hasKeyItem(xi.ki.DARK_KEY)
+        end,
+
+        [99] = function() -- Windurst 6-2: A Saintly Invitation
+            return windurstMission == xi.mission.id.windurst.SAINTLY_INVITATION and
+                nationStatus == 1
+        end,
+
+        [101] = function() -- Quest: Shattering Stars (MNK LB5)
+            return mainJob == xi.job.MNK and mainLevel >= 66
+        end,
+
+        [102] = function() -- Quest: Shattering Stars (WHM LB5)
+            return mainJob == xi.job.WHM and mainLevel >= 66
+        end,
+
+        [103] = function() -- Quest: Shattering Stars (SMN LB5)
+            return mainJob == xi.job.SMN and mainLevel >= 66
+        end,
+
+        [116] = function() -- Quest: Beyond Infinity
+            return player:hasKeyItem(xi.ki.SOUL_GEM_CLASP)
+        end,
+
+        [128] = function() -- ZM4: The Temple of Uggalepih
+            return zilartMission == xi.mission.id.zilart.THE_TEMPLE_OF_UGGALEPIH
+        end,
+
+        [163] = function() -- Quest: Survival of the Wisest (SCH LB5)
+            return mainJob == xi.job.SCH and mainLevel >= 66
+        end,
+
+        [192] = function() -- ZM6: Through the Quicksand Caves
+            return zilartMission == xi.mission.id.zilart.THROUGH_THE_QUICKSAND_CAVES
+        end,
+
+        [194] = function() -- Quest: Shattering Stars (SAM LB5)
+            return mainJob == xi.job.SAM and mainLevel >= 66
+        end,
+
+        [195] = function() -- Quest: Shattering Stars (NIN LB5)
+            return mainJob == xi.job.NIN and mainLevel >= 66
+        end,
+
+        [196] = function() -- Quest: Shattering Stars (DRG LB5)
+            return mainJob == xi.job.DRG and mainLevel >= 66
+        end,
+
+        [224] = function() -- Quest: The Moonlit Path
+            return player:hasKeyItem(xi.ki.MOON_BAUBLE)
+        end,
+
+        [225] = function() -- Windurst 9-2: Moon Reading
+            return windurstMission == xi.mission.id.windurst.MOON_READING and
+                nationStatus == 2
+        end,
+
+        [226] = function() -- Quest: Waking the Beast (Fullmoon Fountain)
+            return player:hasKeyItem(xi.ki.WHISPER_OF_FLAMES) and
+                player:hasKeyItem(xi.ki.WHISPER_OF_TREMORS) and
+                player:hasKeyItem(xi.ki.WHISPER_OF_STORMS) and
+                player:hasKeyItem(xi.ki.WHISPER_OF_FROST) and
+                player:hasKeyItem(xi.ki.WHISPER_OF_GALES) and
+                player:hasKeyItem(xi.ki.WHISPER_OF_TIDES)
+        end,
+
+        [256] = function() -- ZM8: Return to Delkfutt's Tower
+            return zilartMission == xi.mission.id.zilart.RETURN_TO_DELKFUTTS_TOWER and
+                zilartStatus == 2
+        end,
+
+        [288] = function() -- ZM14: Ark Angels (Hume)
+            return zilartMission == xi.mission.id.zilart.ARK_ANGELS and
+                zilartStatus == 1 and
+                npcId == getEntranceOffset(0) and
+                not player:hasKeyItem(xi.ki.SHARD_OF_APATHY)
+        end,
+
+        [289] = function() -- ZM14: Ark Angels (Tarutaru)
+            return zilartMission == xi.mission.id.zilart.ARK_ANGELS and
+                zilartStatus == 1 and
+                npcId == getEntranceOffset(1) and
+                not player:hasKeyItem(xi.ki.SHARD_OF_COWARDICE)
+        end,
+
+        [290] = function() -- ZM14: Ark Angels (Mithra)
+            return zilartMission == xi.mission.id.zilart.ARK_ANGELS and
+                zilartStatus == 1 and
+                npcId == getEntranceOffset(2) and
+                not player:hasKeyItem(xi.ki.SHARD_OF_ENVY)
+        end,
+
+        [291] = function() -- ZM14: Ark Angels (Elvaan)
+            return zilartMission == xi.mission.id.zilart.ARK_ANGELS and
+                zilartStatus == 1 and
+                npcId == getEntranceOffset(3) and
+                not player:hasKeyItem(xi.ki.SHARD_OF_ARROGANCE)
+        end,
+
+        [292] = function() -- ZM14: Ark Angels (Galka)
+            return zilartMission == xi.mission.id.zilart.ARK_ANGELS and
+                zilartStatus == 1 and
+                npcId == getEntranceOffset(4) and
+                not player:hasKeyItem(xi.ki.SHARD_OF_RAGE)
+        end,
+
+        [293] = function() -- ZM14 Divine Might
+            return player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.DIVINE_MIGHT) == QUEST_ACCEPTED or
+                player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.DIVINE_MIGHT_REPEAT) == QUEST_ACCEPTED
+        end,
+
+        [320] = function() -- ZM16: The Celestial Nexus
+            return zilartMission == xi.mission.id.zilart.THE_CELESTIAL_NEXUS
+        end,
+
+        [416] = function() -- Quest: Trial by Wind
+            return player:hasKeyItem(xi.ki.TUNING_FORK_OF_WIND)
+        end,
+
+        [417] = function() -- Quest: Carbuncle Debacle
+            return player:getCharVar("CarbuncleDebacleProgress") == 6
+        end,
+
+        [418] = function() -- Quest: Trial-size Trial by Wind
+            return mainJob == xi.job.SMN and mainLevel >= 20
+        end,
+
+        [419] = function() -- Quest: Waking the Beast (Cloister of Gales)
+            return player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and
+                not player:hasKeyItem(xi.ki.WHISPER_OF_GALES)
+        end,
+
+        [420] = function() -- ASA4: Sugar-coated Directive
+            return asaMission >= xi.mission.id.asa.SUGAR_COATED_DIRECTIVE and
+                player:hasKeyItem(xi.ki.DOMINAS_EMERALD_SEAL)
+        end,
+
+        [448] = function() -- Quest: Trial by Lightning
+            return player:hasKeyItem(xi.ki.TUNING_FORK_OF_LIGHTNING)
+        end,
+
+        [449] = function() -- Quest: Carbuncle Debacle
+            return player:getCharVar("CarbuncleDebacleProgress") == 3
+        end,
+
+        [450] = function() -- Quest: Trial-size Trial by Lightning
+            return mainJob == xi.job.SMN and mainLevel >= 20
+        end,
+
+        [451] = function() -- Quest: Waking the Beast (Cloister of Storms)
+            return player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and
+                not player:hasKeyItem(xi.ki.WHISPER_OF_STORMS)
+        end,
+
+        [452] = function() -- ASA4: Sugar-coated Directive
+            return asaMission >= xi.mission.id.asa.SUGAR_COATED_DIRECTIVE and
+                player:hasKeyItem(xi.ki.DOMINAS_VIOLET_SEAL)
+        end,
+
+        [480] = function() -- Quest: Trial by Ice
+            return player:hasKeyItem(xi.ki.TUNING_FORK_OF_ICE)
+        end,
+
+        [481] = function() -- Quest: Class Reunion
+            return player:getCharVar("ClassReunionProgress") == 5
+        end,
+
+        [482] = function() -- Quest: Trial-size Trial by Ice
+            return mainJob == xi.job.SMN and mainLevel >= 20
+        end,
+
+        [483] = function() -- Quest: Waking the Beast (Cloister of Frost)
+            return player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and
+                not player:hasKeyItem(xi.ki.WHISPER_OF_FROST)
+        end,
+
+        [484] = function() -- ASA4: Sugar-coated Directive
+            return asaMission >= xi.mission.id.asa.SUGAR_COATED_DIRECTIVE and
+                player:hasKeyItem(xi.ki.DOMINAS_AZURE_SEAL)
+        end,
+
+        [512] = function() -- Mission 5-1
+            return player:getCurrentMission(player:getNation()) == xi.mission.id.nation.ARCHLICH and
+                nationStatus == 11
+        end,
+
+        [516] = function() -- San d'Oria 9-2: The Heir to the Light
+            return sandoriaMission == xi.mission.id.sandoria.THE_HEIR_TO_THE_LIGHT and
+                nationStatus == 3
+        end,
+
+        [517] = function() -- Quest: Shattering Stars (PLD LB5)
+            return mainJob == xi.job.PLD and mainLevel >= 66
+        end,
+
+        [518] = function() -- Quest: Shattering Stars (DRK LB5)
+            return mainJob == xi.job.DRK and mainLevel >= 66
+        end,
+
+        [519] = function() -- Quest: Shattering Stars (BRD LB5)
+            return mainJob == xi.job.BRD and mainLevel >= 66
+        end,
+
+        [530] = function() -- Quest: A Furious Finale (DNC LB5)
+            return mainJob == xi.job.DNC and mainLevel >= 66
+        end,
+
+        -- Temp disabled pending BCNM mob fixes
+        -- [532] = function() -- Those Who Lurk in Shadows (ACP7)
+        --     return acpMission >= xi.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_III and
+        --         player:hasKeyItem(xi.ki.MARK_OF_SEED)
+        -- end,
+
+        [533] = function() -- Quest: Beyond Infinity
+            return player:hasKeyItem(xi.ki.SOUL_GEM_CLASP)
+        end,
+
+        [544] = function() -- Quest: Trial by Fire
+            return player:hasKeyItem(xi.ki.TUNING_FORK_OF_FIRE)
+        end,
+
+        [545] = function() -- Quest: Trial-size Trial by Fire
+            return mainJob == xi.job.SMN and mainLevel >= 20
+        end,
+
+        [546] = function() -- Quest: Waking the Beast (Cloister of Flames)
+            return player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and
+                not player:hasKeyItem(xi.ki.WHISPER_OF_FLAMES)
+        end,
+
+        [547] = function() -- ASA4: Sugar-coated Directive
+            return asaMission >= xi.mission.id.asa.SUGAR_COATED_DIRECTIVE and
+                player:hasKeyItem(xi.ki.DOMINAS_SCARLET_SEAL)
+        end,
+
+        [576] = function() -- Quest: Trial by Earth
+            return player:hasKeyItem(xi.ki.TUNING_FORK_OF_EARTH)
+        end,
+
+        [577] = function() -- Quest: The Puppet Master
+            return player:getCharVar("Quest[2][81]Prog") == 1
+        end,
+
+        [578] = function() -- Quest: Trial-size Trial by Earth
+            return mainJob == xi.job.SMN and mainLevel >= 20
+        end,
+
+        [579] = function() -- Quest: Waking the Beast (Cloister of Tremors)
+            return player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and
+                not player:hasKeyItem(xi.ki.WHISPER_OF_TREMORS)
+        end,
+
+        [580] = function() -- ASA4: Sugar-coated Directive
+            return asaMission >= xi.mission.id.asa.SUGAR_COATED_DIRECTIVE and
+                player:hasKeyItem(xi.ki.DOMINAS_AMBER_SEAL)
+        end,
+
+        [608] = function() -- Quest: Trial by Water
+            return player:hasKeyItem(xi.ki.TUNING_FORK_OF_WATER)
+        end,
+
+        [609] = function() -- Quest: Trial-size Trial by Water
+            return mainJob == xi.job.SMN and mainLevel >= 20
+        end,
+
+        [610] = function() -- Quest: Waking the Beast (Cloister of Tides)
+            return player:hasKeyItem(xi.ki.RAINBOW_RESONATOR) and
+                not player:hasKeyItem(xi.ki.WHISPER_OF_TIDES)
+        end,
+
+        [611] = function() -- ASA4: Sugar-coated Directive
+            return asaMission >= xi.mission.id.asa.SUGAR_COATED_DIRECTIVE and
+                player:hasKeyItem(xi.ki.DOMINAS_CERULEAN_SEAL)
+        end,
+
+        [641] = function() -- ENM: Follow the White Rabbit
+            return player:hasKeyItem(xi.ki.ZEPHYR_FAN) and npcId == getEntranceOffset(2)
+        end,
+
+        [642] = function() -- ENM: When Hell Freezes Over
+            return player:hasKeyItem(xi.ki.ZEPHYR_FAN) and npcId == getEntranceOffset(4)
+        end,
+
+        [672] = function() -- PM5-3 U2: Head Wind
+            return promathiaMission == xi.mission.id.cop.THREE_PATHS and
+                player:getMissionStatus(xi.mission.log_id.COP, xi.mission.status.COP.ULMIA) == 7
+        end,
+
+        [673] = function() -- ENM: Like the Wind
+            return player:hasKeyItem(xi.ki.MIASMA_FILTER)
+        end,
+
+        [674] = function() -- ENM: Sheep in Antlion's Clothing
+            return player:hasKeyItem(xi.ki.MIASMA_FILTER)
+        end,
+
+        [675] = function() -- ENM: Shell We Dance?
+            return player:hasKeyItem(xi.ki.MIASMA_FILTER)
+        end,
+
+        [676] = function() -- ENM: Totentanz
+            return player:hasKeyItem(xi.ki.MIASMA_FILTER)
+        end,
+
+        [677] = function() -- Quest: Tango with a Tracker
+            return player:hasKeyItem(xi.ki.LETTER_FROM_SHIKAREE_X)
+        end,
+
+        [678] = function() -- Quest: Requiem of Sin
+            return player:hasKeyItem(xi.ki.LETTER_FROM_SHIKAREE_Y)
+        end,
+
+        [704] = function() -- PM3-5: Darkness Named
+            return promathiaMission == xi.mission.id.cop.DARKNESS_NAMED and
+                player:getCharVar('Mission[6][358]Status') == 4
+        end,
+
+        [705] = function() -- ENM: Test Your Mite
+            return player:hasKeyItem(xi.ki.ASTRAL_COVENANT)
+        end,
+
+        [706] = function() -- Quest: Waking Dreams
+            return player:hasKeyItem(xi.ki.VIAL_OF_DREAM_INCENSE)
+        end,
+
+        [736] = function() -- PM5-3 L3: A Century of Hardship
+            return promathiaMission == xi.mission.id.cop.THREE_PATHS and
+                player:getMissionStatus(xi.mission.log_id.COP, xi.mission.status.COP.LOUVERANCE) == 8
+        end,
+
+        [738] = function() -- ENM: Bionic Bug
+            return player:hasKeyItem(xi.ki.SHAFT_2716_OPERATING_LEVER)
+        end,
+
+        [739] = function() -- ENM: Pulling Your Strings
+            return player:hasKeyItem(xi.ki.SHAFT_GATE_OPERATING_DIAL) and
+                player:getMainJob() < 17 -- ToAU+ jobs not fully implemented
+        end,
+
+        [740] = function() -- ENM: Automaton Assault
+            return player:hasKeyItem(xi.ki.SHAFT_GATE_OPERATING_DIAL) and
+                getPartyRace(player)
+        end,
+
+        [768] = function() -- PM1-3: The Mothercrystals
+            return promathiaMission == xi.mission.id.cop.BELOW_THE_ARKS or
+                (promathiaMission == xi.mission.id.cop.THE_MOTHERCRYSTALS and not player:hasKeyItem(xi.ki.LIGHT_OF_HOLLA))
+        end,
+
+        [769] = function() -- ENM: Simulant
+            return player:hasKeyItem(xi.ki.CENSER_OF_ABANDONMENT)
+        end,
+
+        [800] = function() -- PM1-3: The Mothercrystals
+            return promathiaMission == xi.mission.id.cop.BELOW_THE_ARKS or
+                (promathiaMission == xi.mission.id.cop.THE_MOTHERCRYSTALS and not player:hasKeyItem(xi.ki.LIGHT_OF_DEM))
+        end,
+
+        [801] = function() -- ENM: You Are What You Eat
+            return player:hasKeyItem(xi.ki.CENSER_OF_ANTIPATHY)
+        end,
+
+        [832] = function() -- PM1-3: The Mothercrystals
+            return promathiaMission == xi.mission.id.cop.BELOW_THE_ARKS or
+                (promathiaMission == xi.mission.id.cop.THE_MOTHERCRYSTALS and not player:hasKeyItem(xi.ki.LIGHT_OF_MEA))
+        end,
+
+        [833] = function() -- ENM: Playing Host
+            return player:hasKeyItem(xi.ki.CENSER_OF_ANIMUS)
+        end,
+
+        [864] = function() -- PM5-2: Desires of Emptiness
+            return promathiaMission == xi.mission.id.cop.DESIRES_OF_EMPTINESS and
+                player:getCharVar('Mission[6][518]Status') == 2
+        end,
+
+        [865] = function() -- ENM: Pulling the Plug
+            return player:hasKeyItem(xi.ki.CENSER_OF_ACRIMONY)
+        end,
+
+        [896] = function() -- Quest: Storms of Fate
+            return player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.STORMS_OF_FATE) == QUEST_ACCEPTED and
+                player:getCharVar('StormsOfFate') == 2
+        end,
+
+        [960] = function() -- PM2-5: Ancient Vows
+            return promathiaMission == xi.mission.id.cop.ANCIENT_VOWS and
+                player:getCharVar('Mission[6][248]Status') == 2 and
+                player:getPreviousZone() == xi.zone.RIVERNE_SITE_A01
+        end,
+
+        [961] = function() -- PM4-2: The Savage
+            return promathiaMission == xi.mission.id.cop.THE_SAVAGE and
+                player:getCharVar('Mission[6][418]Status') == 1 and
+                player:getPreviousZone() == xi.zone.RIVERNE_SITE_B01
+        end,
+
+        [962] = function() -- ENM: Fire in the Sky
+            return player:hasKeyItem(xi.ki.MONARCH_BEARD)
+        end,
+
+        [963] = function() -- ENM: Bad Seed
+            return player:hasKeyItem(xi.ki.MONARCH_BEARD)
+        end,
+
+        [964] = function() -- ENM: Bugard in the Clouds
+            return player:hasKeyItem(xi.ki.MONARCH_BEARD)
+        end,
+
+        [965] = function() -- ENM: Beloved of Atlantes
+            return player:hasKeyItem(xi.ki.MONARCH_BEARD)
+        end,
+
+        [992] = function() -- PM6-4: One to be Feared
+            return promathiaMission == xi.mission.id.cop.ONE_TO_BE_FEARED and
+                player:getCharVar('Mission[6][638]Status') == 3
+        end,
+
+        [993] = function() -- PM7-5: The Warrior's Path
+            return promathiaMission == xi.mission.id.cop.THE_WARRIORS_PATH and
+                player:getCharVar('Mission[6][748]Status') == 1
+        end,
+
+        [1024] = function() -- PM8-3: When Angels Fall
+            return promathiaMission == xi.mission.id.cop.WHEN_ANGELS_FALL and
+                promathiaStatus == 4
+        end,
+
+        [1056] = function() -- PM8-4: Dawn
+            return promathiaMission == xi.mission.id.cop.DAWN and
+                promathiaStatus == 2
+        end,
+
+        [1057] = function() -- Apocalypse Nigh
+            return player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_ACCEPTED and
+                player:getCharVar('ApocalypseNigh') == 4
+        end,
+
+        [1090] = function() -- Quest: Puppetmaster Blues
+            return player:hasKeyItem(xi.ki.TOGGLE_SWITCH)
+        end,
+
+        [1091] = function() -- Quest: Breaking the Bonds of Fate (COR LB5)
+            return mainJob == xi.job.COR and mainLevel >= 66
+        end,
+
+        [1092] = function() -- TOAU35: Legacy of the Lost
+            return toauMission == xi.mission.id.toau.LEGACY_OF_THE_LOST
+        end,
+
+        [1122] = function() -- Quest: Omens (BLU AF Quest 2)
+            return player:getQuestStatus(xi.quest.log_id.AHT_URHGAN, xi.quest.id.ahtUrhgan.OMENS) == QUEST_ACCEPTED and
+                xi.quest.getVar(player, xi.quest.log_id.AHT_URHGAN, xi.quest.id.ahtUrhgan.OMENS, 'Prog') == 0
+        end,
+
+        [1123] = function() -- Quest: Achieving True Power (PUP LB5)
+            return mainJob == xi.job.PUP and mainLevel >= 66
+        end,
+
+        [1124] = function() -- TOAU22: Shield of Diplomacy
+            return toauMission == xi.mission.id.toau.SHIELD_OF_DIPLOMACY and toauStatus == 2
+        end,
+
+        [1154] = function() -- Quest: The Beast Within (BLU LB5)
+            return mainJob == xi.job.BLU and mainLevel >= 66
+        end,
+
+        [1156] = function() -- TOAU29: Puppet in Peril
+            return toauMission == xi.mission.id.toau.PUPPET_IN_PERIL and toauStatus == 1
+        end,
+
+        [1290] = function() -- NW Apollyon
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.RED_CARD) and
+                npcId == getEntranceOffset(0)
+        end,
+
+        [1291] = function() -- SW Apollyon
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.RED_CARD) and
+                npcId == getEntranceOffset(0)
+        end,
+
+        [1292] = function() -- NE Apollyon
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.BLACK_CARD) and
+                npcId == getEntranceOffset(1)
+        end,
+
+        [1293] = function() -- SE Apollyon
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.BLACK_CARD) and
+                npcId == getEntranceOffset(1)
+        end,
+
+        [1294] = function() -- CS Apollyon
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+            (
+                (player:hasKeyItem(xi.ki.RED_CARD) and npcId == getEntranceOffset(0)) or
+                (player:hasKeyItem(xi.ki.BLACK_CARD) and npcId == getEntranceOffset(1))
+            )
+        end,
+
+        [1296] = function() -- Central Apollyon
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                (
+                    (player:hasKeyItem(xi.ki.RED_CARD) and npcId == getEntranceOffset(0)) or
+                    (player:hasKeyItem(xi.ki.BLACK_CARD) and npcId == getEntranceOffset(1))
+                )
+        end,
+
+        [1298] = function() -- Temenos Western Tower
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.WHITE_CARD)
+        end,
+
+        [1299] = function() -- Temenos Northern Tower
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.WHITE_CARD)
+        end,
+
+        [1300] = function() -- Temenos Eastern Tower
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.WHITE_CARD)
+        end,
+
+        [1301] = function() -- Central Temenos Basement
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.WHITE_CARD)
+        end,
+
+        [1303] = function() -- Central Temenos 1st Floor
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.WHITE_CARD)
+        end,
+
+        [1304] = function() -- Central Temenos 2nd Floor
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.WHITE_CARD)
+        end,
+
+        [1305] = function() -- Central Temenos 3rd Floor
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.WHITE_CARD)
+        end,
+
+        [1306] = function() -- Central Temenos 4th Floor
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.WHITE_CARD)
+        end,
+
+        [2721] = function() -- WOTG07: Purple, The New Black
+            return player:getCurrentMission(xi.mission.log_id.WOTG) == xi.mission.id.wotg.PURPLE_THE_NEW_BLACK and
+                player:getMissionStatus(xi.mission.log_id.WOTG) == 1
+        end,
     }
 
     -- Requirements to enter a battlefield already registered by a party member
     local enterReqs =
     {
-        [ 640] = function() return ( npc:getXPos() > -721 and npc:getXPos() < 719                                                                          ) end, -- PM5-3 U3: Flames for the Dead
-        [ 641] = function() return ( player:hasKeyItem(xi.ki.ZEPHYR_FAN)                                                                                   ) end, -- ENM: Follow the White Rabbit
-        [ 642] = function() return ( player:hasKeyItem(xi.ki.ZEPHYR_FAN)                                                                                   ) end, -- ENM: When Hell Freezes Over
-        [ 643] = function() return ( player:hasKeyItem(xi.ki.ZEPHYR_FAN)                                                                                   ) end, -- ENM: Brothers
-        [ 644] = function() return ( player:hasKeyItem(xi.ki.ZEPHYR_FAN)                                                                                   ) end, -- ENM: Holy Cow
-        [ 673] = function() return ( player:hasKeyItem(xi.ki.MIASMA_FILTER)                                                                                ) end, -- ENM: Like the Wind
-        [ 674] = function() return ( player:hasKeyItem(xi.ki.MIASMA_FILTER)                                                                                ) end, -- ENM: Sheep in Antlion's Clothing
-        [ 675] = function() return ( player:hasKeyItem(xi.ki.MIASMA_FILTER)                                                                                ) end, -- ENM: Shell We Dance?
-        [ 676] = function() return ( player:hasKeyItem(xi.ki.MIASMA_FILTER)                                                                                ) end, -- ENM: Totentanz
-        [ 705] = function() return ( player:hasKeyItem(xi.ki.ASTRAL_COVENANT)                                                                              ) end, -- ENM: Test Your Mite
-        [ 738] = function() return ( player:hasKeyItem(xi.ki.SHAFT_2716_OPERATING_LEVER)                                                                   ) end, -- ENM: Bionic Bug
-        [ 737] = function() return ( player:getCharVar("Quest[1][78]prog") >= 9 or
-                                     player:hasCompletedQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.RETURN_TO_THE_DEPTHS)                             ) end, -- Quest: Return to the Depths
-        [ 740] = function() return ( player:hasKeyItem(xi.ki.SHAFT_GATE_OPERATING_DIAL)                                                                    ) end, -- ENM: Automaton Assault
-        [ 769] = function() return ( player:hasKeyItem(xi.ki.CENSER_OF_ABANDONMENT)                                                                        ) end, -- ENM: Simulant
-        [ 801] = function() return ( player:hasKeyItem(xi.ki.CENSER_OF_ANTIPATHY)                                                                          ) end, -- ENM: You Are What You Eat
-        [ 833] = function() return ( player:hasKeyItem(xi.ki.CENSER_OF_ANIMUS)                                                                             ) end, -- ENM: Playing Host
-        [ 865] = function() return ( player:hasKeyItem(xi.ki.CENSER_OF_ACRIMONY)                                                                           ) end, -- ENM: Pulling the Plug
-        [ 897] = function() return ( player:hasKeyItem(xi.ki.WHISPER_OF_THE_WYRMKING)                                                                      ) end, -- Quest: The Wyrmking Descends
-        [ 928] = function() return ( player:hasCompletedMission(xi.mission.log_id.COP, mi.cop.ANCIENT_VOWS) or
-                                   ( cop == mi.cop.ANCIENT_VOWS and player:getCharVar('Mission[6][248]Status') >= 2)                                       ) end, -- Quest: Ouryu Cometh
-        [ 962] = function() return ( player:hasKeyItem(xi.ki.MONARCH_BEARD)                                                                                ) end, -- ENM: Fire in the Sky
-        [ 963] = function() return ( player:hasKeyItem(xi.ki.MONARCH_BEARD)                                                                                ) end, -- ENM: Bad Seed
-        [ 964] = function() return ( player:hasKeyItem(xi.ki.MONARCH_BEARD)                                                                                ) end, -- ENM: Bugard in the Clouds
-        [ 965] = function() return ( player:hasKeyItem(xi.ki.MONARCH_BEARD)                                                                                ) end, -- ENM: Beloved of Atlantes
-        [ 966] = function() return ( player:hasKeyItem(xi.ki.MONARCH_LINN_PATROL_PERMIT)                                                                   ) end, -- Quest: Uninvited Guests
-        [ 992] = function() return ( cop > mi.cop.ONE_TO_BE_FEARED                                                                                         ) end, -- PM6-4: One to be Feared
-        [1024] = function() return ( player:hasCompletedMission(xi.mission.log_id.COP, mi.cop.WHEN_ANGELS_FALL) or
-                                    player:getCharVar('Mission[6][828]Status') >= 4                                                                        ) end, -- PM8-3: When Angels Fall
-        [1056] = function() return ( player:hasCompletedMission(xi.mission.log_id.COP, mi.cop.DAWN) or player:getCharVar('Mission[6][840]Status') >= 2     ) end, -- PM8-4: Dawn
-        [1057] = function() return ( player:getCharVar("Quest[3][89]Prog") >= 3                                                                            ) end, -- Quest: Apocalypse Nigh
-        [1290] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.RED_CARD) and npcid == getEntranceOffset(0)        ) end, -- NW Apollyon
-        [1291] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.RED_CARD) and npcid == getEntranceOffset(0)        ) end, -- SW Apollyon
-        [1292] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.BLACK_CARD) and npcid == getEntranceOffset(1)      ) end, -- NE Apollyon
-        [1293] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.BLACK_CARD) and npcid == getEntranceOffset(1)      ) end, -- SE Apollyon
-        [1294] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and ((player:hasKeyItem(xi.ki.RED_CARD) and npcid == getEntranceOffset(0))
-                                                                            or (player:hasKeyItem(xi.ki.BLACK_CARD) and npcid == getEntranceOffset(1)))    ) end, -- CS Apollyon
-        [1296] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and ((player:hasKeyItem(xi.ki.RED_CARD) and npcid == getEntranceOffset(0))
-                                                                            or (player:hasKeyItem(xi.ki.BLACK_CARD) and npcid == getEntranceOffset(1)))    ) end, -- Central Apollyon
-        [1298] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.WHITE_CARD)                                        ) end, -- Temenos Western Tower
-        [1299] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.WHITE_CARD)                                        ) end, -- Temenos Northern Tower
-        [1300] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.WHITE_CARD)                                        ) end, -- Temenos Eastern Tower
-        [1301] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.WHITE_CARD)                                        ) end, -- Central Temenos Basement
-        [1303] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.WHITE_CARD)                                        ) end, -- Central Temenos 1st Floor
-        [1304] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.WHITE_CARD)                                        ) end, -- Central Temenos 2nd Floor
-        [1305] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.WHITE_CARD)                                        ) end, -- Central Temenos 3rd Floor
-        [1306] = function() return ( player:hasKeyItem(xi.ki.COSMO_CLEANSE) and player:hasKeyItem(xi.ki.WHITE_CARD)                                        ) end, -- Central Temenos 4th Floor
-        [2721] = function() return ( player:hasCompletedMission(xi.mission.log_id.WOTG, mi.wotg.PURPLE_THE_NEW_BLACK)                                      ) end, -- WOTG07: Purple, The New Black
+        [226] = function() -- Quest: Waking the Beast (Fullmoon Fountain)
+            return player:hasKeyItem(xi.ki.WHISPER_OF_FLAMES) and
+                player:hasKeyItem(xi.ki.WHISPER_OF_TREMORS) and
+                player:hasKeyItem(xi.ki.WHISPER_OF_STORMS) and
+                player:hasKeyItem(xi.ki.WHISPER_OF_FROST) and
+                player:hasKeyItem(xi.ki.WHISPER_OF_GALES) and
+                player:hasKeyItem(xi.ki.WHISPER_OF_TIDES)
+        end,
+
+        [419] = function() -- Quest: Waking the Beast (Cloister of Gales)
+            return player:hasKeyItem(xi.ki.RAINBOW_RESONATOR)
+        end,
+
+        [451] = function() -- Quest: Waking the Beast (Cloister of Storms)
+            return player:hasKeyItem(xi.ki.RAINBOW_RESONATOR)
+        end,
+
+        [483] = function() -- Quest: Waking the Beast (Cloister of Frost)
+            return player:hasKeyItem(xi.ki.RAINBOW_RESONATOR)
+        end,
+
+        [546] = function() -- Quest: Waking the Beast (Cloister of Flames)
+            return player:hasKeyItem(xi.ki.RAINBOW_RESONATOR)
+        end,
+
+        [579] = function() -- Quest: Waking the Beast (Cloister of Tremors)
+            return player:hasKeyItem(xi.ki.RAINBOW_RESONATOR)
+        end,
+
+        [610] = function() -- Quest: Waking the Beast (Cloister of Tides)
+            return player:hasKeyItem(xi.ki.RAINBOW_RESONATOR)
+        end,
+
+        [640] = function() -- PM5-3 U3: Flames for the Dead
+            return npc:getXPos() > -721 and npc:getXPos() < 719
+        end,
+
+        [641] = function() -- ENM: Follow the White Rabbit
+            return player:hasKeyItem(xi.ki.ZEPHYR_FAN)
+        end,
+
+        [642] = function() -- ENM: When Hell Freezes Over
+            return player:hasKeyItem(xi.ki.ZEPHYR_FAN)
+        end,
+
+        [673] = function() -- ENM: Like the Wind
+            return player:hasKeyItem(xi.ki.MIASMA_FILTER)
+        end,
+
+        [674] = function() -- ENM: Sheep in Antlion's Clothing
+            return player:hasKeyItem(xi.ki.MIASMA_FILTER)
+        end,
+
+        [675] = function() -- ENM: Shell We Dance?
+            return player:hasKeyItem(xi.ki.MIASMA_FILTER)
+        end,
+
+        [676] = function() -- ENM: Totentanz
+            return player:hasKeyItem(xi.ki.MIASMA_FILTER)
+        end,
+
+        [705] = function() -- ENM: Test Your Mite
+            return player:hasKeyItem(xi.ki.ASTRAL_COVENANT)
+        end,
+
+        [738] = function() -- ENM: Bionic Bug
+            return player:hasKeyItem(xi.ki.SHAFT_2716_OPERATING_LEVER)
+        end,
+
+        [739] = function() -- ENM: Pulling Your Strings
+            return player:hasKeyItem(xi.ki.SHAFT_GATE_OPERATING_DIAL)
+        end,
+
+        [740] = function() -- ENM: Automaton Assault
+            return player:hasKeyItem(xi.ki.SHAFT_GATE_OPERATING_DIAL)
+        end,
+
+        [769] = function() -- ENM: Simulant
+            return player:hasKeyItem(xi.ki.CENSER_OF_ABANDONMENT)
+        end,
+
+        [801] = function() -- ENM: You Are What You Eat
+            return player:hasKeyItem(xi.ki.CENSER_OF_ANTIPATHY)
+        end,
+
+        [833] = function() -- ENM: Playing Host
+            return player:hasKeyItem(xi.ki.CENSER_OF_ANIMUS)
+        end,
+
+        [865] = function() -- ENM: Pulling the Plug
+            return player:hasKeyItem(xi.ki.CENSER_OF_ACRIMONY)
+        end,
+
+        [897] = function() -- Quest: The Wyrmking Descends
+            return player:hasKeyItem(xi.ki.WHISPER_OF_THE_WYRMKING)
+        end,
+
+        [962] = function() -- ENM: Fire in the Sky
+            return player:hasKeyItem(xi.ki.MONARCH_BEARD)
+        end,
+
+        [963] = function() -- ENM: Bad Seed
+            return player:hasKeyItem(xi.ki.MONARCH_BEARD)
+        end,
+
+        [964] = function() -- ENM: Bugard in the Clouds
+            return player:hasKeyItem(xi.ki.MONARCH_BEARD)
+        end,
+
+        [965] = function() -- ENM: Beloved of Atlantes
+            return player:hasKeyItem(xi.ki.MONARCH_BEARD)
+        end,
+
+        [928] = function() -- Quest: Ouryu Cometh
+            return player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.ANCIENT_VOWS) or
+                (
+                    promathiaMission == xi.mission.id.cop.ANCIENT_VOWS and
+                    player:getCharVar('Mission[6][248]Status') >= 2
+                )
+        end,
+
+        [1057] = function() -- Quest: Apocalypse Nigh
+            return player:hasCompletedQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH) or
+                (
+                    player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_ACCEPTED and
+                    player:getCharVar('ApocalypseNigh') == 4
+                )
+        end,
+
+        [1290] = function() -- NW Apollyon
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.RED_CARD) and
+                npcId == getEntranceOffset(0)
+        end,
+
+        [1291] = function() -- SW Apollyon
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.RED_CARD) and
+                npcId == getEntranceOffset(0)
+        end,
+
+        [1292] = function() -- NE Apollyon
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.BLACK_CARD) and
+                npcId == getEntranceOffset(1)
+        end,
+
+        [1293] = function() -- SE Apollyon
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.BLACK_CARD) and
+                npcId == getEntranceOffset(1)
+        end,
+
+        [1294] = function() -- CS Apollyon
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                (
+                    (player:hasKeyItem(xi.ki.RED_CARD) and npcId == getEntranceOffset(0)) or
+                    (player:hasKeyItem(xi.ki.BLACK_CARD) and npcId == getEntranceOffset(1))
+                )
+        end,
+
+        [1296] = function() -- Central Apollyon
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+            (
+                (player:hasKeyItem(xi.ki.RED_CARD) and npcId == getEntranceOffset(0)) or
+                (player:hasKeyItem(xi.ki.BLACK_CARD) and npcId == getEntranceOffset(1))
+            )
+        end,
+
+        [1298] = function() -- Temenos Western Tower
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.WHITE_CARD)
+        end,
+
+        [1299] = function() -- Temenos Northern Tower
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.WHITE_CARD)
+        end,
+
+        [1300] = function() -- Temenos Eastern Tower
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.WHITE_CARD)
+        end,
+
+        [1301] = function() -- Central Temenos Basement
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.WHITE_CARD)
+        end,
+
+        [1303] = function() -- Central Temenos 1st Floor
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.WHITE_CARD)
+        end,
+
+        [1304] = function() -- Central Temenos 2nd Floor
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.WHITE_CARD)
+        end,
+
+        [1305] = function() -- Central Temenos 3rd Floor
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.WHITE_CARD)
+        end,
+
+        [1306] = function() -- Central Temenos 4th Floor
+            return player:hasKeyItem(xi.ki.COSMO_CLEANSE) and
+                player:hasKeyItem(xi.ki.WHITE_CARD)
+        end,
+
+        [2721] = function() -- WOTG07: Purple, The New Black
+            return player:hasCompletedMission(xi.mission.log_id.WOTG, xi.mission.id.wotg.PURPLE_THE_NEW_BLACK)
+        end,
     }
 
     -- Determine whether player meets battlefield requirements
