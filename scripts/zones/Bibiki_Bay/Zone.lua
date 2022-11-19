@@ -43,8 +43,8 @@ zone_object.onGameDay = function()
     SetServerVariable("[DIG]ZONE4_ITEMS", 0)
 end
 
-zone_object.onRegionEnter = function(player, region)
-    xi.manaclipper.aboard(player, region:GetRegionID(), true)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
+    xi.manaclipper.aboard(player, triggerArea:GetTriggerAreaID(), true)
 end
 
 zoneObject.onTriggerAreaLeave = function(player, triggerArea)

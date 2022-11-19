@@ -15,20 +15,16 @@
         "xi",
         "ai",
         "os",
-
         "common",
         "zones",
         "quests",
         "utils",
         "npcUtil",
         "item_utils",
-
         "super",
-
         "mixins",
         "g_mixins",
         "applyMixins",
-
         "set",
         "printf",
         "switch",
@@ -37,7 +33,6 @@
         "getMidnight",
         "getConquestTally",
         "vanaDay",
-
         "mission",
         "Mission",
         "quest",
@@ -56,9 +51,7 @@
         "Container",
         "Event",
         "onMobDeathEx",
-
         "removeSleepEffects",
-
         "SANDORIA",
         "BASTOK",
         "WINDURST",
@@ -73,11 +66,9 @@
         "ASA",
         "SOA",
         "ROV",
-
         "QUEST_AVAILABLE",
         "QUEST_ACCEPTED",
         "QUEST_COMPLETED",
-
         "GetMissionLogInfo",
         "GetQuestLogInfo",
         "finishMissionTimeline",
@@ -85,7 +76,6 @@
         "ORIGINAL_MISSION_OFFSET",
         "getMissionRankPoints",
         "getMissionMask",
-
         "SANDORIA",
         "BASTOK",
         "WINDURST",
@@ -97,7 +87,6 @@
         "ABYSSEA",
         "ADOULIN",
         "COALITION",
-
         "SANDORIA",
         "BASTOK",
         "WINDURST",
@@ -137,25 +126,19 @@
         "ROV",
         "QUEST_LOGS",
         "MISSION_LOGS",
-
         "TradeBCNM",
         "EventTriggerBCNM",
         "EventUpdateBCNM",
         "EventFinishBCNM",
-
         "onBattlefieldHandlerInitialise",
-
         "moogleTrade",
         "moogleTrigger",
         "moogleEventUpdate",
         "moogleEventFinish",
-
         "porterMoogleTrade",
         "porterEventUpdate",
         "porterEventFinish",
-
         "dynamis",
-
         "doAutoPhysicalWeaponskill",
         "doAutoRangedWeaponskill",
         "doPhysicalWeaponskill",
@@ -164,9 +147,7 @@
         "doesElementMatchWeaponskill",
         "applyResistanceAddEffect",
         "takeWeaponskillDamage",
-
         "updateModPerformance",
-
         "fTP",
         "fSTR",
         "fSTR2",
@@ -176,23 +157,17 @@
         "generatePdif",
         "getMeleeDmg",
         "handleWSGorgetBelt",
-
         "getRecommendedAssaultLevel",
-
         "PATHFLAG_WALLHACK",
-
         "RoeParseTimed",
         "getRoeRecords",
         "RoeParseRecords",
-
         "cmdprops",
         "error",
         "onTrigger",
-
         "unionRepresentativeTrade",
         "unionRepresentativeTrigger",
         "unionRepresentativeTriggerFinish",
-
         "tradeTestItem",
         "getTestItem",
         "isGuildMember",
@@ -200,29 +175,22 @@
         "getCraftSkillCap",
         "signupGuild",
         "guild",
-
         "CheckMaps",
         "CheckMapsUpdate",
-
         "getDynamisMapList",
-
         "SetExplorerMoogles",
-
         "applyHalloweenNpcCostumes",
         "isHalloweenEnabled",
         "onHalloweenTrade",
         "HALLOWEEN_2008",
         "HALLOWEEN_2009",
         "HALLOWEEN_2010",
-
         "salvageUtil",
-
         "addMogLockerExpiryTime",
         "getMogLockerExpiryTimestamp",
         "unlockMogLocker",
         "getMogLockerAccessType",
         "setMogLockerAccessType",
-
         "addBonuses",
         "addBonusesAbility",
         "applyBarspell",
@@ -285,19 +253,14 @@
         "MobFinalAdjustments",
         "MobPhysicalStatusEffectMove",
         "MobStatusEffectMove",
-
         "FormMagicBurst",
-
         "BOMB_TOSS_HPP",
-
         "AbilityFinalAdjustments",
-
         "getSummoningSkillOverCap",
         "AvatarFinalAdjustments",
         "AvatarPhysicalHit",
         "AvatarPhysicalMove",
         "avatarMiniFightCheck",
-
         "TP_ACC_VARIES",
         "TP_ATK_VARIES",
         "TP_CRIT_VARIES",
@@ -307,7 +270,6 @@
         "TP_MACC_BONUS",
         "TP_NO_EFFECT",
         "TP_RANGED",
-
         "MOBPARAM_1_SHADOW",
         "MOBPARAM_2_SHADOW",
         "MOBPARAM_3_SHADOW",
@@ -327,16 +289,13 @@
         "MOBTYPE_CALLED",
         "MOBTYPE_BATTLEFIELD",
         "MOBTYPE_EVENT",
-
         "MOBSKILL_MAGICAL",
         "MOBSKILL_PHYSICAL",
-
         "getMedalRank",
         "getBastokNotesItem",
         "getSandOriaNotesItem",
         "getWindurstNotesItem",
         "getSigilTimeStamp",
-
         "TPMOD_NONE",
         "TPMOD_CHANCE",
         "TPMOD_CRITICAL",
@@ -368,16 +327,13 @@
         "BlueMagicalSpell",
         "BlueFinalAdjustments",
         "getBlueEffectDuration",
-
         "LEUJAOAM_ASSAULT_POINT",
         "MAMOOL_ASSAULT_POINT",
         "LEBROS_ASSAULT_POINT",
         "PERIQIA_ASSAULT_POINT",
         "ILRUSI_ASSAULT_POINT",
         "NYZUL_ISLE_ASSAULT_POINT",
-
         "doRoyalPalaceArmorCheck",
-
         "MOGLOCKER_START_TS",
         "MOGLOCKER_ALZAHBI_VALID_DAYS",
         "MOGLOCKER_ALLAREAS_VALID_DAYS",
@@ -385,7 +341,6 @@
         "MOGLOCKER_ACCESS_TYPE_ALLAREAS",
         "MOGLOCKER_PLAYERVAR_ACCESS_TYPE",
         "MOGLOCKER_PLAYERVAR_EXPIRY_TIMESTAMP",
-
         "GarbageCollectStep",
         "GarbageCollectFull",
         "GetZone",
@@ -448,6 +403,14 @@
         "GetCachedInstanceScript",
         "ForceCrash",
         "BuildString",
+        "SendLuaFuncStringToZone",
+        "DYNAMIC_LOOKUP",
+        "GetEntityByID",
+        "GetItemIDByName",
+        "GetPlayerIDAnywhere",
+        "SendToJailOffline",
+        "IsZoneActive",
+        "GetContainerFilenamesList"
     ],
     "Lua.diagnostics.disable": [
         "lowercase-global"
