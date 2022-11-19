@@ -2,18 +2,24 @@
 
 ## Table of Contents
 
-1. [General Guidelines](#general-guidelines) @ref
-2. [License](#license)
-3. [Workflow Guide](#workflow-guide)
-4. [Issue Report Contributions](#issue-report-contributions)
-5. [Pull Request Contributions](#pull-request-contributions)
-6. [Style Guide](#style-guide)
-    - [Code Editor Configuration](#code-editor-configuration)
-    - [General code guidlines and styling (all languages)](#general-code-guidlines-all-languages)
-    - [C++](#c)
-    - [Lua](#lua)
-    - [SQL](#sql)
-    - [Python](#python)
+- [Contributing Guide](#contributing-guide)
+  - [Table of Contents](#table-of-contents)
+  - [Code of Conduct](#code-of-conduct)
+  - [License](#license)
+  - [General Guidelines](#general-guidelines)
+  - [Technical Guidelines](#technical-guidelines)
+  - [Workflow Guide](#workflow-guide)
+  - [Issue Report Contributions](#issue-report-contributions)
+  - [Pull Request Contributions](#pull-request-contributions)
+
+## Code of Conduct
+
+- Please read and understand our [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## License
+
+- We operate under [GNU General Public License v3.0](https://github.com/AirSkyBoat/AirSkyBoat/blob/staging/LICENSE).
+- We do not accept contributions that use other more restrictive licenses (such as AGPLv3).
 
 ## General Guidelines
 
