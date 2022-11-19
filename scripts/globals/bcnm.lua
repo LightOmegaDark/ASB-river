@@ -523,26 +523,27 @@ local battlefields =
 -- Check requirements for registrant and allies
 -----------------------------------
 local function checkReqs(player, npc, bfid, registrant)
-    local mi       = xi.mission.id
-    local npcid    = npc:getID()
-    local mjob     = player:getMainJob()
-    local mlvl     = player:getMainLvl()
-    local nat      = player:getCurrentMission(player:getNation())
-    local sandy    = player:getCurrentMission(xi.mission.log_id.SANDORIA)
-    local basty    = player:getCurrentMission(xi.mission.log_id.BASTOK)
-    local windy    = player:getCurrentMission(xi.mission.log_id.WINDURST)
-    local roz      = player:getCurrentMission(xi.mission.log_id.ZILART)
-    local cop      = player:getCurrentMission(xi.mission.log_id.COP)
-    local toau     = player:getCurrentMission(xi.mission.log_id.TOAU)
-    local wotg     = player:getCurrentMission(xi.mission.log_id.WOTG)
-    local asa      = player:getCurrentMission(xi.mission.log_id.ASA)
-    local natStat  = player:getMissionStatus(player:getNation())
-    local rozStat  = player:getMissionStatus(xi.mission.log_id.ZILART)
-    local toauStat = player:getMissionStatus(xi.mission.log_id.TOAU)
-    local wotgStat = player:getMissionStatus(xi.mission.log_id.WOTG)
-    local stc      = player:hasCompletedMission(xi.mission.log_id.SANDORIA, mi.sandoria.SAVE_THE_CHILDREN)
-    local dm1      = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.DIVINE_MIGHT)
-    local dm2      = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.DIVINE_MIGHT_REPEAT)
+    local battlefield = xi.battlefield.contents[bfid]
+    if battlefield then
+        return battlefield:checkRequirements(player, npc, registrant)
+    end
+
+    local npcId     = npc:getID()
+    local mainJob   = player:getMainJob()
+    local mainLevel = player:getMainLvl()
+
+    local sandoriaMission  = player:getCurrentMission(xi.mission.log_id.SANDORIA)
+    local bastokMission    = player:getCurrentMission(xi.mission.log_id.BASTOK)
+    local windurstMission  = player:getCurrentMission(xi.mission.log_id.WINDURST)
+    local zilartMission    = player:getCurrentMission(xi.mission.log_id.ZILART)
+    local promathiaMission = player:getCurrentMission(xi.mission.log_id.COP)
+    local toauMission      = player:getCurrentMission(xi.mission.log_id.TOAU)
+--  local acpMission       = player:getCurrentMission(xi.mission.log_id.ACP) NOTE: UNUSED Until BCNMID 532 is Re-enabled
+    local asaMission       = player:getCurrentMission(xi.mission.log_id.ASA)
+
+    local nationStatus    = player:getMissionStatus(player:getNation())
+    local zilartStatus    = player:getMissionStatus(xi.mission.log_id.ZILART)
+    local toauStatus      = player:getMissionStatus(xi.mission.log_id.TOAU)
 
     local function getEntranceOffset(offset)
         return zones[player:getZoneID()].npc.ENTRANCE_OFFSET + offset
@@ -1444,45 +1445,16 @@ end
 -- check ability to skip a cutscene
 -----------------------------------
 local function checkSkip(player, bfid)
-    local mi        = xi.mission.id
-    local nat       = player:getCurrentMission(player:getNation())
-    local sandy     = player:getCurrentMission(xi.mission.log_id.SANDORIA)
-    local basty     = player:getCurrentMission(xi.mission.log_id.BASTOK)
-    local windy     = player:getCurrentMission(xi.mission.log_id.WINDURST)
-    -- local roz       = player:getCurrentMission(ZILART)
-    local cop       = player:getCurrentMission(xi.mission.log_id.COP)
-    -- local toau      = player:getCurrentMission(xi.mission.log_id.TOAU)
-    -- local wotg      = player:getCurrentMission(xi.mission.log_id.WOTG)
-    -- local asa       = player:getCurrentMission(ASA)
-    local natStat   = player:getMissionStatus(player:getNation())
-    -- local rozStat   = player:getMissionStatus(xi.mission.log_id.ZILART)
-    local copStat   = player:getCharVar("PromathiaStatus")
-    -- local toauStat  = player:getCharVar("AhtUrganStatus")
-    local sofStat   = player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.STORMS_OF_FATE)
-    local mission2_3a =
-        player:hasCompletedMission(xi.mission.log_id.BASTOK, mi.bastok.THE_EMISSARY_SANDORIA2) or
-        player:hasCompletedMission(xi.mission.log_id.WINDURST, mi.windurst.THE_THREE_KINGDOMS_SANDORIA2) or
-        natStat > 9 and
-        (
-            basty == mi.bastok.THE_EMISSARY_SANDORIA2 or
-            windy == mi.windurst.THE_THREE_KINGDOMS_SANDORIA2
-        )
-    local mission2_3b =
-        player:hasCompletedMission(xi.mission.log_id.SANDORIA, mi.sandoria.JOURNEY_TO_BASTOK2) or
-        player:hasCompletedMission(xi.mission.log_id.WINDURST, mi.windurst.THE_THREE_KINGDOMS_BASTOK2) or
-        natStat > 10 and
-        (
-            sandy == mi.sandoria.JOURNEY_TO_BASTOK2 or
-            windy == mi.windurst.THE_THREE_KINGDOMS_BASTOK2
-        )
-    local mission2_3c =
-        player:hasCompletedMission(xi.mission.log_id.SANDORIA, mi.sandoria.JOURNEY_TO_WINDURST2) or
-        player:hasCompletedMission(xi.mission.log_id.BASTOK, mi.bastok.THE_EMISSARY_WINDURST2) or
-        natStat > 8 and
-        (
-            sandy == mi.sandoria.JOURNEY_TO_WINDURST2 or
-            basty == mi.bastok.THE_EMISSARY_WINDURST2
-        )
+    local battlefield = xi.battlefield.contents[bfid]
+    if battlefield then
+        return battlefield:checkSkipCutscene(player)
+    end
+
+    local sandoriaMission  = player:getCurrentMission(xi.mission.log_id.SANDORIA)
+    local bastokMission    = player:getCurrentMission(xi.mission.log_id.BASTOK)
+    local windurstMission  = player:getCurrentMission(xi.mission.log_id.WINDURST)
+    local promathiaMission = player:getCurrentMission(xi.mission.log_id.COP)
+    local nationStatus     = player:getMissionStatus(player:getNation())
 
     -- Requirements to skip a battlefield
     local skipReqs =
