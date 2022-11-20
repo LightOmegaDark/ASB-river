@@ -492,9 +492,6 @@ INSERT INTO `mob_spawn_mods` VALUES (16793860,55,180,1); -- IDLE_DESPAWN: 180
 -- Shen'S Filtrate
 INSERT INTO `mob_spawn_mods` VALUES (16793861,55,180,1); -- IDLE_DESPAWN: 180
 
--- Jormungand
-INSERT INTO `mob_spawn_mods` VALUES (16797969,12,15,1); -- DRAW_IN: 15
-
 -- Geush Urvan
 INSERT INTO `mob_spawn_mods` VALUES (16798078,55,1800,1); -- IDLE_DESPAWN: 1800
 

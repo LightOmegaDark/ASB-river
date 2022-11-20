@@ -35,7 +35,7 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
         skill:setMsg(xi.msg.basic.DISAPPEAR_NUM)
     end
 
-    mob:lowerEnmity(target, 70)
+    mob:resetEnmity(target)
 
     return dispel
 end
