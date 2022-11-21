@@ -105,10 +105,14 @@ entity.onMobDeath = function(mob, player, isKiller)
     if isKiller then
         local mobId = mob:getID()
         for i = 1, 2 do
-            local petID = GetMobByID(mobId+i)
+            local petID = GetMobByID(mobId + i)
             petID:setHP(0)
         end
+        -- Save off quest marker local variable
+        local qmVar = mob:getLocalVar("qm")
+        -- Clear everything else
         mob:resetLocalVars()
+        mob:setLocalVar("qm", qmVar)
         mob:removeListener("SHEN_MAGIC_EXIT")
     end
 end
