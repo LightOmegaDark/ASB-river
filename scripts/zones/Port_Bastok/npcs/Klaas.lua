@@ -1,8 +1,6 @@
 -----------------------------------
 -- Area: Port Bastok
 --  NPC: Klaas
--- Standard Info NPC
--- TODO: Event logic, values
 -----------------------------------
 local entity = {}
 

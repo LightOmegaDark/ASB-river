@@ -26,7 +26,11 @@ zoneObject.onZoneIn = function(player, prevZone)
     -- No need for an 'else' to change it back outside these dates as a re-zone will handle that.
     end
 
-    if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
+    if
+        player:getXPos() == 0 and
+        player:getYPos() == 0 and
+        player:getZPos() == 0
+    then
         if prevZone == xi.zone.SAN_DORIA_JEUNO_AIRSHIP then
             cs = 10018
             player:setPos(-87.000, 12.000, 116.000, 128)
@@ -44,7 +48,6 @@ zoneObject.onZoneIn = function(player, prevZone)
             player:setPos(-192.5 , -5, position, 0)
         end
     end
-
     return cs
 end
 

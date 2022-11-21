@@ -13,8 +13,8 @@ require('scripts/globals/zone')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    zone:registerRegion(1, -292, -10, 90 , -258, 10, 105)
-    quests.ffr.initZone(zone) -- register regions 2 through 6
+    zone:registerTriggerArea(1, -292, -10, 90 , -258, 10, 105)
+    quests.ffr.initZone(zone) -- register trigger areas 2 through 6
     applyHalloweenNpcCostumes(zone:getID())
     applyStarlightDecorations(zone:getID())
     xi.chocobo.initZone(zone)
@@ -35,7 +35,11 @@ zoneObject.onZoneIn = function(player, prevZone)
     end
 
     -- MOG HOUSE EXIT
-    if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
+    if
+        player:getXPos() == 0 and
+        player:getYPos() == 0 and
+        player:getZPos() == 0
+    then
         player:setPos(161, -2, 161, 94)
     end
 
@@ -46,11 +50,11 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onRegionEnter = function(player, region)
-    quests.ffr.onRegionEnter(player, region) -- player approaching Flyers for Regine NPCs
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
+    quests.ffr.onTriggerAreaEnter(player, triggerArea) -- player approaching Flyers for Regine NPCs
 end
 
-zoneObject.onRegionLeave = function(player, region)
+zoneObject.onTriggerAreaLeave = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)

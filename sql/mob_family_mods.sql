@@ -843,6 +843,10 @@ INSERT INTO `mob_family_mods` VALUES (268,59,120,1); -- WEAPON_BONUS: 120
 INSERT INTO `mob_family_mods` VALUES (271,3,50,1);   -- MP_BASE: 50
 INSERT INTO `mob_family_mods` VALUES (271,363,50,0); -- DEFP: 50
 
+-- Zdei
+INSERT INTO `mob_family_mods` VALUES (272,4,10,1);    -- SIGHT_RANGE: 10
+INSERT INTO `mob_family_mods` VALUES (272,102,60,1);  -- MOBMOD_SIGHT_ANGLE
+
 -- Scorpion-Serket
 INSERT INTO `mob_family_mods` VALUES (273,23,256,1); -- IMMUNITY: 256
 
@@ -956,6 +960,7 @@ INSERT INTO `mob_family_mods` VALUES (392,36,55,1); -- ROAM_COOL: 55
 -- Wyrm-Tiamat
 INSERT INTO `mob_family_mods` VALUES (393,31,5,1);  -- ROAM_DISTANCE: 5
 INSERT INTO `mob_family_mods` VALUES (393,36,55,1); -- ROAM_COOL: 55
+INSERT INTO `mob_family_mods` VALUES (393,59,254,1); -- WEAPON_BONUS: 254
 
 -- Humanoid-Hume
 INSERT INTO `mob_family_mods` VALUES (394,4,30,1);   -- SIGHT_RANGE: 30
