@@ -331,6 +331,7 @@ local function doNuke(caster, target, spell, params)
             dmg = dmg + (caster:getJobPointLevel(xi.jp.ELEM_NINJITSU_EFFECT) * 2)
             dmg = dmg * ninSkillBonus/100
         end
+
         -- boost with Futae
         if caster:hasStatusEffect(xi.effect.FUTAE) then
             dmg = dmg + (caster:getJobPointLevel(xi.jp.FUTAE_EFFECT) * 5)
@@ -1348,6 +1349,7 @@ xi.magic.getElementalDebuffDOT = function(INT)
     else
         DOT = 5
     end
+
     return DOT
 end
 
@@ -1569,6 +1571,7 @@ xi.magic.doNinjutsuNuke = function(caster, target, spell, params)
     if caster:hasStatusEffect(xi.effect.INNIN) and caster:isBehind(target, 23) then -- Innin mag atk bonus from behind, guesstimating angle at 23 degrees
         mabBonus = mabBonus + caster:getStatusEffect(xi.effect.INNIN):getPower()
     end
+
     params.skillType = xi.skill.NINJUTSU
     params.attribute = xi.mod.INT
     params.bonusmab = mabBonus

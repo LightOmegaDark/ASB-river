@@ -350,6 +350,15 @@ xi.magian.deliveryCrateOnEventUpdate = function(player, csid, option)
             player:updateEvent(trialBits[1], trialBits[2], trialBits[3], trialBits[4], trialBits[5], nbTrialsPlayer, places, 0)
         end
     end
+
+    if csid == 10134 and optionMod == 103 then
+        local places = bit.rshift(maxNumber, nbTrialsPlayer)
+        local trials = getPlayerTrialByItemId(player, itemTrialId)
+
+        local trialBits = getTrialsBits(player, trials)
+        player:updateEvent(trialBits[1], trialBits[2], trialBits[3], trialBits[4], trialBits[5], nbTrialsPlayer, places, 0)
+    end
+
 end
 
 xi.magian.deliveryCrateOnEventFinish = function(player, csid, option)
@@ -375,6 +384,12 @@ xi.magian.deliveryCrateOnEventFinish = function(player, csid, option)
             local t = GetMagianTrial(trialId)
             player:addItem(t.reqItem, 1, t.reqItemAug1, t.reqItemAugValue1, t.reqItemAug2, t.reqItemAugValue2, t.reqItemAug3, t.reqItemAugValue3, t.reqItemAug4, t.reqItemAugValue4, trialId)
         end
+
+        player:setLocalVar("storeTrialId", 0)
+        player:setLocalVar("storeItemId", 0)
+        player:setLocalVar("storeItemTrialId", 0)
+        player:setLocalVar("storeItemTrialQty", 0)
+        player:setLocalVar("storeNbTrialsPlayer", 0)
     end
 end
 
