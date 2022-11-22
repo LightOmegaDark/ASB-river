@@ -677,7 +677,10 @@ xi.treasure.treasureInfo =
                                 player:hasKeyItem(xi.ki.OLD_BOOTS) and
                                 not player:hasKeyItem(xi.ki.CRAWLER_BLOOD)
                         end,
-                        code = function(player) npcUtil.giveKeyItem(player, xi.ki.CRAWLER_BLOOD) end,
+
+                        code = function(player)
+                            npcUtil.giveKeyItem(player, xi.ki.CRAWLER_BLOOD)
+                        end,
                     },
                 },
                 points =

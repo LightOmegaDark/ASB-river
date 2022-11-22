@@ -873,7 +873,10 @@ end
 
 function utils.getAngleDifference(a, b)
     local diff = math.abs(b - a)
-    if diff > math.pi then diff = 2 * math.pi - diff end
+    if diff > math.pi then
+        diff = 2 * math.pi - diff
+    end
+
     return diff
 end
 

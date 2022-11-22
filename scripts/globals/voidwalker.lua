@@ -139,7 +139,7 @@ local getNearestMob = function(player, mobs)
         return a.distance < b.distance
     end)
 
-    if #results > 0 then
+    if table.getn(results) > 0 then
         return results[1]
     else
         return nil
@@ -513,18 +513,12 @@ xi.voidwalker.onMobDeath = function(mob, player, optParams, keyItem)
                 end
             end
 
-            if
-                outOfParty and
-                not playerpoped:hasKeyItem(keyItem)
-            then
+            if outOfParty and not playerpoped:hasKeyItem(keyItem) then
                 checkUpgrade(playerpoped, mob, keyItem)
             end
         end
 
-        if
-            player:hasKeyItem(popkeyitem) and
-            not player:hasKeyItem(keyItem)
-        then
+        if player:hasKeyItem(popkeyitem) and not player:hasKeyItem(keyItem) then
             checkUpgrade(player, mob, keyItem)
         end
     end

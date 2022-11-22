@@ -50,6 +50,8 @@ entity.onTrigger = function(player, npc)
     end
 
     xi.shop.nation(player, stock, xi.nation.WINDURST)
+
+    xi.shop.nation(player, stock, xi.nation.WINDURST)
 end
 
 entity.onEventUpdate = function(player, csid, option)

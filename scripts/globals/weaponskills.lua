@@ -428,6 +428,7 @@ local function calculateDEXvsAGICritRate(attacker, target)
     else
         nativecrit = 0.15 -- caps only apply to base rate, not merits and mods
     end
+
     return nativecrit
 end
 

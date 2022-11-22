@@ -153,6 +153,18 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
         [22] = function(x)
             player:startEvent(210)
         end,
+
+        [24] = function(x)
+            if player:getCharVar("TransformationsProgress") == 2 then
+                player:startEvent(2)
+            end
+        end,
+
+        [25] = function(x)
+            if player:getCharVar("TransformationsProgress") == 3 then
+                player:startEvent(3)
+            end
+        end,
     }
 end
 

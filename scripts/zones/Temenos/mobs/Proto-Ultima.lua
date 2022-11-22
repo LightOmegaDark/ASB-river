@@ -37,13 +37,16 @@ entity.onMobFight = function(mob, target)
                 -- Enable Holy II after a short delay so Dissipation will go off first
             mob:timer(1000, function(mobArg)
                 mob:setMagicCastingEnabled(true)
-            end)
-        elseif phase == 3 then
-            mob:setMobMod(xi.mobMod.SKILL_LIST, 1195)
-        elseif phase == 4 then
-            mob:setMobMod(xi.mobMod.SKILL_LIST, 1196)
-            mob:setMod(xi.mod.REGAIN, 100)
-            mob:setLocalVar("citadelBusterTime", os.time() + math.random(20, 30))
+            end
+
+            if phase == 4 then -- add Regain in final phase
+                if not mob:hasStatusEffect(xi.effect.REGAIN) then
+                    mob:addStatusEffect(xi.effect.REGAIN, 7, 3, 0)
+                    mob:getStatusEffect(xi.effect.REGAIN):setFlag(xi.effectFlag.DEATH)
+                end
+            end
+
+            mob:setLocalVar("battlePhase", phase) -- incrementing the phase here instead of in the Dissipation skill because stunning it prevents use.
         end
 
         mob:setLocalVar("phase", phase)
@@ -70,25 +73,9 @@ entity.onMobDeath = function(mob, player, optParams)
     if player then
         player:addTitle(xi.title.TEMENOS_LIBERATOR)
     end
-end
 
-local citadelBusterTimers =
-{
-    [0] = 0,
-    [1] = 10000,
-    [2] = 10000,
-    [3] = 5000,
-    [4] = 1000,
-    [5] = 1000,
-    [6] = 1000,
-    [7] = 1000,
-    [8] = 1000,
-    [9] = 500,
-}
-
-local function sendMessageToList(playerList, messageID)
-    for _, member in pairs(playerList) do
-        member:messageSpecial(messageID)
+    if optParams.isKiller or optParams.noKiller then
+        GetNPCByID(ID.npc.TEMENOS_C_CRATE[4][1]):setStatus(xi.status.NORMAL)
     end
 end
 

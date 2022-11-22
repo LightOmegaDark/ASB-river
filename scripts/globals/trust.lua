@@ -333,10 +333,10 @@ xi.trust.canCast = function(caster, spell, notAllowedTrustIds)
                 end
             end
 
-            numTrusts = numTrusts + 1
+            num_trusts = num_trusts + 1
         end
 
-        numPt = numPt + 1
+        num_pt = num_pt + 1
     end
 
     -- Max party size
