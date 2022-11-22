@@ -1060,7 +1060,7 @@ local function checkReqs(player, npc, bfid, registrant)
             return player:hasKeyItem(xi.ki.MONARCH_BEARD)
         end,
 
-        [966] = function() -- Quest: Uninvited Guests
+        [966] = function() -- ENM: Uninvited Guests
             return player:hasKeyItem(xi.ki.MONARCH_LINN_PATROL_PERMIT)
         end,
 
@@ -1330,12 +1330,16 @@ local function checkReqs(player, npc, bfid, registrant)
             return player:hasKeyItem(xi.ki.MONARCH_BEARD)
         end,
 
-        [966] = function() -- Quest: Uninvited Guests
+        [966] = function() -- ENM: Uninvited Guests
             return player:hasKeyItem(xi.ki.MONARCH_LINN_PATROL_PERMIT)
         end,
 
-        [992] = function() -- PM6-4: One to be Feared
-            return promathiaMission >= xi.mission.id.cop.ONE_TO_BE_FEARED
+        [928] = function() -- Quest: Ouryu Cometh
+            return player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.ANCIENT_VOWS) or
+                (
+                    promathiaMission == xi.mission.id.cop.ANCIENT_VOWS and
+                    player:getCharVar('Mission[6][248]Status') >= 2
+                )
         end,
 
         [1057] = function() -- Quest: Apocalypse Nigh
