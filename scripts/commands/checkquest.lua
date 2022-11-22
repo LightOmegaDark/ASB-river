@@ -64,6 +64,20 @@ function onTrigger(player, logId, questId, target)
 
     -- get quest status
     local status = targ:getQuestStatus(logId, questId)
+    switch (status): caseof
+    {
+        [0] = function()
+            status = "AVAILABLE"
+        end,
+
+        [1] = function()
+            status = "ACCEPTED"
+        end,
+
+        [2] = function()
+            status = "COMPLETED"
+        end,
+    }
 
     -- show quest status
     player:PrintToPlayer( string.format( "%s's status for %s quest ID %i is: %s", targ:getName(), logName, questId, status ) )

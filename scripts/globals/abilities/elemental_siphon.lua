@@ -50,10 +50,21 @@ ability_object.onUseAbility = function(player,target,ability)
     local weather = player:getWeather()
 
     -- Day bonus/penalty
-    if (dayElement == spiritEle) then
-        dayBonus = dayBonus + 0.1
-    elseif (dayElement == xi.magic.elementDescendant[spiritEle]) then
-        dayBonus = dayBonus - 0.1
+    if dayElement == xi.magic.dayStrong[spiritEle] then
+        weatherDayBonus = weatherDayBonus + 0.1
+    elseif dayElement == xi.magic.dayWeak[spiritEle] then
+        weatherDayBonus = weatherDayBonus - 0.1
+    end
+
+    -- Weather bonus/penalty
+    if weather == xi.magic.singleWeatherStrong[spiritEle] then
+        weatherDayBonus = weatherDayBonus + 0.1
+    elseif weather == xi.magic.singleWeatherWeak[spiritEle] then
+        weatherDayBonus = weatherDayBonus - 0.1
+    elseif weather == xi.magic.doubleWeatherStrong[spiritEle] then
+        weatherDayBonus = weatherDayBonus + 0.25
+    elseif weather == xi.magic.doubleWeatherWeak[spiritEle] then
+        weatherDayBonus = weatherDayBonus - 0.25
     end
 
     -- Weather bonus/penalty
