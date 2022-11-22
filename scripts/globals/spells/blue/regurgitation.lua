@@ -49,6 +49,8 @@ spellObject.onSpellCast = function(caster, target, spell)
         damage = math.floor(damage * 1.25)
     end
 
+    damage = BlueFinalAdjustments(caster, target, spell, damage, params)
+
     --TODO: Knockback? Where does that get handled? How much knockback does it have?
 
     local resist = xi.magic.applyResistance(caster, target, spell, params)

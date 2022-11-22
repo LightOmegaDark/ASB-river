@@ -24,7 +24,12 @@ end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
-    params.ecosystem = xi.ecosystem.DEMON
+    -- This data should match information on https://www.bg-wiki.com/bg/Calculating_Blue_Magic_Damage
+    local multi = 2.625
+    if caster:hasStatusEffect(xi.effect.AZURE_LORE) then
+        multi = multi + 2.0
+    end
+
     params.attackType = xi.attackType.MAGICAL
     params.damageType = xi.damageType.DARK
     params.attribute = xi.mod.CHR
