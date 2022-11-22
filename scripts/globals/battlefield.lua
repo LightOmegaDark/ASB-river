@@ -937,6 +937,7 @@ function Battlefield:onBattlefieldEnter(player, battlefield)
                         if not self.requiredKeyItems.keep then
                             player:delKeyItem(subitem)
                         end
+
                         table.insert(items, subitem)
                     end
                 end
@@ -944,6 +945,7 @@ function Battlefield:onBattlefieldEnter(player, battlefield)
                 if not self.requiredKeyItems.keep then
                     player:delKeyItem(item)
                 end
+
                 table.insert(items, item)
             end
         end

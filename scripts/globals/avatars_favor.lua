@@ -153,6 +153,8 @@ xi.avatarsFavor.removeAvatarsFavorAuraFromPet = function(target)
 
             removeAvatarsFavorDebuffsFromPet(target)
         end
+
+        removeAvatarsFavorDebuffsFromPet(target)
     end
 end
 

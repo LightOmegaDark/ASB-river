@@ -34,6 +34,8 @@ local function calculateAlpha(level)
     elseif level <= 99 then
         return 0.83
     end
+
+    return alpha
 end
 
 -- Get WSC
@@ -80,7 +82,6 @@ local function BluecRatio(ratio, atk_lvl, def_lvl)
         cratiomax = 1.2 * ratio
     end
 
-    -- Return data
     local cratio = {}
     if cratiomin < 0 then
         cratiomin = 0
@@ -101,6 +102,8 @@ local function calculatefTP(tp, ftp0, ftp1500, ftp3000)
     else -- unreachable
         return 1
     end
+
+    return 1 -- no ftp mod
 end
 
 -- Get fSTR
@@ -133,9 +136,36 @@ local function calculateHitrate(attacker, target)
     local eva = target:getEVA()
     acc = acc + ((attacker:getMainLvl() - target:getMainLvl()) * 4)
 
-    local hitrate = 75 + (acc - eva) / 2
+    if attacker:getMainLvl() > target:getMainLvl() then -- acc bonus!
+        acc = acc + ((attacker:getMainLvl() - target:getMainLvl()) * 4)
+    elseif attacker:getMainLvl() < target:getMainLvl() then -- acc penalty :(
+        acc = acc - ((target:getMainLvl() - attacker:getMainLvl()) * 4)
+    end
+
+    local hitdiff = 0
+    local hitrate = 75
+    if acc > eva then
+        hitdiff = (acc - eva) / 2
+    end
+
+    if eva > acc then
+        hitdiff = (-1 * (eva - acc)) / 2
+    end
+
+    hitrate = hitrate + hitdiff
     hitrate = hitrate / 100
     hitrate = utils.clamp(hitrate, 0.2, 0.95)
+
+    -- Applying hitrate caps
+    if capHitRate then -- this isn't capped for when acc varies with tp, as more penalties are due
+        if hitrate > 0.95 then
+            hitrate = 0.95
+        end
+
+        if hitrate < 0.2 then
+            hitrate = 0.2
+        end
+    end
 
     return hitrate
 end
