@@ -42,6 +42,7 @@ battlefieldObject.onEventFinish = function(player, csid, option)
             player:addItem(4181) -- Scroll of instant warp
             player:messageSpecial(ID.text.ITEM_OBTAINED, 4181)
         end
+
         player:addFame(xi.quest.fame_area.WINDURST, 30)
         player:completeQuest(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.TRIAL_SIZE_TRIAL_BY_LIGHTNING)
     end
