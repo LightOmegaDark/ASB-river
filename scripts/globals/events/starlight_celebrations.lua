@@ -138,12 +138,12 @@ function npcGiftsMoogleOnFinish(player, id, csid, option)
             4169, -- Little Comet
         }
         if hasToken == true then
-            npcUtil.giveItem(player, gift_table[math.random( 1,2 )])
+            npcUtil.giveItem(player, gift_table[math.random(1, 2)])
         else
             player:addKeyItem(xi.keyItem.SNOW_THEMED_GIFT_TOKEN)
             player:messageSpecial(id.text.KEYITEM_OBTAINED, xi.keyItem.SNOW_THEMED_GIFT_TOKEN)
         end
-        npcUtil.giveItem( player, { { fireworks_table[math.random(1,7)], 10 } } )
+        npcUtil.giveItem(player, { { fireworks_table[math.random( 1, 7 )], 10 } })
         player:setLocalVar("[StarlightNPCGifts]Started", 0)
         player:setCharVar("[StarlightNPCGifts]Completed", VanadielDayOfTheWeek())
     end
@@ -1755,7 +1755,7 @@ function merryMakersGoblinOnTrigger(player, npc)
     local hasTrust = player:getLocalVar("[StarlightMerryMakers]GoblinTrust")
     local hasPresent = player:getLocalVar("[StarlightMerryMakers]HasPresent")
     if hasTrust == npc:getID() then
-        local loseTrust = math.random(0,3)
+        local loseTrust = math.random(0, 3)
 
         if loseTrust ~= 0 then
             if loseTrust == 1 then
