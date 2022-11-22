@@ -82,6 +82,8 @@ spellObject.onSpellCast = function(caster, target, spell)
             target:addStatusEffect(xi.effect.STONESKIN, solaceStoneskin, 0, 25, 0, 0, 1)
         end
 
+        final = final + (final * (target:getMod(xi.mod.CURE_POTENCY_RCVD) / 100))
+
         --Applying server mods
         final = final * xi.settings.main.CURE_POWER
 
