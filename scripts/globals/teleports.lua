@@ -153,9 +153,9 @@ local destinations =
     [ids.QUFIM_CONFLUENCE]      = {     -203,      -20,       81,  76, 126 },
     [ids.ESCHA_RUAUN]           = {   -0.371,  -34.279, -466.980, 192, 289 },
     [ids.MISAREAUX_CONFLUENCE]  = {  -57.385,  -21.460,  568.941, 160,  25 },
-    [ids.BASTOK_STARLIGHT]      = { -344.489,  -10.002,  -182.797, 88, 235},
-    [ids.SAN_DORIA_STARLIGHT]   = { 100.952,  0.999,   -49.758, 31,  230},
-    [ids.WINDURST_STARLIGHT]    = { 103.065,  -5.000,  -48.627, 5,  241},
+    [ids.BASTOK_STARLIGHT]      = { -344.489,  -10.002,  -182.797, 88, 235 },
+    [ids.SAN_DORIA_STARLIGHT]   = { 100.952,  0.999,   -49.758, 31,  230 },
+    [ids.WINDURST_STARLIGHT]    = { 103.065,  -5.000,  -48.627, 5,  241 },
 }
 
 xi.teleport.type =

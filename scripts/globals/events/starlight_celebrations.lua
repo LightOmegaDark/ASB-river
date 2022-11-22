@@ -138,12 +138,12 @@ function npcGiftsMoogleOnFinish(player, id, csid, option)
             4169, -- Little Comet
         }
         if hasToken == true then
-            npcUtil.giveItem(player, gift_table[math.random(1,2)])
+            npcUtil.giveItem(player, gift_table[math.random( 1,2 )])
         else
             player:addKeyItem(xi.keyItem.SNOW_THEMED_GIFT_TOKEN)
             player:messageSpecial(id.text.KEYITEM_OBTAINED, xi.keyItem.SNOW_THEMED_GIFT_TOKEN)
         end
-        npcUtil.giveItem(player, { { fireworks_table[math.random(1,7)], 10 } })
+        npcUtil.giveItem( player, { { fireworks_table[math.random(1,7)], 10 } } )
         player:setLocalVar("[StarlightNPCGifts]Started", 0)
         player:setCharVar("[StarlightNPCGifts]Completed", VanadielDayOfTheWeek())
     end
@@ -506,7 +506,7 @@ function smileBringerSergeantOnFinish(player, npc, id, csid, option)
         if hasItem == true then
             player:resetLocalVars()
             player:setCharVar("dayOfCompletedRace", VanadielDayOfTheWeek())
-            npcUtil.giveItem(player, 5622, {silent = true})
+            npcUtil.giveItem( player, 5622, { silent = true } )
             if not player:hasKeyItem(xi.keyItem.BELL_THEMED_GIFT_TOKEN) then
                 player:addKeyItem(xi.keyItem.BELL_THEMED_GIFT_TOKEN)
                 player:messageSpecial(id.text.KEYITEM_OBTAINED, xi.keyItem.BELL_THEMED_GIFT_TOKEN)
@@ -514,7 +514,7 @@ function smileBringerSergeantOnFinish(player, npc, id, csid, option)
         else
             player:resetLocalVars()
             player:setCharVar("dayOfCompletedRace", VanadielDayOfTheWeek())
-            npcUtil.giveItem(player, 138, {silent = true})
+            npcUtil.giveItem( player, 138, { silent = true } )
         end
     elseif csid == 7011 then
         player:resetLocalVars()
@@ -1756,6 +1756,7 @@ function merryMakersGoblinOnTrigger(player, npc)
     local hasPresent = player:getLocalVar("[StarlightMerryMakers]HasPresent")
     if hasTrust == npc:getID() then
         local loseTrust = math.random(0,3)
+
         if loseTrust ~= 0 then
             if loseTrust == 1 then
                 player:startEvent(4713)
@@ -1850,12 +1851,14 @@ function merryMakersMoogleOnTrigger(player, npc)
             local npc_table = getMerrymakerNPCIDs(npc:getZoneID())
 
             if (red_present or green_present or blue_present) then
-                local rnd = math.random(1,6)
+                local rnd = math.random( 1,6 )
                 local giftNpcID = npc_table[rnd]
                 local giftNpc = GetNPCByID(giftNpcID):getName()
+
                 if string.find(giftNpc, "%_") ~= 0 then
                     giftNpc = string.gsub(giftNpc, "%_", " ")
                 end
+
                 player:startEventString(4701, giftNpc)
                 player:setLocalVar("[StarlightMerryMakers]Sender", giftNpcID)
                 player:setLocalVar("[StarlightMerryMakers]SenderID", rnd)

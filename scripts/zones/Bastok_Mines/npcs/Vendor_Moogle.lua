@@ -18,7 +18,7 @@ local starlight_stock1 =
         4167, 8,     -- Cracker
         4168, 25,    -- Twinkle Shower
         4169, 25,    -- Little Comet
-        15178,2000,  -- Dream Hat
+        15178, 500,  -- Dream Hat
         86,   10000, -- San d'Orian Tree
         115,  10000, -- Bastokan Tree
         116,  10000, -- Windurstian Tree
@@ -29,7 +29,7 @@ local starlight_stock1 =
         176, 10000,    -- Snowman Knight
         177, 10000,    -- Snowman Miner
         178, 10000,    -- Snowman Mage
-        10875,5000,    -- Snowman Cap
+        10875, 5000,    -- Snowman Cap
         6498, 777,     -- Fortune Fruits
         4495, 50       -- Goblin Chocolate
     }

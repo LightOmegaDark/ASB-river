@@ -80,7 +80,7 @@ entity.onEventFinish = function(player, csid, option)
         if option == 1 then
             player:setFame(xi.quest.fame_area.HOLIDAY, fameafter)
             player:addStatusEffectEx(xi.effect.TELEPORT, 0, xi.teleport.id.SAN_DORIA_STARLIGHT, 0, 1)
-        elseif option == 2 then 
+        elseif option == 2 then
             player:setFame(xi.quest.fame_area.HOLIDAY, fameafter)
             player:addStatusEffectEx(xi.effect.TELEPORT, 0, xi.teleport.id.BASTOK_STARLIGHT, 0, 1)
         elseif option == 3 then
