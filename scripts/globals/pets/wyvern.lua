@@ -171,29 +171,10 @@ entity.onMobSpawn = function(mob)
         player:petRetreat()
     end)
 
+    -- https://www.bg-wiki.com/ffxi/Wyvern_(Dragoon_Pet)#Parameter_Increase
     if xi.settings.main.ENABLE_WOTG == 1 then
         master:addListener("EXPERIENCE_POINTS", "PET_WYVERN_EXP", function(player, exp)
-            local pet = player:getPet()
-            local prev_exp = pet:getLocalVar("wyvern_exp")
-            local levels_gained = pet:getLocalVar("wyvern_level_ups")
-            if prev_exp < 1000 and levels_gained < 5 then
-                -- cap exp at 1000 to prevent wyvern leveling up many times from large exp awards
-                local currentExp = utils.clamp(exp + prev_exp, 0, 1000)
-                local diff = math.floor(currentExp / 200) - levels_gained
-
-                while diff > 0 do
-                    -- wyvern levelled up (diff is the number of level ups)
-                    pet:addMod(xi.mod.ACC, 6)
-                    pet:addMod(xi.mod.HPP, 6)
-                    pet:addMod(xi.mod.ATTP, 5)
-                    pet:setHP(pet:getMaxHP())
-                    player:messageBasic(xi.msg.basic.STATUS_INCREASED, 0, 0, pet)
-                    pet:setLocalVar("wyvern_level_ups", levels_gained + 1)
-                    diff = diff - 1
-                end
-
-                pet:setLocalVar("wyvern_exp", prev_exp + exp)
-            end
+            xi.job_utils.dragoon.addWyvernExp(player, exp)
         end)
     end
 end
