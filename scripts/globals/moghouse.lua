@@ -108,36 +108,34 @@ end
 xi.moghouse.moogleTrigger = function(player, npc)
     if player:isInMogHouse() then
         if isStarlightEnabled() ~= 0 then
+            if xi.moghouse.isInMogHouseInHomeNation(player) then
+                local treePlaced = player:getCharVar("[StarlightMisc]TreePlaced")
+                local placedTime = player:getCharVar("[StarlightMisc]TreeTimePlaced")
+                local earnedReward = player:getCharVar("[StarlightMisc]DreamHatHQ")
 
-            local treePlaced = player:getCharVar("[StarlightMisc]TreePlaced")
-            local placedTime = player:getCharVar("[StarlightMisc]TreeTimePlaced")
-            local earnedReward = player:getCharVar("[StarlightMisc]DreamHatHQ")
+                if (treePlaced ~= 0 and earnedReward ~= 1) then
+                    local dreamHat = player:hasItem(15178)
+                    local sandOrianTree = player:getCharVar("[StarlightMisc]SandOrianTree")
+                    local bastokanTree = player:getCharVar("[StarlightMisc]BastokanTree")
+                    local windurstianTree = player:getCharVar("[StarlightMisc]WindurstianTree")
+                    local jeunoanTree = player:getCharVar("[StarlightMisc]JeunoanTree")
+                    local holidayFame = player:getFameLevel(xi.quest.fame_area.HOLIDAY)
 
-            if treePlaced ~= 0 and not earnedReward then
-                local dreamHat = player:hasItem(15178)
-                local sandOrianTree = player:getCharVar("[StarlightMisc]SandOrianTree")
-                local bastokanTree = player:getCharVar("[StarlightMisc]BastokanTree")
-                local windurstianTree = player:getCharVar("[StarlightMisc]WindurstianTree")
-                local jeunoanTree = player:getCharVar("[StarlightMisc]JeunoanTree")
-                local holidayFame = player:getFameLevel(xi.quest.fame_area.HOLIDAY)
-
-                if placedTime < JstMidnight() then
-                    if dreamHat == true and holidayFame == 9 then
-                        if sandOrianTree then
-                            player:startEvent(30017, 0, 0, 0, 86)
-                        elseif bastokanTree then
-                            player:startEvent(30017, 0, 0, 0, 115)
-                        elseif windurstianTree then
-                            player:startEvent(30017, 0, 0, 0, 116)
-                        elseif jeunoanTree then
-                            player:startEvent(30017, 0, 0, 0, 138)
+                    if placedTime > JstMidnight() then
+                        if (dreamHat == true and holidayFame == 9) then
+                            if sandOrianTree == 1 then
+                                player:startEvent(30017, 0, 0, 0, 86)
+                            elseif bastokanTree == 1 then
+                                player:startEvent(30017, 0, 0, 0, 115)
+                            elseif windurstianTree == 1 then
+                                player:startEvent(30017, 0, 0, 0, 116)
+                            elseif jeunoanTree == 1 then
+                                player:startEvent(30017, 0, 0, 0, 138)
+                            end
                         end
-                        npcUtil.giveItem(player, 5269)
-                        player:setCharVar("[StarlightMisc]DreamHatHQ", 1)
                     end
                 end
             end
-
         end
         local lockerTs = xi.moghouse.getMogLockerExpiryTimestamp(player)
 
@@ -157,6 +155,10 @@ xi.moghouse.moogleEventUpdate = function(player, csid, option)
 end
 
 xi.moghouse.moogleEventFinish = function(player, csid, option)
+    if csid == 30017 and option == 0 then
+        npcUtil.giveItem(player, 5269)
+        player:setCharVar("[StarlightMisc]DreamHatHQ", 1)
+    end
 end
 
 -- Unlocks a mog locker for a player. Returns the 'expired' timestamp (-1)

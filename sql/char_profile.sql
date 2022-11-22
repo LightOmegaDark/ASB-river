@@ -32,5 +32,6 @@ CREATE TABLE IF NOT EXISTS `char_profile` (
   `fame_aby_uleguerand` smallint(5) unsigned NOT NULL DEFAULT '0',
   `fame_adoulin` smallint(5) unsigned NOT NULL DEFAULT '0',
   `unity_leader` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `fame_holiday` smallint(5) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`charid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

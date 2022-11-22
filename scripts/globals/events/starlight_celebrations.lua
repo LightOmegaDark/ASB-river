@@ -25,11 +25,11 @@ end
 -- For the Children Sub-Quest --
 --------------------------------
 function onStarlightSmilebringersTrade(player, trade, npc)
-    local zone = player:getZoneName()
     local ID = zones[player:getZoneID()]
     local contentEnabled = isStarlightEnabled()
     local item = trade:getItemId()
-
+    local npcID = tostring(npc:getID())
+    local npcTrades = player:getLocalVar("[Smilebringers][" .. npcID .. "]GiftsReceived")
     ------------------
     -- 2007 Edition --
     ------------------
@@ -64,20 +64,25 @@ function onStarlightSmilebringersTrade(player, trade, npc)
         ---------------
         local head = player:getEquipID(xi.slot.HEAD)
 
-        for itemInList = 1, #gifts_table do
-            if (item == gifts_table[itemInList] and (head == 15179 or head == 15178) and (item == presents_table[itemInList]) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) < 9)) then
-                player:showText(npc, ID.text.GIFT_THANK_YOU)
-                player:messageSpecial(ID.text.BARRELS_JOY_TO_CHILDREN)
-                player:addFame(xi.quest.fame_area.HOLIDAY, 64)
-                player:tradeComplete()
-            elseif (item == gifts_table[itemInList] and (head == 15179 or head == 15178) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) < 9)) then
-                player:showText(npc, ID.text.GIFT_THANK_YOU)
-                player:messageSpecial(ID.text.JOY_TO_CHILDREN)
-                player:addFame(xi.quest.fame_area.HOLIDAY, 32)
-                player:tradeComplete()
-            elseif ((item == gifts_table[itemInList]) and (head == 15179 or head == 15178) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) >= 9)) then
-                player:showText(npc, ID.text.ONLY_TWO_HANDS)
+        if (npcTrades < 14 and (head == 15179 or head == 15178)) then
+            for itemInList = 1, #gifts_table do
+                if (item == gifts_table[itemInList] and (head == 15179 or head == 15178) and (item == presents_table[itemInList]) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) < 9)) then
+                    player:showText(npc, ID.text.GIFT_THANK_YOU)
+                    player:messageSpecial(ID.text.BARRELS_JOY_TO_CHILDREN)
+                    player:addFame(xi.quest.fame_area.HOLIDAY, 64)
+                    player:tradeComplete()
+                elseif (item == gifts_table[itemInList] and (head == 15179 or head == 15178) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) < 9)) then
+                    player:showText(npc, ID.text.GIFT_THANK_YOU)
+                    player:messageSpecial(ID.text.JOY_TO_CHILDREN)
+                    player:addFame(xi.quest.fame_area.HOLIDAY, 32)
+                    player:tradeComplete()
+                elseif ((item == gifts_table[itemInList]) and (head == 15179 or head == 15178) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) >= 9)) then
+                    player:showText(npc, ID.text.ONLY_TWO_HANDS)
+                end
             end
+            player:setLocalVar("[Smilebringers][" .. npcID .. "]GiftsReceived", npcTrades + 1)
+        else
+            player:showText(npc, ID.text.ONLY_TWO_HANDS)
         end
     end
 end
