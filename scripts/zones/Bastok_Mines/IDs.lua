@@ -11,6 +11,7 @@ zones[xi.zone.BASTOK_MINES] =
     text =
     {
         ITEM_CANNOT_BE_OBTAINED        = 6384,  -- You cannot obtain the <item>. Come back after sorting your inventory.
+        DEFAULT_CANNOT_BE_OBTAINED     = 6386,  -- You cannot obtain the item. Come back after sorting your inventory.
         FULL_INVENTORY_AFTER_TRADE     = 6388,  -- You cannot obtain the <item>. Try trading again after sorting your inventory.
         ITEM_OBTAINED                  = 6390,  -- Obtained: <item>.
         GIL_OBTAINED                   = 6391,  -- Obtained <number> gil.
@@ -104,6 +105,7 @@ zones[xi.zone.BASTOK_MINES] =
         STARLIGHT_CARD_WRONG           = 15605, -- Are you trying to pull a fast one, kupo!? This card isn't yours to give, nor is it addressed to you, so please take it back to where you found it.≺Prompt≻
         STARLIGHT_CARD_CONFIRM         = 15593, -- Here's a little something for your kindness.≺Prompt≻
         STARLIGHT_FAME_DIALOG          = 12414, -- ≺Multiple Choice (Parameter 1)≻[You haven't brought any happiness to the children!/You've done some good./You've done fairly well./You've made the children very happy!/You've brought lots of smiles!/You have the children bursting with glee!/The children love you!] ≺Multiple Choice (Parameter 1)≻[What a disappointment./You just need to give a little extra effort!/Keep it up!/You make a good smilebringer./Excellent work!/Stupendous job!/Even I think you're great!]≺Prompt≻
+        STARLIGHT_VENDOR_MOOGLE        = 14457, -- Welcome, kupo!
     },
     mob =
     {
@@ -127,7 +129,8 @@ zones[xi.zone.BASTOK_MINES] =
             [17736000] = 17736000,  -- Starlight Celebration Planter
             [17736001] = 17736001,  -- Starlight Celebration Planter
             [17735995] = 17735995,  -- Christina
-            [17736002] = 17736002,  -- Event Moogle
+            [17736002] = 17736002,  -- Token Moogle
+            [17736003] = 17736003,  -- Event Moogle
             [17736004] = 17736004,  -- Vendor Moogle
             [17736005] = 17736005,  -- Vendor Moogle
             [17735962] = 17735962,  -- Event Moogle Stall

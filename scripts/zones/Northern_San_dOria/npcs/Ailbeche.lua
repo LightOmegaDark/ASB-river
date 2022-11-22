@@ -5,6 +5,7 @@
 -- !pos 4 -1 24 231
 -----------------------------------
 local ID = require("scripts/zones/Northern_San_dOria/IDs")
+require("scripts/globals/events/starlight_celebrations")
 require("scripts/globals/keyitems")
 require("scripts/globals/settings")
 require("scripts/globals/quests")
@@ -15,6 +16,9 @@ require("scripts/globals/npc_util")
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
+    if isStarlightEnabled() ~= 0 then
+        onStarlightSmilebringersTrade(player, trade, npc)
+    end
     if player:getCharVar("aBoysDreamCS") >= 3 then
         if
             npcUtil.tradeHasExactly(trade, xi.items.GIANT_SHELL_BUG) and

@@ -12,6 +12,7 @@ zones[xi.zone.WINDURST_WOODS] =
     {
         CONQUEST_BASE                 = 0,     -- Tallying conquest results...
         ITEM_CANNOT_BE_OBTAINED       = 6543,  -- You cannot obtain the <item>. Come back after sorting your inventory.
+        DEFAULT_CANNOT_BE_OBTAINED    = 6545,  -- You cannot obtain the item. Come back after sorting your inventory.
         ITEM_OBTAINED                 = 6549,  -- Obtained: <item>.
         GIL_OBTAINED                  = 6550,  -- Obtained <number> gil.
         KEYITEM_OBTAINED              = 6552,  -- Obtained key item: <keyitem>.
@@ -113,7 +114,8 @@ zones[xi.zone.WINDURST_WOODS] =
             [17764758] = 17764758,  -- Starlight Celebration Tree
             [17764759] = 17764759,  -- Starlight Celebration Tree
             [17764760] = 17764760,  -- Starlight Celebration Tree
-            [17764763] = 17764763,  -- Rokor-Makor
+            [17764761] = 17764761,  -- Token Moogle
+            -- [17764763] = 17764763,  -- Rokor-Makor
         },
     },
 }

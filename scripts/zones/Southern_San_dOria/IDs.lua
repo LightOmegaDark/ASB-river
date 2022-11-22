@@ -12,6 +12,7 @@ zones[xi.zone.SOUTHERN_SAN_DORIA] =
     {
         HOMEPOINT_SET                  = 24,    -- Home point set!
         ITEM_CANNOT_BE_OBTAINED        = 6428,  -- You cannot obtain the <item>. Come back after sorting your inventory.
+        DEFAULT_CANNOT_BE_OBTAINED     = 6430,  -- You cannot obtain the item. Come back after sorting your inventory.
         FULL_INVENTORY_AFTER_TRADE     = 6432,  -- You cannot obtain the <item>. Try trading again after sorting your inventory.
         ITEM_OBTAINED                  = 6434,  -- Obtained: <item>.
         GIL_OBTAINED                   = 6435,  -- Obtained <number> gil.
@@ -160,7 +161,9 @@ zones[xi.zone.SOUTHERN_SAN_DORIA] =
             [17719924] = 17719924,  -- Starlight Celebration Tree
             [17719925] = 17719925,  -- Starlight Celebration Tree
             [17719926] = 17719926,  -- Starlight Celebration Tree
-            [17719929] = 17719929,  -- Estiliphire
+            -- [17719929] = 17719929,  -- Estiliphire
+            [17719927] = 17719927,  -- Event Moogle
+            [17719928] = 17719928,  -- Token Moogle (Token Redemption)
         },
         LUSIANE  = 17719350,
         ARPETION = 17719409,

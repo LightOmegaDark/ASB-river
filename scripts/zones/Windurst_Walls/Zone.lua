@@ -10,7 +10,9 @@ require('scripts/globals/zone')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    applyStarlightDecorations(zone:getID())
+    if isStarlightEnabled() ~= 0 then
+        applyStarlightDecorations(zone:getID())
+    end
     zone:registerTriggerArea(1, -2, -17, 140, 2, -16, 142)
 end
 

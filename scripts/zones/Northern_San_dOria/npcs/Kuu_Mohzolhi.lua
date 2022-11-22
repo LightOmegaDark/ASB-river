@@ -7,10 +7,14 @@
 require("scripts/globals/settings")
 require("scripts/globals/quests")
 local ID = require("scripts/zones/Northern_San_dOria/IDs")
+require("scripts/globals/events/starlight_celebrations")
 -----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
+    if isStarlightEnabled() ~= 0 then
+        onStarlightSmilebringersTrade(player, trade, npc)
+    end
     local itemQuality = 0
 
     if trade:getItemCount() == 1 and trade:getGil() == 0 then

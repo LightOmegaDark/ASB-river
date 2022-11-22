@@ -20,6 +20,8 @@ end
 
 entity.onTrigger = function(player, npc)
     if isStarlightEnabled ~= 0 then
+        npcGiftsNpcOnTrigger(player, 4)
+
         local zone = player:getZoneName()
         local ID = zones[player:getZoneID()]
         local contentEnabled = isStarlightEnabled()

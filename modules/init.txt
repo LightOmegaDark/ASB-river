@@ -67,4 +67,4 @@ renamer
 #-----------------------
 #		Custom
 #-----------------------
-custom/lua/starlight_celebrations.lua
+custom/sql/starlight_celebrations.sql

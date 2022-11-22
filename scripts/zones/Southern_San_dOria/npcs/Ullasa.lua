@@ -3,12 +3,18 @@
 --  NPC: Ullasa
 --  General Info NPC
 -----------------------------------
+require("scripts/globals/events/starlight_celebrations")
+-----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
+    if isStarlightEnabled() ~= 0 then
+        npcGiftsNpcOnTrigger(player, 1)
+        return
+    end
     if player:getCharVar("UnderOathCS") == 2 then  -- Quest: Under Oath - PLD AF3
         player:startEvent(40)
     else
