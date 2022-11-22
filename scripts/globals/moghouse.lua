@@ -2,12 +2,14 @@
 -- Mog House related functions
 -----------------------------------
 require('scripts/globals/items')
+require('scripts/globals/utils')
 require("scripts/globals/npc_util")
 require("scripts/globals/quests")
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/titles")
 require("scripts/globals/zone")
+require('scripts/globals/events/starlight_celebrations')
 -----------------------------------
 
 xi = xi or {}
@@ -105,6 +107,38 @@ end
 
 xi.moghouse.moogleTrigger = function(player, npc)
     if player:isInMogHouse() then
+        if isStarlightEnabled() ~= 0 then
+
+            local treePlaced = player:getCharVar("[StarlightMisc]TreePlaced")
+            local placedTime = player:getCharVar("[StarlightMisc]TreeTimePlaced")
+            local earnedReward = player:getCharVar("[StarlightMisc]DreamHatHQ")
+
+            if treePlaced ~= 0 and not earnedReward then
+                local dreamHat = player:hasItem(15178)
+                local sandOrianTree = player:getCharVar("[StarlightMisc]SandOrianTree")
+                local bastokanTree = player:getCharVar("[StarlightMisc]BastokanTree")
+                local windurstianTree = player:getCharVar("[StarlightMisc]WindurstianTree")
+                local jeunoanTree = player:getCharVar("[StarlightMisc]JeunoanTree")
+                local holidayFame = player:getFameLevel(xi.quest.fame_area.HOLIDAY)
+
+                if placedTime < JstMidnight() then
+                    if dreamHat == true and holidayFame == 9 then
+                        if sandOrianTree then
+                            player:startEvent(30017, 0, 0, 0, 86)
+                        elseif bastokanTree then
+                            player:startEvent(30017, 0, 0, 0, 115)
+                        elseif windurstianTree then
+                            player:startEvent(30017, 0, 0, 0, 116)
+                        elseif jeunoanTree then
+                            player:startEvent(30017, 0, 0, 0, 138)
+                        end
+                        npcUtil.giveItem(player, 5269)
+                        player:setCharVar("[StarlightMisc]DreamHatHQ", 1)
+                    end
+                end
+            end
+
+        end
         local lockerTs = xi.moghouse.getMogLockerExpiryTimestamp(player)
 
         if lockerTs ~= nil then

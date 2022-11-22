@@ -83,6 +83,9 @@ zones[xi.zone.WINDURST_WATERS] =
         STARLIGHT_CARD_CONFIRM     = 15413, -- Here's a little something for your kindness.≺Prompt≻
         STARLIGHT_FAME_DIALOG      = 10826, -- ≺Multiple Choice (Parameter 1)≻[You haven't brought any happiness to the children!/You've done some good./You've done fairly well./You've made the children very happy!/You've brought lots of smiles!/You have the children bursting with glee!/The children love you!] ≺Multiple Choice (Parameter 1)≻[What a disappointment./You just need to give a little extra effort!/Keep it up!/You make a good smilebringer./Excellent work!/Stupendous job!/Even I think you're great!]≺Prompt≻
         STARLIGHT_VENDOR_MOOGLE    = 11478, -- Come one, come all, kupo!
+        MERRYMAKER_TRADE           = 15645, -- Yum-yums for me? Gobbies remember...till our tummies go rumble-rumble again.
+        MERRYMAKER_BLECH           = 15649, -- Blech. What this yucky thing? It make me want to upgut food. Take it away.
+        MERRYMAKER_TOY             = 15637, -- Happy toy, happy toy, where be me happy toy?
     },
 
     mob =

@@ -20,7 +20,10 @@ end
 
 entity.onTrigger = function(player, npc)
     if isStarlightEnabled ~= 0 then
-        npcGiftsNpcOnTrigger(player, 4)
+        if player:getLocalVar("[StarlightNPCGifts]Started") ~= 0 then
+            npcGiftsNpcOnTrigger(player, 4)
+            return
+        end
 
         local zone = player:getZoneName()
         local ID = zones[player:getZoneID()]
@@ -30,8 +33,6 @@ entity.onTrigger = function(player, npc)
         local currentDay = VanadielDayOfTheWeek()
         local fame = player:getFameLevel(xi.quest.fame_area.HOLIDAY)
         local head = player:getEquipID(xi.slot.HEAD)
-
-        print(fame)
 
         if previousDay ~= currentDay then
             player:setCharVar("smilebringersconvo", 0)

@@ -13,7 +13,7 @@ function isStarlightEnabled()
     local day = tonumber(os.date("%d"))
 
     if ((month == 12 and day >= 16) or xi.settings.main.STARLIGHT_YEAR_ROUND) then -- According to wiki Startlight Festival is December 16 - December 31.
-        if (xi.settings.main.STARLIGHT_2007 == 1) then
+        if (xi.settings.main.STARLIGHT_2021 == 1) then
             option = 1
         end
     end
