@@ -6075,7 +6075,7 @@ uint16 CLuaBaseEntity::getFame(sol::object const& areaObj)
                 fame = static_cast<uint16>(PChar->profile.fame[14] * fameMultiplier);
                 break;
             case 16: // Holiday, Special Events
-                fame = static_cast<uint16>(PChar->profile.fame[17] * fameMultiplier);
+                fame = static_cast<uint16>(PChar->profile.fame[15] * fameMultiplier);
                 break;
         }
     }
@@ -6137,7 +6137,7 @@ void CLuaBaseEntity::addFame(sol::object const& areaObj, uint16 fame)
                 PChar->profile.fame[14] += fame;
                 break;
             case 16: // Holiday, Special Events
-                PChar->profile.fame[17] += fame;
+                PChar->profile.fame[15] += fame;
                 break;
         }
         charutils::SaveFame(PChar);
@@ -6198,7 +6198,7 @@ void CLuaBaseEntity::setFame(sol::object const& areaObj, uint16 fame)
                 PChar->profile.fame[14] = fame;
                 break;
             case 16: // Holiday, Special Events
-                PChar->profile.fame[17] = fame;
+                PChar->profile.fame[15] = fame;
                 break;
         }
 

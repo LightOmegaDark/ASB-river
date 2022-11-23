@@ -494,8 +494,8 @@ namespace charutils
             PChar->profile.fame[12]     = (uint16)sql->GetIntData(16); // AbysseaGrauberg
             PChar->profile.fame[13]     = (uint16)sql->GetIntData(17); // AbysseaUleguerand
             PChar->profile.fame[14]     = (uint16)sql->GetIntData(18); // Adoulin
-            PChar->profile.unity_leader = (uint8)sql->GetUIntData(19);
-            PChar->profile.fame[16]     = (uint16)sql->GetIntData(20); // Special Events
+            PChar->profile.fame[15]     = (uint16)sql->GetIntData(19); // Special Events
+            PChar->profile.unity_leader = (uint8)sql->GetUIntData(20);
         }
 
         roeutils::onCharLoad(PChar);
@@ -5187,7 +5187,7 @@ namespace charutils
 
         sql->Query(Query, PChar->profile.fame[0], PChar->profile.fame[1], PChar->profile.fame[2], PChar->profile.fame[3], PChar->profile.fame[4],
                    PChar->profile.fame[5], PChar->profile.fame[6], PChar->profile.fame[7], PChar->profile.fame[8], PChar->profile.fame[9],
-                   PChar->profile.fame[10], PChar->profile.fame[11], PChar->profile.fame[12], PChar->profile.fame[13], PChar->profile.fame[14], PChar->profile.fame[17], PChar->id);
+                   PChar->profile.fame[10], PChar->profile.fame[11], PChar->profile.fame[12], PChar->profile.fame[13], PChar->profile.fame[14], PChar->profile.fame[15], PChar->id);
     }
 
     /************************************************************************
