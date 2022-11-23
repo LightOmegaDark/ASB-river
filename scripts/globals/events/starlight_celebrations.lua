@@ -95,7 +95,7 @@ end
 -- Gifts for NPCs Sub-Quest --
 --------------------------------
 
-function npcGiftsMoogleOnTrigger(player)
+function xi.events.starlightCelebration.npcGiftsMoogleOnTrigger(player)
     if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
         local startedQuest = player:getLocalVar("[StarlightNPCGifts]Started")
         local hasCompleted = player:getCharVar("[StarlightNPCGifts]Completed")
@@ -153,7 +153,7 @@ function xi.events.starlightCelebration.npcGiftsMoogleOnFinish(player, id, csid,
     end
 end
 
-function xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, eventid)
+function xi.events.starlightCelebration.npcGiftsNPC1(player, eventid)
     if eventid == 1 then
         if player:getLocalVar("[StarlightNPCGifts]Started") == 1 then
             if player:getLocalVar("[StarlightNPCGifts]Npc1") ~= 1 then
@@ -186,7 +186,11 @@ function xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, eventid)
                 return
             end
         end
-    elseif eventid == 2 then
+    end
+end
+
+function xi.events.starlightCelebration.npcGiftsNPC2(player, eventid)
+    if eventid == 2 then
         if player:getLocalVar("[StarlightNPCGifts]Started") == 1 then
             if player:getLocalVar("[StarlightNPCGifts]Npc2") ~= 1 then
                 local npc1 = player:getLocalVar("[StarlightNPCGifts]Npc1")
@@ -218,7 +222,11 @@ function xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, eventid)
                 return
             end
         end
-    elseif eventid == 3 then
+    end
+end
+
+function xi.events.starlightCelebration.npcGiftsNPC3(player, eventid)
+    if eventid == 3 then
         if player:getLocalVar("[StarlightNPCGifts]Started") == 1 then
             if player:getLocalVar("[StarlightNPCGifts]Npc3") ~= 1 then
                 local npc1 = player:getLocalVar("[StarlightNPCGifts]Npc1")
@@ -250,7 +258,11 @@ function xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, eventid)
                 return
             end
         end
-    elseif eventid == 4 then
+    end
+end
+
+function xi.events.starlightCelebration.npcGiftsNPC4(player, eventid)
+    if eventid == 4 then
         if player:getLocalVar("[StarlightNPCGifts]Started") == 1 then
             if player:getLocalVar("[StarlightNPCGifts]Npc4") ~= 1 then
                 local npc1 = player:getLocalVar("[StarlightNPCGifts]Npc1")
@@ -282,6 +294,18 @@ function xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, eventid)
                 return
             end
         end
+    end
+end
+
+function xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, eventid)
+    if eventid == 1 then
+        xi.events.starlightCelebration.npcGiftsNPC1(player, eventid)
+    elseif eventid == 2 then
+        xi.events.starlightCelebration.npcGiftsNPC2(player, eventid)
+    elseif eventid == 3 then
+        xi.events.starlightCelebration.npcGiftsNPC3(player, eventid)
+    else
+        xi.events.starlightCelebration.npcGiftsNPC4(player, eventid)
     end
 end
 
@@ -573,11 +597,10 @@ function xi.events.starlightCelebration.applyStarlightDecorations(zoneid)
     if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
         local decoration = zones[zoneid].npc.STARLIGHT_DECORATIONS
         if decoration then
-            for id, decoration in pairs(decoration) do
+            for id, v in pairs(decoration) do
                 local npc = GetNPCByID(id)
                 if npc then
                     npc:setStatus(xi.status.NORMAL)
-                    --local npcstatus = npc:getStatus()
                 end
             end
         end
@@ -588,7 +611,7 @@ function xi.events.starlightCelebration.toggleSmileHelpers(zoneid)
     if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
         local smileHelper = zones[zoneid].npc.SMILE_HELPERS
         if smileHelper then
-            for id, smileHelper in pairs(smileHelper) do
+            for id, v in pairs(smileHelper) do
                 local npc = GetNPCByID(id)
                 if npc then
                     npc:setStatus(xi.status.NORMAL)
@@ -603,7 +626,7 @@ function xi.events.starlightCelebration.resetSmileHelpers(zoneid)
     if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
         local smileHelper = zones[zoneid].npc.SMILE_HELPERS
         if smileHelper then
-            for id, smileHelper in pairs(smileHelper) do
+            for id, v in pairs(smileHelper) do
                 local npc = GetNPCByID(id)
                 local depopTime = npc:getLocalVar("depopTime")
                 if depopTime < os.clock() then
@@ -1709,7 +1732,7 @@ local merryMakersNPCs =
 }
 
 function xi.events.starlightCelebration.getMerrymakerNPCIDs(zoneid)
-    npc_table = {}
+    local npc_table = {}
     if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
         if zoneid == 231 then
             npc_table = merryMakersNPCs.Northern_SandOria
@@ -1725,7 +1748,7 @@ function xi.events.starlightCelebration.getMerrymakerNPCIDs(zoneid)
 end
 
 function xi.events.starlightCelebration.getMerrymakerPathing(npcid, zoneid)
-    pathNodes = {}
+    local pathNodes = {}
     if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
         if zoneid == 231 then
             pathNodes = merryMakersSandoria[npcid]
@@ -1855,7 +1878,7 @@ function xi.events.starlightCelebration.merryMakersMoogleOnTrigger(player, npc)
             local npc_table = xi.events.starlightCelebration.getMerrymakerNPCIDs(npc:getZoneID())
 
             if (red_present or green_present or blue_present) then
-                local rnd = math.random( 1,6 )
+                local rnd = math.random(1, 6)
                 local giftNpcID = npc_table[rnd]
                 local giftNpc = GetNPCByID(giftNpcID):getName()
 
@@ -1913,7 +1936,7 @@ function xi.events.starlightCelebration.merryMakersMoogleOnFinish(player, id, cs
     end
 end
 
-function merryMakersNPCDeliverOnTrigger(player, npc, defaultAction)
+function xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, defaultAction)
     if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
         local npcID = npc:getID()
         local sender = player:getLocalVar("[StarlightMerryMakers]Sender")

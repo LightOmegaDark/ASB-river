@@ -25,9 +25,7 @@ entity.onTrigger = function(player, npc)
             return
         end
 
-        local zone = player:getZoneName()
         local ID = zones[player:getZoneID()]
-        local contentEnabled = xi.events.starlightCelebration.isStarlightEnabled()
         local smilebringersconvo = player:getCharVar("smilebringersconvo")
         local previousDay = player:getCharVar("previousDay")
         local currentDay = VanadielDayOfTheWeek()

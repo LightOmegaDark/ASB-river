@@ -8,7 +8,7 @@ return {
     {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-                merryMakersNPCDeliverOnTrigger(player, npc, 135)
+                xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, 135)
             else
                 player:startEvent(135)
             end
@@ -28,7 +28,7 @@ return {
     {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-                merryMakersNPCDeliverOnTrigger(player, npc, 130)
+                xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, 130)
             else
                 player:startEvent(130)
             end
@@ -44,7 +44,7 @@ return {
     {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-                merryMakersNPCDeliverOnTrigger(player, npc, 129)
+                xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, 129)
             else
                 player:startEvent(129)
             end
@@ -63,7 +63,7 @@ return {
     {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-                merryMakersNPCDeliverOnTrigger(player, npc, 128)
+                xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, 128)
             else
                 player:startEvent(128)
             end
@@ -73,7 +73,7 @@ return {
     {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-                merryMakersNPCDeliverOnTrigger(player, npc, 133)
+                xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, 133)
             else
                 player:startEvent(133)
             end
@@ -86,7 +86,7 @@ return {
     {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-                merryMakersNPCDeliverOnTrigger(player, npc, 132)
+                xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, 132)
             else
                 player:startEvent(132)
             end

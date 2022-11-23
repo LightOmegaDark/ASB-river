@@ -18,7 +18,7 @@ end
 
 entity.onTrigger = function(player, npc)
     if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-        npcGiftsMoogleOnTrigger(player)
+        xi.events.starlightCelebration.npcGiftsMoogleOnTrigger(player)
     end
 end
 

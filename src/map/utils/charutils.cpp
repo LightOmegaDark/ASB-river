@@ -463,8 +463,8 @@ namespace charutils
                    "fame_aby_altepa, "     // 15
                    "fame_aby_grauberg, "   // 16
                    "fame_aby_uleguerand, " // 17
-                   "fame_adoulin, "         // 18
-                   "fame_holiday, "         // 19
+                   "fame_adoulin, "        // 18
+                   "fame_holiday, "        // 19
                    "unity_leader "         // 20
                    "FROM char_profile "
                    "WHERE charid = %u;";

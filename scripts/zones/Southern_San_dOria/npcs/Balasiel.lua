@@ -57,9 +57,9 @@ entity.onTrigger = function(player, npc)
 
         if aSquiresTestII == QUEST_AVAILABLE then
             player:startEvent(625)
-        elseif aSquiresTestII == QUEST_ACCEPTED and not stalactiteDew then
+        elseif aSquiresTestII == QUEST_ACCEPTED and not hasStalactiteDew then
             player:startEvent(630)
-        elseif stalactiteDew then
+        elseif hasStalactiteDew then
             player:startEvent(626)
         else
             player:startEvent(667)
