@@ -19,10 +19,10 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    if isStarlightEnabled ~= 0 then
+    if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
         local zone = player:getZoneName()
         local ID = zones[player:getZoneID()]
-        local contentEnabled = isStarlightEnabled()
+        local contentEnabled = xi.events.starlightCelebration.isStarlightEnabled()
         local smilebringersconvo = player:getCharVar("smilebringersconvo")
         local previousDay = player:getCharVar("previousDay")
         local currentDay = VanadielDayOfTheWeek()

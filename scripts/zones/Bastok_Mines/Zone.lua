@@ -14,7 +14,7 @@ local zoneObject = {}
 zoneObject.onInitialize = function(zone)
     SetExplorerMoogles(ID.npc.EXPLORER_MOOGLE)
     applyHalloweenNpcCostumes(zone:getID())
-    applyStarlightDecorations(zone:getID())
+    xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
     xi.chocobo.initZone(zone)
 end
 

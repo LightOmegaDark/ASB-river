@@ -7,7 +7,7 @@ return {
     ['Anguysh'] =
     {
         onTrigger = function(player, npc)
-            if isStarlightEnabled() ~= 0 then
+            if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
                 merryMakersNPCDeliverOnTrigger(player, npc, 135)
             else
                 player:startEvent(135)
@@ -27,7 +27,7 @@ return {
     ['Epione'] =
     {
         onTrigger = function(player, npc)
-            if isStarlightEnabled() ~= 0 then
+            if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
                 merryMakersNPCDeliverOnTrigger(player, npc, 130)
             else
                 player:startEvent(130)
@@ -43,7 +43,7 @@ return {
     ['Lame_Deer'] =
     {
         onTrigger = function(player, npc)
-            if isStarlightEnabled() ~= 0 then
+            if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
                 merryMakersNPCDeliverOnTrigger(player, npc, 129)
             else
                 player:startEvent(129)
@@ -62,7 +62,7 @@ return {
     ['Pavel'] =
     {
         onTrigger = function(player, npc)
-            if isStarlightEnabled() ~= 0 then
+            if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
                 merryMakersNPCDeliverOnTrigger(player, npc, 128)
             else
                 player:startEvent(128)
@@ -72,7 +72,7 @@ return {
     ['Red_Canyon'] =
     {
         onTrigger = function(player, npc)
-            if isStarlightEnabled() ~= 0 then
+            if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
                 merryMakersNPCDeliverOnTrigger(player, npc, 133)
             else
                 player:startEvent(133)
@@ -85,7 +85,7 @@ return {
     ['Tancredi'] =
     {
         onTrigger = function(player, npc)
-            if isStarlightEnabled() ~= 0 then
+            if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
                 merryMakersNPCDeliverOnTrigger(player, npc, 132)
             else
                 player:startEvent(132)

@@ -15,8 +15,8 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    if isStarlightEnabled ~= 0 then
-        smileBringerSergeantOnTrigger(player, npc)
+    if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
+        xi.events.starlightCelebration.smileBringerSergeantOnTrigger(player, npc)
     end
 end
 
@@ -25,8 +25,8 @@ end
 
 entity.onEventFinish = function(player, csid, option)
     local npc = GetNPCByID(ID.npc.STARLIGHT_DECORATIONS[17191562])
-    if isStarlightEnabled ~= 0 then
-        smileBringerSergeantOnFinish(player, npc, ID, csid, option)
+    if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
+        xi.events.starlightCelebration.smileBringerSergeantOnFinish(player, npc, ID, csid, option)
     end
 end
 

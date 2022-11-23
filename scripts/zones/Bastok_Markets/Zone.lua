@@ -11,7 +11,7 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     applyHalloweenNpcCostumes(zone:getID())
-    applyStarlightDecorations(zone:getID())
+    xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

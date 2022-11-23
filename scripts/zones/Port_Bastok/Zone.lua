@@ -13,7 +13,7 @@ zoneObject.onInitialize = function(zone)
     zone:registerTriggerArea(1, -112, -3, -17, -96, 3, -3)     -- event COP
     zone:registerTriggerArea(2, 53.5, 5, -165.3, 66.5, 6, -72) -- drawbridge area
     xi.conquest.toggleRegionalNPCs(zone)
-    applyStarlightDecorations(zone:getID())
+    xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

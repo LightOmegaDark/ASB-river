@@ -16,8 +16,8 @@ require("scripts/globals/npc_util")
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    if isStarlightEnabled() ~= 0 then
-        onStarlightSmilebringersTrade(player, trade, npc)
+    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
+        xi.events.starlightCelebration.onStarlightSmilebringersTrade(player, trade, npc)
     end
     if player:getCharVar("aBoysDreamCS") >= 3 then
         if

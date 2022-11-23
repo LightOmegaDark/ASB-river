@@ -2,15 +2,15 @@
 -- Area: Bastok Mines
 --  NPC: Valeri
 -----------------------------------
-require("scripts/globals/settings")
 local ID = require("scripts/zones/Bastok_Mines/IDs")
+require("scripts/globals/settings")
 require("scripts/globals/events/starlight_celebrations")
 -----------------------------------
 
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    onStarlightSmilebringersTrade(player, trade, npc)
+    xi.events.starlightCelebration.onStarlightSmilebringersTrade(player, trade, npc)
 end
 
 entity.onTrigger = function(player, npc)

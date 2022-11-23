@@ -11,7 +11,7 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     SetExplorerMoogles(ID.npc.EXPLORER_MOOGLE)
-    applyStarlightDecorations(zone:getID())
+    xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

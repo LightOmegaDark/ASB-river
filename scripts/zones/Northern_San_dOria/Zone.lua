@@ -22,7 +22,7 @@ zoneObject.onInitialize = function(zone)
     quests.ffr.initZone(zone) -- register trigger areas 2 through 6
 
     applyHalloweenNpcCostumes(zone:getID())
-    applyStarlightDecorations(zone:getID())
+    xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

@@ -107,7 +107,7 @@ end
 
 xi.moghouse.moogleTrigger = function(player, npc)
     if player:isInMogHouse() then
-        if isStarlightEnabled() ~= 0 then
+        if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
             if xi.moghouse.isInMogHouseInHomeNation(player) then
                 local treePlaced = player:getCharVar("[StarlightMisc]TreePlaced")
                 local placedTime = player:getCharVar("[StarlightMisc]TreeTimePlaced")

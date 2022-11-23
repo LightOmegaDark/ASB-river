@@ -15,8 +15,8 @@ zoneObject.onChocoboDig = function(player, precheck)
 end
 
 zoneObject.onInitialize = function(zone)
-    if isStarlightEnabled ~= 0 then
-        applyStarlightDecorations(zone:getID())
+    if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
+        xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
     end
     -- NM Persistence
     if xi.settings.main.ENABLE_WOTG == 1 then
@@ -48,9 +48,9 @@ end
 
 zoneObject.onGameDay = function()
     SetServerVariable("[DIG]ZONE107_ITEMS", 0)
-    if isStarlightEnabled ~= 0 then
+    if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
         local zone = 107
-        resetSmileHelpers(zone)
+        xi.events.starlightCelebration.resetSmileHelpers(zone)
     end
 end
 

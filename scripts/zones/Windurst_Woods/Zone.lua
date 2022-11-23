@@ -13,7 +13,7 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     applyHalloweenNpcCostumes(zone:getID())
-    applyStarlightDecorations(zone:getID())
+    xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
     xi.chocobo.initZone(zone)
     xi.conquest.toggleRegionalNPCs(zone)
 end

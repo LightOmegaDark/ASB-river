@@ -15,7 +15,7 @@ zoneObject.onInitialize = function(zone)
     zone:registerTriggerArea(1, 23, -12, -208, 31, -8, -197)
 
     applyHalloweenNpcCostumes(zone:getID())
-    applyStarlightDecorations(zone:getID())
+    xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

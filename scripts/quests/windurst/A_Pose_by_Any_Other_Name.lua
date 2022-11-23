@@ -60,8 +60,8 @@ quest.sections =
             ['Angelica'] =
             {
                 onTrigger = function(player, npc)
-                    if isStarlightEnabled() ~= 0 then
-                        return npcGiftsNpcOnTrigger(player, 4)
+                    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
+                        return xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, 4)
                     end
                     local desiredBody = poseItems[player:getMainJob()]
                     local currentBody = player:getEquipID(xi.slot.BODY)

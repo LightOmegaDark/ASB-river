@@ -17,8 +17,8 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    if isStarlightEnabled() ~= 0 then
-        tokenMoogleOnTrigger(player)
+    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
+        xi.events.starlightCelebration.tokenMoogleOnTrigger(player)
     end
 end
 
@@ -26,8 +26,8 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if isStarlightEnabled() ~= 0 then
-        tokenMoogleOnFinish(player, ID, csid, option)
+    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
+        xi.events.starlightCelebration.tokenMoogleOnFinish(player, ID, csid, option)
     end
 end
 

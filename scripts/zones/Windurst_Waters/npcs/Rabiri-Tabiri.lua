@@ -23,8 +23,8 @@ entity.onSpawn = function(npc)
 end
 
 entity.onTrade = function(player, npc, trade)
-    if isStarlightEnabled() ~= 0 then
-        onStarlightSmilebringersTrade(player, trade, npc)
+    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
+        xi.events.starlightCelebration.onStarlightSmilebringersTrade(player, trade, npc)
     end
 end
 

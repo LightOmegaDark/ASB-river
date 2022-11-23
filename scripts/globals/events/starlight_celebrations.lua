@@ -7,7 +7,11 @@ require("scripts/globals/utils")
 require("scripts/globals/npc_util")
 ------------------------------------
 
-function isStarlightEnabled()
+xi = xi or {}
+xi.events = xi.events or {}
+xi.events.starlightCelebration = xi.events.starlightCelebration or {}
+
+function xi.events.starlightCelebration.isStarlightEnabled()
     local option = 0
     local month = tonumber(os.date("%m"))
     local day = tonumber(os.date("%d"))
@@ -24,9 +28,9 @@ end
 --------------------------------
 -- For the Children Sub-Quest --
 --------------------------------
-function onStarlightSmilebringersTrade(player, trade, npc)
+function xi.events.starlightCelebration.onStarlightSmilebringersTrade(player, trade, npc)
     local ID = zones[player:getZoneID()]
-    local contentEnabled = isStarlightEnabled()
+    local contentEnabled = xi.events.starlightCelebration.isStarlightEnabled()
     local item = trade:getItemId()
     local npcID = tostring(npc:getID())
     local npcTrades = player:getLocalVar("[Smilebringers][" .. npcID .. "]GiftsReceived")
@@ -69,7 +73,7 @@ function onStarlightSmilebringersTrade(player, trade, npc)
                 if (item == gifts_table[itemInList] and (head == 15179 or head == 15178) and (item == presents_table[itemInList]) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) < 9)) then
                     player:showText(npc, ID.text.GIFT_THANK_YOU)
                     player:messageSpecial(ID.text.BARRELS_JOY_TO_CHILDREN)
-                    player:addFame(xi.quest.fame_area.HOLIDAY, 64)
+                    player:addFame(xi.quest.fame_area.HOLIDAY, 128)
                     player:tradeComplete()
                 elseif (item == gifts_table[itemInList] and (head == 15179 or head == 15178) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) < 9)) then
                     player:showText(npc, ID.text.GIFT_THANK_YOU)
@@ -92,7 +96,7 @@ end
 --------------------------------
 
 function npcGiftsMoogleOnTrigger(player)
-    if isStarlightEnabled ~= 0 then
+    if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
         local startedQuest = player:getLocalVar("[StarlightNPCGifts]Started")
         local hasCompleted = player:getCharVar("[StarlightNPCGifts]Completed")
         if startedQuest ~= 0 then
@@ -112,7 +116,7 @@ function npcGiftsMoogleOnTrigger(player)
     end
 end
 
-function npcGiftsMoogleOnFinish(player, id, csid, option)
+function xi.events.starlightCelebration.npcGiftsMoogleOnFinish(player, id, csid, option)
     if csid == 32703 and option == 1 then
         player:setLocalVar("[StarlightNPCGifts]Started", 1)
         player:setLocalVar("[StarlightNPCGifts]Delivered", 0)
@@ -149,7 +153,7 @@ function npcGiftsMoogleOnFinish(player, id, csid, option)
     end
 end
 
-function npcGiftsNpcOnTrigger(player, eventid)
+function xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, eventid)
     if eventid == 1 then
         if player:getLocalVar("[StarlightNPCGifts]Started") == 1 then
             if player:getLocalVar("[StarlightNPCGifts]Npc1") ~= 1 then
@@ -285,7 +289,7 @@ end
 -- Token Redemption Sub-Quest --
 --------------------------------
 
-function tokenMoogleOnTrigger(player)
+function xi.events.starlightCelebration.tokenMoogleOnTrigger(player)
     local startedTokens = player:getCharVar("[StarlightTokens]Started")
     if startedTokens ~= 0 then
         local snowToken = player:hasKeyItem(xi.keyItem.SNOW_THEMED_GIFT_TOKEN)
@@ -311,7 +315,7 @@ function tokenMoogleOnTrigger(player)
     end
 end
 
-function tokenMoogleOnFinish(player, id, csid, option)
+function xi.events.starlightCelebration.tokenMoogleOnFinish(player, id, csid, option)
     if csid == 32706 then
         player:setCharVar("[StarlightTokens]Started", 1)
     elseif csid == 32704 or (csid == 32705 and option ~= 1) then -- snow, bell, star
@@ -437,7 +441,7 @@ end
 -- Smilebringer Bootcamp Sub-Quest --
 -------------------------------------
 
-function smileBringerSergeantOnTrigger(player, npc)
+function xi.events.starlightCelebration.smileBringerSergeantOnTrigger(player, npc)
     local elapsedTime = (os.time() - player:getLocalVar("bootCampStarted"))
     local playerPoint = player:getLocalVar("playerBCCP")
     local completedDay = player:getCharVar("dayOfCompletedRace")
@@ -493,14 +497,14 @@ function smileBringerSergeantOnTrigger(player, npc)
     end
 end
 
-function smileBringerSergeantOnFinish(player, npc, id, csid, option)
+function xi.events.starlightCelebration.smileBringerSergeantOnFinish(player, npc, id, csid, option)
     if csid == 7001 and option == 2 then
         local zoneid = player:getZoneID()
         player:delGil(600)
         player:showText(npc, id.text.SMILEBRINGER_START)
         player:setLocalVar("bootCampStarted", os.time())
         player:setLocalVar("playerBCCP", 1)
-        toggleSmileHelpers(zoneid)
+        xi.events.starlightCelebration.toggleSmileHelpers(zoneid)
     elseif csid == 7005 then
         local hasItem = player:hasItem(138)
         if hasItem == true then
@@ -521,7 +525,7 @@ function smileBringerSergeantOnFinish(player, npc, id, csid, option)
     end
 end
 
-function smileHelperTrigger(player, npc, id)
+function xi.events.starlightCelebration.smileHelperTrigger(player, npc, id)
     local npcID = tostring(npc:getID())
     local playerTime = player:getLocalVar("bootCampStarted")
     local playerPoint = player:getLocalVar("playerBCCP")
@@ -565,8 +569,8 @@ end
 ----------------------------------------------------------------
 -- Apply Zone Decorations, Vendors, and Additional Event NPCs --
 ----------------------------------------------------------------
-function applyStarlightDecorations(zoneid)
-    if isStarlightEnabled() ~= 0 then
+function xi.events.starlightCelebration.applyStarlightDecorations(zoneid)
+    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
         local decoration = zones[zoneid].npc.STARLIGHT_DECORATIONS
         if decoration then
             for id, decoration in pairs(decoration) do
@@ -580,8 +584,8 @@ function applyStarlightDecorations(zoneid)
     end
 end
 
-function toggleSmileHelpers(zoneid)
-    if isStarlightEnabled() ~= 0 then
+function xi.events.starlightCelebration.toggleSmileHelpers(zoneid)
+    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
         local smileHelper = zones[zoneid].npc.SMILE_HELPERS
         if smileHelper then
             for id, smileHelper in pairs(smileHelper) do
@@ -595,8 +599,8 @@ function toggleSmileHelpers(zoneid)
     end
 end
 
-function resetSmileHelpers(zoneid)
-    if isStarlightEnabled() ~= 0 then
+function xi.events.starlightCelebration.resetSmileHelpers(zoneid)
+    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
         local smileHelper = zones[zoneid].npc.SMILE_HELPERS
         if smileHelper then
             for id, smileHelper in pairs(smileHelper) do
@@ -618,13 +622,13 @@ local merryMakersBastok =
 {
     [17739906] =
     {
-        { x = -276.000, y = -12.020, z = -89.000, wait = 0 },
-        { x = -266.000, y = -12.020, z = -86.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -79.000, wait = 0 },
-        { x = -255.000, y = -12.020, z = -68.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -57.000, wait = 0 },
-        { x = -265.000, y = -12.020, z = -49.000, wait = 0 },
-        { x = -276.000, y = -12.020, z = -47.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -89.000, wait = 0 },
+        { x = -266.000, y = -13.000, z = -86.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -79.000, wait = 0 },
+        { x = -255.000, y = -13.000, z = -68.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -57.000, wait = 0 },
+        { x = -265.000, y = -13.000, z = -49.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -47.000, wait = 0 },
         { x = -324.000, y = -12.000, z = -33.000, wait = 0 },
         { x = -307.000, y = -15.013, z = -46.000, wait = 0 },
         { x = -322.000, y = -12.000, z = -53.000, wait = 0 },
@@ -634,16 +638,16 @@ local merryMakersBastok =
     },
     [17739907] =
     {
-        { x = -266.000, y = -12.020, z = -86.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -79.000, wait = 0 },
-        { x = -255.000, y = -12.020, z = -68.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -57.000, wait = 0 },
-        { x = -265.000, y = -12.020, z = -49.000, wait = 0 },
-        { x = -276.000, y = -12.020, z = -47.000, wait = 0 },
-        { x = -287.000, y = -12.020, z = -49.000, wait = 0 },
-        { x = -294.000, y = -12.020, z = -57.000, wait = 0 },
-        { x = -297.000, y = -12.020, z = -68.000, wait = 0 },
-        { x = -295.000, y = -12.020, z = -78.000, wait = 0 },
+        { x = -266.000, y = -13.000, z = -86.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -79.000, wait = 0 },
+        { x = -255.000, y = -13.000, z = -68.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -57.000, wait = 0 },
+        { x = -265.000, y = -13.000, z = -49.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -47.000, wait = 0 },
+        { x = -287.000, y = -13.000, z = -49.000, wait = 0 },
+        { x = -294.000, y = -13.000, z = -57.000, wait = 0 },
+        { x = -297.000, y = -13.000, z = -68.000, wait = 0 },
+        { x = -295.000, y = -13.000, z = -78.000, wait = 0 },
         { x = -281.000, y = -12.000, z = -97.000, wait = 0 },
         { x = -280.000, y = -12.000, z = -106.000, wait = 0 },
         { x = -294.000, y = -12.000, z = -115.000, wait = 0 },
@@ -654,16 +658,16 @@ local merryMakersBastok =
     },
     [17739908] =
     {
-        { x = -258.000, y = -12.020, z = -79.000, wait = 0 },
-        { x = -255.000, y = -12.020, z = -68.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -57.000, wait = 0 },
-        { x = -265.000, y = -12.020, z = -49.000, wait = 0 },
-        { x = -276.000, y = -12.020, z = -47.000, wait = 0 },
-        { x = -287.000, y = -12.020, z = -49.000, wait = 0 },
-        { x = -294.000, y = -12.020, z = -57.000, wait = 0 },
-        { x = -297.000, y = -12.020, z = -68.000, wait = 0 },
-        { x = -295.000, y = -12.020, z = -78.000, wait = 0 },
-        { x = -286.000, y = -12.020, z = -86.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -79.000, wait = 0 },
+        { x = -255.000, y = -13.000, z = -68.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -57.000, wait = 0 },
+        { x = -265.000, y = -13.000, z = -49.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -47.000, wait = 0 },
+        { x = -287.000, y = -13.000, z = -49.000, wait = 0 },
+        { x = -294.000, y = -13.000, z = -57.000, wait = 0 },
+        { x = -297.000, y = -13.000, z = -68.000, wait = 0 },
+        { x = -295.000, y = -13.000, z = -78.000, wait = 0 },
+        { x = -286.000, y = -13.000, z = -86.000, wait = 0 },
         { x = -281.000, y = -12.000, z = -97.000, wait = 0 },
         { x = -280.000, y = -12.000, z = -106.000, wait = 0 },
         { x = -249.000, y = -12.000, z = -121.000, wait = 0 },
@@ -676,44 +680,44 @@ local merryMakersBastok =
     },
     [17739909] =
     {
-        { x = -255.000, y = -12.020, z = -68.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -57.000, wait = 0 },
-        { x = -265.000, y = -12.020, z = -49.000, wait = 0 },
-        { x = -276.000, y = -12.020, z = -47.000, wait = 0 },
-        { x = -287.000, y = -12.020, z = -49.000, wait = 0 },
-        { x = -294.000, y = -12.020, z = -57.000, wait = 0 },
-        { x = -297.000, y = -12.020, z = -68.000, wait = 0 },
-        { x = -295.000, y = -12.020, z = -78.000, wait = 0 },
-        { x = -286.000, y = -12.020, z = -86.000, wait = 0 },
-        { x = -276.000, y = -12.020, z = -89.000, wait = 0 },
-        { x = -266.000, y = -12.020, z = -86.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -79.000, wait = 0 },
+        { x = -255.000, y = -13.000, z = -68.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -57.000, wait = 0 },
+        { x = -265.000, y = -13.000, z = -49.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -47.000, wait = 0 },
+        { x = -287.000, y = -13.000, z = -49.000, wait = 0 },
+        { x = -294.000, y = -13.000, z = -57.000, wait = 0 },
+        { x = -297.000, y = -13.000, z = -68.000, wait = 0 },
+        { x = -295.000, y = -13.000, z = -78.000, wait = 0 },
+        { x = -286.000, y = -13.000, z = -86.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -89.000, wait = 0 },
+        { x = -266.000, y = -13.000, z = -86.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -79.000, wait = 0 },
         { x = -243.000, y = -12.000, z = -32.000, wait = 0 },
-        { x = -200.000, y = -12.020, z = -31.000, wait = 0 },
-        { x = -200.000, y = -12.020, z = 32.000, wait = 0 },
-        { x = -241.000, y = -12.020, z = 32.000, wait = 0 },
-        { x = -249.000, y = -12.020, z = 34.000, wait = 0 },
-        { x = -253.000, y = -12.020, z = 41.000, wait = 0 },
-        { x = -252.000, y = -12.020, z = 51.000, wait = 0 },
-        { x = -239.000, y = -12.020, z = 52.000, wait = 0 },
-        { x = -233.000, y = -12.020, z = 65.000, wait = 0 },
-        { x = -209.000, y = -12.020, z = 65.000, wait = 0 },
-        { x = -198.000, y = -12.020, z = 61.000, wait = 0 },
-        { x = -189.000, y = -12.020, z = 60.000, wait = 0 },
-        { x = -190.000, y = -12.020, z = 87.000, wait = 0 },
-        { x = -210.000, y = -12.020, z = 87.000, wait = 0 },
-        { x = -224.000, y = -12.020, z = 79.000, wait = 0 },
-        { x = -251.000, y = -12.020, z = 79.000, wait = 0 },
-        { x = -253.000, y = -12.020, z = 41.000, wait = 0 },
-        { x = -249.000, y = -12.020, z = 34.000, wait = 0 },
-        { x = -241.000, y = -12.020, z = 32.000, wait = 0 },
-        { x = -200.000, y = -12.020, z = 32.000, wait = 0 },
-        { x = -200.000, y = -12.020, z = -31.000, wait = 0 },
+        { x = -200.000, y = -13.000, z = -31.000, wait = 0 },
+        { x = -200.000, y = -13.000, z = 32.000, wait = 0 },
+        { x = -241.000, y = -13.000, z = 32.000, wait = 0 },
+        { x = -249.000, y = -13.000, z = 34.000, wait = 0 },
+        { x = -253.000, y = -13.000, z = 41.000, wait = 0 },
+        { x = -252.000, y = -13.000, z = 51.000, wait = 0 },
+        { x = -239.000, y = -13.000, z = 52.000, wait = 0 },
+        { x = -233.000, y = -13.000, z = 65.000, wait = 0 },
+        { x = -209.000, y = -13.000, z = 65.000, wait = 0 },
+        { x = -198.000, y = -13.000, z = 61.000, wait = 0 },
+        { x = -189.000, y = -13.000, z = 60.000, wait = 0 },
+        { x = -190.000, y = -13.000, z = 87.000, wait = 0 },
+        { x = -210.000, y = -13.000, z = 87.000, wait = 0 },
+        { x = -224.000, y = -13.000, z = 79.000, wait = 0 },
+        { x = -251.000, y = -13.000, z = 79.000, wait = 0 },
+        { x = -253.000, y = -13.000, z = 41.000, wait = 0 },
+        { x = -249.000, y = -13.000, z = 34.000, wait = 0 },
+        { x = -241.000, y = -13.000, z = 32.000, wait = 0 },
+        { x = -200.000, y = -13.000, z = 32.000, wait = 0 },
+        { x = -200.000, y = -13.000, z = -31.000, wait = 0 },
         { x = -243.000, y = -12.000, z = -32.000, wait = 0 },
     },
     [17739910] =
     {
-        { x = -258.000, y = -12.020, z = -57.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -57.000, wait = 0 },
         { x = -243.000, y = -12.000, z = -58.000, wait = 0 },
         { x = -242.000, y = -12.000, z = -74.000, wait = 0 },
         { x = -198.000, y = -12.000, z = -72.000, wait = 0 },
@@ -729,29 +733,29 @@ local merryMakersBastok =
         { x = -198.000, y = -12.000, z = -71.000, wait = 0 },
         { x = -242.000, y = -12.000, z = -74.000, wait = 0 },
         { x = -243.000, y = -12.000, z = -58.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -57.000, wait = 0 },
-        { x = -265.000, y = -12.020, z = -49.000, wait = 0 },
-        { x = -276.000, y = -12.020, z = -47.000, wait = 0 },
-        { x = -287.000, y = -12.020, z = -49.000, wait = 0 },
-        { x = -294.000, y = -12.020, z = -57.000, wait = 0 },
-        { x = -297.000, y = -12.020, z = -68.000, wait = 0 },
-        { x = -295.000, y = -12.020, z = -78.000, wait = 0 },
-        { x = -286.000, y = -12.020, z = -86.000, wait = 0 },
-        { x = -276.000, y = -12.020, z = -89.000, wait = 0 },
-        { x = -266.000, y = -12.020, z = -86.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -79.000, wait = 0 },
-        { x = -255.000, y = -12.020, z = -68.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -57.000, wait = 0 },
+        { x = -265.000, y = -13.000, z = -49.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -47.000, wait = 0 },
+        { x = -287.000, y = -13.000, z = -49.000, wait = 0 },
+        { x = -294.000, y = -13.000, z = -57.000, wait = 0 },
+        { x = -297.000, y = -13.000, z = -68.000, wait = 0 },
+        { x = -295.000, y = -13.000, z = -78.000, wait = 0 },
+        { x = -286.000, y = -13.000, z = -86.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -89.000, wait = 0 },
+        { x = -266.000, y = -13.000, z = -86.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -79.000, wait = 0 },
+        { x = -255.000, y = -13.000, z = -68.000, wait = 0 },
     },
     [17739911] =
     {
-        { x = -265.000, y = -12.020, z = -49.000, wait = 0 },
-        { x = -276.000, y = -12.020, z = -47.000, wait = 0 },
-        { x = -287.000, y = -12.020, z = -49.000, wait = 0 },
-        { x = -294.000, y = -12.020, z = -57.000, wait = 0 },
-        { x = -297.000, y = -12.020, z = -68.000, wait = 0 },
-        { x = -295.000, y = -12.020, z = -78.000, wait = 0 },
-        { x = -286.000, y = -12.020, z = -86.000, wait = 0 },
-        { x = -276.000, y = -12.020, z = -89.000, wait = 0 },
+        { x = -265.000, y = -13.000, z = -49.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -47.000, wait = 0 },
+        { x = -287.000, y = -13.000, z = -49.000, wait = 0 },
+        { x = -294.000, y = -13.000, z = -57.000, wait = 0 },
+        { x = -297.000, y = -13.000, z = -68.000, wait = 0 },
+        { x = -295.000, y = -13.000, z = -78.000, wait = 0 },
+        { x = -286.000, y = -13.000, z = -86.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -89.000, wait = 0 },
         { x = -279.000, y = -12.000, z = -97.000, wait = 0 },
         { x = -279.000, y = -12.000, z = -108.000, wait = 0 },
         { x = -264.000, y = -12.000, z = -116.000, wait = 0 },
@@ -775,54 +779,54 @@ local merryMakersBastok =
         { x = -262.000, y = -12.000, z = -117.000, wait = 0 },
         { x = -279.000, y = -12.000, z = -108.000, wait = 0 },
         { x = -279.000, y = -12.000, z = -97.000, wait = 0 },
-        { x = -276.000, y = -12.020, z = -89.000, wait = 0 },
-        { x = -266.000, y = -12.020, z = -86.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -79.000, wait = 0 },
-        { x = -255.000, y = -12.020, z = -68.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -57.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -89.000, wait = 0 },
+        { x = -266.000, y = -13.000, z = -86.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -79.000, wait = 0 },
+        { x = -255.000, y = -13.000, z = -68.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -57.000, wait = 0 },
     },
     [17739912] =
     {
-        { x = -276.000, y = -12.020, z = -47.000, wait = 0 },
-        { x = -287.000, y = -12.020, z = -49.000, wait = 0 },
-        { x = -294.000, y = -12.020, z = -57.000, wait = 0 },
-        { x = -297.000, y = -12.020, z = -68.000, wait = 0 },
-        { x = -295.000, y = -12.020, z = -78.000, wait = 0 },
-        { x = -286.000, y = -12.020, z = -86.000, wait = 0 },
-        { x = -276.000, y = -12.020, z = -89.000, wait = 4000 },
-        { x = -266.000, y = -12.020, z = -86.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -79.000, wait = 0 },
-        { x = -255.000, y = -12.020, z = -68.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -47.000, wait = 0 },
+        { x = -287.000, y = -13.000, z = -49.000, wait = 0 },
+        { x = -294.000, y = -13.000, z = -57.000, wait = 0 },
+        { x = -297.000, y = -13.000, z = -68.000, wait = 0 },
+        { x = -295.000, y = -13.000, z = -78.000, wait = 0 },
+        { x = -286.000, y = -13.000, z = -86.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -89.000, wait = 4000 },
+        { x = -266.000, y = -13.000, z = -86.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -79.000, wait = 0 },
+        { x = -255.000, y = -13.000, z = -68.000, wait = 0 },
         { x = -243.000, y = -12.000, z = -32.000, wait = 0 },
-        { x = -200.000, y = -12.020, z = -31.000, wait = 0 },
-        { x = -200.000, y = -12.020, z = 32.000, wait = 0 },
-        { x = -241.000, y = -12.020, z = 32.000, wait = 0 },
-        { x = -249.000, y = -12.020, z = 34.000, wait = 0 },
-        { x = -253.000, y = -12.020, z = 41.000, wait = 0 },
-        { x = -252.000, y = -12.020, z = 51.000, wait = 0 },
-        { x = -239.000, y = -12.020, z = 52.000, wait = 0 },
-        { x = -233.000, y = -12.020, z = 65.000, wait = 0 },
-        { x = -209.000, y = -12.020, z = 65.000, wait = 0 },
-        { x = -198.000, y = -12.020, z = 61.000, wait = 0 },
-        { x = -189.000, y = -12.020, z = 60.000, wait = 0 },
-        { x = -190.000, y = -12.020, z = 87.000, wait = 0 },
-        { x = -210.000, y = -12.020, z = 87.000, wait = 0 },
-        { x = -224.000, y = -12.020, z = 79.000, wait = 0 },
-        { x = -251.000, y = -12.020, z = 79.000, wait = 0 },
-        { x = -253.000, y = -12.020, z = 41.000, wait = 0 },
-        { x = -249.000, y = -12.020, z = 34.000, wait = 0 },
-        { x = -241.000, y = -12.020, z = 32.000, wait = 0 },
-        { x = -200.000, y = -12.020, z = 32.000, wait = 0 },
-        { x = -200.000, y = -12.020, z = -31.000, wait = 0 },
+        { x = -200.000, y = -13.000, z = -31.000, wait = 0 },
+        { x = -200.000, y = -13.000, z = 32.000, wait = 0 },
+        { x = -241.000, y = -13.000, z = 32.000, wait = 0 },
+        { x = -249.000, y = -13.000, z = 34.000, wait = 0 },
+        { x = -253.000, y = -13.000, z = 41.000, wait = 0 },
+        { x = -252.000, y = -13.000, z = 51.000, wait = 0 },
+        { x = -239.000, y = -13.000, z = 52.000, wait = 0 },
+        { x = -233.000, y = -13.000, z = 65.000, wait = 0 },
+        { x = -209.000, y = -13.000, z = 65.000, wait = 0 },
+        { x = -198.000, y = -13.000, z = 61.000, wait = 0 },
+        { x = -189.000, y = -13.000, z = 60.000, wait = 0 },
+        { x = -190.000, y = -13.000, z = 87.000, wait = 0 },
+        { x = -210.000, y = -13.000, z = 87.000, wait = 0 },
+        { x = -224.000, y = -13.000, z = 79.000, wait = 0 },
+        { x = -251.000, y = -13.000, z = 79.000, wait = 0 },
+        { x = -253.000, y = -13.000, z = 41.000, wait = 0 },
+        { x = -249.000, y = -13.000, z = 34.000, wait = 0 },
+        { x = -241.000, y = -13.000, z = 32.000, wait = 0 },
+        { x = -200.000, y = -13.000, z = 32.000, wait = 0 },
+        { x = -200.000, y = -13.000, z = -31.000, wait = 0 },
         { x = -243.000, y = -12.000, z = -32.000, wait = 0 },
     },
     [17739913] =
     {
-        { x = -287.000, y = -12.020, z = -49.000, wait = 0 },
-        { x = -294.000, y = -12.020, z = -57.000, wait = 0 },
-        { x = -297.000, y = -12.020, z = -68.000, wait = 0 },
-        { x = -295.000, y = -12.020, z = -78.000, wait = 0 },
-        { x = -286.000, y = -12.020, z = -86.000, wait = 0 },
+        { x = -287.000, y = -13.000, z = -49.000, wait = 0 },
+        { x = -294.000, y = -13.000, z = -57.000, wait = 0 },
+        { x = -297.000, y = -13.000, z = -68.000, wait = 0 },
+        { x = -295.000, y = -13.000, z = -78.000, wait = 0 },
+        { x = -286.000, y = -13.000, z = -86.000, wait = 0 },
         { x = -280.000, y = -12.000, z = -106.000, wait = 0 },
         { x = -292.000, y = -12.000, z = -113.000, wait = 4000 },
         { x = -328.000, y = -12.000, z = -147.000, wait = 0 },
@@ -830,35 +834,35 @@ local merryMakersBastok =
         { x = -328.000, y = -16.000, z = -147.000, wait = 0 },
         { x = -292.000, y = -12.000, z = -113.000, wait = 0 },
         { x = -280.000, y = -12.000, z = -106.000, wait = 0 },
-        { x = -276.000, y = -12.020, z = -89.000, wait = 0 },
-        { x = -266.000, y = -12.020, z = -86.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -79.000, wait = 0 },
-        { x = -255.000, y = -12.020, z = -68.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -57.000, wait = 0 },
-        { x = -265.000, y = -12.020, z = -49.000, wait = 0 },
-        { x = -276.000, y = -12.020, z = -47.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -89.000, wait = 0 },
+        { x = -266.000, y = -13.000, z = -86.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -79.000, wait = 0 },
+        { x = -255.000, y = -13.000, z = -68.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -57.000, wait = 0 },
+        { x = -265.000, y = -13.000, z = -49.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -47.000, wait = 0 },
 
     },
     [17739914] =
     {
-        { x = -294.000, y = -12.020, z = -57.000, wait = 0 },
-        { x = -297.000, y = -12.020, z = -68.000, wait = 0 },
-        { x = -295.000, y = -12.020, z = -78.000, wait = 0 },
-        { x = -286.000, y = -12.020, z = -86.000, wait = 0 },
-        { x = -276.000, y = -12.020, z = -89.000, wait = 0 },
-        { x = -266.000, y = -12.020, z = -86.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -79.000, wait = 4000 },
-        { x = -255.000, y = -12.020, z = -68.000, wait = 0 },
+        { x = -294.000, y = -13.000, z = -57.000, wait = 0 },
+        { x = -297.000, y = -13.000, z = -68.000, wait = 0 },
+        { x = -295.000, y = -13.000, z = -78.000, wait = 0 },
+        { x = -286.000, y = -13.000, z = -86.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -89.000, wait = 0 },
+        { x = -266.000, y = -13.000, z = -86.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -79.000, wait = 4000 },
+        { x = -255.000, y = -13.000, z = -68.000, wait = 0 },
         { x = -243.000, y = -12.000, z = -32.000, wait = 0 },
         { x = -178.000, y = -12.000, z = -30.000, wait = 0 },
         { x = -243.000, y = -12.000, z = -32.000, wait = 0 },
-        { x = -287.000, y = -12.020, z = -49.000, wait = 0 },
+        { x = -287.000, y = -13.000, z = -49.000, wait = 0 },
     },
     [17739915] =
     {
-        { x = -297.000, y = -12.020, z = -68.000, wait = 0 },
-        { x = -295.000, y = -12.020, z = -78.000, wait = 0 },
-        { x = -286.000, y = -12.020, z = -86.000, wait = 0 },
+        { x = -297.000, y = -13.000, z = -68.000, wait = 0 },
+        { x = -295.000, y = -13.000, z = -78.000, wait = 0 },
+        { x = -286.000, y = -13.000, z = -86.000, wait = 0 },
         { x = -279.000, y = -12.000, z = -108.000, wait = 0 },
         { x = -264.000, y = -12.000, z = -116.000, wait = 0 },
         { x = -249.000, y = -12.000, z = -121.000, wait = 0 },
@@ -874,15 +878,15 @@ local merryMakersBastok =
         { x = -249.000, y = -12.000, z = -121.000, wait = 0 },
         { x = -264.000, y = -12.000, z = -116.000, wait = 0 },
         { x = -279.000, y = -12.000, z = -108.000, wait = 0 },
-        { x = -276.000, y = -12.020, z = -89.000, wait = 0 },
-        { x = -266.000, y = -12.020, z = -86.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -79.000, wait = 0 },
-        { x = -255.000, y = -12.020, z = -68.000, wait = 0 },
-        { x = -258.000, y = -12.020, z = -57.000, wait = 0 },
-        { x = -265.000, y = -12.020, z = -49.000, wait = 0 },
-        { x = -276.000, y = -12.020, z = -47.000, wait = 0 },
-        { x = -287.000, y = -12.020, z = -49.000, wait = 0 },
-        { x = -294.000, y = -12.020, z = -57.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -89.000, wait = 0 },
+        { x = -266.000, y = -13.000, z = -86.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -79.000, wait = 0 },
+        { x = -255.000, y = -13.000, z = -68.000, wait = 0 },
+        { x = -258.000, y = -13.000, z = -57.000, wait = 0 },
+        { x = -265.000, y = -13.000, z = -49.000, wait = 0 },
+        { x = -276.000, y = -13.000, z = -47.000, wait = 0 },
+        { x = -287.000, y = -13.000, z = -49.000, wait = 0 },
+        { x = -294.000, y = -13.000, z = -57.000, wait = 0 },
     },
 }
 
@@ -1704,9 +1708,9 @@ local merryMakersNPCs =
     }
 }
 
-function getMerrymakerNPCIDs(zoneid)
+function xi.events.starlightCelebration.getMerrymakerNPCIDs(zoneid)
     npc_table = {}
-    if isStarlightEnabled ~= 0 then
+    if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
         if zoneid == 231 then
             npc_table = merryMakersNPCs.Northern_SandOria
             return npc_table
@@ -1720,9 +1724,9 @@ function getMerrymakerNPCIDs(zoneid)
     end
 end
 
-function getMerrymakerPathing(npcid, zoneid)
+function xi.events.starlightCelebration.getMerrymakerPathing(npcid, zoneid)
     pathNodes = {}
-    if isStarlightEnabled() ~= 0 then
+    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
         if zoneid == 231 then
             pathNodes = merryMakersSandoria[npcid]
             return pathNodes
@@ -1736,22 +1740,22 @@ function getMerrymakerPathing(npcid, zoneid)
     end
 end
 
-function merryMakersGoblinOnSpawn(npc)
+function xi.events.starlightCelebration.merryMakersGoblinOnSpawn(npc)
     npc:initNpcAi()
     local npcID = npc:getID()
-    local pathNodes = getMerrymakerPathing(npcID, npc:getZoneID())
+    local pathNodes = xi.events.starlightCelebration.getMerrymakerPathing(npcID, npc:getZoneID())
     npc:setPos(xi.path.first(pathNodes))
     npc:pathThrough(pathNodes, xi.path.flag.PATROL)
 end
 
-function merryMakersGoblinOnPathPoint(npc, id)
+function xi.events.starlightCelebration.merryMakersGoblinOnPathPoint(npc, id)
     local rnd = math.random(1, 30)
     if rnd == 20 then
         npc:showText(npc, id.text.MERRYMAKER_TOY)
     end
 end
 
-function merryMakersGoblinOnTrigger(player, npc)
+function xi.events.starlightCelebration.merryMakersGoblinOnTrigger(player, npc)
     local hasTrust = player:getLocalVar("[StarlightMerryMakers]GoblinTrust")
     local hasPresent = player:getLocalVar("[StarlightMerryMakers]HasPresent")
     if hasTrust == npc:getID() then
@@ -1778,7 +1782,7 @@ function merryMakersGoblinOnTrigger(player, npc)
     end
 end
 
-function merryMakersGoblinOnFinish(player, csid, option)
+function xi.events.starlightCelebration.merryMakersGoblinOnFinish(player, csid, option)
     if csid == 4711 then
         local bluePresent = player:hasKeyItem(xi.keyItem.BLUE_PRESENT)
         -- local present_table =
@@ -1810,7 +1814,7 @@ function merryMakersGoblinOnFinish(player, csid, option)
     end
 end
 
-function merryMakersGoblinOnTrade(player, npc, trade)
+function xi.events.starlightCelebration.merryMakersGoblinOnTrade(player, npc, trade)
     local item = trade:getItemId()
     if item == 4495 then
         player:setLocalVar("[StarlightMerryMakers]GoblinTrust", npc:getID())
@@ -1821,7 +1825,7 @@ function merryMakersGoblinOnTrade(player, npc, trade)
     end
 end
 
-function merryMakersMoogleOnTrigger(player, npc)
+function xi.events.starlightCelebration.merryMakersMoogleOnTrigger(player, npc)
     local questStatus = player:getLocalVar("[StarlightMerryMakers]Started")
     local cleared = player:getLocalVar("[StarlightMerryMakers]Cleared")
     local confirmed = player:getLocalVar("[StarlightMerryMakers]Confirmed")
@@ -1848,7 +1852,7 @@ function merryMakersMoogleOnTrigger(player, npc)
             local green_present = player:hasKeyItem(xi.keyItem.GREEN_PRESENT)
             local blue_present = player:hasKeyItem(xi.keyItem.BLUE_PRESENT)
 
-            local npc_table = getMerrymakerNPCIDs(npc:getZoneID())
+            local npc_table = xi.events.starlightCelebration.getMerrymakerNPCIDs(npc:getZoneID())
 
             if (red_present or green_present or blue_present) then
                 local rnd = math.random( 1,6 )
@@ -1872,7 +1876,7 @@ function merryMakersMoogleOnTrigger(player, npc)
     end
 end
 
-function merryMakersMoogleOnFinish(player, id, csid, option)
+function xi.events.starlightCelebration.merryMakersMoogleOnFinish(player, id, csid, option)
     if csid == 4702 then
         local dreamPants = player:hasItem(11967)
         local dreamTrousers = player:hasItem(11965)
@@ -1910,7 +1914,7 @@ function merryMakersMoogleOnFinish(player, id, csid, option)
 end
 
 function merryMakersNPCDeliverOnTrigger(player, npc, defaultAction)
-    if isStarlightEnabled() ~= 0 then
+    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
         local npcID = npc:getID()
         local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
         local confirmed = player:getLocalVar("[StarlightMerryMakers]Confirmed")
@@ -1949,7 +1953,7 @@ function merryMakersNPCDeliverOnTrigger(player, npc, defaultAction)
         else
             if player:getLocalVar("[StarlightMerryMakers]Sender") == npcID then
                 local eventID = player:getLocalVar("[StarlightMerryMakers]SenderID")
-                local npc_table = getMerrymakerNPCIDs(npc:getZoneID())
+                local npc_table = xi.events.starlightCelebration.getMerrymakerNPCIDs(npc:getZoneID())
                 local event_table = merryMakersNPCs.Send_Event_IDs
                 local receiver = 0
                 local receiveID = 0
@@ -1980,3 +1984,5 @@ function merryMakersNPCDeliverOnTrigger(player, npc, defaultAction)
         end
     end
 end
+
+return xi.events.starlightCelebration

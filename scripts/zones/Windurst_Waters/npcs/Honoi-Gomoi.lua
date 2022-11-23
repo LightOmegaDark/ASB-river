@@ -19,8 +19,8 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    if isStarlightEnabled() ~= 0 then
-        npcGiftsNpcOnTrigger(player, 3)
+    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
+        xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, 3)
     else
         if
             player:hasKeyItem(xi.ki.NEW_MODEL_HAT) and

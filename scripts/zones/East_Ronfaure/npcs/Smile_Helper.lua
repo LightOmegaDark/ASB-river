@@ -14,8 +14,8 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    if isStarlightEnabled ~= 0 then
-        smileHelperTrigger(player, npc, ID)
+    if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
+        xi.events.starlightCelebration.smileHelperTrigger(player, npc, ID)
     end
 end
 
