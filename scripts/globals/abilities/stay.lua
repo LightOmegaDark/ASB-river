@@ -23,8 +23,11 @@ end
 abilityObject.onUseAbility = function(player, target, ability, action)
     local pet = player:getPet()
 
-    if (not pet:hasPreventActionEffect()) then
-        pet:addStatusEffectEx(xi.effect.HEALING, 0, 0, 10, 0)
+    if not pet:hasPreventActionEffect() then
+        -- Pets gradually regaining HP out of combat added in ToAU.
+        if xi.settings.main.ENABLE_TOAU == 1 then
+            pet:addStatusEffectEx(xi.effect.HEALING, 0, 0, 10, 0)
+        end
         pet:setAnimation(0)
     end
 end
