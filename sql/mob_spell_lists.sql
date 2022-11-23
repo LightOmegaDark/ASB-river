@@ -5148,6 +5148,11 @@ INSERT INTO `mob_spell_lists` VALUES ('Bloody_Coffin',507,231,1,255);  -- Bio II
 INSERT INTO `mob_spell_lists` VALUES ('Bloody_Coffin',507,250,1,255);  -- Ice Spikes (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Bloody_Coffin',507,254,1,255);  -- Blind (1~255)
 
+-- Cemetery Cherry (508)
+INSERT INTO `mob_spell_lists` VALUES ('Cemetery_Cherry',508,274,1,255); -- Sleepga II
+INSERT INTO `mob_spell_lists` VALUES ('Cemetery_Cherry',508,356,1,255); -- Paralyga
+INSERT INTO `mob_spell_lists` VALUES ('Cemetery_Cherry',508,366,1,255); -- Graviga
+
 -- AirSkyBoat Specific Starts at 5000
 -- 5000 -> 5010 is Era Dynamis
 
