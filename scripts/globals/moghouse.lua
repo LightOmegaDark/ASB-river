@@ -106,7 +106,23 @@ xi.moghouse.moogleTrade = function(player, npc, trade)
 end
 
 xi.moghouse.moogleTrigger = function(player, npc)
+    local hasEnteredBefore = player:getCharVar("[Moghouse]HasEntered")
+    local rentedARoomBefore = player:getCharVar("[Moghouse]HasRentedARoom")
+
     if player:isInMogHouse() then
+
+        if (hasEnteredBefore == 0 and xi.moghouse.isInMogHouseInHomeNation(player) == true) then
+            player:startEvent(30000)
+            player:setCharVar("[Moghouse]HasEntered", 1)
+            return
+        end
+
+        if (xi.moghouse.isInMogHouseInHomeNation(player) == false and rentedARoomBefore == 0) then
+            player:setCharVar("[Moghouse]HasRentedARoom", 1)
+            player:startEvent(30001)
+            player:sendMenu(1)
+        end
+
         if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
             if xi.moghouse.isInMogHouseInHomeNation(player) then
                 local treePlaced = player:getCharVar("[StarlightMisc]TreePlaced")
@@ -137,6 +153,7 @@ xi.moghouse.moogleTrigger = function(player, npc)
                 end
             end
         end
+
         local lockerTs = xi.moghouse.getMogLockerExpiryTimestamp(player)
 
         if lockerTs ~= nil then
