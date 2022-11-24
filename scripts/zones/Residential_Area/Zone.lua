@@ -9,7 +9,17 @@ zoneObject.onInitialize = function(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
-    return xi.moghouse.onMoghouseZoneIn(player, prevZone)
+    local cs = -1
+
+    if player:getCharVar("newMog") == 0 then
+        cs = 30000
+        player:setCharVar("newMob", 1)
+    end
+
+    player:eraseStatusEffect(true)
+    player:setPos(0, 0, 0, 192)
+
+    return cs
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
