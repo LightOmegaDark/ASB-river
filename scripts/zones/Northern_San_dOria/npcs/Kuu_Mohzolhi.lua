@@ -13,7 +13,12 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-        xi.events.starlightCelebration.onStarlightSmilebringersTrade(player, trade, npc)
+        local head = player:getEquipID(xi.slot.HEAD)
+        if (head == 15179 or head == 15178) then
+            xi.events.starlightCelebration.onStarlightSmilebringersTrade(player, trade, npc)
+
+            return
+        end
     end
     local itemQuality = 0
 

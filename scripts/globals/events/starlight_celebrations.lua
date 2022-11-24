@@ -34,6 +34,7 @@ function xi.events.starlightCelebration.onStarlightSmilebringersTrade(player, tr
     local item = trade:getItemId()
     local npcID = tostring(npc:getID())
     local npcTrades = player:getLocalVar("[Smilebringers][" .. npcID .. "]GiftsReceived")
+    local head = player:getEquipID(xi.slot.HEAD)
     ------------------
     -- 2007 Edition --
     ------------------
@@ -66,27 +67,29 @@ function xi.events.starlightCelebration.onStarlightSmilebringersTrade(player, tr
         ---------------
         -- Hat Check --
         ---------------
-        local head = player:getEquipID(xi.slot.HEAD)
-
-        if (npcTrades < 14 and (head == 15179 or head == 15178)) then
-            for itemInList = 1, #gifts_table do
-                if (item == gifts_table[itemInList] and (head == 15179 or head == 15178) and (item == presents_table[itemInList]) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) < 9)) then
-                    player:showText(npc, ID.text.GIFT_THANK_YOU)
-                    player:messageSpecial(ID.text.BARRELS_JOY_TO_CHILDREN)
-                    player:addFame(xi.quest.fame_area.HOLIDAY, 128)
-                    player:tradeComplete()
-                elseif (item == gifts_table[itemInList] and (head == 15179 or head == 15178) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) < 9)) then
-                    player:showText(npc, ID.text.GIFT_THANK_YOU)
-                    player:messageSpecial(ID.text.JOY_TO_CHILDREN)
-                    player:addFame(xi.quest.fame_area.HOLIDAY, 32)
-                    player:tradeComplete()
-                elseif ((item == gifts_table[itemInList]) and (head == 15179 or head == 15178) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) >= 9)) then
-                    player:showText(npc, ID.text.ONLY_TWO_HANDS)
+        if (head == 15179 or head == 15178) then
+            if (npcTrades < 14) then
+                for itemInList = 1, #gifts_table do
+                    if (item == gifts_table[itemInList] and (head == 15179 or head == 15178) and (item == presents_table[itemInList]) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) < 9)) then
+                        player:showText(npc, ID.text.GIFT_THANK_YOU)
+                        player:messageSpecial(ID.text.BARRELS_JOY_TO_CHILDREN)
+                        player:addFame(xi.quest.fame_area.HOLIDAY, 128)
+                        player:tradeComplete()
+                    elseif (item == gifts_table[itemInList] and (head == 15179 or head == 15178) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) < 9)) then
+                        player:showText(npc, ID.text.GIFT_THANK_YOU)
+                        player:messageSpecial(ID.text.JOY_TO_CHILDREN)
+                        player:addFame(xi.quest.fame_area.HOLIDAY, 32)
+                        player:tradeComplete()
+                    elseif ((item == gifts_table[itemInList]) and (head == 15179 or head == 15178) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) >= 9)) then
+                        player:showText(npc, ID.text.ONLY_TWO_HANDS)
+                    end
                 end
+                player:setLocalVar("[Smilebringers][" .. npcID .. "]GiftsReceived", npcTrades + 1)
+            else
+                player:showText(npc, ID.text.ONLY_TWO_HANDS)
             end
-            player:setLocalVar("[Smilebringers][" .. npcID .. "]GiftsReceived", npcTrades + 1)
         else
-            player:showText(npc, ID.text.ONLY_TWO_HANDS)
+            return
         end
     end
 end
@@ -867,68 +870,73 @@ end
 function xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc)
     local npcID = npc:getID()
     local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
+    local questStatus = player:getLocalVar("[StarlightMerryMakers]Cleared")
     local confirmed = player:getLocalVar("[StarlightMerryMakers]Confirmed")
     local delivered = player:getLocalVar("[StarlightMerryMakers]Delivered")
 
-    if delivered ~= 0 then
-        player:showText(npc, 14002)
-        player:setLocalVar("[StarlightMerryMakers]Sender", 0)
-        player:setLocalVar("[StarlightMerryMakers]Confirmed", 0)
-        player:setLocalVar("[StarlightMerryMakers]Delivered", 0)
-        player:setLocalVar("[StarlightMerryMakers]Cleared", 1)
-    elseif confirmed ~= 0 then
-        local npcName = GetNPCByID(sender):getName()
-        local event_pos = player:getLocalVar("[StarlightMerryMakers]ConfirmedID")
-        local event_table = merryMakersNPCs.Receive_Event_IDs[event_pos]
-        local red_present = player:hasKeyItem(xi.keyItem.RED_PRESENT)
-        local green_present = player:hasKeyItem(xi.keyItem.GREEN_PRESENT)
-        local blue_present = player:hasKeyItem(xi.keyItem.BLUE_PRESENT)
-
-        if string.find(npcName, "%_") ~= 0 then
-            npcName = string.gsub(npcName, "%_", " ")
-        end
-
-        player:startEventString(event_table, npcName)
-        player:setLocalVar("[StarlightMerryMakers]Confirmed", 0)
-        player:setLocalVar("[StarlightMerryMakers]Delivered", npc:getID())
-
-        if red_present then
-            player:delKeyItem(xi.keyItem.RED_PRESENT)
-        elseif green_present then
-            player:delKeyItem(xi.keyItem.GREEN_PRESENT)
-        elseif blue_present then
-            player:delKeyItem(xi.keyItem.BLUE_PRESENT)
-        end
-        player:setLocalVar("[StarlightMerryMakers]HasPresent", 0)
-    else
-        if player:getLocalVar("[StarlightMerryMakers]Sender") == npcID then
-            local eventID = player:getLocalVar("[StarlightMerryMakers]SenderID")
-            local npc_table = xi.events.starlightCelebration.getMerrymakerNPCIDs(npc:getZoneID())
-            local event_table = merryMakersNPCs.Send_Event_IDs
-            local receiver = 0
-            local receiveID = 0
-            local count = #npc_table
-            while count ~= 0 do
-                local rnd = math.random(1, #npc_table)
-                local picked = npc_table[rnd]
-                if picked ~= npcID then
-                    receiver = picked
-                    count = 0
-                    receiveID = rnd
-                else
-                    table.remove(npc_table, picked) -- removes this NPC's ID from table
-                    count = count - 1
-                end
-            end
-            local npcName = GetNPCByID(receiver):getName()
+    if questStatus ~= 0 then
+        if delivered ~= 0 then
+            player:showText(npc, 14002)
+            player:setLocalVar("[StarlightMerryMakers]Sender", 0)
+            player:setLocalVar("[StarlightMerryMakers]Confirmed", 0)
+            player:setLocalVar("[StarlightMerryMakers]Delivered", 0)
+            player:setLocalVar("[StarlightMerryMakers]Cleared", 1)
+        elseif confirmed ~= 0 then
+            local npcName = GetNPCByID(sender):getName()
+            local event_pos = player:getLocalVar("[StarlightMerryMakers]ConfirmedID")
+            local event_table = merryMakersNPCs.Receive_Event_IDs[event_pos]
+            local red_present = player:hasKeyItem(xi.keyItem.RED_PRESENT)
+            local green_present = player:hasKeyItem(xi.keyItem.GREEN_PRESENT)
+            local blue_present = player:hasKeyItem(xi.keyItem.BLUE_PRESENT)
 
             if string.find(npcName, "%_") ~= 0 then
                 npcName = string.gsub(npcName, "%_", " ")
             end
-            player:startEvent(event_table[eventID], npcName)
-            player:setLocalVar("[StarlightMerryMakers]Confirmed", receiver)
-            player:setLocalVar("[StarlightMerryMakers]ConfirmedID", receiveID)
+
+            player:startEventString(event_table, npcName)
+            player:setLocalVar("[StarlightMerryMakers]Confirmed", 0)
+            player:setLocalVar("[StarlightMerryMakers]Delivered", npc:getID())
+
+            if red_present then
+                player:delKeyItem(xi.keyItem.RED_PRESENT)
+            elseif green_present then
+                player:delKeyItem(xi.keyItem.GREEN_PRESENT)
+            elseif blue_present then
+                player:delKeyItem(xi.keyItem.BLUE_PRESENT)
+            end
+            player:setLocalVar("[StarlightMerryMakers]HasPresent", 0)
+        else
+            if player:getLocalVar("[StarlightMerryMakers]Sender") == npcID then
+                local eventID = player:getLocalVar("[StarlightMerryMakers]SenderID")
+                local npc_table = xi.events.starlightCelebration.getMerrymakerNPCIDs(npc:getZoneID())
+                local event_table = merryMakersNPCs.Send_Event_IDs
+                local receiver = 0
+                local receiveID = 0
+                local count = #npc_table
+                while count ~= 0 do
+                    local rnd = math.random(1, #npc_table)
+                    local picked = npc_table[rnd]
+                    if picked ~= npcID then
+                        receiver = picked
+                        count = 0
+                        receiveID = rnd
+                    else
+                        table.remove(npc_table, picked) -- removes this NPC's ID from table
+                        count = count - 1
+                    end
+                end
+                local npcName = GetNPCByID(receiver):getName()
+
+                if string.find(npcName, "%_") ~= 0 then
+                    npcName = string.gsub(npcName, "%_", " ")
+                end
+                player:startEvent(event_table[eventID], npcName)
+                player:setLocalVar("[StarlightMerryMakers]Confirmed", receiver)
+                player:setLocalVar("[StarlightMerryMakers]ConfirmedID", receiveID)
+            end
         end
+    else
+        return
     end
 end
 
