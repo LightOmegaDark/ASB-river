@@ -21,6 +21,9 @@ abilityObject.onPetAbility = function(target, pet, skill)
 
     skill:setMsg(xi.msg.basic.SELF_HEAL)
     target:addHP(base)
+
+    pet:updateEnmityFromCure(pet, base)
+
     return base
 end
 
