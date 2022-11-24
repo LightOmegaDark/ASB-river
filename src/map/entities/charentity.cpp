@@ -945,6 +945,7 @@ void CCharEntity::OnEngage(CAttackState& state)
     TracyZoneScoped;
     CBattleEntity::OnEngage(state);
     PLatentEffectContainer->CheckLatentsTargetChange();
+    PAI->EventHandler.triggerListener("ENGAGE", CLuaBaseEntity(this), CLuaBaseEntity(state.GetTarget()));
     this->m_charHistory.battlesFought++;
 }
 
