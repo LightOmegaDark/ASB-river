@@ -17,8 +17,14 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-        xi.events.starlightCelebration.npcGiftsMoogleOnTrigger(player)
+    if npc:getID() == 17752551 then
+        if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
+            xi.events.starlightCelebration.npcGiftsMoogleOnTrigger(player)
+        end
+    else
+        if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
+            xi.events.starlightCelebration.merryMakersMoogleOnTrigger(player, npc)
+        end
     end
 end
 

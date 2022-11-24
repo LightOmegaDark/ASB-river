@@ -79,6 +79,11 @@ zones[xi.zone.BASTOK_MARKETS] =
         MERRYMAKER_TRADE              = 13964, -- Yum-yums for me? Gobbies remember...till our tummies go rumble-rumble again.
         MERRYMAKER_BLECH              = 13967, -- Blech. What this yucky thing? It make me want upgut food. Take it away.
         MERRYMAKER_TOY                = 13956, -- Happy toy, happy toy, where be me happy toy?
+        MERRYMAKER_TOY2               = 13957, -- Ev'ry girl, ev'ry boy, ev'rybody, happy toy! Me nose holes smell the joy, the joy from happy toy! Where cooould iiit beee?
+        MERRYMAKER_WAHH               = 15640, -- Waaah! It you! You give yum-yums for me tum-tum. Good [boy, girl]!
+        MERRYMAKER_GIVE               = 15641, -- Not for us, not for me? I give it back. Now you happy? Happy toy, happy toy, where be me happy toy?
+        MERRYMAKER_NO                 = 15642, -- No no no no no! Go away! Nose holes busy sniff for happy toy!
+        MERRYMAKER_FRIEND             = 15644, -- You have friend you do? We gobbies have friend too.
     },
     mob =
     {

@@ -6,7 +6,16 @@ return {
     ['Bacherume']  = { text = ID.text.BACHERUME_DIALOG },
     ['Chasalvige'] = { event = 6 },
     ['Eperdur']    = { event = 678 },
-    ['Gilipese']   = { text = ID.text.GILIPESE_DIALOG },
+    ['Gilipese']   =
+    {
+        onTrigger = function(player, npc)
+            if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
+                xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc)
+            else
+                player:showText(npc, ID.text.GILIPESE_DIALOG)
+            end
+        end,
+    },
     ['Guilerme']   = { text = ID.text.GUILERME_DIALOG },
     ['Helaku']     = { event = 541 },
     ['Hinaree']    = { event = 580 },
@@ -15,5 +24,14 @@ return {
     ['Miageau']    = { event = 517 },
     ['Nouveil']    = { event = 574 },
     ['Pepigort']   = { text = ID.text.PEPIGORT_DIALOG },
-    ['Rodaillece'] = { text = ID.text.RODAILLECE_DIALOG },
+    ['Rodaillece'] =
+    {
+        onTrigger = function(player, npc)
+            if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
+                xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc)
+            else
+                player:showText(npc, ID.text.RODAILLECE_DIALOG)
+            end
+        end,
+    },
 }

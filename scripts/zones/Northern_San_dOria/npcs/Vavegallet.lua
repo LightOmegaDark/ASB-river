@@ -8,7 +8,11 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    player:startEvent(673)
+    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
+        xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc)
+    else
+        player:startEvent(673)
+    end
 end
 
 entity.onEventUpdate = function(player, csid, option)

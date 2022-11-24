@@ -86,6 +86,11 @@ zones[xi.zone.WINDURST_WATERS] =
         MERRYMAKER_TRADE           = 15645, -- Yum-yums for me? Gobbies remember...till our tummies go rumble-rumble again.
         MERRYMAKER_BLECH           = 15649, -- Blech. What this yucky thing? It make me want to upgut food. Take it away.
         MERRYMAKER_TOY             = 15637, -- Happy toy, happy toy, where be me happy toy?
+        MERRYMAKER_TOY2            = 15638, -- Ev'ry girl, ev'ry boy, ev'rybody, happy toy! Me nose holes smell the joy, the joy from happy toy! Where cooould iiit beee?
+        MERRYMAKER_WAHH            = 15640, -- Waaah! It you! You give yum-yums for me tum-tum. Good [boy, girl]!
+        MERRYMAKER_GIVE            = 15641, -- Not for us, not for me? I give it back. Now you happy? Happy toy, happy toy, where be me happy toy?
+        MERRYMAKER_NO              = 15642, -- No no no no no! Go away! Nose holes busy sniff for happy toy!
+        MERRYMAKER_FRIEND          = 15644, -- You have friend you do? We gobbies have friend too.
     },
 
     mob =
@@ -127,6 +132,7 @@ zones[xi.zone.WINDURST_WATERS] =
             [17752529] = 17752529,  -- Atagei-Portagei
             [17752550] = 17752550,  -- Token Moogle
             [17752551] = 17752551,  -- Event Moogle
+            [17752552] = 17752552,  -- Event Moogle
             [17752560] = 17752560,  -- Vendor Moogle
             [17752561] = 17752561,  -- Vendor Moogle
             [17752563] = 17752563,  -- Event Moogle Stall

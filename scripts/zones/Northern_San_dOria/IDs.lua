@@ -151,6 +151,11 @@ zones[xi.zone.NORTHERN_SAN_DORIA] =
         MERRYMAKER_TRADE         = 17654, -- Yum-yums for me? Gobbies remember...till your tummies go rumble-rumble again.
         MERRYMAKER_BLECH         = 17657, -- Blech. What this yucky thing? It makes me want upgut food. Take it away.
         MERRYMAKER_TOY           = 17646, -- Happy toy, happy toy, where be me happy toy?
+        MERRYMAKER_TOY2          = 17647, -- Ev'ry girl, ev'ry boy, ev'rybody, happy toy! Me nose holes smell the joy, the joy from happy toy! Where cooould iiit beee?
+        MERRYMAKER_WAHH          = 17649, -- Waaah! It you! You give yum-yums for me tum-tum. Good [boy, girl]!
+        MERRYMAKER_GIVE          = 17650, -- Not for us, not for me? I give it back. Now you happy? Happy toy, happy toy, where be me happy toy?
+        MERRYMAKER_NO            = 17651, -- No no no no no! Go away! Nose holes busy sniff for happy toy!
+        MERRYMAKER_FRIEND        = 17653, -- You have friend you do? We gobbies have friend too.
     },
     mob =
     {
