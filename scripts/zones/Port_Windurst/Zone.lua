@@ -41,11 +41,10 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
 end
 
 zoneObject.onTransportEvent = function(player, transport)
-    if player:getLocalVar('[AIRSHIP]Paid') == 1 then
+    if player:hasKeyItem(xi.ki.AIRSHIP_PASS) then
         player:startEvent(10002)
     else
-        player:setPos(207.0728, -6.5000, 124.9320, 30)
-        player:setLocalVar('[AIRSHIP]Paid', 0)
+        player:setPos(202.93, -6.25, 129.05, 161)
     end
 end
 
@@ -55,8 +54,6 @@ end
 zoneObject.onEventFinish = function(player, csid, option)
     if csid == 10002 then
         player:setPos(0, 0, 0, 0, 225)
-    elseif csid == 182 and option == 0 then
-        player:setLocalVar('[AIRSHIP]Paid', 0)
     end
 end
 
