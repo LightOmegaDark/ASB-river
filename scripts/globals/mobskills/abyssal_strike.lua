@@ -5,8 +5,6 @@
 --  Type: Physical
 --  Notes: zeid and shadows of rage move
 -----------------------------------
-require("scripts/globals/settings")
-require("scripts/globals/status")
 require("scripts/globals/mobskills")
 require("scripts/globals/status")
 ---------------------------------------------1

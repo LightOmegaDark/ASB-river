@@ -2,8 +2,6 @@
 --  Amatsu: Torimai
 --  Type: Physical
 -----------------------------------
-require("scripts/globals/settings")
-require("scripts/globals/status")
 require("scripts/globals/mobskills")
 require("scripts/globals/status")
 -----------------------------------

@@ -2,8 +2,6 @@
 -- Acid Spray
 -- Deals Water damage to targets in a fan-shaped area of effect. Additional effect: Poison
 -----------------------------------
-require("scripts/globals/settings")
-require("scripts/globals/status")
 require("scripts/globals/mobskills")
 require("scripts/globals/status")
 -----------------------------------
@@ -14,7 +12,6 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local typeEffect = xi.effect.POISON
     local power = (mob:getMainLvl() - 3) / 2
 
     xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, power, 3, 120)
