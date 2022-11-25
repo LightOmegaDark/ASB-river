@@ -29,6 +29,24 @@ quest.sections =
 
         [xi.zone.PORT_BASTOK] =
         {
+            ['Talib'] = quest:progressEvent(2),
+
+            onEventFinish =
+            {
+                [2] = function(player, csid, option, npc)
+                    quest:begin(player)
+                end,
+            },
+        },
+    },
+
+    {
+        check = function(player, status, vars)
+            return status >= QUEST_ACCEPTED
+        end,
+
+        [xi.zone.PORT_BASTOK] =
+        {
             ['Talib'] =
             {
                 onTrigger = function(player, npc)
