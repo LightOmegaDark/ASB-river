@@ -11,6 +11,7 @@ return {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
                 xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc)
+                return
             end
             player:showText(npc, ID.text.GILIPESE_DIALOG)
         end,
@@ -28,6 +29,7 @@ return {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
                 xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc)
+                return
             end
             player:showText(npc, ID.text.RODAILLECE_DIALOG)
         end,
