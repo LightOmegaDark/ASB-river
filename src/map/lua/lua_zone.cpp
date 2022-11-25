@@ -323,6 +323,9 @@ std::optional<CLuaBaseEntity> CLuaZone::insertDynamicEntity(sol::table table)
         }
 
         m_pLuaZone->InsertMOB(PMob);
+
+        uint32 flags  = table.get_or<uint32>("entityFlags", 0);
+        PMob->m_flags = flags == 0 ? PMob->m_flags : flags;
     }
 
     if (table["look"].get_type() == sol::type::number)
@@ -340,7 +343,7 @@ std::optional<CLuaBaseEntity> CLuaZone::insertDynamicEntity(sol::table table)
         std::memcpy(&PEntity->look, &look, sizeof(PEntity->look));
     }
 
-    PEntity->updatemask |= UPDATE_ALL_MOB | UPDATE_LOOK | UPDATE_STATUS;
+    PEntity->updatemask |= UPDATE_ALL_CHAR | UPDATE_ALL_MOB | UPDATE_LOOK | UPDATE_STATUS | UPDATE_HP;
 
     return CLuaBaseEntity(PEntity);
 }
