@@ -174,8 +174,9 @@ function xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, eventid)
         local questUpdateStr = "[StarlightNPCGifts]Npc" .. eventid
         player:setLocalVar(questUpdateStr, 1)
         player:startEvent(eventTable[eventid])
+    else
+        return
     end
-
 end
 
 --------------------------------

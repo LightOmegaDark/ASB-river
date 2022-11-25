@@ -71,9 +71,9 @@ quest.sections =
                 onTrigger = function(player, npc)
                     if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
                         xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, 2)
-                    else
-                        return quest:progressEvent(310)
                     end
+
+                    return quest:progressEvent(310)
                 end
             },
 
