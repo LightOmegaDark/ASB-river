@@ -13,12 +13,11 @@ itemObject.onItemCheck = function(target)
 end
 
 itemObject.onItemUse = function(target)
-    local dreamHat = target:hasItem(15178)
     local dreamHatHQ = target:hasItem(15179)
 
-    if dreamHat and not dreamHatHQ then
+    if not dreamHatHQ then
         npcUtil.giveItem(target, 15179)
-    elseif dreamHatHQ then
+    else
         npcUtil.giveItem(target, 5622)
     end
 

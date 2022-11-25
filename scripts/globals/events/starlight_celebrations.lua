@@ -16,8 +16,8 @@ function xi.events.starlightCelebration.isStarlightEnabled()
     local month = tonumber(os.date("%m"))
     local day = tonumber(os.date("%d"))
 
-    if ((month == 12 and day >= 16) or xi.settings.main.STARLIGHT_YEAR_ROUND) then -- According to wiki Startlight Festival is December 16 - December 31.
-        if (xi.settings.main.STARLIGHT_2021 == 1) then
+    if (month == 12 and day >= 16) or xi.settings.main.STARLIGHT_YEAR_ROUND then -- According to wiki Startlight Festival is December 16 - December 31.
+        if xi.settings.main.STARLIGHT_2021 == 1 then
             option = 1
         end
     end
@@ -99,22 +99,24 @@ end
 --------------------------------
 
 function xi.events.starlightCelebration.npcGiftsMoogleOnTrigger(player)
-    if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
-        local startedQuest = player:getLocalVar("[StarlightNPCGifts]Started")
-        local hasCompleted = player:getCharVar("[StarlightNPCGifts]Completed")
-        if startedQuest ~= 0 then
-            local delivered = player:getLocalVar("[StarlightNPCGifts]Delivered")
-            if delivered == 15 then
-                player:startEvent(32702)
-            else
-                player:startEvent(32701, delivered)
-            end
+    local startedQuest = player:getLocalVar("[StarlightNPCGifts]Started")
+    local hasCompleted = player:getCharVar("[StarlightNPCGifts]Completed")
+    if startedQuest ~= 0 then
+        local npc1 = player:getLocalVar("[StarlightNPCGifts]Npc1")
+        local npc2 = player:getLocalVar("[StarlightNPCGifts]Npc2")
+        local npc3 = player:getLocalVar("[StarlightNPCGifts]Npc3")
+        local npc4 = player:getLocalVar("[StarlightNPCGifts]Npc4")
+        local delivered = tonumber(npc4 .. npc3 .. npc2 .. npc1, 2)
+        if delivered == 15 then
+            player:startEvent(32702)
         else
-            if hasCompleted == VanadielDayOfTheWeek() then
-                player:startEvent(32700)
-            else
-                player:startEvent(32703)
-            end
+            player:startEvent(32701, delivered)
+        end
+    else
+        if hasCompleted == VanadielUniqueDay() then
+            player:startEvent(32700)
+        else
+            player:startEvent(32703)
         end
     end
 end
@@ -122,7 +124,7 @@ end
 function xi.events.starlightCelebration.npcGiftsMoogleOnFinish(player, id, csid, option)
     if csid == 32703 and option == 1 then
         player:setLocalVar("[StarlightNPCGifts]Started", 1)
-        player:setLocalVar("[StarlightNPCGifts]Delivered", 0)
+        -- player:setLocalVar("[StarlightNPCGifts]Delivered", 0)
         player:setLocalVar("[StarlightNPCGifts]Npc1", 0)
         player:setLocalVar("[StarlightNPCGifts]Npc2", 0)
         player:setLocalVar("[StarlightNPCGifts]Npc3", 0)
@@ -152,164 +154,28 @@ function xi.events.starlightCelebration.npcGiftsMoogleOnFinish(player, id, csid,
         end
         npcUtil.giveItem(player, { { fireworks_table[math.random( 1, 7 )], 10 } })
         player:setLocalVar("[StarlightNPCGifts]Started", 0)
-        player:setCharVar("[StarlightNPCGifts]Completed", VanadielDayOfTheWeek())
+        player:setCharVar("[StarlightNPCGifts]Completed", VanadielUniqueDay())
     end
 end
 
-function xi.events.starlightCelebration.npcGiftsNPC1(player, eventid)
-    if eventid == 1 then
-        if player:getLocalVar("[StarlightNPCGifts]Started") == 1 then
-            if player:getLocalVar("[StarlightNPCGifts]Npc1") ~= 1 then
-                local npc2 = player:getLocalVar("[StarlightNPCGifts]Npc2")
-                local npc3 = player:getLocalVar("[StarlightNPCGifts]Npc3")
-                local npc4 = player:getLocalVar("[StarlightNPCGifts]Npc4")
-                local delivered = 0
-                if npc2 == 1 then
-                    delivered = 3
-                    if npc3 == 1 then
-                        delivered = 7
-                        if npc4 == 1 then
-                            delivered = 15
-                        end
-                    end
-                elseif npc3 == 1 then
-                    delivered = 5
-                    if npc4 == 1 then
-                        delivered = 14
-                    end
-                elseif npc4 == 1 then
-                    delivered = 9
-                else
-                    delivered = 1
-                end
-                player:startEvent(32693)
-                player:setLocalVar("[StarlightNPCGifts]Npc1", 1)
-                player:setLocalVar("[StarlightNPCGifts]Delivered", delivered)
-
-                return
-            end
-        end
-    end
-end
-
-function xi.events.starlightCelebration.npcGiftsNPC2(player, eventid)
-    if eventid == 2 then
-        if player:getLocalVar("[StarlightNPCGifts]Started") == 1 then
-            if player:getLocalVar("[StarlightNPCGifts]Npc2") ~= 1 then
-                local npc1 = player:getLocalVar("[StarlightNPCGifts]Npc1")
-                local npc3 = player:getLocalVar("[StarlightNPCGifts]Npc3")
-                local npc4 = player:getLocalVar("[StarlightNPCGifts]Npc4")
-                local delivered = 0
-                if npc1 == 1 then
-                    delivered = 3
-                    if npc3 == 1 then
-                        delivered = 7
-                        if npc4 == 1 then
-                            delivered = 15
-                        end
-                    end
-                elseif npc3 == 1 then
-                    delivered = 6
-                    if npc4 == 1 then
-                        delivered = 14
-                    end
-                elseif npc4 == 1 then
-                    delivered = 10
-                else
-                    delivered = 2
-                end
-                player:startEvent(32692)
-                player:setLocalVar("[StarlightNPCGifts]Npc2", 1)
-                player:setLocalVar("[StarlightNPCGifts]Delivered", delivered)
-
-                return
-            end
-        end
-    end
-end
-
-function xi.events.starlightCelebration.npcGiftsNPC3(player, eventid)
-    if eventid == 3 then
-        if player:getLocalVar("[StarlightNPCGifts]Started") == 1 then
-            if player:getLocalVar("[StarlightNPCGifts]Npc3") ~= 1 then
-                local npc1 = player:getLocalVar("[StarlightNPCGifts]Npc1")
-                local npc2 = player:getLocalVar("[StarlightNPCGifts]Npc2")
-                local npc4 = player:getLocalVar("[StarlightNPCGifts]Npc4")
-                local delivered = 0
-                if npc1 == 1 then
-                    delivered = 5
-                    if npc2 == 1 then
-                        delivered = 7
-                        if npc4 == 1 then
-                            delivered = 15
-                        end
-                    end
-                elseif npc2 == 1 then
-                    delivered = 6
-                    if npc4 == 1 then
-                        delivered = 14
-                    end
-                elseif npc4 == 1 then
-                    delivered = 12
-                else
-                    delivered = 4
-                end
-                player:startEvent(32691)
-                player:setLocalVar("[StarlightNPCGifts]Npc3", 1)
-                player:setLocalVar("[StarlightNPCGifts]Delivered", delivered)
-
-                return
-            end
-        end
-    end
-end
-
-function xi.events.starlightCelebration.npcGiftsNPC4(player, eventid)
-    if eventid == 4 then
-        if player:getLocalVar("[StarlightNPCGifts]Started") == 1 then
-            if player:getLocalVar("[StarlightNPCGifts]Npc4") ~= 1 then
-                local npc1 = player:getLocalVar("[StarlightNPCGifts]Npc1")
-                local npc2 = player:getLocalVar("[StarlightNPCGifts]Npc2")
-                local npc3 = player:getLocalVar("[StarlightNPCGifts]Npc3")
-                local delivered = 0
-                if npc1 == 1 then
-                    delivered = 9
-                    if npc2 == 1 then
-                        delivered = 11
-                        if npc3 == 1 then
-                            delivered = 15
-                        end
-                    end
-                elseif npc2 == 1 then
-                    delivered = 10
-                    if npc3 == 1 then
-                        delivered = 14
-                    end
-                elseif npc3 == 1 then
-                    delivered = 12
-                else
-                    delivered = 8
-                end
-                player:startEvent(32690)
-                player:setLocalVar("[StarlightNPCGifts]Npc4", 1)
-                player:setLocalVar("[StarlightNPCGifts]Delivered", delivered)
-
-                return
-            end
-        end
-    end
-end
+local npcGiftsEvents =
+{
+    32693,
+    32692,
+    32691,
+    32690,
+}
 
 function xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, eventid)
-    if eventid == 1 then
-        xi.events.starlightCelebration.npcGiftsNPC1(player, eventid)
-    elseif eventid == 2 then
-        xi.events.starlightCelebration.npcGiftsNPC2(player, eventid)
-    elseif eventid == 3 then
-        xi.events.starlightCelebration.npcGiftsNPC3(player, eventid)
-    else
-        xi.events.starlightCelebration.npcGiftsNPC4(player, eventid)
+    local startedQuest = player:getLocalVar("[StarlightNPCGifts]Started")
+
+    if startedQuest ~= 0 then
+        local eventTable = npcGiftsEvents
+        local questUpdateStr = "[StarlightNPCGifts]Npc" .. eventid
+        player:setLocalVar(questUpdateStr, 1)
+        player:startEvent(eventTable[eventid])
     end
+
 end
 
 --------------------------------
@@ -405,20 +271,20 @@ function xi.events.starlightCelebration.tokenMoogleOnFinish(player, id, csid, op
                 }
             }
 
-        if invAvailable ~= 0 then
-            if snowToken then
-                player:delKeyItem(xi.keyItem.SNOW_THEMED_GIFT_TOKEN)
-                reward_table = gifts_table.SNOW_TOKEN
-            elseif bellToken then
-                player:delKeyItem(xi.keyItem.BELL_THEMED_GIFT_TOKEN)
-                reward_table = gifts_table.BELL_TOKEN
-            elseif starToken then
-                player:delKeyItem(xi.keyItem.STAR_THEMED_GIFT_TOKEN)
-                reward_table = gifts_table.STAR_TOKEN
-            end
-        else
+        if invAvailable == 0 then
             player:messageSpecial(id.text.DEFAULT_CANNOT_BE_OBTAINED)
             return
+        end
+
+        if snowToken then
+            player:delKeyItem(xi.keyItem.SNOW_THEMED_GIFT_TOKEN)
+            reward_table = gifts_table.SNOW_TOKEN
+        elseif bellToken then
+            player:delKeyItem(xi.keyItem.BELL_THEMED_GIFT_TOKEN)
+            reward_table = gifts_table.BELL_TOKEN
+        elseif starToken then
+            player:delKeyItem(xi.keyItem.STAR_THEMED_GIFT_TOKEN)
+            reward_table = gifts_table.STAR_TOKEN
         end
 
         local count = #reward_table
@@ -471,8 +337,8 @@ end
 function xi.events.starlightCelebration.smileBringerSergeantOnTrigger(player, npc)
     local elapsedTime = (os.time() - player:getLocalVar("bootCampStarted"))
     local playerPoint = player:getLocalVar("playerBCCP")
-    local completedDay = player:getCharVar("dayOfCompletedRace")
-    local currentDay = VanadielDayOfTheWeek()
+    local completedDay = player:getCharVar("[SmileBootCamp]Completed")
+    local currentDay = VanadielUniqueDay()
     local gil = player:getGil()
     local hasTree = player:hasItem(138)
     local recordHolderID = npc:getLocalVar("recordHolderID")
@@ -536,7 +402,7 @@ function xi.events.starlightCelebration.smileBringerSergeantOnFinish(player, npc
         local hasItem = player:hasItem(138)
         if hasItem == true then
             player:resetLocalVars()
-            player:setCharVar("dayOfCompletedRace", VanadielDayOfTheWeek())
+            player:setCharVar("[SmileBootCamp]Completed", VanadielUniqueDay())
             npcUtil.giveItem( player, 5622, { silent = true } )
             if not player:hasKeyItem(xi.keyItem.BELL_THEMED_GIFT_TOKEN) then
                 player:addKeyItem(xi.keyItem.BELL_THEMED_GIFT_TOKEN)
@@ -544,7 +410,7 @@ function xi.events.starlightCelebration.smileBringerSergeantOnFinish(player, npc
             end
         else
             player:resetLocalVars()
-            player:setCharVar("dayOfCompletedRace", VanadielDayOfTheWeek())
+            player:setCharVar("[SmileBootCamp]Completed", VanadielUniqueDay())
             npcUtil.giveItem( player, 138, { silent = true } )
         end
     elseif csid == 7011 then
@@ -618,7 +484,7 @@ function xi.events.starlightCelebration.toggleSmileHelpers(zoneid)
                 local npc = GetNPCByID(id)
                 if npc then
                     npc:setStatus(xi.status.NORMAL)
-                    npc:setLocalVar("depopTime", (os.clock() + 3600))
+                    npc:setLocalVar("depopTime", (os.time() + 3600))
                 end
             end
         end
@@ -632,7 +498,7 @@ function xi.events.starlightCelebration.resetSmileHelpers(zoneid)
             for id, v in pairs(smileHelper) do
                 local npc = GetNPCByID(id)
                 local depopTime = npc:getLocalVar("depopTime")
-                if depopTime < os.clock() then
+                if depopTime < os.time() then
                     npc:setStatus(xi.status.DISAPPEAR)
                 end
             end
