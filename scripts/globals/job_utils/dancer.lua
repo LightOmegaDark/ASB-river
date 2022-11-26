@@ -80,7 +80,6 @@ xi.job_utils.dancer.stepAbilityCheck = function(player, target, ability)
     end
 end
 
--- TODO: This might be able to become generic
 xi.job_utils.dancer.useStepAbility = function(player, target, ability, action, stepEffect, missId, hitId)
     local hitType        = missId
     local debuffStacks   = 1
@@ -150,4 +149,130 @@ end
 
 xi.job_utils.dancer.usePrestoAbility = function(player, target, ability)
     target:addStatusEffect(xi.effect.PRESTO, 19, 1, 30)
+end
+
+xi.job_utils.dancer.checkNoFootRiseAbility = function(player, target, ability)
+    local fmEffect = player:getStatusEffect(xi.effect.FINISHING_MOVE_1)
+
+    if
+        fmEffect and
+        fmEffect:getPower() >= getMaxFinishingMoves(player)
+    then
+        return 561, 0
+    else
+        return 0, 0
+    end
+end
+
+xi.job_utils.dancer.useNoFootRiseAbility = function(player, target, ability)
+    local addedMoves = player:getMerit(xi.merit.NO_FOOT_RISE)
+    local fmEffect   = player:getStatusEffect(xi.effect.FINISHING_MOVE_1)
+
+    if fmEffect then
+        addedMoves = addedMoves + fmEffect:getPower()
+    end
+
+    addedMoves = math.min(addedMoves, getMaxFinishingMoves(player))
+    setFinishingMoves(player, addedMoves)
+
+    return addedMoves
+end
+
+xi.job_utils.dancer.checkReverseFlourishAbility = function(player, target, ability)
+    if player:hasStatusEffect(xi.effect.FINISHING_MOVE_1) then
+        return 0, 0
+    else
+        return xi.msg.basic.NO_FINISHINGMOVES, 0
+    end
+end
+
+xi.job_utils.dancer.useReverseFlourishAbility = function(player, target, ability)
+    local reverseFlourishBonus = player:getJobPointLevel(xi.jp.FLOURISH_II_EFFECT)
+    local numMerits            = player:getMerit(xi.merit.REVERSE_FLOURISH_EFFECT)
+    local gearMod              = player:getMod(xi.mod.REVERSE_FLOURISH_EFFECT)
+    local numMoves             = player:getStatusEffect(xi.effect.FINISHING_MOVE_1):getPower()
+    local tpGained             = 0
+
+    local usedMoves = math.min(numMoves, 5)
+    tpGained = (95 + reverseFlourishBonus) * usedMoves + (5 + gearMod) * usedMoves ^ 2 + 30 * numMerits
+
+    player:addTP(tpGained)
+    setFinishingMoves(player, numMoves - usedMoves)
+
+    return tpGained
+end
+
+xi.job_utils.dancer.checkAnimatedFlourishAbility = function(player, target, ability)
+    if player:hasStatusEffect(xi.effect.FINISHING_MOVE_1) then
+        return 0, 0
+    else
+        return xi.msg.basic.NO_FINISHINGMOVES, 0
+    end
+end
+
+xi.job_utils.dancer.useAnimatedFlourishAbility = function(player, target, ability)
+    local jpBonusVE = player:getJobPointLevel(xi.jp.FLOURISH_I_EFFECT) * 10
+    local numMoves  = player:getStatusEffect(xi.effect.FINISHING_MOVE_1):getPower()
+    local veGranted = numMoves >= 2 and 1500 or 1000
+    local usedMoves = numMoves >= 2 and 2 or 1
+
+    target:addEnmity(player, 0, veGranted + jpBonusVE)
+    setFinishingMoves(player, numMoves - usedMoves)
+end
+
+xi.job_utils.dancer.checkDesperateFlourishAbility = function(player, target, ability)
+    if player:getAnimation() ~= 1 then
+        return xi.msg.basic.REQUIRES_COMBAT, 0
+    else
+        if player:hasStatusEffect(xi.effect.FINISHING_MOVE_1) then
+            return 0, 0
+        else
+            return xi.msg.basic.NO_FINISHINGMOVES, 0
+        end
+    end
+end
+
+xi.job_utils.dancer.useDesperateFlourishAbility = function(player, target, ability)
+    local isSneakValid = player:hasStatusEffect(xi.effect.SNEAK_ATTACK)
+    local numMoves     = player:getStatusEffect(xi.effect.FINISHING_MOVE_1):getPower()
+
+    setFinishingMoves(player, numMoves - 1)
+
+    if
+        isSneakValid and
+        not player:isBehind(target)
+    then
+        isSneakValid = false
+    end
+
+    if
+        math.random() <= getHitRate(player, target, true, player:getJobPointLevel(xi.jp.FLOURISH_I_EFFECT)) or
+        isSneakValid
+    then
+        local spell  = GetSpell(xi.magic.spell.GRAVITY)
+        local params =
+        {
+            diff      = 0
+            skillType = player:getWeaponSkillType(xi.slot.MAIN)
+            bonus     = 50 - target:getMod(xi.mod.GRAVITYRES)
+        }
+
+        local resistRate = applyResistance(player, target, spell, params)
+        if resistRate > 0.25 then
+            target:delStatusEffectSilent(xi.effect.WEIGHT)
+            target:addStatusEffect(xi.effect.WEIGHT, 50, 0, 60 * resistRate)
+        else
+            ability:setMsg(xi.msg.basic.JA_DAMAGE)
+        end
+
+        ability:setMsg(xi.msg.basic.JA_ENFEEB_IS)
+        action:setAnimation(target:getID(), getFlourishAnimation(player:getWeaponSkillType(xi.slot.MAIN)))
+        action:speceffect(target:getID(), 2)
+
+        return xi.effect.WEIGHT
+    else
+        ability:setMsg(xi.msg.basic.JA_MISS)
+
+        return 0
+    end
 end
