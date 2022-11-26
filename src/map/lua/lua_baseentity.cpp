@@ -9596,21 +9596,25 @@ bool CLuaBaseEntity::checkKillCredit(CLuaBaseEntity* PLuaBaseEntity, sol::object
 
 /************************************************************************
  *  Function: checkDifficulty()
- *  Purpose : Checks the mobs difficulty
- *  Example : local difficulty = player:checkDifficulty(mob)
- *  Notes   : Returns a value based on the enum EMobDifficulty
+ *  Purpose : Checks if the mob is too weak
+ *  Example : local difficulty = checkDifficulty(mob)
+ *  Notes   :
  ************************************************************************/
 uint8 CLuaBaseEntity::checkDifficulty(CLuaBaseEntity* PLuaBaseEntity)
 {
-    CMobEntity*  PMob  = dynamic_cast<CMobEntity*>(PLuaBaseEntity->GetBaseEntity());
-    CCharEntity* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
+    CMobEntity*  PMob  = static_cast<CMobEntity*>(PLuaBaseEntity->GetBaseEntity());
+    CCharEntity* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+
+    // auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
+    // auto* PMob = dynamic_cast<CMobEntity*>(m_PBaseEntity);
 
     if (PChar && PMob)
     {
         return (uint8)charutils::CheckMob((PChar->GetMLevel()), (PMob->GetMLevel()));
     }
 
-    ShowError("Value is not valid");
+    // if you get here, there is a problem
+    // ShowError("Something broke")
     return 0;
 }
 
