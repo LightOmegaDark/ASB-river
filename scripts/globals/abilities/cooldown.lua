@@ -5,7 +5,6 @@
 -- Recast Time: 00:05:00
 -----------------------------------
 require("scripts/globals/jobpoints")
-require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}

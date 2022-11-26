@@ -13,9 +13,6 @@
 -- Tough            |1.5 Minutes
 -- Very Tough       |1-20 seconds
 -----------------------------------
-require("scripts/globals/settings")
-require("scripts/globals/status")
-require("scripts/globals/pets")
 require("scripts/globals/msg")
 require("scripts/globals/pets")
 require("scripts/globals/status")
