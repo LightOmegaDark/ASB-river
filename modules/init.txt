@@ -67,4 +67,4 @@ renamer
 #-----------------------
 #		Custom
 #-----------------------
-custom/sql/starlight_celebrations.sql
+#custom/sql/starlight_celebrations.sql
