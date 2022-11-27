@@ -5,9 +5,6 @@
 -- Recast Time: 5:00
 -- Duration: Instant
 -----------------------------------
-require("scripts/globals/settings")
-require("scripts/globals/status")
-require("scripts/globals/pets")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
 require("scripts/globals/pets")
@@ -17,14 +14,9 @@ require("scripts/globals/utils")
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
-    local pet = player:getPet()
-    local petID = 0
+    local pet = player:getPetID()
 
-    if pet then
-        petID = pet:getPetID()
-    end
-
-    if petID >= xi.pet.id.FIRE_SPIRIT and petID <= xi.pet.id.DARK_SPIRIT then -- spirits
+    if pet >= 0 and pet <= 7 then -- spirits
         return 0, 0
     end
 
@@ -38,16 +30,16 @@ ability_object.onUseAbility = function(player,target,ability)
         spiritEle = spirit:getPetID() + 1
     end
 
-    local pEquipMods = player:getMod(xi.mod.ENHANCES_ELEMENTAL_SIPHON) --Will be in era if expansions between TOAU/WINGS are implemented
-    local basePower = player:getSkillLevel(xi.skill.SUMMONING_MAGIC) + pEquipMods - 50
-    if (basePower < 0) then
+    local pEquipMods = player:getMod(xi.mod.ENHANCES_ELEMENTAL_SIPHON)
+    local basePower  = player:getSkillLevel(xi.skill.SUMMONING_MAGIC) + pEquipMods - 50
+
+    if basePower < 0 then
         basePower = 0
     end
-    local weatherDayBase = 1
-    local dayBonus = 0
-    local weatherBonus = 0
-    local dayElement = VanadielDayElement()
-    local weather = player:getWeather()
+
+    local weatherDayBonus = 1
+    local dayElement      = VanadielDayElement()
+    local weather         = player:getWeather()
 
     -- Day bonus/penalty
     if dayElement == xi.magic.dayStrong[spiritEle] then
@@ -67,21 +59,10 @@ ability_object.onUseAbility = function(player,target,ability)
         weatherDayBonus = weatherDayBonus - 0.25
     end
 
-    -- Weather bonus/penalty
-    if (weather == xi.magic.singleWeatherStrong[spiritEle]) then
-        weatherBonus = weatherBonus + 0.1
-    elseif (weather == xi.magic.singleWeatherWeak[spiritEle]) then
-        weatherBonus = weatherBonus - 0.1
-    elseif (weather == xi.magic.doubleWeatherStrong[spiritEle]) then
-        weatherBonus = weatherBonus + 0.25
-    elseif (weather == xi.magic.doubleWeatherWeak[spiritEle]) then
-        weatherBonus = weatherBonus - 0.25
-    end
-
-    local power = math.floor(basePower * (weatherDayBase + dayBonus + weatherBonus))
+    local power  = math.floor(basePower * weatherDayBonus)
     local spirit = player:getPet()
-    power = utils.clamp(power, 0, spirit:getMP()) -- cap MP drained at spirit's MP
-    power = utils.clamp(power, 0, player:getMaxMP() - player:getMP()) -- cap MP drained at the max MP - current MP
+    power        = utils.clamp(power, 0, spirit:getMP()) -- cap MP drained at spirit's MP
+    power        = utils.clamp(power, 0, player:getMaxMP() - player:getMP()) -- cap MP drained at the max MP - current MP
 
     spirit:delMP(power)
 

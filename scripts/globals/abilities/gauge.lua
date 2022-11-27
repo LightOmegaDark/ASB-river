@@ -5,9 +5,6 @@
 -- Recast Time: 0:30
 -- Duration: Instant
 -----------------------------------
-require("scripts/globals/magic")
-require("scripts/globals/settings")
-require("scripts/globals/status")
 require("scripts/globals/msg")
 require("scripts/globals/status")
 -----------------------------------
