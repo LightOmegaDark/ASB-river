@@ -188,6 +188,10 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
     --work out hit rate for mobs
     local hitrate = xi.weaponskills.getHitRate(mob, target, 0, 0)
 
+    if tpeffect == xi.mobskills.magicalTpBonus.RANGED then
+        hitrate = xi.weaponskills.getRangedHitRate(mob, target, 0, 0)
+    end
+
     --work out the base damage for a single hit
     local hitdamage = base
 
@@ -218,10 +222,16 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
     hitdamage = hitdamage * ftpMult
 
     -- Set everything to 1 because the FTP for mobs iis not supposed to be for attack only.
-    -- TODO: Remove remoev thie from cMeleeRatio completly. Setting to 1 so the attack multiplier is always 1.
-    local params = { atk000 = 1, atk150 = 1, atk300 = 1 }
+    -- TODO: Apply attack modifiers to certain mobskills with params
+    local params       = { atk000 = 1, atk150 = 1, atk300 = 1 }
+    local paramsRanged = { atk100 = 1, atk200 = 1, atk300 = 1 }
     -- Getting PDIF
-    local pdifTable = xi.weaponskills.cMeleeRatio(mob, target, params, 0, mob:getTP(), xi.slot.main)
+    local pdifTable = xi.weaponskills.cMeleeRatio(mob, target, params, 0, mob:getTP(), xi.slot.MAIN)
+
+    if tpeffect == xi.mobskills.magicalTpBonus.RANGED then
+        pdifTable = xi.weaponskills.cRangedRatio(mob, target, paramsRanged, 0, mob:getTP())
+    end
+
     local pdif = pdifTable[1]
     local pdifcrit = pdifTable[2]
 
@@ -238,12 +248,19 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
     end
 
     local chance = math.random()
-    chance = xi.weaponskills.handleParry(mob, target, chance)
+
+    if tpeffect ~= xi.mobskills.magicalTpBonus.RANGED then
+        chance = xi.weaponskills.handleParry(mob, target, chance)
+    end
 
     -- first hit has a higher chance to land
-    local firstHitChance = hitrate
+    local firstHitChance = hitrate + 0.5
 
-    firstHitChance = utils.clamp(firstHitChance, 0.25, 0.95)
+    if tpeffect == xi.mobskills.magicalTpBonus.RANGED then
+        firstHitChance = hitrate
+    end
+
+    firstHitChance = utils.clamp(firstHitChance, 0.20, 0.95)
 
     if chance <= firstHitChance then -- it hit
         local isCrit = math.random() < critRate
@@ -482,6 +499,7 @@ xi.mobskills.mobAddBonuses = function(caster, target, dmg, ele, ignoreres) -- us
     then -- bar- spell magic defense bonus
         mdefBarBonus = target:getStatusEffect(xi.magic.barSpell[ele]):getSubPower()
     end
+
     local mab = (100 + caster:getMod(xi.mod.MATT)) / (100 + target:getMod(xi.mod.MDEF) + mdefBarBonus)
 
     dmg = math.floor(dmg * mab)
@@ -540,11 +558,6 @@ xi.mobskills.mobBreathMove = function(mob, target, percent, base, element, cap)
 
     if target:hasStatusEffect(xi.effect.ALL_MISS) and target:getStatusEffect(xi.effect.ALL_MISS):getPower() > 1 then
         return 0
-    end
-
-    -- Handle Phalanx
-    if damage > 0 then
-        damage = utils.clamp(damage - target:getMod(xi.mod.PHALANX), 0, 99999)
     end
 
     -- Handle Stoneskin
@@ -637,6 +650,7 @@ xi.mobskills.mobFinalAdjustments = function(dmg, mob, skill, target, attackType,
             target:setLocalVar("analyzer_skill", skill:getID())
             analyzerHits = 0
         end
+
         target:setLocalVar("analyzer_hits", analyzerHits)
     end
 
@@ -843,6 +857,7 @@ xi.mobskills.mobGazeMove = function(mob, target, typeEffect, power, tick, durati
     if target:isFacing(mob) and mob:isInfront(target) then
         return xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, power, tick, duration)
     end
+
     return xi.msg.basic.SKILL_NO_EFFECT
 end
 
