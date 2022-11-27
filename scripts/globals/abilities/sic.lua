@@ -5,8 +5,6 @@
 -- Recast Time: 2 minutes
 -- Duration: N/A
 -----------------------------------
-require("scripts/globals/settings")
-require("scripts/globals/status")
 require("scripts/globals/msg")
 require("scripts/globals/status")
 -----------------------------------
