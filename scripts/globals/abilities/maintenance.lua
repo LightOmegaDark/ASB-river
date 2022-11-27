@@ -65,19 +65,39 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    local id         = player:getEquipID(xi.slot.AMMO)
-    local pet        = player:getPet()
-    local toRemove   = idStrengths[id] or 1
-    local numRemoved = 0
+    local id  = player:getEquipID(xi.slot.AMMO)
+    local pet = player:getPet()
+
+    local function removeStatus()
+        --if pet:delStatusEffect(xi.effect.DOOM) then return true end
+        if pet:delStatusEffect(xi.effect.PETRIFICATION) then return true end
+        --if pet:delStatusEffect(xi.effect.LULLABY) then return true end
+        --if pet:delStatusEffect(xi.effect.SLEEP_II) then return true end
+        --if pet:delStatusEffect(xi.effect.SLEEP_I) then return true end
+        if pet:delStatusEffect(xi.effect.SILENCE) then return true end
+        if pet:delStatusEffect(xi.effect.BANE) then return true end
+        if pet:delStatusEffect(xi.effect.CURSE_II) then return true end
+        if pet:delStatusEffect(xi.effect.CURSE_I) then return true end
+        if pet:delStatusEffect(xi.effect.PARALYSIS) then return true end
+        if pet:delStatusEffect(xi.effect.PLAGUE) then return true end
+        if pet:delStatusEffect(xi.effect.POISON) then return true end
+        if pet:delStatusEffect(xi.effect.DISEASE) then return true end
+        if pet:delStatusEffect(xi.effect.BLINDNESS) then return true end
+        if pet:eraseStatusEffect() ~= 255 then return true end
+        return false
+    end
+
+    local toremove = idStrengths[id] or 1
+    local removed  = 0
 
     repeat
-        if not removeStatus(pet) then
+        if not removeStatus() then
             break
         end
 
-        toRemove   = toRemove - 1
-        numRemoved = numRemoved + 1
-    until toRemove <= 0
+        toremove = toremove - 1
+        removed  = removed + 1
+    until (toremove <= 0)
 
     player:removeAmmo()
 
