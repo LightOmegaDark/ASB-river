@@ -14,17 +14,13 @@ zoneObject.onChocoboDig = function(player, precheck)
     return xi.chocoboDig.start(player, precheck)
 end
 
-zone_object.onInitialize = function(zone)
+zoneObject.onInitialize = function(zone)
+    -- NM Persistence
     if xi.settings.main.ENABLE_WOTG == 1 then
-        UpdateNMSpawnPoint(ID.mob.NANDI)
-        GetMobByID(ID.mob.NANDI):setRespawnTime(math.random(3600, 4200))
+        xi.mob.nmTODPersistCache(zone, ID.mob.NANDI)
     end
-
-    UpdateNMSpawnPoint(ID.mob.CACTROT_RAPIDO)
-    GetMobByID(ID.mob.CACTROT_RAPIDO):setRespawnTime(math.random(900, 10800))
-
-    UpdateNMSpawnPoint(ID.mob.CENTURIO_XII_I)
-    GetMobByID(ID.mob.CENTURIO_XII_I):setRespawnTime(math.random(900, 10800))
+    xi.mob.nmTODPersistCache(zone, ID.mob.CACTROT_RAPIDO)
+    xi.mob.nmTODPersistCache(zone, ID.mob.CENTURIO_XII_I)
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.chocobo.initZone(zone)
