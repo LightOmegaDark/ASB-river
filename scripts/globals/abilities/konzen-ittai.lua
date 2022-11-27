@@ -5,9 +5,6 @@
 -- Recast Time: 0:03:00
 -- Duration: 1:00 or until next Weapon Skill
 -----------------------------------
-require("scripts/globals/weaponskills")
-require("scripts/globals/settings")
-require("scripts/globals/status")
 require("scripts/globals/msg")
 require("scripts/globals/status")
 require("scripts/globals/weaponskills")

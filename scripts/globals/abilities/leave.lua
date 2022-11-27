@@ -4,7 +4,6 @@
 -- Obtained: Beastmaster Level 35
 -- Recast Time: 10 seconds
 -----------------------------------
-require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
