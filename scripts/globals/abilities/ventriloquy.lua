@@ -5,9 +5,6 @@
 -- Recast Time: 1:00
 -- Duration: Instant
 -----------------------------------
-require("scripts/globals/settings")
-require("scripts/globals/status")
-require("scripts/globals/pets")
 require("scripts/globals/msg")
 require("scripts/globals/pets")
 require("scripts/globals/status")
@@ -48,8 +45,12 @@ abilityObject.onUseAbility = function(player, target, ability)
             local petCE             = target:getCE(pet)
             local petVE             = target:getVE(pet)
             local playerEnmityBonus = 1
-            local petEnmityBonus = 1
-            if target:getTarget():getTargID() == player:getTargID() or ((playerCE + playerVE) >= (petCE + petVE) and target:getTarget():getTargID() ~= pet:getTargID()) then
+            local petEnmityBonus    = 1
+
+            if
+                target:getTarget():getTargID() == player:getTargID() or
+                ((playerCE + playerVE) >= (petCE + petVE) and target:getTarget():getTargID() ~= pet:getTargID())
+            then
                 playerEnmityBonus = playerEnmityBonus + bonus
                 petEnmityBonus    = petEnmityBonus - bonus
             else
