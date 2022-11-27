@@ -70,6 +70,7 @@ zones[xi.zone.MERIPHATAUD_MOUNTAINS] =
 
         WARAXE_BEAK         = 17264828,
         COO_KEJA_THE_UNSEEN = 17264946,
+        CHONCHON            = 17264722,
 
         VOIDWALKER =
         {
