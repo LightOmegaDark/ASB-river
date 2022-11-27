@@ -75,7 +75,7 @@ quest.sections =
                     end
                 end,
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, {{ xi.items.STARMITE_SHELL, 3 }} ) then
+                    if npcUtil.tradeHasExactly(trade, { { xi.items.STARMITE_SHELL, 3 } }) then
                         return quest:progressEvent(791)
                     end
                 end,
