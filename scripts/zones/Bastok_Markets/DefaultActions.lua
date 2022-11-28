@@ -8,10 +8,16 @@ return {
     {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-                xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc)
-            else
-                player:startEvent(135)
+                local npcID = npc:getID()
+                local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
+                local confirmed = player:getLocalVar("[StarlightMerryMakers]Confirmed")
+
+                if npcID == sender or npcID == confirmed then
+                    xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, ID)
+                    return
+                end
             end
+            player:startEvent(135)
         end,
     },
     ['Aquillina']   = { event = 116 },
@@ -28,10 +34,16 @@ return {
     {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-                xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc)
-            else
-                player:startEvent(130)
+                local npcID = npc:getID()
+                local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
+                local confirmed = player:getLocalVar("[StarlightMerryMakers]Confirmed")
+
+                if npcID == sender or npcID == confirmed then
+                    xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, ID)
+                    return
+                end
             end
+            player:startEvent(130)
         end,
     },
     ['Foss']        = { event = 270 },
@@ -44,10 +56,16 @@ return {
     {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-                xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc)
-            else
-                player:startEvent(129)
+                local npcID = npc:getID()
+                local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
+                local confirmed = player:getLocalVar("[StarlightMerryMakers]Confirmed")
+
+                if npcID == sender or npcID == confirmed then
+                    xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, ID)
+                    return
+                end
             end
+            player:startEvent(129)
         end,
     },
     ['Lavinia']     = { event = 123 },
@@ -63,20 +81,32 @@ return {
     {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-                xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc)
-            else
-                player:startEvent(128)
+                local npcID = npc:getID()
+                local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
+                local confirmed = player:getLocalVar("[StarlightMerryMakers]Confirmed")
+
+                if npcID == sender or npcID == confirmed then
+                    xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, ID)
+                    return
+                end
             end
+            player:startEvent(128)
         end,
     },
     ['Red_Canyon'] =
     {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-                xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc)
-            else
-                player:startEvent(133)
+                local npcID = npc:getID()
+                local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
+                local confirmed = player:getLocalVar("[StarlightMerryMakers]Confirmed")
+
+                if npcID == sender or npcID == confirmed then
+                    xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, ID)
+                    return
+                end
             end
+            player:startEvent(133)
         end,
     },
     ['Rock_Jaw']    = { event = 325 },
@@ -86,10 +116,16 @@ return {
     {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-                xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc)
-            else
-                player:startEvent(132)
+                local npcID = npc:getID()
+                local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
+                local confirmed = player:getLocalVar("[StarlightMerryMakers]Confirmed")
+
+                if (npcID == sender or npcID == confirmed) then
+                    xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, ID)
+                    return
+                end
             end
+            player:startEvent(132)
         end,
     },
     ['Tanguy']      = { event = 120 },

@@ -3,6 +3,7 @@
 --  NPC: Kobite-Mojite
 -- Working 100%
 -----------------------------------
+local ID = require("scripts/zones/Windurst_Waters/IDs")
 require("scripts/globals/settings")
 -----------------------------------
 local entity = {}
@@ -12,10 +13,16 @@ end
 
 entity.onTrigger = function(player, npc)
     if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-        xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc)
-    else
-        player:startEvent(563)
+        local npcID = npc:getID()
+        local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
+        local confirmed = player:getLocalVar("[StarlightMerryMakers]Confirmed")
+
+        if npcID == sender or npcID == confirmed then
+            xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, ID)
+            return
+        end
     end
+    player:startEvent(563)
 end
 
 entity.onEventUpdate = function(player, csid, option)

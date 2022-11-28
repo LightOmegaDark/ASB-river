@@ -10,8 +10,14 @@ return {
     {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-                xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc)
-                return
+                local npcID = npc:getID()
+                local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
+                local confirmed = player:getLocalVar("[StarlightMerryMakers]Confirmed")
+
+                if npcID == sender or npcID == confirmed then
+                    xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, ID)
+                    return
+                end
             end
             player:showText(npc, ID.text.GILIPESE_DIALOG)
         end,
@@ -28,8 +34,14 @@ return {
     {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
-                xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc)
-                return
+                local npcID = npc:getID()
+                local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
+                local confirmed = player:getLocalVar("[StarlightMerryMakers]Confirmed")
+
+                if npcID == sender or npcID == confirmed then
+                    xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, ID)
+                    return
+                end
             end
             player:showText(npc, ID.text.RODAILLECE_DIALOG)
         end,

@@ -256,20 +256,6 @@ function xi.events.starlightCelebration.tokenMoogleOnFinish(player, id, csid, op
                     176,    -- Snowman Knight
                     86,     -- San d'Orian Tree
                 },
-                RARE_ITEMS =
-                {
-                    18863,  -- Dream Bell
-                    14519,  -- Dream Robe
-                    14520,  -- Dream Robe +1
-                    15752,  -- Dream Boots
-                    15753,  -- Dream Boots +1
-                    176,    -- Snowman Knight
-                    177,    -- Snowman Miner
-                    178,    -- Snowman Mage
-                    86,     -- San d'Orian Tree
-                    115,    -- Bastokan Tree
-                    116,    -- Windurstian Tree
-                }
             }
 
         if invAvailable == 0 then
@@ -605,33 +591,21 @@ end
 
 function xi.events.starlightCelebration.merryMakersGoblinOnFinish(player, csid, option, id)
     if csid == 4711 then
-        local bluePresent = player:hasKeyItem(xi.keyItem.BLUE_PRESENT)
-        -- local present_table =
-        -- {
-        --     2056,  --xi.keyItem.RED_PRESENT,
-        --     2058,  --xi.keyItem.GREEN_PRESENT,
-        --     2057,  --xi.keyItem.BLUE_PRESENT,
-        -- }
+        local rnd = math.random(1, 3)
 
-        -- local count = 0
-        -- local reward = 0
-
-        -- while count ~= 0 do
-        --     local picked = present_table[math.random(1, #present_table)]
-        --     if player:hasKeyItem(picked) == false then
-        --         reward = picked
-        --         count = 0
-        --     else
-        --         table.remove(present_table, picked) -- removes present KIs that player already has
-        --         count = count - 1
-        --     end
-        -- end
-        if not bluePresent then
+        if rnd == 1 then
+            player:addKeyItem(xi.keyItem.RED_PRESENT)
+            player:messageSpecial(id.text.KEYITEM_OBTAINED, xi.keyItem.RED_PRESENT)
+        elseif rnd == 2 then
+            player:addKeyItem(xi.keyItem.GREEN_PRESENT)
+            player:messageSpecial(id.text.KEYITEM_OBTAINED, xi.keyItem.GREEN_PRESENT)
+        else
             player:addKeyItem(xi.keyItem.BLUE_PRESENT)
             player:messageSpecial(id.text.KEYITEM_OBTAINED, xi.keyItem.BLUE_PRESENT)
-            player:setLocalVar("[StarlightMerryMakers]GoblinTrust", 0)
-            player:setLocalVar("[StarlightMerryMakers]HasPresent", 1)
         end
+
+        player:setLocalVar("[StarlightMerryMakers]GoblinTrust", 0)
+        player:setLocalVar("[StarlightMerryMakers]HasPresent", 1)
     end
 end
 
@@ -648,6 +622,8 @@ end
 
 function xi.events.starlightCelebration.merryMakersMoogleOnTrigger(player, npc)
     local questStatus = player:getLocalVar("[StarlightMerryMakers]Started")
+    local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
+    local hasPresent = player:getLocalVar("[StarlightMerryMakers]HasPresent")
     local cleared = player:getLocalVar("[StarlightMerryMakers]Cleared")
     local confirmed = player:getLocalVar("[StarlightMerryMakers]Confirmed")
     local delivered = player:getLocalVar("[StarlightMerryMakers]Delivered")
@@ -655,20 +631,18 @@ function xi.events.starlightCelebration.merryMakersMoogleOnTrigger(player, npc)
         if cleared ~= 0 then
             player:startEvent(4702)
         elseif delivered ~= 0 then
-            local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
             local npcName = GetNPCByID(sender):getName()
             if string.find(npcName, "%_") ~= 0 then
                 npcName = string.gsub(npcName, "%_", " ")
             end
             player:startEventString(4705, npcName)
         elseif confirmed ~= 0 then
-            local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
             local npcName = GetNPCByID(sender):getName()
             if string.find(npcName, "%_") ~= 0 then
                 npcName = string.gsub(npcName, "%_", " ")
             end
             player:startEventString(4704, npcName)
-        else
+        elseif (sender == 0 and hasPresent ~= 0) then
             local red_present = player:hasKeyItem(xi.keyItem.RED_PRESENT)
             local green_present = player:hasKeyItem(xi.keyItem.GREEN_PRESENT)
             local blue_present = player:hasKeyItem(xi.keyItem.BLUE_PRESENT)
@@ -687,9 +661,9 @@ function xi.events.starlightCelebration.merryMakersMoogleOnTrigger(player, npc)
                 player:startEventString(4701, giftNpc)
                 player:setLocalVar("[StarlightMerryMakers]Sender", giftNpcID)
                 player:setLocalVar("[StarlightMerryMakers]SenderID", rnd)
-            else
-                player:startEvent(4703, 2)
             end
+        else
+            player:startEvent(4703, 2)
         end
     else
         player:startEvent(4700)
@@ -734,10 +708,10 @@ function xi.events.starlightCelebration.merryMakersMoogleOnFinish(player, id, cs
     end
 end
 
-function xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc)
+function xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, id)
     local npcID = npc:getID()
     local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
-    local questStatus = player:getLocalVar("[StarlightMerryMakers]Cleared")
+    local questStatus = player:getLocalVar("[StarlightMerryMakers]Started")
     local confirmed = player:getLocalVar("[StarlightMerryMakers]Confirmed")
     local delivered = player:getLocalVar("[StarlightMerryMakers]Delivered")
 
@@ -755,23 +729,37 @@ function xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, n
             local red_present = player:hasKeyItem(xi.keyItem.RED_PRESENT)
             local green_present = player:hasKeyItem(xi.keyItem.GREEN_PRESENT)
             local blue_present = player:hasKeyItem(xi.keyItem.BLUE_PRESENT)
+            local currentNpc = npc:getID()
 
-            if string.find(npcName, "%_") ~= 0 then
-                npcName = string.gsub(npcName, "%_", " ")
+            if currentNpc ~= sender then
+                if string.find(npcName, "%_") ~= 0 then
+                    npcName = string.gsub(npcName, "%_", " ")
+                end
+
+                player:startEventString(event_table, npcName)
+                player:setLocalVar("[StarlightMerryMakers]Confirmed", 0)
+                player:setLocalVar("[StarlightMerryMakers]Delivered", npc:getID())
+
+                if red_present then
+                    player:delKeyItem(xi.keyItem.RED_PRESENT)
+                    player:messageSpecial(id.text.KEYITEM_LOST, xi.keyItem.RED_PRESENT)
+                elseif green_present then
+                    player:delKeyItem(xi.keyItem.GREEN_PRESENT)
+                    player:messageSpecial(id.text.KEYITEM_LOST, xi.keyItem.GREEN_PRESENT)
+                elseif blue_present then
+                    player:delKeyItem(xi.keyItem.BLUE_PRESENT)
+                    player:messageSpecial(id.text.KEYITEM_LOST, xi.keyItem.BLUE_PRESENT)
+                end
+                player:setLocalVar("[StarlightMerryMakers]HasPresent", 0)
+            elseif currentNpc == sender then
+                local eventID = player:getLocalVar("[StarlightMerryMakers]SenderID")
+                local event_table = merryMakersNPCs.Send_Event_IDs
+                local targetID = player:getLocalVar("[StarlightMerryMakers]Confirmed")
+
+                local targetName = GetNPCByID(targetID):getName()
+
+                player:startEvent(event_table[eventID], targetName)
             end
-
-            player:startEventString(event_table, npcName)
-            player:setLocalVar("[StarlightMerryMakers]Confirmed", 0)
-            player:setLocalVar("[StarlightMerryMakers]Delivered", npc:getID())
-
-            if red_present then
-                player:delKeyItem(xi.keyItem.RED_PRESENT)
-            elseif green_present then
-                player:delKeyItem(xi.keyItem.GREEN_PRESENT)
-            elseif blue_present then
-                player:delKeyItem(xi.keyItem.BLUE_PRESENT)
-            end
-            player:setLocalVar("[StarlightMerryMakers]HasPresent", 0)
         else
             if player:getLocalVar("[StarlightMerryMakers]Sender") == npcID then
                 local eventID = player:getLocalVar("[StarlightMerryMakers]SenderID")
@@ -800,6 +788,8 @@ function xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, n
                 player:startEvent(event_table[eventID], npcName)
                 player:setLocalVar("[StarlightMerryMakers]Confirmed", receiver)
                 player:setLocalVar("[StarlightMerryMakers]ConfirmedID", receiveID)
+            else
+                return
             end
         end
     else
