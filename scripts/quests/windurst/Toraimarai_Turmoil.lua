@@ -10,7 +10,6 @@ require('scripts/globals/items')
 require('scripts/globals/keyitems')
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
-require('scripts/globals/status')
 require('scripts/globals/zone')
 -----------------------------------
 
@@ -41,9 +40,7 @@ quest.sections =
             onEventFinish =
             {
                 [785] = function(player, csid, option, npc)
-                    if
-                        option == 1
-                    then
+                    if option == 1 then
                         quest:begin(player)
                         npcUtil.giveKeyItem(player, xi.ki.RHINOSTERY_CERTIFICATE)
                     end
@@ -63,14 +60,10 @@ quest.sections =
             ['Ohbiru-Dohbiru'] =
             {
                 onTrigger = function(player, npc)
-                    status = player:getQuestStatus(quest.areaId, quest.questId)
-                    if
-                        status == QUEST_COMPLETED
-                    then
+                    local status = player:getQuestStatus(quest.areaId, quest.questId)
+                    if status == QUEST_COMPLETED then
                         return quest:progressEvent(795, 4500, 0, xi.items.STARMITE_SHELL) --dialog for repeat
-                    elseif
-                        status == QUEST_ACCEPTED
-                    then
+                    elseif status == QUEST_ACCEPTED then
                         return quest:progressEvent(786, 4500, xi.keyItem.RHINOSTERY_CERTIFICATE, xi.items.STARMITE_SHELL) -- Reminder text.
                     end
                 end,
@@ -84,13 +77,14 @@ quest.sections =
             onEventFinish =
             {
                 [791] = function(player, csid, option, npc)
-                    player:confirmTrade()
-                    -- From previous implementation, award 100 fame (50 + 50) on first completion,
-                    -- and 50 fame for any subsequent trade.
-                    if player:getQuestStatus(quest.areaId, quest.questId) == QUEST_ACCEPTED then
-                        player:addFame(xi.quest.fame_area.WINDURST, 50)
+                    if quest:complete(player) then
+                        player:confirmTrade()
+                        -- From previous implementation, award 100 fame (50 + 50) on first completion,
+                        -- and 50 fame for any subsequent trade.
+                        if player:getQuestStatus(quest.areaId, quest.questId) == QUEST_ACCEPTED then
+                            player:addFame(xi.quest.fame_area.WINDURST, 50)
+                        end
                     end
-                    quest:complete(player)
                 end,
             },
         },
