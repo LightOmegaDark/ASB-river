@@ -275,7 +275,7 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
 
             PPlayer->flags2 = PPlayer->flags1;
 
-            //dont show anon in results if seraching by job, nation,  race, rank, lvl
+            // dont show anon in results if seraching by job, nation,  race, rank, lvl
             if (FLAG_ANON && (sr.jobid > 0 || sr.nation != 255 || sr.race != 255 || sr.minRank > 0 || sr.maxRank > 0 || sr.minlvl > 0 || sr.maxlvl > 0))
             {
                 continue;
