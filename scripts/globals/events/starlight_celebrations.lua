@@ -70,17 +70,17 @@ function xi.events.starlightCelebration.onStarlightSmilebringersTrade(player, tr
         if (head == 15179 or head == 15178) then
             if (npcTrades < 14) then
                 for itemInList = 1, #gifts_table do
-                    if (item == gifts_table[itemInList] and (head == 15179 or head == 15178) and (item == presents_table[itemInList]) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) < 9)) then
+                    if (item == gifts_table[itemInList] and (item == presents_table[itemInList]) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) < 9)) then
                         player:showText(npc, ID.text.GIFT_THANK_YOU)
                         player:messageSpecial(ID.text.BARRELS_JOY_TO_CHILDREN)
                         player:addFame(xi.quest.fame_area.HOLIDAY, 128)
                         player:tradeComplete()
-                    elseif (item == gifts_table[itemInList] and (head == 15179 or head == 15178) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) < 9)) then
+                    elseif (item == gifts_table[itemInList] and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) < 9)) then
                         player:showText(npc, ID.text.GIFT_THANK_YOU)
                         player:messageSpecial(ID.text.JOY_TO_CHILDREN)
                         player:addFame(xi.quest.fame_area.HOLIDAY, 32)
                         player:tradeComplete()
-                    elseif ((item == gifts_table[itemInList]) and (head == 15179 or head == 15178) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) >= 9)) then
+                    elseif ((item == gifts_table[itemInList]) and (player:getFameLevel(xi.quest.fame_area.HOLIDAY) >= 9)) then
                         player:showText(npc, ID.text.ONLY_TWO_HANDS)
                     end
                 end
