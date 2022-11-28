@@ -753,12 +753,12 @@ function xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, n
                 player:setLocalVar("[StarlightMerryMakers]HasPresent", 0)
             elseif currentNpc == sender then
                 local eventID = player:getLocalVar("[StarlightMerryMakers]SenderID")
-                local event_table = merryMakersNPCs.Send_Event_IDs
+                local target_table = merryMakersNPCs.Send_Event_IDs
                 local targetID = player:getLocalVar("[StarlightMerryMakers]Confirmed")
 
                 local targetName = GetNPCByID(targetID):getName()
 
-                player:startEvent(event_table[eventID], targetName)
+                player:startEvent(target_table[eventID], targetName)
             end
         else
             if player:getLocalVar("[StarlightMerryMakers]Sender") == npcID then
