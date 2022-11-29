@@ -119,10 +119,6 @@ local path =
 }
 
 entity.onMobSpawn = function(mob)
-    -- DEBUGGING ENSURE REMOVED WHEN DONE
-    --------------------------------------------
-    mob:setPos(xi.path.first(pathNodes))
-    --------------------------------------------
     mob:setSpeed(70)
     mob:pathThrough(pathNodes, bit.bor(xi.path.flag.PATROL, xi.path.flag.RUN))
 end
