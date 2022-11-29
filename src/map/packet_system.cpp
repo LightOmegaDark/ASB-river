@@ -5954,6 +5954,7 @@ void SmallPacket0x0DC(map_session_data_t* const PSession, CCharEntity* const PCh
                 PChar->nameflags.flags &= ~FLAG_ANON;
                 PChar->menuConfigFlags.flags &= ~NFLAG_ANON;
             }
+
             if (flags != PChar->nameflags.flags)
             {
                 PChar->pushPacket(new CMessageSystemPacket(0, 0, param == 1 ? 175 : 176));
