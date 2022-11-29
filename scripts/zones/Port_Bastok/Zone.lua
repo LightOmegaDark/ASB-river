@@ -1,11 +1,12 @@
 -----------------------------------
 -- Zone: Port_Bastok (236)
 -----------------------------------
-local ID = require("scripts/zones/Port_Bastok/IDs")
-require("scripts/globals/conquest")
-require("scripts/globals/missions")
-require("scripts/globals/settings")
-require("scripts/globals/zone")
+local ID = require('scripts/zones/Port_Bastok/IDs')
+require('scripts/globals/events/starlight_celebrations')
+require('scripts/globals/conquest')
+require('scripts/globals/cutscenes')
+require('scripts/globals/settings')
+require('scripts/globals/zone')
 -----------------------------------
 local zoneObject = {}
 
@@ -13,6 +14,7 @@ zoneObject.onInitialize = function(zone)
     zone:registerTriggerArea(1, -112, -3, -17, -96, 3, -3)     -- event COP
     zone:registerTriggerArea(2, 53.5, 5, -165.3, 66.5, 6, -72) -- drawbridge area
     xi.conquest.toggleRegionalNPCs(zone)
+    xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

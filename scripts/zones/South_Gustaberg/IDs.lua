@@ -32,15 +32,22 @@ zones[xi.zone.SOUTH_GUSTABERG] =
         FIRE_TAKE                     = 7417, -- You take <item> out of the fire.
         FIRE_LONGER                   = 7418, -- It may take a little while more to cook the <item>.
         MEAT_ALREADY_PUT              = 7419, -- The <item> is already in the fire.
-        ITEMS_ITEMS_LA_LA             = 7515, -- You can hear a strange voice... Items, items, la la la la la
-        GOBLIN_SLIPPED_AWAY           = 7521, -- The Goblin slipped away when you were not looking...
-        PLAYER_OBTAINS_ITEM           = 7535, -- <name> obtains <item>!
-        UNABLE_TO_OBTAIN_ITEM         = 7536, -- You were unable to obtain the item.
-        PLAYER_OBTAINS_TEMP_ITEM      = 7537, -- <name> obtains the temporary item: <item>!
-        ALREADY_POSSESS_TEMP          = 7538, -- You already possess that temporary item.
-        NO_COMBINATION                = 7543, -- You were unable to enter a combination.
-        UNITY_WANTED_BATTLE_INTERACT  = 7605, -- Those who have accepted % must pay # Unity accolades to participate. The content for this Wanted battle is #. [Ready to begin?/You do not have the appropriate object set, so your rewards will be limited.]
-        REGIME_REGISTERED             = 9904, -- New training regime registered!
+        ITEMS_ITEMS_LA_LA             = 7527, -- You can hear a strange voice... Items, items, la la la la la
+        GOBLIN_SLIPPED_AWAY           = 7533, -- The Goblin slipped away when you were not looking...
+        PLAYER_OBTAINS_ITEM           = 7547, -- <name> obtains <item>!
+        UNABLE_TO_OBTAIN_ITEM         = 7548, -- You were unable to obtain the item.
+        PLAYER_OBTAINS_TEMP_ITEM      = 7549, -- <name> obtains the temporary item: <item>!
+        ALREADY_POSSESS_TEMP          = 7550, -- You already possess that temporary item.
+        NO_COMBINATION                = 7555, -- You were unable to enter a combination.
+        UNITY_WANTED_BATTLE_INTERACT  = 7617, -- Those who have accepted % must pay # Unity accolades to participate. The content for this Wanted battle is #. [Ready to begin?/You do not have the appropriate object set, so your rewards will be limited.]
+        REGIME_REGISTERED             = 9916, -- New training regime registered!
+        -- Smilebringer Bootcamp Dialog --
+        SMILEBRINGER_START            = 11059, -- So, are you ready-steady? Beginner level training...GO! Come on, pump those legs like there's no tomorrow!
+        SMILEHELPER_IDLE              = 11087, -- This is a checkpointaru for the Smilebringer Boot camp. To learny-wearn more, please speak with the smile sergeant posted by the town entrance.
+        SMILEHELPER_CHECKPOINT_1      = 11081, -- Checkpoint <number> cleared, Elasped time: [minutes], [seconds]
+        SMILEHELPER_CHECKPOINT_2      = 11082, -- Checkpoint <number> cleared! You gain the effect of Flee. Elasped time: [minutes], [seconds]
+        SMILEHELPER_ALREADY_VISITED   = 11083, -- You have already cleared this checkpoint. Elapsed time: [minutes], [seconds]
+        SMILEHELPER_POINTS_CLEARED    = 11085, -- All checkpoints cleared! Please report back to the smile sergeant in charge.
     },
     mob =
     {
@@ -66,6 +73,23 @@ zones[xi.zone.SOUTH_GUSTABERG] =
     },
     npc =
     {
+        STARLIGHT_DECORATIONS =
+        {
+            [17216217] = 17216217, -- Wandering Cloud (Smilebringers Bootcamp Start NPC)
+        },
+        SMILE_HELPERS =
+        {
+            [17216218] = 17216218,
+            [17216219] = 17216219,
+            [17216220] = 17216220,
+            [17216221] = 17216221,
+            [17216222] = 17216222,
+            [17216223] = 17216223,
+            [17216224] = 17216224,
+            [17216225] = 17216225,
+            [17216226] = 17216226,
+            [17216227] = 17216227,
+        },
     },
 }
 

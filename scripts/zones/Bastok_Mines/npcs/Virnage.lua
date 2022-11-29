@@ -3,37 +3,17 @@
 --  NPC: Virnage
 -- !pos 0 0 51 234
 -----------------------------------
+require("scripts/globals/events/starlight_celebrations")
+-----------------------------------
+
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local AltanaSorrow = player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.ALTANA_S_SORROW)
-
-    if
-        AltanaSorrow == QUEST_AVAILABLE and
-        player:getFameLevel(xi.quest.fame_area.BASTOK) >= 4 and
-        player:getMainLvl() >= 10
-    then
-        player:startEvent(141) -- Start quest "Altana's Sorrow"
-
-    elseif AltanaSorrow == QUEST_ACCEPTED then
-        if player:hasKeyItem(xi.ki.BUCKET_OF_DIVINE_PAINT) then
-            player:startEvent(143) -- CS with Bucket of Divine Paint KI
-        elseif player:hasKeyItem(xi.ki.LETTER_FROM_VIRNAGE) then
-            --player:showText(npc, ID.text.VIRNAGE_DIALOG_2)
-            player:startEvent(144) -- During quest (after KI)
-        else
-            -- player:showText(npc, ID.text.VIRNAGE_DIALOG_1)
-            player:startEvent(142) -- During quest "Altana's Sorrow" (before KI)
-        end
-
-    elseif AltanaSorrow == QUEST_COMPLETED then
-        player:startEvent(145) -- New standard dialog
-
-    else
-        player:startEvent(140) -- Standard dialog
+    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
+        xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, 3)
     end
 end
 

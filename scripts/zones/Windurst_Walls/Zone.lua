@@ -1,17 +1,18 @@
 -----------------------------------
 -- Zone: Windurst_Walls (239)
 -----------------------------------
-local ID = require("scripts/zones/Windurst_Walls/IDs")
-require("scripts/globals/conquest")
-require("scripts/globals/settings")
-require("scripts/globals/keyitems")
-require("scripts/globals/missions")
-require("scripts/globals/quests")
-require("scripts/globals/zone")
+local ID = require('scripts/zones/Windurst_Walls/IDs')
+require('scripts/globals/events/starlight_celebrations')
+require('scripts/globals/conquest')
+require('scripts/globals/quests')
+require('scripts/globals/zone')
 -----------------------------------
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
+    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
+        xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
+    end
     zone:registerTriggerArea(1, -2, -17, 140, 2, -16, 142)
 end
 

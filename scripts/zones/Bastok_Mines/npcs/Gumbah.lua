@@ -3,14 +3,15 @@
 --  NPC: Gumbah
 -- !pos 52 0 -36 234
 -----------------------------------
-local ID = require("scripts/zones/Bastok_Mines/IDs")
-require("scripts/globals/keyitems")
-require("scripts/globals/quests")
 require("scripts/globals/settings")
+local ID = require("scripts/zones/Bastok_Mines/IDs")
+require("scripts/globals/events/starlight_celebrations")
 -----------------------------------
+
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
+    xi.events.starlightCelebration.onStarlightSmilebringersTrade(player, trade, npc)
 end
 
 entity.onTrigger = function(player, npc)

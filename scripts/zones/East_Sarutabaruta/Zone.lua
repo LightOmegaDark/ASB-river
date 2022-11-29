@@ -8,6 +8,8 @@ require('scripts/globals/conquest')
 require('scripts/globals/keyitems')
 require('scripts/globals/missions')
 require('scripts/globals/zone')
+require('scripts/globals/events/harvest_festivals')
+require('scripts/globals/events/starlight_celebrations')
 -----------------------------------
 local zoneObject = {}
 
@@ -18,6 +20,9 @@ end
 zone_object.onInitialize = function(zone)
     if xi.settings.main.ENABLE_WOTG == 1 then
         xi.mob.nmTODPersistCache(zone, ID.mob.DUKE_DECAPOD)
+    end
+    if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
+        xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
     end
 end
 
@@ -48,6 +53,10 @@ end
 
 zone_object.onGameDay = function()
     SetServerVariable("[DIG]ZONE116_ITEMS", 0)
+    if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
+        local zone = 107
+        xi.events.starlightCelebration.resetSmileHelpers(zone)
+    end
 end
 
 zone_object.onRegionEnter = function(player, region)

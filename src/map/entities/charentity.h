@@ -79,7 +79,7 @@ struct profile_t
     uint16 mhflag;
 
     uint16     title;      // rank
-    uint16     fame[15];   // Fame
+    uint16     fame[16];   // Fame
     uint8      rank[3];    // RAGN in three states
     uint16     rankpoints; // rank glasses in three states
     location_t home_point; // Renaissance point character
