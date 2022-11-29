@@ -9,7 +9,7 @@ local itemObject = {}
 
 itemObject.onFurniturePlaced = function(player)
     player:setCharVar("[StarlightMisc]TreePlaced", 1)
-    player:setCharVar("[StarlightMisc]TreeTimePlaced", os.time())
+    player:setCharVar("[StarlightMisc]TreeTimePlaced", VanadielUniqueDay())
     player:setCharVar("[StarlightMisc]WindurstianTree", 1)
 end
 

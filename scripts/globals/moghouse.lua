@@ -106,39 +106,27 @@ xi.moghouse.moogleTrade = function(player, npc, trade)
 end
 
 xi.moghouse.moogleTrigger = function(player, npc)
-    local hasEnteredBefore = player:getCharVar("[Moghouse]HasEntered")
-    local rentedARoomBefore = player:getCharVar("[Moghouse]HasRentedARoom")
 
     if player:isInMogHouse() then
-
-        if (hasEnteredBefore == 0 and xi.moghouse.isInMogHouseInHomeNation(player) == true) then
-            player:startEvent(30000)
-            player:setCharVar("[Moghouse]HasEntered", 1)
-            return
-        end
-
-        if (xi.moghouse.isInMogHouseInHomeNation(player) == false and rentedARoomBefore == 0) then
-            player:setCharVar("[Moghouse]HasRentedARoom", 1)
-            player:startEvent(30001)
-            player:sendMenu(1)
-        end
 
         if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
             if xi.moghouse.isInMogHouseInHomeNation(player) then
                 local treePlaced = player:getCharVar("[StarlightMisc]TreePlaced")
-                local placedTime = player:getCharVar("[StarlightMisc]TreeTimePlaced")
+                local placedDay = player:getCharVar("[StarlightMisc]TreeTimePlaced")
                 local earnedReward = player:getCharVar("[StarlightMisc]DreamHatHQ")
+                local currentDay = VanadielUniqueDay()
+                local currentTime = os.time()
+                local currentMidnight = getVanaMidnight(placedDay)
 
                 if (treePlaced ~= 0 and earnedReward ~= 1) then
-                    local dreamHat = player:hasItem(15178)
                     local sandOrianTree = player:getCharVar("[StarlightMisc]SandOrianTree")
                     local bastokanTree = player:getCharVar("[StarlightMisc]BastokanTree")
                     local windurstianTree = player:getCharVar("[StarlightMisc]WindurstianTree")
                     local jeunoanTree = player:getCharVar("[StarlightMisc]JeunoanTree")
                     local holidayFame = player:getFameLevel(xi.quest.fame_area.HOLIDAY)
 
-                    if placedTime > JstMidnight() then
-                        if (dreamHat == true and holidayFame == 9) then
+                    if (placedDay < currentDay and currentTime > currentMidnight) then
+                        if holidayFame == 9 then
                             if sandOrianTree == 1 then
                                 player:startEvent(30017, 0, 0, 0, 86)
                             elseif bastokanTree == 1 then

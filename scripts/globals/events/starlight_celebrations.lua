@@ -124,7 +124,6 @@ end
 function xi.events.starlightCelebration.npcGiftsMoogleOnFinish(player, id, csid, option)
     if csid == 32703 and option == 1 then
         player:setLocalVar("[StarlightNPCGifts]Started", 1)
-        -- player:setLocalVar("[StarlightNPCGifts]Delivered", 0)
         player:setLocalVar("[StarlightNPCGifts]Npc1", 0)
         player:setLocalVar("[StarlightNPCGifts]Npc2", 0)
         player:setLocalVar("[StarlightNPCGifts]Npc3", 0)
@@ -424,7 +423,7 @@ function xi.events.starlightCelebration.smileHelperTrigger(player, npc, id)
                     player:showText(npc, id.text.SMILEHELPER_CHECKPOINT_2, 0, playerPoint, minutes, seconds)
                     player:addStatusEffect(xi.effect.FLEE, 100, 0, 30)
                 else
-                    local rnd = math.random(0, 1)
+                    local rnd = math.random(0, 3)
                     if rnd ~= 3 then
                         player:setLocalVar("missedFlee", 1)
                         player:showText(npc, id.text.SMILEHELPER_CHECKPOINT_1, 0, playerPoint, minutes, seconds)
