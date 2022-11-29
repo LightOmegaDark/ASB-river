@@ -119,8 +119,12 @@ local path =
 }
 
 entity.onMobSpawn = function(mob)
-    mob:setSpeed(250)
-    mob:pathThrough(path, bit.bor(xi.path.flag.PATROL, xi.path.flag.RUN))
+    -- DEBUGGING ENSURE REMOVED WHEN DONE
+    --------------------------------------------
+    mob:setPos(xi.path.first(pathNodes))
+    --------------------------------------------
+    mob:setSpeed(70)
+    mob:pathThrough(pathNodes, bit.bor(xi.path.flag.PATROL, xi.path.flag.RUN))
 end
 
 entity.onMobFight = function(mob)
@@ -132,8 +136,9 @@ entity.onMobFight = function(mob)
 end
 
 entity.onMobDisengage = function(mob)
-    mob:setSpeed(250)
+    mob:setSpeed(70)
     mob:setAnimationSub(5)
+    mob:pathThrough(pathNodes, bit.bor(xi.path.flag.PATROL, xi.path.flag.RUN))
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
