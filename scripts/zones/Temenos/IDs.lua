@@ -204,45 +204,6 @@ zones[xi.zone.TEMENOS] =
             LOOT_CRATE = 16929029,
         }
     },
-
-    CENTRAL_TEMENOS_3RD_FLOOR =
-    {
-        npc =
-        {
-            LOOT_CRATE = 16929004,
-        }
-    },
-
-    CENTRAL_TEMENOS_4TH_FLOOR =
-    {
-        npc =
-        {
-            LOOT_CRATE = 16928965,
-            GROUPS =
-            {
-                { offset = 16928967, count = 4 },
-                { offset = 16928971, count = 7 },
-                { offset = 16928978, count = 8 },
-            },
-        },
-        mob =
-        {
-            GROUPS =
-            {
-                { offset = 16928986, count = 3 },
-                { offset = 16928991, count = 6 },
-                { offset = 16928997, count = 7 },
-            },
-        },
-    },
-
-    CENTRAL_TEMENOS_BASEMENT =
-    {
-        npc =
-        {
-            LOOT_CRATE = 16929052,
-        }
-    },
 }
 
 return zones[xi.zone.TEMENOS]
