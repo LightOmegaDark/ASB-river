@@ -18,7 +18,7 @@ local quest = Quest:new(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TORAIMARA
 quest.reward =
 {
     gil  = 4500,
-    fame = 50,
+    fame = 100,
     fameArea = xi.quest.fame_area.WINDURST,
     title = xi.title.CERTIFIED_RHINOSTERY_VENTURER
 }
@@ -74,9 +74,6 @@ quest.sections =
                 [791] = function(player, csid, option, npc)
                     if quest:complete(player) then
                         player:confirmTrade()
-                        -- From previous implementation, award 100 fame (50 + 50) on first completion,
-                        -- and 50 fame for any subsequent trade.
-                        player:addFame(xi.quest.fame_area.WINDURST, 50)
                     end
                 end,
             },
@@ -106,9 +103,10 @@ quest.sections =
             onEventFinish =
             {
                 [791] = function(player, csid, option, npc)
-                    if quest:complete(player) then
-                        player:confirmTrade()
-                    end
+                    player:confirmTrade()
+                    --From previous implementation, award 100 fame on first completion,
+                    -- and 50 fame for any subsequent trade.
+                    player:addFame(xi.quest.fame_area.WINDURST, 50)
                 end,
             },
         },
