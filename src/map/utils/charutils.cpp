@@ -6373,6 +6373,11 @@ namespace charutils
         {
             PChar->pushPacket(new CRoeSparkUpdatePacket(PChar));
         }
+
+        if (type == charutils::GetConquestPointsName(PChar).c_str())
+        {
+            PChar->pushPacket(new CConquestPacket(PChar));
+        }
     }
 
     void SetPoints(CCharEntity* PChar, const char* type, int32 amount)
