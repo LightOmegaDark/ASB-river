@@ -2265,8 +2265,6 @@ namespace charutils
                     PChar->mainlook.ranged = PChar->look.ranged;
                 }
 
-            case SLOT_AMMO:
-                // Appears as though these aren't implemented by SE.
                 break;
             default:
                 break;
