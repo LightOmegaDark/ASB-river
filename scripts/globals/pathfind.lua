@@ -41,4 +41,22 @@ xi.path =
         local result = xi.path.get(points, length)
         return result
     end,
+
+    -- Randomly picks a point to path to within the provided distance range
+    randomPath = function(mob, points, min, max)
+        local mobPosition = mob:getPos()
+
+        local validPoints = {}
+        for point, position in ipairs(points) do
+            local distance =  utils.distance(mobPosition, position)
+            if distance > min and distance < max then
+                table.insert(validPoints, point)
+            end
+        end
+
+        if #validPoints > 0 then
+            local target = points[validPoints[math.random(1, #validPoints)]]
+            mob:pathThrough({ target.x, target.y, target.z })
+        end
+    end
 }

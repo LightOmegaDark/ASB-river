@@ -16,11 +16,11 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-
-    local quest_fas = player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.FATHER_AND_SON)      -- 1st Quest in Series
-    local quest_poa = player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.A_PURCHASE_OF_ARMS)  -- 2nd Quest in Series
-
-    if (player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 2 and quest_fas == QUEST_COMPLETED and quest_poa == QUEST_AVAILABLE) then
+    if
+        player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 2 and
+        player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.FATHER_AND_SON) == QUEST_COMPLETED and
+        player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.A_PURCHASE_OF_ARMS) == QUEST_AVAILABLE
+    then
         player:startEvent(594)  -- Start quest A Purchase of Arms
     elseif
         player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.A_PURCHASE_OF_ARMS) == QUEST_ACCEPTED and

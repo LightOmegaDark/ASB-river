@@ -26,9 +26,6 @@
 #include "console_service.h"
 #include "settings.h"
 
-extern int    arg_c;
-extern char** arg_v;
-
 extern std::atomic<bool> gRunFlag;
 
 extern void  log_init(int, char**);

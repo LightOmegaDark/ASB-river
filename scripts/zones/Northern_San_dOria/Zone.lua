@@ -29,16 +29,11 @@ end
 zoneObject.onZoneIn = function(player, prevZone)
     local cs = { -1 }
 
-    -- FIRST LOGIN (START CS)
-    if player:getPlaytime(false) == 0 then
-        if xi.settings.main.NEW_CHARACTER_CUTSCENE == 1 then
-            cs = 535
-        end
-        player:setPos(0, 0, -11, 191)
-        player:setHomePoint()
-    -- RDM AF3 CS
-    elseif player:getCharVar("peaceForTheSpiritCS") == 5 and player:getFreeSlotsCount() >= 1 then
-        cs = 49
+    if
+        player:getCharVar("peaceForTheSpiritCS") == 5 and
+        player:getFreeSlotsCount() >= 1
+    then
+        cs = { 49 }
     end
 
     -- MOG HOUSE EXIT

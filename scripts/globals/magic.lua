@@ -350,7 +350,6 @@ local function doNuke(caster, target, spell, params)
 end
 
 xi.magic.calculateMagicDamage = function(caster, target, spell, params)
-
     local dINT = caster:getStat(params.attribute) - target:getStat(params.attribute)
     local dmg = params.dmg
 
@@ -1226,9 +1225,8 @@ xi.magic.addBonuses = function(caster, spell, target, dmg, params)
             mab = mab + caster:getMerit(xi.merit.NIN_MAGIC_BONUS)
         end
 
-        local mab_crit = caster:getMod(xi.mod.MAGIC_CRITHITRATE)
-        if math.random(1, 100) < mab_crit then
-            mab = mab + ( 10 + caster:getMod(xi.mod.MAGIC_CRIT_DMG_INCREASE ) )
+        if math.random(1, 100) < caster:getMod(xi.mod.MAGIC_CRITHITRATE) then
+            mab = mab + (10 + caster:getMod(xi.mod.MAGIC_CRIT_DMG_INCREASE))
         end
 
         local mdefBarBonus = 0
@@ -1367,9 +1365,7 @@ xi.magic.getElementalDebuffDOT = function(INT)
 end
 
 xi.magic.getElementalDebuffStatDownFromDOT = function(dot)
-    local stat_down = 0
-    stat_down = (dot-1)*2 +5
-    return stat_down
+    return (dot - 1) * 2 + 5
 end
 
 xi.magic.getHelixDuration = function(caster)

@@ -623,8 +623,8 @@ xi.nyzul.tempBoxPickItems = function(npc)
         [22] = { itemID = xi.items.DUSTY_ELIXIR,               amount = 1                 }
     }
 
-    local random      = math.random(1, #tempBoxItems)
-    local item        = tempBoxItems[random]
+    local random       = math.random(1, #tempBoxItems)
+    local item         = tempBoxItems[random]
     local item2Random = math.random(1, 10)
     local item3Random = math.random(1, 10)
 
@@ -659,11 +659,7 @@ xi.nyzul.tempBoxFinish = function(player, csid, option, npc)
         local item2 = npc:getLocalVar("itemID_2")
         local item3 = npc:getLocalVar("itemID_3")
 
-        if
-            option == 1 and
-            item1 > 0 and
-            npc:getLocalVar("itemAmount_1") > 0
-        then
+        if option == 1 and item1 > 0 and npc:getLocalVar("itemAmount_1") > 0 then
             if not player:hasItem(item1, xi.inventoryLocation.TEMPITEMS) then
                 player:addTempItem(item1)
                 player:messageName(ID.text.PLAYER_OBTAINS_TEMP_ITEM, player, item1)
@@ -671,12 +667,7 @@ xi.nyzul.tempBoxFinish = function(player, csid, option, npc)
             else
                 player:messageSpecial(ID.text.ALREADY_HAVE_TEMP_ITEM)
             end
-
-        elseif
-            option == 2 and
-            item2 > 0 and
-            npc:getLocalVar("itemAmount_2") > 0
-        then
+        elseif option == 2 and item2 > 0 and npc:getLocalVar("itemAmount_2") > 0 then
             if not player:hasItem(item2, xi.inventoryLocation.TEMPITEMS) then
                 player:addTempItem(item2)
                 player:messageName(ID.text.PLAYER_OBTAINS_TEMP_ITEM, player, item2)
@@ -684,12 +675,7 @@ xi.nyzul.tempBoxFinish = function(player, csid, option, npc)
             else
                 player:messageSpecial(ID.text.ALREADY_HAVE_TEMP_ITEM)
             end
-
-        elseif
-            option == 3 and
-            item3 > 0 and
-            npc:getLocalVar("itemAmount_3") > 0
-        then
+        elseif option == 3 and item3 > 0 and npc:getLocalVar("itemAmount_3") > 0 then
             if not player:hasItem(item3, xi.inventoryLocation.TEMPITEMS) then
                 player:addTempItem(item3)
                 player:messageName(ID.text.PLAYER_OBTAINS_TEMP_ITEM, player, item3)
@@ -1069,5 +1055,5 @@ xi.nyzul.getTokenPenalty = function(instance)
     local floorPenalities = instance:getLocalVar("tokenPenalty")
     local rate            = getTokenRate(instance)
 
-    return math.floor(117 * rate * floorPenalities)
+    return math.floor(117 * rate) * floorPenalities
 end

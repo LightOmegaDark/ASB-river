@@ -10,6 +10,12 @@ mixinOptions = { item = xi.items.STELLAR_FRAGMENT }
 local entity = {}
 
 entity.onMobEngaged = function(mob, target)
+    if mob:getAnimationSub() == 3 then
+        SetDropRate(114, 1578, 1000)
+    else
+        SetDropRate(114, 1578, 0)
+    end
+
     target:showText(mob, ID.text.ANIMATED_SPEAR_DIALOG)
 end
 

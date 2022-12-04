@@ -10,6 +10,12 @@ mixinOptions = { item = xi.items.DEMONIAC_FRAGMENT }
 local entity = {}
 
 entity.onMobEngaged = function(mob, target)
+    if mob:getAnimationSub() == 3 then
+        SetDropRate(109, 1579, 1000)
+    else
+        SetDropRate(109, 1579, 0)
+    end
+
     target:showText(mob, ID.text.ANIMATED_KUNAI_DIALOG)
 end
 

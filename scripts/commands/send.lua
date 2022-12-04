@@ -358,7 +358,7 @@ function onTrigger(player, bytes)
                 return
             end
 
-            for k, v in pairs(zone_list) do
+            for k, v in pairs(zoneList) do
                 if v[3] == zone then
                     x = v[4] or 0
                     y = v[5] or 0

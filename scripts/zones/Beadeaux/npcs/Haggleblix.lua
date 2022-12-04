@@ -127,8 +127,6 @@ entity.onEventUpdate = function(player, csid, option)
             end
 
             player:updateEvent(xi.dynamis.getDynamisMapList(player), player:getGil())
-
-            player:updateEvent(xi.dynamis.getDynamisMapList(player), player:getGil())
         end
     end
 end
@@ -194,8 +192,6 @@ entity.onEventFinish = function(player, csid, option)
             player:addItem(item)
             player:messageSpecial(ID.text.ITEM_OBTAINED, item)
         end
-
-        player:setLocalVar("hundoItemBought", 0)
 
         player:setLocalVar("hundoItemBought", 0)
     end

@@ -118,9 +118,7 @@ zones[xi.zone.BATALLIA_DOWNS] =
 
     npc =
     {
-        SYRILLIA         = GetFirstID("Syrillia"),
-        BLUE_BEAM_BASE   = GetFirstID("NPC[2a4]"),
-        RAPTOR_FOOD_BASE = GetFirstID("Raptors_Food_0"),
+        SYRILLIA = DYNAMIC_LOOKUP
     },
 }
 

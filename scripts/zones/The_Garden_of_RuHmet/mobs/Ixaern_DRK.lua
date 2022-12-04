@@ -52,6 +52,7 @@ entity.onMobInitialize = function(IxAernDrkMob)
                             elseif i == partySize then --if all checks fail just disengage
                                 mobArg:disengage()
                             end
+
                             i = i + 1
                         end
                     else

@@ -49,7 +49,6 @@ spell_object.onSpellCast = function(caster, target, spell)
     end
 
     return effectType
-
 end
 
 return spellObject

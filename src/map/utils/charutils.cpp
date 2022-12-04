@@ -1537,7 +1537,7 @@ namespace charutils
     {
         if (charutils::UpdateItem(PChar, container, slotID, -quantity) != 0)
         {
-            ShowInfo("Player %s DROPPING itemID: %s (%u) quantity: %u", PChar->GetName(), itemutils::GetItem(ItemID)->getName(), ItemID, quantity);
+            ShowInfo("Player %s DROPPING itemID: %s (%u) quantity: %u", PChar->GetName(), itemutils::GetItemPointer(ItemID)->getName(), ItemID, quantity);
             PChar->pushPacket(new CMessageStandardPacket(nullptr, ItemID, quantity, MsgStd::ThrowAway));
             PChar->pushPacket(new CInventoryFinishPacket());
         }
@@ -2233,13 +2233,18 @@ namespace charutils
                 break;
             case SLOT_RANGED:
                 if (hasValidStyle(PChar, PItem, appearance))
+                {
                     PChar->mainlook.ranged = appearanceModel;
+                }
                 else
+                {
                     PChar->mainlook.ranged = PChar->look.ranged;
-                break;
+                }
 
             case SLOT_AMMO:
                 // Appears as though these aren't implemented by SE.
+                break;
+            default:
                 break;
         }
     }

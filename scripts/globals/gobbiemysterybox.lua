@@ -192,17 +192,17 @@ xi.mystery.onEventUpdate = function(player, csid, option, events)
             player:updateEvent(SelectDailyItem(player, 6), SelectDailyItem(player, 6), SelectDailyItem(player, 6), 0, 0, 0, 0, dailyTallyPoints) -- peek
         else
             local dial = math.floor(option / 8)
-            local option_type = option % 8
-            local dial_used = false
-            local dial_cost = costs[dial]
-            local dial_mask = false
+            local optionType = option % 8
+            local dialUsed = false
+            local dialCost = costs[dial]
+            local dialMask = false
 
             if dial >= 6 then
                 dialMask = dial - 6
                 dialUsed = utils.mask.getBit(gobbieBoxUsed, dialMask)
             end
 
-            switch (option_type): caseof
+            switch (optionType): caseof
             {
                 [1] = function()
                     if dialUsed then

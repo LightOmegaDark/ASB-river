@@ -5977,11 +5977,16 @@ uint8 CLuaBaseEntity::levelRestriction(sol::object const& level)
                         return PChar->m_LevelRestriction;
                 }
 
-                if (PChar->PPet || PChar->PAutomaton)
-                {
-                    petutils::FinalizePetStatistics(PChar, PPet);
-                    PPet->updatemask |= UPDATE_HP;
-                }
+                // Allow global pet script to handle the level restriction
+                luautils::OnPetLevelRestriction(PPet);
+
+                // Setup pet with master since traits, abilities and some status effects need to be reapplied
+                petutils::SetupPetWithMaster(PChar, PPet);
+
+                // Restore pet's HP and MP to what it was before the stat recalculation
+                PPet->health.hp = std::min(hp, PPet->GetMaxHP());
+                PPet->health.mp = std::min(mp, PPet->GetMaxMP());
+                PPet->updatemask |= UPDATE_HP;
             }
         }
     }
@@ -6072,7 +6077,7 @@ void CLuaBaseEntity::addTitle(uint16 titleID)
 {
     if (!(m_PBaseEntity->objtype & TYPE_PC))
     {
-        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        ShowWarning("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return;
     }
 
@@ -6095,7 +6100,7 @@ void CLuaBaseEntity::setTitle(uint16 titleID)
 {
     if (!(m_PBaseEntity->objtype & TYPE_PC))
     {
-        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        ShowWarning("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return;
     }
 
@@ -6113,7 +6118,7 @@ void CLuaBaseEntity::delTitle(uint16 titleID)
 {
     if (!(m_PBaseEntity->objtype & TYPE_PC))
     {
-        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        ShowWarning("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return;
     }
 
@@ -9623,25 +9628,21 @@ bool CLuaBaseEntity::checkKillCredit(CLuaBaseEntity* PLuaBaseEntity, sol::object
 
 /************************************************************************
  *  Function: checkDifficulty()
- *  Purpose : Checks if the mob is too weak
- *  Example : local difficulty = checkDifficulty(mob)
- *  Notes   :
+ *  Purpose : Checks the mobs difficulty
+ *  Example : local difficulty = player:checkDifficulty(mob)
+ *  Notes   : Returns a value based on the enum EMobDifficulty
  ************************************************************************/
 uint8 CLuaBaseEntity::checkDifficulty(CLuaBaseEntity* PLuaBaseEntity)
 {
-    CMobEntity*  PMob  = static_cast<CMobEntity*>(PLuaBaseEntity->GetBaseEntity());
-    CCharEntity* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-
-    // auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
-    // auto* PMob = dynamic_cast<CMobEntity*>(m_PBaseEntity);
+    CMobEntity*  PMob  = dynamic_cast<CMobEntity*>(PLuaBaseEntity->GetBaseEntity());
+    CCharEntity* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
 
     if (PChar && PMob)
     {
         return (uint8)charutils::CheckMob((PChar->GetMLevel()), (PMob->GetMLevel()));
     }
 
-    // if you get here, there is a problem
-    // ShowError("Something broke")
+    ShowError("Value is not valid");
     return 0;
 }
 
@@ -14133,7 +14134,7 @@ void CLuaBaseEntity::setDelay(uint16 delay)
 {
     if (!(m_PBaseEntity->objtype & TYPE_MOB))
     {
-        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        ShowWarning("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return;
     }
 
@@ -14172,7 +14173,7 @@ void CLuaBaseEntity::setDamage(uint16 damage)
 {
     if (!(m_PBaseEntity->objtype & TYPE_MOB))
     {
-        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        ShowWarning("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return;
     }
 
@@ -14190,7 +14191,7 @@ bool CLuaBaseEntity::hasSpellList()
 {
     if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
     {
-        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        ShowWarning("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return false;
     }
 
@@ -14208,7 +14209,7 @@ void CLuaBaseEntity::setSpellList(uint16 spellList)
 {
     if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
     {
-        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        ShowWarning("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return;
     }
 
@@ -14226,11 +14227,11 @@ void CLuaBaseEntity::setAutoAttackEnabled(bool state)
 {
     if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
     {
-        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        ShowWarning("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return;
     }
 
-    m_PBaseEntity->PAI->GetController()->SetAutoAttackEnabled(state);
+    m_PBaseEntity->PAI->GetController()->setAutoAttackEnabled(state);
 }
 
 /************************************************************************
@@ -14244,11 +14245,11 @@ void CLuaBaseEntity::setMagicCastingEnabled(bool state)
 {
     if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
     {
-        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        ShowWarning("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return;
     }
 
-    m_PBaseEntity->PAI->GetController()->SetMagicCastingEnabled(state);
+    m_PBaseEntity->PAI->GetController()->setMagicCastingEnabled(state);
 }
 
 /************************************************************************
@@ -14262,7 +14263,7 @@ void CLuaBaseEntity::setMobAbilityEnabled(bool state)
 {
     if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
     {
-        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        ShowWarning("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return;
     }
 
@@ -14280,7 +14281,7 @@ void CLuaBaseEntity::setMobSkillAttack(int16 listId)
 {
     if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
     {
-        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        ShowWarning("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return;
     }
 
@@ -14322,7 +14323,7 @@ int16 CLuaBaseEntity::getMobMod(uint16 mobModID)
 {
     if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
     {
-        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        ShowWarning("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return MOBMOD_NONE;
     }
 
@@ -14340,7 +14341,7 @@ void CLuaBaseEntity::addMobMod(uint16 mobModID, int16 value)
 {
     if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
     {
-        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        ShowWarning("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return;
     }
 
@@ -14358,7 +14359,7 @@ void CLuaBaseEntity::setMobMod(uint16 mobModID, int16 value)
 {
     if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
     {
-        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        ShowWarning("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return;
     }
 
@@ -14376,7 +14377,7 @@ void CLuaBaseEntity::delMobMod(uint16 mobModID, int16 value)
 {
     if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
     {
-        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        ShowWarning("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return;
     }
 

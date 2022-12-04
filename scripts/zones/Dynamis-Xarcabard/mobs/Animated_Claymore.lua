@@ -10,6 +10,12 @@ mixinOptions = { item = xi.items.INTRICATE_FRAGMENT }
 local entity = {}
 
 entity.onMobEngaged = function(mob, target)
+    if mob:getAnimationSub() == 3 then
+        SetDropRate(102, 1574, 1000)
+    else
+        SetDropRate(102, 1574, 0)
+    end
+
     target:showText(mob, ID.text.ANIMATED_CLAYMORE_DIALOG)
 end
 

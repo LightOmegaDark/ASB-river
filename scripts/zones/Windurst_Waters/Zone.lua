@@ -19,18 +19,7 @@ zoneObject.onInitialize = function(zone)
     xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
 end
 
-zone_object.onZoneIn = function(player, prevZone)
-    local cs = -1
-
-    -- FIRST LOGIN (START CS)
-    if player:getPlaytime(false) == 0 then
-        if xi.settings.main.NEW_CHARACTER_CUTSCENE == 1 then
-            cs = 531
-        end
-        player:setPos(-40, -5, 80, 64)
-        player:setHomePoint()
-    end
-
+zoneObject.onZoneIn = function(player, prevZone)
     -- MOG HOUSE EXIT
     if
         player:getXPos() == 0 and

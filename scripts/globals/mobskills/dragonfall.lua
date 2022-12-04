@@ -17,7 +17,7 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskill_object.onMobWeaponSkill = function(target, mob, skill)
+mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     -- TODO: Can skillchain?  Unknown property.
     local numhits = 1
     local accmod = 1

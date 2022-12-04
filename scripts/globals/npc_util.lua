@@ -401,7 +401,7 @@ function npcUtil.giveCurrency(player, currency, amount)
         player:addCurrency(currency, amount)
     end
 
-    player:messageSpecial(message_id, amount)
+    player:messageSpecial(messageId, amount)
 
     return true
 end

@@ -51,16 +51,6 @@ entity.onMobWeaponSkillPrepare = function(mob, target)
     end
 end
 
-entity.onMobWeaponSkill = function(target, mob, skill)
-    -- After using Nuclear Waste use a random elemental conal attack
-    if skill:getID() == 1268 then
-        mob:timer(4000, function(mobArg)
-            local ability = math.random(1262, 1267)
-            mob:useMobAbility(ability)
-        end)
-    end
-end
-
 entity.onMobFight = function(mob, target)
     -- Gains regain at under 25% HP
     if

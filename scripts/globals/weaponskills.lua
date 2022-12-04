@@ -19,6 +19,7 @@ require("scripts/globals/magic")
 require("scripts/globals/utils")
 require("scripts/globals/msg")
 require("scripts/globals/damage")
+-----------------------------------
 
 xi = xi or { }
 xi.weaponskills = xi.weaponskills or { }

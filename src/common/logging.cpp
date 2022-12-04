@@ -32,6 +32,81 @@
 #include "spdlog/sinks/daily_file_sink.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 
+std::string ServerName;
+
+class star_formatter_flag : public spdlog::custom_flag_formatter
+{
+public:
+    void format(const spdlog::details::log_msg& msg, const std::tm&, spdlog::memory_buf_t& dest) override
+    {
+        // spdlog and libfmt don't appear to have functionality to truncate text leaving the contents
+        // on the right, so we have to do it by hand.
+        // If longer than length, we pad, if less, then we build a new string of size length.
+        // https://fmt.dev/latest/syntax.html
+        std::size_t length      = 32;
+        std::string locationStr = fmt::format("{}:{}", msg.source.funcname, msg.source.line);
+        std::string outStr      = locationStr.size() > length ? std::string(locationStr.end() - length, locationStr.end()) : fmt::format("{:>{}}", locationStr, length);
+        dest.append(outStr.data(), outStr.data() + outStr.size());
+    }
+
+    std::unique_ptr<custom_flag_formatter> clone() const override
+    {
+        return spdlog::details::make_unique<star_formatter_flag>();
+    }
+};
+
+class ampersand_formatter_flag : public spdlog::custom_flag_formatter
+{
+public:
+    void format(const spdlog::details::log_msg&, const std::tm&, spdlog::memory_buf_t& dest) override
+    {
+        std::string outStr = ServerName;
+        dest.append(outStr.data(), outStr.data() + outStr.size());
+    }
+
+    std::unique_ptr<custom_flag_formatter> clone() const override
+    {
+        return spdlog::details::make_unique<ampersand_formatter_flag>();
+    }
+};
+
+class underscore_formatter_flag : public spdlog::custom_flag_formatter
+{
+public:
+    void format(const spdlog::details::log_msg&, const std::tm&, spdlog::memory_buf_t& dest) override
+    {
+        std::string firstChar = std::string(1, ServerName[0]);
+        std::string outStr    = to_upper(firstChar);
+        dest.append(outStr.data(), outStr.data() + outStr.size());
+    }
+
+    std::unique_ptr<custom_flag_formatter> clone() const override
+    {
+        return spdlog::details::make_unique<underscore_formatter_flag>();
+    }
+};
+
+class q_formatter_flag : public spdlog::custom_flag_formatter
+{
+public:
+    void format(const spdlog::details::log_msg& msg, const std::tm&, spdlog::memory_buf_t& dest) override
+    {
+        // spdlog and libfmt don't appear to have functionality to truncate text leaving the contents
+        // on the right, so we have to do it by hand.
+        // If longer than length, we pad, if less, then we build a new string of size length.
+        // https://fmt.dev/latest/syntax.html
+        std::size_t length      = 32;
+        std::string locationStr = fmt::format("{}:{}", msg.source.filename, msg.source.line);
+        std::string outStr      = locationStr.size() > 12 ? std::string(locationStr.end() - length, locationStr.end()) : fmt::format("{:>{}}", locationStr, length);
+        dest.append(outStr.data(), outStr.data() + outStr.size());
+    }
+
+    std::unique_ptr<custom_flag_formatter> clone() const override
+    {
+        return spdlog::details::make_unique<q_formatter_flag>();
+    }
+};
+
 namespace logging
 {
     const std::vector<std::string> logNames =
@@ -39,8 +114,10 @@ namespace logging
         "critical", "error", "warn", "info", "debug", "trace",
     };
 
-    void InitializeLog(std::string serverName, std::string logFile, bool appendDate)
+    void InitializeLog(std::string const& serverName, std::string const& logFile, bool appendDate)
     {
+        ServerName = serverName;
+
         ServerName = serverName;
 
         // If you create more than one worker thread, messages may be delivered out of order
@@ -69,12 +146,6 @@ namespace logging
             spdlog::register_logger(logger);
         }
 
-        // https://github.com/gabime/spdlog/wiki/3.-Custom-formatting
-        // [date time:ms][server name][log level] message (func_name:func_line)
-        //                            ^level col^
-        spdlog::set_pattern(fmt::format("[%D %T:%e][{}]%^[%l]%$ %v (%!:%#)", serverName));
-
-#ifdef _DEBUG
         spdlog::set_level(spdlog::level::debug);
 #else
         spdlog::set_level(spdlog::level::info);
@@ -87,5 +158,17 @@ namespace logging
     {
         spdlog::drop_all();
         spdlog::shutdown();
+    }
+
+    void SetPattern(std::string const& str)
+    {
+        // https://github.com/gabime/spdlog/wiki/3.-Custom-formatting
+        auto formatter = std::make_unique<spdlog::pattern_formatter>();
+        formatter->add_flag<star_formatter_flag>('*');
+        formatter->add_flag<ampersand_formatter_flag>('&');
+        formatter->add_flag<underscore_formatter_flag>('_');
+        formatter->add_flag<q_formatter_flag>('q');
+        formatter->set_pattern(str);
+        spdlog::set_formatter(std::move(formatter));
     }
 } // namespace logging

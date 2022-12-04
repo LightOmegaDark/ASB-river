@@ -50,21 +50,60 @@ namespace logging
 {
     void InitializeLog(std::string const& serverName, std::string const& logFile, bool appendDate);
     void ShutDown();
+
+    void SetPattern(std::string const& str);
 } // namespace logging
 
 // clang-format off
 
-// Regular Loggers
-#define ShowTrace(...)    { auto _msgStr = fmt::sprintf(__VA_ARGS__); TracyMessageStr(_msgStr); SPDLOG_LOGGER_TRACE(spdlog::get("trace"), _msgStr); }
-#define ShowDebug(...)    { auto _msgStr = fmt::sprintf(__VA_ARGS__); TracyMessageStr(_msgStr); SPDLOG_LOGGER_DEBUG(spdlog::get("debug"), _msgStr); }
-#define ShowInfo(...)     { auto _msgStr = fmt::sprintf(__VA_ARGS__); TracyMessageStr(_msgStr); SPDLOG_LOGGER_INFO(spdlog::get("info"), _msgStr); }
-#define ShowWarning(...)  { auto _msgStr = fmt::sprintf(__VA_ARGS__); TracyMessageStr(_msgStr); SPDLOG_LOGGER_WARN(spdlog::get("warn"), _msgStr); }
-#define ShowError(...)    { auto _msgStr = fmt::sprintf(__VA_ARGS__); TracyMessageStr(_msgStr); SPDLOG_LOGGER_ERROR(spdlog::get("error"), _msgStr); }
-#define ShowCritical(...) { auto _msgStr = fmt::sprintf(__VA_ARGS__); TracyMessageStr(_msgStr); SPDLOG_LOGGER_CRITICAL(spdlog::get("critical"), _msgStr); }
+// NOTE: In order to preserve the ability for Tracy and spdlog to track the source location of
+//     : logging calls, we have to stack a lot of macros. This leads to some strangeness with
+//     : the output of Tracy: Each logging call creates its own scope, and will have its own
+//     : entry in the Tracy statistics. This is a low price to pay for the ability to profile
+//     : logging calls, and everything else, and still have all the information we want delivered
+//     : to the logging system.
+#define BEGIN_CATCH_HANDLER  \
+    {                        \
+        TracyZoneNamed(Log); \
+        try                  \
+        {
 
-// Trace Loggers
-#define TraceNavmesh(...) { if (settings::get<bool>("logging.TRACE_NAVMESH")) { ShowTrace(__VA_ARGS__); } }
-#define TracePackets(...) { if (settings::get<bool>("logging.TRACE_PACKETS")) { ShowTrace(__VA_ARGS__); } }
+#define END_CATCH_HANDLER                                                                                             \
+        }                                                                                                             \
+        catch (std::exception const& ex)                                                                              \
+        {                                                                                                             \
+            SPDLOG_LOGGER_ERROR(spdlog::get("error"), fmt::sprintf("Encountered logging exception!: %s", ex.what())); \
+            SPDLOG_LOGGER_ERROR(spdlog::get("error"), fmt::sprintf("%s:%i", __FILE__, __LINE__));                     \
+        }                                                                                                             \
+        catch (...)                                                                                                   \
+        {                                                                                                             \
+            SPDLOG_LOGGER_ERROR(spdlog::get("error"), fmt::sprintf("Encountered unhandled logging exception!"));      \
+            SPDLOG_LOGGER_ERROR(spdlog::get("error"), fmt::sprintf("%s:%i", __FILE__, __LINE__));                     \
+        }                                                                                                             \
+    }
+
+// Regular Loggers
+#define ShowTrace(...)    BEGIN_CATCH_HANDLER { auto _msgStr = fmt::sprintf(__VA_ARGS__); TracyMessageStr(_msgStr); SPDLOG_LOGGER_TRACE(spdlog::get("trace"), _msgStr); } END_CATCH_HANDLER
+#define ShowDebug(...)    BEGIN_CATCH_HANDLER { auto _msgStr = fmt::sprintf(__VA_ARGS__); TracyMessageStr(_msgStr); SPDLOG_LOGGER_DEBUG(spdlog::get("debug"), _msgStr); } END_CATCH_HANDLER
+#define ShowInfo(...)     BEGIN_CATCH_HANDLER { auto _msgStr = fmt::sprintf(__VA_ARGS__); TracyMessageStr(_msgStr); SPDLOG_LOGGER_INFO(spdlog::get("info"), _msgStr); } END_CATCH_HANDLER
+#define ShowWarning(...)  BEGIN_CATCH_HANDLER { auto _msgStr = fmt::sprintf(__VA_ARGS__); TracyMessageStr(_msgStr); SPDLOG_LOGGER_WARN(spdlog::get("warn"), _msgStr); } END_CATCH_HANDLER
+#define ShowError(...)    BEGIN_CATCH_HANDLER { auto _msgStr = fmt::sprintf(__VA_ARGS__); TracyMessageStr(_msgStr); SPDLOG_LOGGER_ERROR(spdlog::get("error"), _msgStr); } END_CATCH_HANDLER
+#define ShowCritical(...) BEGIN_CATCH_HANDLER { auto _msgStr = fmt::sprintf(__VA_ARGS__); TracyMessageStr(_msgStr); SPDLOG_LOGGER_CRITICAL(spdlog::get("critical"), _msgStr); } END_CATCH_HANDLER
+
+// Special Loggers
+#define ShowLua(...) BEGIN_CATCH_HANDLER { auto _msgStr = fmt::sprintf(__VA_ARGS__); TracyMessageStr(_msgStr); SPDLOG_LOGGER_INFO(spdlog::get("lua"), _msgStr); } END_CATCH_HANDLER
+
+// Debug Loggers
+#define DebugSockets(...)  { if (settings::get<bool>("logging.DEBUG_SOCKETS"))   { ShowDebug(__VA_ARGS__); } }
+#define DebugNavmesh(...)  { if (settings::get<bool>("logging.DEBUG_NAVMESH"))   { ShowDebug(__VA_ARGS__); } }
+#define DebugPackets(...)  { if (settings::get<bool>("logging.DEBUG_PACKETS"))   { ShowDebug(__VA_ARGS__); } }
+#define DebugActions(...)  { if (settings::get<bool>("logging.DEBUG_ACTIONS"))   { ShowDebug(__VA_ARGS__); } }
+#define DebugSQL(...)      { if (settings::get<bool>("logging.DEBUG_SQL"))       { ShowDebug(__VA_ARGS__); } }
+#define DebugIDLookup(...) { if (settings::get<bool>("logging.DEBUG_ID_LOOKUP")) { ShowDebug(__VA_ARGS__); } }
+#define DebugModules(...)  { if (settings::get<bool>("logging.DEBUG_MODULES"))   { ShowDebug(__VA_ARGS__); } }
+
+// Crash dump utils
+#define DumpBacktrace() spdlog::get("trace")->dump_backtrace()
 
 // clang-format on
 

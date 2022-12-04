@@ -18,17 +18,13 @@ end
 zoneObject.onZoneIn = function(player, prevZone)
     local cs = { -1 }
 
-    -- FIRST LOGIN (START CS)
-    if player:getPlaytime(false) == 0 then
-        if xi.settings.main.NEW_CHARACTER_CUTSCENE == 1 then
-            cs = 305
-        end
-        player:setPos(-120, -5.5, 175, 48)
-        player:setHomePoint()
-    end
-    if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
-        if (prevZone == xi.zone.WINDURST_JEUNO_AIRSHIP) then
-            cs = 10004
+    if
+        player:getXPos() == 0 and
+        player:getYPos() == 0 and
+        player:getZPos() == 0
+    then
+        if prevZone == xi.zone.WINDURST_JEUNO_AIRSHIP then
+            cs = { 10004 }
             player:setPos(228.000, -3.000, 76.000, 160)
         else
             local position = math.random(1, 5) + 195

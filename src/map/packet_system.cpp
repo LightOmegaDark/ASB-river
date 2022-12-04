@@ -3424,7 +3424,9 @@ void SmallPacket0x053(map_session_data_t* const PSession, CCharEntity* const PCh
             uint8  equipSlotId = data.ref<uint8>(0x09 + 0x08 * i);
             uint16 itemId      = data.ref<uint16>(0x0C + 0x08 * i);
 
-            if (equipSlotId > SLOT_BACK || equipSlotId == SLOT_RANGED || equipSlotId == SLOT_AMMO)
+            // Skip non-visible items
+            // Skip non-visible items
+            if (equipSlotId > SLOT_FEET)
             {
                 continue;
             }

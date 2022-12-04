@@ -421,7 +421,7 @@ function utils.conalDamageAdjustment(attacker, target, skill, maxDamage, minimum
 
     if conalAnglePower < 0 then
         -- #TODO The below print will be a valid print upon fixing to-do above relating to beam center orgin
-        conal_angle_power = 0
+        conalAnglePower = 0
     end
 
     -- Calculate the amount of damage to add above the minimum percentage based on how close
@@ -805,14 +805,14 @@ end
 function utils.lateralTranslateWithOriginRotation(origin, translation)
     local degrees = utils.ffxiRotToDegrees(origin.rot)
     local rads = math.rad(degrees)
-    local new_coords = {}
+    local newCoords = {}
 
-    new_coords.x = origin.x + ((math.cos(rads) * translation.x) + (math.sin(rads) * translation.z))
-    new_coords.z = origin.z + ((math.cos(rads) * translation.z) - (math.sin(rads) * translation.x))
-    new_coords.y = origin.y
-    new_coords.rot = origin.rot
+    newCoords.x = origin.x + ((math.cos(rads) * translation.x) + (math.sin(rads) * translation.z))
+    newCoords.z = origin.z + ((math.cos(rads) * translation.z) - (math.sin(rads) * translation.x))
+    newCoords.y = origin.y
+    newCoords.rot = origin.rot
 
-    return new_coords
+    return newCoords
 end
 
 function utils.getNearPosition(origin, offset, radians)

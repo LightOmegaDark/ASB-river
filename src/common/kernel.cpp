@@ -112,7 +112,7 @@ void operator delete[](void* ptr, std::size_t count) noexcept
 
 std::atomic<bool> gRunFlag = true;
 
-std::array<std::unique_ptr<socket_data>, MAX_FD> sessions;
+std::array<std::unique_ptr<socket_data>, FD_SETSIZE> sessions;
 
 // This must be manually created
 std::unique_ptr<ConsoleService> gConsoleService;

@@ -62,7 +62,6 @@ spell_object.onSpellCast = function(caster, target, spell)
     end
 
     return xi.effect.SHOCK
-
 end
 
 return spellObject

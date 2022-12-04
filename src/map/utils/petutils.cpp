@@ -1980,6 +1980,7 @@ namespace petutils
         else
         {
             PPet = new CPetEntity(petType);
+            PPet->saveModifiers();
 
             if (PetID <= PETID_DARKSPIRIT)
             {

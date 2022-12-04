@@ -19,18 +19,7 @@ zoneObject.onInitialize = function(zone)
     xi.conquest.toggleRegionalNPCs(zone)
 end
 
-zone_object.onZoneIn = function(player, prevZone)
-    local cs = -1
-
-    -- FIRST LOGIN (START CS)
-    if player:getPlaytime(false) == 0 then
-        if xi.settings.main.NEW_CHARACTER_CUTSCENE == 1 then
-            cs = 367
-        end
-        player:setPos(0, 0, -50, 0)
-        player:setHomePoint()
-    end
-
+zoneObject.onZoneIn = function(player, prevZone)
     -- MOG HOUSE EXIT
     if
         player:getXPos() == 0 and

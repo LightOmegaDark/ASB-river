@@ -100,6 +100,8 @@ global_objects=(
     isHalloweenEnabled
     onHalloweenTrade
 
+    salvageUtil
+
     getFlourishAnimation
     getStepAnimation
     hasSleepEffects

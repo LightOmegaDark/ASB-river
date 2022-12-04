@@ -254,10 +254,10 @@ end
 
 xi.job_utils.corsair.useDoubleUp = function(caster, target, ability, action)
     if caster:getID() == target:getID() then -- the COR handles all the calculations
-        local du_effect = caster:getStatusEffect(xi.effect.DOUBLE_UP_CHANCE)
-        local prev_roll = caster:getStatusEffect(du_effect:getSubPower())
-        local roll = prev_roll:getSubPower()
-        local job = du_effect:getTier()
+        local duEffect = caster:getStatusEffect(xi.effect.DOUBLE_UP_CHANCE)
+        local prevRoll = caster:getStatusEffect(duEffect:getSubPower())
+        local roll     = prevRoll:getSubPower()
+        local job      = duEffect:getTier()
 
         caster:setLocalVar("corsairActiveRoll", duEffect:getSubType())
         local snakeEye = caster:getStatusEffect(xi.effect.SNAKE_EYE)
@@ -291,15 +291,15 @@ xi.job_utils.corsair.useDoubleUp = function(caster, target, ability, action)
     local activeRoll  = caster:getLocalVar("corsairActiveRoll")
     local prevAbility = GetAbility(activeRoll)
 
-    if prev_ability then -- Apply rolls to target(s), including the COR
-        action:actionID(prev_ability:getID())
+    if prevAbility then -- Apply rolls to target(s), including the COR
+        action:actionID(prevAbility:getID())
 
-        total = applyRoll(caster, target, prev_ability, action, total, true, ability)
+        total = applyRoll(caster, target, prevAbility, action, total, true, ability)
 
         if total > 11 then
             action:setAnimation(target:getID(), 98) -- 98 is bust anim for all rolls
         else
-            action:setAnimation(target:getID(), prev_ability:getAnimation())
+            action:setAnimation(target:getID(), prevAbility:getAnimation())
         end
 
         return total

@@ -10,7 +10,13 @@ mixinOptions = { item = xi.items.HEAVENLY_FRAGMENT }
 local entity = {}
 
 entity.onMobEngaged = function(mob, target)
-    target:showText(mob, ID.text.ANIMATED_HAMMER_DIALOG)
+    if mob:getAnimationSub() == 3 then
+        SetDropRate(106, 1581, 1000)
+    else
+        SetDropRate(106, 1581, 0)
+    end
+
+    target:showText(mob, ID.text.ANIMATED_HORN_DIALOG)
 end
 
 entity.onMobFight = function(mob, target)

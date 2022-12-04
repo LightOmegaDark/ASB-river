@@ -31,12 +31,12 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local YourCrystalBall           = player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.YOUR_CRYSTAL_BALL)
-    local SearchingForTheRightWords = player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.SEARCHING_FOR_THE_RIGHT_WORDS)
-    local RubbishDay                = player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.RUBBISH_DAY)
-    local NeverToReturn             = player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.NEVER_TO_RETURN)
-    local JFame                     = player:getFameLevel(xi.quest.fame_area.JEUNO)
-    local SearchingForWords_prereq  = player:getCharVar("QuestSearchRightWords_prereq")
+    local yourCrystalBall           = player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.YOUR_CRYSTAL_BALL)
+    local searchingForTheRightWords = player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.SEARCHING_FOR_THE_RIGHT_WORDS)
+    local rubbishDay                = player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.RUBBISH_DAY)
+    local neverToReturn             = player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.NEVER_TO_RETURN)
+    local jeunoFame                 = player:getFameLevel(xi.quest.fame_area.JEUNO)
+    local searchingForWordsPrereq   = player:getCharVar("QuestSearchRightWords_prereq")
 
     if
         jeunoFame >= 2 and

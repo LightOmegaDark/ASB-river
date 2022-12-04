@@ -575,18 +575,26 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
         }
         charutils::SendClearTimerPacket(PChar);
 
+        // Remove enmity from character and their pet with all mobs
+        auto func = [&](auto mob)
+        {
+            // Only remove enmity from pet if it is not charmed
+            if (PChar->PPet)
+            {
+                mob->PEnmityContainer->Clear(PChar->PPet->id);
+            }
+            mob->PEnmityContainer->Clear(PChar->id);
+        };
+
         // Remove the player's pet as well
         if (auto* PPet = dynamic_cast<CPetEntity*>(PChar->PPet))
         {
-            // Player timed out with a battlefield mob as a pet
-            if (PPet->objtype == TYPE_MOB)
-            {
-                petutils::DespawnPet(PPet);
-            }
-            PPet->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION, true);
-            PPet->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);
-            ClearEnmityForEntity(PPet);
+            PChar->PPet->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION, true);
+            PChar->PPet->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);
         }
+
+        ForEachRequiredEnemy(func);
+        ForEachAdditionalEnemy(func);
     }
     else
     {
@@ -623,17 +631,7 @@ bool CBattlefield::RemoveEntity(CBaseEntity* PEntity, uint8 leavecode)
                 auto* PPetEntity = dynamic_cast<CPetEntity*>(PEntity);
                 if (PPetEntity && (!PPetEntity->PMaster || PPetEntity->PMaster->objtype != TYPE_PC))
                 {
-                    if (PPetEntity->PMaster && PPetEntity->PMaster->objtype == TYPE_PC &&
-                        (PPetEntity->getPetType() == PET_TYPE::WYVERN ||
-                         PPetEntity->getPetType() == PET_TYPE::AUTOMATON))
-                    {
-                        return found;
-                    }
-
-                    if (PPetEntity->isAlive() && PPetEntity->PAI->IsSpawned())
-                    {
-                        PPetEntity->Die();
-                    }
+                    PEntity->status = STATUS_TYPE::DISAPPEAR;
                 }
 
                 if (auto* PMobEntity = dynamic_cast<CMobEntity*>(PEntity))
@@ -895,26 +893,6 @@ bool CBattlefield::SpawnLoot(CBaseEntity* PEntity)
     }
     SetLocalVar("lootSpawned", 1);
     return InsertEntity(PEntity, true);
-}
-
-void CBattlefield::ClearEnmityForEntity(CBattleEntity* PEntity)
-{
-    if (!PEntity)
-    {
-        return;
-    }
-
-    auto func = [&](auto mob)
-    {
-        if (PEntity->PPet)
-        {
-            mob->PEnmityContainer->Clear(PEntity->PPet->id);
-        }
-        mob->PEnmityContainer->Clear(PEntity->id);
-    };
-
-    ForEachRequiredEnemy(func);
-    ForEachAdditionalEnemy(func);
 }
 
 bool CBattlefield::CheckInProgress()

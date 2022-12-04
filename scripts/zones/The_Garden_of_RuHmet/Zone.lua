@@ -117,17 +117,40 @@ zone_object.onZoneIn = function(player, prevZone)
    player:setCharVar("Ru-Hmet-TP", 0)
 end
 
-zone_object.onRegionEnter = function(player, region)
-    if (player:getCharVar("Ru-Hmet-TP") == 0 and player:getAnimation() == 0) then
-        switch (region:GetRegionID()): caseof
-        {
-            [1] = function (x)
-                if (player:getCurrentMission(xi.mission.log_id.COP)==xi.mission.id.cop.DAWN or player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.DAWN) or player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.THE_LAST_VERSE) ) then
-                    player:startEvent(101)
-                else
-                    player:startEvent(155)
-                end
-            end, --101
+local teleportEventsByArea =
+{
+    [ 3] = 103,
+    [ 4] = 150, -- Hume Floor 0 to Floor 1
+    [ 5] = 158, -- Hume Floor 1 to Floor 0
+    [ 6] = 159, -- Hume Floor 1 to Floor 2
+    [ 7] = 169, -- Hume Floor 2 to Floor 1
+    [ 8] = 168, -- Hume Floor 2 to Floor 3
+    [ 9] = 178, -- Hume Floor 3 to Floor 2
+    [10] = 151, -- Elvaan Floor 0 to Floor 1
+    [11] = 160, -- Elvaan Floor 1 to Floor 0
+    [12] = 161, -- Elvaan Floor 1 to Floor 2
+    [13] = 171, -- Elvaan Floor 2 to Floor 1
+    [14] = 170, -- Elvaan Floor 2 to Floor 3
+    [15] = 179, -- Elvaan Floor 3 to Floor 2
+    [16] = 152, -- Galka Floor 0 to Floor 1
+    [17] = 162, -- Galka Floor 1 to Floor 0
+    [18] = 163, -- Galka Floor 1 to Floor 2
+    [19] = 173, -- Galka Floor 2 to Floor 1
+    [20] = 172, -- Galka Floor 2 to Floor 3
+    [21] = 180, -- Galka Floor 3 to Floor 2
+    [22] = 153, -- Taru Floor 0 to Floor 1
+    [23] = 164, -- Taru Floor 1 to Floor 0
+    [24] = 165, -- Taru Floor 1 to Floor 2
+    [25] = 175, -- Taru Floor 2 to Floor 1
+    [26] = 174, -- Taru Floor 2 to Floor 3
+    [27] = 181, -- Taru Floor 3 to Floor 2
+    [28] = 154, -- Mithra Floor 0 to Floor 1
+    [29] = 166, -- Mithra Floor 1 to Floor 0
+    [30] = 167, -- Mithra Floor 1 to Floor 2
+    [31] = 177, -- Mithra Floor 2 to Floor 1
+    [32] = 176, -- Mithra Floor 2 to Floor 3
+    [33] = 182, -- Mithra Floor 3 to Floor 2
+}
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
     if player:getCharVar("Ru-Hmet-TP") == 0 and player:getAnimation() == 0 then
