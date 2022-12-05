@@ -48,9 +48,7 @@ function content:onBattlefieldInitialise(battlefield)
         for j = 1, group.count do
             local crateID = group.offset + j - 1
             local crate = GetEntityByID(crateID)
-            crate:setStatus(xi.status.NORMAL)
-            crate:setUntargetable(false)
-            crate:setAnimationSub(8)
+            xi.limbus.hideCrate(crate)
             crate:setModelId(961)
 
             crate:addListener("ON_TRIGGER", "TRIGGER_CRATE", function(player, npc)
@@ -62,7 +60,7 @@ function content:onBattlefieldInitialise(battlefield)
                     else
                         -- Spawn a random mob from the corresponding mob group
                         local mobGroup = ID.CENTRAL_TEMENOS_4TH_FLOOR.mob.GROUPS[index]
-                        local mobID = mobGroup.offset + math.random(0, mobGroup.count - 1)
+                        local mobID = mobGroup.offset + math.random(0, mobGroup.count)
                         local mob = GetMobByID(mobID)
                         mob:setSpawn(npc:getXPos(), npc:getYPos(), npc:getZPos(), npc:getRotPos())
                         mob:spawn()
@@ -119,14 +117,13 @@ content.groups =
             "Koo_Buzu_the_Theomanic",
         },
 
-        spawned = false,
         mixins = { require("scripts/mixins/job_special") }
     },
 
     {
         mobs = { "Proto-Ultima" },
         setup = function(battlefield, mobs)
-            local ultima = mobs[1]
+            local ultima = mobs[0]
             -- Despawn all crates when Proto-Ultima is engaged
             ultima:addListener("ENGAGE", "ULTIMA_ENGAGED", function(mob, target)
                 for _, group in ipairs(ID.CENTRAL_TEMENOS_4TH_FLOOR.npc.GROUPS) do
@@ -148,38 +145,16 @@ content.loot =
     [1] =
     {
         {
-            quantity = 5,
-            { item = xi.items.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+            quantity = 6,
+            { itemid = 1875, droprate = 1000 },
         },
 
         {
-            quantity = 2,
-            { item = xi.items.NONE, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
-        },
-
-        {
-            quantity = 2,
-            { item = xi.items.SQUARE_OF_ECARLATE_CLOTH, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.UTOPIAN_GOLD_THREAD, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SQUARE_OF_BENEDICT_SILK, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SQUARE_OF_DIABOLIC_SILK, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SPOOL_OF_RUBY_SILK_THREAD, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SQUARE_OF_SUPPLE_SKIN, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.CHUNK_OF_SNOWY_CERMET, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.DARK_ORICHALCUM_INGOT, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SQUARE_OF_SMALT_LEATHER, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SPOOL_OF_COILED_YARN, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SPOOL_OF_CHAMELEON_YARN, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SPOOL_OF_SCARLET_ODOSHI, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.PLAITED_CORD, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SHEET_OF_COBALT_MYTHRIL, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SPOOL_OF_GLITTERING_YARN, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SPOOL_OF_LUMINIAN_THREAD, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SPOOL_OF_SILKWORM_THREAD, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.PANTIN_WIRE, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SQUARE_OF_FILET_LACE, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SQUARE_OF_BRILLIANTINE, weight = xi.loot.weight.NORMAL },
+            { itemid = 1934, droprate = 200 },
+            { itemid = 1930, droprate = 200 },
+            { itemid = 1958, droprate = 200 },
+            { itemid = 2658, droprate = 400 },
+            { itemid = 1940, droprate = 200 },
         },
     },
 
@@ -187,20 +162,26 @@ content.loot =
     {
         {
             quantity = 7,
-            { item = xi.items.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+            { itemid = 1875, droprate = 1000 },
         },
 
         {
-            quantity = 2,
-            { item = xi.items.PIECE_OF_ULTIMAS_CEREBRUM, weight = xi.loot.weight.NORMAL },
-            { item = xi.items.SEGMENT_OF_ULTIMAS_CLAW, weight = xi.loot.weight.LOW },
-            { item = xi.items.SEGMENT_OF_ULTIMAS_LEG, weight = xi.loot.weight.LOW },
-            { item = xi.items.SEGMENT_OF_ULTIMAS_TAIL, weight = xi.loot.weight.LOW },
+            { itemid = 1920, droprate = 659 },
+            { itemid = 1924, droprate = 394 },
+            { itemid = 1923, droprate = 388 },
+            { itemid = 1922, droprate = 404 },
         },
 
         {
-            { item = xi.items.NONE, weight = xi.loot.weight.EXTREMELY_HIGH },
-            { item = xi.items.PIECE_OF_ULTIMAS_HEART, weight = xi.loot.weight.NORMAL },
+            { itemid = 1924, droprate = 394 },
+            { itemid = 1922, droprate = 402 },
+            { itemid = 1920, droprate = 659 },
+            { itemid = 1923, droprate = 383 },
+        },
+
+        {
+            { itemid = 1921, droprate = 265 },
+            { itemid =    0, droprate = 735 },
         },
     },
 }
