@@ -65,12 +65,21 @@ entity.onTrigger = function(player, npc)
         else
             player:startEvent(13)
         end
-    elseif (aLittleKnowledge == QUEST_COMPLETED and mJob == xi.job.SCH and mLvl >= 5 and not (player:hasSpell(478) and player:hasSpell(502))) then
-            player:startEvent(47)
-    elseif (onSabbatical == QUEST_AVAILABLE and mJob == xi.job.SCH and mLvl >= xi.settings.main.AF1_QUEST_LEVEL) then
-            player:startEvent(18)
-    elseif (onSabbatical == QUEST_ACCEPTED) then
-        if (onSabbaticalProgress < 3) then
+    elseif
+        aLittleKnowledge == QUEST_COMPLETED and
+        mJob == xi.job.SCH and
+        mLvl >= 5 and
+        not (player:hasSpell(478) and player:hasSpell(502))
+    then
+        player:startEvent(47)
+    elseif
+        onSabbatical == QUEST_AVAILABLE and
+        mJob == xi.job.SCH and
+        mLvl >= xi.settings.main.AF1_QUEST_LEVEL
+    then
+        player:startEvent(18)
+    elseif onSabbatical == QUEST_ACCEPTED then
+        if onSabbaticalProgress < 3 then
             player:startEvent(19)
         else
             player:startEvent(20)
