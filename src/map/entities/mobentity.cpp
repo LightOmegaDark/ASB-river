@@ -1275,7 +1275,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
             {
                 // Determine if this group should drop an item and determine bonus
                 float bonus = ApplyTH(m_THLvl, group.GroupRate);
-                if (group.GroupRate > 0 && xirand::GetRandomNumber(1000) < group.GroupRate * settings::get<float>("map.DROP_RATE_MULTIPLIER") * bonus)
+                if (group.GroupRate > 0 && xirand::GetRandomNumber(1000) < std::round(group.GroupRate * settings::get<float>("map.DROP_RATE_MULTIPLIER") * bonus))
                 {
                     // Each item in the group is given its own weight range which is the previous value to the previous value + item.DropRate
                     // Such as 2 items with drop rates of 200 and 800 would be 0-199 and 200-999 respectively
@@ -1306,7 +1306,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
             for (int16 roll = 0; roll < rolls; ++roll)
             {
                 float bonus = ApplyTH(m_THLvl, item.DropRate);
-                if (item.DropRate > 0 && xirand::GetRandomNumber(1000) < item.DropRate * settings::get<float>("map.DROP_RATE_MULTIPLIER") * bonus)
+                if (item.DropRate > 0 && xirand::GetRandomNumber(1000) < std::round(item.DropRate * settings::get<float>("map.DROP_RATE_MULTIPLIER") * bonus))
                 {
                     if (AddItemToPool(item.ItemID, ++dropCount))
                     {
