@@ -86,6 +86,7 @@ CMagicState::CMagicState(CBattleEntity* PEntity, uint16 targid, SpellID spellid,
     actionTarget.param      = static_cast<uint16>(m_PSpell->getID());
     actionTarget.messageID  = m_PEntity->objtype == TYPE_MOB ? 3 : 327; // Mobs start casing immediately. Everything else sends a message.
 
+    // TODO: weaponskill lua object
     m_PEntity->PAI->EventHandler.triggerListener("MAGIC_START", CLuaBaseEntity(m_PEntity), CLuaSpell(m_PSpell.get()), CLuaAction(&action));
 
     m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, new CActionPacket(action));
