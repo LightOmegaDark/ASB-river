@@ -45,6 +45,8 @@ zoneObject.onZoneIn = function(player, prevZone)
         end
     end
 
+    xi.moghouse.exitJobChange(player, prevZone)
+
     return cs
 end
 
@@ -116,6 +118,8 @@ zoneObject.onEventFinish = function(player, csid, option)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.LIFE_FLOAT)
         player:setCharVar("AgainstAllOddsTimer", getMidnight())
     end
+
+    xi.moghouse.exitJobChangeFinish(player, csid, option)
 end
 
 return zoneObject
