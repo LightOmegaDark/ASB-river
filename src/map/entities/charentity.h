@@ -527,6 +527,7 @@ public:
     uint32 GetPlayTime(bool needUpdate = true); // Get playtime
 
     CItemEquipment* getEquip(SLOTTYPE slot);
+    std::vector<CItemEquipment*> getVisibleEquip();
 
     CBasicPacket* PendingPositionPacket = nullptr;
 
