@@ -78,7 +78,7 @@ quest.sections =
 
                     for _, member in pairs(player:getAlliance()) do
                         if
-                            member:getLevel() > 40 or
+                            member:getMainLvl() > 40 or
                             member:checkDistance(player) > 15
                         then
                             flag = false
