@@ -91,7 +91,6 @@ quest.sections =
                 end,
             },
 
-
             onEventFinish =
             {
                 [14] = function(player, csid, option, npc)
