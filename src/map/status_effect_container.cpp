@@ -1630,7 +1630,7 @@ void CStatusEffectContainer::LoadStatusEffects()
  *                                                                       *
  ************************************************************************/
 
-void CStatusEffectContainer::SaveStatusEffects(bool logout)
+void CStatusEffectContainer::SaveStatusEffects(bool logout, bool skipRemove)
 {
     // Print entity name and bail out if entity isn't a player.
     if (m_POwner->objtype != TYPE_PC)
@@ -1644,7 +1644,7 @@ void CStatusEffectContainer::SaveStatusEffects(bool logout)
 
     for (CStatusEffect* PStatusEffect : m_StatusEffectSet)
     {
-        if ((logout && PStatusEffect->GetFlag() & EFFECTFLAG_LOGOUT) || (!logout && PStatusEffect->GetFlag() & EFFECTFLAG_ON_ZONE))
+        if (!skipRemove && ((logout && PStatusEffect->GetFlag() & EFFECTFLAG_LOGOUT) || (!logout && PStatusEffect->GetFlag() & EFFECTFLAG_ON_ZONE)))
         {
             RemoveStatusEffect(PStatusEffect, true);
             continue;
@@ -1704,7 +1704,11 @@ void CStatusEffectContainer::SaveStatusEffects(bool logout)
                        std::chrono::duration_cast<std::chrono::seconds>(PStatusEffect->GetStartTime().time_since_epoch()).count());
         }
     }
-    DeleteStatusEffects();
+
+    if (!skipRemove)
+    {
+        DeleteStatusEffects();
+    }
 }
 
 /************************************************************************
