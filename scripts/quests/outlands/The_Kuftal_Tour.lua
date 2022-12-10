@@ -56,7 +56,7 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if quest:getVar(player, 'Prog') == 1 then
-                        quest:progressEvent(75)
+                        return quest:progressEvent(75)
                     end
                 end,
             },
@@ -90,7 +90,7 @@ quest.sections =
                         quest:getVar(player, 'Prog') == 0 and
                         #player:getParty() > 1
                     then
-                        quest:progressEvent(14)
+                        return quest:progressEvent(14)
                     end
                 end,
             },
