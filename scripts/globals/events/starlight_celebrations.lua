@@ -25,6 +25,37 @@ function xi.events.starlightCelebration.isStarlightEnabled()
     return option
 end
 
+local musicZones =
+{
+    xi.zone.UPPER_JEUNO,
+    xi.zone.LOWER_JEUNO,
+    xi.zone.PORT_JEUNO,
+}
+
+local starlightCelebrationMusic = 239
+local grandDuchyOfJeunoMusic    = 110
+
+xi.events.starlightCelebration.setMusic = function(musicId)
+    for _, zoneId in pairs(musicZones) do
+        local zone = GetZone(zoneId)
+        if zone then
+            -- TODO: Save the original music into a table
+
+            -- Set the music of the zone, so that players zoning in will
+            -- be sent it immediately
+            zone:setBackgroundMusicDay(musicId)
+            zone:setBackgroundMusicNight(musicId)
+
+            -- Set the music for players already in the zone (this is wiped when
+            -- they zone out)
+            for _, player in pairs(zone:getPlayers()) do
+                player:changeMusic(0, musicId)
+                player:changeMusic(1, musicId)
+            end
+        end
+    end
+end
+
 --------------------------------
 -- For the Children Sub-Quest --
 --------------------------------
@@ -718,11 +749,11 @@ function xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, n
 
     if questStatus ~= 0 then
         if delivered ~= 0 then
-            player:showText(npc, 14002)
             player:setLocalVar("[StarlightMerryMakers]Sender", 0)
             player:setLocalVar("[StarlightMerryMakers]Confirmed", 0)
             player:setLocalVar("[StarlightMerryMakers]Delivered", 0)
             player:setLocalVar("[StarlightMerryMakers]Cleared", 1)
+            player:showText(npc, id.text.MERRYMAKER_NPC_RETURNED)
         elseif confirmed ~= 0 then
             local npcName = GetNPCByID(sender):getName()
             local event_pos = player:getLocalVar("[StarlightMerryMakers]ConfirmedID")
