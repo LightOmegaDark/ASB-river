@@ -18,6 +18,11 @@ end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local typeEffect = xi.effect.DEFENSE_BOOST
+    local power = 20
+
+    if mob:isNM() then
+        power = 80
+    end
 
     skill:setMsg(xi.mobskills.mobBuffMove(mob, typeEffect, 100, 0, 60))
     return typeEffect
