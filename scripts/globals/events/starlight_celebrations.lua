@@ -594,30 +594,36 @@ function xi.events.starlightCelebration.getMerrymakerNPCIDs(zoneid)
     end
 end
 
-function xi.events.starlightCelebration.merryMakersGoblinOnTrigger(player, npc)
+function xi.events.starlightCelebration.merryMakersGoblinOnTrigger(player, npc, id)
+    local questStatus = player:getLocalVar("[StarlightMerryMakers]Started")
     local hasTrust = player:getLocalVar("[StarlightMerryMakers]GoblinTrust")
     local hasPresent = player:getLocalVar("[StarlightMerryMakers]HasPresent")
-    if hasTrust == npc:getID() then
-        local loseTrust = math.random(0, 3)
 
-        if loseTrust ~= 0 then
-            if loseTrust == 1 then
-                player:startEvent(4713) -- Response 1
-            elseif loseTrust == 2 then
-                player:startEvent(4718) -- Response 2
-            elseif loseTrust == 3 then
-                if hasPresent == 0 then
-                    player:startEvent(4711) -- gives present
-                else
-                    player:startEvent(4712) -- loses trust
+    if questStatus ~= 0 then
+        if hasTrust == npc:getID() then
+            local loseTrust = math.random(0, 3)
+
+            if loseTrust ~= 0 then
+                if loseTrust == 1 then
+                    player:showText(npc, id.text.MERRYMAKER_FRIEND) -- Response 1
+                elseif loseTrust == 2 then
+                    player:showText(npc, id.text.MERRYMAKER_WAHH) -- Response 2
+                elseif loseTrust == 3 then
+                    if hasPresent == 0 then
+                        player:startEvent(4711) -- gives present
+                    else
+                        player:showText(npc, id.text.MERRYMAKER_NO) -- loses trust
+                    end
                 end
+            else
+                player:setLocalVar("[StarlightMerryMakers]GoblinTrust", 0)
+                player:startEvent(4712)
             end
         else
-            player:setLocalVar("[StarlightMerryMakers]GoblinTrust", 0)
             player:startEvent(4712)
         end
     else
-        player:startEvent(4712)
+        player:showText(npc, id.text.MERRYMAKER_DEFAULT)
     end
 end
 
@@ -643,12 +649,17 @@ end
 
 function xi.events.starlightCelebration.merryMakersGoblinOnTrade(player, npc, trade, id)
     local item = trade:getItemId()
-    if item == 4495 then
-        player:setLocalVar("[StarlightMerryMakers]GoblinTrust", npc:getID())
-        player:tradeComplete()
-        player:showText(npc, id.text.MERRYMAKER_TRADE)
+    local questStatus = player:getLocalVar("[StarlightMerryMakers]Started")
+    if questStatus ~= 0 then
+        if item == 4495 then
+            player:setLocalVar("[StarlightMerryMakers]GoblinTrust", npc:getID())
+            player:tradeComplete()
+            player:showText(npc, id.text.MERRYMAKER_TRADE)
+        else
+            player:showText(npc, id.text.MERRYMAKER_BLECH)
+        end
     else
-        player:showText(npc, id.text.MERRYMAKER_BLECH)
+        player:showText(npc, id.text.MERRYMAKER_DEFAULT)
     end
 end
 
