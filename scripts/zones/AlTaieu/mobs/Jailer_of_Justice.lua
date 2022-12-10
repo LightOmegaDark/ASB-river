@@ -10,18 +10,16 @@ local entity = {}
 
 local spawnXzomit = function(mob, xzomit)
     mob:entityAnimationPacket("casm")
-    mob:SetAutoAttackEnabled(false)
-    mob:SetMobAbilityEnabled(false)
-    local x = mob:getXPos()
-    local y = mob:getYPos()
-    local z = mob:getZPos()
+    mob:setAutoAttackEnabled(false)
+    mob:setMobAbilityEnabled(false)
+    local pos = mob:getPos()
     mob:timer(3000, function(mobArg)
         if mob:isAlive() then
             mobArg:entityAnimationPacket("shsm")
-            mobArg:SetAutoAttackEnabled(true)
-            mobArg:SetMobAbilityEnabled(true)
-            GetMobByID(xzomit):setSpawn(x + math.random(1, 2), y, z + math.random(1, 2))
-            SpawnMob(xzomit, 300):updateEnmity(mobArg:getTarget())
+            mobArg:setAutoAttackEnabled(true)
+            mobArg:setMobAbilityEnabled(true)
+            GetMobByID(xzomit):setSpawn(pos.x + math.random(1, 2), pos.y, pos.z + math.random(1, 2))
+            SpawnMob(xzomit):updateEnmity(mobArg:getTarget())
         end
     end)
 end
