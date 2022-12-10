@@ -18,7 +18,7 @@ end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local typeEffect = xi.effect.PETRIFICATION
-    local duration = 45
+    local duration = math.random(30, 60)
 
     skill:setMsg(xi.mobskills.mobGazeMove(mob, target, typeEffect, 1, 0, duration))
 
