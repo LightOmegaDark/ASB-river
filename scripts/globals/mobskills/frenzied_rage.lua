@@ -18,7 +18,7 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local power = 20
+    local power = 190 / 1024 -- 18.56%
     local duration = 120
 
     local typeEffect = xi.effect.ATTACK_BOOST

@@ -17,7 +17,7 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local power = 20
+    local power = 15
     local duration = 180
 
     local typeEffect = xi.effect.WARCRY

@@ -260,6 +260,7 @@ INSERT INTO `mob_pool_mods` VALUES (2135,59,207,1); -- WEAPON_BONUS: 207
 INSERT INTO `mob_pool_mods` VALUES (2136,59,115,1); -- WEAPON_BONUS: 115
 
 -- Jormungand
+INSERT INTO `mob_pool_mods` VALUES (2156,29,12,0);  -- MDEF: 12
 INSERT INTO `mob_pool_mods` VALUES (2156,370,25,0); -- REGEN: 25
 INSERT INTO `mob_pool_mods` VALUES (2156,59,263,1); -- WEAPON_BONUS: 263
 
@@ -470,9 +471,11 @@ INSERT INTO `mob_pool_mods` VALUES (3824,29,2,1); -- ASSIST: 2
 INSERT INTO `mob_pool_mods` VALUES (3853,28,23,1); -- EXP_BONUS: 23
 
 -- Tiamat
-INSERT INTO `mob_pool_mods` VALUES (3916,29,50,0);   -- MDEF: 50
 INSERT INTO `mob_pool_mods` VALUES (3916,164,-50,0); -- DMGRANGE: -50
 INSERT INTO `mob_pool_mods` VALUES (3916,370,25,0);  -- REGEN: 25
+INSERT INTO `mob_pool_mods` VALUES (3916,162,-50,0);  -- DMGBREATH: -50
+INSERT INTO `mob_pool_mods` VALUES (3916,163,-40,0);  -- DMGMAGIC: -40
+
 
 -- Tombstone Prototype
 INSERT INTO `mob_pool_mods` VALUES (3941,163,-100,0); -- DMGMAGIC: -100
@@ -518,7 +521,6 @@ INSERT INTO `mob_pool_mods` VALUES (4222,4,4,1); -- SIGHT_RANGE: 4
 INSERT INTO `mob_pool_mods` VALUES (4238,28,5,1); -- EXP_BONUS: 5
 
 -- Vrtra
-INSERT INTO `mob_pool_mods` VALUES (4261,29,50,0);  -- MDEF: 50
 INSERT INTO `mob_pool_mods` VALUES (4261,370,10,0); -- REGEN: 10
 
 -- Woodland Sage

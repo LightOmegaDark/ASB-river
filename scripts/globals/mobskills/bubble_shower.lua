@@ -17,7 +17,7 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local bubbleCap = 0
     local hpdmg = 1 / 16
 
-    xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, 10, 3, 120)
+    xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, 10, 3, 180)
 
     if mob:getMaster() then
         bubbleCap = 2000

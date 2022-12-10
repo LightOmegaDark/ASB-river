@@ -20,7 +20,7 @@ end
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local power = 10
     local tick = 3
-    local duration = 100
+    local duration = 210
 
     local typeEffect = xi.effect.AGI_BOOST
 

@@ -20,7 +20,7 @@ end
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local typeEffect = xi.effect.POISON
 
-    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, 12, 0, 120))
+    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, 12, 0, 300))
 
     return typeEffect
 end

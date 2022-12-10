@@ -20,12 +20,12 @@ end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local typeEffect = xi.effect.CHOKE
-    local power = mob:getMainLvl() / 4 * 0.6 + 4
+    local power = 3
 
-    xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, power, 3, 60)
+    xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, power, 3, 90)
 
-    local dmgmod = 1
-    local info = xi.mobskills.mobMagicalMove(mob, target, skill, mob:getMobWeaponDmg(xi.slot.MAIN), xi.magic.ele.WIND, dmgmod, xi.mobskills.magicalTpBonus.NO_EFFECT, 0, 0, 3, 3.25, 3.5)
+    local damage = mob:getMainLvl() * 4
+    local info = xi.mobskills.mobMagicalMove(mob, target, skill, damage, xi.magic.ele.WIND, dmgmod, xi.mobskills.magicalTpBonus.NO_EFFECT, 0, 0, 1, 1.25, 1.5)
     local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.MAGICAL, xi.damageType.WIND, xi.mobskills.shadowBehavior.IGNORE_SHADOWS)
     target:takeDamage(dmg, mob, xi.attackType.MAGICAL, xi.damageType.WIND)
     return dmg
