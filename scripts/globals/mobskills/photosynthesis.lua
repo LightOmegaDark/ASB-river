@@ -24,8 +24,8 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local power = mob:getMainLvl() * .75
-    local duration = 30
+    local power = math.floor(mob:getMainLvl() / 10)
+    local duration = 120
 
     if power < 1 then
         power = 1

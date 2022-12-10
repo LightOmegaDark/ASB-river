@@ -14,7 +14,8 @@ end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local typeEffect = xi.effect.MND_DOWN
-    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, 10, 3, 120))
+    local power = target:getStat(xi.mod.MND) * 0.25
+    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, power, 3, 120))
 
     return typeEffect
 end
