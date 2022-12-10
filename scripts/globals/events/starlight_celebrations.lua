@@ -167,12 +167,15 @@ local npcGiftsEvents =
 
 function xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, eventid)
     local startedQuest = player:getLocalVar("[StarlightNPCGifts]Started")
+    local npcProgress = player:getLocalVar("[StarlightNPCGifts]Npc" .. tostring(eventid))
 
     if startedQuest ~= 0 then
-        local eventTable = npcGiftsEvents
-        local questUpdateStr = "[StarlightNPCGifts]Npc" .. eventid
-        player:setLocalVar(questUpdateStr, 1)
-        player:startEvent(eventTable[eventid])
+        if npcProgress ~= 1 then
+            local eventTable = npcGiftsEvents
+            local questUpdateStr = "[StarlightNPCGifts]Npc" .. eventid
+            player:setLocalVar(questUpdateStr, 1)
+            player:startEvent(eventTable[eventid])
+        end
     else
         return
     end
