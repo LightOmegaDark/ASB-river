@@ -471,6 +471,9 @@ INSERT INTO `mob_pool_mods` VALUES (3824,29,2,1); -- ASSIST: 2
 -- Tavnazian Ram
 INSERT INTO `mob_pool_mods` VALUES (3853,28,23,1); -- EXP_BONUS: 23
 
+-- Tenzen
+INSERT INTO `mob_pool_mods` VALUES (3875,59,153,1); -- WEAPON_BONUS: 153
+
 -- Tiamat
 INSERT INTO `mob_pool_mods` VALUES (3916,164,-50,0); -- DMGRANGE: -50
 INSERT INTO `mob_pool_mods` VALUES (3916,370,25,0);  -- REGEN: 25
@@ -490,6 +493,7 @@ INSERT INTO `mob_pool_mods` VALUES (4082,4,4,1); -- SIGHT_RANGE: 4
 -- Ultima
 INSERT INTO `mob_pool_mods` VALUES (4083,368,30,0); -- REGAIN: 30
 INSERT INTO `mob_pool_mods` VALUES (4083,370,1,0);  -- REGEN: 1
+INSERT INTO `mob_pool_mods` VALUES (4083,59,105,1); -- WEAPON_BONUS: 105
 
 -- Vanguards Crow
 INSERT INTO `mob_pool_mods` VALUES (4186,34,20,1);  -- MAGIC_COOL: 20
