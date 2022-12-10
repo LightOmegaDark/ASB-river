@@ -1997,7 +1997,7 @@ INSERT INTO `mob_skills` VALUES (2094,1432,'fire_angon',0,7.0,2000,1500,4,0,0,0,
 -- INSERT INTO `mob_skills` VALUES (2096,1438,'clobber',0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2097,1439,'granite_skin',0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (2098,1433,'blazing_angon',0,7.0,2000,1500,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (2099,1437,'batterhorn',4,16.0,2000,1000,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (2099,1437,'batterhorn',4,16.0,2000,1000,4,0,0,2,0,0,0);
 INSERT INTO `mob_skills` VALUES (2100,1436,'clobber',4,16.0,2000,1000,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (2101,1434,'demoralizing_roar',1,16.0,2000,1000,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (2102,1435,'boiling_blood',0,7.0,2000,1000,1,0,0,0,0,0,0);
