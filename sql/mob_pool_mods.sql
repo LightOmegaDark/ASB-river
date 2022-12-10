@@ -366,6 +366,7 @@ INSERT INTO `mob_pool_mods` VALUES (2963,252,40,0); -- CHARMRES: 40
 -- Omega
 INSERT INTO `mob_pool_mods` VALUES (2973,291,25,0); -- COUNTER: 25
 INSERT INTO `mob_pool_mods` VALUES (2973,370,1,0);  -- REGEN: 1
+INSERT INTO `mob_pool_mods` VALUES (2973,59,112,1); -- WEAPON_BONUS: 112
 
 -- Ore Golem
 INSERT INTO `mob_pool_mods` VALUES (3051,4,4,1); -- SIGHT_RANGE: 4
