@@ -12,8 +12,6 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local phase = VanadielMoonPhase()
-    local direction = VanadielMoonDirection()
     if player:getCharVar("sinHunting") == 4 and IsMoonFull() then
         player:startEvent(13, 0, 1107)
     else
