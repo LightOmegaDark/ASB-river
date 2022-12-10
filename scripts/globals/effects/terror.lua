@@ -9,10 +9,7 @@ end
 effectObject.onEffectTick = function(target, effect)
 end
 
-effect_object.onEffectLose = function(target, effect)
-    if target:hasStatusEffect(xi.effect.CHARM_I) or target:hasStatusEffect(xi.effect.CHARM_II) then
-        target:resetAI()
-    end
+effectObject.onEffectLose = function(target, effect)
 end
 
 return effectObject
