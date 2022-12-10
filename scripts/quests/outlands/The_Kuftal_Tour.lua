@@ -85,7 +85,11 @@ quest.sections =
                         end
                     end
 
-                    if flag and quest:getVar(player, 'Prog') == 0 then
+                    if
+                        flag and
+                        quest:getVar(player, 'Prog') == 0 and
+                        #player:getParty() > 1
+                    then
                         quest:progressEvent(14)
                     end
                 end,
