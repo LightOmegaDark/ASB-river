@@ -24,9 +24,9 @@ end
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local typeEffect = xi.effect.PARALYSIS
 
-    xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, 25, 0, 120)
+    xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, 50, 0, 180)
 
-    local dmgmod = xi.mobskills.mobBreathMove(mob, target, 0.333, 0.625, xi.magic.ele.ICE, 500)
+    local dmgmod = xi.mobskills.mobBreathMove(mob, target, 0.083, 1, xi.magic.ele.ICE, 500)
 
     local dmg = xi.mobskills.mobFinalAdjustments(dmgmod, mob, skill, target, xi.attackType.BREATH, xi.damageType.ICE, xi.mobskills.shadowBehavior.IGNORE_SHADOWS)
     target:takeDamage(dmg, mob, xi.attackType.BREATH, xi.damageType.ICE)
