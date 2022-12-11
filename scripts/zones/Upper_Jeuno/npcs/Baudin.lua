@@ -15,10 +15,6 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 177 then
-        player:incrementCharVar("saveTheClockTowerVar", 1)
-        player:incrementCharVar("saveTheClockTowerNPCz2", 32)
-    end
 end
 
 return entity

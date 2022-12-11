@@ -36,41 +36,6 @@ entity.onEventFinish = function(player, csid, option)
         if player:hasKeyItem(xi.ki.AIRSHIP_PASS) then
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.AIRSHIP_PASS)
         end
-    elseif csid == 230 and option == 20 then
-        if player:getFreeSlotsCount() == 0 then
-            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 555)
-        else
-            player:addItem(555)
-            player:messageSpecial(ID.text.ITEM_OBTAINED, 555)
-            player:setCharVar("saveTheClockTowerVar", 1)
-            player:setCharVar("saveTheClockTowerNPCz1", 0)
-            player:setCharVar("saveTheClockTowerNPCz2", 0)
-        end
-    elseif csid == 230 and option == 30 then
-        if player:hasItem(555) == true then
-            player:messageSpecial(ID.text.ITEM_OBTAINED, 555)
-            player:setCharVar("saveTheClockTowerVar", 1)
-            player:setCharVar("saveTheClockTowerNPCz1", 0)
-            player:setCharVar("saveTheClockTowerNPCz2", 0)
-        else
-            if player:getFreeSlotsCount() == 0 then
-                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 555)
-            else
-                player:addItem(555)
-                player:messageSpecial(ID.text.ITEM_OBTAINED, 555)
-                player:setCharVar("saveTheClockTowerVar", 1)
-                player:setCharVar("saveTheClockTowerNPCz1", 0)
-                player:setCharVar("saveTheClockTowerNPCz2", 0)
-            end
-        end
-    elseif csid == 231 then
-        player:setCharVar("saveTheClockTowerVar", 0)
-        player:setCharVar("saveTheClockTowerNPCz1", 0)
-        player:setCharVar("saveTheClockTowerNPCz2", 0)
-        player:addTitle(xi.title.CLOCK_TOWER_PRESERVATIONIST)
-        player:addFame(xi.quest.fame_area.JEUNO, 30)
-        player:tradeComplete()
-        player:completeQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.SAVE_THE_CLOCK_TOWER)
     end
 end
 

@@ -6,6 +6,15 @@
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
+    if player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.NORTHWARD) == QUEST_ACCEPTED then
+        if
+            trade:hasItemQty(16522, 1) and
+            trade:getGil() == 0 and
+            trade:getItemCount() == 1
+        then
+            player:startEvent(61) -- Finish quest "Northward"
+        end
+    end
 end
 
 entity.onTrigger = function(player, npc)
@@ -17,9 +26,6 @@ entity.onTrigger = function(player, npc)
         player:startEvent(159, 2, 0, 0, 0, 0, 0, 8)
     elseif northward == QUEST_COMPLETED then
         player:startEvent(159, 3, 0, 0, 0, 0, 0, 8)
-    else
-        -- Standard dialogue
-        player:startEvent(159)
     end
 end
 
@@ -27,10 +33,7 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 160 then
-        player:addCharVar("saveTheClockTowerVar", 1)
-        player:addCharVar("saveTheClockTowerNPCz1", 1)
-    elseif csid == 159 and option == 1 then
+    if csid == 159 and option == 1 then
         player:addQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.NORTHWARD)
     elseif csid == 61 then
         player:completeQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.NORTHWARD)
