@@ -34,7 +34,7 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     if mob:getPool() == 979 then -- Demonic Tiphia pollen recovers 3k+ HP
         return xi.mobskills.mobHealMove(mob, mob:getMaxHP() * potency / 30)
     else
-        return xi.mobskills.mobHealMove(mob, mob:getMaxHP() * potency / 100)
+        return xi.mobskills.mobHealMove(mob, mob:getMaxHP() * (147 / 1024))
     end
 end
 
