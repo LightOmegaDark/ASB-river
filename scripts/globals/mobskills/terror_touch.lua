@@ -15,13 +15,13 @@ end
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local numhits = 1
     local accmod = 1
-    local dmgmod = 1
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, xi.mobskills.physicalTpBonus.DMG_VARIES, 1, 1.25, 1.5)
+    local crit = 0.2
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, 1, xi.mobskills.physicalTpBonus.DMG_VARIES, 1, 1.5, 2, crit)
     local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.BLUNT, info.hitslanded)
 
     local typeEffect = xi.effect.ATTACK_DOWN
 
-    xi.mobskills.mobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 70, 0, 30)
+    xi.mobskills.mobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 70, 0, math.random(30, 90))
 
     target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
     return dmg
