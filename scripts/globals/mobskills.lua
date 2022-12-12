@@ -65,7 +65,7 @@ xi.mobskills.magicalTpBonus =
     PDIF_BONUS  = 4,
     RANGED      = 5,
 }
--- Temp Fix
+
 -- local function getDexCritRate(source, target)
 --     -- https://www.bg-wiki.com/bg/Critical_Hit_Rate
 --     local dDex = source:getStat(xi.mod.DEX) - target:getStat(xi.mod.AGI)
@@ -159,7 +159,6 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
     local returninfo = { }
     local fStr = 0
     local tp = mob:getTP()
-    print("random", math.random())
     -- Leaving this in here in case Jimmayus info says otherwise
     -- if wSCdex == nil then
     --     wSCdex = 0
@@ -225,20 +224,18 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
     local ftpMult = xi.mobskills.ftP(tp, mtp000, mtp150, mtp300)
 
     hitdamage = hitdamage * ftpMult
-
     -- Set everything to 1 because the FTP for mobs iis not supposed to be for attack only.
     -- attmod will provide attack bonuses
+    local params = { }
     if attmod == nil then
-        print("Att is nil")
         params = { atk000 = 1, atk150 = 1, atk300 = 1 }
     else
-        print("Att boost: enter att")
         params = { atk000 = attmod, atk150 = attmod, atk300 = attmod }
     end
+
     local paramsRanged = { atk100 = 1, atk200 = 1, atk300 = 1 }
     -- Getting PDIF
     local pdifTable = xi.weaponskills.cMeleeRatio(mob, target, params, 0, mob:getTP(), xi.slot.MAIN)
-    print("pdif: ", pdifTable)
     if tpeffect == xi.mobskills.physicalTpBonus.RANGED then
         pdifTable = xi.weaponskills.cRangedRatio(mob, target, paramsRanged, 0, mob:getTP())
     end
@@ -329,7 +326,6 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
 
     returninfo.dmg = finaldmg / numberofhits
     returninfo.hitslanded = hitslanded
-    print("Final Damage: ", returninfo.dmg)
     return returninfo
 end
 
@@ -354,7 +350,7 @@ end
 -- xi.mobskills.magicalTpBonus.DMG_BONUS and TP = 100, tpvalue = 2, assume V=150  --> damage is now 150*(TP*2) / 100 = 300
 -- xi.mobskills.magicalTpBonus.DMG_BONUS and TP = 200, tpvalue = 2, assume V=150  --> damage is now 150*(TP*2) / 100 = 600
 
-xi.mobskills.mobMagicalMove = function(mob, target, skill, damage, element, dmgmod, tpeffect, tpvalue, ignoreresist, ftp100, ftp200, ftp300)
+xi.mobskills.mobMagicalMove = function(mob, target, skill, damage, element, dmgmod, tpeffect, tpvalue, ignoreresist, ftp100, ftp200, ftp300, dStatMult)
     local returninfo = { }
     local ignoreres = ignoreresist or false
 
@@ -388,10 +384,15 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, damage, element, dmgm
         ftp300 = 1.0
     end
 
+    local dStat = 0
+    if dStatMult then
+        dStat = mob:getStat(xi.mod.INT)-target:getStat(xi.mod.INT)
+    end
+
     local ftpMult = xi.mobskills.ftP(tp, ftp100, ftp200, ftp300)
 
     -- resistence is added last
-    local finaldmg = damage * mab * ftpMult
+    local finaldmg = damage * mab * ftpMult + dStat
     -- Check for dmgmod if it still has one. To be removed.
     if dmgmod then
         finaldmg = damage * mab * dmgmod * ftpMult
