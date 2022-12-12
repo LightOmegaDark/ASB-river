@@ -3143,7 +3143,6 @@ namespace battleutils
         int32 fstr = 0;
         float dif  = (float)(PAttacker->STR() - PDefender->VIT());
 
-        // does mob FSTR2 for ranged attack apply here?
         if (PAttacker->objtype == TYPE_MOB || PAttacker->objtype == TYPE_PET)
         {
             fstr = (PAttacker->STR() - PDefender->VIT() + 4) / 4;
