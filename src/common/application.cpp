@@ -40,6 +40,8 @@ Application::Application(std::string serverName, std::unique_ptr<argparse::Argum
 #endif
 
     logging::InitializeLog(serverName, fmt::format("log/{}-server.log", serverName), false);
+    lua_init();
+    settings::init();
     ShowInfo("Begin %s-server initialisation...", serverName);
 
     debug::init();

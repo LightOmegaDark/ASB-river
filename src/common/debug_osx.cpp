@@ -1,15 +1,5 @@
 #include <csignal>
-#include <sys/ptrace.h>
 #include <sys/resource.h>
-#include <sys/types.h>
-
-#ifndef PTRACE_TRACEME
-#define PTRACE_TRACEME 0
-#endif // PTRACE_TRACEME
-
-#ifndef PTRACE_DETACH
-#define PTRACE_DETACH 17
-#endif // PTRACE_DETACH
 
 #include "debug.h"
 #include "kernel.h"
@@ -48,4 +38,18 @@ void dumpBacktrace(int signal)
 
 void debug::init()
 {
+    struct rlimit core_limits;
+    core_limits.rlim_cur = core_limits.rlim_max = RLIM_INFINITY;
+    setrlimit(RLIMIT_CORE, &core_limits);
+
+    // things we want to handle
+    std::signal(SIGABRT, dumpBacktrace);
+    std::signal(SIGSEGV, dumpBacktrace);
+    std::signal(SIGFPE, dumpBacktrace);
+    std::signal(SIGXFSZ, dumpBacktrace);
+
+    // pass these onto default handler
+    std::signal(SIGILL, SIG_DFL);
+    std::signal(SIGBUS, SIG_DFL);
+    std::signal(SIGTRAP, SIG_DFL);
 }
