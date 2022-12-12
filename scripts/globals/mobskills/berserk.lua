@@ -13,7 +13,6 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local typeEffect = xi.effect.BERSERK
     local power = (116 / 256) * 100
 
     if
@@ -25,8 +24,8 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
         power = 33
     end
 
-    skill:setMsg(xi.mobskills.mobBuffMove(mob, typeEffect, power, 0, 120))
-    return typeEffect
+    skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.BERSERK, power, 0, 120))
+    return xi.effect.BERSERK
 end
 
 return mobskillObject

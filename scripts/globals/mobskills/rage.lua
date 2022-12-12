@@ -19,6 +19,7 @@ end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local duration = 120
+    local power = (116 / 256) * 100
 
     if mob:isPet() then
         local player = mob:getMaster()
@@ -30,9 +31,8 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
         end
     end
 
-    local typeEffect = xi.effect.BERSERK
-    skill:setMsg(xi.mobskills.mobBuffMove(mob, typeEffect, 45, 0, duration))
-    return typeEffect
+    skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.BERSERK, power, 0, duration))
+    return xi.effect.BERSERK
 end
 
 return mobskillObject

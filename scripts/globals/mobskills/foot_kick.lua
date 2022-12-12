@@ -16,9 +16,17 @@ end
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local numhits = 1
     local accmod = 1
+    local dmgmod = 1
     local crit = 1
+    local info = {}
 
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, 1, xi.mobskills.physicalTpBonus.CRIT_VARIES, 2, 2.25, 2.5, crit)
+    -- Level 50+ rabbits have a different type of foot kick that has a 2.0 FTP instead of 1.0 This version also crits 100% of the time.
+    if mob:getMainLvl() >= 50 then
+        info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, xi.mobskills.physicalTpBonus.CRIT_VARIES, 2, 2.25, 2.5, crit)
+    else
+        info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, xi.mobskills.physicalTpBonus.CRIT_VARIES, 1, 1.25, 1.5, crit)
+    end
+
     local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.SLASHING, info.hitslanded)
     target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
     return dmg
