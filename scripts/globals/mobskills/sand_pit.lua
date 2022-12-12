@@ -14,7 +14,7 @@ end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local typeEffect = xi.effect.BIND
-    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, 1, 0, 30))
+    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, 1, 0, 60))
 
     -- Different mechanics based on the antlion using it
     local poolID = mob:getPool()
