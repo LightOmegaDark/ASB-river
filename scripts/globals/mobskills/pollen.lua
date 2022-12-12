@@ -24,10 +24,10 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
 
     if mob:getPool() == 385 then
         potency = 25
-        potency = potency - math.random(0,5)
+        potency = potency - math.random(0, 5)
     end
 
-    potency = potency - math.random(0, potency/4)
+    potency = potency - math.random(0, potency / 4)
 
     skill:setMsg(xi.msg.basic.SELF_HEAL)
 
