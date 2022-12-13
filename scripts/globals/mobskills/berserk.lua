@@ -15,13 +15,17 @@ end
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local power = (116 / 256) * 100
 
+    -- Dolls Berserk is Warcry
+    -- TODO: Separate file
     if
         mob:getFamily() == 83 or
         mob:getFamily() == 84 or
         mob:getFamily() == 85 or
         mob:getFamily() == 498
     then
-        power = 33
+        skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.WARCRY, 33, 0, 120))
+
+        return xi.effect.WARCRY
     end
 
     skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.BERSERK, power, 0, math.random(120, 180)))
