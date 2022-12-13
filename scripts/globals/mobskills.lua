@@ -167,9 +167,9 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
 
     --get dstr (bias to monsters, so no fSTR)
     if tpeffect == xi.mobskills.physicalTpBonus.RANGED then
-        fStr = xi.weaponskills.fSTR2(mob:getStat(xi.mod.STR), target:getStat(xi.mod.VIT), mob:getWeaponDmgRank())
+        fStr = xi.mobskills.fSTR2(mob:getStat(xi.mod.STR), target:getStat(xi.mod.VIT))
     else
-        fStr = xi.weaponskills.fSTR(mob:getStat(xi.mod.STR), target:getStat(xi.mod.VIT), mob:getWeaponDmgRank())
+        fStr = xi.mobskills.fSTR(mob:getStat(xi.mod.STR), target:getStat(xi.mod.VIT))
     end
 
     local base = 0
@@ -898,4 +898,18 @@ xi.mobskills.mobHealMove = function(target, heal)
     target:addHP(heal)
 
     return heal
+end
+
+xi.weaponskills.fSTR = function(atk_str, def_vit)
+    local dSTR = atk_str - def_vit
+    local fSTR = math.floor((atk_str - def_vit + 4) / 4)
+
+    return fSTR
+end
+
+xi.mobskills.fSTR2 = function(atk_str, def_vit)
+    local dSTR = atk_str - def_vit
+    local fSTR = math.floor((atk_str - def_vit + 4) / 2)
+
+    return fSTR
 end
