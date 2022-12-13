@@ -30,7 +30,7 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
         skill:setMsg(xi.msg.basic.EFFECT_DRAINED)
         return 1
     else
-        local power = mob:getMainLevel() * 2
+        local power = mob:getMainLvl() * 2
         dmg = xi.mobskills.mobFinalAdjustments(power, mob, skill, target, xi.attackType.MAGICAL, xi.damageType.DARK, xi.mobskills.shadowBehavior.IGNORE_SHADOWS)
 
         skill:setMsg(xi.mobskills.mobPhysicalDrainMove(mob, target, skill, xi.mobskills.drainType.HP, dmg))
