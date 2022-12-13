@@ -900,16 +900,14 @@ xi.mobskills.mobHealMove = function(target, heal)
     return heal
 end
 
-xi.weaponskills.fSTR = function(atk_str, def_vit)
-    local dSTR = atk_str - def_vit
+xi.mobskills.fSTR = function(atk_str, def_vit)
     local fSTR = math.floor((atk_str - def_vit + 4) / 4)
 
-    return fSTR
+    return utils.clamp(fSTR, -20, 24)
 end
 
 xi.mobskills.fSTR2 = function(atk_str, def_vit)
-    local dSTR = atk_str - def_vit
     local fSTR = math.floor((atk_str - def_vit + 4) / 2)
 
-    return fSTR
+    return utils.clamp(fSTR, -20, 24)
 end

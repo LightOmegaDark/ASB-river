@@ -124,6 +124,7 @@ INSERT INTO `mob_pool_mods` VALUES (680,251,-50,0); -- STUNRES: -50
 
 -- Cerebrator
 INSERT INTO `mob_pool_mods` VALUES (681,368,10,0); -- REGAIN: 10
+INSERT INTO `mob_pool_mods` VALUES (681,59,119,1); -- WEAPON_BONUS: 119
 
 -- Citipati
 INSERT INTO `mob_pool_mods` VALUES (733,302,5,0); -- TRIPLE_ATTACK: 5
@@ -136,6 +137,7 @@ INSERT INTO `mob_pool_mods` VALUES (770,4,4,1); -- SIGHT_RANGE: 4
 
 -- Coveter
 INSERT INTO `mob_pool_mods` VALUES (820,368,10,0); -- REGAIN: 10
+INSERT INTO `mob_pool_mods` VALUES (820,59,119,1); -- WEAPON_BONUS: 119
 
 -- Darksteel Golem
 INSERT INTO `mob_pool_mods` VALUES (906,4,4,1); -- SIGHT_RANGE: 4
@@ -422,6 +424,9 @@ INSERT INTO `mob_pool_mods` VALUES (3379,4,4,1); -- SIGHT_RANGE: 4
 
 -- Sabotender
 INSERT INTO `mob_pool_mods` VALUES (3426,105,1,1); -- ATTRACT_FAMILY_NM: 1
+
+-- Satiator
+INSERT INTO `mob_pool_mods` VALUES (3483,59,119,1); -- WEAPON_BONUS: 119
 
 -- Seiryu
 INSERT INTO `mob_pool_mods` VALUES (3540,3,100,1); -- MP_BASE: 100
