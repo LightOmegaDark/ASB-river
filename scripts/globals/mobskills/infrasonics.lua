@@ -13,12 +13,9 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local typeEffect = xi.effect.EVASION_DOWN
-    local evasion    = 40
+    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.EVASION_DOWN, 40, 0, 180))
 
-    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, evasion, 0, 180))
-
-    return typeEffect
+    return xi.effect.EVASION_DOWN
 end
 
 return mobskillObject

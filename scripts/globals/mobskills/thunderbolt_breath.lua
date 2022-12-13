@@ -22,9 +22,7 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local typeEffect = xi.effect.STUN
-
-    xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, 1, 0, 7)
+    xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STUN, 1, 0, 7)
 
     local dmgmod = xi.mobskills.mobBreathMove(mob, target, 0.083, 1, xi.magic.ele.THUNDER, 500)
 

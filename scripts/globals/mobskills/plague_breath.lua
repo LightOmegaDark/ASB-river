@@ -17,10 +17,9 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local typeEffect = xi.effect.POISON
-    local power = mob:getMainLvl() / 10
+    local power = math.min(1, mob:getMainLvl() / 10)
 
-    xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, power, 3, 60)
+    xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, power, 3, 60)
 
     local dmgmod = xi.mobskills.mobBreathMove(mob, target, 0.0625, 1, xi.magic.ele.WATER, 500)
 

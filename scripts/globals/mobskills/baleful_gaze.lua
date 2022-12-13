@@ -17,7 +17,14 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    skill:setMsg(xi.mobskills.mobGazeMove(mob, target, xi.effect.PETRIFICATION, 1, 0, math.random(60, 120)))
+    local duration = math.random(30, 60)
+
+    -- Cockatrice
+    if mob:getFamily() == 70 then
+        duration = duration * 2
+    end
+
+    skill:setMsg(xi.mobskills.mobGazeMove(mob, target, xi.effect.PETRIFICATION, 1, 0, duration))
 
     return xi.effect.PETRIFICATION
 end

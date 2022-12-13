@@ -24,16 +24,12 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local power = math.floor(mob:getMainLvl() / 10)
+    local power = math.min(1, math.floor(mob:getMainLvl() / 10))
     local duration = 120
 
-    if power < 1 then
-        power = 1
-    end
+    skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.REGEN, power, 0, duration))
 
-    local typeEffect = xi.effect.REGEN
-    skill:setMsg(xi.mobskills.mobBuffMove(mob, typeEffect, power, 0, duration))
-    return typeEffect
+    return xi.effect.REGEN
 end
 
 return mobskillObject

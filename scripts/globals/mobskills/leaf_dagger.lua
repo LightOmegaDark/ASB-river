@@ -23,10 +23,7 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, 1, xi.mobskills.physicalTpBonus.RANGED, 2, 2.25, 2.5)
     local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.PIERCING, info.hitslanded)
 
-    local power = mob:getMainLvl() / 10
-    if power < 1 then
-        power = 1
-    end
+    local power = math.min(1, mob:getMainLvl() / 10)
 
     xi.mobskills.mobPhysicalStatusEffectMove(mob, target, skill, xi.effect.POISON, power, 3, 90)
 

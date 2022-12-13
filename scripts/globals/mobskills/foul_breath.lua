@@ -22,8 +22,7 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local typeEffect = xi.effect.DISEASE
-    xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, 1, 0, 180)
+    xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.DISEASE, 1, 0, 180)
 
     local dmgmod = xi.mobskills.mobBreathMove(mob, target, 0.083, 1, xi.magic.ele.FIRE, 500)
 

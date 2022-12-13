@@ -17,14 +17,14 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local power = math.floor(((mob:getMainLvl() - 3) / 2))
+    local power = math.min(1, math.floor(((mob:getMainLvl() - 3) / 2)))
     local duration = 60
 
     if
         mob:getFamily() == 218 or
         mob:getFamily() == 219
     then
-        power = math.floor(((mob:getMainLvl() - 1) / 2) / 2)
+        power = math.min(1, math.floor(((mob:getMainLvl() - 1) / 2) / 2))
         duration = 300
     end
 
