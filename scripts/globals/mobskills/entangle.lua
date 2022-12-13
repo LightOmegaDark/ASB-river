@@ -40,7 +40,7 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
         mob:resetEnmity(target)
         target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
         skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, typeEffectOne, 1, 0, 30))
-        xi.mobskills.mobStatusEffectMove(mob, target, typeEffectTwo, 50, 0, 60)
+        xi.mobskills.mobStatusEffectMove(mob, target, typeEffectTwo, 50, 3, 60)
 
         return typeEffectOne
     else

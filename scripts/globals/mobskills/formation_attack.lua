@@ -30,8 +30,6 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
         bombNum = bombNum + 3
     elseif mob:getAnimationSub() == 5 then
         bombNum = bombNum + 2
-    elseif mob:getAnimationSub() == 6 then
-        bombNum = bombNum + 1
     end
 
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, 1, xi.mobskills.magicalTpBonus.NO_EFFECT, bombNum, bombNum, bombNum)

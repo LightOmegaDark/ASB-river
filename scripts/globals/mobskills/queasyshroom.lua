@@ -26,14 +26,11 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     mob:setAnimationSub(1)
     local numhits = 1
     local accmod = 1
-    local crit = math.random(0.05)
+    local crit = 0.05
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, 1, xi.mobskills.physicalTpBonus.DMG_VARIES, 1.5, 1.75, 2, crit)
     local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.PIERCING, xi.mobskills.shadowBehavior.WIPE_SHADOWS)
 
-    local typeEffect = xi.effect.POISON
-    local power = 10
-
-    xi.mobskills.mobPhysicalStatusEffectMove(mob, target, skill, typeEffect, power, 3, 60)
+    xi.mobskills.mobPhysicalStatusEffectMove(mob, target, skill, xi.effect.POISON, 10, 3, 60)
 
     target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.PIERCING)
     return dmg
