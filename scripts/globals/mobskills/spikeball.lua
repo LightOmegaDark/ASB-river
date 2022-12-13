@@ -20,7 +20,7 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     target:takeDamage(dmg, mob, xi.attackType.RANGED, xi.damageType.PIERCING)
 
     if dmg > 0 then
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, 16, 0, math.random(30, 60))
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, 16, 3, math.random(30, 60))
     end
 
     return dmg

@@ -13,13 +13,10 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local typeEffect = xi.effect.POISON
-    local subEffect  = xi.effect.BIND
+    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, 5, 3, 90))
+    xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BIND, 1, 0, 90)
 
-    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, 5, 3, 90))
-    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, subEffect, 1, 0, 30))
-
-    return typeEffect, subEffect
+    return xi.effect.POISON, xi.effect.BIND
 end
 
 return mobskillObject
