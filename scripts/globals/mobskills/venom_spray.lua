@@ -20,7 +20,7 @@ end
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local power = 10
 
-    xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, power, 3, 60)
+    xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, power, 3, 120)
 
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, mob:getWeaponDmg() * 1.8, xi.magic.ele.WATER, 1, xi.mobskills.magicalTpBonus.NO_EFFECT)
     local dmg = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.MAGICAL, xi.damageType.WATER, xi.mobskills.shadowBehavior.IGNORE_SHADOWS)

@@ -20,7 +20,7 @@ end
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.SHELL, 20, 0, 60))
 
-    return typeEffect
+    return xi.effect.SHELL
 end
 
 return mobskillObject

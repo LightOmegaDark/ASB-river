@@ -27,6 +27,11 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local power = math.min(1, math.floor(mob:getMainLvl() / 10))
     local duration = 120
 
+    -- Not Mandragora
+    if mob:getFamily() ~= 178 then
+        duration = 180
+    end
+
     skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.REGEN, power, 0, duration))
 
     return xi.effect.REGEN

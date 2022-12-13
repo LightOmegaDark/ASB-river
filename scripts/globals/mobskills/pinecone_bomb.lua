@@ -36,7 +36,7 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     end
 
     if mob:getPool() ~= 671 and mob:getPool() ~= 1346 then
-        xi.mobskills.mobPhysicalStatusEffectMove(mob, target, skill, xi.effect.SLEEP_I, 1, 0, 30)
+        xi.mobskills.mobPhysicalStatusEffectMove(mob, target, skill, xi.effect.SLEEP_I, 1, 0, 60)
     end
 
     return dmg
