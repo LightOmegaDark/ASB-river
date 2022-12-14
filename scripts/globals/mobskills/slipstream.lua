@@ -12,12 +12,10 @@ mobskill_object.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskill_object.onMobWeaponSkill = function(target, mob, skill)
-    local typeEffect = xi.effect.ACCURACY_DOWN
+mobskillObject.onMobWeaponSkill = function(target, mob, skill)
+    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.ACCURACY_DOWN, 25, 0, 180))
 
-    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, 25, 0, 180))
-
-    return typeEffect
+    return xi.effect.ACCURACY_DOWN
 end
 
 return mobskill_object

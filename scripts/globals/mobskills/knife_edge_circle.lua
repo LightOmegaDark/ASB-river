@@ -13,14 +13,11 @@ mobskill_object.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskill_object.onMobWeaponSkill = function(target, mob, skill)
-    local typeEffectOne = xi.effect.STUN
-    local typeEffectTwo = xi.effect.POISON
+mobskillObject.onMobWeaponSkill = function(target, mob, skill)
+    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, 20, 3, math.random(60, 120)))
+    xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STUN, 1, 0, math.random(5, 15))
 
-    xi.mobskills.mobStatusEffectMove(mob, target, typeEffectOne, 1, 0, 1)
-    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, typeEffectTwo, 20, 3, 30))
-
-    return typeEffectTwo
+    return xi.effect.POISON, xi.effect.STUN
 end
 
 return mobskill_object

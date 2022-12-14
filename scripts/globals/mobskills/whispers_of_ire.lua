@@ -26,8 +26,8 @@ mobskill_object.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskill_object.onMobWeaponSkill = function(target, mob, skill)
-    local amount = math.random(1,5)
+mobskillObject.onMobWeaponSkill = function(target, mob, skill)
+    local amount = math.random(1,6)
     local count = 0
     local statsDrained = {}
     local size = amount
@@ -43,7 +43,7 @@ mobskill_object.onMobWeaponSkill = function(target, mob, skill)
         end
 
         if check then
-            xi.mobskills.mobDrainAttribute(mob, target, attributesDown[effectType], 10, 0, 60)
+            xi.mobskills.mobDrainAttribute(mob, target, attributesDown[effectType], 14, 3, 60)
             count = count + 1
             statsDrained[count] = effectType
             size = size - 1
