@@ -21,7 +21,7 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, 15, 3, 120)
 
     local cap = 800
-    if mob:isInDynamis() then
+    if mob:isInDynamis() and not mob:getMaster() then
         cap = 1055
     end
     local dmgmod = xi.mobskills.mobBreathMove(mob, target, 0.25, 2, xi.magic.ele.DARK, cap)
