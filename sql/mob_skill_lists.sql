@@ -1492,9 +1492,14 @@ INSERT INTO `mob_skill_lists` VALUES ('WarlordRojgnojOrc',334,607);
 INSERT INTO `mob_skill_lists` VALUES ('WarlordRojgnojOrc',334,608);
 INSERT INTO `mob_skill_lists` VALUES ('WarlordRojgnojOrc',334,609);
 INSERT INTO `mob_skill_lists` VALUES ('WarlordRojgnojOrc',334,1066);
-INSERT INTO `mob_skill_lists` VALUES ('Maat',335,1028);
-INSERT INTO `mob_skill_lists` VALUES ('Maat',335,1033);
-INSERT INTO `mob_skill_lists` VALUES ('Maat',335,1034);
+INSERT INTO `mob_skill_lists` VALUES ('Maat',335,1027); -- combo
+INSERT INTO `mob_skill_lists` VALUES ('Maat',335,1028); -- tackle
+INSERT INTO `mob_skill_lists` VALUES ('Maat',335,1029); -- one-inch_punch
+INSERT INTO `mob_skill_lists` VALUES ('Maat',335,1031); -- spinning_attack
+INSERT INTO `mob_skill_lists` VALUES ('Maat',335,1032); -- howling_fist
+INSERT INTO `mob_skill_lists` VALUES ('Maat',335,1033); -- dragon_kick
+INSERT INTO `mob_skill_lists` VALUES ('Maat',335,1034); -- asuran_fists
+INSERT INTO `mob_skill_lists` VALUES ('Maat',335,1036); -- maats_bash
 INSERT INTO `mob_skill_lists` VALUES ('ZM4-Tonberry',336,783);
 INSERT INTO `mob_skill_lists` VALUES ('ZM4-Tonberry',336,784);
 INSERT INTO `mob_skill_lists` VALUES ('ZM4-Tonberry',336,785);
