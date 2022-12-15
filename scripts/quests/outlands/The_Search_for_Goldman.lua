@@ -151,7 +151,7 @@ quest.sections =
             {
                 onMobDeath = function(mob, player, optParams)
                     for _, member in pairs(player:getParty()) do
-                        if quest:getVar(member, 'Prog') == 4 then
+                        if quest:getVar(member, 'Prog') == 4 and member:getZone() == player:getZone() then
                             quest:setVar(member, 'Prog', 5)
                         end
                     end
