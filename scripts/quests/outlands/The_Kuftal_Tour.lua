@@ -71,7 +71,7 @@ quest.sections =
 
         [xi.zone.KUFTAL_TUNNEL] =
         {
-            ['qm5'] =
+            ['Kuftal_Tour'] =
             {
                 onTrigger = function(player, npc)
                     local flag = true
