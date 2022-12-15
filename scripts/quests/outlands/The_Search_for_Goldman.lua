@@ -150,10 +150,8 @@ quest.sections =
             ['Rohemolipaud'] =
             {
                 onMobDeath = function(mob, player, optParams)
-                    for _, member in pairs(player:getParty()) do
-                        if quest:getVar(member, 'Prog') == 4 and member:getZone() == player:getZone() then
-                            quest:setVar(member, 'Prog', 5)
-                        end
+                    if quest:getVar(player, 'Prog') == 4 then
+                        quest:setVar(player, 'Prog', 5)
                     end
                 end,
             },
