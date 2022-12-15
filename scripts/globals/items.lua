@@ -1411,6 +1411,7 @@ xi.items =
     FLASK_OF_SLEEPING_POTION        = 4161,
     FLASK_OF_SILENCING_POTION       = 4162,
     FLASK_OF_BLINDNESS_POTION       = 4163,
+    PINCH_OF_PRISM_POWDER           = 4164,
     RERAISER                        = 4172,
     HI_RERAISER                     = 4173,
     VILE_ELIXIR                     = 4174,
