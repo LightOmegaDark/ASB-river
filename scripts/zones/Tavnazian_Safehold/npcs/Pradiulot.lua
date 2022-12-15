@@ -16,9 +16,9 @@ end
 entity.onTrigger = function(player, npc)
     local unforgiven = player:getQuestStatus(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.UNFORGIVEN)
 
-    if  unforgiven == QUEST_COMPLETED and
-        player:getCharVar("Unforgiven_Last_CS") == 1 then
-        player:startEvent(206) -- Dialogue after completing quest (optional)
+    if  unforgiven == QUEST_COMPLETED
+        and player:getCharVar("Unforgiven_Last_CS") == 1 then
+            player:startEvent(206) -- Dialogue after completing quest (optional)
     end
 end
 

@@ -55,8 +55,8 @@ quest.sections =
                 onTrigger = function(player, npc)
                     if not player:hasKeyItem(xi.ki.ALABASTER_HAIRPIN) then
                         return quest:progressEvent(201)
-                    elseif player:hasKeyItem(xi.ki.ALABASTER_HAIRPIN) and
-                    quest:getVar(player, 'Prog') == 1 then
+                    elseif player:hasKeyItem(xi.ki.ALABASTER_HAIRPIN)
+                    and quest:getVar(player, 'Prog') == 1 then
                         return quest:progressEvent(202)
                     elseif quest:getVar(player, 'Prog') == 2 then
                         return quest:progressEvent(203)
