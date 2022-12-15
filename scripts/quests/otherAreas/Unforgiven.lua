@@ -1,0 +1,104 @@
+-----------------------------------
+-- Unforgiven
+-----------------------------------
+-- Log ID: 4, Quest ID: 72
+-- Elysia :  !pos -50.410 -22.204 -41.640 26
+-- Pradiulot !pos -20.814 -22 8.399 26
+-- ???       !pos 110.714 -40.856 -53.154 26
+-----------------------------------
+require('scripts/globals/keyitems')
+require('scripts/globals/npc_util')
+require('scripts/globals/quests')
+require('scripts/globals/zone')
+require('scripts/globals/interaction/quest')
+-----------------------------------
+local ID = require("scripts/zones/Tavnazian_Safehold/IDs")
+-----------------------------------
+local quest = Quest:new(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.UNFORGIVEN)
+
+quest.reward =
+{
+    keyItem  = xi.ki.MAP_OF_TAVNAZIA,
+    gil      = 2000,
+    exp      = 2000,
+}
+
+quest.sections =
+{
+    {
+        check = function(player, status, vars)
+            return status == QUEST_AVAILABLE
+        end,
+
+        [xi.zone.TAVNAZIAN_SAFEHOLD] =
+        {
+            ['Elysia'] = quest:progressEvent(200),
+
+            onEventFinish =
+            {
+                [200] = function(player, csid, option, npc)
+                    quest:begin(player)
+                end,
+            },
+        }
+    },
+
+    {
+        check = function(player, status, vars)
+            return status == QUEST_ACCEPTED
+        end,
+
+        [xi.zone.TAVNAZIAN_SAFEHOLD] =
+        {
+            ['Elysia'] =
+            {
+                onTrigger = function(player, npc)
+                    if not player:hasKeyItem(xi.ki.ALABASTER_HAIRPIN) then
+                        return quest:progressEvent(201)
+                    elseif player:hasKeyItem(xi.ki.ALABASTER_HAIRPIN) and
+                    quest:getVar(player, 'Prog') == 1 then
+                        return quest:progressEvent(202)
+                    elseif quest:getVar(player, 'Prog') == 2 then
+                        return quest:progressEvent(203)
+                    end
+                end,
+            },
+            ['Pradiulot'] =
+            {
+                onTrigger = function(player, npc)
+                    if quest:getVar(player, 'Prog') == 2 then
+                        return quest:progressEvent(204)
+                    end
+                end,
+            },
+            ['qm_unforgiven'] =
+            {
+                onTrigger = function(player, npc)
+                    if not player:hasKeyItem(xi.ki.ALABASTER_HAIRPIN) then
+                           player:addKeyItem(xi.ki.ALABASTER_HAIRPIN)
+                           player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.ALABASTER_HAIRPIN)
+                           quest:setVar(player, 'Prog', 1)
+                    else
+                        player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
+                    end
+                end,
+            },
+
+            onEventFinish =
+            {
+                [202] = function(player, csid, option, npc)
+                    quest:setVar(player, 'Prog', 2)
+                end,
+
+                [204] = function(player, csid, option, npc)
+                    if quest:complete(player) then
+                           player:delKeyItem(xi.ki.ALABASTER_HAIRPIN)
+                           player:setCharVar("Unforgiven_Last_CS", 1)
+                    end
+                end,
+            },
+        },
+    },
+}
+
+return quest
