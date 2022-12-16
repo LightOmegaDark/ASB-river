@@ -77,6 +77,7 @@ quest.sections =
                     if not player:hasKeyItem(xi.ki.ALABASTER_HAIRPIN) then
                         npcUtil.giveKeyItem(player, xi.ki.ALABASTER_HAIRPIN)
                         quest:setVar(player, 'Prog', 1)
+                        return quest:noAction()
                     end
                 end,
             },
@@ -90,9 +91,34 @@ quest.sections =
                 [204] = function(player, csid, option, npc)
                     if quest:complete(player) then
                            player:delKeyItem(xi.ki.ALABASTER_HAIRPIN)
-                           player:setCharVar("Unforgiven_Last_CS", 1)
+                           quest:setVar(player, 'Prog', 3)
                     end
                 end,
+            },
+        },
+    },
+
+    {
+        check = function(player, status, vars)
+            return status == QUEST_COMPLETED
+        end,
+
+        [xi.zone.TAVNAZIAN_SAFEHOLD] =
+        {
+            ['Pradiulot'] =
+            {
+                onTrigger = function(player, npc)
+                    if quest:getVar(player, 'Prog') == 3 then
+                        return quest:progressEvent(206)
+                    end
+                end,
+            },
+
+        onEventFinish =
+            {
+            [206] = function(player, csid, option, npc)
+                quest:setVar(player, 'Prog', 0)
+            end,
             },
         },
     },
