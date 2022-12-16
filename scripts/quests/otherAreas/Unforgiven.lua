@@ -19,8 +19,6 @@ local quest = Quest:new(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.UNFO
 quest.reward =
 {
     keyItem  = xi.ki.MAP_OF_TAVNAZIA,
-    gil      = 2000,
-    exp      = 2000,
 }
 
 quest.sections =
@@ -54,12 +52,12 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if not player:hasKeyItem(xi.ki.ALABASTER_HAIRPIN) then
-                        return quest:progressEvent(201)
+                        return quest:event(201)
                     elseif player:hasKeyItem(xi.ki.ALABASTER_HAIRPIN)
                     and quest:getVar(player, 'Prog') == 1 then
-                        return quest:progressEvent(202)
+                        return quest:event(202)
                     elseif quest:getVar(player, 'Prog') == 2 then
-                        return quest:progressEvent(203)
+                        return quest:event(203)
                     end
                 end,
             },
@@ -67,7 +65,7 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if quest:getVar(player, 'Prog') == 2 then
-                        return quest:progressEvent(204)
+                        return quest:event(204)
                     end
                 end,
             },
@@ -75,11 +73,8 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if not player:hasKeyItem(xi.ki.ALABASTER_HAIRPIN) then
-                           player:addKeyItem(xi.ki.ALABASTER_HAIRPIN)
-                           player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.ALABASTER_HAIRPIN)
-                           quest:setVar(player, 'Prog', 1)
-                    else
-                        player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
+                        npcUtil.giveKeyItem(player, xi.ki.ALABASTER_HAIRPIN)
+                        quest:setVar(player, 'Prog', 1)
                     end
                 end,
             },
