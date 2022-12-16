@@ -2,7 +2,7 @@
 -- ID: 15324
 -- Caitiff's Socks
 -- Players have chance to be given flee effect when taken damage
--- while HP < 35 and TP < 1000
+-- while HP < 25 and TP < 1000
 -- Lasts for 30 seconds. Proc rate requires more information
 -----------------------------------
 local itemObject = {}
@@ -13,7 +13,7 @@ end
 itemObject.onItemEquip = function(player, item)
     player:addListener("ATTACKED", "CAITIFF_SOCKS_FLEE", function(playerArg, mob)
         if
-            playerArg:getHPP() <= 25 and
+            playerArg:getHPP() < 25 and
             playerArg:getTP() < 1000 and
             math.random() <= 15
         then
