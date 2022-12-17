@@ -12,10 +12,6 @@ require("scripts/globals/titles")
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:addMod(xi.mod.SLEEPRES, 100)
-end
-
-entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.DRAW_IN, 1)
     -- custom distance from retail capture
     mob:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 34)
