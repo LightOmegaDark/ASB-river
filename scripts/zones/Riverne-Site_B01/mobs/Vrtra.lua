@@ -78,7 +78,7 @@ end
 entity.onMobDeath = function(mob, player, isKiller)
     -- Despawn adds when Vrtra dies
     for i, offset in ipairs(offsets) do
-        DespawnMob(mob:getID()+offset)
+        DespawnMob(mob:getID() + offset)
     end
 end
 
