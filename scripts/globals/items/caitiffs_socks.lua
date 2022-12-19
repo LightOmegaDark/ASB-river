@@ -15,7 +15,7 @@ itemObject.onItemEquip = function(player, item)
         if
             playerArg:getHPP() < 25 and
             playerArg:getTP() < 1000 and
-            math.random() <= 15
+            math.random() <= .15
         then
             playerArg:delStatusEffect(xi.effect.FLEE)
             playerArg:addStatusEffect(xi.effect.FLEE, 100, 0, 30)
