@@ -13,8 +13,7 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.DRAW_IN, 1)
-    -- custom distance from retail capture
-    mob:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 34)
+    mob:setMod(xi.mod.EVA, 300)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
