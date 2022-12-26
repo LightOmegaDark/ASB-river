@@ -25,7 +25,7 @@ end
 entity.onTrade = function(player, npc, trade)
     if
         not isInTime() or
-        not checkQuestStatus(player) == QUEST_ACCEPTED
+        checkQuestStatus(player) ~= QUEST_ACCEPTED
     then
         player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
         return
