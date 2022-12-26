@@ -1131,9 +1131,9 @@ INSERT INTO `mob_groups` VALUES (9,4530,29,'Blazedrake',330,0,1352,0,0,85,87,0);
 INSERT INTO `mob_groups` VALUES (10,71,29,'Air_Elemental',330,4,38,0,0,57,64,0);
 INSERT INTO `mob_groups` VALUES (11,2060,29,'Imdugud',0,32,1358,5000,0,56,60,0);
 INSERT INTO `mob_groups` VALUES (12,513,29,'Boroka',86400,0,341,8000,0,56,60,0);
-INSERT INTO `mob_groups` VALUES (13,3725,29,'Spell_Spitter_Spilospok',0,128,0,0,0,55,55,0);
-INSERT INTO `mob_groups` VALUES (14,708,29,'Chemical_Cook_Chemachiq',0,128,0,0,0,55,55,0);
-INSERT INTO `mob_groups` VALUES (15,503,29,'Book_Browser_Bokabraq',0,128,0,0,0,55,55,0);
+INSERT INTO `mob_groups` VALUES (13,3725,29,'Spell_Spitter_Spilospok',0,128,0,4000,0,55,56,0);
+INSERT INTO `mob_groups` VALUES (14,708,29,'Chemical_Cook_Chemachiq',0,128,0,2000,0,52,53,0);
+INSERT INTO `mob_groups` VALUES (15,503,29,'Book_Browser_Bokabraq',0,128,0,0,2000,52,53,0);
 INSERT INTO `mob_groups` VALUES (16,4102,29,'Unstable_Cluster',0,128,2523,10000,0,56,57,0);
 INSERT INTO `mob_groups` VALUES (17,325,29,'Bahamut',0,128,0,26000,20000,83,83,0);
 INSERT INTO `mob_groups` VALUES (28,325,29,'Bahamutv2',0,128,6026,34000,20000,92,92,0);
@@ -13297,8 +13297,13 @@ INSERT INTO `mob_groups` VALUES (7,6954,209,'Titan_Prime_HTBF',0,128,0,0,0,99,99
 -- GM Zone (Zone 210)
 -- ------------------------------------------------------------
 
--- Garrison npc
-INSERT INTO `mob_groups` VALUES (1,20001,210,'Garrison',0,129,0,0,0,30,35,1); -- we need 1 base model
+-- Garrison npcs (1 per cap). These are inserted dynamically. Only min/max level matters.
+-- Consider adding a dynamic entitiy spawn param for min / max level so we only need 1 base mob group.
+INSERT INTO `mob_groups` VALUES (1,20001,210,'Garrison_20',0,129,0,0,0,15,20,1);
+INSERT INTO `mob_groups` VALUES (2,20001,210,'Garrison_30',0,129,0,0,0,25,30,1);
+INSERT INTO `mob_groups` VALUES (3,20001,210,'Garrison_40',0,129,0,0,0,35,40,1);
+INSERT INTO `mob_groups` VALUES (4,20001,210,'Garrison_50',0,129,0,0,0,45,50,1);
+INSERT INTO `mob_groups` VALUES (5,20001,210,'Garrison_75',0,129,0,0,0,70,75,1);
 
 -- ------------------------------------------------------------
 -- Cloister_of_Tides (Zone 211)

@@ -554,7 +554,7 @@ xi.quest.id =
         A_BITTER_PAST                   = 66, -- + Converted
         THE_CALL_OF_THE_SEA             = 67, -- + Converted
         PARADISE_SALVATION_AND_MAPS     = 68, -- + Converted
-        GO_GO_GOBMUFFIN                 = 69,
+        GO_GO_GOBMUFFIN                 = 69, -- + Converted
         THE_BIG_ONE                     = 70,
         FLY_HIGH                        = 71, -- ±
         UNFORGIVEN                      = 72, -- + Converted
@@ -654,7 +654,7 @@ xi.quest.id =
         THE_KUFTAL_TOUR                 = 195, -- ± Converted
         THE_IMMORTAL_LU_SHANG           = 196, -- ±
         TRIAL_SIZE_TRIAL_BY_WIND        = 197, -- ±
-        CHASING_DREAMS                  = 199,            -- CoP Quest
+        CHASING_DREAMS                  = 199, -- + Converted
         THE_SEARCH_FOR_GOLDMANE         = 200,            -- CoP Quest
         INDOMITABLE_SPIRIT              = 201, -- ±
     },
