@@ -22,9 +22,9 @@ zone_object.onInitialize = function(zone)
     zone:registerRegion(3, -213, -1, 224, -211, 1, 227)
     zone:registerRegion(4, -213, -1, 212, -211, 1, 215)
     -- Banishing Gate #2
-    zone:registerTriggerArea(10,  -49, -1,  82,  -49, 1,  84.2)
+    zone:registerTriggerArea(10,  -51, -1,  82,  -49, 1,  84.2)
     zone:registerTriggerArea(11, -151, -1,  82, -149, 1,  84.2)
-    zone:registerTriggerArea(12,  -49, -1, 115,  -49, 1, 117.2)
+    zone:registerTriggerArea(12,  -51, -1, 115,  -49, 1, 117.2)
     zone:registerTriggerArea(13, -151, -1, 115, -149, 1, 117.2)
 
     -- Banishing Gate #3
