@@ -12,8 +12,6 @@ require("scripts/globals/quests")
 -----------------------------------
 local entity = {}
 
-local entity = {}
-
 local function isInTime()
     return VanadielHour() <= 3
 end
