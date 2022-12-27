@@ -20,7 +20,7 @@ end
 
 entity.onTrade = function(player, npc, trade)
     if
-        not (VanadielHour() <= maxHour) or
+        VanadielHour() > maxHour or
         checkQuestStatus(player) ~= QUEST_ACCEPTED
     then
         player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
