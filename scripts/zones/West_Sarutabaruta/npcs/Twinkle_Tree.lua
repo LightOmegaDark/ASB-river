@@ -14,14 +14,10 @@ local entity = {}
 local maxHour = 3
 local questNameProg = "QuestCatchAFallingStar_prog"
 
-local function checkQuestStatus(player)
-    return player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TO_CATCH_A_FALLING_STAR)
-end
-
 entity.onTrade = function(player, npc, trade)
     if
         VanadielHour() > maxHour or
-        checkQuestStatus(player) ~= QUEST_ACCEPTED
+        player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TO_CATCH_A_FALLING_STAR) ~= QUEST_ACCEPTED
     then
         player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
         return
@@ -42,7 +38,7 @@ end
 entity.onTrigger = function(player, npc)
     if
         VanadielHour() <= maxHour and
-        checkQuestStatus(player) == QUEST_ACCEPTED
+        player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TO_CATCH_A_FALLING_STAR) == QUEST_ACCEPTED
     then
         player:messageSpecial(ID.text.FROST_DEPOSIT_TWINKLES)
         player:messageSpecial(ID.text.MELT_BARE_HANDS)
