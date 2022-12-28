@@ -109,8 +109,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if
-                    npcUtil.tradeHasExactly(trade, {{ xi.items.STARFALL_TEAR, 1}}) then
+                    if npcUtil.tradeHasExactly(trade, { { xi.items.STARFALL_TEAR, 1 } }) then
                         player:startEvent(199)
                     end
                 end
