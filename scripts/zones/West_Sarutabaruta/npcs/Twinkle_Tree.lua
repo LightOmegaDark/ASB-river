@@ -11,40 +11,11 @@ require("scripts/globals/npc_util")
 require("scripts/globals/quests")
 -----------------------------------
 local entity = {}
-local maxHour = 3
-local questNameProg = "QuestCatchAFallingStar_prog"
 
 entity.onTrade = function(player, npc, trade)
-    if
-        VanadielHour() > maxHour or
-        player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TO_CATCH_A_FALLING_STAR) ~= QUEST_ACCEPTED
-    then
-        player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
-        return
-    end
-
-    if npcUtil.tradeHas(trade, xi.items.HANDFUL_OF_PUGIL_SCALES) then
-        player:messageSpecial(ID.text.FROST_DEPOSIT_TWINKLES)
-        player:messageSpecial(ID.text.MELT_BARE_HANDS)
-        if npcUtil.giveItem(player, xi.items.STARFALL_TEAR) then
-            player:confirmTrade()
-            if (player:getCharVar(questNameProg) == 0) then
-                player:setCharVar(questNameProg, 1)
-            end
-        end
-    end
 end
 
 entity.onTrigger = function(player, npc)
-    if
-        VanadielHour() <= maxHour and
-        player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TO_CATCH_A_FALLING_STAR) == QUEST_ACCEPTED
-    then
-        player:messageSpecial(ID.text.FROST_DEPOSIT_TWINKLES)
-        player:messageSpecial(ID.text.MELT_BARE_HANDS)
-        return
-    end
-    player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
 end
 
 entity.onEventUpdate = function(player, csid, option)
