@@ -12,8 +12,6 @@ require('scripts/globals/zone')
 
 local westSaruMessages = require("scripts/zones/West_Sarutabaruta/IDs").text
 -----------------------------------
-local prog = "Prog"
-
 local quest = Quest:new(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TO_CATCH_A_FALLING_STAR)
 
 quest.reward =
@@ -86,8 +84,8 @@ quest.sections =
                         player:messageSpecial(westSaruMessages.MELT_BARE_HANDS)
                         if npcUtil.giveItem(player, xi.items.STARFALL_TEAR) then
                             player:confirmTrade()
-                            if(quest:getVar(player, prog) == 0) then
-                                quest:setVar(player, prog, 1)
+                            if(quest:getVar(player, "Prog") == 0) then
+                                quest:setVar(player, "Prog", 1)
                             end
                         end
                     end
@@ -123,7 +121,7 @@ quest.sections =
                 [199] = function(player, csid, option, npc)
                     player:tradeComplete()
                     quest:complete(player)
-                    quest:setVar(player, prog, 2)
+                    quest:setVar(player, "Prog", 2)
                 end
             }
         }
@@ -134,7 +132,7 @@ quest.sections =
         check = function(player, status, vars)
             return
                 status == QUEST_COMPLETED and
-                vars[prog] > 0
+                vars["Prog"] > 0
         end,
 
         [xi.zone.PORT_WINDURST] =
@@ -149,7 +147,7 @@ quest.sections =
             onEventFinish =
             {
                 [200] = function(player, csid, option, npc)
-                    quest:setVar(player, prog, 0)
+                    quest:setVar(player, "Prog", 0)
                 end
             }
         }
