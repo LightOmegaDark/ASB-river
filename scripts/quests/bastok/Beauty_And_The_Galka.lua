@@ -2,7 +2,6 @@
 -- Beauty and the Galka
 -----------------------------------
 -- !addquest 1 1
--- 
 -----------------------------------
 require('scripts/globals/interaction/quest')
 require("scripts/globals/items")
