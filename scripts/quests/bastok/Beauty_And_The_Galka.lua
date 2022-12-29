@@ -93,7 +93,7 @@ quest.sections =
                 [3] = function(player, csid, option, npc)
                     player:tradeComplete()
                     local palLogs = xi.ki.PALBOROUGH_MINES_LOGS
-                    npcUtil:giveKeyItem(player, palLogs)
+                    npcUtil.giveKeyItem(player, palLogs)
                     quest:messageSpecial(portBastokIDs.text.KEYITEM_OBTAINED, palLogs)
                 end,
             },
