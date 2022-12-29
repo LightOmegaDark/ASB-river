@@ -68,15 +68,16 @@ quest.sections =
                     if VanadielHour() <= 3 then
                         player:messageSpecial(westSaruMessages.FROST_DEPOSIT_TWINKLES)
                         player:messageSpecial(westSaruMessages.MELT_BARE_HANDS)
-                        return
+                        return quest:noAction()
                     end
                     player:messageSpecial(westSaruMessages.NOTHING_OUT_OF_ORDINARY)
+                    return quest:noAction()
                 end,
 
                 onTrade = function(player, npc, trade)
                     if VanadielHour() > 3 then
                         player:messageSpecial(westSaruMessages.NOTHING_OUT_OF_ORDINARY)
-                        return
+                        return quest:noAction()
                     end
 
                     if npcUtil.tradeHas(trade, xi.items.HANDFUL_OF_PUGIL_SCALES) then
@@ -84,11 +85,12 @@ quest.sections =
                         player:messageSpecial(westSaruMessages.MELT_BARE_HANDS)
                         if npcUtil.giveItem(player, xi.items.STARFALL_TEAR) then
                             player:confirmTrade()
-                            if(quest:getVar(player, "Prog") == 0) then
-                                quest:setVar(player, "Prog", 1)
+                            if quest:getVar(player, 'Prog') == 0 then
+                                quest:setVar(player, 'Prog', 1)
                             end
                         end
                     end
+                    return quest:noAction()
                 end
             }
         }
@@ -105,12 +107,12 @@ quest.sections =
             ['Sigismund'] =
             {
                 onTrigger = function(player, npc)
-                    player:startEvent(197, 0, xi.items.STARFALL_TEAR)
+                    return quest:progressEvent(197, 0, xi.items.STARFALL_TEAR)
                 end,
 
                 onTrade = function(player, npc, trade)
                     if npcUtil.tradeHasExactly(trade, { { xi.items.STARFALL_TEAR, 1 } }) then
-                        player:startEvent(199)
+                        return quest:progressEvent(199)
                     end
                 end
             },
@@ -118,9 +120,10 @@ quest.sections =
             onEventFinish =
             {
                 [199] = function(player, csid, option, npc)
-                    player:tradeComplete()
-                    quest:complete(player)
-                    quest:setVar(player, "Prog", 2)
+                    if quest:complete(player) then
+                        player:tradeComplete()
+                        quest:setVar(player, 'Prog', 2)
+                    end
                 end
             }
         }
@@ -131,22 +134,17 @@ quest.sections =
         check = function(player, status, vars)
             return
                 status == QUEST_COMPLETED and
-                vars["Prog"] > 0
+                vars['Prog'] > 0
         end,
 
         [xi.zone.PORT_WINDURST] =
         {
-            ['Sigismund'] =
-            {
-                onTrigger = function(player, npc)
-                    player:startEvent(200)
-                end
-            },
+            ['Sigismund'] = quest:progressEvent(200),
 
             onEventFinish =
             {
                 [200] = function(player, csid, option, npc)
-                    quest:setVar(player, "Prog", 0)
+                    quest:setVar(player, 'Prog', 0)
                 end
             }
         }
