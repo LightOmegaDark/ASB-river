@@ -37,7 +37,7 @@ quest.sections =
             {
                 [2] = function(player, csid, option, npc)
                     if option == 1 then
-                        quest:setVar(player, 'Denied', 1)
+                        quest:setVar(player, 'Option', 1)
                         return
                     end
                     quest:begin(player)
@@ -51,7 +51,7 @@ quest.sections =
         check = function(player, status, vars)
             return
                 status == QUEST_AVAILABLE and
-                quest:getVar(player, 'Denied') == 1
+                quest:getVar(player, 'Option') == 1
         end,
 
         [xi.zone.BASTOK_MINES] =
@@ -93,7 +93,7 @@ quest.sections =
                 [3] = function(player, csid, option, npc)
                     player:tradeComplete()
                     local palLogs = xi.ki.PALBOROUGH_MINES_LOGS
-                    player:addKeyItem(palLogs)
+                    npcUtil:giveKeyItem(player, palLogs)
                     quest:messageSpecial(portBastokIDs.text.KEYITEM_OBTAINED, palLogs)
                 end,
             },
@@ -128,7 +128,6 @@ quest.sections =
                     if quest:complete(player) then
                         player:tradeComplete()
                         player:delKeyItem(xi.ki.PALBOROUGH_MINES_LOGS)
-                        quest:setVar(player, 'Denied', 0)
                     end
                 end
             }
@@ -143,7 +142,7 @@ quest.sections =
 
         [xi.zone.BASTOK_MINES] =
         {
-            ['Parraggoh'] = quest:event(12)
+            ['Parraggoh'] = quest:event(12):replaceDefault()
         }
     },
 }
