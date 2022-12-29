@@ -41,7 +41,6 @@ quest.sections =
                     else
                         quest:begin(player)
                     end
-
                 end,
             },
         },
