@@ -10,7 +10,7 @@ require("scripts/globals/npc_util")
 require('scripts/globals/quests')
 require('scripts/globals/zone')
 
-local westSaruMessages = require("scripts/zones/West_Sarutabaruta/IDs").text
+local westSaruIDs = require("scripts/zones/West_Sarutabaruta/IDs")
 -----------------------------------
 local quest = Quest:new(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TO_CATCH_A_FALLING_STAR)
 
@@ -66,28 +66,25 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if VanadielHour() <= 3 then
-                        player:messageSpecial(westSaruMessages.FROST_DEPOSIT_TWINKLES)
-                        player:messageSpecial(westSaruMessages.MELT_BARE_HANDS)
-                        return quest:noAction()
+                        player:messageSpecial(westSaruIDs.text.FROST_DEPOSIT_TWINKLES)
+                        return quest:messageSpecial(westSaruIDs.text.MELT_BARE_HANDS)
                     end
-                    player:messageSpecial(westSaruMessages.NOTHING_OUT_OF_ORDINARY)
-                    return quest:noAction()
+                    return quest:messageSpecial(westSaruIDs.text.NOTHING_OUT_OF_ORDINARY)
                 end,
 
                 onTrade = function(player, npc, trade)
                     if VanadielHour() > 3 then
-                        player:messageSpecial(westSaruMessages.NOTHING_OUT_OF_ORDINARY)
-                        return quest:noAction()
+                        return quest:messageSpecial(westSaruIDs.text.NOTHING_OUT_OF_ORDINARY)
                     end
 
                     if npcUtil.tradeHas(trade, xi.items.HANDFUL_OF_PUGIL_SCALES) then
-                        player:messageSpecial(westSaruMessages.FROST_DEPOSIT_TWINKLES)
-                        player:messageSpecial(westSaruMessages.MELT_BARE_HANDS)
                         if npcUtil.giveItem(player, xi.items.STARFALL_TEAR) then
                             player:confirmTrade()
                             if quest:getVar(player, 'Prog') == 0 then
                                 quest:setVar(player, 'Prog', 1)
                             end
+                            player:messageSpecial(westSaruIDs.text.FROST_DEPOSIT_TWINKLES)
+                            return quest:messageSpecial(westSaruIDs.text.MELT_BARE_HANDS)
                         end
                     end
                     return quest:noAction()
@@ -107,7 +104,7 @@ quest.sections =
             ['Sigismund'] =
             {
                 onTrigger = function(player, npc)
-                    return quest:progressEvent(197, 0, xi.items.STARFALL_TEAR)
+                    return quest:event(197, 0, xi.items.STARFALL_TEAR)
                 end,
 
                 onTrade = function(player, npc, trade)
