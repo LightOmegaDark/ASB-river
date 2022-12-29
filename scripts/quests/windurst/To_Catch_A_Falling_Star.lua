@@ -42,24 +42,18 @@ quest.sections =
         },
     },
 
-    -- Supporting Character dialogue after Accepted
-    {
-        check  = function(player, status, vars)
-            return status == QUEST_ACCEPTED
-        end,
-
-        [xi.zone.PORT_WINDURST] =
-        {
-            ['Tohopka'] = quest:progressEvent(198, 0, xi.items.STARFALL_TEAR, xi.items.HANDFUL_OF_PUGIL_SCALES)
-        }
-    },
-
-    -- Twinkle Tree in West Saru.
     {
         check = function(player, status, vars)
             return status == QUEST_ACCEPTED
         end,
 
+        -- Supporting Character dialogue after Accepted
+        [xi.zone.PORT_WINDURST] =
+        {
+            ['Tohopka'] = quest:event(198, 0, xi.items.STARFALL_TEAR, xi.items.HANDFUL_OF_PUGIL_SCALES)
+        },
+
+        -- Twinkle Tree in West Saru.
         [xi.zone.WEST_SARUTABARUTA] =
         {
             ['Twinkle_Tree'] =
@@ -77,7 +71,7 @@ quest.sections =
                         return quest:messageSpecial(westSaruIDs.text.NOTHING_OUT_OF_ORDINARY)
                     end
 
-                    if npcUtil.tradeHas(trade, xi.items.HANDFUL_OF_PUGIL_SCALES) then
+                    if npcUtil.tradeHasExactly(trade, { { xi.items.HANDFUL_OF_PUGIL_SCALES, 1 } }) then
                         if npcUtil.giveItem(player, xi.items.STARFALL_TEAR) then
                             player:confirmTrade()
                             if quest:getVar(player, 'Prog') == 0 then
@@ -131,7 +125,7 @@ quest.sections =
         check = function(player, status, vars)
             return
                 status == QUEST_COMPLETED and
-                vars['Prog'] > 0
+                vars.Prog > 0
         end,
 
         [xi.zone.PORT_WINDURST] =
