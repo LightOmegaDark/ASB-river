@@ -11,7 +11,7 @@ require("scripts/globals/npc_util")
 require('scripts/globals/quests')
 require('scripts/globals/zone')
 
-local portBastokMessages = require("scripts/zones/Port_Bastok/IDs").text
+local portBastokIDs = require("scripts/zones/Port_Bastok/IDs")
 -----------------------------------
 local quest = Quest:new(xi.quest.log_id.BASTOK, xi.quest.id.bastok.BEAUTY_AND_THE_GALKA)
 
@@ -95,7 +95,7 @@ quest.sections =
                     player:tradeComplete()
                     local palLogs = xi.ki.PALBOROUGH_MINES_LOGS
                     player:addKeyItem(palLogs)
-                    player:messageSpecial(portBastokMessages.KEYITEM_OBTAINED, palLogs)
+                    quest:messageSpecial(portBastokIDs.text.KEYITEM_OBTAINED, palLogs)
                 end,
             },
         }
