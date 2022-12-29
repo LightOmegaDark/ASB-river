@@ -3,10 +3,6 @@
 --  NPC: Parraggoh
 -- Finishes Quest: Beauty and the Galka
 -----------------------------------
--- local ID = require("scripts/zones/Bastok_Mines/IDs")
-require("scripts/globals/quests")
-require("scripts/globals/keyitems")
------------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
