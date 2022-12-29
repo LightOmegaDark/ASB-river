@@ -116,7 +116,7 @@ quest.sections =
                         return quest:progressEvent(10)
                     end
 
-                    if math.random(1,2) == 1 then
+                    if math.random(1, 2) == 1 then
                         return quest:event(8)
                     end
                     return quest:event(9)
