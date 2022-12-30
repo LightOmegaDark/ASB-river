@@ -69,12 +69,12 @@ quest.sections =
         },
     },
 
-    -- Quest Giver after Accepted
     {
         check = function(player, status, vars)
             return status == QUEST_ACCEPTED
         end,
 
+        -- Quest Giver after Accepted
         [xi.zone.PORT_BASTOK] =
         {
             ['Talib'] =
@@ -95,15 +95,9 @@ quest.sections =
                     npcUtil.giveKeyItem(player, xi.ki.PALBOROUGH_MINES_LOGS)
                 end,
             },
-        }
-    },
+        },
 
-    -- Quest Complete
-    {
-        check = function(player, status, vars)
-            return status == QUEST_ACCEPTED
-        end,
-
+        -- Quest Complete
         [xi.zone.BASTOK_MINES] =
         {
             ['Parraggoh'] =
