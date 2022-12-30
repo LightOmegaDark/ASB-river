@@ -81,7 +81,6 @@ quest.sections =
                             return quest:messageSpecial(westSaruIDs.text.MELT_BARE_HANDS)
                         end
                     end
-                    return quest:noAction()
                 end
             }
         }
