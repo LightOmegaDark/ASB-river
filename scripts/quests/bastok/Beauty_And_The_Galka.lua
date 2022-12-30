@@ -9,8 +9,6 @@ require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")
 require('scripts/globals/quests')
 require('scripts/globals/zone')
-
-local portBastokIDs = require("scripts/zones/Port_Bastok/IDs")
 -----------------------------------
 local quest = Quest:new(xi.quest.log_id.BASTOK, xi.quest.id.bastok.BEAUTY_AND_THE_GALKA)
 
