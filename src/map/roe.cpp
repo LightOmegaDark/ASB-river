@@ -684,7 +684,6 @@ namespace roeutils
     void CycleUnityRankings()
     {
         TracyZoneScoped;
-
         if (!settings::get<bool>("main.ENABLE_ROE"))
         {
             return;
@@ -699,7 +698,6 @@ namespace roeutils
     void UpdateUnityRankings()
     {
         TracyZoneScoped;
-
         if (!settings::get<bool>("main.ENABLE_ROE"))
         {
             return;
