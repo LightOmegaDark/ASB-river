@@ -83,6 +83,7 @@ private:
 
     bool       m_Stuck = false;
     position_t m_LastPos;
+    position_t m_LastTargetPos;
 
     time_point m_LastActionTime;
     time_point m_LastMagicTime;
