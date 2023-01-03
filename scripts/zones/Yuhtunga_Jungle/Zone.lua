@@ -49,14 +49,6 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onZoneWeatherChange = function(weatherType)
-    if weatherType == xi.weather.RAIN or weatherType == xi.weather.SQUALL then
-        updateRainHarvesting(xi.status.NORMAL)
-    else
-        updateRainHarvesting(xi.status.DISAPPEAR)
-    end
-end
-
 zoneObject.onZoneIn = function(player, prevZone)
     local cs = -1
 
@@ -106,6 +98,12 @@ zoneObject.onZoneWeatherChange = function(weather)
             DisallowRespawn(bayawak:getID(), false)
             bayawak:setRespawnTime(math.random(30, 150)) -- pop 30-150 sec after fire weather starts
         end
+    end
+
+    if weather == xi.weather.RAIN or weather == xi.weather.SQUALL then
+        updateRainHarvesting(xi.status.NORMAL)
+    else
+        updateRainHarvesting(xi.status.DISAPPEAR)
     end
 end
 
