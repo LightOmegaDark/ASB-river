@@ -14,10 +14,12 @@ require('scripts/globals/zone')
 -----------------------------------
 local quest = Quest:new(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TWINSTONE_BONDING)
 
+quest.reward = {}
+
 local function checkTrade(player, trade)
     if
-        quest:getVar(player, "Prog") ~= 1 or
-        player:needToZone() and
+        quest:getVar(player, 'Prog') == 1 and
+        not player:needToZone() and
         npcUtil.tradeHasExactly(trade, { { xi.items.TWINSTONE_EARRING, 1 } })
     then
         return quest:progressEvent(490)
@@ -30,27 +32,6 @@ local function checkAndcompleteQuest(player)
         player:needToZone(true)
     end
 end
-
-local function setInitialReward()
-    quest.reward =
-    {
-        fame = 80,
-        fameArea = xi.quest.fame_area.WINDURST,
-        item = xi.items.WRAPPED_BOW,
-        title = xi.title.BOND_FIXER
-    }
-end
-
--- Repeat turn ins only get gil + less fame than the initial turn in
-local function setRepeatReward()
-    quest.reward =
-    {
-        fame = 10,
-        fameArea = xi.quest.fame_area.WINDURST,
-        gil = 900 * xi.settings.main.GIL_RATE
-    }
-end
-
 
 quest.sections =
 {
@@ -98,11 +79,18 @@ quest.sections =
             onEventFinish =
             {
                 [488] = function(player, csid, option, npc)
-                    quest:setVar(player, "Prog", 1)
+                    quest:setVar(player, 'Prog', 1)
                 end,
 
                 [490] = function(player, csid, option, npc)
-                    setInitialReward()
+                    player:messageSpecial(7251)
+                    quest.reward =
+                    {
+                        fame = 80,
+                        fameArea = xi.quest.fame_area.WINDURST,
+                        item = xi.items.WRAPPED_BOW,
+                        title = xi.title.BOND_FIXER
+                    }
                     checkAndcompleteQuest(player)
                 end
             },
@@ -115,7 +103,7 @@ quest.sections =
             return status == QUEST_COMPLETED
         end,
 
-        [xi.zone.PORT_WINDURST] =
+        [xi.zone.WINDURST_WOODS] =
         {
             ['Gioh_Ajihri'] =
             {
@@ -135,11 +123,17 @@ quest.sections =
             onEventFinish =
             {
                 [488] = function(player, csid, option, npc)
-                    quest:setVar(player, "Prog", 1)
+                    quest:setVar(player, 'Prog', 1)
                 end,
 
                 [490] = function(player, csid, option, npc)
-                    setRepeatReward()
+                    player:messageSpecial(6649)
+                    quest.reward =
+                    {
+                        fame = 10,
+                        fameArea = xi.quest.fame_area.WINDURST,
+                        gil = 900 * xi.settings.main.GIL_RATE
+                    }
                     checkAndcompleteQuest(player)
                 end
             },
