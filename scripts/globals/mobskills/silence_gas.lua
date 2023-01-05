@@ -21,7 +21,7 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
 
     local dmgmod = 1
     if mob:getMaster() then
-        dmgmod = xi.mobskills.mobBreathMove(mob, target, 0.1, 2, xi.magic.ele.DARK, 600)
+        dmgmod = xi.mobskills.mobBreathMove(mob, target, 0.1, 2, xi.magic.ele.DARK, 300)
     else
         dmgmod = xi.mobskills.mobBreathMove(mob, target, 0.25, 2, xi.magic.ele.DARK, 800)
     end
