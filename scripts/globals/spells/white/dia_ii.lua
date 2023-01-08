@@ -46,8 +46,13 @@ spellObject.onSpellCast = function(caster, target, spell)
     spell:setMsg(xi.msg.basic.MAGIC_DMG) -- hit for initial damage
     -- Check for Bio
     local bio = target:getStatusEffect(xi.effect.BIO)
+    local dia = target:getStatusEffect(xi.effect.DIA)
 
-    if  bio == nil then -- if no bio, add dia dot
+    if dia ~= nil then -- reset dia timer if dia is already on target
+        target:delStatusEffectSilent(xi.effect.DIA)
+        target:addStatusEffect(xi.effect.DIA, 2 + dotBonus, 3, duration, 0, 10, 2)
+    elseif  bio == nil then -- if no bio, add dia dot
+
         target:addStatusEffect(xi.effect.DIA, 2 + dotBonus, 3, duration, 0, 10, 2)
     elseif
         bio:getSubPower() == 10 or
