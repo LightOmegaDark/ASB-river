@@ -826,9 +826,6 @@ xi.job_utils.dragoon.addWyvernExp = function(player, exp)
         numLevelUps = math.floor((prevExp + currentExp) / 200) - math.floor(prevExp / 200)
 
         if numLevelUps ~= 0 then
-            local wyvernAttributeIncreaseEffectJP = player:getJobPointLevel(xi.jp.WYVERN_ATTR_BONUS)
-            local wyvernBonusDA = player:getMod(xi.mod.WYVERN_ATTRIBUTE_DA)
-
             wyvern:addMod(xi.mod.ACC, 6 * numLevelUps)
             wyvern:addMod(xi.mod.HPP, 6 * numLevelUps)
             wyvern:addMod(xi.mod.ATTP, 5 * numLevelUps)
@@ -836,13 +833,12 @@ xi.job_utils.dragoon.addWyvernExp = function(player, exp)
             wyvern:updateHealth()
             wyvern:setHP(wyvern:getMaxHP())
             player:messageBasic(xi.msg.basic.STATUS_INCREASED, 0, 0, wyvern)
-            wyvern:setLocalVar("wyvern_level_ups", levels_gained + 1)
-            diff = diff - 1
+            wyvern:setLocalVar("wyvern_level_ups", numLevelUps + 1)
         end
 
         wyvern:setLocalVar("wyvern_exp", prevExp + exp)
         wyvern:setLocalVar("level_Ups", wyvern:getLocalVar("level_Ups") + numLevelUps)
     end
 
-    return levels_gained
+    return numLevelUps
 end

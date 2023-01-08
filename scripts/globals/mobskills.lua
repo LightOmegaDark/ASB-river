@@ -100,7 +100,7 @@ xi.mobskills.magicalTpBonus =
 --     return math.min(critRate, 15) * sign
 -- end
 
-local function calculateMobMagicBurst(caster, ele, target)
+local calculateMobMagicBurst = function(caster, ele, target)
     local burst = 1.0
     local skillchainTier, skillchainCount = xi.magic.MobFormMagicBurst(ele, target)
 
@@ -124,13 +124,17 @@ local function calculateMobMagicBurst(caster, ele, target)
     return burst
 end
 
-local function getBarSpellDefBonus(mob, target, spellElement)
-    if spellElement >= xi.magic.element.FIRE and spellElement <= xi.magic.element.WATER then
+local getBarSpellDefBonus = function(mob, target, spellElement)
+    if
+        spellElement >= xi.magic.element.FIRE and
+        spellElement <= xi.magic.element.WATER
+    then
         if target:hasStatusEffect(xi.magic.barSpell[spellElement]) then -- bar- spell magic defense bonus
             return target:getStatusEffect(xi.magic.barSpell[spellElement]):getPower()
         end
     end
 end
+
 xi.mobskills.mobRangedMove = function(mob, target, skill, numberofhits, accmod, dmgmod, tpeffect, ftp100, ftp200, ftp300)
     -- this will eventually contian ranged attack code
     return xi.mobskills.mobPhysicalMove(mob, target, skill, numberofhits, accmod, dmgmod, xi.mobskills.physicalTpBonus.RANGED, ftp100, ftp200, ftp300)
@@ -198,6 +202,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numberofhits, accmod
     if hitdamage < 1 then
         hitdamage = 0 -- If I hit below 1 I actually did 0 damage.
     end
+
     -- Leaving dmgmod for future rewrite (Set all to 1)
     -- TODO: Remove damage mod completely
     if dmgmod then
@@ -352,6 +357,10 @@ end
 
 xi.mobskills.mobMagicalMove = function(mob, target, skill, damage, element, dmgmod, tpeffect, tpvalue, ignoreresist, ftp100, ftp200, ftp300, dStatMult)
     local returninfo = { }
+    if ignoreresist == 0 then
+        ignoreresist = false
+    end
+
     local ignoreres = ignoreresist or false
 
     --get all the stuff we need
@@ -436,15 +445,15 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, damage, element, dmgm
 end
 
 xi.mobskills.ftP = function(tp, ftp100, ftp200, ftp300)
-    if (tp < 1000) then
+    if tp < 1000 then
         tp = 1000
     end
 
-    if (tp >= 1000 and tp < 2000) then
-        return ftp100 + ( ((ftp200 - ftp100 ) / 1000) * (tp - 1000) )
-    elseif (tp >= 2000 and tp <= 3000) then
+    if tp >= 1000 and tp < 2000 then
+        return ftp100 + (((ftp200 - ftp100) / 1000) * (tp - 1000))
+    elseif tp >= 2000 and tp <= 3000 then
         -- generate a straight line between ftp2 and ftp3 and find point @ tp
-        return ftp200 + ( ((ftp300 - ftp200) / 1000) * (tp - 2000) )
+        return ftp200 + (((ftp300 - ftp200) / 1000) * (tp - 2000))
     else
         print("fTP error: TP value is not between 1000-3000!")
     end
@@ -460,11 +469,12 @@ xi.mobskills.applyPlayerResistance = function(mob, effect, target, diff, bonus, 
 end
 
 xi.mobskills.mobAddBonuses = function(caster, target, dmg, ele, ignoreres) -- used for SMN magical bloodpacts, despite the name.
-
     local ignore = ignoreres or false
     local magicDefense = xi.magic.getElementalDamageReduction(target, ele)
 
-    if not ignore then dmg = math.floor(dmg * magicDefense) end
+    if not ignore then
+        dmg = math.floor(dmg * magicDefense)
+    end
 
     local dayWeatherBonus = 1.00
 
@@ -570,7 +580,10 @@ xi.mobskills.mobBreathMove = function(mob, target, percent, base, element, cap)
 
     damage = xi.damage.applyDamageTaken(target, damage, xi.attackType.BREATH)
 
-    if target:hasStatusEffect(xi.effect.ALL_MISS) and target:getStatusEffect(xi.effect.ALL_MISS):getPower() > 1 then
+    if
+        target:hasStatusEffect(xi.effect.ALL_MISS) and
+        target:getStatusEffect(xi.effect.ALL_MISS):getPower() > 1
+    then
         return 0
     end
 
@@ -605,7 +618,10 @@ xi.mobskills.mobFinalAdjustments = function(dmg, mob, skill, target, attackType,
     end
 
     -- handle super jump
-    if target:hasStatusEffect(xi.effect.ALL_MISS) and target:getStatusEffect(xi.effect.ALL_MISS):getPower() > 1 then
+    if
+        target:hasStatusEffect(xi.effect.ALL_MISS) and
+        target:getStatusEffect(xi.effect.ALL_MISS):getPower() > 1
+    then
         skill:setMsg(xi.msg.basic.SKILL_MISS)
         return 0
     end

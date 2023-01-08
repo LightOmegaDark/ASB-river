@@ -380,7 +380,7 @@ xi.crafting.unionRepresentativeTrigger = function(player, guildId, csid, currenc
     local rank   = player:getSkillRank(guildId + 48)
     local cap    = (rank + 1) * 10
     local kibits = 0
-    local rewardTable = xi.crafting.gpRewards[guildID]["Keyitems"]
+    local rewardTable = xi.crafting.gpRewards[guildId]["Keyitems"]
 
     for kbit, ki in pairs(rewardTable) do
         if rank >= ki.rank then

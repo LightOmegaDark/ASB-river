@@ -20,7 +20,7 @@ abilityObject.onAbilityCheck = function(player, target, ability)
         return xi.msg.basic.NO_EFFECT_ON_PET, 0
     else
         local id = player:getEquipID(xi.slot.AMMO)
-        if (id >= 17016 and id <= 17023) then
+        if id >= 17016 and id <= 17023 then
             local playerLevel = player:getMainLvl()
             local itemLevels = {}
             itemLevels[17016] = 12 -- Alpha
@@ -32,7 +32,10 @@ abilityObject.onAbilityCheck = function(player, target, ability)
             itemLevels[17022] = 84 -- Eta
             itemLevels[17023] = 96 -- Theta
 
-            if playerLevel < itemLevels[id] then return xi.msg.basic.MUST_HAVE_FOOD, 0 end
+            if playerLevel < itemLevels[id] then
+                return xi.msg.basic.MUST_HAVE_FOOD, 0
+            end
+
             return 0, 0
         else
             return xi.msg.basic.MUST_HAVE_FOOD, 0
@@ -59,43 +62,43 @@ abilityObject.onUseAbility = function(player, target, ability, action)
 
     -- TODO: Create lookup table for these switches
     switch (rangeObj) : caseof {
-        [17016] = function () -- pet food alpha biscuit
+        [17016] = function() -- pet food alpha biscuit
             minimumHealing = 20
             regenAmount    = 1
             totalHealing   = math.floor(minimumHealing + 2 * (playerMnd - 10))
         end,
 
-        [17017] = function () -- pet food beta biscuit
+        [17017] = function() -- pet food beta biscuit
             minimumHealing = 50
             regenAmount    = 3
             totalHealing   = math.floor(minimumHealing + 1 * (playerMnd - 33))
         end,
 
-        [17018] = function () -- pet food gamma biscuit
+        [17018] = function() -- pet food gamma biscuit
             minimumHealing = 100
             regenAmount    = 5
             totalHealing   = math.floor(minimumHealing + 1 * (playerMnd - 35)) -- TO BE VERIFIED.
         end,
 
-        [17019] = function () -- pet food delta biscuit
+        [17019] = function() -- pet food delta biscuit
             minimumHealing = 150
             regenAmount    = 8
             totalHealing   = math.floor(minimumHealing + 2 * (playerMnd - 40)) -- TO BE VERIFIED.
         end,
 
-        [17020] = function () -- pet food epsilon biscuit
+        [17020] = function() -- pet food epsilon biscuit
             minimumHealing = 300
             regenAmount    = 11
             totalHealing   = math.floor(minimumHealing + 2 * (playerMnd - 45))
         end,
 
-        [17021] = function () -- pet food zeta biscuit
+        [17021] = function() -- pet food zeta biscuit
             minimumHealing = 350
             regenAmount    = 14
             totalHealing   = math.floor(minimumHealing + 3 * (playerMnd - 45))
         end,
 
-        [17022] = function () -- pet food eta biscuit
+        [17022] = function() -- pet food eta biscuit
             minimumHealing = 1200
             regenAmount    = 17
             totalHealing   = math.floor(minimumHealing + 4 * (playerMnd - 50))

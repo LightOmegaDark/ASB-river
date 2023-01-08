@@ -451,7 +451,7 @@ xi.spells.enfeebling.useEnfeeblingSpell = function(caster, target, spell)
         end
 
         -- Add "Magic Burst!" message
-        local _, skillchainCount = FormMagicBurst(spellElement, target) -- External function. Not present in magic.lua.
+        local _, skillchainCount = xi.magic.FormMagicBurst(spellElement, target) -- External function. Not present in magic.lua.
 
         if skillchainCount > 0 then
             spell:setMsg(xi.msg.basic.MAGIC_BURST_ENFEEB_IS - message * 3)

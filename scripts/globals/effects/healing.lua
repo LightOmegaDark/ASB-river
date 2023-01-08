@@ -95,6 +95,7 @@ effectObject.onEffectTick = function(target, effect)
             if target:getHPP() < 100 then
                 target:updateEnmityFromCure(target, healHP)
             end
+
             target:addHPLeaveSleeping(healHP)
             target:addMP(12 + ((healtime - 2) * (1 + target:getMod(xi.mod.CLEAR_MIND))) + target:getMod(xi.mod.MPHEAL))
         end

@@ -36,7 +36,7 @@ spellObject.onSpellCast = function(caster, target, spell)
 
         if resduration == 0 then
             spell:setMsg(xi.msg.basic.NONE)
-        elseif (target:addStatusEffect(xi.effect.STUN, 1, 0, resduration)) then
+        elseif target:addStatusEffect(xi.effect.STUN, 1, 0, resduration) then
             spell:setMsg(xi.msg.basic.MAGIC_ENFEEB_IS)
         else
             spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)

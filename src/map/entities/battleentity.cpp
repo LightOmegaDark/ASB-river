@@ -1795,13 +1795,9 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
                 msg = PSpell->getAoEMessage();
             }
 
+            actionTarget.param    = damage;
             actionTarget.modifier = PSpell->getModifier();
             PSpell->setModifier(MODIFIER::NONE); // Reset modifier on use
-
-            actionTarget.modifier = PSpell->getModifier();
-            PSpell->setModifier(MODIFIER::NONE); // Reset modifier on use
-
-            actionTarget.param = damage;
         }
 
         if (actionTarget.animation == 122)

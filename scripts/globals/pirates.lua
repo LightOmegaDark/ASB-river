@@ -19,7 +19,7 @@ xi.pirates.status =
 
 local function SetZoneMusic(zone, block, track)
     for _, player in pairs(zone:getPlayers()) do
-        player:ChangeMusic(block, track)
+        player:changeMusic(block, track)
     end
 end
 
@@ -110,11 +110,13 @@ xi.pirates.despawnMobs = function(ID)
             end
         end
     end
+
     if GetMobByID(ID.mob.CROSSBONES + 4):isSpawned() then
         if not GetMobByID(ID.mob.CROSSBONES + 4):isEngaged() then
             DespawnMob(ID.mob.CROSSBONES + 4)
         end
     end
+
     if GetMobByID(ID.mob.CROSSBONES + 5):isSpawned() then
         if not GetMobByID(ID.mob.CROSSBONES + 5):isEngaged() then
             DespawnMob(ID.mob.CROSSBONES + 5)
@@ -146,6 +148,7 @@ xi.pirates.summonAnimations = function(ID, firstcast)
             if not firstcast then
                 startTime = 2000 + math.random(2000, 3000)
             end
+
             npc:timer(startTime, function(npcArg)
                 if npcArg:getLocalVar("castmode") == 1 then
                     npcArg:entityAnimationPacket("casm")
@@ -166,14 +169,15 @@ xi.pirates.update = function(ID, zone, tripTime)
 
     switch (pirateStatus): caseof
     {
-        [0] = function (x)
+        [0] = function()
             if tripTime >= 200 then
                 SetZoneMusic(zone, 0, 0)
                 SetZoneMusic(zone, 1, 0)
                 ship:setLocalVar("pirateStatus", xi.pirates.status.PREPARING)
             end
         end,
-        [1] = function (x)
+
+        [1] = function()
             if tripTime >= 240 then
                 ship:setAnimPath(ID.npc.PIRATE_SHIP.anim_path)
                 ship:setAnimation(18)
@@ -185,7 +189,8 @@ xi.pirates.update = function(ID, zone, tripTime)
                 ship:setLocalVar("pirateStatus", xi.pirates.status.ARRIVING)
             end
         end,
-        [2] = function (x)
+
+        [2] = function()
             if tripTime >= 290 then
                 for k, pirate in pairs(ID.npc.PIRATES) do
                     local npc = GetNPCByID(k)
@@ -214,7 +219,8 @@ xi.pirates.update = function(ID, zone, tripTime)
                 ship:setLocalVar("pirateStatus", xi.pirates.status.SPAWNING)
             end
         end,
-        [3] = function (x)
+
+        [3] = function()
             if tripTime >= 297 then
                 xi.pirates.setShipPosition(ship, ID.npc.PIRATE_SHIP.event_pos)
                 ship:setAnimation(0)
@@ -226,6 +232,7 @@ xi.pirates.update = function(ID, zone, tripTime)
                     npc:lookAt(pirate.look_at)
                     npc:sendUpdateToZoneCharsInRange(2000)
                 end
+
                 xi.pirates.summonAnimations(ID, true)
             else
                 for k, pirate in pairs(ID.npc.PIRATES) do
@@ -235,7 +242,8 @@ xi.pirates.update = function(ID, zone, tripTime)
                 end
             end
         end,
-        [4] = function (x)
+
+        [4] = function()
             if tripTime >= 695 then
                 for k, pirate in pairs(ID.npc.PIRATES) do
                     local npc = GetNPCByID(k)
@@ -254,6 +262,7 @@ xi.pirates.update = function(ID, zone, tripTime)
                         npc:sendUpdateToZoneCharsInRange(2000)
                     end
                 end
+
                 xi.pirates.despawnMobs(ID)
                 ship:setLocalVar("pirateStatus", xi.pirates.status.DESPAWNING)
             elseif tripTime <= 685 and tripTime >= 304 then
@@ -263,7 +272,8 @@ xi.pirates.update = function(ID, zone, tripTime)
                 SetZoneMusic(zone, 1, 170)
             end
         end,
-        [5] = function (x)
+
+        [5] = function()
             if tripTime >= 706 then
                 xi.pirates.despawnNPCs(ID)
                 ship:setAnimPath(ID.npc.PIRATE_SHIP.anim_path)
@@ -275,7 +285,8 @@ xi.pirates.update = function(ID, zone, tripTime)
                 ship:setLocalVar("pirateStatus", xi.pirates.status.DEPARTING)
             end
         end,
-        [6] = function (x)
+
+        [6] = function()
             if tripTime >= 760 then
                 SetZoneMusic(zone, 0, 106)
                 SetZoneMusic(zone, 1, 106)
@@ -285,7 +296,8 @@ xi.pirates.update = function(ID, zone, tripTime)
                 ship:setLocalVar("pirateStatus", xi.pirates.status.FINISHED)
             end
         end,
-        [7] = function (x)
+
+        [7] = function()
             xi.pirates.despawnMobs(ID)
         end
     }

@@ -198,7 +198,7 @@ xi.damage.magicHitRate.calculateCasterMagicAccuracy = function(caster, target, s
     -----------------------------------
     -- magicAcc from Magic Burst
     -----------------------------------
-    local _, skillchainCount = FormMagicBurst(spellElement, target)
+    local _, skillchainCount = xi.magic.FormMagicBurst(spellElement, target)
 
     if skillchainCount > 0 then
         magicAcc = magicAcc + 100

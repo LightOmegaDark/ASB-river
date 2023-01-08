@@ -787,6 +787,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
 
     PSkill->setTotalTargets(targets);
     PSkill->setTP(state.GetSpentTP());
+    PSkill->setHP(health.hp);
     PSkill->setHPP(GetHPP());
 
     uint16 msg            = 0;
@@ -1645,6 +1646,11 @@ float CMobEntity::ApplyTH(int16 m_THLvl, int16 rate)
             }
         }
     }
+}
+
+bool CMobEntity::CanMove()
+{
+    return !StatusEffectContainer->IsAsleep() && !StatusEffectContainer->HasStatusEffect({EFFECT_BIND, EFFECT_PETRIFICATION, EFFECT_TERROR, EFFECT_STUN});
 }
 
 bool CMobEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg)

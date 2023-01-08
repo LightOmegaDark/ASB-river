@@ -25,8 +25,8 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.tier = 3
 
     if not xi.magic.differentEffect(caster, target, spell, params) then
-       spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
-       return params.effect
+        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
+        return params.effect
     end
 
     local resist = xi.magic.applyResistanceEffect(caster, target, spell, params)
