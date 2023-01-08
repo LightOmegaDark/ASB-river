@@ -23,6 +23,10 @@ entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.SKILL_LIST, 728)
 end
 
+entity.onMobSpawn = function(mob)
+    mob:setMobMod(xi.mobMod.SKILL_LIST, 728)
+end
+
 entity.onMobWeaponSkillPrepare = function(mob, target)
     local stage = mob:getLocalVar("stage")
     if stage == 0 then

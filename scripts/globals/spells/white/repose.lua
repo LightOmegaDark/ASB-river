@@ -1,9 +1,7 @@
 -----------------------------------
 -- Spell: Repose
 -----------------------------------
-require("scripts/globals/status")
-require("scripts/globals/magic")
-require("scripts/globals/msg")
+require("scripts/globals/spells/enfeebling_spell")
 -----------------------------------
 local spellObject = {}
 

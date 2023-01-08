@@ -64,7 +64,7 @@ end
 local function getWyvern(player)
     local wyvern = player:getPet()
 
-    if wyvern and player:getPetID() == xi.pet.id.WYVERN then
+    if wyvern and wyvern:getPetID() == xi.pet.id.WYVERN then
         return wyvern
     end
 
@@ -703,7 +703,7 @@ xi.job_utils.dragoon.useDamageBreath = function(wyvern, target, skill, action, d
         -- The bit does not actually change the message.
         action:messageID(target:getID(), xi.msg.basic.JA_RECOVERS_HP)
         if magicBurst > 1  then
-            action:modifier(target:getID(), xi.actionModifier.MAGIC_BURST)
+            action:modifier(target:getID(), xi.msg.actionModifier.MAGIC_BURST)
         end
 
         return target:addHP(math.abs(damage))
@@ -812,27 +812,36 @@ xi.job_utils.dragoon.useSmitingBreath = function(player, target, ability, action
 end
 
 xi.job_utils.dragoon.addWyvernExp = function(player, exp)
-    local wyvern   = player:getPet()
-    local prev_exp = wyvern:getLocalVar("wyvern_exp")
-    local levels_gained = wyvern:getLocalVar("wyvern_level_ups")
+    local wyvern      = player:getPet()
+    local prevExp     = wyvern:getLocalVar("wyvern_exp")
+    local numLevelUps = 0
 
-    if prev_exp < 1000 and levels_gained < 5 then
+    if prevExp < 1000 then
         -- cap exp at 1000 to prevent wyvern leveling up many times from large exp awards
-        local currentExp = utils.clamp(exp + prev_exp, 0, 1000)
-        local diff = math.floor(currentExp / 200) - levels_gained
+        local currentExp = exp
+        if prevExp + currentExp > 1000 then
+            currentExp = 1000 - prevExp
+        end
 
-        while diff > 0 do
-            -- wyvern levelled up (diff is the number of level ups)
-            wyvern:addMod(xi.mod.ACC, 6)
-            wyvern:addMod(xi.mod.HPP, 6)
-            wyvern:addMod(xi.mod.ATTP, 5)
+        numLevelUps = math.floor((prevExp + currentExp) / 200) - math.floor(prevExp / 200)
+
+        if numLevelUps ~= 0 then
+            local wyvernAttributeIncreaseEffectJP = player:getJobPointLevel(xi.jp.WYVERN_ATTR_BONUS)
+            local wyvernBonusDA = player:getMod(xi.mod.WYVERN_ATTRIBUTE_DA)
+
+            wyvern:addMod(xi.mod.ACC, 6 * numLevelUps)
+            wyvern:addMod(xi.mod.HPP, 6 * numLevelUps)
+            wyvern:addMod(xi.mod.ATTP, 5 * numLevelUps)
+
+            wyvern:updateHealth()
             wyvern:setHP(wyvern:getMaxHP())
             player:messageBasic(xi.msg.basic.STATUS_INCREASED, 0, 0, wyvern)
             wyvern:setLocalVar("wyvern_level_ups", levels_gained + 1)
             diff = diff - 1
         end
 
-        wyvern:setLocalVar("wyvern_exp", prev_exp + exp)
+        wyvern:setLocalVar("wyvern_exp", prevExp + exp)
+        wyvern:setLocalVar("level_Ups", wyvern:getLocalVar("level_Ups") + numLevelUps)
     end
 
     return levels_gained

@@ -1,11 +1,7 @@
 -----------------------------------
 -- Spell: Jubaku: Ni
--- Spell accuracy is most highly affected by Enfeebling Magic Skill, Magic Accuracy, and INT.
--- taken from paralyze
 -----------------------------------
-require("scripts/globals/status")
-require("scripts/globals/magic")
-require("scripts/globals/msg")
+require("scripts/globals/spells/enfeebling_spell")
 -----------------------------------
 local spellObject = {}
 

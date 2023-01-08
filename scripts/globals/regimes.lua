@@ -1087,8 +1087,8 @@ xi.regime.bookOnTrigger = function(player, regimeType)
         -- here, we only show pages that have regime info
         -- arg4 reduces prices of field suppord
         local pages = #info.page
-        local arg2 = 0
-        local arg4 = 0
+        local arg2  = 0
+        local arg4  = 0
 
         for i = 1, 10 do
             if i > pages then

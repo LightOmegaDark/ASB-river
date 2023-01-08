@@ -410,7 +410,8 @@
         "GetPlayerIDAnywhere",
         "SendToJailOffline",
         "IsZoneActive",
-        "GetContainerFilenamesList"
+        "GetContainerFilenamesList",
+        "GetFirstID",
     ],
     "Lua.diagnostics.disable": [
         "lowercase-global"

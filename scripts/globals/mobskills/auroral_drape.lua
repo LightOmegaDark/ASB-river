@@ -16,8 +16,8 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local silenced   = false
-    local blinded    = false
+    local silenced   = 0
+    local blinded    = 0
     local typeEffect = nil
 
     silenced = xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SILENCE, 1, 0, 60)

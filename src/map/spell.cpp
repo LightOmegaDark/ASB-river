@@ -337,6 +337,11 @@ void CSpell::setModifier(MODIFIER modifier)
     m_MessageModifier = modifier;
 }
 
+void CSpell::setPrimaryTargetID(uint32 targid)
+{
+    m_primaryTargetID = targid;
+}
+
 uint16 CSpell::getElement() const
 {
     return m_element;
@@ -425,6 +430,11 @@ float CSpell::getRange() const
 uint16 CSpell::getConeAngle()
 {
     return m_coneAngle;
+}
+
+uint32 CSpell::getPrimaryTargetID() const
+{
+    return m_primaryTargetID;
 }
 
 void CSpell::setContentTag(const std::string& contentTag)

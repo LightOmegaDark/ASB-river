@@ -3239,6 +3239,7 @@ namespace battleutils
         else
         {
             fstr /= 2;
+
             if (SlotID == SLOT_MAIN)
             {
                 rank = PAttacker->GetMainWeaponRank();
@@ -3247,6 +3248,7 @@ namespace battleutils
             {
                 rank = PAttacker->GetSubWeaponRank();
             }
+
             // Everything else
             if (fstr <= (-rank))
             {
@@ -3661,8 +3663,8 @@ namespace battleutils
             case ECOSYSTEM::LUMINION:
                 KillerEffect = PDefender->getMod(Mod::LUMINION_KILLER);
                 break;
-            case ECOSYSTEM::LUMORIAN:
-                KillerEffect = PDefender->getMod(Mod::LUMORIAN_KILLER);
+            case ECOSYSTEM::LUMINIAN:
+                KillerEffect = PDefender->getMod(Mod::LUMINIAN_KILLER);
                 break;
             case ECOSYSTEM::PLANTOID:
                 KillerEffect = PDefender->getMod(Mod::PLANTOID_KILLER);

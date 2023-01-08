@@ -1,10 +1,7 @@
 -----------------------------------
 -- Spell: Breakga
--- Petrifies enemies within area of effect, preventing them from acting.
 -----------------------------------
-require("scripts/globals/magic")
-require("scripts/globals/msg")
-require("scripts/globals/status")
+require("scripts/globals/spells/enfeebling_spell")
 -----------------------------------
 local spellObject = {}
 

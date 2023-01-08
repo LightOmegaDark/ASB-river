@@ -975,6 +975,9 @@ xi.mod =
     INT                             = 12,
     MND                             = 13,
     CHR                             = 14,
+
+    -- Magic Evasion versus elements
+    -- This has been repeatedly mixed up with SDT - be careful!
     FIRE_MEVA                       = 15,
     ICE_MEVA                        = 16,
     WIND_MEVA                       = 17,
@@ -983,6 +986,17 @@ xi.mod =
     WATER_MEVA                      = 20,
     LIGHT_MEVA                      = 21,
     DARK_MEVA                       = 22,
+
+    -- Magic Evasion RANK versus elements (resistance ranks)
+    FIRE_RES_RANK                   = 192, -- Fire Resistance Rank
+    ICE_RES_RANK                    = 193, -- Ice Resistance Rank
+    WIND_RES_RANK                   = 194, -- Wind Resistance Rank
+    EARTH_RES_RANK                  = 195, -- Earth Resistance Rank
+    THUNDER_RES_RANK                = 196, -- Thunder Resistance Rank
+    WATER_RES_RANK                  = 197, -- Water Resistance Rank
+    LIGHT_RES_RANK                  = 198, -- Light Resistance Rank
+    DARK_RES_RANK                   = 199, -- Dark Resistance Rank
+
     ATT                             = 23,
     RATT                            = 24,
     ACC                             = 25,
@@ -1172,7 +1186,7 @@ xi.mod =
     DEMON_KILLER                    = 234,
     EMPTY_KILLER                    = 235,
     HUMANOID_KILLER                 = 236,
-    LUMORIAN_KILLER                 = 237,
+    LUMINIAN_KILLER                 = 237,
     LUMINION_KILLER                 = 238,
     SLEEPRES                        = 240,
     POISONRES                       = 241,
@@ -1191,6 +1205,23 @@ xi.mod =
     LULLABYRES                      = 254,
     DEATHRES                        = 255,
     STATUSRES                       = 958, -- "Resistance to All Status Ailments"
+    SLEEP_MEVA                      = 200,
+    POISON_MEVA                     = 201,
+    PARALYZE_MEVA                   = 202,
+    BLIND_MEVA                      = 203,
+    SILENCE_MEVA                    = 204,
+    VIRUS_MEVA                      = 205,
+    PETRIFY_MEVA                    = 206,
+    BIND_MEVA                       = 207,
+    CURSE_MEVA                      = 208,
+    GRAVITY_MEVA                    = 209,
+    SLOW_MEVA                       = 210,
+    STUN_MEVA                       = 211,
+    CHARM_MEVA                      = 212,
+    AMNESIA_MEVA                    = 213,
+    LULLABY_MEVA                    = 214,
+    DEATH_MEVA                      = 215,
+    STATUS_MEVA                     = 216,
     AFTERMATH                       = 256,
     PARALYZE                        = 257,
     MIJIN_RERAISE                   = 258,
@@ -1798,6 +1829,9 @@ xi.mod =
     BLUE_MAGIC_EFFECT       = 1059, -- TODO: Bonus to Attribute Value of spell (percent)
     QUICK_DRAW_RECAST       = 1060, -- TODO: Quick Draw Charge Reduction (seconds)
 
+    DIG_BYPASS_FATIGUE      = 1074, -- Chocobo digging modifier found in "Blue Race Silks". Modifier works as a direct percent. Used in Chocobo_Digging.lua
+    BREATH_DMG_DEALT        = 1075, -- Breath damage dealt
+
     -- Permenant Resistance Build Modifiers
     SLEEPRESBUILD                 = 1138, -- Used to create a resbuild for the appropriate effect. Will decrease overall duration of effect. (Out of 1000)
     POISONRESBUILD                = 1139, -- Used to create a resbuild for the appropriate effect. Will decrease overall duration of effect. (Out of 1000)
@@ -1818,7 +1852,7 @@ xi.mod =
     PET_DMG_TAKEN_PHYSICAL        = 1154, -- Percent increase/decrease in pet physical damage taken for the target.
     PET_DMG_TAKEN_MAGICAL         = 1155, -- Percent increase/decrease in pet magical damage taken for the target.
     PET_DMG_TAKEN_BREATH          = 1156, -- Percent increase/decrease in pet breath damage taken for the target.
-    DIG_BYPASS_FATIGUE            = 1157, -- Chocobo digging modifier found in "Blue Race Silks". Modifier works as a direct percent. Used in Chocobo_Digging.lua
+    -- 1157 Free
 
     FIRE_EEM                      = 1158, -- Elemental Evasion Multiplier (Known as SDT in common magic accuracy formulas) (out of 100)
     ICE_EEM                       = 1159, -- Elemental Evasion Multiplier (Known as SDT in common magic accuracy formulas) (out of 100)
@@ -1833,13 +1867,6 @@ xi.mod =
     CRITHITRATE_SLOT              = 1168, -- CRITHITRATE for slot
     ATT_SLOT                      = 1169, -- ATT for slot
     UDMG                          = 1170, -- Uncapped dmg taken (all types)
-    SLEEP_MEVA                    = 1171, -- Sleep MEVA from Barspells
-    POISON_MEVA                   = 1172, -- Poison MEVA from Barspells
-    PARALYZE_MEVA                 = 1173, -- Paralyze MEVA from Barspells
-    BLIND_MEVA                    = 1174, -- Blind MEVA from Barspells
-    SILENCE_MEVA                  = 1175, -- Silence MEVA from Barspells
-    VIRUS_MEVA                    = 1176, -- Virus MEVA from Barspells
-    PETRIFY_MEVA                  = 1177, -- Petrify MEVA from Barspells
 
     -- IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN src/map/modifier.h ASWELL!
 
@@ -2916,7 +2943,7 @@ xi.ecosystem =
     EMPTY          = 12,
     HUMANOID       = 13,
     LIZARD         = 14,
-    LUMORIAN       = 15,
+    LUMINIAN       = 15,
     LUMINION       = 16,
     PLANTOID       = 17,
     UNCLASSIFIED   = 18,

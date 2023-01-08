@@ -272,7 +272,7 @@ function xi.events.starlightCelebration.tokenMoogleOnFinish(player, id, csid, op
             }
 
         if invAvailable == 0 then
-            player:messageSpecial(id.text.DEFAULT_CANNOT_BE_OBTAINED)
+            player:messageSpecial(id.text.CANNOT_OBTAIN_THE_ITEM)
             return
         end
 
@@ -324,7 +324,7 @@ function xi.events.starlightCelebration.tokenMoogleOnFinish(player, id, csid, op
             player:delKeyItem(xi.keyItem.BELL_THEMED_GIFT_TOKEN)
             player:delKeyItem(xi.keyItem.STAR_THEMED_GIFT_TOKEN)
         else
-            player:messageSpecial(id.text.DEFAULT_CANNOT_BE_OBTAINED)
+            player:messageSpecial(id.text.CANNOT_OBTAIN_THE_ITEM)
             return
         end
     end

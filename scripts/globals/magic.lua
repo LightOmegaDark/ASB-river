@@ -299,7 +299,7 @@ local function calculateMagicBurst(caster, spell, target, params)
 
     if
         spell:getSpellGroup() == 3 and
-        not caster:hasStatusEffect(xi.effect.BURST_AFFINITY)
+        not (caster:hasStatusEffect(xi.effect.BURST_AFFINITY) or caster:hasStatusEffect(xi.effect.AZURE_LORE))
     then
         return burst
     end
@@ -1301,7 +1301,6 @@ xi.magic.addBonuses = function(caster, spell, target, dmg, params)
     end
 
     mabbonus = math.max(0, mabbonus)
-
     dmg = math.floor(dmg * mabbonus)
 
     if caster:hasStatusEffect(xi.effect.EBULLIENCE) then

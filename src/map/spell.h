@@ -1083,6 +1083,7 @@ public:
     const std::string& getContentTag();
     float              getRange() const;
     uint16             getConeAngle();
+    uint32             getPrimaryTargetID() const;
     bool               tookEffect() const; // returns true if the spell landed, not resisted or missed
     bool               hasMPCost();        // checks if spell costs mp to use
     bool               isHeal();           // is a heal spell
@@ -1114,6 +1115,7 @@ public:
     void setMagicBurstMessage(uint16 message);
     auto getModifier() -> MODIFIER;
     void setModifier(MODIFIER modifier); // set Spell modifier message, MUST reset the modifier on use otherwise it will be stale
+    void setPrimaryTargetID(uint32);
 
     void setCE(uint16 ce);
     void setVE(uint16 ve);
@@ -1133,10 +1135,11 @@ protected:
     CSpell& operator=(const CSpell&) = default;
 
 private:
-    SpellID     m_ID;           // spell id
-    uint32      m_castTime{};   // time to cast spell
-    uint32      m_recastTime{}; // recast time
-    uint16      m_animation{};  // animation for spell
+    SpellID     m_ID;                // spell id
+    uint32      m_primaryTargetID{}; // primary target ID
+    uint32      m_castTime{};        // time to cast spell
+    uint32      m_recastTime{};      // recast time
+    uint16      m_animation{};       // animation for spell
     uint16      m_animationTime{};
     uint8       m_skillType{};
     float       m_range{};

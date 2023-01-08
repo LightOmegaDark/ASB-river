@@ -69,7 +69,6 @@ spellObject.onSpellCast = function(caster, target, spell)
     caster:addHP(dmg)
 
     return math.min(dmg, hpDiff)
-
 end
 
 return spellObject

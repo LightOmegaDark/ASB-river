@@ -14,10 +14,10 @@ zoneObject.onChocoboDig = function(player, precheck)
 end
 
 local function registerRegionAroundNPC(zone, NPCID, zoneID)
-    local npc = GetNPCByID(NPCID)
-    local x = npc:getXPos()
-    local y = npc:getYPos()
-    local z = npc:getZPos()
+    local npc      = GetNPCByID(NPCID)
+    local x        = npc:getXPos()
+    local y        = npc:getYPos()
+    local z        = npc:getZPos()
     local distance = 7
 
     zone:registerTriggerArea(zoneID,
@@ -92,10 +92,16 @@ end
 zoneObject.onEventFinish = function(player, csid, option)
     if csid == 24 then
         xi.fsa.completeGame(player)
-    elseif csid == 26 and option == 0 then
+    elseif
+        csid == 26 and
+        option == 0
+    then
         player:setCharVar("[QUEST]FullSpeedAhead", 1)
         player:setPos(475, 8.8, -159, 128, 105)
-    elseif csid == 26 and option == 1 then
+    elseif
+        csid == 26 and
+        option == 1
+    then
         player:setCharVar("[QUEST]FullSpeedAhead", 2)
         player:setPos(475, 8.8, -159, 128, 105)
     end

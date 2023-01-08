@@ -2134,8 +2134,8 @@ void SmallPacket0x03D(map_session_data_t* const PSession, CCharEntity* const PCh
 {
     TracyZoneScoped;
 
-    char blacklistedName[15] = {};
-    memcpy(&blacklistedName, data[0x08], sizeof(blacklistedName));
+    char blacklistedName[PacketNameLength] = {};
+    memcpy(&blacklistedName, data[0x08], PacketNameLength - 1);
 
     std::string name = blacklistedName;
     uint8       cmd  = data.ref<uint8>(0x18);
@@ -2461,8 +2461,14 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
 
                     CItem* PUBoxItem = itemutils::GetItem(PItem->getID());
 
-                    char receiver[15] = {};
-                    memcpy(&receiver, data[0x10], sizeof(receiver));
+                    if (PUBoxItem == nullptr)
+                    {
+                        ShowError("PUBoxItem was null.");
+                        return;
+                    }
+
+                    char receiver[PacketNameLength] = {};
+                    memcpy(&receiver, data[0x10], PacketNameLength - 1);
                     PUBoxItem->setReceiver(receiver);
                     PUBoxItem->setSender(PChar->GetName());
                     PUBoxItem->setQuantity(quantity);
@@ -3478,7 +3484,6 @@ void SmallPacket0x053(map_session_data_t* const PSession, CCharEntity* const PCh
             uint16 itemId      = data.ref<uint16>(0x0C + 0x08 * i);
 
             // Skip non-visible items
-            // Skip non-visible items
             if (equipSlotId > SLOT_FEET)
             {
                 continue;
@@ -4397,8 +4402,8 @@ void SmallPacket0x071(map_session_data_t* const PSession, CCharEntity* const PCh
         case 0: // party - party leader may remove member of his own party
             if (PChar->PParty && PChar->PParty->GetLeader() == PChar)
             {
-                char charName[15] = {};
-                memcpy(&charName, data[0x0C], sizeof(charName));
+                char charName[PacketNameLength] = {};
+                memcpy(&charName, data[0x0C], PacketNameLength - 1);
 
                 CCharEntity* PVictim = dynamic_cast<CCharEntity*>(PChar->PParty->GetMemberByName(charName));
                 if (PVictim)
@@ -4485,8 +4490,8 @@ void SmallPacket0x071(map_session_data_t* const PSession, CCharEntity* const PCh
                 CCharEntity* PVictim = nullptr;
                 for (std::size_t i = 0; i < PChar->PParty->m_PAlliance->partyList.size(); ++i)
                 {
-                    char charName[15] = {};
-                    memcpy(&charName, data[0x0C], sizeof(charName));
+                    char charName[PacketNameLength] = {};
+                    memcpy(&charName, data[0x0C], PacketNameLength - 1);
 
                     PVictim = dynamic_cast<CCharEntity*>(PChar->PParty->m_PAlliance->partyList[i]->GetMemberByName(charName));
                     if (PVictim && PVictim->PParty && PVictim->PParty->m_PAlliance) // victim is in this party
@@ -4696,10 +4701,10 @@ void SmallPacket0x077(map_session_data_t* const PSession, CCharEntity* const PCh
         {
             if (PChar->PParty != nullptr && PChar->PParty->GetLeader() == PChar)
             {
-                char memberName[15] = {};
-                memcpy(&memberName, data[0x04], sizeof(memberName));
+                char memberName[PacketNameLength] = {};
+                memcpy(&memberName, data[0x04], PacketNameLength - 1);
 
-                ShowDebug("(Party)Changing leader to %s", data[0x04]);
+                ShowDebug("(Party)Altering permissions of %s to %d", data[0x04], data[0x15]);
                 PChar->PParty->AssignPartyRole(memberName, data.ref<uint8>(0x15));
             }
         }
@@ -6008,7 +6013,6 @@ void SmallPacket0x0DC(map_session_data_t* const PSession, CCharEntity* const PCh
                 PChar->nameflags.flags &= ~FLAG_ANON;
                 PChar->menuConfigFlags.flags &= ~NFLAG_ANON;
             }
-
             if (flags != PChar->nameflags.flags)
             {
                 PChar->pushPacket(new CMessageSystemPacket(0, 0, param == 1 ? 175 : 176));
@@ -7096,7 +7100,7 @@ void SmallPacket0x0FF(map_session_data_t* const PSession, CCharEntity* const PCh
     CItemContainer* PItemContainer = PChar->getStorage(containerID);
     CItemFlowerpot* PItem          = (CItemFlowerpot*)PItemContainer->GetItem(slotID);
 
-    if (PItem->isPlanted() && PItem->getStage() > FLOWERPOT_STAGE_INITIAL && PItem->getStage() < FLOWERPOT_STAGE_WILTED && !PItem->isDried())
+    if (PItem != nullptr && PItem->isPlanted() && PItem->getStage() > FLOWERPOT_STAGE_INITIAL && PItem->getStage() < FLOWERPOT_STAGE_WILTED && !PItem->isDried())
     {
         PChar->pushPacket(new CMessageStandardPacket(itemID, 133)); // Your moogle dries the plant in the <item>.
         PChar->pushPacket(new CFurnitureInteractPacket(PItem, containerID, slotID));

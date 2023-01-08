@@ -346,7 +346,9 @@ namespace zoneutils
         mob_resistances.ice_sdt, mob_resistances.wind_sdt, mob_resistances.earth_sdt, mob_resistances.lightning_sdt, mob_resistances.water_sdt, \
         mob_resistances.light_sdt, mob_resistances.dark_sdt, mob_resistances.fire_meva, mob_resistances.ice_meva, mob_resistances.wind_meva, \
         mob_resistances.earth_meva, mob_resistances.lightning_meva, mob_resistances.water_meva, mob_resistances.light_meva, \
-        mob_resistances.dark_meva, mob_family_system.Element, mob_pools.familyid, mob_family_system.superFamilyID, mob_pools.name_prefix, \
+        mob_resistances.dark_meva, mob_resistances.fire_res_rank, mob_resistances.ice_res_rank, mob_resistances.wind_res_rank, \
+        mob_resistances.earth_res_rank, mob_resistances.lightning_res_rank, mob_resistances.water_res_rank, mob_resistances.light_res_rank, \
+        mob_resistances.dark_res_rank, mob_family_system.Element, mob_pools.familyid, mob_family_system.superFamilyID, mob_pools.name_prefix, \
         mob_pools.entityFlags, mob_pools.animationsub, (mob_family_system.HP / 100) AS mobFamilyHP, (mob_family_system.MP / 100) AS mobFamilyMP, \
         mob_pools.hasSpellScript, mob_pools.spellList, mob_groups.poolid, mob_groups.allegiance, mob_pools.namevis, mob_pools.aggro, \
         mob_pools.roamflag, mob_pools.skill_list_id, mob_pools.true_detection, mob_family_system.detects, mob_family_system.charmable, \
@@ -370,7 +372,7 @@ namespace zoneutils
         {
             while (sql->NextRow() == SQL_SUCCESS)
             {
-                const char* contentTag = (const char*)sql->GetData(77);
+                const char* contentTag = (const char*)sql->GetData(85);
 
                 if (!luautils::IsContentEnabled(contentTag))
                 {
@@ -488,14 +490,14 @@ namespace zoneutils
                     PMob->setModifier(Mod::LIGHT_SDT, (int16)sql->GetIntData(48));   // Modifier 60, base 10000 stored as signed integer. Positives signify less damage.
                     PMob->setModifier(Mod::DARK_SDT, (int16)sql->GetIntData(49));    // Modifier 61, base 10000 stored as signed integer. Positives signify less damage.
 
-                    PMob->setModifier(Mod::FIRE_EEM, (int16)sql->GetIntData(78));    // Modifier 1157, base 100 stored as signed integer. Positives signify modified meva for that element.
-                    PMob->setModifier(Mod::ICE_EEM, (int16)sql->GetIntData(79));     // Modifier 1158, base 100 stored as signed integer. Positives signify modified meva for that element.
-                    PMob->setModifier(Mod::WIND_EEM, (int16)sql->GetIntData(80));    // Modifier 1159, base 100 stored as signed integer. Positives signify modified meva for that element.
-                    PMob->setModifier(Mod::EARTH_EEM, (int16)sql->GetIntData(81));   // Modifier 1160, base 100 stored as signed integer. Positives signify modified meva for that element.
-                    PMob->setModifier(Mod::THUNDER_EEM, (int16)sql->GetIntData(82)); // Modifier 1161, base 100 stored as signed integer. Positives signify modified meva for that element.
-                    PMob->setModifier(Mod::WATER_EEM, (int16)sql->GetIntData(83));   // Modifier 1162, base 100 stored as signed integer. Positives signify modified meva for that element.
-                    PMob->setModifier(Mod::LIGHT_EEM, (int16)sql->GetIntData(84));   // Modifier 1163, base 100 stored as signed integer. Positives signify modified meva for that element.
-                    PMob->setModifier(Mod::DARK_EEM, (int16)sql->GetIntData(85));    // Modifier 1164, base 100 stored as signed integer. Positives signify modified meva for that element.
+                    PMob->setModifier(Mod::FIRE_EEM, (int16)sql->GetIntData(86));    // Modifier 1157, base 100 stored as signed integer. Positives signify modified meva for that element.
+                    PMob->setModifier(Mod::ICE_EEM, (int16)sql->GetIntData(87));     // Modifier 1158, base 100 stored as signed integer. Positives signify modified meva for that element.
+                    PMob->setModifier(Mod::WIND_EEM, (int16)sql->GetIntData(88));    // Modifier 1159, base 100 stored as signed integer. Positives signify modified meva for that element.
+                    PMob->setModifier(Mod::EARTH_EEM, (int16)sql->GetIntData(89));   // Modifier 1160, base 100 stored as signed integer. Positives signify modified meva for that element.
+                    PMob->setModifier(Mod::THUNDER_EEM, (int16)sql->GetIntData(90)); // Modifier 1161, base 100 stored as signed integer. Positives signify modified meva for that element.
+                    PMob->setModifier(Mod::WATER_EEM, (int16)sql->GetIntData(91));   // Modifier 1162, base 100 stored as signed integer. Positives signify modified meva for that element.
+                    PMob->setModifier(Mod::LIGHT_EEM, (int16)sql->GetIntData(92));   // Modifier 1163, base 100 stored as signed integer. Positives signify modified meva for that element.
+                    PMob->setModifier(Mod::DARK_EEM, (int16)sql->GetIntData(93));    // Modifier 1164, base 100 stored as signed integer. Positives signify modified meva for that element.
 
                     PMob->setModifier(Mod::FIRE_MEVA, (int16)(sql->GetIntData(50))); // These are stored as signed integers which
                     PMob->setModifier(Mod::ICE_MEVA, (int16)(sql->GetIntData(51)));  // is directly the modifier starting value.
@@ -506,22 +508,20 @@ namespace zoneutils
                     PMob->setModifier(Mod::LIGHT_MEVA, (int16)(sql->GetIntData(56)));
                     PMob->setModifier(Mod::DARK_MEVA, (int16)(sql->GetIntData(57)));
 
-                    /* Todo: hook this up, seems to force resist tiering
-                    PMob->setModifier(Mod::FIRE_RES_RANK, (int16)(sql->GetIntData(??)));
-                    PMob->setModifier(Mod::ICE_RES_RANK, (int16)(sql->GetIntData(??)));
-                    PMob->setModifier(Mod::WIND_RES_RANK, (int16)(sql->GetIntData(??)));
-                    PMob->setModifier(Mod::EARTH_RES_RANK, (int16)(sql->GetIntData(??)));
-                    PMob->setModifier(Mod::THUNDER_RES_RANK, (int16)(sql->GetIntData(??)));
-                    PMob->setModifier(Mod::WATER_RES_RANK, (int16)(sql->GetIntData(??)));
-                    PMob->setModifier(Mod::LIGHT_RES_RANK, (int16)(sql->GetIntData(??)));
-                    PMob->setModifier(Mod::DARK_RES_RANK, (int16)(sql->GetIntData(??)));
-                    */
+                    PMob->setModifier(Mod::FIRE_RES_RANK, (int8)(sql->GetIntData(58)));
+                    PMob->setModifier(Mod::ICE_RES_RANK, (int8)(sql->GetIntData(59)));
+                    PMob->setModifier(Mod::WIND_RES_RANK, (int8)(sql->GetIntData(60)));
+                    PMob->setModifier(Mod::EARTH_RES_RANK, (int8)(sql->GetIntData(61)));
+                    PMob->setModifier(Mod::THUNDER_RES_RANK, (int8)(sql->GetIntData(62)));
+                    PMob->setModifier(Mod::WATER_RES_RANK, (int8)(sql->GetIntData(63)));
+                    PMob->setModifier(Mod::LIGHT_RES_RANK, (int8)(sql->GetIntData(64)));
+                    PMob->setModifier(Mod::DARK_RES_RANK, (int8)(sql->GetIntData(65)));
 
-                    PMob->m_Element     = (uint8)sql->GetIntData(58);
-                    PMob->m_Family      = (uint16)sql->GetIntData(59);
-                    PMob->m_SuperFamily = (uint16)sql->GetIntData(60);
-                    PMob->m_name_prefix = (uint8)sql->GetIntData(61);
-                    PMob->m_flags       = (uint32)sql->GetIntData(62);
+                    PMob->m_Element     = (uint8)sql->GetIntData(66);
+                    PMob->m_Family      = (uint16)sql->GetIntData(67);
+                    PMob->m_SuperFamily = (uint16)sql->GetIntData(68);
+                    PMob->m_name_prefix = (uint8)sql->GetIntData(69);
+                    PMob->m_flags       = (uint32)sql->GetIntData(70);
 
                     // Cap Level if Necessary (Don't Cap NMs)
                     if (normalLevelRangeMin > 0 && !(PMob->m_Type & MOBTYPE_NOTORIOUS) && PMob->m_minLevel > normalLevelRangeMin)
@@ -537,7 +537,7 @@ namespace zoneutils
                     // Special sub animation for Mob (yovra, jailer of love, phuabo)
                     // yovra 1: On top/in the sky, 2: , 3: On top/in the sky
                     // phuabo 1: Underwater, 2: Out of the water, 3: Goes back underwater
-                    PMob->animationsub = (uint32)sql->GetIntData(63);
+                    PMob->animationsub = (uint32)sql->GetIntData(71);
 
                     if (PMob->animationsub != 0)
                     {
@@ -551,28 +551,28 @@ namespace zoneutils
                     }
 
                     // Setup HP / MP Stat Percentage Boost
-                    PMob->HPscale = sql->GetFloatData(64);
-                    PMob->MPscale = sql->GetFloatData(65);
+                    PMob->HPscale = sql->GetFloatData(72);
+                    PMob->MPscale = sql->GetFloatData(73);
 
                     // TODO: Remove me
                     // Check if we should be looking up scripts for this mob
-                    // PMob->m_HasSpellScript = (uint8)sql->GetIntData(65);
+                    // PMob->m_HasSpellScript = (uint8)sql->GetIntData(74);
 
-                    PMob->m_SpellListContainer = mobSpellList::GetMobSpellList(sql->GetIntData(67));
+                    PMob->m_SpellListContainer = mobSpellList::GetMobSpellList(sql->GetIntData(75));
 
-                    PMob->m_Pool = sql->GetUIntData(68);
+                    PMob->m_Pool = sql->GetUIntData(76);
 
-                    PMob->allegiance = static_cast<ALLEGIANCE_TYPE>(sql->GetUIntData(69));
-                    PMob->namevis    = sql->GetUIntData(70);
-                    PMob->m_Aggro    = sql->GetUIntData(71);
+                    PMob->allegiance = static_cast<ALLEGIANCE_TYPE>(sql->GetUIntData(77));
+                    PMob->namevis    = sql->GetUIntData(78);
+                    PMob->m_Aggro    = sql->GetUIntData(79);
 
-                    PMob->m_roamFlags    = (uint16)sql->GetUIntData(72);
-                    PMob->m_MobSkillList = sql->GetUIntData(73);
+                    PMob->m_roamFlags    = (uint16)sql->GetUIntData(80);
+                    PMob->m_MobSkillList = sql->GetUIntData(81);
 
-                    PMob->m_TrueDetection = sql->GetUIntData(74);
-                    PMob->setMobMod(MOBMOD_DETECTION, sql->GetUIntData(75));
+                    PMob->m_TrueDetection = sql->GetUIntData(82);
+                    PMob->setMobMod(MOBMOD_DETECTION, sql->GetUIntData(83));
 
-                    PMob->setMobMod(MOBMOD_CHARMABLE, sql->GetUIntData(76));
+                    PMob->setMobMod(MOBMOD_CHARMABLE, sql->GetUIntData(84));
 
                     // Overwrite base family charmables depending on mob type. Disallowed mobs which should be charmable
                     // can be set in mob_spawn_mods or in their onInitialize

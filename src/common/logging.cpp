@@ -110,21 +110,18 @@ public:
 namespace logging
 {
     const std::vector<std::string> logNames = {
-        // Regular loggers
         "critical",
         "error",
+        "lua",
         "warn",
         "info",
         "debug",
         "trace",
-
-        // Special loggers
-        "lua",
     };
 
     void InitializeLog(std::string const& serverName, std::string const& logFile, bool appendDate)
     {
-        TracyZoneScoped;
+        ServerName = serverName;
 
         ServerName = serverName;
 
@@ -161,8 +158,6 @@ namespace logging
 
     void ShutDown()
     {
-        TracyZoneScoped;
-
         spdlog::drop_all();
         spdlog::shutdown();
     }

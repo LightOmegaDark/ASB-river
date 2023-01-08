@@ -23,11 +23,6 @@ abilityObject.onUseAbility = function(player, target, ability)
     -- Job Point Bonus (3% per Level)
     dmg = dmg * (1 + (player:getJobPointLevel(xi.jp.MIJIN_GAKURE_EFFECT) * 0.03))
     dmg = dmg * resist
-
-    if player:hasStatusEffect(xi.effect.WEAKNESS) then
-        player:delStatusEffect(xi.effect.WEAKNESS)
-    end
-
     dmg = utils.rampart(target, dmg)
     dmg = utils.stoneskin(target, dmg)
 

@@ -301,6 +301,8 @@ int32 do_init(int32 argc, char** argv)
 
     moduleutils::OnInit();
 
+    luautils::OnServerStart();
+
     moduleutils::ReportLuaModuleUsage();
 
     ShowInfo("The map-server is ready to work!");
@@ -340,7 +342,13 @@ int32 do_init(int32 argc, char** argv)
         fmt::print("Promoting {} to GM level {}\n", PChar->name, level);
         PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3,
             fmt::format("You have been set to GM level {}.", level), ""));
+    });
 
+    gConsoleService->RegisterCommand("reload_settings", "Reload settings files.",
+    [&](std::vector<std::string> inputs)
+    {
+        fmt::print("Reloading settings files\n");
+        settings::init();
     });
 
     gConsoleService->RegisterCommand("exit", "Terminate the program.",

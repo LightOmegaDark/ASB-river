@@ -1,10 +1,7 @@
 -----------------------------------
--- Spell: Paralyze
--- Spell accuracy is most highly affected by Enfeebling Magic Skill, Magic Accuracy, and MND.
+-- Spell: Paralyga
 -----------------------------------
-require("scripts/globals/status")
-require("scripts/globals/magic")
-require("scripts/globals/msg")
+require("scripts/globals/spells/enfeebling_spell")
 -----------------------------------
 local spellObject = {}
 

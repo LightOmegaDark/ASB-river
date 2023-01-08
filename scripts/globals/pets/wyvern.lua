@@ -111,9 +111,6 @@ end
 entity.onMobSpawn = function(mob)
     local master = mob:getMaster()
 
-    -- innate +40 subtle blow
-    mob:addMod(xi.mod.SUBTLE_BLOW, 40)
-
     if master:getMod(xi.mod.WYVERN_SUBJOB_TRAITS) > 0 then
         mob:addJobTraits(master:getSubJob(), master:getSubLvl())
     end
@@ -179,8 +176,28 @@ entity.onMobSpawn = function(mob)
     end
 end
 
+local function removeWyvernLevels(mob)
+    local master  = mob:getMaster()
+    local numLvls = mob:getLocalVar("level_Ups")
+
+    if numLvls ~= 0 then
+        local wyvernAttributeIncreaseEffectJP = master:getJobPointLevel(xi.jp.WYVERN_ATTR_BONUS)
+        local wyvernBonusDA = master:getMod(xi.mod.WYVERN_ATTRIBUTE_DA)
+
+        master:delMod(xi.mod.ATT, wyvernAttributeIncreaseEffectJP * numLvls)
+        master:delMod(xi.mod.DEF, wyvernAttributeIncreaseEffectJP * numLvls)
+        master:delMod(xi.mod.ATTP, 4 * numLvls)
+        master:delMod(xi.mod.DEFP, 4 * numLvls)
+        master:delMod(xi.mod.HASTE_ABILITY, 200 * numLvls)
+        master:delMod(xi.mod.DOUBLE_ATTACK, wyvernBonusDA * numLvls)
+        master:delMod(xi.mod.ALL_WSDMG_ALL_HITS, 2 * numLvls)
+    end
+end
+
 entity.onMobDeath = function(mob, player)
-    local master = mob:getMaster()
+    removeWyvernLevels(mob)
+
+    local master  = mob:getMaster()
     master:removeListener("PET_WYVERN_WS")
     master:removeListener("PET_WYVERN_MAGIC")
     master:removeListener("PET_WYVERN_ENGAGE")

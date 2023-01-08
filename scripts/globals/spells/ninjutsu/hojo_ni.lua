@@ -1,11 +1,7 @@
 -----------------------------------
 -- Spell: Hojo:Ni
--- Description: Inflicts Slow on target.
--- Edited from slow.lua
 -----------------------------------
-require("scripts/globals/status")
-require("scripts/globals/magic")
-require("scripts/globals/msg")
+require("scripts/globals/spells/enfeebling_spell")
 -----------------------------------
 local spellObject = {}
 

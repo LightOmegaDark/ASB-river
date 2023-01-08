@@ -304,7 +304,7 @@ xi.spells.enhancing.calculateEnhancingFinalPower = function(caster, target, spel
         spellEffect == xi.effect.BARAMNESIA or
         (spellEffect >= xi.effect.BARSLEEP and spellEffect <= xi.effect.BARVIRUS)
     then
-        finalPower = finalPower + caster:getMerit(xi.merit.BAR_SPELL_EFFECT) + caster:getMod(xi.mod.BARSPELL_MDEF_BONUS)
+        finalPower = finalPower + caster:getMerit(xi.merit.BAR_SPELL_EFFECT)
 
     -- Protect/Protectra
     elseif spellEffect == xi.effect.PROTECT then
@@ -445,6 +445,7 @@ xi.spells.enhancing.useEnhancingSpell = function(caster, target, spell)
     local spellId           = spell:getID()
     local spellGroup        = spell:getSpellGroup()
     local magicDefenseBonus = 0
+
     -- Get Variables from Parameters Table.
     local tier            = pTable[spellId][1]
     local spellEffect     = pTable[spellId][2]
@@ -465,6 +466,7 @@ xi.spells.enhancing.useEnhancingSpell = function(caster, target, spell)
     -- Bar-Element (They use addStatusEffect argument 6. Bar-Status current implementation doesn't.)
     if spellEffect >= xi.effect.BARFIRE and spellEffect <= xi.effect.BARWATER then
         magicDefenseBonus = caster:getMerit(xi.merit.BAR_SPELL_EFFECT) + caster:getMod(xi.mod.BARSPELL_MDEF_BONUS)
+
     -- Embrava
     elseif spellEffect == xi.effect.EMBRAVA then
         -- If Tabula Rasa wears before spell goes off, no Embrava for you!

@@ -3,7 +3,6 @@
 -- Sets your pet free.
 -- Obtained: Beastmaster Level 35
 -- Recast Time: 10 seconds
--- Duration: N/A
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
