@@ -268,7 +268,7 @@ INSERT INTO `mob_skills` VALUES (366,110,'tail_blow',0,7.0,2000,1500,4,0,0,0,0,0
 INSERT INTO `mob_skills` VALUES (367,111,'fireball',2,11.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (368,112,'blockhead',0,7.0,2000,1500,4,0,0,1,0,0,0);
 INSERT INTO `mob_skills` VALUES (369,113,'brain_crush',0,7.0,2000,1500,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (370,114,'baleful_gaze',0,10.0,2000,2000,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (370,114,'baleful_gaze',0,10.0,2000,1000,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (371,115,'plague_breath',4,10.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (372,116,'infrasonics',4,10.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (373,117,'secretion',0,7.0,2000,1500,1,0,0,0,0,0,0);
@@ -488,9 +488,9 @@ INSERT INTO `mob_skills` VALUES (586,330,'blank_gaze',0,7.0,2000,2000,4,0,0,0,0,
 INSERT INTO `mob_skills` VALUES (587,331,'antiphase',1,15.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (588,398,'death_trap',1,30.0,2000,2000,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (589,333,'mortal_ray',0,7.0,2000,1500,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (590,334,'goblin_rush',0,6.0,2000,1500,4,0,0,1,0,0,0);
+INSERT INTO `mob_skills` VALUES (590,334,'goblin_rush',0,6.0,2000,1000,4,0,0,1,0,0,0);
 INSERT INTO `mob_skills` VALUES (591,335,'bomb_toss',2,13.5,2000,2000,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (592,336,'bomb_toss_suicide',1,13.5,2000,2000,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (592,336,'bomb_toss_suicide',1,13.5,2000,4000,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (593,337,'berserk',0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (594,880,'pl_vulcanian_impact',0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (595,881,'heat_wave',0,7.0,2000,1500,4,0,0,0,0,0,0);
