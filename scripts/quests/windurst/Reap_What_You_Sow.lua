@@ -18,6 +18,7 @@ quest.reward =
     gil = 700,
     fame = 75,
     fameArea = xi.quest.fame_area.WINDURST,
+    item = xi.items.STATIONERY_SET
 }
 
 quest.sections =
@@ -32,11 +33,14 @@ quest.sections =
             ['Mashuu-Ajuu'] =
             {
                 onTrigger = function(player, npc)
-                    if player:getFameLevel(xi.quest.fame_area.WINDURST) >= 4 then
-                        return quest:progressEvent(483)
-                    else
-                        return quest:progressEvent(463, 0, xi.items.SOBBING_FUNGUS, xi.items.BAG_OF_HERB_SEEDS)
+                    if
+                        player:getFameLevel(xi.quest.fame_area.WINDURST) >= 4 and
+                        player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.LET_SLEEPING_DOGS_LIE) ~= QUEST_COMPLETED and
+                        not player:needToZone()
+                    then
+                        return quest:event(483)
                     end
+                    return quest:progressEvent(463, 0, xi.items.SOBBING_FUNGUS, xi.items.BAG_OF_HERB_SEEDS)
                 end,
             },
 
@@ -53,7 +57,7 @@ quest.sections =
 
     {
         check = function(player, status, vars)
-            return status == QUEST_AVAILABLE
+            return status == QUEST_ACCEPTED
         end,
 
         [xi.zone.WINDURST_WATERS] =
@@ -64,9 +68,9 @@ quest.sections =
                     local rand = math.random()
 
                     if rand > 0.5 then
-                        return quest:progressEvent(464, 0, xi.items.SOBBING_FUNGUS, xi.items.BAG_OF_HERB_SEEDS)
+                        return quest:event(464, 0, xi.items.SOBBING_FUNGUS, xi.items.BAG_OF_HERB_SEEDS)
                     else
-                        return quest:progressEvent(476)
+                        return quest:event(476)
                     end
                 end,
 
@@ -81,17 +85,25 @@ quest.sections =
 
             onEventFinish =
             {
+                -- 475 is a Sobbing Fungus turn-in, which allows for repeat turn-ins.
                 [475] = function(player, csid, option, npc)
+                    if quest:getVar(player, 'Prog') == 1 then
+                        player:confirmTrade()
+                        player:addGil(500)
+                        return
+                    end
+
                     if npcUtil.giveItem(player, xi.items.STATIONERY_SET) then
                         player:confirmTrade()
                         player:addGil(500)
+                        quest:setVar(player, 'Prog', 1)
                     end
                 end,
 
+                -- 477 is a Deathball turn-in which officially completes the quest and stops the repeat turn-in capability
                 [477] = function(player, csid, option, npc)
-                    if npcUtil.giveItem(player, xi.items.STATIONERY_SET) then
+                    if quest:complete(player) then
                         player:confirmTrade()
-                        quest:complete(player)
                     end
                 end,
             },

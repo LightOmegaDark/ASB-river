@@ -5,6 +5,7 @@
 -- Mashuu-Ajuu 130 -5 167
 -----------------------------------
 require('scripts/globals/interaction/quest')
+require('scripts/globals/items')
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
 require('scripts/globals/zone')
@@ -23,13 +24,16 @@ quest.sections =
 {
     {
         check = function(player, status, vars)
-            return status == QUEST_AVAILABLE and
+            return
+            status == QUEST_AVAILABLE and
             player:getFameLevel(xi.quest.fame_area.WINDURST) >= 4 and
-            player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.REAP_WHAT_YOU_SOW) ~= QUEST_ACCEPTED
+            player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.REAP_WHAT_YOU_SOW) ~= QUEST_ACCEPTED and
+            player:getCurrentMission(xi.mission.log_id.WINDURST) ~= xi.mission.id.windurst.VAIN
         end,
 
         [xi.zone.WINDURST_WATERS] =
         {
+            ['Mashuu-Ajuu'] = quest:event(483),
             ['Paku-Nakku'] = quest:progressEvent(481),
 
             onEventFinish =
@@ -57,24 +61,32 @@ quest.sections =
             ['Paku-Nakku'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 1 then
-                        return quest:progressEvent(494, 653393087, 1, 0, 1200, 8388608, 3749, 4095, 2) -- 0, 0, 0, 0)
-                    elseif quest:getVar(player, 'Prog') == 3 then
+                    if quest:getVar(player, 'Prog') == 3 then
                         return quest:progressEvent(499)
-                    else
-                        return quest:event(482)
                     end
+                    return quest:event(482)
                 end,
+
+                onTrade = function(player, npc, trade)
+                    if
+                        quest:getVar(player, 'Prog') == 1 and
+                        npcUtil.tradeHasExactly(trade, { { xi.items.BUNCH_OF_BLAZING_PEPPERS, 1 } })
+                    then
+                        return quest:progressEvent(494, 653393087, 1, 0, 1200, 8388608, 3749, 4095, 2)
+                    end
+                end
             },
             ['Pechiru-Mashiru'] =
             {
                 onTrigger = function(player, npc)
                     if quest:getVar(player, 'Prog') == 2 then
-                        return quest:progressEvent(495, 4155, 1102, 1, 50617851, 2729760, 0)
-                    elseif quest:getVar(player, 'Prog') == 3 then
+                        return quest:progressEvent(495, 4155, xi.items.BUNCH_OF_BLAZING_PEPPERS, 1, 50617851, 2729760, 0)
+                    end
+                    if quest:getVar(player, 'Prog') == 3 then
                         return quest:event(496)
-                    elseif quest:getVar(player, 'Prog') == 4 then
-                        return quest:event(497)
+                    end
+                    if quest:getVar(player, 'Prog') == 4 then
+                        return quest:progressEvent(497)
                     end
                 end,
             },
@@ -104,12 +116,12 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if quest:getVar(player, 'Prog') == 0 then
-                        return quest:progressEvent(319, 653392653, 4155, 1102, 1020) -- 0, 0, 0, 0)
-                    elseif quest:getVar(player, 'Prog') == 2 then
-                        return quest:event(321, 653393447, 1102, 0, 0, 67108863, 41513848, 4095, 4)
-                    else
-                        return quest:event(320, 653392653, 4155, 1102) -- 1020, 0, 0, 0, 0)
+                        return quest:progressEvent(319, 653392653, 4155, xi.items.BUNCH_OF_BLAZING_PEPPERS, 1020) -- 0, 0, 0, 0)
                     end
+                    if quest:getVar(player, 'Prog') == 2 then
+                        return quest:event(321, 653393447, xi.items.BUNCH_OF_BLAZING_PEPPERS, 0, 0, 67108863, 41513848, 4095, 4)
+                    end
+                    return quest:event(320, 653392653, 4155, xi.items.BUNCH_OF_BLAZING_PEPPERS) -- 1020, 0, 0, 0, 0)
                 end,
             },
 
@@ -120,24 +132,6 @@ quest.sections =
                 end,
             },
         },
-    },
-
-    {
-        check = function(player, status, vars)
-            return status == QUEST_COMPLETED
-        end,
-
-        [xi.zone.WINDURST_WATERS] =
-        {
-            ['Chomoro-Kyotoro'] =
-            {
-                onTrigger = function(player, npc)
-                    if player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.HAT_IN_HAND) ~= QUEST_ACCEPTED then
-                        quest:event(498)
-                    end
-                end,
-            },
-        }
     },
 }
 
