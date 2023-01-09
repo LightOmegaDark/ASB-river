@@ -1,8 +1,8 @@
 -----------------------------------
 -- Twinstone Bonding
 -----------------------------------
--- !addquest 2 53
--- Sigismund : !pos -110 -9 80 206
+-- !addquest 2 62
+-- Gioh Ajirhri : !pos 107 -5 174 130
 -----------------------------------
 require('scripts/globals/interaction/quest')
 require("scripts/globals/items")
