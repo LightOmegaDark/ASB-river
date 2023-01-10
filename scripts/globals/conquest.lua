@@ -987,7 +987,7 @@ end
 xi.conquest.setTravelingMerchants = function(zone, updateType, travelingMerchants)
     -- Show/Hide traveling merchant NPCs
     -- If there is a draw or a 1st place Alliance, those NPCs won't be available.
-    if updatetype ~= conquestConstants.TALLY_END then
+    if updateType ~= conquestConstants.TALLY_END then
         return
     end
 
