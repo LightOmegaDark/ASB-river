@@ -13,12 +13,13 @@ local zoneObject = {}
 zoneObject.onInitialize = function(zone)
     zone:registerTriggerArea(1, -112, -3, -17, -96, 3, -3)     -- event COP
     zone:registerTriggerArea(2, 53.5, 5, -165.3, 66.5, 6, -72) -- drawbridge area
-    xi.conquest.toggleRegionalNPCs(zone)
+    xi.conquest.setTravelingMerchants(zone, 1, ID.npc.TRAVELING_MERCHANTS)
     xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
 end
 
-zoneObject.onConquestUpdate = function(zone, updatetype)
-    xi.conq.onConquestUpdate(zone, updatetype)
+zoneObject.onConquestUpdate = function(zone, updateType)
+    xi.conq.onConquestUpdate(zone, updateType)
+    xi.conquest.setTravelingMerchants(zone, updateType, ID.npc.TRAVELING_MERCHANTS)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

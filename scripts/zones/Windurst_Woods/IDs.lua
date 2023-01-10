@@ -118,6 +118,16 @@ zones[xi.zone.WINDURST_WOODS] =
             [17764761] = 17764761,  -- Token Moogle
             -- [17764763] = 17764763,  -- Rokor-Makor
         },
+        TRAVELING_MERCHANTS =
+        {
+            NOKKHI_JINJAHL = 17764581,
+            OMINOUS_CLOUD = 17764582,
+            VALERIANO = 17764525,
+            DAHJAL = 17764526,
+            MOKOP_SANKOP = 17764527,
+            CHEH_RAIHAH = 17764528,
+            NALTA = 177645259,
+        },
     },
 }
 

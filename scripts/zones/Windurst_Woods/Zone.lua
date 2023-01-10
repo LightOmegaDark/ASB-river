@@ -16,7 +16,7 @@ zoneObject.onInitialize = function(zone)
     applyHalloweenNpcCostumes(zone:getID())
     xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
     xi.chocobo.initZone(zone)
-    xi.conquest.toggleRegionalNPCs(zone)
+    xi.conquest.setTravelingMerchants(zone, 1, ID.npc.TRAVELING_MERCHANTS)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -33,8 +33,9 @@ zoneObject.onZoneIn = function(player, prevZone)
     xi.moghouse.exitJobChange(player, prevZone)
 end
 
-zoneObject.onConquestUpdate = function(zone, updatetype)
-    xi.conq.onConquestUpdate(zone, updatetype)
+zoneObject.onConquestUpdate = function(zone, updateType)
+    xi.conq.onConquestUpdate(zone, updateType)
+    xi.conquest.setTravelingMerchants(zone, updateType, ID.npc.TRAVELING_MERCHANTS)
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
