@@ -1017,7 +1017,7 @@ xi.conquest.setTravelingMerchants = function(zone, updateType, travelingMerchant
     for _, npcID in pairs(travelingMerchants) do
         local entity = GetNPCByID(npcID)
         -- Will be the real entity if it has an X position
-        if math.abs(entity:getXPos()) > 0 then
+        if entity ~= nil and math.abs(entity:getXPos()) > 0 then
             entity:setStatus(xi.status.DISAPPEAR)
         end
     end
@@ -1028,7 +1028,7 @@ xi.conquest.setTravelingMerchants = function(zone, updateType, travelingMerchant
         for _, npcID in pairs(travelingMerchants) do
             local entity = GetNPCByID(npcID)
             -- Will be the real entity if it has an X position
-            if math.abs(entity:getXPos()) > 0 then
+            if entity ~= nil and math.abs(entity:getXPos()) > 0 then
                 entity:setStatus(xi.status.NORMAL)
             end
         end
