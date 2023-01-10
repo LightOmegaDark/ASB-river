@@ -609,57 +609,6 @@ local function conquestRanking()
     return GetNationRank(xi.nation.SANDORIA) + 4 * GetNationRank(xi.nation.BASTOK) + 16 * GetNationRank(xi.nation.WINDURST)
 end
 
-xi.conquest.setTravelingMerchants = function(zone, updateType, travelingMerchants)
-    -- Show/Hide traveling merchant NPCs
-    -- If there is a draw or a 1st place Alliance, those NPCs won't be available.
-    if updatetype ~= conquestConstants.TALLY_END then
-        return
-    end
-
-    local zoneName = zone:getName()
-    local zoneID = zone:getID()
-
-    -- TODO: Do we need to worry about beastmen's rank?
-    local rankings =
-    {
-        { GetNationRank(xi.nation.SANDORIA), xi.zone.SOUTHERN_SAN_DORIA },
-        { GetNationRank(xi.nation.BASTOK), xi.zone.PORT_BASTOK },
-        { GetNationRank(xi.nation.WINDURST), xi.zone.WINDURST_WOODS },
-    }
-
-    table.sort(rankings, function(a, b)
-        return a[1] < b[1]
-    end)
-
-    local firstPlaceZone = rankings[1][2]
-    local secondPlaceZone = rankings[2][2]
-
-    if firstPlaceZone == zoneID then
-        print("Making regional conquest NPCs available in: " .. zoneName)
-    end
-
-    -- Hide all of these NPCs by default
-    for _, npcID in pairs(travelingMerchants) do
-        local entity = GetNPCByID(npcID)
-        -- Will be the real entity if it has an X position
-        if math.abs(entity:getXPos()) > 0 then
-            entity:setStatus(xi.status.DISAPPEAR)
-        end
-    end
-
-    -- If there is a clear winner, and not a tie,
-    -- show the NPCs
-    if zoneID == firstPlaceZone and not (IsConquestAlliance() or (firstPlaceZone == secondPlaceZone)) then
-        for _, npcID in pairs(travelingMerchants) do
-            local entity = GetNPCByID(npcID)
-            -- Will be the real entity if it has an X position
-            if math.abs(entity:getXPos()) > 0 then
-                entity:setStatus(xi.status.NORMAL)
-            end
-        end
-    end
-end
-
 local function getArg1(player, guardNation, guardType)
     local pNation = player:getNation()
     local output = 0
@@ -1030,6 +979,57 @@ xi.conquest.setRegionalConquestOverseers = function(region)
                         end
                     end
                 end
+            end
+        end
+    end
+end
+
+xi.conquest.setTravelingMerchants = function(zone, updateType, travelingMerchants)
+    -- Show/Hide traveling merchant NPCs
+    -- If there is a draw or a 1st place Alliance, those NPCs won't be available.
+    if updatetype ~= conquestConstants.TALLY_END then
+        return
+    end
+
+    local zoneName = zone:getName()
+    local zoneID = zone:getID()
+
+    -- TODO: Do we need to worry about beastmen's rank?
+    local rankings =
+    {
+        { GetNationRank(xi.nation.SANDORIA), xi.zone.SOUTHERN_SAN_DORIA },
+        { GetNationRank(xi.nation.BASTOK), xi.zone.PORT_BASTOK },
+        { GetNationRank(xi.nation.WINDURST), xi.zone.WINDURST_WOODS },
+    }
+
+    table.sort(rankings, function(a, b)
+        return a[1] < b[1]
+    end)
+
+    local firstPlaceZone = rankings[1][2]
+    local secondPlaceZone = rankings[2][2]
+
+    if firstPlaceZone == zoneID then
+        print("Making regional conquest NPCs available in: " .. zoneName)
+    end
+
+    -- Hide all of these NPCs by default
+    for _, npcID in pairs(travelingMerchants) do
+        local entity = GetNPCByID(npcID)
+        -- Will be the real entity if it has an X position
+        if math.abs(entity:getXPos()) > 0 then
+            entity:setStatus(xi.status.DISAPPEAR)
+        end
+    end
+
+    -- If there is a clear winner, and not a tie,
+    -- show the NPCs
+    if zoneID == firstPlaceZone and not (IsConquestAlliance() or (firstPlaceZone == secondPlaceZone)) then
+        for _, npcID in pairs(travelingMerchants) do
+            local entity = GetNPCByID(npcID)
+            -- Will be the real entity if it has an X position
+            if math.abs(entity:getXPos()) > 0 then
+                entity:setStatus(xi.status.NORMAL)
             end
         end
     end
