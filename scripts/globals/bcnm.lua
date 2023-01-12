@@ -287,7 +287,7 @@ local battlefields =
      -- { 19,   83, 3351 },   -- The Palborough Project (KC30)
      -- { 20,   84, 3352 },   -- Shell Shocked (KC50)
         { 21,   85,    0 },   -- Beyond Infinity (Quest)
-    --  { 22,    ?, 4062 },   -- *The Worm's Tail (SKC10)
+    --  { 22,    ?, 4062 },   -- *The Worm's Turn (SKC10)
     --  { 23,    ?, 4063 },   -- *Grimshell Shocktroopers (SKC20)
     --  { 24,    ?,    0 },   -- A Feast Most Dire (Quest)
     --  { 25,    ?,    0 },   -- A.M.A.N. Trove (Mars)
