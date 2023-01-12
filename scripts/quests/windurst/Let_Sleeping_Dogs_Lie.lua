@@ -133,6 +133,24 @@ quest.sections =
             },
         },
     },
+
+    {
+        check = function(player, status, vars)
+            return status == QUEST_COMPLETED
+        end,
+
+        [xi.zone.WINDURST_WATERS] =
+        {
+            ['Chomoro-Kyotoro'] =
+            {
+                onTrigger = function(player, npc)
+                    if player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.HAT_IN_HAND) ~= QUEST_ACCEPTED then
+                        quest:event(498)
+                    end
+                end,
+            },
+        }
+    },
 }
 
 return quest
