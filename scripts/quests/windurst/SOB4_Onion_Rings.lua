@@ -29,6 +29,7 @@ quest.reward =
     fame     = 40,
     fameArea = xi.quest.fame_area.WINDURST,
     title    = xi.title.STAR_ONION_BRIGADIER,
+    item     = xi.items.BOUNCER_CLUB,
 }
 
 quest.sections =
