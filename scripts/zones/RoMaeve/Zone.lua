@@ -15,14 +15,13 @@ local function updateFullMoonStatus()
     local weather = zone:getWeather()
     local rovEnabled = xi.settings.main.ENABLE_ROV
     -- ROV: Make Ro'Maeve come to life between 6pm and 6am during a full moon, any weather
-    -- Pre-ROV: between midnight and 3am during a full moon and clear weather
+    -- Pre-ROV: between midnight and 3am during a full moon
     if
         IsMoonFull()
     then
         if
             (rovEnabled == 1 and (vanadielHour >= 18 or vanadielHour < 6)) or
-            (rovEnabled == 0 and (vanadielHour >= 0 and vanadielHour < 3) and
-            (weather == xi.weather.NONE or weather == xi.weather.SUNSHINE))
+            (rovEnabled == 0 and (vanadielHour >= 0 and vanadielHour < 3))
         then
             local moongate1 = GetNPCByID(ID.npc.MOONGATE_OFFSET)
             local moongate2 = GetNPCByID(ID.npc.MOONGATE_OFFSET + 1)
