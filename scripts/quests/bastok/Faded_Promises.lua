@@ -17,9 +17,6 @@ require('scripts/globals/titles')
 require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 -----------------------------------
-local bastokMarketsID = zones[xi.zone.METALWORKS]
------------------------------------
-
 local quest = Quest:new(xi.quest.log_id.BASTOK, xi.quest.id.bastok.FADED_PROMISES)
 
 quest.reward =
@@ -107,9 +104,7 @@ quest.sections =
             ['Kagetora'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 2 and
-                    player:hasKeyItem(xi.ki.DIARY_OF_MUKUNDA)
-                    then
+                    if quest:getVar(player, 'Prog') == 2 and player:hasKeyItem(xi.ki.DIARY_OF_MUKUNDA) then
                         return quest:progressEvent(296)
                     else
                         return quest:event(23)
