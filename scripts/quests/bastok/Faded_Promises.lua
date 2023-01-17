@@ -38,7 +38,7 @@ quest.sections =
             return status == QUEST_AVAILABLE and
             player:getMainJob() == xi.job.NIN and
             player:getMainLvl() >= 20 and
-            player:getFameLevel(xi.quest.fame_area.NORG) >= 1
+            player:getFameLevel(xi.quest.fame_area.NORG) >= 4
         end,
 
         [xi.zone.METALWORKS] =
