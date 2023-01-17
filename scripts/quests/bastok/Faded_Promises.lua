@@ -54,7 +54,7 @@ quest.sections =
 
     {
         check = function(player, status, vars)
-            return status >= QUEST_ACCEPTED
+            return status == QUEST_ACCEPTED
         end,
 
         [xi.zone.METALWORKS] =
@@ -83,7 +83,7 @@ quest.sections =
             {
                 [803] = function(player, csid, option, npc)
                     if option == 0 then
-                    quest:setVar(player, 'Prog', 2)
+                        quest:setVar(player, 'Prog', 2)
                     end
                 end,
 
