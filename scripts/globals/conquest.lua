@@ -984,7 +984,8 @@ xi.conquest.setRegionalConquestOverseers = function(region)
     end
 end
 
-local travelingMerchants = {
+local travelingMerchants =
+{
     'Nokkhi_Jinjahl',
     'Ominous_Cloud',
     'Valeriano',
