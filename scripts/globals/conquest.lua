@@ -1031,22 +1031,23 @@ xi.conquest.setTravelingMerchants = function(zone, updateType)
 
     -- Hide all of these NPCs by default
     for _, npcName in pairs(travelingMerchants) do
-        local entity = zone:queryEntitiesByName(npcName)
-        -- Will be the real entity if it has an X position
-        if entity ~= nil and math.abs(entity:getXPos()) > 0 then
+        local results = zone:queryEntitiesByName(npcName)
+        for _, entity in pairs(results) do
             entity:setStatus(xi.status.DISAPPEAR)
         end
     end
 
+    -- Early return if this zone is not in first place, or the placement is tied.
+    if zoneID ~= firstPlaceZone or (firstPlaceZone == secondPlaceZone) then
+        return
+    end
+
     -- If there is a clear winner, and not a tie,
     -- show the NPCs
-    if zoneID == firstPlaceZone (firstPlaceZone == secondPlaceZone) then
-        for _, npcName in pairs(travelingMerchants) do
-            local entity = zone:queryEntitiesByName(npcName)
-            -- Will be the real entity if it has an X position
-            if entity ~= nil and math.abs(entity:getXPos()) > 0 then
-                entity:setStatus(xi.status.NORMAL)
-            end
+    for _, npcName in pairs(travelingMerchants) do
+        local results = zone:queryEntitiesByName(npcName)
+        for _, entity in pairs(results) do
+            entity:setStatus(xi.status.NORMAL)
         end
     end
 end
