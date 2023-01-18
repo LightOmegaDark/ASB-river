@@ -111,16 +111,6 @@ zones[xi.zone.PORT_BASTOK] =
             [17744155] = 17744155,  -- Starlight Celebration Planter
             -- [17744156] = 17744156,  -- Klaas
         },
-        TRAVELING_MERCHANTS =
-        {
-            NOKKHI_JINJAHL = 17744021,
-            OMINOUS_CLOUD = 17744022,
-            VALERIANO = 17743966,
-            DAHJAL = 17743967,
-            MOKOP_SANKOP = 17743968,
-            CHEH_RAIHAH = 17743969,
-            NALTA = 17743970,
-        },
     },
 }
 

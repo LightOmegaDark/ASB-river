@@ -170,16 +170,6 @@ zones[xi.zone.SOUTHERN_SAN_DORIA] =
         },
         LUSIANE  = 17719350,
         ARPETION = 17719409,
-        TRAVELING_MERCHANTS =
-        {
-            NOKKHI_JINJAHL = 17719534,
-            OMINOUS_CLOUD = 17719535,
-            VALERIANO = 17719424,
-            DAHJAL = 17719425,
-            MOKOP_SANKOP = 17719426,
-            CHEH_RAIHAH = 17719427,
-            NALTA = 17719428,
-        },
     },
 }
 

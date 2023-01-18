@@ -984,7 +984,16 @@ xi.conquest.setRegionalConquestOverseers = function(region)
     end
 end
 
-xi.conquest.setTravelingMerchants = function(zone, updateType, travelingMerchants)
+local travelingMerchants = {
+    'Nokkhi_Jinjahl',
+    'Ominous_Cloud',
+    'Valeriano',
+    'Mokop-Sankop',
+    'Dahjal',
+    'Nalta',
+}
+
+xi.conquest.setTravelingMerchants = function(zone, updateType)
     -- Show/Hide traveling merchant NPCs
     -- If there is a draw or a 1st place Alliance, those NPCs won't be available.
     if updateType ~= conquestConstants.TALLY_END then
@@ -1014,8 +1023,8 @@ xi.conquest.setTravelingMerchants = function(zone, updateType, travelingMerchant
     end
 
     -- Hide all of these NPCs by default
-    for _, npcID in pairs(travelingMerchants) do
-        local entity = GetNPCByID(npcID)
+    for _, npcName in pairs(travelingMerchants) do
+        local entity = zone:queryEntitiesByName(npcName)
         -- Will be the real entity if it has an X position
         if entity ~= nil and math.abs(entity:getXPos()) > 0 then
             entity:setStatus(xi.status.DISAPPEAR)
@@ -1024,9 +1033,9 @@ xi.conquest.setTravelingMerchants = function(zone, updateType, travelingMerchant
 
     -- If there is a clear winner, and not a tie,
     -- show the NPCs
-    if zoneID == firstPlaceZone and not (IsConquestAlliance() or (firstPlaceZone == secondPlaceZone)) then
-        for _, npcID in pairs(travelingMerchants) do
-            local entity = GetNPCByID(npcID)
+    if zoneID == firstPlaceZone (firstPlaceZone == secondPlaceZone) then
+        for _, npcName in pairs(travelingMerchants) do
+            local entity = zone:queryEntitiesByName(npcName)
             -- Will be the real entity if it has an X position
             if entity ~= nil and math.abs(entity:getXPos()) > 0 then
                 entity:setStatus(xi.status.NORMAL)

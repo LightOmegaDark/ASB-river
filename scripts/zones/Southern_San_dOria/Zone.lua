@@ -1,7 +1,6 @@
 -----------------------------------
 -- Zone: Southern_San_dOria (230)
 -----------------------------------
-local ID = require('scripts/zones/Southern_San_dOria/IDs')
 require('scripts/globals/events/harvest_festivals')
 require('scripts/globals/events/starlight_celebrations')
 require('scripts/quests/flyers_for_regine')
@@ -19,7 +18,7 @@ zoneObject.onInitialize = function(zone)
     applyHalloweenNpcCostumes(zone:getID())
     xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
     xi.chocobo.initZone(zone)
-    xi.conquest.setTravelingMerchants(zone, 1, ID.npc.TRAVELING_MERCHANTS)
+    xi.conquest.setTravelingMerchants(zone, 1)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -37,7 +36,7 @@ end
 
 zoneObject.onConquestUpdate = function(zone, updateType)
     xi.conq.onConquestUpdate(zone, updateType)
-    xi.conquest.setTravelingMerchants(zone, updateType, ID.npc.TRAVELING_MERCHANTS)
+    xi.conquest.setTravelingMerchants(zone, updateType)
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
