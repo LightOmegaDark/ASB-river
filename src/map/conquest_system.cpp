@@ -51,7 +51,7 @@ namespace conquest
         zoneutils::ForEachZone([](CZone* PZone)
         {
             // only find chars for zones that have had conquest updated
-            if (PZone->GetRegionID() <= REGION_TYPE::TAVNAZIA)
+            if (PZone->GetRegionID() <= REGION_TYPE::DYNAMIS)
             {
                 luautils::OnConquestUpdate(PZone, Conquest_Update);
                 PZone->ForEachChar([](CCharEntity* PChar) { PChar->PLatentEffectContainer->CheckLatentsZone(); });
@@ -365,7 +365,7 @@ namespace conquest
         zoneutils::ForEachZone([](CZone* PZone)
         {
             // only find chars for zones that have had conquest updated
-            if (PZone->GetRegionID() <= REGION_TYPE::TAVNAZIA)
+            if (PZone->GetRegionID() <= REGION_TYPE::DYNAMIS)
             {
                 luautils::OnConquestUpdate(PZone, Conquest_Tally_Start);
             }
@@ -392,7 +392,7 @@ namespace conquest
         zoneutils::ForEachZone([](CZone* PZone)
         {
             // only find chars for zones that have had conquest updated
-            if (PZone->GetRegionID() <= REGION_TYPE::TAVNAZIA)
+            if (PZone->GetRegionID() <= REGION_TYPE::DYNAMIS)
             {
                 luautils::OnConquestUpdate(PZone, Conquest_Tally_End);
                 PZone->ForEachChar([](CCharEntity* PChar)

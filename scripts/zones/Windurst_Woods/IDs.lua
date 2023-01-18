@@ -126,7 +126,7 @@ zones[xi.zone.WINDURST_WOODS] =
             DAHJAL = 17764526,
             MOKOP_SANKOP = 17764527,
             CHEH_RAIHAH = 17764528,
-            NALTA = 177645259,
+            NALTA = 17764529,
         },
     },
 }
