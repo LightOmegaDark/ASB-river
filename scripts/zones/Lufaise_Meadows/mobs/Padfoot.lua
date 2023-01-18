@@ -31,7 +31,7 @@ entity.onMobDespawn = function(mob)
                 DespawnMob(v)
             end
 
-            xi.mob.nmTODPersist(GetMobByID(v), 75600 + math.random(0, 6) * 1800) -- 21 to 24 hours with half hour windows
+            xi.mob.nmTODPersist(GetMobByID(mobId), 75600 + math.random(0, 6) * 1800) -- 21 to 24 hours with half hour windows
         end
 
         SetServerVariable("realPadfoot", math.random(1, 5))
