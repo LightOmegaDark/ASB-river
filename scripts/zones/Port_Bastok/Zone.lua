@@ -1,6 +1,7 @@
 -----------------------------------
 -- Zone: Port_Bastok (236)
 -----------------------------------
+local ID = require('scripts/zones/Port_Bastok/IDs')
 require('scripts/globals/events/starlight_celebrations')
 require('scripts/globals/conquest')
 require('scripts/globals/cutscenes')

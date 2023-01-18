@@ -111,6 +111,7 @@ zones[xi.zone.PORT_BASTOK] =
             [17744155] = 17744155,  -- Starlight Celebration Planter
             -- [17744156] = 17744156,  -- Klaas
         },
+
     },
 }
 

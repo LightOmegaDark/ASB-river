@@ -1,6 +1,7 @@
 -----------------------------------
 -- Zone: Southern_San_dOria (230)
 -----------------------------------
+local ID = require('scripts/zones/Southern_San_dOria/IDs')
 require('scripts/globals/events/harvest_festivals')
 require('scripts/globals/events/starlight_celebrations')
 require('scripts/quests/flyers_for_regine')

@@ -989,6 +989,7 @@ local travelingMerchants = {
     'Ominous_Cloud',
     'Valeriano',
     'Mokop-Sankop',
+    "Cheh_Raihah",
     'Dahjal',
     'Nalta',
 }
