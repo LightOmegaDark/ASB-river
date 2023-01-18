@@ -997,7 +997,7 @@ local travelingMerchants =
 
 xi.conquest.setTravelingMerchants = function(zone, updateType)
     -- Show/Hide traveling merchant NPCs
-    -- If there is a draw or a 1st place Alliance, those NPCs won't be available.
+    -- If there is a draw or a 1st place Alliance, those NPCs won't be available anywhere.
     if updateType ~= conquestConstants.TALLY_END then
         return
     end
@@ -1020,8 +1020,13 @@ xi.conquest.setTravelingMerchants = function(zone, updateType)
     local firstPlaceZone = rankings[1][2]
     local secondPlaceZone = rankings[2][2]
 
-    if firstPlaceZone == zoneID then
-        print("Making regional conquest NPCs available in: " .. zoneName)
+    if
+        firstPlaceZone == zoneID and
+        firstPlaceZone ~= secondPlaceZone
+    then
+        print("Showing traveling merchants (conquest): " .. zoneName)
+    else
+        print("Hiding traveling merchants (conquest): " .. zoneName)
     end
 
     -- Hide all of these NPCs by default
@@ -1489,14 +1494,21 @@ end
 -----------------------------------
 
 xi.conquest.onConquestUpdate = function(zone, updatetype)
-    local region = zone:getRegionID()
-    local owner = GetRegionOwner(region)
-    local players = zone:getPlayers()
-    local messageBase = zones[zone:getID()].text.CONQUEST_BASE
-    local ranking = GetConquestBalance()
+    local region             = zone:getRegionID()
+    local influence          = GetRegionInfluence(region)
+    local owner              = GetRegionOwner(region)
+    local players            = zone:getPlayers()
+    local messageBase        = zones[zone:getID()].text.CONQUEST_BASE
+    local ranking            = GetConquestBalance()
+    local isConquestAlliance = IsConquestAlliance()
 
+    -----------------------------------
+    -- Send messages to every player in the zone
+    -----------------------------------
+    -- WARNING: This is iterating every player in a zone, be careful not
+    --        : to put expensive operations like db reads in here!
+    -----------------------------------
     for _, player in pairs(players) do
-
         -- CONQUEST TALLY START
         if updatetype == conquestConstants.TALLY_START then
             player:messageText(player, messageBase, 5)
@@ -1549,7 +1561,7 @@ xi.conquest.onConquestUpdate = function(zone, updatetype)
 
             player:messageText(player, messageBase + offset, 5) -- Global balance of power:
 
-            if IsConquestAlliance() then
+            if IsConquestAlliance then
                 if bit.band(ranking, 0x03) == 0x01 then
                     player:messageText(player, messageBase + 50, 5) -- Bastok and Windurst have formed an alliance.
                 elseif bit.band(ranking, 0x0C) == 0x04 then
@@ -1583,7 +1595,7 @@ xi.conquest.onConquestUpdate = function(zone, updatetype)
                 player:messageText(player, messageBase + 49 - windurst, 5) -- Regional influence: Windurst
             end
 
-            if IsConquestAlliance() then
+            if IsConquestAlliance then
                 if bit.band(ranking, 0x03) == 0x01 then
                     player:messageText(player, messageBase + 53, 5) -- Bastok and Windurst are currently allies.
                 elseif bit.band(ranking, 0x0C) == 0x04 then
