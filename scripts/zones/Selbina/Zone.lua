@@ -15,7 +15,7 @@ zoneObject.onInitialize = function(zone)
     SetExplorerMoogles(ID.npc.EXPLORER_MOOGLE)
 end
 
-zone_object.onGameHour = function(zone)
+zoneObject.onGameHour = function(zone)
     SetServerVariable("Selbina_Destination", math.random(1, 100))
 end
 

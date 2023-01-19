@@ -19,37 +19,12 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    if player:getCharVar("FadedPromises") == 1 then
-        player:startEvent(803)
-    elseif player:getCharVar("FadedPromises") == 3 then
-        player:startEvent(804)
-    end
 end
 
 entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if (csid == 748) then
-        player:addQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.TRUE_STRENGTH)
-    elseif (csid == 749) then
-        if (player:getFreeSlotsCount() == 0) then
-            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 14215) -- Temple Hose
-        else
-            player:tradeComplete()
-            player:addTitle(xi.title.PARAGON_OF_MONK_EXCELLENCE)
-            player:addItem(14215)
-            player:messageSpecial(ID.text.ITEM_OBTAINED, 14215) -- Temple Hose
-            player:addFame(xi.quest.fame_area.BASTOK, 60)
-            player:completeQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.TRUE_STRENGTH)
-        end
-    elseif (csid == 935) then
-        player:setCharVar("WildcatBastok", utils.mask.setBit(player:getCharVar("WildcatBastok"), 9, true))
-    elseif (csid == 803 and option == 0) then -- accepting returns option 0, declining returns option 1073741824 ???
-        player:setCharVar("FadedPromises", 2)
-    elseif csid == 804 then
-        player:setCharVar("FadedPromises", 4)
-    end
 end
 
 return entity
