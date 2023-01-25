@@ -135,6 +135,7 @@ CZone::CZone(ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID, ui
 , m_levelRestriction(levelRestriction)
 {
     TracyZoneScoped;
+
     m_useNavMesh = false;
     std::ignore  = m_useNavMesh;
     ZoneTimer    = nullptr;
@@ -159,7 +160,8 @@ CZone::CZone(ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID, ui
 
     LoadZoneLines();
     LoadZoneWeather();
-    LoadNavMesh();
+
+    // NOTE: Heavy resources like Navmesh are now loaded outside of the constructor in zoneutils::LoadZoneList
 }
 
 CZone::~CZone()
@@ -517,6 +519,23 @@ void CZone::LoadNavMesh()
         DebugNavmesh("CZone::LoadNavMesh: Cannot load navmesh file (%s)", file);
         destroy(m_navMesh);
     }
+}
+
+void CZone::LoadZoneLos()
+{
+    if (GetType() == ZONE_TYPE::CITY || (m_miscMask & MISC_LOS_OFF))
+    {
+        // Skip cities and zones with line of sight turned off
+        return;
+    }
+
+    if (lineOfSight)
+    {
+        // Clean up previous object if one exists.
+        delete lineOfSight;
+    }
+
+    lineOfSight = ZoneLos::Load((uint16)GetID(), fmt::sprintf("losmeshes/%s.obj", GetName()));
 }
 
 /************************************************************************
