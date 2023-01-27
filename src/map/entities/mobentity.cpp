@@ -1615,7 +1615,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 
         for (uint8 i = 0; i < crystalRolls; i++)
         {
-            if (xirand::GetRandomNumber(100) < 20 && AddItemToPool(4095 + m_Element, ++dropCount))
+            if (xirand::GetRandomNumber(100) < 50 && AddItemToPool(4095 + m_Element, ++dropCount))
             {
                 return;
             }
