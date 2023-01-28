@@ -22,6 +22,8 @@ quest.sections =
 {
     {
         check = function(player, status, vars)
+            player:addFame(xi.quest.fame_area.BASTOK, 11112)
+
             return status == QUEST_AVAILABLE and
             player:getCurrentMission(xi.mission.log_id.COP) >= xi.mission.id.cop.THREE_PATHS
         end,
