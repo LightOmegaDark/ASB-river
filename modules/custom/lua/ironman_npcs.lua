@@ -4,11 +4,28 @@
 -----------------------------------
 require("modules/module_utils")
 require('scripts/globals/items')
-require("scripts/zones/Bastok_Markets/Zone")
 -----------------------------------
-local m = Module:new("ironman_npcs")
+local m = Module:new("ironman")
 local CHAR_RESTRICTION = "CHAR_RESTRICTION"
 local CHAR_INTERACTED = "CHAR_INTERACTED"
+
+local ironmanDialog = {
+    WARNING1 = "You are about to become an Ironman.",
+    WARNING2 = "Your character will no longer be able to party with regular adventurers, trade, or use the Auction House or Delivery Box.",
+    MENU_ACCEPT = {
+        TITLE = "Will you take the path alone?",
+        AGREE = "Become an Ironman",
+        DECLINE = "Walk away",
+        EXIT = "You've taken the easy road, adventurer. Disappointing.",
+    },
+    MENU_REWARD = {
+        TITLE = "Choose an Ironman reward:",
+    },
+    PREVENTED = "It's too late, adventurer. You've already taken another path.",
+    ACCEPTED1 = "This path will be long and difficult. It will take an iron will to see it through",
+}
+
+m:loadSettings(ironmanDialog)
 
 local rewards = {
     { lv = 18, id = xi.items.RABBIT_HIDE, desc = "(Lv18) Rabbit Hide" },
@@ -30,41 +47,40 @@ local function setIronmanRewards(player)
     return options
 end
 
-local menuReward = {
-    title = "Choose an Ironman reward:",
-    options = {},
-}
-
 local function ironmanOnTrigger(player, npc)
     if player:getVar(CHAR_RESTRICTION) ~= 0 then
+        local menuReward = {
+            title = ironmanDialog.MENU_REWARD.TITLE,
+            options = {},
+        }
         menuReward.options = setIronmanRewards(player)
         player:customMenu(menuReward)
     else
         if player:getVar(CHAR_INTERACTED) == 0 then
-            player:PrintToPlayer("You are about to become an Ironman.", xi.msg.channel.SYSTEM_3)
-            player:PrintToPlayer("Your character will no longer be able to party with regular adventurers, trade, or use the Auction House or Delivery Box.", xi.msg.channel.SYSTEM_3)
+            player:PrintToPlayer(ironmanDialog.WARNING1, xi.msg.channel.SYSTEM_3)
+            player:PrintToPlayer(ironmanDialog.WARNING2, xi.msg.channel.SYSTEM_3)
             player:customMenu({
-                title = "Will you take the path alone?",
+                title = ironmanDialog.MENU_ACCEPT.TITLE,
                 options = {
                     {
-                        "Become an Ironman",
+                        ironmanDialog.MENU_ACCEPT.AGREE,
                         function(playerArg, npc)
                             playerArg:setVar(CHAR_INTERACTED, 1)
                             playerArg:setVar(CHAR_RESTRICTION, 255)
-                            playerArg:PrintToPlayer("This path will be long and difficult. It will take an iron will to see it through. Glory awaits you, adventurer.", xi.msg.channel.NS_SAY, npc:getPacketName())
-                            playerArg:PrintToPlayer("You have become an Ironman.", xi.msg.channel.SYSTEM_3)
+                            playerArg:PrintToPlayer(ironmanDialog.ACCEPTED1, xi.msg.channel.NS_SAY, npc:getPacketName())
+                            playerArg:PrintToPlayer(ironmanDialog.ACCEPTED2, xi.msg.channel.SYSTEM_3)
                         end
                     },
                     {
-                        "Walk away",
+                        ironmanDialog.MENU_ACCEPT.DECLINE,
                         function(playerArg, npc)
-                            playerArg:PrintToPlayer("You've taken the easy road, adventurer. Disappointing.", xi.msg.channel.NS_SAY, npc:getPacketName())
+                            playerArg:PrintToPlayer(ironmanDialog.MENU_ACCEPT.EXIT, xi.msg.channel.NS_SAY, npc:getPacketName())
                         end
                     }
                 }
             })
         else
-            player:PrintToPlayer("It's too late, adventurer. You've already taken another path.", xi.msg.channel.NS_SAY, npc:getPacketName())
+            player:PrintToPlayer(ironmanDialog.PREVENTED, xi.msg.channel.NS_SAY, npc:getPacketName())
         end
     end
 end

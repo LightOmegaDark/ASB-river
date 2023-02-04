@@ -116,22 +116,6 @@ class IronmanModeModule : public CPPModule
         if (settings::get<std::string>("restriction.PUNITIVE_MODE").length() > 0)
             punitiveMode = settings::get<bool>("restriction.PUNITIVE_MODE");
 
-        // === Settings example ===
-        /*
-        * xi.settings.restriction {
-        *   PUNITIVE_MODE = false,
-        *   ALLOW_BAZAAR = true,
-        *   MSG_AUCTION_HOUSE = "You cannot use the Auction House as an Ironman.",
-        *   MSG_DELIVERY_BOX = "You cannot use the Delivery Box as an Ironman.",
-        *   MSG_TRADE_PLAYER = "You cannot trade as an Ironman.",
-        *   MSG_TRADE_OTHER = "You cannot trade with an Ironman.",
-        *   MSG_INVITE_PLAYER = "You cannot invite an Ironman as a regular player.",
-        *   MSG_INVITE_OTHER = "You cannot invite regular players as an Ironman.",
-        *   MSG_BAZAAR_SELLING = "You cannot buy items from an Ironman.",
-        *   MSG_BAZAAR_BUYING = "You cannot buy bazaar items as an Ironman.",
-        * }
-        */
-
         // Party invite
         {
 
