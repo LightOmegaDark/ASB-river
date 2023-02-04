@@ -1,5 +1,5 @@
 -----------------------------------
--- func: restrict (player) <days> <ah/dbox/trade/party/all>
+-- func: restrict (player) <ah/dbox/trade/party/all>
 -- desc: Restricts player access to party and economy functions
 -- debug: !checkvar (player) CHAR_RESTRICTION
 -----------------------------------
