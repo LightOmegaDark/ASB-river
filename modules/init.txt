@@ -68,3 +68,9 @@ renamer
 #		Custom
 #-----------------------
 #custom/sql/starlight_celebrations.sql
+#-----------------------
+#       Ironman
+#-----------------------
+custom/cpp/ironman_mode.cpp
+custom/lua/ironman_npcs.lua
+custom/commands/restrict.lua
