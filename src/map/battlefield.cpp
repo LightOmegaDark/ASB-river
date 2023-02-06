@@ -991,7 +991,6 @@ void CBattlefield::handleDeath(CBaseEntity* PEntity)
     }
 
     auto groups(m_groups);
-
     for (auto& group : groups)
     {
         for (uint32 mobId : group.mobIds)
