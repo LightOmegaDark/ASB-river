@@ -9,7 +9,7 @@ require("modules/module_utils")
 local m = Module:new("helm_claim")
 
 local claimSettings = {
-    MESSAGE = "Another player is currently using that.",
+    MESSAGE = "Another player is currently using this.",
     CLAIM_DURATION = 10, -- Seconds
     POINT_AVAILABLE = "POINT_AVAILABLE",
     POINT_CLAIMED = "POINT_CLAIMED"
