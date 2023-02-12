@@ -37,6 +37,7 @@ local ironmanDialog = {
     ACCEPTED2 = "You have become an Ironman.",
     RETIRE_WARNING = "Warning: You will no longer be an Ironman or eligible for Ironman rewards. This cannot be undone.",
     RETIRE = "You are no longer an Ironman.",
+    IRONMAN_FLAG = 0x00002000,
 }
 
 local ironmanRewards = {
@@ -119,8 +120,9 @@ local MENU_RETIRE = {
         {
             ironmanDialog.MENU_RETIRE.AGREE,
             function(player)
-                player:PrintToPlayer(ironmanDialog.RETIRE, xi.msg.channel.SYSTEM_3)
                 player:setVar(CHAR_RESTRICTION, 0)
+                player:setFlag(ironmanDialog.IRONMAN_FLAG)
+                player:PrintToPlayer(ironmanDialog.RETIRE, xi.msg.channel.SYSTEM_3)
             end,
         },
         {
@@ -163,6 +165,7 @@ local MENU_ACCEPT = {
             function(player)
                 player:setVar(CHAR_INTERACTED, 1)
                 player:setVar(CHAR_RESTRICTION, 255)
+                player:setFlag(ironmanDialog.IRONMAN_FLAG)
                 player:PrintToPlayer(ironmanDialog.ACCEPTED1, xi.msg.channel.NS_SAY)
                 player:PrintToPlayer(ironmanDialog.ACCEPTED2, xi.msg.channel.SYSTEM_3)
             end,

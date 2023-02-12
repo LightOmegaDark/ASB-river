@@ -53,8 +53,8 @@ class IronmanModeModule : public CPPModule
 
     std::string CHAR_RESTRICTION                = "CHAR_RESTRICTION"; // CharVar (Bitmask containing CHAR_RESTRICTION flags)
     std::string CHAR_INTERACTED                 = "CHAR_INTERACTED";  // CharVar (Set to 1 if a character has ever interacted with party or economy functions)
-    bool        allowBazaar                     = true;               // Allow restricted players to display items in their bazaar (But other players cannot purchase)
     bool        punitiveMode                    = false;              // Use module as a punitive restriction (Do not allow partying with other restricted players)
+    bool        allowBazaar                     = true;               // Allow restricted players to display items in their bazaar (But other players cannot purchase)
     bool        allowHourglass                  = true;               // Allow Ironman to buy Perpetual Hourglass from another Ironman bazaar (Needed for Ironman Dynamis groups)
     uint16      ITEM_PERPETUAL_HOURGLASS        = 4237;
 
@@ -114,11 +114,14 @@ class IronmanModeModule : public CPPModule
         if (settings::get<std::string>("restriction.MSG_BAZAAR_BUYING").length() > 0)
             RESTRICTION_MSG_BAZAAR_BUYING = settings::get<std::string>("restriction.MSG_BAZAAR_BUYING");
 
+        if (settings::get<std::string>("restriction.PUNITIVE_MODE").length() > 0)
+            punitiveMode = settings::get<bool>("restriction.PUNITIVE_MODE");
+
         if (settings::get<std::string>("restriction.ALLOW_BAZAAR").length() > 0)
             allowBazaar = settings::get<bool>("restriction.ALLOW_BAZAAR");
 
-        if (settings::get<std::string>("restriction.PUNITIVE_MODE").length() > 0)
-            punitiveMode = settings::get<bool>("restriction.PUNITIVE_MODE");
+        if (settings::get<std::string>("restriction.ALLOW_HOURGLASS").length() > 0)
+            allowHourglass = settings::get<bool>("restriction.ALLOW_HOURGLASS");
 
         // Party invite
         {
