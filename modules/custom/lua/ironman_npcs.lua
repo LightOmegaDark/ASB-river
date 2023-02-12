@@ -39,12 +39,27 @@ local ironmanDialog = {
     RETIRE = "You are no longer an Ironman.",
 }
 
--- TODO: Add pagination
 local ironmanRewards = {
-    REWARD_LV_18 = { lv = 18, id = xi.items.RABBIT_HIDE, desc = "Rabbit Hide" },
-    REWARD_LV_30 = { lv = 30, id = xi.items.WILD_ONION, desc = "Wild Onion" },
-    REWARD_LV_50 = { lv = 50, id = xi.items.XIPHOS, desc = "Xiphos" },
+    REWARD_LV_18 = { lv = 18, id = xi.items.RED_CHIP, desc = "Red Chip" },
+    REWARD_LV_30 = { lv = 30, id = xi.items.BLUE_CHIP, desc = "Blue Chip" },
+    REWARD_LV_40 = { lv = 40, id = xi.items.YELLOW_CHIP, desc = "Yellow Chip" },
+    REWARD_LV_50 = { lv = 50, id = xi.items.GREEN_CHIP, desc = "Green Chip" },
+    REWARD_LV_60 = { lv = 60, id = xi.items.CLEAR_CHIP, desc = "Clear Chip" },
+    REWARD_LV_65 = { lv = 65, id = xi.items.PURPLE_CHIP, desc = "Purple Chip" },
+    REWARD_LV_70 = { lv = 70, id = xi.items.WHITE_CHIP, desc = "White Chip" },
+    REWARD_LV_75 = { lv = 75, id = xi.items.BLACK_CHIP, desc = "Black Chip" },
 }
+
+local sortedRewards = {}
+local menu  = {}
+
+local i = 1
+for _, v in pairs(ironmanRewards) do
+    sortedRewards[i] = v
+    i = i + 1
+end
+
+table.sort(sortedRewards, function (a, b) return a.lv < b.lv end)
 
 m:loadSettings(ironmanDialog)
 m:loadSettings(ironmanRewards)
@@ -58,25 +73,45 @@ local delaySendMenu = function(player, menuNext)
     end)
 end
 
-local function setIronmanRewards(player)
-    local options = {}
-    local playerLevel = player:getMainLvl()
-    for _, v in pairs(ironmanRewards) do
-        if playerLevel >= v.lv then
-            table.insert(options, {
-                string.format("(%d) %s", v.lv, v.desc), function(playerArg)
-                    npcUtil.giveItem(playerArg, v.id)
-                end
-            })
-        end
-    end
-    return options
-end
-
 local MENU_REWARD = {
     title = ironmanDialog.MENU_REWARD.TITLE,
     options = {},
 }
+
+local function setIronmanRewards(player)
+    local options = {}
+    local page = player:getLocalVar("IRONMAN_MENU_PAGE")
+    local playerLevel = player:getMainLvl()
+    local itemsBefore = (page - 1) * 3
+    for i = 1, 3 do
+        local item = sortedRewards[itemsBefore + i]
+        if item == nil then
+            break
+        end
+
+        if playerLevel >= item.lv then
+            table.insert(options, {
+                string.format("(%d) %s", item.lv, item.desc), function(playerArg)
+                    npcUtil.giveItem(playerArg, item.id)
+                end
+            })
+        end
+    end
+
+    if sortedRewards[itemsBefore + 4] ~= nil then
+        table.insert(options, {
+            "Next Page",
+            function()
+                local page = player:getLocalVar("IRONMAN_MENU_PAGE", 1)
+                player:setLocalVar("IRONMAN_MENU_PAGE", page + 1)
+                MENU_REWARD.options = setIronmanRewards(player)
+                delaySendMenu(player, MENU_REWARD)
+            end
+        })
+    end
+
+    return options
+end
 
 local MENU_RETIRE = {
     title = ironmanDialog.MENU_RETIRE.TITLE,
@@ -101,6 +136,7 @@ local MENU_CURRENT = {
         {
             ironmanDialog.MENU_CURRENT.REWARDS,
             function(player)
+                player:setLocalVar("IRONMAN_MENU_PAGE", 1)
                 MENU_REWARD.options = setIronmanRewards(player)
                 delaySendMenu(player, MENU_REWARD)
             end,
@@ -149,7 +185,7 @@ local function ironmanOnTrigger(player, npc)
             player:PrintToPlayer(ironmanDialog.WARNING2, xi.msg.channel.SYSTEM_3)
             delaySendMenu(player, MENU_ACCEPT)
         else
-            player:PrintToPlayer(ironmanDialog.PREVENTED, xi.msg.channel.NS_SAY, npc:getPacketName())
+            player:PrintToPlayer(string.format("%s : %s", npc:getPacketName(), ironmanDialog.PREVENTED), xi.msg.channel.NS_SAY, npc:getPacketName())
         end
     end
 end
