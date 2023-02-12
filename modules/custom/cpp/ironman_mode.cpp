@@ -17,12 +17,14 @@
 #include "map/packets/menu_mog.h"
 #include "map/packets/shop_menu.h"
 #include "map/packets/shop_items.h"
+#include "map/packets/bazaar_purchase.h"
 #include "map/packets/message_standard.h"
 
 #include "map/utils/charutils.h"
 #include "map/utils/jailutils.h"
 #include "map/utils/zoneutils.h"
 #include "map/lua/lua_baseentity.h"
+#include "map/item_container.h"
 
 extern uint8                                                                            PacketSize[512];
 extern std::function<void(map_session_data_t* const, CCharEntity* const, CBasicPacket)> PacketParser[512];
@@ -53,6 +55,8 @@ class IronmanModeModule : public CPPModule
     std::string CHAR_INTERACTED                 = "CHAR_INTERACTED";  // CharVar (Set to 1 if a character has ever interacted with party or economy functions)
     bool        allowBazaar                     = true;               // Allow restricted players to display items in their bazaar (But other players cannot purchase)
     bool        punitiveMode                    = false;              // Use module as a punitive restriction (Do not allow partying with other restricted players)
+    bool        allowHourglass                  = true;               // Allow Ironman to buy Perpetual Hourglass from another Ironman bazaar (Needed for Ironman Dynamis groups)
+    uint16      ITEM_PERPETUAL_HOURGLASS        = 4237;
 
     void SetFirstTimeInteraction(CCharEntity* Player)
     {
@@ -304,13 +308,35 @@ class IronmanModeModule : public CPPModule
                 int32 targetRestriction = charutils::GetCharVar(PTarget, CHAR_RESTRICTION);
                 int32 playerRestriction = charutils::GetCharVar(PChar, CHAR_RESTRICTION);
 
+                // Allow Ironman Dynamis (If enabled)
+                if (allowHourglass && (playerRestriction & RESTRICTION_TRADE_PLAYER) && (targetRestriction & RESTRICTION_TRADE_PLAYER)) {
+                    uint8 SlotID = data.ref<uint8>(0x04);
+                    CItemContainer* PBazaar     = PTarget->getStorage(LOC_INVENTORY);
+
+                    CItem* PBazaarItem = PBazaar->GetItem(SlotID);
+                    if (PBazaarItem == nullptr)
+                    {
+                        PChar->pushPacket(new CBazaarPurchasePacket(PTarget, false));
+                        return;
+                    }
+
+                    if (PBazaarItem->getID() == ITEM_PERPETUAL_HOURGLASS)
+                    {
+                        SetFirstTimeInteraction(PChar);
+                        bazaarPurchase(PSession, PChar, data);
+                        return;
+                    }
+                }
+
                 if (playerRestriction & RESTRICTION_TRADE_PLAYER) // Buying as a restricted player
                 {
                     PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, RESTRICTION_MSG_BAZAAR_BUYING));
+                    PChar->pushPacket(new CBazaarPurchasePacket(PTarget, false));
                 }
                 if (targetRestriction & RESTRICTION_TRADE_PLAYER) // Buying from a restricted player
                 {
                     PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, RESTRICTION_MSG_BAZAAR_SELLING));
+                    PChar->pushPacket(new CBazaarPurchasePacket(PTarget, false));
                 }
                 else
                 {
@@ -318,7 +344,7 @@ class IronmanModeModule : public CPPModule
                     bazaarPurchase(PSession, PChar, data);
                 }
             };
-            PacketParser[0x105] = bazaarPurchaseRestricted;
+            PacketParser[0x106] = bazaarPurchaseRestricted;
         }
 
         // Delivery Box (Mog House)
