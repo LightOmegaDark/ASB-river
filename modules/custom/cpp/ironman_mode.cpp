@@ -123,6 +123,51 @@ class IronmanModeModule : public CPPModule
         if (settings::get<std::string>("restriction.ALLOW_HOURGLASS").length() > 0)
             allowHourglass = settings::get<bool>("restriction.ALLOW_HOURGLASS");
 
+        // Party join (SetFirstTimeInteraction)
+        {
+            auto partyJoin = PacketParser[0x074];
+            auto partyJoinSetFlag = [this, partyJoin](map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data) -> void {
+                TracyZoneScoped;
+
+                CCharEntity* PInviter     = zoneutils::GetCharFromWorld(PChar->InvitePending.id, PChar->InvitePending.targid);
+                uint8 inviteAnswer = data.ref<uint8>(0x04);
+
+                if (!punitiveMode && inviteAnswer == 1)
+                {
+                    SetFirstTimeInteraction(PChar);
+                    SetFirstTimeInteraction(PInviter);
+                }
+
+                partyJoin(PSession, PChar, data);
+            };
+            PacketParser[0x074] = partyJoinSetFlag;
+        }
+
+        // Trade accept (SetFirstTimeInteraction)
+        {
+            auto tradeAccept        = PacketParser[0x033];
+            auto tradeAcceptSetFlag = [this, tradeAccept](map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data) -> void {
+                TracyZoneScoped;
+
+                CCharEntity* PTarget = (CCharEntity*)PChar->GetEntity(PChar->TradePending.targid, TYPE_PC);
+
+                if (PTarget != nullptr && PChar->TradePending.id == PTarget->id)
+                {
+                    uint16 action = data.ref<uint8>(0x04);
+
+                    // trade accepted
+                    if (!punitiveMode && action == 0x02)
+                    {
+                        SetFirstTimeInteraction(PChar);
+                        SetFirstTimeInteraction(PTarget);
+                    }
+
+                    tradeAccept(PSession, PChar, data);
+                }
+            };
+            PacketParser[0x033] = tradeAcceptSetFlag;
+        }
+
         // Party invite
         {
 
@@ -179,8 +224,6 @@ class IronmanModeModule : public CPPModule
                                 // Restricted player invites restricted player (Ironman configuration)
                                 if ((!inviterIsRestricted && !inviteeIsRestricted) || (!punitiveMode && (inviterIsRestricted && inviteeIsRestricted)))
                                 {
-                                    SetFirstTimeInteraction(PInvitee);
-                                    SetFirstTimeInteraction(PChar);
                                     partyInvite(PSession, PChar, data);
                                 }
                                 // Restricted player invites regular player
@@ -224,8 +267,6 @@ class IronmanModeModule : public CPPModule
                                 // Restricted player invites restricted player (Ironman configuration)
                                 if ((!inviterIsRestricted && !inviteeIsRestricted) || (!punitiveMode && (inviterIsRestricted && inviteeIsRestricted)))
                                 {
-                                    SetFirstTimeInteraction(PInvitee);
-                                    SetFirstTimeInteraction(PChar);
                                     partyInvite(PSession, PChar, data);
                                 }
                                 // Restricted player invites regular player
@@ -266,7 +307,6 @@ class IronmanModeModule : public CPPModule
                     }
                     else
                     {
-                        SetFirstTimeInteraction(PChar);
                         tradeRequest(PSession, PChar, data);
                     }
                 }
