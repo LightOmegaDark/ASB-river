@@ -44,7 +44,12 @@ local ironmanDialog = {
     ACCEPTED2 = "You have become an Ironman.",
     RETIRE_WARNING = "Warning: You will no longer be an Ironman or eligible for Ironman rewards. This cannot be undone.",
     RETIRE = "You are no longer an Ironman.",
+}
+
+local ironmanSettings = {
     IRONMAN_FLAG = 0x00002000,
+    IRONMAN_STATUS_ADD_ANIM = 892,
+    IRONMAN_STATUS_DEL_ANIM = 901,
 }
 
 local ironmanRewards = {
@@ -70,6 +75,7 @@ end
 table.sort(sortedRewards, function (a, b) return a.lv < b.lv end)
 
 m:loadSettings(ironmanDialog)
+m:loadSettings(ironmanSettings)
 m:loadSettings(ironmanRewards)
 
 local menu  = {}
@@ -121,15 +127,47 @@ local function setIronmanRewards(player)
     return options
 end
 
+local function delIronmanStatus(player)
+    player:setVar(CHAR_RESTRICTION, 0)
+    player:PrintToPlayer(ironmanDialog.RETIRE, xi.msg.channel.SYSTEM_3)
+
+    if player:checkNameFlags(ironmanSettings.IRONMAN_FLAG) then
+        player:setFlag(ironmanSettings.IRONMAN_FLAG)
+    end
+end
+
+local function addIronmanStatus(player)
+    player:setVar(CHAR_INTERACTED, 1)
+    player:setVar(CHAR_RESTRICTION, 255)
+    player:PrintToPlayer(ironmanDialog.ACCEPTED2, xi.msg.channel.SYSTEM_3)
+
+    if not player:checkNameFlags(ironmanSettings.IRONMAN_FLAG) then
+        player:setFlag(ironmanSettings.IRONMAN_FLAG)
+    end
+end
+
+local function changeIronmanStatus(player, anim, func)
+    local zone = player:getZone()
+    local npcName = ironmanNPC[zone:getName()]
+    local npcEntity = zone:queryEntitiesByName(string.format("DE_%s", npcName))
+
+    --- If entity found, play animation then apply status change
+    if npcEntity and npcEntity[1] then
+        npcEntity[1]:independentAnimation(player, anim, 0)
+        player:timer(2000, func)
+    else
+        -- Otherwise, skip animation and apply change anyway
+        func()
+    end
+end
+
 local MENU_RETIRE = {
     title = ironmanDialog.MENU_RETIRE.TITLE,
     options = {
         {
             ironmanDialog.MENU_RETIRE.AGREE,
             function(player)
-                player:setVar(CHAR_RESTRICTION, 0)
-                player:setFlag(ironmanDialog.IRONMAN_FLAG)
-                player:PrintToPlayer(ironmanDialog.RETIRE, xi.msg.channel.SYSTEM_3)
+                changeIronmanStatus(player, ironmanSettings.IRONMAN_STATUS_DEL_ANIM, delIronmanStatus)
             end,
         },
         {
@@ -170,24 +208,9 @@ local MENU_ACCEPT = {
         {
             ironmanDialog.MENU_ACCEPT.AGREE,
             function(player)
-                local zone = player:getZone()
-                local npcName = ironmanNPC[zone:getName()]
-                local npcEntity = zone:queryEntitiesByName(string.format("DE_%s", npcName))
-
-                player:setVar(CHAR_INTERACTED, 1)
-                player:setVar(CHAR_RESTRICTION, 255)
-                player:setFlag(ironmanDialog.IRONMAN_FLAG)
+                local npcName = ironmanNPC[player:getZoneName()]
                 player:PrintToPlayer(string.format("%s : %s", npcName, ironmanDialog.ACCEPTED1), xi.msg.channel.NS_SAY, npcName)
-
-                --- If entity found, play animation then display confirmation message
-                if npcEntity and npcEntity[1] then
-                    npcEntity[1]:independentAnimation(player, 892, 0)
-                    player:timer(2000, function(playerArg)
-                        playerArg:PrintToPlayer(ironmanDialog.ACCEPTED2, xi.msg.channel.SYSTEM_3)
-                    end)
-                else -- Otherwise, skip animation and display message anyway
-                    playerArg:PrintToPlayer(ironmanDialog.ACCEPTED2, xi.msg.channel.SYSTEM_3)
-                end
+                changeIronmanStatus(player, ironmanSettings.IRONMAN_STATUS_ADD_ANIM, addIronmanStatus)
             end,
         },
         {
