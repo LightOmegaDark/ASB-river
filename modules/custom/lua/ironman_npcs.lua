@@ -13,13 +13,16 @@ local m = Module:new("ironman")
 ****************************************************************************
 
     -- Override settings --
+
     xi.settings.ironman = {
         IRONMAN_FLAG = 0x00002000,
         IRONMAN_STATUS_ADD_ANIM = 892,
         IRONMAN_STATUS_DEL_ANIM = 901,
     }
 
+
     -- Override dialog --
+
     xi.settings.ironman = {
         WARNING1 = "You are about to become an Ironman.",
         MENU_CURRENT = {
@@ -30,12 +33,17 @@ local m = Module:new("ironman")
         },
     }
 
+
     -- Override rewards --
+    -- Rewards are automatically paginated into 3 per page
+
     xi.settings.ironman = {
         REWARDS = {
             { lv = 15, id = 16465, desc = "Bronze Knife" },
             { lv = 25, id = 16535, desc = "Bronze Sword" },
             { lv = 35, id = 16640, desc = "Bronze Axe" },
+            -- Next page
+            { lv = 45, id = 16768, desc = "Bronze Zaghnal" },
         },
     }
 
