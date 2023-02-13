@@ -8,7 +8,7 @@
 *************************************************************************
 * Module can be used as an alternative punishment to full ban
 * when set to punitiveMode (Not compatible with Ironman Mode)
- ************************************************************************/
+************************************************************************/
 
 #include "map/utils/moduleutils.h"
 
@@ -60,7 +60,7 @@ class IronmanModeModule : public CPPModule
 
     void SetFirstTimeInteraction(CCharEntity* Player)
     {
-        if (charutils::GetCharVar(Player, CHAR_INTERACTED) == 0)
+        if (!punitiveMode && charutils::GetCharVar(Player, CHAR_INTERACTED) == 0)
         {
             charutils::SetCharVar(Player, CHAR_INTERACTED, 1);
         }
@@ -70,7 +70,10 @@ class IronmanModeModule : public CPPModule
     {
         TracyZoneScoped;
 
-        // More generic messages for restrictions if module not used for Ironman
+       /************************************************************************
+       *                    Generic messages for Punitive Mode
+       ************************************************************************/
+
         if (punitiveMode)
         {
             RESTRICTION_MSG_AUCTION_HOUSE   = "You are currently restricted from using the Auction House.";
@@ -86,7 +89,19 @@ class IronmanModeModule : public CPPModule
             RESTRICTION_MSG_BAZAAR_BUYING   = "You are currently restricted from buying items.";
         }
 
-        // Override message strings from settings if they exist
+
+        /************************************************************************
+        *                     Override messages from settings
+        *************************************************************************
+        *         -- Example --
+        *
+        *   xi.settings.restriction = {
+        *       MSG_AUCTION_HOUSE = "You are currently restricted from using the Auction House.",
+        *       MSG_DELIVERY_BOX  = "You are currently restricted from using the Delivery Box.",
+        *       MSG_TRADE_PLAYER  = "You are currently restricted from trading.",
+        *   }
+        ************************************************************************/
+
         if (settings::get<std::string>("restriction.MSG_AUCTION_HOUSE").length() > 0)
             RESTRICTION_MSG_AUCTION_HOUSE = settings::get<std::string>("restriction.MSG_AUCTION_HOUSE");
 
@@ -114,6 +129,19 @@ class IronmanModeModule : public CPPModule
         if (settings::get<std::string>("restriction.MSG_BAZAAR_BUYING").length() > 0)
             RESTRICTION_MSG_BAZAAR_BUYING = settings::get<std::string>("restriction.MSG_BAZAAR_BUYING");
 
+
+        /************************************************************************
+        *                       Override general settings
+        *************************************************************************
+        *         -- Example --
+        *
+        *   xi.settings.restriction = {
+        *       PUNITIVE_MODE   = false,
+        *       ALLOW_BAZAAR    = true,
+        *       ALLOW_HOURGLASS = true,
+        *   }
+        ************************************************************************/
+
         if (settings::get<std::string>("restriction.PUNITIVE_MODE").length() > 0)
             punitiveMode = settings::get<bool>("restriction.PUNITIVE_MODE");
 
@@ -123,7 +151,12 @@ class IronmanModeModule : public CPPModule
         if (settings::get<std::string>("restriction.ALLOW_HOURGLASS").length() > 0)
             allowHourglass = settings::get<bool>("restriction.ALLOW_HOURGLASS");
 
-        // Party join (SetFirstTimeInteraction)
+
+        /************************************************************************
+        *              SetFirstTimeInteraction for Party and Trade
+        ************************************************************************/
+
+        // Party join
         {
             auto partyJoin = PacketParser[0x074];
             auto partyJoinSetFlag = [this, partyJoin](map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data) -> void {
@@ -132,7 +165,7 @@ class IronmanModeModule : public CPPModule
                 CCharEntity* PInviter     = zoneutils::GetCharFromWorld(PChar->InvitePending.id, PChar->InvitePending.targid);
                 uint8 inviteAnswer = data.ref<uint8>(0x04);
 
-                if (!punitiveMode && inviteAnswer == 1)
+                if (inviteAnswer == 1)
                 {
                     SetFirstTimeInteraction(PChar);
                     SetFirstTimeInteraction(PInviter);
@@ -156,7 +189,7 @@ class IronmanModeModule : public CPPModule
                     uint16 action = data.ref<uint8>(0x04);
 
                     // trade accepted
-                    if (!punitiveMode && action == 0x02)
+                    if (action == 0x02)
                     {
                         SetFirstTimeInteraction(PChar);
                         SetFirstTimeInteraction(PTarget);
@@ -167,6 +200,11 @@ class IronmanModeModule : public CPPModule
             };
             PacketParser[0x033] = tradeAcceptSetFlag;
         }
+
+
+        /************************************************************************
+        *                        PacketParser Methods
+        ************************************************************************/
 
         // Party invite
         {
@@ -287,7 +325,7 @@ class IronmanModeModule : public CPPModule
             PacketParser[0x06E] = partyInviteRestricted;
         }
 
-        // Trade
+        // Trade request
         {
             auto tradeRequest = PacketParser[0x032];
             auto tradeRequestRestricted = [this, tradeRequest](map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data) -> void {
@@ -408,6 +446,11 @@ class IronmanModeModule : public CPPModule
             };
             PacketParser[0x04D] = deliveryBoxRestricted;
         }
+
+
+        /************************************************************************
+        *                        Lua Functions
+        ************************************************************************/
 
         // Lua Auction House
         lua["CBaseEntity"]["sendMenu"] = [this](CLuaBaseEntity* PLuaBaseEntity, uint32 menu) {
