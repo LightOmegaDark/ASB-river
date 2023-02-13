@@ -203,7 +203,7 @@ class IronmanModeModule : public CPPModule
 
 
         /************************************************************************
-        *                        PacketParser Methods
+        *                        PacketParser methods
         ************************************************************************/
 
         // Party invite
@@ -449,7 +449,7 @@ class IronmanModeModule : public CPPModule
 
 
         /************************************************************************
-        *                        Lua Functions
+        *                        Lua functions
         ************************************************************************/
 
         // Lua Auction House

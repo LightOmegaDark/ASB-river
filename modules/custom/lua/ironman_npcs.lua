@@ -5,17 +5,54 @@
 require("modules/module_utils")
 require('scripts/globals/items')
 -----------------------------------
+
 local m = Module:new("ironman")
+
+--[[************************************************************************
+                         Settings example
+****************************************************************************
+
+    -- Override settings --
+    xi.settings.ironman = {
+        IRONMAN_FLAG = 0x00002000,
+        IRONMAN_STATUS_ADD_ANIM = 892,
+        IRONMAN_STATUS_DEL_ANIM = 901,
+    }
+
+    -- Override dialog --
+    xi.settings.ironman = {
+        WARNING1 = "You are about to become an Ironman.",
+        MENU_CURRENT = {
+            TITLE = "How goes your journey?",
+            REWARDS = "Collect a reward",
+            RETIRE = "Retire from Ironman",
+            NOTHING = "Nothing",
+        },
+    }
+
+    -- Override rewards --
+    xi.settings.ironman = {
+        REWARDS = {
+            { lv = 15, id = 16465, desc = "Bronze Knife" },
+            { lv = 25, id = 16535, desc = "Bronze Sword" },
+            { lv = 35, id = 16640, desc = "Bronze Axe" },
+        },
+    }
+
+**************************************************************************]]
+
+-- Charvar strings
 local CHAR_RESTRICTION = "CHAR_RESTRICTION"
 local CHAR_INTERACTED = "CHAR_INTERACTED"
 local IRONMAN_MENU_PAGE = "IRONMAN_MENU_PAGE"
 
 local ironmanNPC = {
-    Bastok_Markets = "Robin",
-    Port_San_dOria = "Robinette",
-    Windurst_Walls = "Robina",
+    Bastok_Markets = "Robin",     -- !pos -192.5 -4 80 235
+    Port_San_dOria = "Robinette", -- !pos -60 -4.5 -39 232
+    Windurst_Walls = "Robina",    -- !pos 114.5 -11 171 239
 }
 
+-- Default dialog
 local ironmanDialog = {
     WARNING1 = "You are about to become an Ironman.",
     WARNING2 = "Your character will no longer be able to party with regular adventurers, trade, or use the Auction House or Delivery Box.",
@@ -46,37 +83,35 @@ local ironmanDialog = {
     RETIRE = "You are no longer an Ironman.",
 }
 
+-- Default settings
 local ironmanSettings = {
     IRONMAN_FLAG = 0x00002000,
     IRONMAN_STATUS_ADD_ANIM = 892,
     IRONMAN_STATUS_DEL_ANIM = 901,
 }
 
+-- Default rewards
 local ironmanRewards = {
-    REWARD_LV_18 = { lv = 18, id = xi.items.RED_CHIP, desc = "Red Chip" },
-    REWARD_LV_30 = { lv = 30, id = xi.items.BLUE_CHIP, desc = "Blue Chip" },
-    REWARD_LV_40 = { lv = 40, id = xi.items.YELLOW_CHIP, desc = "Yellow Chip" },
-    REWARD_LV_50 = { lv = 50, id = xi.items.GREEN_CHIP, desc = "Green Chip" },
-    REWARD_LV_60 = { lv = 60, id = xi.items.CLEAR_CHIP, desc = "Clear Chip" },
-    REWARD_LV_65 = { lv = 65, id = xi.items.PURPLE_CHIP, desc = "Purple Chip" },
-    REWARD_LV_70 = { lv = 70, id = xi.items.WHITE_CHIP, desc = "White Chip" },
-    REWARD_LV_75 = { lv = 75, id = xi.items.BLACK_CHIP, desc = "Black Chip" },
+    { lv = 18, id = xi.items.RED_CHIP, desc = "Red Chip" },
+    { lv = 30, id = xi.items.BLUE_CHIP, desc = "Blue Chip" },
+    { lv = 40, id = xi.items.YELLOW_CHIP, desc = "Yellow Chip" },
+    { lv = 50, id = xi.items.GREEN_CHIP, desc = "Green Chip" },
+    { lv = 60, id = xi.items.CLEAR_CHIP, desc = "Clear Chip" },
+    { lv = 65, id = xi.items.PURPLE_CHIP, desc = "Purple Chip" },
+    { lv = 70, id = xi.items.WHITE_CHIP, desc = "White Chip" },
+    { lv = 75, id = xi.items.BLACK_CHIP, desc = "Black Chip" },
 }
 
-local sortedRewards = {}
 local menu  = {}
 
-local i = 1
-for _, v in pairs(ironmanRewards) do
-    sortedRewards[i] = v
-    i = i + 1
+if xi.settings[m.name] and xi.settings[m.name].REWARDS then
+    ironmanRewards = xi.settings[m.name].REWARDS
 end
 
-table.sort(sortedRewards, function (a, b) return a.lv < b.lv end)
+table.sort(ironmanRewards, function (a, b) return a.lv < b.lv end)
 
 m:loadSettings(ironmanDialog)
 m:loadSettings(ironmanSettings)
-m:loadSettings(ironmanRewards)
 
 local menu  = {}
 
@@ -92,13 +127,18 @@ local MENU_REWARD = {
     options = {},
 }
 
+
+--[[************************************************************************
+                          Reward and status change
+**************************************************************************]]
+
 local function setIronmanRewards(player)
     local options = {}
     local page = player:getLocalVar(IRONMAN_MENU_PAGE)
     local playerLevel = player:getMainLvl()
     local itemsBefore = (page - 1) * 3
     for i = 1, 3 do
-        local item = sortedRewards[itemsBefore + i]
+        local item = ironmanRewards[itemsBefore + i]
         if item == nil then
             break
         end
@@ -112,7 +152,7 @@ local function setIronmanRewards(player)
         end
     end
 
-    if sortedRewards[itemsBefore + 4] ~= nil then
+    if ironmanRewards[itemsBefore + 4] ~= nil then
         table.insert(options, {
             "Next Page",
             function()
@@ -160,6 +200,11 @@ local function changeIronmanStatus(player, anim, func)
         func()
     end
 end
+
+
+--[[************************************************************************
+                              Dialog tables
+**************************************************************************]]
 
 local MENU_RETIRE = {
     title = ironmanDialog.MENU_RETIRE.TITLE,
@@ -236,6 +281,11 @@ local function ironmanOnTrigger(player, npc)
         end
     end
 end
+
+
+--[[************************************************************************
+                            Custom NPC setup
+**************************************************************************]]
 
 local IRONMAN_NPC = {
     Bastok_Markets = {
