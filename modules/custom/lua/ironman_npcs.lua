@@ -8,6 +8,13 @@ require('scripts/globals/items')
 local m = Module:new("ironman")
 local CHAR_RESTRICTION = "CHAR_RESTRICTION"
 local CHAR_INTERACTED = "CHAR_INTERACTED"
+local IRONMAN_MENU_PAGE = "IRONMAN_MENU_PAGE"
+
+local ironmanNPC = {
+    Bastok_Markets = "Robin",
+    Port_San_dOria = "Robinette",
+    Windurst_Walls = "Robina",
+}
 
 local ironmanDialog = {
     WARNING1 = "You are about to become an Ironman.",
@@ -33,7 +40,7 @@ local ironmanDialog = {
         DECLINE = "No",
     },
     PREVENTED = "It's too late, adventurer. You've already taken another path.",
-    ACCEPTED1 = "This path will be long and difficult. It will take an iron will to see it through",
+    ACCEPTED1 = "This path will be long and difficult. It will take an iron will to see it through. Now hold still...",
     ACCEPTED2 = "You have become an Ironman.",
     RETIRE_WARNING = "Warning: You will no longer be an Ironman or eligible for Ironman rewards. This cannot be undone.",
     RETIRE = "You are no longer an Ironman.",
@@ -81,7 +88,7 @@ local MENU_REWARD = {
 
 local function setIronmanRewards(player)
     local options = {}
-    local page = player:getLocalVar("IRONMAN_MENU_PAGE")
+    local page = player:getLocalVar(IRONMAN_MENU_PAGE)
     local playerLevel = player:getMainLvl()
     local itemsBefore = (page - 1) * 3
     for i = 1, 3 do
@@ -103,8 +110,8 @@ local function setIronmanRewards(player)
         table.insert(options, {
             "Next Page",
             function()
-                local page = player:getLocalVar("IRONMAN_MENU_PAGE", 1)
-                player:setLocalVar("IRONMAN_MENU_PAGE", page + 1)
+                local page = player:getLocalVar(IRONMAN_MENU_PAGE, 1)
+                player:setLocalVar(IRONMAN_MENU_PAGE, page + 1)
                 MENU_REWARD.options = setIronmanRewards(player)
                 delaySendMenu(player, MENU_REWARD)
             end
@@ -138,7 +145,7 @@ local MENU_CURRENT = {
         {
             ironmanDialog.MENU_CURRENT.REWARDS,
             function(player)
-                player:setLocalVar("IRONMAN_MENU_PAGE", 1)
+                player:setLocalVar(IRONMAN_MENU_PAGE, 1)
                 MENU_REWARD.options = setIronmanRewards(player)
                 delaySendMenu(player, MENU_REWARD)
             end,
@@ -163,17 +170,31 @@ local MENU_ACCEPT = {
         {
             ironmanDialog.MENU_ACCEPT.AGREE,
             function(player)
+                local zone = player:getZone()
+                local npcName = ironmanNPC[zone:getName()]
+                local npcEntity = zone:queryEntitiesByName(string.format("DE_%s", npcName))
+
                 player:setVar(CHAR_INTERACTED, 1)
                 player:setVar(CHAR_RESTRICTION, 255)
                 player:setFlag(ironmanDialog.IRONMAN_FLAG)
-                player:PrintToPlayer(ironmanDialog.ACCEPTED1, xi.msg.channel.NS_SAY)
-                player:PrintToPlayer(ironmanDialog.ACCEPTED2, xi.msg.channel.SYSTEM_3)
+                player:PrintToPlayer(string.format("%s : %s", npcName, ironmanDialog.ACCEPTED1), xi.msg.channel.NS_SAY, npcName)
+
+                --- If entity found, play animation then display confirmation message
+                if npcEntity and npcEntity[1] then
+                    npcEntity[1]:independentAnimation(player, 892, 0)
+                    player:timer(2000, function(playerArg)
+                        playerArg:PrintToPlayer(ironmanDialog.ACCEPTED2, xi.msg.channel.SYSTEM_3)
+                    end)
+                else -- Otherwise, skip animation and display message anyway
+                    playerArg:PrintToPlayer(ironmanDialog.ACCEPTED2, xi.msg.channel.SYSTEM_3)
+                end
             end,
         },
         {
             ironmanDialog.MENU_ACCEPT.DECLINE,
             function(player)
-                player:PrintToPlayer(ironmanDialog.MENU_ACCEPT.EXIT, xi.msg.channel.NS_SAY)
+                local npcName = ironmanNPC[player:getZoneName()]
+                player:PrintToPlayer(string.format("%s : %s", npcName, ironmanDialog.MENU_ACCEPT.EXIT), xi.msg.channel.NS_SAY, npcName)
             end,
         },
     },
@@ -195,7 +216,7 @@ end
 
 local IRONMAN_NPC = {
     Bastok_Markets = {
-        name = "Robin",
+        name = ironmanNPC.Bastok_Markets,
         objtype = xi.objType.NPC,
         look = 113,
         x = -197.5,
@@ -206,7 +227,7 @@ local IRONMAN_NPC = {
         onTrigger = ironmanOnTrigger,
     },
     Port_San_dOria = {
-        name = "Robinette",
+        name = ironmanNPC.Port_San_dOria,
         objtype = xi.objType.NPC,
         look = 158,
         x = -58.5,
@@ -217,7 +238,7 @@ local IRONMAN_NPC = {
         onTrigger = ironmanOnTrigger,
     },
     Windurst_Walls = {
-        name = "Robina",
+        name = ironmanNPC.Windurst_Walls,
         objtype = xi.objType.NPC,
         look = 165,
         x = 118.9,
