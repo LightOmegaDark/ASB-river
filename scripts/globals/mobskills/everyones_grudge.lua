@@ -11,7 +11,14 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local realDmg = 5 * target:getCharVar("EVERYONES_GRUDGE_KILLS") -- Damage is 5 times the amount you have killed
+    local grudgeKills = 0
+    if target:isPC() then
+        grudgeKills = target:getCharVar("EVERYONES_GRUDGE_KILLS")
+    elseif target:isPet() then
+        grudgeKills = target:getMaster():getCharVar("EVERYONES_GRUDGE_KILLS")
+    end
+
+    local realDmg = 5 * grudgeKills -- Damage is 5 times the amount you have killed
     target:takeDamage(realDmg, mob, xi.attackType.MAGICAL, xi.damageType.ELEMENTAL)
     return realDmg
 end
