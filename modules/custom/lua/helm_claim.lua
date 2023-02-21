@@ -5,6 +5,8 @@
 -- Prevents players from "stealing" a point currently in use
 -----------------------------------
 require("modules/module_utils")
+require("scripts/globals/items")
+require("scripts/globals/npc_util")
 -----------------------------------
 local m = Module:new("helm_claim")
 
@@ -16,10 +18,10 @@ local claimSettings = {
 }
 
 local helmTools = {
-    [xi.helm.type.HARVESTING] = 1020, -- Sickle
-    [xi.helm.type.EXCAVATION] = 605,  -- Pickaxe
-    [xi.helm.type.LOGGING] = 1021,    -- Hatchet
-    [xi.helm.type.MINING] = 605,      -- Pickaxe
+    [xi.helm.type.HARVESTING] = xi.items.SICKLE,
+    [xi.helm.type.EXCAVATION] = xi.items.PICKAXE,
+    [xi.helm.type.LOGGING]    = xi.items.HATCHET,
+    [xi.helm.type.MINING]     = xi.items.PICKAXE,
 }
 
 if xi.settings[m.name] then
