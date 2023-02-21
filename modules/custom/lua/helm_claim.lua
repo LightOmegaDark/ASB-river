@@ -16,10 +16,10 @@ local claimSettings = {
 }
 
 local helmTools = {
-    [xi.helm.type.HARVESTING] = 1020,
-    [xi.helm.type.EXCAVATION] = 605,
-    [xi.helm.type.LOGGING] = 1021,
-    [xi.helm.type.MINING] = 605,
+    [xi.helm.type.HARVESTING] = 1020, -- Sickle
+    [xi.helm.type.EXCAVATION] = 605,  -- Pickaxe
+    [xi.helm.type.LOGGING] = 1021,    -- Hatchet
+    [xi.helm.type.MINING] = 605,      -- Pickaxe
 }
 
 if xi.settings[m.name] then
@@ -38,7 +38,7 @@ m:addOverride("xi.helm.onTrade", function(player, npc, trade, helmType, csid, fu
         return
     end
 
-    if trade:hasItemQty(helmTools[helmType], 1) and trade:getItemCount() == 1 then
+    if npcUtil.tradeHasExactly(trade, helmTools[helmType]) then
         local lastTrade = player:getLocalVar("[HELM]Last_Trade")
 
         if os.time() > lastTrade + 4 then
