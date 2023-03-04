@@ -203,47 +203,11 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
     switch (PSpirit->m_PetID)
     {
         case PETID_EARTHSPIRIT:
-            if (mLvl >= 28 && !PSpirit->StatusEffectContainer->HasStatusEffect(EFFECT_STONESKIN) && CanCastSpells())
-            {
-                CastSpell(SpellID::Stoneskin);
-                return true;
-            }
-            break;
         case PETID_WATERSPIRIT:
-            if (mLvl >= 10 && !PSpirit->StatusEffectContainer->HasStatusEffect(EFFECT_AQUAVEIL) && CanCastSpells())
-            {
-                CastSpell(SpellID::Aquaveil);
-                return true;
-            }
-            break;
         case PETID_AIRSPIRIT:
-            if (mLvl >= 19 && !PSpirit->StatusEffectContainer->HasStatusEffect(EFFECT_BLINK) && CanCastSpells())
-            {
-                CastSpell(SpellID::Blink);
-                return true;
-            }
-            break;
         case PETID_FIRESPIRIT:
-            if (mLvl >= 10 && !PSpirit->StatusEffectContainer->HasStatusEffect(EFFECT_BLAZE_SPIKES) && CanCastSpells())
-            {
-                CastSpell(SpellID::Blaze_Spikes);
-                return true;
-            }
-            break;
         case PETID_ICESPIRIT:
-            if (mLvl >= 20 && !PSpirit->StatusEffectContainer->HasStatusEffect(EFFECT_ICE_SPIKES) && CanCastSpells())
-            {
-                CastSpell(SpellID::Ice_Spikes);
-                return true;
-            }
-            break;
         case PETID_THUNDERSPIRIT:
-            if (mLvl >= 30 && !PSpirit->StatusEffectContainer->HasStatusEffect(EFFECT_SHOCK_SPIKES) && CanCastSpells())
-            {
-                CastSpell(SpellID::Shock_Spikes);
-                return true;
-            }
-            break;
         case PETID_DARKSPIRIT:
             break;
         case PETID_LIGHTSPIRIT:
