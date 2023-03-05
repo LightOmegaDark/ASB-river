@@ -252,7 +252,6 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
                 case 2:
                     if (PSpirit->m_buffSpells.size() > 0)
                     {
-                        if()
                         chosenSpell = xirand::GetRandomElement(PSpirit->m_buffSpells);
                     }
                     break;
@@ -388,8 +387,6 @@ int16 CSpiritController::GetSMNSkillReduction()
         uint16 skill    = PSpirit->PMaster->GetSkill(SKILL_SUMMONING_MAGIC);
         uint16 maxSkill = battleutils::GetMaxSkill(SKILL_SUMMONING_MAGIC, JOB_SMN, masterLvl);
 
-        // SMN skill over cap does factor into spirit recast time.
-        // Evidence: https://ffxiclopedia.fandom.com/wiki/Spirit_Guide_by_Spira
         return 1000 * (skill - maxSkill);
     }
 
