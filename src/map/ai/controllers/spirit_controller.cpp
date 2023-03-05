@@ -100,9 +100,6 @@ void CSpiritController::setMagicCooldowns()
         castTime -= 5000;
     }
 
-
-    if(castTime < 12000) castTime = 12000;
-
     PSpirit->m_magicCooldown = std::chrono::milliseconds(castTime);
 }
 
