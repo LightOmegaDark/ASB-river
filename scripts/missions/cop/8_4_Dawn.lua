@@ -142,7 +142,9 @@ mission.sections =
                 end,
 
                 [3] = function(player, csid, option)
-                    mission:setVar(player, 'Status', 4)
+                    if mission:getVar(player, 'Status') < 4 then
+                       mission:setVar(player, 'Status', 4)
+                    end
                 end,
 
                 [6] = function(player, csid, option)
