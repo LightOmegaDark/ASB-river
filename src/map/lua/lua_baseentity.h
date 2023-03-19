@@ -154,12 +154,12 @@ public:
     void  setWeather(uint8 weatherType); // Set Weather condition (GM COMMAND)
 
     // PC Instructions
-    void changeMusic(uint8 blockID, uint8 musicTrackID);                    // Sets the specified music Track for specified music block.
-    void sendMenu(uint32 menu);                                             // Displays a menu (AH,Raise,Tractor,MH etc)
-    bool sendGuild(uint16 guildID, uint8 open, uint8 close, uint8 holiday); // Sends guild shop menu
-    void openSendBox();                                                     // Opens send box (to deliver items)
-    void leaveGame();                                                       // Character leaving game
-    void sendEmote(CLuaBaseEntity* target, uint8 emID, uint8 emMode);       // Character emits emote packet.
+    void changeMusic(uint8 blockID, uint8 musicTrackID);                         // Sets the specified music Track for specified music block.
+    void sendMenu(uint32 menu);                                                  // Displays a menu (AH,Raise,Tractor,MH etc)
+    bool sendGuild(uint16 guildID, uint8 open, uint8 close, uint8 holiday);      // Sends guild shop menu
+    void openSendBox();                                                          // Opens send box (to deliver items)
+    void leaveGame();                                                            // Character leaving game
+    void sendEmote(CLuaBaseEntity* target, uint8 emID, uint8 emMode, bool self); // Character emits emote packet.
 
     // Location and Positioning
     int16 getWorldAngle(sol::variadic_args va);                                 // return angle (rot) between two points (vector from a to b), aligned to absolute cardinal degree

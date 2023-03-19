@@ -193,7 +193,7 @@ quest.sections =
                             end
 
                             player:startEvent(120, getItem, isBreak, isFull) -- 120 is the csid for mining in Palborough.
-                            player:sendEmote(npc, xi.emote.EXCAVATION, xi.emoteMode.MOTION)
+                            player:sendEmote(npc, xi.emote.EXCAVATION, xi.emoteMode.MOTION, false)
 
                             if getItem ~= 0 and isFull == 0 then
                                 player:addItem(getItem)
