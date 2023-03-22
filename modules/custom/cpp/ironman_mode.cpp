@@ -19,12 +19,15 @@
 #include "map/packets/shop_items.h"
 #include "map/packets/bazaar_purchase.h"
 #include "map/packets/message_standard.h"
+#include "map/packets/trade_action.h"
 
 #include "map/utils/charutils.h"
 #include "map/utils/jailutils.h"
 #include "map/utils/zoneutils.h"
 #include "map/lua/lua_baseentity.h"
 #include "map/item_container.h"
+#include "map/universal_container.h"
+#include "map/trade_container.h"
 
 extern uint8                                                                            PacketSize[512];
 extern std::function<void(map_session_data_t* const, CCharEntity* const, CBasicPacket)> PacketParser[512];
@@ -57,6 +60,7 @@ class IronmanModeModule : public CPPModule
     bool        allowBazaar                     = true;               // Allow restricted players to display items in their bazaar (But other players cannot purchase)
     bool        allowHourglass                  = true;               // Allow Ironman to buy Perpetual Hourglass from another Ironman bazaar (Needed for Ironman Dynamis groups)
     uint16      ITEM_PERPETUAL_HOURGLASS        = 4237;
+    uint16      ITEM_LINKPEARL                  = 515;
 
     void SetFirstTimeInteraction(CCharEntity* Player)
     {
@@ -156,14 +160,14 @@ class IronmanModeModule : public CPPModule
         *              SetFirstTimeInteraction for Party and Trade
         ************************************************************************/
 
-        // Party join
+        // Party join (SetFirstTimeInteraction)
         {
-            auto partyJoin = PacketParser[0x074];
+            auto partyJoin        = PacketParser[0x074];
             auto partyJoinSetFlag = [this, partyJoin](map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data) -> void {
                 TracyZoneScoped;
 
                 CCharEntity* PInviter     = zoneutils::GetCharFromWorld(PChar->InvitePending.id, PChar->InvitePending.targid);
-                uint8 inviteAnswer = data.ref<uint8>(0x04);
+                uint8        inviteAnswer = data.ref<uint8>(0x04);
 
                 if (inviteAnswer == 1)
                 {
@@ -206,15 +210,40 @@ class IronmanModeModule : public CPPModule
         *                        PacketParser methods
         ************************************************************************/
 
+        // Update trade slot
+        {
+            auto updateTradeSlot           = PacketParser[0x034];
+            auto updateTradeSlotRestricted = [this, updateTradeSlot](map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data) -> void {
+                TracyZoneScoped;
+
+                uint16       itemID  = data.ref<uint16>(0x08);
+                CCharEntity* PTarget = (CCharEntity*)PChar->GetEntity(PChar->TradePending.targid, TYPE_PC);
+
+                if (PTarget != nullptr && PTarget->id == PChar->TradePending.id)
+                {
+                    int32 charRestriction   = charutils::GetCharVar(PChar, CHAR_RESTRICTION) & RESTRICTION_TRADE_PLAYER;
+                    int32 targetRestriction = charutils::GetCharVar(PTarget, CHAR_RESTRICTION) & RESTRICTION_TRADE_PLAYER;
+
+                    if (charRestriction && targetRestriction && !(itemID == ITEM_LINKPEARL || itemID == ITEM_PERPETUAL_HOURGLASS))
+                    {
+                        return;
+                    }
+                }
+
+                updateTradeSlot(PSession, PChar, data);
+            };
+            PacketParser[0x034] = updateTradeSlotRestricted;
+        }
+
         // Party invite
         {
 
-            auto partyInvite = PacketParser[0x06E];
+            auto partyInvite           = PacketParser[0x06E];
             auto partyInviteRestricted = [this, partyInvite](map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data) -> void {
                 TracyZoneScoped;
 
-                uint32 charid = data.ref<uint32>(0x04);
-                uint16 targid = data.ref<uint16>(0x08);
+                uint32 charid  = data.ref<uint32>(0x04);
+                uint16 targid  = data.ref<uint16>(0x08);
                 uint8  invType = data.ref<uint8>(0x0A);
 
                 // cannot invite yourself
@@ -327,19 +356,23 @@ class IronmanModeModule : public CPPModule
 
         // Trade request
         {
-            auto tradeRequest = PacketParser[0x032];
+            auto tradeRequest           = PacketParser[0x032];
             auto tradeRequestRestricted = [this, tradeRequest](map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data) -> void {
                 TracyZoneScoped;
 
-                int32 charRestriction = charutils::GetCharVar(PChar, CHAR_RESTRICTION);
+                uint16       targid  = data.ref<uint16>(0x08);
+                CCharEntity* PTarget = (CCharEntity*)PChar->GetEntity(targid, TYPE_PC);
 
-                if (charRestriction & RESTRICTION_TRADE_PLAYER)
+                int32 charRestriction   = charutils::GetCharVar(PChar, CHAR_RESTRICTION) & RESTRICTION_TRADE_PLAYER;
+                int32 targetRestriction = charutils::GetCharVar(PTarget, CHAR_RESTRICTION) & RESTRICTION_TRADE_PLAYER;
+
+                if (charRestriction && !targetRestriction)
                 {
                     PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, RESTRICTION_MSG_TRADE_PLAYER));
                 }
                 else
                 {
-                    if (charRestriction & RESTRICTION_TRADE_PLAYER)
+                    if (!charRestriction && targetRestriction)
                     {
                         PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, RESTRICTION_MSG_TRADE_OTHER));
                     }
