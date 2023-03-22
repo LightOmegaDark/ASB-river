@@ -118,12 +118,33 @@ end
 
 table.sort(ironmanRewards, function (a, b) return a.lv < b.lv end)
 
-m:loadSettings(ironmanDialog)
-m:loadSettings(ironmanSettings)
+-- Load associated module settings into a provided table
+local function loadSettings(tbl)
+    if not xi.settings[m.name] then
+        return
+    end
+
+    for k, v in pairs(tbl) do
+        if type(v) == "table" then
+            for k2, v2 in pairs(v) do
+                if xi.settings[m.name][k] and xi.settings[m.name][k][k2] then
+                    tbl[k][k2] = xi.settings[m.name][k][k2]
+                end
+            end
+        else
+            if xi.settings[m.name][k] then
+                tbl[k] = xi.settings[m.name][k]
+            end
+        end
+    end
+end
+
+loadSettings(ironmanDialog)
+loadSettings(ironmanSettings)
 
 local menu  = {}
 
-local delaySendMenu = function(player, menuNext)
+local function delaySendMenu(player, menuNext)
     menu = menuNext
     player:timer(50, function(playerArg)
         playerArg:customMenu(menu)

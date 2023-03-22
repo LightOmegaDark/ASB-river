@@ -66,25 +66,3 @@ function Module:addOverride(target_func_str, func)
     local override = Override:new(target_func_str, func)
     table.insert(self.overrides, override)
 end
-
--- Load associated module settings into a provided table
-function Module:loadSettings(tbl)
-    if not xi.settings[self.name] then
-        return
-    end
-
-    for k, v in pairs(tbl) do
-        if type(v) == "table" then
-            for k2, v2 in pairs(v) do
-                if xi.settings[self.name][k] and xi.settings[self.name][k][k2] then
-                    tbl[k][k2] = xi.settings[self.name][k][k2]
-                end
-            end
-        else
-            if xi.settings[self.name][k] then
-                tbl[k] = xi.settings[self.name][k]
-            end
-        end
-    end
-
-end
