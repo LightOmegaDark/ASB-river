@@ -54,6 +54,8 @@ quest.sections =
             {
                 [576] = function(player, csid, option, npc)
                         npcUtil.giveKeyItem(player, xi.ki.LETTER_FROM_SHIKAREE_X)
+                        npcUtil.giveCurrency(player, "gil", xi.settings.main.GIL_RATE * 10000)
+                        player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.main.GIL_RATE * 10000)
                 end,
             },
         }
