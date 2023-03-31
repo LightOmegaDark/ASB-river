@@ -11,7 +11,7 @@ require('scripts/globals/titles')
 require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 -----------------------------------
-local battlefield_object = {}
+local battlefieldObject = {}
 
 battlefield_object.onBattlefieldInitialise = function(battlefield)
     battlefield:setLocalVar("loot", 1)
