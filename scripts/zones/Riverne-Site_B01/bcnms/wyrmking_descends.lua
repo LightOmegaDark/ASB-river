@@ -22,8 +22,12 @@ end
 
 battlefieldObject.onBattlefieldEnter = function(player, battlefield)
     player:delStatusEffect(xi.effect.LEVEL_RESTRICTION) -- can't be capped at 50 for this fight !
-    player:timer (1000, function(playerArg) playerArg:setHP(playerArg:getMaxHP()) playerArg:setMP(playerArg:getMaxMP()) end)
+    player:timer (1000, function(playerArg)
+        playerArg:setHP(playerArg:getMaxHP())
+        playerArg:setMP(playerArg:getMaxMP())
+    end)
 end
+
 
 battlefieldObject.onBattlefieldLeave = function(player, battlefield, leavecode)
     if leavecode == xi.battlefield.leaveCode.WON then

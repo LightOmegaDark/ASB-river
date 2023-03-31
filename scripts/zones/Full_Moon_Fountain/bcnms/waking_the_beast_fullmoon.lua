@@ -49,12 +49,15 @@ battlefieldObject.onBattlefieldLeave = function(player, battlefield, leavecode)
 
             -- Loot has 3 chances to drop. The droprates are as follows: 40% -> 20% -> 10%
             for i = 1, 3 do
-                if math.random(1,100) < lootChance then
-                    player:addTreasure(loot[math.random(1,7)])
+                if math.random(1, 100) < lootChance then
+                    player:addTreasure(loot[math.random(1, 7)])
                 end
+
                 lootChance = lootChance / 2
             end
+
         end
+
         player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 1, battlefield:getLocalVar("[cs]bit"), arg8)
     elseif leavecode == xi.battlefield.leaveCode.LOST then
         player:startEvent(32002)
@@ -91,6 +94,7 @@ battlefieldObject.onEventFinish = function(player, csid, option)
             for i = 0, 7 do
                 player:delKeyItem(xi.ki.key[i])
             end
+
             npcUtil.giveKeyItem(player, xi.ki.FADED_RUBY)
             if option == 0 then
                 player:setCharVar("Quest[4][32]Option", 1)

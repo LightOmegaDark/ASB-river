@@ -32,7 +32,10 @@ end
 
 battlefieldObject.onEventFinish = function(player, csid, option)
     if csid == 32001 then
-        if player:getCharVar("Quest[1][78]prog") == 9 then player:setCharVar("Quest[1][78]prog", 10) end
+        if player:getCharVar("Quest[1][78]prog") == 9 then
+            player:setCharVar("Quest[1][78]prog", 10)
+        end
+
         player:addGil(10000)
         player:messageSpecial(ID.text.GIL_OBTAINED, 10000)
     end
