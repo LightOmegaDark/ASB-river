@@ -35,3 +35,4 @@ battlefieldObject.onBattlefieldLeave = function(player, battlefield, leavecode)
 end
 
 return battlefieldObject
+
