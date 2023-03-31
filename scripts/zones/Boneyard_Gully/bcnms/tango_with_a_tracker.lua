@@ -7,7 +7,7 @@ require("scripts/globals/battlefield")
 require("scripts/globals/keyitems")
 require('scripts/globals/quests')
 -----------------------------------
-local battlefield_object = {}
+local battlefieldObject = {}
 
 battlefield_object.onBattlefieldInitialise = function(battlefield)
 end
