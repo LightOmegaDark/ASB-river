@@ -6,7 +6,7 @@
 require("scripts/globals/battlefield")
 require("scripts/globals/keyitems")
 -----------------------------------
-local battlefield_object = {}
+local battlefieldObject = {}
 
 battlefield_object.onBattlefieldInitialise = function(battlefield)
     battlefield:setLocalVar("loot", 1)
