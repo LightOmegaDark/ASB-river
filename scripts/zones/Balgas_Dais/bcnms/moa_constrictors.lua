@@ -5,7 +5,7 @@
 -----------------------------------
 require("scripts/globals/battlefield")
 -----------------------------------
-local battlefield_object = {}
+local battlefieldObject = {}
 
 battlefieldObject.onBattlefieldInitialise = function(battlefield)
     battlefield:setLocalVar("loot", 1)
@@ -36,4 +36,4 @@ end
 battlefieldObject.onEventFinish = function(player, csid, option)
 end
 
-return battlefield_object
+return battlefieldObject
