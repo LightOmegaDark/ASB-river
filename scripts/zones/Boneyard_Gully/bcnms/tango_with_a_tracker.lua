@@ -45,4 +45,4 @@ battlefield_object.onEventFinish = function(player, csid, option)
     end
 end
 
-return battlefield_object
+return battlefieldObject
