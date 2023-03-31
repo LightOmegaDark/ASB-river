@@ -28,7 +28,6 @@ battlefieldObject.onBattlefieldEnter = function(player, battlefield)
     end)
 end
 
-
 battlefieldObject.onBattlefieldLeave = function(player, battlefield, leavecode)
     if leavecode == xi.battlefield.leaveCode.WON then
         local _, clearTime, partySize = battlefield:getRecord()
