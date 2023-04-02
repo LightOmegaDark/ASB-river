@@ -29,8 +29,8 @@ battlefieldObject.onEventUpdate = function(player, csid, option)
 end
 
 battlefieldObject.onEventFinish = function(player, csid, option)
-    if csid == 32001 and player:getCharVar("ClassReunionProgress") == 5 then
-        player:setCharVar("ClassReunionProgress", 6)
+    if csid == 32001 and player:getCharVar("Quest[2][82]Prog") == 5 then
+        player:setCharVar("Quest[2][82]Prog", 6)
     end
 end
 
