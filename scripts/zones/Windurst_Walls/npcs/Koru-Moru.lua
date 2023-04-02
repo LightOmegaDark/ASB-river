@@ -28,29 +28,8 @@ end
 entity.onTrigger = function(player, npc)
     local rootProblem = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.THE_ROOT_OF_THE_PROBLEM)
     local thePuppetMaster = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.THE_PUPPET_MASTER)
-    local carbuncleDebacle = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CARBUNCLE_DEBACLE)
-    local carbuncleDebacleProgress = player:getCharVar("CarbuncleDebacleProgress")
-
     -----------------------------------
-    -- Carbuncle Debacle
-    if
-        carbuncleDebacle == QUEST_ACCEPTED and
-        carbuncleDebacleProgress == 1 or
-        carbuncleDebacleProgress == 2
-    then
-        player:startEvent(416) -- go and see Ripapa
-    elseif carbuncleDebacle == QUEST_ACCEPTED and carbuncleDebacleProgress == 4 then
-        player:startEvent(417) -- now go and see Agado-Pugado
-    elseif carbuncleDebacle == QUEST_ACCEPTED and carbuncleDebacleProgress == 5 then
-        player:startEvent(418) -- Uran-Mafran must be stopped
-    elseif carbuncleDebacle == QUEST_ACCEPTED and carbuncleDebacleProgress == 7 then
-        player:startEvent(419) -- ending cs
-    elseif
-        carbuncleDebacle == QUEST_COMPLETED
-    then
-        player:startEvent(420) -- new cs after all 3 SMN AFs done
-    -----------------------------------
-    elseif rootProblem == QUEST_ACCEPTED and player:getCharVar("rootProblem") == 1 then
+    if rootProblem == QUEST_ACCEPTED and player:getCharVar("rootProblem") == 1 then
         player:startEvent(348, 0, 829)
     end
 end
