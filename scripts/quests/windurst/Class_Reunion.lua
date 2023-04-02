@@ -10,6 +10,7 @@ require('scripts/globals/quests')
 require("scripts/globals/status")
 require('scripts/globals/interaction/quest')
 -----------------------------------------------
+local windyWallsID = require("scripts/zones/Windurst_Walls/IDs")
 local windyWatersID = require("scripts/zones/Windurst_Waters/IDs")
 local northsandyID = require("scripts/zones/Northern_San_dOria/IDs")
 local frostcloisterID = require('scripts/zones/Cloister_of_Frost/IDs')
@@ -71,8 +72,6 @@ quest.sections =
 
         [xi.zone.WINDURST_WALLS] =
         {
-
-
             ['Koru-Moru'] =
             {
                 onTrigger = function(player, npc)
@@ -89,6 +88,7 @@ quest.sections =
 
                 onTrade = function(player, npc, trade)
                     local questProgress = quest:getVar(player, 'Prog')
+
                     if questProgress == 2 then
                         if npcUtil.tradeHasExactly(trade, { xi.items.ASTRAGALOS}) then
                             return quest:progressEvent(407)
@@ -101,6 +101,7 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     local questProgress = quest:getVar(player, 'Prog')
+
                     if questProgress >= 2 then
                         quest:event(409)
                     end
@@ -132,7 +133,8 @@ quest.sections =
             {
                onTrigger = function(player, npc)
                 local questProgress = quest:getVar(player, 'Prog')
-                    if questProgress >= 2 then
+
+                if questProgress >= 2 then
                         quest:event(817)
                     end
                 end
@@ -142,6 +144,7 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     local questProgress = quest:getVar(player, 'Prog')
+
                     if questProgress >= 2 then
                         quest:event(816)
                     end
@@ -155,9 +158,10 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     local questProgress = quest:getVar(player, 'Prog')
+
                     if questProgress == 3 then
                         quest:progressEvent(713)
-                    elseif questProgress == 5 and not player:hasItem(xi.items.ICE_PENDULUM) then
+                    elseif questProgress == 4 and not player:hasItem(xi.items.ICE_PENDULUM) then
                         quest:event(712)
                     end
                 end
@@ -172,6 +176,7 @@ quest.sections =
 
                 [712] = function(player, csid, option, npc)
                     npcUtil.giveItem(xi.items.ICE_PENDULUM)
+                    player:setVar(player, 'Prog', 5)
                 end
             }
         },

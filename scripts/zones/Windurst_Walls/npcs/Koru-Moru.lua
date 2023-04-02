@@ -59,25 +59,7 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 416 then
-        player:setCharVar("CarbuncleDebacleProgress", 2)
-    elseif csid == 417 then
-        player:setCharVar("CarbuncleDebacleProgress", 5)
-        player:addKeyItem(xi.ki.DAZE_BREAKER_CHARM)
-        player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.DAZE_BREAKER_CHARM)
-    elseif csid == 419 then
-        if player:getFreeSlotsCount() ~= 0 then
-            player:addItem(12520) -- Evoker's Horn
-            player:messageSpecial(ID.text.ITEM_OBTAINED, 12520)
-            player:addTitle(xi.title.PARAGON_OF_SUMMONER_EXCELLENCE)
-            player:completeQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CARBUNCLE_DEBACLE)
-            player:addFame(xi.quest.fame_area.WINDURST, 60)
-            player:setCharVar("CarbuncleDebacleProgress", 0)
-            player:needToZone(true)
-        else
-            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 12520)
-        end
-    end
+
 end
 
 return entity
