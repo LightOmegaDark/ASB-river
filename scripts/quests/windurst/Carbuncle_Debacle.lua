@@ -179,14 +179,14 @@ quest.sections =
             onEventFinish =
             {
                 [32001] = function(player, csid, option, npc)
-
-                        if player:getLocalVar('battlefieldWin') == 577 and questProgress == 6 then
-                            quest:setVar(player, 'Prog', 7)
-                            player:delKeyItem(xi.ki.DAZE_BREAKER_CHARM)
-                        end
+                    if player:getLocalVar('battlefieldWin') == 577 and questProgress == 6 then
+                        quest:setVar(player, 'Prog', 7)
+                        player:delKeyItem(xi.ki.DAZE_BREAKER_CHARM)
                     end
+                end
             },
         },
     }
 
 }
+return quest

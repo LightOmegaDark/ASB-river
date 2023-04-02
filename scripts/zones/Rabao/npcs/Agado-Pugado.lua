@@ -21,15 +21,20 @@ entity.onTrigger = function(player, npc)
     -----------------------------------
     -- Trial by Wind
     if
-        (trialByWind == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.SELBINA_RABAO) >= 5) or (trialByWind == QUEST_COMPLETED and os.time() > player:getCharVar("TrialByWind_date"))
-    then
+        (trialByWind == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.SELBINA_RABAO) >= 5) or
+        (trialByWind == QUEST_COMPLETED and
+        os.time() > player:getCharVar("TrialByWind_date")) then
         player:startEvent(66, 0, 331) -- Start and restart quest "Trial by Wind"
-    elseif trialByWind == QUEST_ACCEPTED and not player:hasKeyItem(xi.ki.TUNING_FORK_OF_WIND) and not player:hasKeyItem(xi.ki.WHISPER_OF_GALES) then
+    elseif trialByWind == QUEST_ACCEPTED and
+    not player:hasKeyItem(xi.ki.TUNING_FORK_OF_WIND) and
+    not player:hasKeyItem(xi.ki.WHISPER_OF_GALES) then
         player:startEvent(107, 0, 331) -- Defeat against Avatar : Need new Fork
-    elseif trialByWind == QUEST_ACCEPTED and not player:hasKeyItem(xi.ki.WHISPER_OF_GALES) then
+    elseif trialByWind == QUEST_ACCEPTED and
+    not player:hasKeyItem(xi.ki.WHISPER_OF_GALES) then
         player:startEvent(67, 0, 331, 3)
     elseif
-        trialByWind == QUEST_ACCEPTED and player:hasKeyItem(xi.ki.WHISPER_OF_GALES) then
+        trialByWind == QUEST_ACCEPTED and
+        player:hasKeyItem(xi.ki.WHISPER_OF_GALES) then
         local numitem = 0
 
         if player:hasItem(17627) then

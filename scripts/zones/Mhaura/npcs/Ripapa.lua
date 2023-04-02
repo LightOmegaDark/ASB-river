@@ -24,10 +24,14 @@ entity.onTrigger = function(player, npc)
 
     -----------------------------------
     -- Trial by Lightning
-    if
-        (trialByLightning == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 6) or (trialByLightning == QUEST_COMPLETED and os.time() > player:getCharVar("TrialByLightning_date")) then
+    if (trialByLightning == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 6) or
+    (trialByLightning == QUEST_COMPLETED
+    and os.time() > player:getCharVar("TrialByLightning_date")) then
         player:startEvent(10016, 0, xi.ki.TUNING_FORK_OF_LIGHTNING) -- Start and restart quest "Trial by Lightning"
-    elseif trialByLightning == QUEST_ACCEPTED and not player:hasKeyItem(xi.ki.TUNING_FORK_OF_LIGHTNING) and  not hasWhisperOfStorms then
+    elseif trialByLightning == QUEST_ACCEPTED and
+    not player:hasKeyItem(xi.ki.TUNING_FORK_OF_LIGHTNING) and
+    not hasWhisperOfStorms
+    then
         player:startEvent(10024, 0, xi.ki.TUNING_FORK_OF_LIGHTNING) -- Defeat against Ramuh : Need new Fork
     elseif trialByLightning == QUEST_ACCEPTED and not hasWhisperOfStorms then
         player:startEvent(10017, 0, xi.ki.TUNING_FORK_OF_LIGHTNING, 5)

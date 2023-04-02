@@ -18,11 +18,11 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local thePuppetMaster = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.THE_PUPPET_MASTER)
     local iCanHearARainbow = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.I_CAN_HEAR_A_RAINBOW)
 
     -- I CAN HEAR A RAINBOW
-    if iCanHearARainbow == QUEST_AVAILABLE and player:getMainLvl() >= 30 and player:hasItem(1125) then
+    if iCanHearARainbow == QUEST_AVAILABLE and player:getMainLvl() >= 30
+    and player:hasItem(1125) then
         player:startEvent(384, 1125, 1125, 1125, 1125, 1125, 1125, 1125, 1125)
     elseif iCanHearARainbow == QUEST_ACCEPTED then
         player:startEvent(385, 1125, 1125, 1125, 1125, 1125, 1125, 1125, 1125)

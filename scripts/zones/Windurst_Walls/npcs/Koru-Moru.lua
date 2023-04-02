@@ -27,14 +27,13 @@ end
 
 entity.onTrigger = function(player, npc)
     local rootProblem = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.THE_ROOT_OF_THE_PROBLEM)
-    local thePuppetMaster = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.THE_PUPPET_MASTER)
-    -----------------------------------
     if rootProblem == QUEST_ACCEPTED and player:getCharVar("rootProblem") == 1 then
         player:startEvent(348, 0, 829)
     end
 end
 
 entity.onEventUpdate = function(player, csid, option)
+
 end
 
 entity.onEventFinish = function(player, csid, option)

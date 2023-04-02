@@ -10,11 +10,6 @@ require('scripts/globals/quests')
 require("scripts/globals/status")
 require('scripts/globals/interaction/quest')
 -----------------------------------------------
-local windyWallsID = require("scripts/zones/Windurst_Walls/IDs")
-local windyWatersID = require("scripts/zones/Windurst_Waters/IDs")
-local northsandyID = require("scripts/zones/Northern_San_dOria/IDs")
-local frostcloisterID = require('scripts/zones/Cloister_of_Frost/IDs')
--------------------------------------------------------------------
 
 local quest = Quest:new(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CLASS_REUNION)
 
@@ -35,8 +30,6 @@ quest.sections =
                 player:getMainLvl() >= xi.settings.main.AF2_QUEST_LEVEL and
                 player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.THE_PUPPET_MASTER) == QUEST_COMPLETE
         end,
-
-
 
         [xi.zone.WINDURST_WALLS] =
         {
@@ -61,9 +54,9 @@ quest.sections =
                 end,
             },
         },
-     },
+    },
 
-     {
+    {
         check = function(player, status, vars)
             return status == QUEST_ACCEPTED
         end,
@@ -80,7 +73,7 @@ quest.sections =
                     if questProgress == 1 then
                         return quest:progressEvent(412)
                     elseif questProgress == 2 then
-                        return quest:preogressEvent(414)
+                        return quest:progressEvent(414)
                     elseif questProgress == 6 then
                         return quest:event(410)
                     end
@@ -90,7 +83,7 @@ quest.sections =
                     local questProgress = quest:getVar(player, 'Prog')
 
                     if questProgress == 2 then
-                        if npcUtil.tradeHasExactly(trade, { xi.items.ASTRAGALOS}) then
+                        if npcUtil.tradeHasExactly(trade, xi.items.ASTRAGALOS) then
                             return quest:progressEvent(407)
                         end
                     end
@@ -131,10 +124,10 @@ quest.sections =
         {
             ['Fuepepe'] =
             {
-               onTrigger = function(player, npc)
-                local questProgress = quest:getVar(player, 'Prog')
+                onTrigger = function(player, npc)
+                    local questProgress = quest:getVar(player, 'Prog')
 
-                if questProgress >= 2 then
+                    if questProgress >= 2 then
                         quest:event(817)
                     end
                 end
@@ -186,7 +179,7 @@ quest.sections =
             onEventFinish =
             {
                 [32001] = function(player, csid, option, npc)
-                     if player:getLocalVar('battlefieldWin') == 577 and questProgress == 4 then
+                    if player:getLocalVar('battlefieldWin') == 577 and questProgress == 4 then
                         quest:setVar(player, 'Prog', 6)
                     end
                 end

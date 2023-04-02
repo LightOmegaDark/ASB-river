@@ -21,10 +21,13 @@ entity.onTrigger = function(player, npc)
 
     -----------------------------------
     if
-        (trialByIce == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 6) or (trialByIce == QUEST_COMPLETED and os.time() > player:getCharVar("TrialByIce_date")) then
+        (trialByIce == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 6) or
+        (trialByIce == QUEST_COMPLETED and
+        os.time() > player:getCharVar("TrialByIce_date")) then
             player:startEvent(706, 0, xi.ki.TUNING_FORK_OF_ICE) -- Start and restart quest "Trial by ice"
     elseif
-        trialByIce == QUEST_ACCEPTED and not player:hasKeyItem(xi.ki.TUNING_FORK_OF_ICE) and not player:hasKeyItem(xi.ki.WHISPER_OF_FROST) then
+        trialByIce == QUEST_ACCEPTED and not player:hasKeyItem(xi.ki.TUNING_FORK_OF_ICE) and
+        not player:hasKeyItem(xi.ki.WHISPER_OF_FROST) then
             player:startEvent(718, 0, xi.ki.TUNING_FORK_OF_ICE) -- Defeat against Shiva : Need new Fork
     elseif
         trialByIce == QUEST_ACCEPTED and not player:hasKeyItem(xi.ki.WHISPER_OF_FROST) then
