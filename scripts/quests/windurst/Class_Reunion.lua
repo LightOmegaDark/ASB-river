@@ -88,6 +88,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
+                    local questProgress = quest:getVar(player, 'Prog')
                     if questProgress == 2 then
                         if npcUtil.tradeHasExactly(trade, { xi.items.ASTRAGALOS}) then
                             return quest:progressEvent(407)
@@ -99,6 +100,7 @@ quest.sections =
             ['Shantotto'] =
             {
                 onTrigger = function(player, npc)
+                    local questProgress = quest:getVar(player, 'Prog')
                     if questProgress >= 2 then
                         quest:event(409)
                     end
@@ -128,7 +130,8 @@ quest.sections =
         {
             ['Fuepepe'] =
             {
-               onTrigger == function(player, npc)
+               onTrigger = function(player, npc)
+                local questProgress = quest:getVar(player, 'Prog')
                     if questProgress >= 2 then
                         quest:event(817)
                     end
@@ -138,6 +141,7 @@ quest.sections =
             ['Furakku-Norakku'] =
             {
                 onTrigger = function(player, npc)
+                    local questProgress = quest:getVar(player, 'Prog')
                     if questProgress >= 2 then
                         quest:event(816)
                     end
@@ -150,6 +154,7 @@ quest.sections =
             ['Gulmama'] =
             {
                 onTrigger = function(player, npc)
+                    local questProgress = quest:getVar(player, 'Prog')
                     if questProgress == 3 then
                         quest:progressEvent(713)
                     elseif questProgress == 5 and not player:hasItem(xi.items.ICE_PENDULUM) then
