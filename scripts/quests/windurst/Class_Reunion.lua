@@ -186,11 +186,10 @@ quest.sections =
             onEventFinish =
             {
                 [32001] = function(player, csid, option, npc)
-
-                        if player:getLocalVar('battlefieldWin') == 577 and questProgress == 4 then
-                            quest:setVar(player, 'Prog', 6)
-                        end
+                     if player:getLocalVar('battlefieldWin') == 577 and questProgress == 4 then
+                        quest:setVar(player, 'Prog', 6)
                     end
+                end
             },
         },
     }
