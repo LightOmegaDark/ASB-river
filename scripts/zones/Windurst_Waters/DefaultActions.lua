@@ -7,8 +7,6 @@ return {
     ['Cochal-Monchal']  = { event = 696   },
     ['Dabido-Sorobido'] = { event = 907   },
     ['Foi-Mui']         = { event = 430   },
-    ['Fuepepe']         = { event = 423   },
-    ['Furakku-Norakku'] = { event = 371   },
     ['Gantineux']       = { event = 10018 },
     ['Hariga-Origa']    = { event = 372   },
     ['Kerutoto']        = { event = 306   },
