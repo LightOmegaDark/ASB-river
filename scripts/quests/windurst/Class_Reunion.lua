@@ -80,8 +80,10 @@ quest.sections =
 
                     if questProgress == 1 then
                         return quest:progressEvent(412)
+                    elseif questProgress == 2 then
+                        return quest:preogressEvent(414)
                     elseif questProgress == 6 then
-                        return quest:progressEvent(410)
+                        return quest:event(410)
                     end
                 end,
 
