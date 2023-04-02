@@ -1,6 +1,7 @@
 -----------------------------------
 -- Items
 -- Item table by ID (used by quests)
+--
 -----------------------------------
 xi = xi or {}
 
@@ -6674,6 +6675,10 @@ xi.items =
     HATCHLING_SHIELD                = 28652,
     SLIME_SHIELD                    = 28655,
     GLINTING_SHIELD                 = 28661,
+    ASTRAGALOS                      = 17299,
+    ICE_PENDULUM                    = 1171,
+    LIGHTNING_PENDULUM              = 1172,
+    WIND_PENDULUM                   = 1174,
     MOOGLE_STORAGE_SLIP_01          = 29312,
     MOOGLE_STORAGE_SLIP_02          = 29313,
     MOOGLE_STORAGE_SLIP_03          = 29314,

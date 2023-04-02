@@ -4,6 +4,7 @@
 -- Starts and Finishes Quest: Trial by Ice
 -- Involved in Quest: Class Reunion
 -- !pos -186 0 107 231
+--
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/titles")
@@ -18,40 +19,22 @@ end
 
 entity.onTrigger = function(player, npc)
     local trialByIce = player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.TRIAL_BY_ICE)
-    local classReunion = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CLASS_REUNION)
-    local classReunionProgress = player:getCharVar("ClassReunionProgress")
 
     -----------------------------------
-    -- Class Reunion
-    if classReunion == 1 and classReunionProgress == 4 then
-        player:startEvent(713, 0, 1171, 0, 0, 0, 0, 0, 0) -- he gives you an ice pendulum and wants you to go to Cloister of Frost
-    elseif
-        classReunion == 1 and
-        classReunionProgress == 5 and
-        not player:hasItem(1171)
-    then
-        player:startEvent(712, 0, 1171, 0, 0, 0, 0, 0, 0) -- lost the ice pendulum need another one
-    -----------------------------------
-    elseif
+    if
         (trialByIce == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 6) or
-        (trialByIce == QUEST_COMPLETED and os.time() > player:getCharVar("TrialByIce_date"))
-    then
-        player:startEvent(706, 0, xi.ki.TUNING_FORK_OF_ICE) -- Start and restart quest "Trial by ice"
+        (trialByIce == QUEST_COMPLETED and
+        os.time() > player:getCharVar("TrialByIce_date")) then
+            player:startEvent(706, 0, xi.ki.TUNING_FORK_OF_ICE) -- Start and restart quest "Trial by ice"
     elseif
-        trialByIce == QUEST_ACCEPTED and
-        not player:hasKeyItem(xi.ki.TUNING_FORK_OF_ICE) and
-        not player:hasKeyItem(xi.ki.WHISPER_OF_FROST)
-    then
-        player:startEvent(718, 0, xi.ki.TUNING_FORK_OF_ICE) -- Defeat against Shiva : Need new Fork
+        trialByIce == QUEST_ACCEPTED and not player:hasKeyItem(xi.ki.TUNING_FORK_OF_ICE) and
+        not player:hasKeyItem(xi.ki.WHISPER_OF_FROST) then
+            player:startEvent(718, 0, xi.ki.TUNING_FORK_OF_ICE) -- Defeat against Shiva : Need new Fork
     elseif
-        trialByIce == QUEST_ACCEPTED and
-        not player:hasKeyItem(xi.ki.WHISPER_OF_FROST)
-    then
-        player:startEvent(707, 0, xi.ki.TUNING_FORK_OF_ICE, 4)
+        trialByIce == QUEST_ACCEPTED and not player:hasKeyItem(xi.ki.WHISPER_OF_FROST) then
+            player:startEvent(707, 0, xi.ki.TUNING_FORK_OF_ICE, 4)
     elseif
-        trialByIce == QUEST_ACCEPTED and
-        player:hasKeyItem(xi.ki.WHISPER_OF_FROST)
-    then
+        trialByIce == QUEST_ACCEPTED and player:hasKeyItem(xi.ki.WHISPER_OF_FROST) then
         local numitem = 0
 
         if player:hasItem(17492) then
@@ -128,14 +111,6 @@ entity.onEventFinish = function(player, csid, option)
             player:setCharVar("TrialByIce_date", getMidnight())
             player:addFame(xi.quest.fame_area.SANDORIA, 30)
             player:completeQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.TRIAL_BY_ICE)
-        end
-    elseif csid == 713 or csid == 712 then
-        if player:getFreeSlotsCount() ~= 0 then
-            player:addItem(1171)
-            player:messageSpecial(ID.text.ITEM_OBTAINED, 1171)
-            player:setCharVar("ClassReunionProgress", 5)
-        else
-            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1171)
         end
     end
 end
