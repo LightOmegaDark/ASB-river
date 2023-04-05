@@ -102,6 +102,14 @@ function utils.minutes(minutes)
     return minutes * 60
 end
 
+function utils.hours(hours)
+    return hours * 3600
+end
+
+function utils.days(days)
+    return days * 86400
+end
+
 -- Generates a random permutation of integers >= min_val and <= max_val
 -- If a min_val isn't given, 1 is used (assumes permutation of lua indices)
 function utils.permgen(max_val, min_val)
@@ -203,9 +211,11 @@ end
 -- applying the given mapping function to the given table elements
 function utils.map(tbl, func)
     local t = {}
+
     for k, v in pairs(tbl) do
         t[k] = func(k, v)
     end
+
     return t
 end
 
@@ -269,7 +279,7 @@ end
 -- matches the given predicate
 -- e.g: utils.sum({ "a, "a", "b" }, utils.counter(function (k, v) return v == "a" end)) --> 2
 function utils.counter(predicate)
-    return function (k, v)
+    return function(k, v)
         if predicate(k, v) then
             return 1
         else
@@ -450,11 +460,16 @@ function utils.thirdeye(target)
 
     if prevAnt == 0 or (math.random() * 100) < (80 - (prevAnt * 10)) then
         --anticipated!
-        if seigan == nil or prevAnt == 6 or math.random() * 100 > 100 - (prevAnt + 1) * 15 then
+        if
+            seigan == nil or
+            prevAnt == 6 or
+            math.random() * 100 > 100 - (prevAnt + 1) * 15
+        then
             target:delStatusEffect(xi.effect.THIRD_EYE)
         else
             teye:setPower(prevAnt + 1)
         end
+
         return true
     else
         target:delStatusEffect(xi.effect.THIRD_EYE) -- how did we get here?  the previous clause checks for prevAnt == 6
