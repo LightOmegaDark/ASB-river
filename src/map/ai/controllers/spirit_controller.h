@@ -37,6 +37,9 @@ protected:
     bool  TryIdleSpellcast(time_point tick);
     int16 GetSMNSkillReduction();
     int16 GetDayWeatherBonus();
+    CBattleEntity* GetLowestThresholdHPMember();
+    uint8 GetLowestHPThresholdCountForParty(CBattleEntity* target);
+    void CastIdleSpell(SpellID spellId, uint16 target);
 
 private:
     CPetEntity* const PSpirit;

@@ -212,31 +212,18 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
             break;
         case PETID_LIGHTSPIRIT:
             CBattleEntity* PLowest       = nullptr;
-            float          lowestPercent = 1.f;
+            uint8          numUnderThreshold = NULL;
             uint8          choice        = 2;
             uint16         chosenSpell   = static_cast<uint16>(SpellID::Cure);
 
             // clang-format off
-            PSpirit->PMaster->ForParty([&](CBattleEntity* PMember)
-            {
-                if (PMember != nullptr && PSpirit->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(PSpirit->loc.p, PMember->loc.p) <= 20 &&
-                    !PMember->isDead())
-                {
-                    float memberPercent = PMember->health.hp / PMember->health.maxhp;
-                    if (PLowest == nullptr ||
-                        (lowestPercent >= memberPercent))
-                    {
-                        PLowest = PMember;
-                        lowestPercent = memberPercent;
-                    }
-                }
-            });
-            // clang-format on
-
-            if (lowestPercent < 0.5f && xirand::GetRandomNumber(100) < 25) // 50% HP
-            {
+            // Light Spirit cures/curagas can target other alliance members.
+            PLowest = GetLowestThresholdHPMember();
+            if(PLowest != nullptr) {
                 choice = 1;
+                numUnderThreshold = GetLowestHPThresholdCountForParty(PLowest);
             }
+            // clang-format on
 
             switch (choice)
             {
@@ -255,7 +242,7 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
             }
             if (CanCastSpells())
             {
-                CastSpell(static_cast<SpellID>(chosenSpell));
+                CastIdleSpell(static_cast<SpellID>(chosenSpell), PLowest->targid);
                 return true;
             }
             break;
@@ -550,4 +537,51 @@ int16 CSpiritController::GetDayWeatherBonus()
     }
 
     return bonus;
+}
+
+CBattleEntity* CSpiritController::GetLowestThresholdHPMember()
+{
+            CBattleEntity* PLowest       = nullptr;
+            float          lowestPercent = 1.f;
+
+            // The SMN always takes priority over the rest of the alliance.
+            if( PSpirit->PMaster->GetHPP() <= 0.5f)
+            return PSpirit->PMaster;
+            // clang-format off
+            // Light Spirit cures/curagas can target other alliance members.
+            PSpirit->PMaster->ForAlliance([&](CBattleEntity* PMember)
+            {
+                if (PMember != nullptr && PSpirit->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(PSpirit->loc.p, PMember->loc.p) <= 20 &&
+                    !PMember->isDead() && PMember->GetHPP() <= 0.5f)
+                {
+                    float memberPercent = PMember->health.hp / PMember->health.maxhp;
+                    if (PLowest == nullptr ||
+                        (lowestPercent >= memberPercent))
+                    {
+                        PLowest = PMember;
+                        lowestPercent = memberPercent;
+                    }
+                }
+            });
+            // clang-format on
+
+            return PLowest;
+}
+uint8 CSpiritController::GetLowestHPThresholdCountForParty(CBattleEntity* target)
+{
+    uint8 numMeetsThreshold = 0;
+    // clang-format off
+    target->ForParty([&](CBattleEntity* PMember)
+    {
+        if(PMember != nullptr && PSpirit->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() &&
+           distance(PSpirit->loc.p, PMember->loc.p) <= 20 && !PMember->isDead() && PMember->GetHPP() <= 0.5f) numMeetsThreshold++;
+    });
+    // clang-format on
+
+    return numMeetsThreshold;
+}
+
+void CSpiritController::CastIdleSpell(SpellID spellId, uint16 target)
+{
+
 }
