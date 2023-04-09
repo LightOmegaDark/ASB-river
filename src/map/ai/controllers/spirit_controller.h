@@ -23,6 +23,7 @@ public:
     }
 
 protected:
+    uint16 spiritCastTimer;
     virtual void Tick(time_point tick) override;
     virtual void LoadLightSpiritSpellList();
     virtual void setMagicCooldowns();
@@ -38,7 +39,8 @@ protected:
     int16 GetSMNSkillReduction();
     int16 GetDayWeatherBonus();
     CBattleEntity* GetLowestThresholdHPMember();
-    uint8 GetLowestHPThresholdCountForParty(CBattleEntity* target);
+    uint8 GetLowestHPThresholdCountForParty(CBattleEntity& target);
+    uint16 DetermineHighestSpellFromMP(std::vector<uint16>& spellList);
     void CastIdleSpell(SpellID spellId, uint16 target);
 
 private:

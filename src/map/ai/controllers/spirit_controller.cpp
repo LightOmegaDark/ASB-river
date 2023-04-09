@@ -85,7 +85,7 @@ void CSpiritController::Tick(time_point tick)
 
 void CSpiritController::setMagicCooldowns()
 {
-    uint32 castTime = ((48000 + (GetSMNSkillReduction() / 3)) + GetDayWeatherBonus());
+    uint32 castTime = ((45000 + (GetSMNSkillReduction() / 3)) + GetDayWeatherBonus());
 
     if (PSpirit->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_ASTRAL_FLOW))
     {
@@ -100,6 +100,12 @@ void CSpiritController::setMagicCooldowns()
         castTime -= 5000;
     }
 
+    // Light Spirit idle spellcasting time is halved if the Light Spirit is not engaged.
+    // Applies only to buffs, so we'll need to do another check elsewhere.
+    if(PSpirit->m_PetID == PETID_LIGHTSPIRIT && !PSpirit->PAI->IsEngaged())
+        castTime /= 2;
+
+    // TODO: Make the cast time update on "Assault"/"Release".
     PSpirit->m_magicCooldown = std::chrono::milliseconds(castTime);
 }
 
@@ -161,9 +167,9 @@ bool CSpiritController::TrySpellcast(time_point tick)
         switch (choice)
         {
             case 1:
-                if (PSpirit->m_healSpells.size() > 0)
+                if (PSpirit->m_healSingleSpells.size() > 0)
                 {
-                    chosenSpell = xirand::GetRandomElement(PSpirit->m_healSpells);
+                    chosenSpell = xirand::GetRandomElement(PSpirit->m_healSingleSpells);
                 }
                 break;
             case 2:
@@ -202,14 +208,6 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
     uint8 mLvl = PSpirit->GetMLevel();
     switch (PSpirit->m_PetID)
     {
-        case PETID_EARTHSPIRIT:
-        case PETID_WATERSPIRIT:
-        case PETID_AIRSPIRIT:
-        case PETID_FIRESPIRIT:
-        case PETID_ICESPIRIT:
-        case PETID_THUNDERSPIRIT:
-        case PETID_DARKSPIRIT:
-            break;
         case PETID_LIGHTSPIRIT:
             CBattleEntity* PLowest       = nullptr;
             uint8          numUnderThreshold = NULL;
@@ -221,30 +219,45 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
             PLowest = GetLowestThresholdHPMember();
             if(PLowest != nullptr) {
                 choice = 1;
-                numUnderThreshold = GetLowestHPThresholdCountForParty(PLowest);
+                numUnderThreshold = GetLowestHPThresholdCountForParty(*PLowest);
             }
             // clang-format on
 
             switch (choice)
             {
                 case 1:
-                    if (PSpirit->m_healSpells.size() > 0)
+                    if (PSpirit->m_healSingleSpells.size() > 0)
                     {
-                        chosenSpell = xirand::GetRandomElement(PSpirit->m_healSpells);
+                        // TODO: We should make it so that Light Spirit could prefer using Curaga spells even when a single party/alliance member is at yellow HP.
+                        if(numUnderThreshold > 1)
+                            chosenSpell = DetermineHighestSpellFromMP(PSpirit->m_healAOESpells);
+                        else
+                            chosenSpell = DetermineHighestSpellFromMP(PSpirit->m_healSingleSpells);
+
+                        // If the spirit doesn't have the MP to cast a spell, don't do anything.
+                        if(chosenSpell == 0) return false;
+
+                         if (CanCastSpells())
+                        {
+                            CastIdleSpell(static_cast<SpellID>(chosenSpell), PLowest->targid);
+                            return true;
+                        }
                     }
                     break;
                 case 2:
                     if (PSpirit->m_buffSpells.size() > 0)
                     {
+                        PSpirit->PMaster->ForAlliance([&](CBattleEntity* PMember)
+                        {
+
+                        });
                         chosenSpell = xirand::GetRandomElement(PSpirit->m_buffSpells);
                     }
                     break;
             }
-            if (CanCastSpells())
-            {
-                CastIdleSpell(static_cast<SpellID>(chosenSpell), PLowest->targid);
-                return true;
-            }
+            break;
+
+        default:
             break;
     }
 
@@ -256,7 +269,7 @@ void CSpiritController::LoadLightSpiritSpellList()
     uint8 mLvl = PSpirit->GetMLevel();
     if (mLvl >= 71)
     {
-        PSpirit->m_healSpells.push_back(static_cast<uint16>(SpellID::Curaga_IV));
+        PSpirit->m_healAOESpells.push_back(static_cast<uint16>(SpellID::Curaga_IV));
     }
     if (mLvl >= 68)
     {
@@ -272,15 +285,15 @@ void CSpiritController::LoadLightSpiritSpellList()
     }
     if (mLvl >= 61)
     {
-        PSpirit->m_healSpells.push_back(static_cast<uint16>(SpellID::Cure_V));
+        PSpirit->m_healSingleSpells.push_back(static_cast<uint16>(SpellID::Cure_V));
     }
     if (mLvl >= 57 && mLvl < 68)
     {
         PSpirit->m_buffSpells.push_back(static_cast<uint16>(SpellID::Shell_III));
     }
-    if (mLvl >= 51)
+    if (mLvl >= 51 && mLvl < 71)
     {
-        PSpirit->m_healSpells.push_back(static_cast<uint16>(SpellID::Curaga_III));
+        PSpirit->m_healAOESpells.push_back(static_cast<uint16>(SpellID::Curaga_III));
     }
     if (mLvl >= 50)
     {
@@ -290,14 +303,13 @@ void CSpiritController::LoadLightSpiritSpellList()
     {
         PSpirit->m_buffSpells.push_back(static_cast<uint16>(SpellID::Protect_III));
     }
-    if (mLvl >= 41)
+    if (mLvl >= 41 && mLvl < 61)
     {
-        PSpirit->m_healSpells.push_back(static_cast<uint16>(SpellID::Cure_IV));
+        PSpirit->m_healSingleSpells.push_back(static_cast<uint16>(SpellID::Cure_IV));
     }
     if (mLvl >= 40)
     {
         PSpirit->m_buffSpells.push_back(static_cast<uint16>(SpellID::Haste));
-        PSpirit->m_offensiveSpells.push_back(static_cast<uint16>(SpellID::Banishga_II));
     }
     if (mLvl >= 37)
     {
@@ -313,7 +325,7 @@ void CSpiritController::LoadLightSpiritSpellList()
     }
     if (mLvl >= 31 && mLvl < 71)
     {
-        PSpirit->m_healSpells.push_back(static_cast<uint16>(SpellID::Curaga_II));
+        PSpirit->m_healAOESpells.push_back(static_cast<uint16>(SpellID::Curaga_II));
     }
     if (mLvl >= 30)
     {
@@ -329,7 +341,7 @@ void CSpiritController::LoadLightSpiritSpellList()
     }
     if (mLvl >= 21 && mLvl < 41)
     {
-        PSpirit->m_healSpells.push_back(static_cast<uint16>(SpellID::Cure_III));
+        PSpirit->m_healSingleSpells.push_back(static_cast<uint16>(SpellID::Cure_III));
     }
     if (mLvl >= 17 && mLvl < 37)
     {
@@ -337,11 +349,11 @@ void CSpiritController::LoadLightSpiritSpellList()
     }
     if (mLvl >= 16 && mLvl < 51)
     {
-        PSpirit->m_healSpells.push_back(static_cast<uint16>(SpellID::Curaga));
+        PSpirit->m_healAOESpells.push_back(static_cast<uint16>(SpellID::Curaga));
     }
     if (mLvl >= 11 && mLvl < 41)
     {
-        PSpirit->m_healSpells.push_back(static_cast<uint16>(SpellID::Cure_II));
+        PSpirit->m_healSingleSpells.push_back(static_cast<uint16>(SpellID::Cure_II));
     }
     if (mLvl >= 7 && mLvl < 27)
     {
@@ -353,7 +365,7 @@ void CSpiritController::LoadLightSpiritSpellList()
     }
     if (mLvl >= 1 && mLvl < 21)
     {
-        PSpirit->m_healSpells.push_back(static_cast<uint16>(SpellID::Cure));
+        PSpirit->m_healSingleSpells.push_back(static_cast<uint16>(SpellID::Cure));
     }
 }
 
@@ -549,10 +561,11 @@ CBattleEntity* CSpiritController::GetLowestThresholdHPMember()
             return PSpirit->PMaster;
             // clang-format off
             // Light Spirit cures/curagas can target other alliance members.
+            // Light Spirit does not cast cures on invisible players, no matter how low their HP is.
             PSpirit->PMaster->ForAlliance([&](CBattleEntity* PMember)
             {
                 if (PMember != nullptr && PSpirit->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(PSpirit->loc.p, PMember->loc.p) <= 20 &&
-                    !PMember->isDead() && PMember->GetHPP() <= 0.5f)
+                    !PMember->isDead() && !PMember->StatusEffectContainer->HasStatusEffect(EFFECT_INVISIBLE) && PMember->GetHPP() <= 0.5f)
                 {
                     float memberPercent = PMember->health.hp / PMember->health.maxhp;
                     if (PLowest == nullptr ||
@@ -567,18 +580,39 @@ CBattleEntity* CSpiritController::GetLowestThresholdHPMember()
 
             return PLowest;
 }
-uint8 CSpiritController::GetLowestHPThresholdCountForParty(CBattleEntity* target)
+uint8 CSpiritController::GetLowestHPThresholdCountForParty(CBattleEntity& target)
 {
     uint8 numMeetsThreshold = 0;
     // clang-format off
-    target->ForParty([&](CBattleEntity* PMember)
+    target.ForParty([&](CBattleEntity* PMember)
     {
+        // Check to see how many low HP party members are there in Curaga range.
         if(PMember != nullptr && PSpirit->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() &&
-           distance(PSpirit->loc.p, PMember->loc.p) <= 20 && !PMember->isDead() && PMember->GetHPP() <= 0.5f) numMeetsThreshold++;
+           distance(PSpirit->loc.p, PMember->loc.p) <= 20 && !PMember->isDead() && PMember->GetHPP() <= 0.5f)
+           {
+                numMeetsThreshold++;
+           }
     });
     // clang-format on
 
     return numMeetsThreshold;
+}
+
+uint16 CSpiritController::DetermineHighestSpellFromMP(std::vector<uint16> &spellList)
+{
+    for(
+        std::vector<uint16>::iterator spellIterator = spellList.end();
+        spellIterator >= spellList.begin();
+        spellIterator--
+    ) {
+        CSpell* spell = new CSpell(static_cast<SpellID>(*spellIterator));
+        uint16 spellMPCost = spell->getMPCost();
+        if(static_cast<CBattleEntity*>(PSpirit)->health.mp >= spellMPCost)
+        {
+            return static_cast<uint16>(*spellIterator);
+        }
+    }
+    return static_cast<uint16>(0);
 }
 
 void CSpiritController::CastIdleSpell(SpellID spellId, uint16 target)
