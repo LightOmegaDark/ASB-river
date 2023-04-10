@@ -278,7 +278,7 @@ function npcUtil.giveItem(player, items, params)
     for _, v in pairs(givenItems) do
         if player:addItem(v[1], v[2], true) then
             if not params.silent and not messagedItems[v[1]] then
-                if v[2] > 1 then
+                if v[2] > 1 or params.multiple then
                     player:messageSpecial(ID.text.ITEM_OBTAINED + 9, v[1], v[2])
                 else
                     player:messageSpecial(ID.text.ITEM_OBTAINED, v[1])
