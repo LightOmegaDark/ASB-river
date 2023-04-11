@@ -12,17 +12,9 @@ require('scripts/globals/zone')
 require('scripts/globals/status')
 require('scripts/globals/interaction/quest')
 require('scripts/globals/titles')
-local IDs  = require('scripts/zones/WINDURST_WALLS/IDs')
-local IDs2 = require('scripts/zones/WINDURST_WATERS/IDs')
-local IDs3 = require('scripts/zones/MHAURA/IDs')
-local IDs4 = require('scripts/zones/RABAO/IDs')
-local IDs5 = require('scripts/zones/CLOISTER_OF_GALES/IDs')
-local IDs6 = require('scripts/zones/CLOISTER_OF_STORMS/IDs')
 -----------------------------------------------
 local quest = Quest:new(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CARBUNCLE_DEBACLE)
 --------------------------------------------------------------------------------------
-
-
 quest.reward =
 {
     item            =   xi.items.EVOKERS_HORN,
@@ -78,7 +70,7 @@ quest.sections =
                         return quest:progressEvent(418)
                     elseif questProgress == 7 then
                         return quest:progressEvent(419)
-                    elseif player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CARBUNCLE_DEBACLE) == QUEST_COMPLETE then
+                    elseif player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CARBUNCLE_DEBACLE) == QUEST_COMPLETED then
                         return player:event(420)
                     end
                 end,
@@ -136,11 +128,11 @@ quest.sections =
             onEventFinish =
             {
                 [32001] = function(player, csid, option, npc)
-
-                        if player:getLocalVar('battlefieldWin') == 577 and questProgress == 3 then
-                           quest:setVar(player, 'Prog', 4)
-                        end
+                    local questProgress = quest:getVar(player, 'Prog')
+                    if player:getLocalVar('battlefieldWin') == 577 and questProgress == 3 then
+                        quest:setVar(player, 'Prog', 4)
                     end
+                end
             },
         },
 
@@ -179,6 +171,8 @@ quest.sections =
             onEventFinish =
             {
                 [32001] = function(player, csid, option, npc)
+                    local questProgress = quest:getVar(player, 'Prog')
+
                     if player:getLocalVar('battlefieldWin') == 577 and questProgress == 6 then
                         quest:setVar(player, 'Prog', 7)
                         player:delKeyItem(xi.ki.DAZE_BREAKER_CHARM)

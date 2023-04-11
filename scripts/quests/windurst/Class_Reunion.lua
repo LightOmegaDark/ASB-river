@@ -11,9 +11,6 @@ require('scripts/globals/quests')
 require('scripts/globals/zone')
 require('scripts/globals/status')
 require('scripts/globals/interaction/quest')
-local IDs = require('scripts/zones/WINDURST_WALLS/IDs')
-local IDs2 = require('scripts/zones/WINDURST_WATERS/IDs')
-local IDs3 = require('scripts/zones/CLOISTER_OF_FROST/IDs')
 -----------------------------------------------
 local quest = Quest:new(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CLASS_REUNION)
 --------------------------------------------------------------------------------------
@@ -34,7 +31,7 @@ quest.sections =
                 player:getMainLvl() >= xi.settings.main.AF2_QUEST_LEVEL and
                 player:getMainJob() == xi.job.SMN and
                 not quest:getMustZone(player) and
-                player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.THE_PUPPET_MASTER) == QUEST_COMPLETE
+                player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.THE_PUPPET_MASTER) == QUEST_COMPLETED
         end,
 
         [xi.zone.WINDURST_WALLS] =
