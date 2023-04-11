@@ -83,7 +83,7 @@ quest.sections =
                 onTrigger = function(player, npc)
                     local questProgress = quest:getVar(player, 'Prog')
 
-                   if questProgress == 3 then
+                    if questProgress == 3 then
                         return quest:event(409)
                     end
                 end,
@@ -115,7 +115,7 @@ quest.sections =
                     local questProgress = quest:getVar(player, 'Prog')
 
                     if questProgress == 3 then
-                       return quest:event(817)
+                        return quest:event(817)
                     end
                 end,
             },
@@ -176,12 +176,10 @@ quest.sections =
         },
     },
 
-
     {
         check = function(player, status, vars)
             return status == QUEST_COMPLETED
         end,
-
 
         [xi.zone.WINDURST_WALLS] =
         {

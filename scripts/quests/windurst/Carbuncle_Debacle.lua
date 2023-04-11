@@ -1,9 +1,9 @@
-------------------------------------
+-------------------------------------
 -- Carbuncle Debacle
 -- !addquest 2 83
 -- Koru-moru !pos -120 -6 124 239
 --
-------------------------------------
+-------------------------------------
 require('scripts/globals/items')
 require('scripts/globals/npc_util')
 require('scripts/globals/keyitems')
