@@ -30,7 +30,7 @@ end
 
 battlefieldObject.onEventFinish = function(player, csid, option)
     if csid == 32001 then
-        player:setCharVar("CarbuncleDebacleProgress", 4)
+        player:setCharVar("Quest[2][83]Prog", 4)
     end
 end
 
