@@ -3,7 +3,6 @@
 --  NPC: Ripapa
 -- Starts and Finishes Quest: Trial by Lightning
 -- !pos 29 -15 55 249
---
 -----------------------------------
 require("scripts/globals/titles")
 require("scripts/globals/settings")
@@ -22,16 +21,17 @@ entity.onTrigger = function(player, npc)
     local hasWhisperOfStorms = player:hasKeyItem(xi.ki.WHISPER_OF_STORMS)
 
     -----------------------------------
+    --Trial by Lightning
 
-    -----------------------------------
-    -- Trial by Lightning
-    if (trialByLightning == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 6) or
-    (trialByLightning == QUEST_COMPLETED
-    and os.time() > player:getCharVar("TrialByLightning_date")) then
+    if
+        (trialByLightning == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 6) or
+        (trialByLightning == QUEST_COMPLETED and os.time() > player:getCharVar("TrialByLightning_date"))
+    then
         player:startEvent(10016, 0, xi.ki.TUNING_FORK_OF_LIGHTNING) -- Start and restart quest "Trial by Lightning"
-    elseif trialByLightning == QUEST_ACCEPTED and
-    not player:hasKeyItem(xi.ki.TUNING_FORK_OF_LIGHTNING) and
-    not hasWhisperOfStorms
+    elseif
+        trialByLightning == QUEST_ACCEPTED and
+        not player:hasKeyItem(xi.ki.TUNING_FORK_OF_LIGHTNING) and
+        not hasWhisperOfStorms
     then
         player:startEvent(10024, 0, xi.ki.TUNING_FORK_OF_LIGHTNING) -- Defeat against Ramuh : Need new Fork
     elseif trialByLightning == QUEST_ACCEPTED and not hasWhisperOfStorms then
@@ -60,8 +60,6 @@ entity.onTrigger = function(player, npc)
         end  -- Ability to summon Ramuh
 
         player:startEvent(10019, 0, xi.ki.TUNING_FORK_OF_LIGHTNING, 5, 0, numitem)
-    else
-        player:startEvent(10020) -- Standard dialog
     end
 end
 

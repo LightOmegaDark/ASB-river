@@ -1,7 +1,6 @@
 -----------------------------------
 -- Area: Cloister of Storms
 -- BCNM: Carbuncle Debacle
---
 -----------------------------------
 require("scripts/globals/battlefield")
 -----------------------------------
@@ -31,8 +30,7 @@ end
 
 battlefieldObject.onEventFinish = function(player, csid, option)
     if csid == 32001 then
-        player:setCharVar("Quest[2][83]", 4)
-        player:delKeyItem(xi.ki.DAZE_BREAKER_CHARM)
+        player:setCharVar("Quest[2][83]Prog", 4)
     end
 end
 

@@ -4,7 +4,6 @@
 -- Starts and Finishes Quest: Trial by Ice
 -- Involved in Quest: Class Reunion
 -- !pos -186 0 107 231
---
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/titles")
@@ -19,22 +18,27 @@ end
 
 entity.onTrigger = function(player, npc)
     local trialByIce = player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.TRIAL_BY_ICE)
-
     -----------------------------------
     if
         (trialByIce == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.SANDORIA) >= 6) or
-        (trialByIce == QUEST_COMPLETED and
-        os.time() > player:getCharVar("TrialByIce_date")) then
-            player:startEvent(706, 0, xi.ki.TUNING_FORK_OF_ICE) -- Start and restart quest "Trial by ice"
+        (trialByIce == QUEST_COMPLETED and os.time() > player:getCharVar("TrialByIce_date"))
+    then
+        player:startEvent(706, 0, xi.ki.TUNING_FORK_OF_ICE) -- Start and restart quest "Trial by ice"
     elseif
-        trialByIce == QUEST_ACCEPTED and not player:hasKeyItem(xi.ki.TUNING_FORK_OF_ICE) and
-        not player:hasKeyItem(xi.ki.WHISPER_OF_FROST) then
-            player:startEvent(718, 0, xi.ki.TUNING_FORK_OF_ICE) -- Defeat against Shiva : Need new Fork
+        trialByIce == QUEST_ACCEPTED and
+        not player:hasKeyItem(xi.ki.TUNING_FORK_OF_ICE) and
+        not player:hasKeyItem(xi.ki.WHISPER_OF_FROST)
+    then
+        player:startEvent(718, 0, xi.ki.TUNING_FORK_OF_ICE) -- Defeat against Shiva : Need new Fork
     elseif
-        trialByIce == QUEST_ACCEPTED and not player:hasKeyItem(xi.ki.WHISPER_OF_FROST) then
-            player:startEvent(707, 0, xi.ki.TUNING_FORK_OF_ICE, 4)
+        trialByIce == QUEST_ACCEPTED and
+        not player:hasKeyItem(xi.ki.WHISPER_OF_FROST)
+    then
+        player:startEvent(707, 0, xi.ki.TUNING_FORK_OF_ICE, 4)
     elseif
-        trialByIce == QUEST_ACCEPTED and player:hasKeyItem(xi.ki.WHISPER_OF_FROST) then
+        trialByIce == QUEST_ACCEPTED and
+        player:hasKeyItem(xi.ki.WHISPER_OF_FROST)
+    then
         local numitem = 0
 
         if player:hasItem(17492) then

@@ -3,7 +3,6 @@
 --  NPC: Furakku-Norakku
 -- Involved in Quests: Early Bird Catches the Bookworm, Chasing Tales, Class Reunion
 -- !pos -19 -5 101 238
---
 -----------------------------------
 require("scripts/globals/quests")
 -----------------------------------
@@ -13,7 +12,6 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    player:startEvent(272)
 end
 
 entity.onEventUpdate = function(player, csid, option)

@@ -1,7 +1,6 @@
 -----------------------------------
 -- Area: Cloister of Tremors
 -- BCNM: Class Reunion
---
 -----------------------------------
 require("scripts/globals/battlefield")
 -----------------------------------
@@ -12,9 +11,11 @@ battlefieldObject.onBattlefieldTick = function(battlefield, tick)
 end
 
 battlefieldObject.onBattlefieldRegister = function(player, battlefield)
+
 end
 
 battlefieldObject.onBattlefieldEnter = function(player, battlefield)
+
 end
 
 battlefieldObject.onBattlefieldLeave = function(player, battlefield, leavecode)
@@ -27,11 +28,12 @@ battlefieldObject.onBattlefieldLeave = function(player, battlefield, leavecode)
 end
 
 battlefieldObject.onEventUpdate = function(player, csid, option)
+
 end
 
 battlefieldObject.onEventFinish = function(player, csid, option)
-    if csid == 32001 and player:getCharVar("Quest[2][82]Prog") == 5 then
-        player:setCharVar("Quest[2][82]Prog", 6)
+    if csid == 32001 and player:getCharVar("Quest[2][82]Prog") == 4 then
+        player:setCharVar("Quest[2][82]Prog", 5)
     end
 end
 

@@ -5,17 +5,23 @@
 --
 ------------------------------------
 require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/npc_util')
+require('scripts/globals/keyitems')
 require('scripts/globals/quests')
+require('scripts/globals/zone')
 require('scripts/globals/status')
 require('scripts/globals/interaction/quest')
+require('scripts/globals/titles')
+local IDs  = require('scripts/zones/WINDURST_WALLS/IDs')
+local IDs2 = require('scripts/zones/WINDURST_WATERS/IDs')
+local IDs3 = require('scripts/zones/MHAURA/IDs')
+local IDs4 = require('scripts/zones/RABAO/IDs')
+local IDs5 = require('scripts/zones/CLOISTER_OF_GALES/IDs')
+local IDs6 = require('scripts/zones/CLOISTER_OF_STORMS/IDs')
 -----------------------------------------------
-local windyWallsID = require("scripts/zones/Windurst_Walls/IDs")
-local windyWatersID = require("scripts/zones/Windurst_Waters/IDs")
------------------------------------------------
+local quest = Quest:new(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CARBUNCLE_DEBACLE)
+--------------------------------------------------------------------------------------
 
-local quest = Quest:new(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CLASS_REUNION)
 
 quest.reward =
 {
@@ -29,25 +35,17 @@ quest.sections =
     --Section: Quest Available
 
     {
+
         check = function(player, status, vars)
             return status == QUEST_AVAILABLE and
-                player:getMainJob() == xi.jobs.SMN and
                 player:getMainLvl() >= xi.settings.main.AF3_QUEST_LEVEL and
-                player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CLASS_REUNION) == QUEST_COMPLETE
+                player:getMainJob() == xi.job.SMN and
+                not quest:getMustZone(player)
         end,
 
         [xi.zone.WINDURST_WALLS] =
         {
-            ['_6n2'] =
-            {
-
-                onTrigger = function(player, npc)
-                    if player:getVar("Quest[2][82]Prog") == 0 then
-                        return quest:progressEvent(415)
-                    elseif player:getVar("Quest[2][82]Prog") == 1 then
-                        return event(403)
-                    end
-                end,
+            ['_6n2'] = quest:progressEvent(415),
 
                 onEventFinish =
                 {
@@ -56,7 +54,6 @@ quest.sections =
                             quest:setVar(player, 'Prog', 1)
                     end,
                 },
-            },
         },
     },
 
@@ -73,38 +70,40 @@ quest.sections =
                 onTrigger = function(player, npc)
                     local questProgress = quest:getVar(player, 'Prog')
 
-                    if questProgress == 1 or questProgress == 2 then
-                        return quest:progressEvent(416)
+                    if questProgress == 1 then
+                        return quest:event(416)
                     elseif questProgress == 4 then
                         return quest:progressEvent(417)
+                    elseif questProgress == 5 then
+                        return quest:progressEvent(418)
                     elseif questProgress == 7 then
                         return quest:progressEvent(419)
-                    elseif quest:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CARBUNCLE_DEBACLE) == QUEST_COMPLETE then
+                    elseif player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CARBUNCLE_DEBACLE) == QUEST_COMPLETE then
                         return player:event(420)
                     end
                 end,
-
+            },
                 onEventFinish =
                 {
                     [416] = function(player, csid, option, npc)
                         quest:setVar(player, 'Prog', 2)
-                        npcUtil.addKeyItem(xi.ki.DAZE_BREAKER_CHARM)
                     end,
 
                     [417] = function(player, csid, option, npc)
                         quest:setVar(player, 'Prog', 5)
-                        npcUtil.addKeyItem(xi.ki.DAZE_BREAKER_CHARM)
+                        npcUtil.giveKeyItem(player, xi.ki.DAZE_BREAKER_CHARM)
                     end,
 
                     [419] = function(player, csid, option, npc)
                         quest:complete(player)
+                        player:addTitle(xi.title.PARAGON_OF_SUMMONER_EXCELLENCE)
                     end
                 }
-            }
-        },
+            },
 
         [xi.zone.MHAURA] =
         {
+
             ['Ripapa'] =
             {
                 onTrigger = function(player, npc)
@@ -113,22 +112,23 @@ quest.sections =
                     if questProgress == 2 then
                         return quest:progressEvent(10022)
                     elseif questProgress == 3 and not player:hasItem(xi.items.LIGHTNING_PENDULUM) then
-                        return quest:progressEvent(10023)
+                        return quest:event(10023)
                     end
                 end,
+            },
 
                 onEventFinish =
                 {
                     [10022] = function(player, csid, option, npc)
-                        npcUtil.giveItem(xi.items.LIGHTNING_PENDULUM)
+                        npcUtil.giveItem(player, xi.items.LIGHTNING_PENDULUM)
                         quest:setVar(player, 'Prog', 3)
                     end,
 
                     [10023] = function(player, csid, option, npc)
-                        npcUtil.giveItem(xi.items.LIGHTNING_PENDULUM)
+                        npcUtil.giveItem(player, xi.items.LIGHTNING_PENDULUM)
                     end
                 }
-            }
+
         },
 
         [xi.zone.CLOISTER_OF_STORMS] =
@@ -138,8 +138,7 @@ quest.sections =
                 [32001] = function(player, csid, option, npc)
 
                         if player:getLocalVar('battlefieldWin') == 577 and questProgress == 3 then
-                           quest:setVar(player, 'Prog', 5)
-                           player:delKeyItem(xi.ki.DAZE_BREAKER_CHARM)
+                           quest:setVar(player, 'Prog', 4)
                         end
                     end
             },
@@ -154,25 +153,25 @@ quest.sections =
 
                     if questProgress == 5 and player:hasKeyItem(xi.ki.DAZE_BREAKER_CHARM) then
                         return quest:progressEvent(86)
-                    elseif questprogress == 6 then
+                    elseif questProgress == 6 and not player:hasItem(xi.items.WIND_PENDULUM) then
                         return quest:event(87)
                     else
-                        return event(88)
+                        return quest:event(88)
                     end
                 end,
+            },
 
                 onEventFinish =
                 {
                     [86] = function(player, csid, option, npc)
-                        npcUtil.giveItem(xi.items.WIND_PENDULUM)
+                        npcUtil.giveItem(player, xi.items.WIND_PENDULUM)
                         quest:setVar(player, 'Prog', 6)
                     end,
 
                     [87] = function(player, csid, option, npc)
-                        npcUtil.giveItem(xi.items.WIND_PENDULUM)
+                        npcUtil.giveItem(player, xi.items.WIND_PENDULUM)
                     end
-                }
-            }
+                },
         },
 
         [xi.zone.CLOISTER_OF_GALES] =
@@ -187,7 +186,7 @@ quest.sections =
                 end
             },
         },
-    }
-
+    },
 }
+
 return quest

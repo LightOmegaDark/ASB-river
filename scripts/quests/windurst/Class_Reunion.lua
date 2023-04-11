@@ -1,18 +1,22 @@
------------------------------------------------
---  Class Reunion
+--------------------------------------------------------------------------------------
+-- Class Reunion
 -- !addquest 2 82
 -- Koru-Moru !pos -120 -6 124 239
 --
------------------------------------------------
+--------------------------------------------------------------------------------------
 require('scripts/globals/items')
-require("scripts/globals/keyitems")
 require('scripts/globals/npc_util')
+require('scripts/globals/keyitems')
 require('scripts/globals/quests')
-require("scripts/globals/status")
+require('scripts/globals/zone')
+require('scripts/globals/status')
 require('scripts/globals/interaction/quest')
+local IDs = require('scripts/zones/WINDURST_WALLS/IDs')
+local IDs2 = require('scripts/zones/WINDURST_WATERS/IDs')
+local IDs3 = require('scripts/zones/CLOISTER_OF_FROST/IDs')
 -----------------------------------------------
-
 local quest = Quest:new(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CLASS_REUNION)
+--------------------------------------------------------------------------------------
 
 quest.reward =
 {
@@ -27,33 +31,24 @@ quest.sections =
     {
         check = function(player, status, vars)
             return status == QUEST_AVAILABLE and
-                player:getMainJob() == xi.jobs.SMN and
                 player:getMainLvl() >= xi.settings.main.AF2_QUEST_LEVEL and
+                player:getMainJob() == xi.job.SMN and
+                not quest:getMustZone(player) and
                 player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.THE_PUPPET_MASTER) == QUEST_COMPLETE
         end,
 
         [xi.zone.WINDURST_WALLS] =
         {
-            ['_6n2'] =
-            {
+            ['_6n2'] = quest:progressEvent(413),
 
-                onTrigger = function(player, npc)
-                    if player:getVar("Quest[2][82]Prog") == 0 then
-                        return quest:progressEvent(413)
-                    elseif player:getVar("Quest[2][82]Prog") == 1 then
-                        return event(403)
-                    end
-                end
-            },
-
-            onEventFinish =
-            {
-                [413] = function(player, csid, option, npc)
+                onEventFinish =
+                {
+                    [413] = function(player, csid, option, npc)
                         quest:begin(player)
                         npcUtil.giveKeyItem(player, xi.ki.CARBUNCLES_TEAR)
                         quest:setVar(player, 'Prog', 1)
-                end,
-            },
+                    end
+                },
         },
     },
 
@@ -66,6 +61,7 @@ quest.sections =
 
         [xi.zone.WINDURST_WALLS] =
         {
+
             ['Koru-Moru'] =
             {
                 onTrigger = function(player, npc)
@@ -75,20 +71,14 @@ quest.sections =
                         return quest:progressEvent(412)
                     elseif questProgress == 2 then
                         return quest:progressEvent(414)
-                    elseif questProgress == 6 then
-                        return quest:event(410)
                     end
                 end,
 
                 onTrade = function(player, npc, trade)
-                    local questProgress = quest:getVar(player, 'Prog')
-
-                    if questProgress == 2 then
-                        if npcUtil.tradeHasExactly(trade, xi.items.ASTRAGALOS) then
-                            return quest:progressEvent(407)
-                        end
+                    if npcUtil.tradeHasExactly(trade, xi.items.ASTRAGALOS) then
+                        return quest:progressEvent(407)
                     end
-                end
+                end,
             },
 
             ['Shantotto'] =
@@ -96,28 +86,27 @@ quest.sections =
                 onTrigger = function(player, npc)
                     local questProgress = quest:getVar(player, 'Prog')
 
-                    if questProgress >= 2 then
-                        quest:event(409)
+                   if questProgress == 3 then
+                        return quest:event(409)
                     end
-                end
+                end,
             },
 
             onEventFinish =
             {
                 [412] = function(player, csid, option, npc)
-                    player:delKeyItem(xi.ki.CARBUNCLES_TEAR)
+                    player:delKeyItem(player, xi.ki.CARBUNCLES_TEAR)
+                    player:messageSpecial(ID.text.LOST_KEYITEM, xi.ki.CARBUNCLES_TEAR)
                     quest:setVar(player, 'Prog', 2)
                 end,
 
                 [407] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 3)
-                    player:confirmTrade()
                 end,
 
                 [410] = function(player, csid, option, npc)
                     quest:complete(player)
-                end
-
+                end,
             }
         },
 
@@ -128,10 +117,10 @@ quest.sections =
                 onTrigger = function(player, npc)
                     local questProgress = quest:getVar(player, 'Prog')
 
-                    if questProgress >= 2 then
-                        quest:event(817)
+                    if questProgress == 3 then
+                       return quest:event(817)
                     end
-                end
+                end,
             },
 
             ['Furakku-Norakku'] =
@@ -139,11 +128,11 @@ quest.sections =
                 onTrigger = function(player, npc)
                     local questProgress = quest:getVar(player, 'Prog')
 
-                    if questProgress >= 2 then
-                        quest:event(816)
+                    if questProgress == 3 then
+                        return quest:event(816)
                     end
-                end
-            }
+                end,
+            },
         },
 
         [xi.zone.NORTHERN_SAN_DORIA] =
@@ -154,25 +143,24 @@ quest.sections =
                     local questProgress = quest:getVar(player, 'Prog')
 
                     if questProgress == 3 then
-                        quest:progressEvent(713)
+                        return quest:progressEvent(713)
                     elseif questProgress == 4 and not player:hasItem(xi.items.ICE_PENDULUM) then
-                        quest:event(712)
+                        return quest:event(712)
                     end
-                end
+                end,
             },
 
             onEventFinish =
             {
                 [713] = function(player, csid, option, npc)
-                    npcUtil.giveItem(xi.items.ICE_PENDULUM)
-                    player:setVar(player, 'Prog', 4)
+                    npcUtil.giveItem(player, xi.items.ICE_PENDULUM)
+                    quest:setVar(player, 'Prog', 4)
                 end,
 
                 [712] = function(player, csid, option, npc)
-                    npcUtil.giveItem(xi.items.ICE_PENDULUM)
-                    player:setVar(player, 'Prog', 5)
+                    npcUtil.giveItem(player, xi.items.ICE_PENDULUM)
                 end
-            }
+            },
         },
 
         [xi.zone.CLOISTER_OF_FROST] =
@@ -180,12 +168,44 @@ quest.sections =
             onEventFinish =
             {
                 [32001] = function(player, csid, option, npc)
-                    if player:getLocalVar('battlefieldWin') == 577 and questProgress == 4 then
-                        quest:setVar(player, 'Prog', 6)
+                    if
+                        player:getLocalVar('battlefieldWin') == 577 and
+                        quest:getVar(player, 'Prog') == 4
+                    then
+                        quest:setVar(player, 'Prog', 5)
                     end
-                end
+                end,
             },
         },
+    },
+
+
+    {
+        check = function(player, status, vars)
+            return status == QUEST_COMPLETED
+        end,
+
+
+        [xi.zone.WINDURST_WALLS] =
+        {
+            ['Koru-Moru'] =
+            {
+                onTrigger = function(player, npc)
+                    local questProgress = quest:getVar(player, 'Prog')
+
+                    if questProgress == 6 then
+                        return quest:event(410)
+                    end
+                end,
+
+                onEventFinish =
+                {
+                    [410] = function(player, csid, option, npc)
+                        quest:setVar(player, 'Prog', 0)
+                    end
+                }
+            }
+        }
     }
 }
 

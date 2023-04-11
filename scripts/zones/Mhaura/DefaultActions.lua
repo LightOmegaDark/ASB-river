@@ -5,6 +5,7 @@ return {
     ['Kotan-Purutan'] = { event = 140 },
     ['Numi_Adaligo']  = { event = 50 },
     ['Phoochuchu']    = { event = 300 },
+    ['Ripapa']        = { event = 10020},
     ['Rycharde']      = { event = 69 },
     ['Take']          = { event = 59 },
     ['Tonasav']       = { event = 372 },
