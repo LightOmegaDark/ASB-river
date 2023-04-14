@@ -205,12 +205,10 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
         return false;
     }
 
-    uint8 mLvl = PSpirit->GetMLevel();
-    switch (PSpirit->m_PetID)
-    {
-        case PETID_LIGHTSPIRIT:
+    if(PSpirit->m_PetID == PETID_LIGHTSPIRIT) {
+
             CBattleEntity* PLowest       = nullptr;
-            uint8          numUnderThreshold = NULL;
+            uint8          numUnderThreshold = 0;
             uint8          choice        = 2;
             uint16         chosenSpell   = static_cast<uint16>(SpellID::Cure);
 
@@ -247,18 +245,31 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
                 case 2:
                     if (PSpirit->m_buffSpells.size() > 0)
                     {
-                        PSpirit->PMaster->ForAlliance([&](CBattleEntity* PMember)
+                        chosenSpell = DetermineNextBuff(*PSpirit->PMaster);
+                        if(chosenSpell != 0)
                         {
+                            PLowest = PSpirit->PMaster;
+                        }
+                        if(chosenSpell == 0)
+                        {
+                            PSpirit->PMaster->ForAlliance([&](CBattleEntity* PMember)
+                            {
+                                if (PMember != nullptr && PSpirit->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(PSpirit->loc.p, PMember->loc.p) <= 20 &&
+                                    !PMember->isDead() && !PMember->StatusEffectContainer->HasStatusEffect(EFFECT_INVISIBLE))
+                                    {
 
-                        });
-                        chosenSpell = xirand::GetRandomElement(PSpirit->m_buffSpells);
+                                    }
+                            });
+                        }
+
+                        if(chosenSpell != 0)
+                        {
+                             CastIdleSpell(static_cast<SpellID>(chosenSpell), PLowest->targid);
+                             return true;
+                        }
                     }
                     break;
             }
-            break;
-
-        default:
-            break;
     }
 
     return false;
@@ -615,7 +626,88 @@ uint16 CSpiritController::DetermineHighestSpellFromMP(std::vector<uint16> &spell
     return static_cast<uint16>(0);
 }
 
+uint16 CSpiritController::DetermineNextBuff(CBattleEntity& target)
+{
+    uint16 protSpell = 0;
+    uint16 shellSpell = 0;
+
+    for(uint16 buff : PSpirit->m_buffSpells)
+    {
+        if( buff >= 43 && buff <= 47 && buff > protSpell)
+            protSpell = buff;
+
+        if( buff >= 48 && buff <= 52 && buff > shellSpell)
+            shellSpell = buff;
+    }
+
+    if(target.StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT))
+    {
+
+        ShowDebug(
+            "Target's Protect Power [%u] vs Spell Multipler [%f]",
+            target.StatusEffectContainer->GetStatusEffect(EFFECT_PROTECT)->GetPower(),
+            CSpell(static_cast<SpellID>(protSpell)).getMultiplier()
+        );
+    }
+    else
+    {
+        ShowDebug(
+            "Casting Spell %u: Spell Multipler [%f]",
+            protSpell,
+            CSpell(static_cast<SpellID>(protSpell)).getMultiplier()
+        );
+    }
+
+
+    // if(target.StatusEffectContainer->HasStatusEffect(EFFECT_SHELL))
+    // {
+
+    //     ShowDebug(
+    //         "Target's Protect Power [%u] vs Spell Multipler [%f]",
+    //         target.StatusEffectContainer->GetStatusEffect(EFFECT_SHELL)->GetPower(),
+    //         CSpell(static_cast<SpellID>(protSpell)).getMultiplier()
+    //     );
+    // }
+    // else
+    // {
+    //     ShowDebug(
+    //         "Casting Spell %u: Spell Multipler [%f]",
+    //         protSpell,
+    //         CSpell(static_cast<SpellID>(protSpell)).getMultiplier()
+    //     );
+    // }
+
+    CLuaSpell(CSpell(protSpell)).getP
+    // Priority #1 - Protect
+    if(
+        !target.StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT) ||
+        (target.StatusEffectContainer->GetStatusEffect(EFFECT_PROTECT)->GetPower() < CSpell(static_cast<SpellID>(protSpell)).getMultiplier() )
+    )
+        return protSpell;
+
+    // Priority #2 - Haste
+    if(
+        PSpirit->GetMLevel() >= 40 &&
+        !target.StatusEffectContainer->HasStatusEffect(EFFECT_HASTE))
+        return 57; // Haste
+
+    // Priority #3 - Regen
+    if( PSpirit->GetMLevel() >= 21 &&
+        !target.StatusEffectContainer->HasStatusEffect(EFFECT_REGEN))
+        return 108; // Regen
+
+    // Priority #4 - Shell
+    if(
+        !target.StatusEffectContainer->HasStatusEffect(EFFECT_SHELL) ||
+        (target.StatusEffectContainer->GetStatusEffect(EFFECT_SHELL)->GetPower() < CSpell(static_cast<SpellID>(shellSpell)).getMultiplier() )
+    )
+        return shellSpell;
+
+    // Light spirit has nothing to cast.
+    return 0;
+}
+
 void CSpiritController::CastIdleSpell(SpellID spellId, uint16 target)
 {
-
+    static_cast<CMobController>(PSpirit).Cast(target, spellId);
 }
