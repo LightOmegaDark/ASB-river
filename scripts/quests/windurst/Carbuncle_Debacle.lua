@@ -63,15 +63,15 @@ quest.sections =
                     local questProgress = quest:getVar(player, 'Prog')
 
                     if questProgress == 1 then
-                        return quest:event(416)
+                        return quest:progressEvent(416)
                     elseif questProgress == 4 then
                         return quest:progressEvent(417)
                     elseif questProgress == 5 then
-                        return quest:progressEvent(418)
+                        return quest:event(418)
                     elseif questProgress == 7 then
                         return quest:progressEvent(419)
                     elseif player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CARBUNCLE_DEBACLE) == QUEST_COMPLETED then
-                        return player:event(420)
+                        return quest:event(420)
                     end
                 end,
             },
@@ -104,7 +104,7 @@ quest.sections =
                     if questProgress == 2 then
                         return quest:progressEvent(10022)
                     elseif questProgress == 3 and not player:hasItem(xi.items.LIGHTNING_PENDULUM) then
-                        return quest:event(10023)
+                        return quest:progressEvent(10023)
                     end
                 end,
             },

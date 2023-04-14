@@ -189,7 +189,7 @@ quest.sections =
                     local questProgress = quest:getVar(player, 'Prog')
 
                     if questProgress == 6 then
-                        return quest:event(410)
+                        return quest:progressEvent(410)
                     end
                 end,
 
