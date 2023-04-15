@@ -43,7 +43,7 @@ protected:
     CBattleEntity* GetLowestThresholdHPMember();
     uint8 GetLowestHPThresholdCountForParty(CBattleEntity& target);
     uint16 DetermineHighestSpellFromMP(std::vector<uint16>& spellList);
-    void CastIdleSpell(SpellID spellId, uint16 target);
+    bool CastIdleSpell(SpellID spellId, uint16 target);
     uint16 DetermineNextBuff(CBattleEntity& target);
 private:
     CPetEntity* const PSpirit;

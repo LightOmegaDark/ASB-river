@@ -210,13 +210,18 @@ bool CSpiritController::TrySpellcast(time_point tick)
                         });
                     }
 
+                    bool spellIsCast;
                     if(chosenSpell != 0)
                     {
-                        CastIdleSpell(static_cast<SpellID>(chosenSpell), PLowest->targid);
-                        // Update the timer based on all factors.
-                        setMagicCooldowns();
-                        return true;
+                        spellIsCast = CastIdleSpell(static_cast<SpellID>(chosenSpell), PLowest->targid);
+
                     }
+                    else
+                    {
+                        spellIsCast = TryCastSpell();
+                    }
+                    setMagicCooldowns();
+                    return spellIsCast;
                 }
                 break;
 
@@ -224,6 +229,8 @@ bool CSpiritController::TrySpellcast(time_point tick)
                 if (PSpirit->m_offensiveSpells.size() > 0)
                 {
                     bool spellIsCast = TryCastSpell();
+
+                    // Update the timer based on all factors.
                     setMagicCooldowns();
                     return spellIsCast;
                 }
@@ -279,16 +286,12 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
 
                         // If there's only one person or the light spirit rolled a Curaga,
                         // but doesn't even have MP for Curaga I.
-                        if(numUnderThreshold == 1 || (useCuraga && PSpirit->health.mp < spell::GetSpell(SpellID::Curaga)->getMPCost()))
+                        if(!useCuraga || (useCuraga && PSpirit->health.mp < spell::GetSpell(SpellID::Curaga)->getMPCost()))
                             chosenSpell = DetermineHighestSpellFromMP(PSpirit->m_healSingleSpells);
 
                         // If the light spirit can't cast anything, then we return.
                         if(chosenSpell == 0) return false;
 
-                        // Otherwise, we cast the chosen spell on the lowest HP Party/Alliance member.
-                        CastIdleSpell(static_cast<SpellID>(chosenSpell), PLowest->targid);
-                        setMagicCooldowns();
-                        return true;
                     }
                     break;
                 case 2:
@@ -322,13 +325,12 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
                     }
                     break;
             }
-
             if(!(chosenSpell == 0 || PLowest == nullptr))
             {
-                CastIdleSpell(static_cast<SpellID>(chosenSpell), PLowest->targid);
+                bool spellIsCast = CastIdleSpell(static_cast<SpellID>(chosenSpell), PLowest->targid);
                 // Update the timer based on all factors.
                 setMagicCooldowns();
-                return true;
+                return spellIsCast;
             }
     }
     // Update the timer based on all factors.
@@ -735,8 +737,9 @@ uint16 CSpiritController::DetermineNextBuff(CBattleEntity& target)
     return 0;
 }
 
-void CSpiritController::CastIdleSpell(SpellID spellId, uint16 target)
+bool CSpiritController::CastIdleSpell(SpellID spellId, uint16 target)
 {
     if(CanCastSpells())
-        static_cast<CMobController>(PSpirit).Cast(target, spellId);
+        return static_cast<CMobController>(PSpirit).Cast(target, spellId);
+    return false;
 }
