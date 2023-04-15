@@ -12,6 +12,7 @@ CSpiritController::CSpiritController(CPetEntity* PSpirit)
 : CPetController(PSpirit)
 , PSpirit(PSpirit)
 {
+    lastChoice = 1;
 }
 
 void CSpiritController::Tick(time_point tick)
@@ -102,8 +103,12 @@ void CSpiritController::setMagicCooldowns()
 
     // Light Spirit idle spellcasting time is halved if the Light Spirit is not engaged.
     // Applies only to buffs, so we'll need to do another check elsewhere.
-    if(PSpirit->m_PetID == PETID_LIGHTSPIRIT && !PSpirit->PAI->IsEngaged())
+    if(PSpirit->m_PetID == PETID_LIGHTSPIRIT && !PSpirit->PAI->IsEngaged() && lastChoice == 2)
+    {
+        ShowDebug("In Buffing Mode! Spirit timer cooldown reduced by half!")
         castTime /= 2;
+    }
+    ShowDebug("Time until next spell: %u", castTime);
 
     // TODO: Make the cast time update on "Assault"/"Release".
     PSpirit->m_magicCooldown = std::chrono::milliseconds(castTime);
@@ -126,69 +131,103 @@ bool CSpiritController::TrySpellcast(time_point tick)
     else if (PSpirit->m_PetID == PETID_LIGHTSPIRIT)
     {
         CBattleEntity* PLowest       = nullptr;
-        float          lowestPercent = 1.f;
-        uint8          choice        = xirand::GetRandomNumber(2, 4);
+        uint8          numUnderThreshold = 0;
         uint16         chosenSpell   = static_cast<uint16>(SpellID::Cure);
 
-        // clang-format off
-        PSpirit->PMaster->ForParty([&](CBattleEntity* PMember)
+        PLowest = GetLowestThresholdHPMember();
+        if(PLowest != nullptr)
         {
-            if (PMember != nullptr && PSpirit->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(PSpirit->loc.p, PMember->loc.p) <= 20 &&
-                !PMember->isDead())
-            {
-                float memberPercent = PMember->health.hp / PMember->health.maxhp;
-                if (PLowest == nullptr ||
-                    (lowestPercent >= memberPercent))
-                {
-                    PLowest = PMember;
-                    lowestPercent = memberPercent;
-                }
-            }
-        });
-        // clang-format on
-
-        if (lowestPercent < 0.5f) // 50% HP
+            lastChoice = 1;
+        }
+        else
         {
             uint8 chance = xirand::GetRandomNumber(100);
-            if (chance <= 20)
+
+            if (chance <= 25)
             {
-                choice = 1;
-            }
-            else if (chance <= 60)
-            {
-                choice = 2;
+                lastChoice = 2;
             }
             else
             {
-                choice = 3;
+                lastChoice = 3;
             }
         }
 
-        switch (choice)
+        switch (lastChoice)
         {
             case 1:
-                if (PSpirit->m_healSingleSpells.size() > 0)
+                if (PSpirit->m_healSingleSpells.size() > 0 || PSpirit->m_healAOESpells.size() > 0)
                 {
-                    chosenSpell = xirand::GetRandomElement(PSpirit->m_healSingleSpells);
+                    numUnderThreshold = GetLowestHPThresholdCountForParty(*PLowest);
+
+                    // The light spirit has a bias towards using Curaga, even when the master is alone.
+                    bool useCuraga = xirand::GetRandomNumber(10) <= 6;
+
+                    // If more than one party member is at low health or we rolled a Curaga.
+                    if(numUnderThreshold > 1 || useCuraga)
+                        chosenSpell = DetermineHighestSpellFromMP(PSpirit->m_healAOESpells);
+
+                    // If there's only one person or the light spirit rolled a Curaga,
+                    // but doesn't even have MP for Curaga I.
+                    if(numUnderThreshold == 1 || (useCuraga && PSpirit->health.mp < spell::GetSpell(SpellID::Curaga)->getMPCost()))
+                        chosenSpell = DetermineHighestSpellFromMP(PSpirit->m_healSingleSpells);
+
+                    // If the light spirit can't cast anything, then we return.
+                    if(chosenSpell == 0) return false;
+
+                    // Otherwise, we cast the chosen spell on the lowest HP Party/Alliance member.
+                    CastIdleSpell(static_cast<SpellID>(chosenSpell), PLowest->targid);
+                    setMagicCooldowns();
+                    return true;
                 }
                 break;
             case 2:
-                if (PSpirit->m_buffSpells.size() > 0)
+            if (PSpirit->m_buffSpells.size() > 0)
                 {
-                    chosenSpell = xirand::GetRandomElement(PSpirit->m_buffSpells);
+                    chosenSpell = DetermineNextBuff(*PSpirit->PMaster);
+
+                    // Prioritize the master first.
+                    // TODO: Add a raycast check to prioritize people in raycast over master.
+
+                    if(chosenSpell != 0)
+                    {
+                        PLowest = PSpirit->PMaster;
+                    }
+                    if(chosenSpell == 0)
+                    {
+                        PSpirit->PMaster->ForAlliance([&](CBattleEntity* PMember)
+                        {
+                            if (PMember != nullptr && PSpirit->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(PSpirit->loc.p, PMember->loc.p) <= 20 &&
+                                !PMember->isDead() && !PMember->StatusEffectContainer->HasStatusEffect(EFFECT_INVISIBLE))
+                                {
+                                    if(chosenSpell == 0 && PLowest == nullptr)
+                                    {
+                                        chosenSpell = DetermineNextBuff(*PMember);
+                                        if(chosenSpell > 0)
+                                            PLowest = PMember;
+                                    }
+                                }
+                        });
+                    }
+
+                    if(chosenSpell != 0)
+                    {
+                        CastIdleSpell(static_cast<SpellID>(chosenSpell), PLowest->targid);
+                        // Update the timer based on all factors.
+                        setMagicCooldowns();
+                        return true;
+                    }
                 }
                 break;
+
             case 3:
                 if (PSpirit->m_offensiveSpells.size() > 0)
                 {
-                    chosenSpell = xirand::GetRandomElement(PSpirit->m_offensiveSpells);
+                    bool spellIsCast = TryCastSpell();
+                    setMagicCooldowns();
+                    return spellIsCast;
                 }
                 break;
-        }
-        if (CanCastSpells())
-        {
-            CastSpell(static_cast<SpellID>(chosenSpell));
-            return true;
         }
     }
 
@@ -209,7 +248,6 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
 
             CBattleEntity* PLowest       = nullptr;
             uint8          numUnderThreshold = 0;
-            uint8          choice        = 2;
             uint16         chosenSpell   = static_cast<uint16>(SpellID::Cure);
 
             // clang-format off
@@ -217,43 +255,50 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
             PLowest = GetLowestThresholdHPMember();
             if(PLowest != nullptr)
             {
-                ShowDebug("Member with Lowest HP is %s [HPP: %i]", PLowest->GetName(), PLowest->GetHPP());
-                choice = 1;
-                numUnderThreshold = GetLowestHPThresholdCountForParty(*PLowest);
+                lastChoice = 1;
             }
             else
             {
-                ShowDebug("Everyone is in tip-top shape!");
+                lastChoice = 2;
             }
             // clang-format on
 
-            switch (choice)
+            switch (lastChoice)
             {
                 case 1:
-                    ShowDebug("Oh no! Someone's at low health!");
                     if (PSpirit->m_healSingleSpells.size() > 0 || PSpirit->m_healAOESpells.size() > 0)
                     {
-                        // TODO: We should make it so that Light Spirit could prefer using Curaga spells even when a single party/alliance member is at yellow HP.
-                        if(numUnderThreshold > 1)
+                        numUnderThreshold = GetLowestHPThresholdCountForParty(*PLowest);
+
+                        // The light spirit has a bias towards using Curaga, even when the master is alone.
+                        bool useCuraga = xirand::GetRandomNumber(10) <= 6;
+
+                        // If more than one party member is at low health or we rolled a Curaga.
+                        if(numUnderThreshold > 1 || useCuraga)
                             chosenSpell = DetermineHighestSpellFromMP(PSpirit->m_healAOESpells);
-                        else
+
+                        // If there's only one person or the light spirit rolled a Curaga,
+                        // but doesn't even have MP for Curaga I.
+                        if(numUnderThreshold == 1 || (useCuraga && PSpirit->health.mp < spell::GetSpell(SpellID::Curaga)->getMPCost()))
                             chosenSpell = DetermineHighestSpellFromMP(PSpirit->m_healSingleSpells);
 
-                        // If the spirit doesn't have the MP to cast a spell, don't do anything.
+                        // If the light spirit can't cast anything, then we return.
                         if(chosenSpell == 0) return false;
 
-                         if (CanCastSpells())
-                        {
-                            CastIdleSpell(static_cast<SpellID>(chosenSpell), PLowest->targid);
-                            return true;
-                        }
+                        // Otherwise, we cast the chosen spell on the lowest HP Party/Alliance member.
+                        CastIdleSpell(static_cast<SpellID>(chosenSpell), PLowest->targid);
+                        setMagicCooldowns();
+                        return true;
                     }
                     break;
                 case 2:
-                    ShowDebug("Someone needs a buff!");
                     if (PSpirit->m_buffSpells.size() > 0)
                     {
                         chosenSpell = DetermineNextBuff(*PSpirit->PMaster);
+
+                        // Prioritize the master first.
+                        // TODO: Add a raycast check to prioritize people in raycast over master.
+
                         if(chosenSpell != 0)
                         {
                             PLowest = PSpirit->PMaster;
@@ -265,21 +310,29 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
                                 if (PMember != nullptr && PSpirit->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(PSpirit->loc.p, PMember->loc.p) <= 20 &&
                                     !PMember->isDead() && !PMember->StatusEffectContainer->HasStatusEffect(EFFECT_INVISIBLE))
                                     {
-
+                                        if(chosenSpell == 0 && PLowest == nullptr)
+                                        {
+                                            chosenSpell = DetermineNextBuff(*PMember);
+                                            if(chosenSpell > 0)
+                                                PLowest = PMember;
+                                        }
                                     }
                             });
-                        }
-
-                        if(chosenSpell != 0)
-                        {
-                             CastIdleSpell(static_cast<SpellID>(chosenSpell), PLowest->targid);
-                             return true;
                         }
                     }
                     break;
             }
-    }
 
+            if(!(chosenSpell == 0 || PLowest == nullptr))
+            {
+                CastIdleSpell(static_cast<SpellID>(chosenSpell), PLowest->targid);
+                // Update the timer based on all factors.
+                setMagicCooldowns();
+                return true;
+            }
+    }
+    // Update the timer based on all factors.
+    setMagicCooldowns();
     return false;
 }
 
@@ -322,7 +375,7 @@ void CSpiritController::LoadLightSpiritSpellList()
     {
         PSpirit->m_buffSpells.push_back(static_cast<uint16>(SpellID::Protect_III));
     }
-    if (mLvl >= 41 && mLvl < 61)
+    if (mLvl >= 41)
     {
         PSpirit->m_healSingleSpells.push_back(static_cast<uint16>(SpellID::Cure_IV));
     }
@@ -342,7 +395,7 @@ void CSpiritController::LoadLightSpiritSpellList()
     {
         PSpirit->m_offensiveSpells.push_back(static_cast<uint16>(SpellID::Dia_II));
     }
-    if (mLvl >= 31 && mLvl < 71)
+    if (mLvl >= 31)
     {
         PSpirit->m_healAOESpells.push_back(static_cast<uint16>(SpellID::Curaga_II));
     }
@@ -358,7 +411,7 @@ void CSpiritController::LoadLightSpiritSpellList()
     {
         PSpirit->m_buffSpells.push_back(static_cast<uint16>(SpellID::Regen));
     }
-    if (mLvl >= 21 && mLvl < 41)
+    if (mLvl >= 21)
     {
         PSpirit->m_healSingleSpells.push_back(static_cast<uint16>(SpellID::Cure_III));
     }
@@ -366,11 +419,11 @@ void CSpiritController::LoadLightSpiritSpellList()
     {
         PSpirit->m_buffSpells.push_back(static_cast<uint16>(SpellID::Shell));
     }
-    if (mLvl >= 16 && mLvl < 51)
+    if (mLvl >= 16)
     {
         PSpirit->m_healAOESpells.push_back(static_cast<uint16>(SpellID::Curaga));
     }
-    if (mLvl >= 11 && mLvl < 41)
+    if (mLvl >= 11)
     {
         PSpirit->m_healSingleSpells.push_back(static_cast<uint16>(SpellID::Cure_II));
     }
@@ -382,7 +435,7 @@ void CSpiritController::LoadLightSpiritSpellList()
     {
         PSpirit->m_offensiveSpells.push_back(static_cast<uint16>(SpellID::Banish));
     }
-    if (mLvl >= 1 && mLvl < 21)
+    if (mLvl >= 1)
     {
         PSpirit->m_healSingleSpells.push_back(static_cast<uint16>(SpellID::Cure));
     }
@@ -620,14 +673,22 @@ uint8 CSpiritController::GetLowestHPThresholdCountForParty(CBattleEntity& target
 uint16 CSpiritController::DetermineHighestSpellFromMP(std::vector<uint16> &spellList)
 {
     for(
-        std::vector<uint16>::reverse_iterator spellIterator = spellList.rbegin();
-        spellIterator != spellList.rend();
+        std::vector<uint16>::iterator spellIterator = spellList.begin();
+        spellIterator != spellList.end();
         ++spellIterator
     ) {
-        CSpell* spell = new CSpell(static_cast<SpellID>(*spellIterator));
+        CSpell* spell = spell::GetSpell(static_cast<SpellID>(*spellIterator));
         uint16 spellMPCost = spell->getMPCost();
+        ShowDebug("Checking spell cost for %s[%u,%u] against current Spirit MP: %u vs %u/%u",
+            spell->getName(),
+            *spellIterator,
+            static_cast<SpellID>(*spellIterator),
+            spell->getMPCost(),
+            PSpirit->health.mp,
+            PSpirit->health.maxmp);
         if(static_cast<CBattleEntity*>(PSpirit)->health.mp >= spellMPCost)
         {
+            ShowDebug("%s can be cast!", spell->getName());
             return static_cast<uint16>(*spellIterator);
         }
     }
@@ -647,65 +708,26 @@ uint16 CSpiritController::DetermineNextBuff(CBattleEntity& target)
         if( buff >= 48 && buff <= 52 && buff > shellSpell)
             shellSpell = buff;
     }
-    bool hasProt = target.StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT);
-    bool hasRegen = target.StatusEffectContainer->HasStatusEffect(EFFECT_REGEN);
-    bool hasShell = target.StatusEffectContainer->HasStatusEffect(EFFECT_SHELL);
-    bool hasHaste = target.StatusEffectContainer->HasStatusEffect(EFFECT_HASTE);
-
-    // Negative if the highest protect/shell that can be cast is of a higher tier than
-    // what's on the target.
-    int dProt = hasProt ? (target.StatusEffectContainer->GetStatusEffect(EFFECT_PROTECT)->GetTier() + (static_cast<uint16>(SpellID::Protect) - 1)) - protSpell : -1;
-    int dShell = hasShell ? (target.StatusEffectContainer->GetStatusEffect(EFFECT_SHELL)->GetTier() + (static_cast<uint16>(SpellID::Shell) - 1)) - shellSpell : -1;
-
-    if(target.StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT))
-    {
-
-        ShowDebug(
-            "Target Protect Tier [%u], dProt [%i]",
-            target.StatusEffectContainer->GetStatusEffect(EFFECT_PROTECT)->GetTier(),
-            dProt
-        );
-    }
-    else
-    {
-        ShowDebug(
-            "Casting Spell %u",
-            protSpell
-        );
-    }
-
-
-    if(target.StatusEffectContainer->HasStatusEffect(EFFECT_SHELL))
-    {
-
-        ShowDebug(
-            "Target's Protect Power [%u] vs Effect Power [%u]",
-            target.StatusEffectContainer->GetStatusEffect(EFFECT_SHELL)->GetTier(),
-            protSpell - (static_cast<uint16>(SpellID::Protect) -1)
-        );
-    }
-    else
-    {
-        ShowDebug(
-            "Casting Spell %u: Spell Multipler [%f]",
-            protSpell,
-            CSpell(static_cast<SpellID>(protSpell)).getMultiplier()
-        );
-    }
 
     // Priority #1 - Protect
+    bool hasProt = target.StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT);
+    int dProt = hasProt ? (target.StatusEffectContainer->GetStatusEffect(EFFECT_PROTECT)->GetTier() + (static_cast<uint16>(SpellID::Protect) - 1)) - protSpell : -1;
     if( !hasProt || dProt < 0 )
         return protSpell;
 
     // Priority #2 - Haste
+    bool hasHaste = target.StatusEffectContainer->HasStatusEffect(EFFECT_HASTE);
     if( PSpirit->GetMLevel() >= 40 && !hasHaste )
-        return 57; // Haste
+        return 57U; // Haste
 
     // Priority #3 - Regen
+    bool hasRegen = target.StatusEffectContainer->HasStatusEffect(EFFECT_REGEN);
     if( PSpirit->GetMLevel() >= 21 && !hasRegen )
-        return 108; // Regen
+        return 108U; // Regen
 
     // Priority #4 - Shell
+    bool hasShell = target.StatusEffectContainer->HasStatusEffect(EFFECT_SHELL);
+    int dShell = hasShell ? (target.StatusEffectContainer->GetStatusEffect(EFFECT_SHELL)->GetTier() + (static_cast<uint16>(SpellID::Shell) - 1)) - shellSpell : -1;
     if( !hasShell || dShell < 0 )
         return shellSpell;
 
@@ -715,5 +737,6 @@ uint16 CSpiritController::DetermineNextBuff(CBattleEntity& target)
 
 void CSpiritController::CastIdleSpell(SpellID spellId, uint16 target)
 {
-    static_cast<CMobController>(PSpirit).Cast(target, spellId);
+    if(CanCastSpells())
+        static_cast<CMobController>(PSpirit).Cast(target, spellId);
 }
