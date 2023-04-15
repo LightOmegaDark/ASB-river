@@ -105,10 +105,8 @@ void CSpiritController::setMagicCooldowns()
     // Applies only to buffs, so we'll need to do another check elsewhere.
     if(PSpirit->m_PetID == PETID_LIGHTSPIRIT && !PSpirit->PAI->IsEngaged() && lastChoice == 2)
     {
-        ShowDebug("In Buffing Mode! Spirit timer cooldown reduced by half!")
         castTime /= 2;
     }
-    ShowDebug("Time until next spell: %u", castTime);
 
     // TODO: Make the cast time update on "Assault"/"Release".
     PSpirit->m_magicCooldown = std::chrono::milliseconds(castTime);
