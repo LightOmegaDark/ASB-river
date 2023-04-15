@@ -96,7 +96,7 @@ quest.sections =
         {
             ['Nanaa_Mihgo'] =
             {
-                onTrigger = function (player, npc)
+                onTrigger = function(player, npc)
                     return quest:progressEvent(98)
                 end
             },
@@ -125,7 +125,7 @@ quest.sections =
             onEventFinish =
             {
                 [100] = function(player, csid, option, npc)
-                   return quest:setVar(player, "Prog", 2)
+                    return quest:setVar(player, "Prog", 2)
                 end,
             },
         },
@@ -144,11 +144,11 @@ quest.sections =
         {
             ['Varun'] =
             {
-                onTrigger = function (player, npc)
+                onTrigger = function(player, npc)
                     return quest:progressEvent(101, { [1] = xi.items.SHARP_STONE })
                 end,
 
-                onTrade = function (player, npc, trade)
+                onTrade = function(player, npc, trade)
                     if npcUtil.tradeHasExactly(trade, xi.items.SHARP_STONE) then
                         return quest:progressEvent(102, { [0] = 2100 })
                     end
@@ -169,7 +169,7 @@ quest.sections =
         {
             ['Mythril_Seam'] =
             {
-                onTrade = function (player, npc, trade)
+                onTrade = function(player, npc, trade)
                     local lastTrade = player:getCharVar("[HELM]Last_Trade")
                     if os.time() > lastTrade + 4 then
                         if
@@ -219,7 +219,7 @@ quest.sections =
         {
             ['Nanaa_Mihgo'] =
             {
-                onTrigger = function (player, npc)
+                onTrigger = function(player, npc)
                     return quest:event(99):replaceDefault()
                 end
             },

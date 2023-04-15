@@ -2,6 +2,7 @@
 -- (Harvesting) Pashhow Marshlands
 -----------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/items")
 local customHelm = require("modules/custom/content/custom_helm")
 -----------------------------------
 local m = Module:new("harvesting_pashhow")
