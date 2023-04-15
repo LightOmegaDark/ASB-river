@@ -163,8 +163,8 @@ bool CSpiritController::TrySpellcast(time_point tick)
                 {
                     numUnderThreshold = GetLowestHPThresholdCountForParty(*PLowest);
 
-                    // The light spirit has a bias towards using Curaga, even when the master is alone.
-                    bool useCuraga = xirand::GetRandomNumber(10) <= 6;
+                    // The light spirit still has a chance to use curaga, even when only one user is affected.
+                    bool useCuraga = xirand::GetRandomNumber(10) <= 3;
 
                     // If more than one party member is at low health or we rolled a Curaga.
                     if(numUnderThreshold > 1 || useCuraga)
@@ -280,8 +280,8 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
                     {
                         numUnderThreshold = GetLowestHPThresholdCountForParty(*PLowest);
 
-                        // The light spirit has a bias towards using Curaga, even when the master is alone.
-                        bool useCuraga = xirand::GetRandomNumber(10) <= 6;
+                        // The light spirit still has a chance to use curaga, even when only one user is affected.
+                        bool useCuraga = xirand::GetRandomNumber(10) <= 3;
 
                         // If more than one party member is at low health or we rolled a Curaga.
                         if(numUnderThreshold > 1 || useCuraga)
