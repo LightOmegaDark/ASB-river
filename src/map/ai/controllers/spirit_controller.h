@@ -23,7 +23,6 @@ public:
     }
 
 protected:
-    uint16 spiritCastTimer;
     uint8 lastChoice;
     virtual void Tick(time_point tick) override;
     virtual void LoadLightSpiritSpellList();

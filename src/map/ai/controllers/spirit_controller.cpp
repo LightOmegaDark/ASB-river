@@ -2,6 +2,7 @@
 
 #include "../../../common/utils.h"
 #include "../../entities/petentity.h"
+#include "../../modifier.h"
 #include "../../status_effect_container.h"
 #include "../../utils/battleutils.h"
 #include "../../utils/petutils.h"
@@ -88,17 +89,21 @@ void CSpiritController::setMagicCooldowns()
 {
     uint32 castTime = ((45000 + (GetSMNSkillReduction() / 3)) + GetDayWeatherBonus());
 
-    if (PSpirit->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_ASTRAL_FLOW))
+    // Reduce cast delay when under effect of Astral Flow
+    if (PSpirit->PMaster && PSpirit->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_ASTRAL_FLOW))
     {
         castTime -= 5000;
     }
 
-    CItemEquipment* legSlotItem = static_cast<CCharEntity*>(PSpirit->PMaster)->getEquip(SLOT_LEGS);
-
-    // Summoner's Spats & Summoner's Spats +1
-    if (legSlotItem && (legSlotItem->getID() == 15131 || legSlotItem->getID() == 15594))
+    if (auto PMaster = dynamic_cast<CCharEntity*>(PSpirit->PMaster))
     {
-        castTime -= 5000;
+        auto legSlotItem = PMaster->getEquip(SLOT_LEGS);
+
+        // Summoner's Spats & Summoner's Spats +1
+        if (legSlotItem && legSlotItem->getModifier(Mod::SPIRIT_SPELLCAST_DELAY))
+        {
+            castTime -= (legSlotItem->getModifier(Mod::SPIRIT_SPELLCAST_DELAY) * 1000);
+        }
     }
 
     // Light Spirit idle spellcasting time is halved if the Light Spirit is not engaged.
@@ -363,7 +368,7 @@ void CSpiritController::LoadLightSpiritSpellList()
     {
         PSpirit->m_buffSpells.push_back(static_cast<uint16>(SpellID::Shell_III));
     }
-    if (mLvl >= 51 && mLvl < 71)
+    if (mLvl >= 51)
     {
         PSpirit->m_healAOESpells.push_back(static_cast<uint16>(SpellID::Curaga_III));
     }
