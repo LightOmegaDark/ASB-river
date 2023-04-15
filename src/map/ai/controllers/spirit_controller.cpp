@@ -215,16 +215,23 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
             // clang-format off
             // Light Spirit cures/curagas can target other alliance members.
             PLowest = GetLowestThresholdHPMember();
-            if(PLowest != nullptr) {
+            if(PLowest != nullptr)
+            {
+                ShowDebug("Member with Lowest HP is %s [HPP: %i]", PLowest->GetName(), PLowest->GetHPP());
                 choice = 1;
                 numUnderThreshold = GetLowestHPThresholdCountForParty(*PLowest);
+            }
+            else
+            {
+                ShowDebug("Everyone is in tip-top shape!");
             }
             // clang-format on
 
             switch (choice)
             {
                 case 1:
-                    if (PSpirit->m_healSingleSpells.size() > 0)
+                    ShowDebug("Oh no! Someone's at low health!");
+                    if (PSpirit->m_healSingleSpells.size() > 0 || PSpirit->m_healAOESpells.size() > 0)
                     {
                         // TODO: We should make it so that Light Spirit could prefer using Curaga spells even when a single party/alliance member is at yellow HP.
                         if(numUnderThreshold > 1)
@@ -243,6 +250,7 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
                     }
                     break;
                 case 2:
+                    ShowDebug("Someone needs a buff!");
                     if (PSpirit->m_buffSpells.size() > 0)
                     {
                         chosenSpell = DetermineNextBuff(*PSpirit->PMaster);
@@ -565,10 +573,10 @@ int16 CSpiritController::GetDayWeatherBonus()
 CBattleEntity* CSpiritController::GetLowestThresholdHPMember()
 {
             CBattleEntity* PLowest       = nullptr;
-            float          lowestPercent = 1.f;
+            uint8          lowestPercent = 100;
 
             // The SMN always takes priority over the rest of the alliance.
-            if( PSpirit->PMaster->GetHPP() <= 0.5f)
+            if( PSpirit->PMaster->GetHPP() <= 50 )
             return PSpirit->PMaster;
             // clang-format off
             // Light Spirit cures/curagas can target other alliance members.
@@ -576,9 +584,9 @@ CBattleEntity* CSpiritController::GetLowestThresholdHPMember()
             PSpirit->PMaster->ForAlliance([&](CBattleEntity* PMember)
             {
                 if (PMember != nullptr && PSpirit->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(PSpirit->loc.p, PMember->loc.p) <= 20 &&
-                    !PMember->isDead() && !PMember->StatusEffectContainer->HasStatusEffect(EFFECT_INVISIBLE) && PMember->GetHPP() <= 0.5f)
+                    !PMember->isDead() && !(PMember->StatusEffectContainer->HasStatusEffect(EFFECT_INVISIBLE)) && PMember->GetHPP() <= 0.5f)
                 {
-                    float memberPercent = PMember->health.hp / PMember->health.maxhp;
+                    float memberPercent = PMember->GetHPP();
                     if (PLowest == nullptr ||
                         (lowestPercent >= memberPercent))
                     {
@@ -612,9 +620,9 @@ uint8 CSpiritController::GetLowestHPThresholdCountForParty(CBattleEntity& target
 uint16 CSpiritController::DetermineHighestSpellFromMP(std::vector<uint16> &spellList)
 {
     for(
-        std::vector<uint16>::iterator spellIterator = spellList.end();
-        spellIterator >= spellList.begin();
-        spellIterator--
+        std::vector<uint16>::reverse_iterator spellIterator = spellList.rbegin();
+        spellIterator != spellList.rend();
+        ++spellIterator
     ) {
         CSpell* spell = new CSpell(static_cast<SpellID>(*spellIterator));
         uint16 spellMPCost = spell->getMPCost();
@@ -639,14 +647,41 @@ uint16 CSpiritController::DetermineNextBuff(CBattleEntity& target)
         if( buff >= 48 && buff <= 52 && buff > shellSpell)
             shellSpell = buff;
     }
+    bool hasProt = target.StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT);
+    bool hasRegen = target.StatusEffectContainer->HasStatusEffect(EFFECT_REGEN);
+    bool hasShell = target.StatusEffectContainer->HasStatusEffect(EFFECT_SHELL);
+    bool hasHaste = target.StatusEffectContainer->HasStatusEffect(EFFECT_HASTE);
+
+    // Negative if the highest protect/shell that can be cast is of a higher tier than
+    // what's on the target.
+    int dProt = hasProt ? (target.StatusEffectContainer->GetStatusEffect(EFFECT_PROTECT)->GetTier() + (static_cast<uint16>(SpellID::Protect) - 1)) - protSpell : -1;
+    int dShell = hasShell ? (target.StatusEffectContainer->GetStatusEffect(EFFECT_SHELL)->GetTier() + (static_cast<uint16>(SpellID::Shell) - 1)) - shellSpell : -1;
 
     if(target.StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT))
     {
 
         ShowDebug(
-            "Target's Protect Power [%u] vs Spell Multipler [%f]",
-            target.StatusEffectContainer->GetStatusEffect(EFFECT_PROTECT)->GetPower(),
-            CSpell(static_cast<SpellID>(protSpell)).getMultiplier()
+            "Target Protect Tier [%u], dProt [%i]",
+            target.StatusEffectContainer->GetStatusEffect(EFFECT_PROTECT)->GetTier(),
+            dProt
+        );
+    }
+    else
+    {
+        ShowDebug(
+            "Casting Spell %u",
+            protSpell
+        );
+    }
+
+
+    if(target.StatusEffectContainer->HasStatusEffect(EFFECT_SHELL))
+    {
+
+        ShowDebug(
+            "Target's Protect Power [%u] vs Effect Power [%u]",
+            target.StatusEffectContainer->GetStatusEffect(EFFECT_SHELL)->GetTier(),
+            protSpell - (static_cast<uint16>(SpellID::Protect) -1)
         );
     }
     else
@@ -658,49 +693,20 @@ uint16 CSpiritController::DetermineNextBuff(CBattleEntity& target)
         );
     }
 
-
-    // if(target.StatusEffectContainer->HasStatusEffect(EFFECT_SHELL))
-    // {
-
-    //     ShowDebug(
-    //         "Target's Protect Power [%u] vs Spell Multipler [%f]",
-    //         target.StatusEffectContainer->GetStatusEffect(EFFECT_SHELL)->GetPower(),
-    //         CSpell(static_cast<SpellID>(protSpell)).getMultiplier()
-    //     );
-    // }
-    // else
-    // {
-    //     ShowDebug(
-    //         "Casting Spell %u: Spell Multipler [%f]",
-    //         protSpell,
-    //         CSpell(static_cast<SpellID>(protSpell)).getMultiplier()
-    //     );
-    // }
-
-    CLuaSpell(CSpell(protSpell)).getP
     // Priority #1 - Protect
-    if(
-        !target.StatusEffectContainer->HasStatusEffect(EFFECT_PROTECT) ||
-        (target.StatusEffectContainer->GetStatusEffect(EFFECT_PROTECT)->GetPower() < CSpell(static_cast<SpellID>(protSpell)).getMultiplier() )
-    )
+    if( !hasProt || dProt < 0 )
         return protSpell;
 
     // Priority #2 - Haste
-    if(
-        PSpirit->GetMLevel() >= 40 &&
-        !target.StatusEffectContainer->HasStatusEffect(EFFECT_HASTE))
+    if( PSpirit->GetMLevel() >= 40 && !hasHaste )
         return 57; // Haste
 
     // Priority #3 - Regen
-    if( PSpirit->GetMLevel() >= 21 &&
-        !target.StatusEffectContainer->HasStatusEffect(EFFECT_REGEN))
+    if( PSpirit->GetMLevel() >= 21 && !hasRegen )
         return 108; // Regen
 
     // Priority #4 - Shell
-    if(
-        !target.StatusEffectContainer->HasStatusEffect(EFFECT_SHELL) ||
-        (target.StatusEffectContainer->GetStatusEffect(EFFECT_SHELL)->GetPower() < CSpell(static_cast<SpellID>(shellSpell)).getMultiplier() )
-    )
+    if( !hasShell || dShell < 0 )
         return shellSpell;
 
     // Light spirit has nothing to cast.
