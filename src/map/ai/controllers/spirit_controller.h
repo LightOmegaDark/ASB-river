@@ -7,6 +7,11 @@
 #include "pet_controller.h"
 #include <optional>
 
+struct PMemberTargets
+{
+    CBattleEntity* PLowest;
+    CBattleEntity* PNearest;
+};
 class CSpiritController;
 
 class CSpiritController : public CPetController
@@ -23,7 +28,7 @@ public:
     }
 
 protected:
-    uint8 lastChoice;
+    uint8        lastChoice;
     virtual void Tick(time_point tick) override;
     virtual void LoadLightSpiritSpellList();
     virtual void HandleEnmity() override
@@ -34,16 +39,17 @@ protected:
     }
 
     // We need to be able to reset the Magic cooldown on link, and Assault/Retreat.
-    virtual void setMagicCooldowns();
-    bool  TrySpellcast(time_point tick);
-    bool  TryIdleSpellcast(time_point tick);
-    int16 GetSMNSkillReduction();
-    int16 GetDayWeatherBonus();
-    CBattleEntity* GetLowestThresholdHPMember();
-    uint8 GetLowestHPThresholdCountForParty(CBattleEntity& target);
-    uint16 DetermineHighestSpellFromMP(std::vector<uint16>& spellList);
-    bool CastIdleSpell(SpellID spellId, uint16 target);
-    uint16 DetermineNextBuff(CBattleEntity& target);
+    virtual void   setMagicCooldowns();
+    bool           TrySpellcast(time_point tick);
+    bool           TryIdleSpellcast(time_point tick);
+    int16          GetSMNSkillReduction();
+    int16          GetDayWeatherBonus();
+    PMemberTargets GetBestQualifiedMembers();
+    uint8          GetLowestHPThresholdCountForParty(CBattleEntity& target);
+    uint16         DetermineHighestSpellFromMP(std::vector<uint16>& spellList);
+    bool           CastIdleSpell(SpellID spellId, uint16 target);
+    uint16         DetermineNextBuff(CBattleEntity& target);
+
 private:
     CPetEntity* const PSpirit;
 };
