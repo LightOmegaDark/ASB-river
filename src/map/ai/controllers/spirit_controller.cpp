@@ -119,8 +119,6 @@ void CSpiritController::setMagicCooldowns()
         castTime /= 2;
     }
 
-    ShowDebug("setMagicCooldowns::Next spell will occur in %u ms.", castTime);
-
     PSpirit->m_magicCooldown = std::chrono::milliseconds(castTime);
 }
 
@@ -491,7 +489,6 @@ int16 CSpiritController::GetSMNSkillReduction()
         uint16 skill    = PSpirit->PMaster->GetSkill(SKILL_SUMMONING_MAGIC);
         uint16 maxSkill = battleutils::GetMaxSkill(SKILL_SUMMONING_MAGIC, JOB_SMN, masterLvl);
 
-        ShowDebug("GetSMNSkillReduction::Skill over cap = %i", skill - maxSkill);
         return (maxSkill - skill);
     }
 
@@ -709,6 +706,7 @@ PMemberTargets CSpiritController::GetBestQualifiedMembers()
 
     return qualifiedTargets;
 }
+
 uint8 CSpiritController::GetLowestHPThresholdCountForParty(CBattleEntity& target)
 {
     uint8 numMeetsThreshold = 0;
@@ -736,16 +734,9 @@ uint16 CSpiritController::DetermineHighestSpellFromMP(std::vector<uint16>& spell
     {
         CSpell* spell       = spell::GetSpell(static_cast<SpellID>(*spellIterator));
         uint16  spellMPCost = spell->getMPCost();
-        ShowDebug("Checking spell cost for %s[%u,%u] against current Spirit MP: %u vs %u/%u",
-                  spell->getName(),
-                  *spellIterator,
-                  static_cast<SpellID>(*spellIterator),
-                  spell->getMPCost(),
-                  PSpirit->health.mp,
-                  PSpirit->health.maxmp);
+
         if (static_cast<CBattleEntity*>(PSpirit)->health.mp >= spellMPCost)
         {
-            ShowDebug("%s can be cast!", spell->getName());
             return static_cast<uint16>(*spellIterator);
         }
     }
