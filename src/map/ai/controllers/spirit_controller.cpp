@@ -180,7 +180,7 @@ bool CSpiritController::TrySpellcast(time_point tick)
 
                     // If there's only one person or the light spirit rolled a Curaga,
                     // but doesn't even have MP for Curaga I.
-                    if (numUnderThreshold == 1 || (useCuraga && PSpirit->health.mp < spell::GetSpell(SpellID::Curaga)->getMPCost()))
+                    if (!useCuraga || (useCuraga && PSpirit->health.mp < spell::GetSpell(SpellID::Curaga)->getMPCost()))
                         chosenSpell = DetermineHighestSpellFromMP(PSpirit->m_healSingleSpells);
 
                     // If the light spirit can't cast anything, then we return.
