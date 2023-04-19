@@ -693,7 +693,6 @@ PMemberTargets CSpiritController::GetBestQualifiedMembers()
                     lowestPercent = memberHPP;
                 }
 
-
                 // Check distance.
                 if (curDist < closestPerson && PSpirit->PAI->PathFind && PSpirit->PAI->PathFind->CanSeePoint(PMember->loc.p))
                 {
