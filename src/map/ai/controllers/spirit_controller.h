@@ -26,6 +26,8 @@ public:
     virtual void DoCombatTick(time_point tick) override
     {
     }
+    // We need to be able to reset the Magic cooldown on link, and Assault/Retreat.
+    virtual void setMagicCooldowns();
 
 protected:
     uint8        lastChoice;
@@ -38,8 +40,6 @@ protected:
     {
     }
 
-    // We need to be able to reset the Magic cooldown on link, and Assault/Retreat.
-    virtual void   setMagicCooldowns();
     bool           TrySpellcast(time_point tick);
     bool           TryIdleSpellcast(time_point tick);
     int16          GetSMNSkillReduction();

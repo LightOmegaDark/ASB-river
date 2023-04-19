@@ -2,7 +2,9 @@
 
 #include "../../../common/utils.h"
 #include "../../entities/petentity.h"
+#include "../../mob_modifier.h"
 #include "../../modifier.h"
+
 #include "../../status_effect_container.h"
 #include "../../utils/battleutils.h"
 #include "../../utils/petutils.h"
@@ -39,6 +41,10 @@ void CSpiritController::Tick(time_point tick)
         if (PSpirit->m_PetID == PETID::PETID_LIGHTSPIRIT)
         {
             LoadLightSpiritSpellList();
+
+            // Disable heal/buff on fallback logic.
+            PSpirit->setMobMod(MOBMODIFIER::MOBMOD_BUFF_CHANCE, 0);
+            PSpirit->setMobMod(MOBMODIFIER::MOBMOD_HEAL_CHANCE, 0);
         }
 
         PSpirit->m_LastMagicTime = tick;
@@ -87,7 +93,7 @@ void CSpiritController::Tick(time_point tick)
 
 void CSpiritController::setMagicCooldowns()
 {
-    uint32 castTime = ((45000 + (GetSMNSkillReduction() / 3)) + GetDayWeatherBonus());
+    uint32 castTime = ((45000 + (GetSMNSkillReduction() / 3 * 1000)) + GetDayWeatherBonus());
 
     // Reduce cast delay when under effect of Astral Flow
     if (PSpirit->PMaster && PSpirit->PMaster->StatusEffectContainer->HasStatusEffect(EFFECT_ASTRAL_FLOW))
@@ -113,7 +119,8 @@ void CSpiritController::setMagicCooldowns()
         castTime /= 2;
     }
 
-    // TODO: Make the cast time update on "Assault"/"Release".
+    ShowDebug("setMagicCooldowns::Next spell will occur in %u ms.", castTime);
+
     PSpirit->m_magicCooldown = std::chrono::milliseconds(castTime);
 }
 
@@ -136,7 +143,8 @@ bool CSpiritController::TrySpellcast(time_point tick)
         uint8          numUnderThreshold = 0;
         uint16         chosenSpell       = 0;
         bool           castOnNearest     = false;
-        PMemberTargets qualifiedTargets  = GetBestQualifiedMembers();
+        PMemberTargets qualifiedTargets{ nullptr, nullptr };
+        qualifiedTargets = GetBestQualifiedMembers();
 
         if (qualifiedTargets.PLowest != nullptr)
         {
@@ -188,19 +196,20 @@ bool CSpiritController::TrySpellcast(time_point tick)
             case 2:
                 if (PSpirit->m_buffSpells.size() > 0)
                 {
-                    chosenSpell = DetermineNextBuff(*PSpirit->PMaster);
-
-                    // Prioritize the master first.
                     // Raycast check to prioritize people in raycast over master.
                     if (qualifiedTargets.PNearest != nullptr)
                     {
                         chosenSpell   = DetermineNextBuff(*qualifiedTargets.PNearest);
                         castOnNearest = true;
                     }
+                    // Prioritize the master next.
                     if (chosenSpell == 0)
                     {
-                        qualifiedTargets.PLowest = PSpirit->PMaster;
+                        chosenSpell = DetermineNextBuff(*PSpirit->PMaster);
+                        if (chosenSpell != 0)
+                            qualifiedTargets.PLowest = PSpirit->PMaster;
                     }
+                    // Prioritize anyone else in the party or alliance.
                     if (chosenSpell == 0)
                     {
                         PSpirit->PMaster->ForAlliance([&](CBattleEntity* PMember)
@@ -218,9 +227,21 @@ bool CSpiritController::TrySpellcast(time_point tick)
                     }
 
                     bool spellIsCast;
+                    // At this point, if chosenSpell is 0, everyone in the alliance is buffed.
                     if (chosenSpell != 0)
                     {
-                        spellIsCast = CastIdleSpell(static_cast<SpellID>(chosenSpell), qualifiedTargets.PLowest->targid);
+                        if (castOnNearest && qualifiedTargets.PNearest != nullptr)
+                        {
+                            spellIsCast = CastIdleSpell(static_cast<SpellID>(chosenSpell), qualifiedTargets.PNearest->targid);
+                        }
+                        else if (qualifiedTargets.PLowest != nullptr)
+                        {
+                            spellIsCast = CastIdleSpell(static_cast<SpellID>(chosenSpell), qualifiedTargets.PLowest->targid);
+                        }
+                        else
+                        {
+                            spellIsCast = TryCastSpell();
+                        }
                     }
                     else
                     {
@@ -235,7 +256,6 @@ bool CSpiritController::TrySpellcast(time_point tick)
                 if (PSpirit->m_offensiveSpells.size() > 0)
                 {
                     bool spellIsCast = TryCastSpell();
-
                     // Update the timer based on all factors.
                     setMagicCooldowns();
                     return spellIsCast;
@@ -260,8 +280,8 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
     if (PSpirit->m_PetID == PETID_LIGHTSPIRIT)
     {
         uint8          numUnderThreshold = 0;
-        uint16         chosenSpell       = static_cast<uint16>(SpellID::Cure);
-        PMemberTargets qualifiedTargets;
+        uint16         chosenSpell       = 0;
+        PMemberTargets qualifiedTargets{ nullptr, nullptr };
         bool           castOnNearest = false;
         // clang-format off
             // Light Spirit cures/curagas can target other alliance members.
@@ -319,7 +339,7 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
                     {
                         PSpirit->PMaster->ForAlliance([&](CBattleEntity* PMember)
                                                       {
-                                if (PMember != nullptr && PSpirit->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(PSpirit->loc.p, PMember->loc.p) <= 20 &&
+                                if (PMember != nullptr && PMember->objtype == TYPE_PC && PSpirit->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(PSpirit->loc.p, PMember->loc.p) <= 20 &&
                                     !PMember->isDead() && !PMember->StatusEffectContainer->HasStatusEffect(EFFECT_INVISIBLE))
                                     {
                                         if(chosenSpell == 0 && qualifiedTargets.PLowest == nullptr)
@@ -333,9 +353,11 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
                 }
                 break;
         }
+        if (chosenSpell == 0)
+            return false;
         if (!(chosenSpell == 0 || qualifiedTargets.PLowest == nullptr) || !(chosenSpell == 0 || qualifiedTargets.PNearest == nullptr))
         {
-            bool spellIsCast;
+            bool spellIsCast = false;
             if (castOnNearest)
                 spellIsCast = CastIdleSpell(static_cast<SpellID>(chosenSpell), qualifiedTargets.PNearest->targid);
             else
@@ -469,7 +491,8 @@ int16 CSpiritController::GetSMNSkillReduction()
         uint16 skill    = PSpirit->PMaster->GetSkill(SKILL_SUMMONING_MAGIC);
         uint16 maxSkill = battleutils::GetMaxSkill(SKILL_SUMMONING_MAGIC, JOB_SMN, masterLvl);
 
-        return 1000 * (skill - maxSkill);
+        ShowDebug("GetSMNSkillReduction::Skill over cap = %i", skill - maxSkill);
+        return (maxSkill - skill);
     }
 
     return 0;
@@ -645,10 +668,10 @@ PMemberTargets CSpiritController::GetBestQualifiedMembers()
     qualifiedTargets.PNearest    = nullptr;
     CBattleEntity* PLowest       = nullptr;
     uint8          lowestPercent = 50;
-    float          closestPerson = 20.0f;
+    float          closestPerson = 20.1f;
 
     // The SMN always takes priority over the rest of the alliance.
-    if (PSpirit->PMaster->GetHPP() <= 50)
+    if (PSpirit->PMaster->GetHPP() <= lowestPercent)
     {
         qualifiedTargets.PLowest = PSpirit->PMaster;
         return qualifiedTargets;
@@ -666,12 +689,11 @@ PMemberTargets CSpiritController::GetBestQualifiedMembers()
                 float curDist = distance(PSpirit->loc.p, PMember->loc.p);
 
                 // Check lowest HP
-                float memberPercent = PMember->GetHPP();
                 if (PLowest == nullptr ||
-                    (lowestPercent >= memberPercent))
+                    (lowestPercent >= memberHPP))
                 {
                     PLowest = PMember;
-                    lowestPercent = memberPercent;
+                    lowestPercent = memberHPP;
                 }
 
 
