@@ -13,9 +13,6 @@ m.rate = customUtil.rate
 
 local settings =
 {
-    -- Model/NPC for points
-    look = 2424,
-
     dialog =
     {
         check = "%s is possible here if you have a %s.",
@@ -33,6 +30,7 @@ local settings =
         name    = "Harvesting Point",
         type    = "Harvesting",
         tool    = "sickle",
+        look    = 2422,
         unable  = "You are unable to harvest anything.",
         success = "You succesfully harvest %s!",
         process = "You harvest %s, but your %s breaks.", -- Intentional
@@ -44,6 +42,7 @@ local settings =
         name    = "Excavation Point",
         type    = "Excavation",
         tool    = "pickaxe",
+        look    = 2424,
         unable  = "You are unable to mine anything.",
         success = "You successfully dig up %s!",
         process = "You dig up %s, but your %s breaks in the process.",
@@ -55,6 +54,7 @@ local settings =
         name    = "Logging Point",
         type    = "Logging",
         tool    = "hatchet",
+        look    = 2423,
         unable  = "You are unable to log anything.",
         success = "You successfully cut off %s!",
         process = "You cut off %s, but your %s breaks in the process.",
@@ -66,6 +66,7 @@ local settings =
         name    = "Mining Point",
         type    = "Mining",
         tool    = "pickaxe",
+        look    = 2424,
         unable  = "You are unable to mine anything.",
         success = "You successfully dig up %s!",
         process = "You dig up %s, but your %s breaks in the process.",
@@ -224,7 +225,7 @@ m:addOverride("xi.helm.initZone", function(zone, helmType)
         local dynamicPoint = zone:insertDynamicEntity({
             name      = settings[helmType].name,
             objtype   = xi.objType.NPC,
-            look      = settings.look,
+            look      = settings[helmType].look,
             x         = xi.helm.helmInfo[helmType].zone[zoneId].points[i][1],
             y         = xi.helm.helmInfo[helmType].zone[zoneId].points[i][2],
             z         = xi.helm.helmInfo[helmType].zone[zoneId].points[i][3],
