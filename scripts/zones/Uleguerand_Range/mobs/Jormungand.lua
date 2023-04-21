@@ -30,7 +30,7 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.ATT, 398)
     mob:setMod(xi.mod.DEF, 475)
     mob:setMod(xi.mod.EVA, 434)
-    mob:setMod(xi.mod.MATT, 70)
+    mob:setMod(xi.mod.MATT, 0) -- Despite being /BLM it has 0 MATT
     mob:setMod(xi.mod.REGEN, 22)
     mob:setMod(xi.mod.REFRESH, 200)
     mob:setMod(xi.mod.DARK_MEVA, 70)
@@ -74,7 +74,7 @@ entity.flight = function(mob)
     mob:setAnimationSub(1)
     mob:addStatusEffectEx(xi.effect.ALL_MISS, 0, 1, 0, 0)
     mob:setBehaviour(0)
-    mob:setMobSkillAttack(730)
+    mob:setMobSkillAttack(732)
     mob:setLocalVar("changeTime", os.time() + 30)
 end
 
