@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Spire of Holla
---  NPC: Web of Recollection
+--  NPC: Web of Recollections
 -----------------------------------
 require("scripts/globals/bcnm")
 -----------------------------------
