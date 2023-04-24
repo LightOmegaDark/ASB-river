@@ -1,6 +1,6 @@
 -----------------------------------
--- Area: Spire_of_Mea
---  NPC: web of regret
+-- Area: Spire of Holla
+--  NPC: Web of Recollections
 -----------------------------------
 require("scripts/globals/bcnm")
 -----------------------------------

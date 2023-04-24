@@ -1,6 +1,6 @@
 -----------------------------------
--- Area: Spire_of_Dem
---  NPC: web of regret
+-- Area: Mine_Shaft_2716
+--  NPC: Shaft entrance
 -----------------------------------
 require("scripts/globals/bcnm")
 -----------------------------------

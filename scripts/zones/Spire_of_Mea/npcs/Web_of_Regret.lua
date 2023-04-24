@@ -1,6 +1,6 @@
 -----------------------------------
--- Area: Spire of Holla
---  NPC: Web of Recollection
+-- Area: Spire_of_Mea
+--  NPC: web of regret
 -----------------------------------
 require("scripts/globals/bcnm")
 -----------------------------------
@@ -11,7 +11,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    xi.bcnm.onTrigger(player, npc)
+    player:startEvent(32003)
 end
 
 entity.onEventUpdate = function(player, csid, option, extras)
