@@ -78,7 +78,7 @@ zoneObject.onZoneTick = function(zone)
             teleArg:setLocalVar("isOpen", 0)
         end)
 
-        zone:setLocalVar("tele_timer", os.time() + math.random(5, 10))
+        zone:setLocalVar("tele_timer", os.time() + 5)
     end
 end
 
