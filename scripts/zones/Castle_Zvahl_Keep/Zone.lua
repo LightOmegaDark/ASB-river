@@ -68,6 +68,7 @@ zoneObject.onZoneTick = function(zone)
         while randTele == zone:getLocalVar("last_tele") do
             randTele = math.random(1, #ID.npc.TELEPORTERS)
         end
+
         zone:setLocalVar("last_tele", randTele)
 
         local tele = GetNPCByID(ID.npc.TELEPORTERS[randTele])
