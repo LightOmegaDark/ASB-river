@@ -139,7 +139,7 @@ xi.moghouse.moogleTrade = function(player, npc, trade)
             end
         end
 
-        local eggComponents = 
+        local eggComponents =
         {
             xi.items.EGG_LOCKER,
             xi.items.EGG_TABLE,
@@ -161,7 +161,6 @@ xi.moghouse.moogleTrade = function(player, npc, trade)
 end
 
 xi.moghouse.moogleTrigger = function(player, npc)
-
     if player:isInMogHouse() then
 
         if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
@@ -181,7 +180,7 @@ xi.moghouse.moogleTrigger = function(player, npc)
                         local jeunoanTree = player:getCharVar("[StarlightMisc]JeunoanTree")
                         local holidayFame = player:getFameLevel(xi.quest.fame_area.HOLIDAY)
 
-                        if (placedDay < currentDay) then
+                        if placedDay < currentDay then
                             if holidayFame == 9 then
                                 if sandOrianTree == 1 then
                                     player:startEvent(30017, 0, 0, 0, 86)
@@ -305,14 +304,20 @@ xi.moghouse.addMogLockerExpiryTime = function(player, numBronze)
 end
 
 xi.moghouse.exitJobChange = function(player, prevZone)
-    if player:getCharVar('[Moghouse]Exit_Pending') == 1 and prevZone == player:getZoneID() then
+    if
+        player:getCharVar('[Moghouse]Exit_Pending') == 1 and
+        prevZone == player:getZoneID()
+    then
         player:setVolatileCharVar('[Moghouse]Exit_Pending', 0)
-        if xi.settings.map.MH_EXIT_HOMEPOINT then
-            if player:getCharVar('[Moghouse]Exit_Job_Change') == 1 and not player:isCurrentHomepoint() then
-                player:timer(100, function(playerArg)
-                    playerArg:startEvent(30004, 1)
-                end)
-            end
+
+        if
+            xi.settings.map.MH_EXIT_HOMEPOINT and
+            player:getCharVar('[Moghouse]Exit_Job_Change') == 1 and
+            not player:isCurrentHomepoint()
+        then
+            player:timer(100, function(playerArg)
+                playerArg:startEvent(30004, 1)
+            end)
         end
     else
         player:setVolatileCharVar('[Moghouse]Exit_Job_Change', 0)
@@ -367,10 +372,21 @@ xi.moghouse.onEventFinishRentARoom = function(player, csid, option)
     local regionid  = player:getZone():getRegionID()
     local zonetable = xi.moghouse.rentARoomTable[player:getZoneID()]
 
-    if regionid == xi.region.BASTOK and csid == zonetable.csbase and option == 2 then
+    if
+        regionid == xi.region.BASTOK and
+        csid == zonetable.csbase and
+        option == 2
+    then
         player:setCharVar("[Moghouse]Rent-a-room", player:getZone():getRegionID())
-    elseif regionid == xi.region.SANDORIA or regionid == xi.region.WINDURST then
-        if (csid == zonetable.moveroom or csid == zonetable.needrent) and option == 0 then -- Is a Visitor or Citizen Who Moved Rooms
+    elseif
+        regionid == xi.region.SANDORIA or
+        regionid == xi.region.WINDURST
+    then
+        if
+            (csid == zonetable.moveroom or
+            csid == zonetable.needrent) and
+            option == 0
+        then -- Is a Visitor or Citizen Who Moved Rooms
             player:setCharVar("[Moghouse]Rent-a-room", player:getZone():getRegionID())
         end
     else
@@ -382,7 +398,11 @@ end
 
 xi.moghouse.isRented = function(player)
     local playerzone = player:getZoneID()
-    local isrentexempt = (playerzone >= xi.zone.SOUTHERN_SAN_DORIA_S and playerzone <= xi.zone.WINDURST_WATERS_S) or (playerzone >= xi.zone.WESTERN_ADOULIN and playerzone <= xi.zone.EASTERN_ADOULIN)
+    local isrentexempt =
+        (playerzone >= xi.zone.SOUTHERN_SAN_DORIA_S and
+            playerzone <= xi.zone.WINDURST_WATERS_S) or
+        (playerzone >= xi.zone.WESTERN_ADOULIN and
+            playerzone <= xi.zone.EASTERN_ADOULIN)
 
     if isrentexempt or not xi.settings.map.RENT_A_ROOM then
         return true
@@ -392,7 +412,10 @@ xi.moghouse.isRented = function(player)
     local ishomenation = playerregion == xi.moghouse.nationRegionBits[player:getNation()]
     local isrentedcity = playerregion == player:getCharVar("[Moghouse]Rent-a-room")
 
-    if xi.settings.map.RENT_A_ROOM and utils.ternary(xi.settings.map.ERA_RENT_A_ROOM, isrentedcity, ishomenation or isrentedcity) then
+    if
+        xi.settings.map.RENT_A_ROOM and
+        utils.ternary(xi.settings.map.ERA_RENT_A_ROOM, isrentedcity, ishomenation or isrentedcity)
+    then
         return true
     end
 
