@@ -21,6 +21,8 @@ As AirSkyBoat is a derivative of LandSandBoat, please use all of their guides fo
 
 A [quick start guide](https://github.com/LandSandBoat/server/wiki/Quick-Start-Guide), the [frequently asked questions](https://github.com/LandSandBoat/server/wiki/Frequently-Asked-Questions), and a table of "[what works](https://github.com/LandSandBoat/server/wikis/What-Works)" are all available on [LSB's wiki](https://github.com/LandSandBoat/server/wiki).
 
+Optionally, you can run your server in Docker by following the guide at [docker.md](docker.md).
+
 ## Interacting with AirSkyBoat
 
 ### Crashes, bugs, obvious gameplay issues etc
