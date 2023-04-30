@@ -97,8 +97,14 @@ m.duplicateOverride = function(entity, event, func)
 
     local origEvent = event .. "Orig"
 
-    if entity[origEvent] == nil and entity[event] then
-        entity[origEvent] = entity[event]
+    if entity[origEvent] == nil then
+        if entity[event] then
+            entity[origEvent] = entity[event]
+        else
+            entity[origEvent] = function()
+                -- Do nothing
+            end
+        end
     end
 
     local thisenv = getfenv(entity[event])
