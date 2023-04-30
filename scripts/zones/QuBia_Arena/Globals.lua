@@ -45,14 +45,10 @@ global.phaseEventFinish = function(player, csid)
             SpawnMob(ID.mob.HEIR_TO_THE_LIGHT_OFFSET + 14 * (bfArea - 1) + i)
         end
 
-        if battlefield:getLocalVar("trionSpawned") == 0 then
-            battlefield:setLocalVar("trionSpawned", 1)
-
-            local trion = battlefield:insertEntity(75, true, true)
-            trion:setSpawn(unpack(phaseInfo[bfArea][1]))
-            trion:spawn()
-            player:setPos(unpack(phaseInfo[bfArea][2]))
-        end
+        local trion = battlefield:insertEntity(75, true, true)
+        trion:setSpawn(unpack(phaseInfo[bfArea][1]))
+        trion:spawn()
+        player:setPos(unpack(phaseInfo[bfArea][2]))
     end
 end
 

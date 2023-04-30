@@ -1502,7 +1502,7 @@ namespace petutils
         }
     }
 
-    void DetachPet(CBattleEntity* PMaster, bool petUncharm)
+    void DetachPet(CBattleEntity* PMaster)
     {
         XI_DEBUG_BREAK_IF(PMaster == nullptr);
         XI_DEBUG_BREAK_IF(PMaster->PPet == nullptr);
@@ -1520,10 +1520,9 @@ namespace petutils
                 PMob->PAI->Disengage();
 
                 // charm time is up, mob attacks player now
-                if (PMob->PEnmityContainer->IsWithinEnmityRange(PMob->PMaster) && petUncharm)
+                if (PMob->PEnmityContainer->IsWithinEnmityRange(PMob->PMaster))
                 {
-                    PMob->PEnmityContainer->UpdateEnmity(PChar, 1, 1);
-                    PMob->SetBattleTargetID(PChar->targid);
+                    PMob->PEnmityContainer->UpdateEnmity(PChar, 0, 0);
                 }
                 else
                 {

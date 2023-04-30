@@ -13,15 +13,7 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    if
-        target:hasImmunity(xi.immunity.SLEEP) or
-        target:hasImmunity(xi.immunity.LIGHT_SLEEP)
-    then
-        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
-        return
-    end
-
-    local duration = math.random(27, 32)
+    local duration = 30
     -- local pCHR = caster:getStat(xi.mod.CHR)
     -- local mCHR = target:getStat(xi.mod.CHR)
     -- local dCHR = pCHR - mCHR

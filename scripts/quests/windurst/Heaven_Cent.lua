@@ -139,12 +139,6 @@ quest.sections =
                         return quest:progressEvent(41)
                     end
                 end,
-
-                onTrigger = function(player, npc)
-                    if player:getPos().x >= 248 then
-                        return quest:progressEvent(42)
-                    end
-                end,
             },
 
             -- Chests
@@ -166,7 +160,7 @@ quest.sections =
                             return quest:progressEvent(46)
                         end
                     else
-                        return quest:messageSpecial(ID.text.CHEST_EMPTY)
+                        player:messageSpecial(ID.text.CHEST_EMPTY)
                     end
                 end,
             },
@@ -189,7 +183,7 @@ quest.sections =
                             return quest:progressEvent(48)
                         end
                     else
-                        return quest:messageSpecial(ID.text.CHEST_EMPTY)
+                        player:messageSpecial(ID.text.CHEST_EMPTY)
                     end
                 end,
             },
@@ -212,7 +206,7 @@ quest.sections =
                             return quest:progressEvent(50)
                         end
                     else
-                        return quest:messageSpecial(ID.text.CHEST_EMPTY)
+                        player:messageSpecial(ID.text.CHEST_EMPTY)
                     end
                 end,
             },
@@ -226,19 +220,18 @@ quest.sections =
 
                 -- Correct coin (Flag correct coin)
                 [46] = function(player, csid, option, npc)
-                    if option == 2 and npcUtil.giveItem(player, xi.items.SHELLING_PIECE) then
+                    if option == 2 and npcUtil.giveItem(xi.items.SHELLING_PIECE) then
                         quest:setVar(player, 'Coin', 1)
                     end
                 end,
 
                 [48] = function(player, csid, option, npc)
-                    if option == 2 and npcUtil.giveItem(player, xi.items.SHELLING_PIECE) then
+                    if option == 2 and npcUtil.giveItem(xi.items.SHELLING_PIECE) then
                         quest:setVar(player, 'Coin', 1)
                     end
                 end,
-
                 [50] = function(player, csid, option, npc)
-                    if option == 2 and npcUtil.giveItem(player, xi.items.SHELLING_PIECE) then
+                    if option == 2 and npcUtil.giveItem(xi.items.SHELLING_PIECE) then
                         quest:setVar(player, 'Coin', 1)
                     end
                 end,
@@ -246,19 +239,17 @@ quest.sections =
                 -- Inorrect coin
                 [49] = function(player, csid, option, npc)
                     if option == 2 then
-                        npcUtil.giveItem(player, xi.items.SHELLING_PIECE)
+                        npcUtil.giveItem(xi.items.SHELLING_PIECE)
                     end
                 end,
-
                 [47] = function(player, csid, option, npc)
                     if option == 2 then
-                        npcUtil.giveItem(player, xi.items.SHELLING_PIECE)
+                        npcUtil.giveItem(xi.items.SHELLING_PIECE)
                     end
                 end,
-
                 [51] = function(player, csid, option, npc)
                     if option == 2 then
-                        npcUtil.giveItem(player, xi.items.SHELLING_PIECE)
+                        npcUtil.giveItem(xi.items.SHELLING_PIECE)
                     end
                 end,
             },

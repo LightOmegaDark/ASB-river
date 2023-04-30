@@ -39,8 +39,6 @@ abilityObject.onPetAbility = function(target, pet, skill)
         xi.magic.applyAbilityResistance(pet, target, effectParams)
     end
 
-    xi.magic.handleSMNBurstMsg(pet, target, skill, params.element, 379)
-
     return totaldamage
 end
 

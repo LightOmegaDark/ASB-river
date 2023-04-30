@@ -18,7 +18,6 @@ return {
     ['Rhea_Myuliah'] = { event = 10121 },
     ['Rosaline']     = { event = 96 },
     ['Rouliette']    = { event = 30 },
-    ['Shalott']      = { event = 104 },
     ['Souren']       = { event = 88 },
     ['Zuber']        = { event = 125 },
 }
