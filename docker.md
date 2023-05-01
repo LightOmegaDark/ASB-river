@@ -36,7 +36,7 @@ To open a db console use [docker_dbtool.sh](docker_dbtool.sh). If the `xidb` dat
 
 The database is stored in a docker volume `asb_mysql_data` which persists between restarts.
 
-To take a database backup, simple use `docker_dbtool.sh` and the backup will be created in `sql/backups`.
+To take a database backup, simply use `docker_dbtool.sh` and the `dbtool.py` console it launches. The backup will be created in `sql/backups` on the host.
 
 # Running your container
 
@@ -45,6 +45,7 @@ To run your container use [docker_run.sh](docker_run.sh). To stop your container
 A restart of the server would look like this.
 ```
 ./docker_stop.sh
+# possible ./docker_dbtool.sh
 ./docker_start.sh
 ```
 
