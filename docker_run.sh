@@ -1,7 +1,9 @@
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 docker run \
     --rm \
     --name asb \
-    --mount type=bind,source=/mnt/d/HorizonXI/Server/AirSkyBoat,target=/asb \
+    --mount type=bind,source=$SCRIPT_DIR,target=/asb \
     -v asb_mysql_data:/var/lib/mysql \
     -p 8080:8080 \
     -p 3306:3306 \
