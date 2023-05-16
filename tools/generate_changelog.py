@@ -102,11 +102,10 @@ if last_run is not None:
 if len(sys.argv) < 3:
     print("Usage:\ngenerate_changelog.py <days to generate, or 'ci'> <repo owner name/repo name> <optional changelog title>")
     sys.exit(-1)
-elif len(sys.argv) >= 2:
-    if "ci" in sys.argv[1]:
-        length_days = days_since_last_run()
-    else:
-        length_days = int(sys.argv[1])
+
+length_days = days_since_last_run()
+if "ci" not in sys.argv[1]:
+    length_days = int(sys.argv[1])
 
 repo_name = sys.argv[2]
 user = repo_name.split("/")[0]
