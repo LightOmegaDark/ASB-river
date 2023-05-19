@@ -1,17 +1,14 @@
 -----------------------------------
--- Area: Spire_of_Dem
---  NPC: web of regret
------------------------------------
-require("scripts/globals/bcnm")
+-- Area: Mine_Shaft_2716
+--  NPC: Shaft entrance
 -----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    xi.bcnm.onTrade(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    xi.bcnm.onTrigger(player, npc)
+    player:startEvent(32003)
 end
 
 entity.onEventUpdate = function(player, csid, option, extras)
