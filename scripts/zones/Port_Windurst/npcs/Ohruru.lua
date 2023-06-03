@@ -19,11 +19,8 @@ end
 
 entity.onTrigger = function(player, npc)
     local catch = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CATCH_IT_IF_YOU_CAN)
-    local wonderWands = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.WONDER_WANDS)
 
-    if wonderWands == QUEST_ACCEPTED then
-        player:startEvent(258, 0, 17053)
-    elseif catch == 0 then
+    if catch == 0 then
         local prog = player:getCharVar("QuestCatchItIfYouCan_var")
         if prog == 0 then
             player:startEvent(230) -- CATCH IT IF YOU CAN: Before Quest 1
@@ -58,8 +55,6 @@ entity.onTrigger = function(player, npc)
         else
             player:startEvent(251) -- CATCH IT IF YOU CAN: During Quest 2
         end
-    elseif wonderWands == QUEST_COMPLETED then
-        player:startEvent(265)
     else
         player:startEvent(230) -- STANDARD CONVERSATION
     end
@@ -75,16 +70,13 @@ entity.onEventFinish = function(player, csid, option)
         player:needToZone(true)
         if player:hasStatusEffect(xi.effect.MUTE) then
             player:delStatusEffect(xi.effect.MUTE)
-            player:addGil(xi.settings.main.GIL_RATE * 1000)
-            player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.main.GIL_RATE * 1000)
+            npcUtil.giveCurrency(player, 'gil', 1000)
         elseif player:hasStatusEffect(xi.effect.BANE) then
             player:delStatusEffect(xi.effect.BANE)
-            player:addGil(xi.settings.main.GIL_RATE * 1200)
-            player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.main.GIL_RATE * 1200)
+            npcUtil.giveCurrency(player, 'gil', 1200)
         elseif player:hasStatusEffect(xi.effect.PLAGUE) then
             player:delStatusEffect(xi.effect.PLAGUE)
-            player:addGil(xi.settings.main.GIL_RATE * 1500)
-            player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.main.GIL_RATE * 1500)
+            npcUtil.giveCurrency(player, 'gil', 1500)
         end
 
         player:setCharVar("QuestCatchItIfYouCan_var", 0)
