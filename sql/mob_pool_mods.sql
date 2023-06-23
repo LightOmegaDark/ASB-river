@@ -22,7 +22,7 @@ CREATE TABLE `mob_pool_mods` (
   `value` smallint(5) NOT NULL DEFAULT '0',
   `is_mob_mod` boolean NOT NULL DEFAULT '0',
   PRIMARY KEY (`poolid`,`modid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=13 PACK_KEYS=1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AVG_ROW_LENGTH=13 PACK_KEYS=1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,9 +211,6 @@ INSERT INTO `mob_pool_mods` VALUES (1663,29,3,1); -- ASSIST: 3
 
 -- Goblin Swordsman
 INSERT INTO `mob_pool_mods` VALUES (1719,29,2,1); -- ASSIST: 2
-
--- Golden-Tongued Culberry
-INSERT INTO `mob_pool_mods` VALUES (1750,56,1,1); -- HP_STANDBACK: 1
 
 -- Goliath
 INSERT INTO `mob_pool_mods` VALUES (1754,4,4,1); -- SIGHT_RANGE: 4

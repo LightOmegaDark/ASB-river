@@ -1528,27 +1528,6 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 auto PPetTarget = PTarget->targid;
                 if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
                 {
-                    // Blood Pact mp cost stored in animation ID
-                    float mpCost = PAbility->getAnimationID();
-
-                    if (StatusEffectContainer->HasStatusEffect(EFFECT_APOGEE))
-                    {
-                        mpCost *= 1.5f;
-                        StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_BLOODPACT);
-                    }
-
-                    // Blood Boon (does not affect Astral Flow BPs)
-                    if ((PAbility->getAddType() & ADDTYPE_ASTRAL_FLOW) == 0)
-                    {
-                        int16 bloodBoonRate = getMod(Mod::BLOOD_BOON);
-                        if (xirand::GetRandomNumber(100) < bloodBoonRate)
-                        {
-                            mpCost *= xirand::GetRandomNumber(8.f, 16.f) / 16.f;
-                        }
-                    }
-
-                    addMP((int32)-mpCost);
-
                     if (PAbility->getValidTarget() == TARGET_SELF)
                     {
                         PPetTarget = PPet->targid;
@@ -2152,6 +2131,12 @@ void CCharEntity::OnRaise()
             uint16 expLost = mLevel <= 67 ? (charutils::GetExpNEXTLevel(mLevel) * 8) / 100 : 2400;
 
             uint16 xpNeededToLevel = charutils::GetExpNEXTLevel(jobs.job[GetMJob()]) - jobs.exp[GetMJob()];
+
+            // Player died within a battlefield, reward the battlefield level equivalent EXP
+            if (StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD))
+            {
+                expLost = m_LevelRestriction <= 67 ? (charutils::GetExpNEXTLevel(m_LevelRestriction) * 8) / 100 : 2400;
+            }
 
             // Exp is enough to level you and (you're not under a level restriction, or the level restriction is higher than your current main level).
             if (xpNeededToLevel < expLost && (m_LevelRestriction == 0 || GetMLevel() < m_LevelRestriction))

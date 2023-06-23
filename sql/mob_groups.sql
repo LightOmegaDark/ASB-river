@@ -30,7 +30,7 @@ CREATE TABLE `mob_groups` (
   `maxLevel` tinyint(2) unsigned NOT NULL DEFAULT 0,
   `allegiance` tinyint(2) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`zoneid`,`groupid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=22;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AVG_ROW_LENGTH=22;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1011,7 +1011,7 @@ INSERT INTO `mob_groups` VALUES (54,4293,25,'Warder_Thalia',0,128,0,5000,0,62,63
 INSERT INTO `mob_groups` VALUES (55,466,25,'Bloody_Coffin',0,128,0,3800,0,50,52,0);
 INSERT INTO `mob_groups` VALUES (56,484,25,'Boggelmann',0,128,0,8300,0,70,70,0);
 INSERT INTO `mob_groups` VALUES (57,98,25,'Alsha',0,128,0,0,0,60,60,0);
-INSERT INTO `mob_groups` VALUES (58,1792,25,'Gration',0,128,1218,30000,25000,79,79,0);
+INSERT INTO `mob_groups` VALUES (58,1792,25,'Gration',0,128,0,30000,25000,79,79,0);
 INSERT INTO `mob_groups` VALUES (59,4505,25,'Ziphius',0,128,2801,9000,0,58,62,0);
 INSERT INTO `mob_groups` VALUES (60,6739,25,'Tsui-Goab',0,128,0,0,0,65,65,0);
 INSERT INTO `mob_groups` VALUES (61,6740,25,'Bloodswiller_Fly',0,128,0,0,0,0,0,0);
@@ -1363,8 +1363,8 @@ INSERT INTO `mob_groups` VALUES (7,0,36,'Promathia_htbf',0,128,0,0,0,0,0,0);
 INSERT INTO `mob_groups` VALUES (8,4820,36,'Metus',0,128,0,0,20000,125,125,0);
 INSERT INTO `mob_groups` VALUES (9,0,36,'Omega',0,128,0,0,0,0,0,0);
 INSERT INTO `mob_groups` VALUES (10,0,36,'Ultima',0,128,0,0,0,0,0,0);
-INSERT INTO `mob_groups` VALUES (11,3199,36,'Prishe',0,128,0,2200,0,75,75,0); -- ally
-INSERT INTO `mob_groups` VALUES (12,5417,36,'Selhteus',0,128,0,0,0,75,75,0); -- ally
+INSERT INTO `mob_groups` VALUES (11,3199,36,'Prishe',0,128,0,2200,0,75,75,1); -- ally
+INSERT INTO `mob_groups` VALUES (12,5417,36,'Selhteus',0,128,0,0,0,75,75,1); -- ally
 
 -- ------------------------------------------------------------
 -- Temenos (Zone 37)
@@ -2646,7 +2646,7 @@ INSERT INTO `mob_groups` VALUES (42,2541,52,'Mamool_Jas_Wyvern',0,128,0,0,0,76,7
 INSERT INTO `mob_groups` VALUES (43,5140,52,'Nis_Puk',0,32,2894,13000,0,77,77,0);
 INSERT INTO `mob_groups` VALUES (44,2523,52,'Mamool_Ja_Lurker',300,0,1593,0,0,81,83,0);
 INSERT INTO `mob_groups` VALUES (45,2507,52,'Mamool_Ja_Blusterer',300,0,1586,0,0,81,83,0);
-INSERT INTO `mob_groups` VALUES (46,3153,52,'Plague_Chigoe',0,128,0,0,0,75,75,0);
+INSERT INTO `mob_groups` VALUES (46,3153,52,'Plague_Chigoe',0,128,0,3000,0,60,62,0);
 INSERT INTO `mob_groups` VALUES (47,393,52,'Berried_Chigoe',0,128,255,0,0,60,60,0);
 INSERT INTO `mob_groups` VALUES (48,716,52,'Chigoes_Nit',0,128,0,0,0,48,48,0);
 INSERT INTO `mob_groups` VALUES (49,916,52,'Dark_Rider',0,128,0,0,0,95,95,0);
