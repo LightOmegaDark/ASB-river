@@ -617,7 +617,7 @@ namespace zoneutils
                                 // Add to the spawn group
                                 if (PMob->m_spawnSet > 0)
                                 {
-                                    auto& spawnGroup = GetZone(ZoneID)->m_SpawnGroups[PMob->m_spawnSet];
+                                    auto& spawnGroup = GetZone(zoneId)->m_SpawnGroups[PMob->m_spawnSet];
                                     spawnGroup.groupMobs.push_back(PMob);
                                     spawnGroup.maxSpawns = (uint8)sql->GetUIntData(86);
                                 }
@@ -834,12 +834,6 @@ namespace zoneutils
                 {
                     // NOTE: It is not safe to use SQL in this parallel loop!
                     g_PZoneList[zone]->LoadNavMesh();
-                });
-
-                ts.schedule([zone]()
-                {
-                    // NOTE: It is not safe to use SQL in this parallel loop!
-                    g_PZoneList[zone]->LoadZoneLos();
                 });
             }
         }

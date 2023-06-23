@@ -732,6 +732,8 @@ public:
 
     time_point m_LoadedAt; // time zone was loaded
 
+    void LoadNavMesh();
+
     void SetZoneDirection(uint8 direction);
     void SetZoneAnimation(uint8 animation);
     void SetZoneAnimStartTime(uint32 startTime);
@@ -771,7 +773,6 @@ private:
     void LoadZoneLines();    // список zonelines (можно было бы заменить этот метод методом InsertZoneLine)
     void LoadZoneWeather();  // погода
     void LoadZoneSettings(); // настройки зоны
-    void LoadNavMesh();      // Load the zones navmesh. Must exist in scripts/zones/:zone/NavMesh.nav
 
     CTreasurePool* m_TreasurePool; // глобальный TreasuerPool
 
