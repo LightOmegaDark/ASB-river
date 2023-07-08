@@ -468,7 +468,6 @@ xi.spells.damage.calculateResist = function(caster, target, spell, skillType, sp
         end
 
         magicBurst = 1.25 + (0.1 * skillchainCount) + rankBonus
-    end
 
     return magicBurst
 end
