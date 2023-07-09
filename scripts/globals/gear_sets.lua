@@ -2,9 +2,6 @@
 -- Gear sets
 -- Allows the use of gear sets with modifiers
 -----------------------------------
-require('scripts/globals/items')
-require('scripts/globals/status')
------------------------------------
 
 xi = xi or {}
 xi.gear_sets = xi.gear_sets or {}
@@ -820,9 +817,10 @@ local gearSets =
     {
         items =
         {
+            xi.items.VIRTUE_STONE,
             xi.items.HOPE_STAFF,
         },
-        minEquipped = 1,
+        minEquipped = 2,
         mods =
         {
             { xi.mod.AMMO_SWING, 50 },
@@ -833,9 +831,10 @@ local gearSets =
     {
         items =
         {
+            xi.items.VIRTUE_STONE,
             xi.items.JUSTICE_SWORD,
         },
-        minEquipped = 1,
+        minEquipped = 2,
         mods =
         {
             { xi.mod.AMMO_SWING, 50 },
@@ -846,9 +845,10 @@ local gearSets =
     {
         items =
         {
+            xi.items.VIRTUE_STONE,
             xi.items.TEMPERANCE_AXE,
         },
-        minEquipped = 1,
+        minEquipped = 2,
         mods =
         {
             { xi.mod.AMMO_SWING, 50 },
@@ -859,9 +859,10 @@ local gearSets =
     {
         items =
         {
+            xi.items.VIRTUE_STONE,
             xi.items.LOVE_HALBERD,
         },
-        minEquipped = 1,
+        minEquipped = 2,
         mods =
         {
             { xi.mod.AMMO_SWING, 50 },
@@ -872,9 +873,10 @@ local gearSets =
     {
         items =
         {
+            xi.items.VIRTUE_STONE,
             xi.items.FORTITUDE_AXE,
         },
-        minEquipped = 1,
+        minEquipped = 2,
         mods =
         {
             { xi.mod.AMMO_SWING, 50 },
@@ -885,9 +887,10 @@ local gearSets =
     {
         items =
         {
+            xi.items.VIRTUE_STONE,
             xi.items.FAITH_BAGHNAKHS,
         },
-        minEquipped = 1,
+        minEquipped = 2,
         mods =
         {
             { xi.mod.AMMO_SWING, 50 },
@@ -898,9 +901,10 @@ local gearSets =
     {
         items =
         {
+            xi.items.VIRTUE_STONE,
             xi.items.PRUDENCE_ROD,
         },
-        minEquipped = 1,
+        minEquipped = 2,
         mods =
         {
             { xi.mod.AMMO_SWING, 50 },
@@ -1831,8 +1835,8 @@ local gearSets =
             xi.items.IGNOMINY_GAUNTLETS_P3,
             xi.items.IGNOMINY_CUIRASS_P2,
             xi.items.IGNOMINY_CUIRASS_P3,
-            xi.items.IGNOMINY_BURGONET_P2,
-            xi.items.IGNOMINY_BURGONET_P3,
+            xi.items.IGNOMINY_BURGEONET_P2,
+            xi.items.IGNOMINY_BURGEONET_P3,
         },
         minEquipped = 2,
         maxEquipped = 5,
@@ -2213,16 +2217,16 @@ local gearSets =
         items =
         {
             xi.items.REGAL_RING,
-            xi.items.RUNEISTS_BOOTS_P2,
-            xi.items.RUNEISTS_BOOTS_P3,
-            xi.items.RUNIESTS_TROUSERS_P2,
-            xi.items.RUNEISTS_TROUSERS_P3,
-            xi.items.RUNEISTS_MITONS_P2,
-            xi.items.RUNEISTS_MITONS_P3,
-            xi.items.RUNEISTS_COAT_P2,
-            xi.items.RUNEISTS_COAT_P3,
-            xi.items.RUNEISTS_BANDEAU_P2,
-            xi.items.RUNEISTS_BANDEAU_P3,
+            xi.items.RUNEIST_BOOTS_P2,
+            xi.items.RUNEIST_BOOTS_P3,
+            xi.items.RUNIEST_TROUSERS_P2,
+            xi.items.RUNEIST_TROUSERS_P3,
+            xi.items.RUNEIST_MITONS_P2,
+            xi.items.RUNEIST_MITONS_P3,
+            xi.items.RUNEIST_COAT_P2,
+            xi.items.RUNEIST_COAT_P3,
+            xi.items.RUNEIST_BANDEAU_P2,
+            xi.items.RUNEIST_BANDEAU_P3,
         },
         minEquipped = 2,
         maxEquipped = 5,
@@ -2534,7 +2538,13 @@ xi.gear_sets.createItemToSetId = function()
 
     for setId, setData in pairs(gearSets) do
         for _, itemId in ipairs(setData.items) do
-            itemTable[itemId] = setId
+            if itemTable[itemId] == nil then
+                local setIdTable = {}
+
+                itemTable[itemId] = setIdTable
+            end
+
+            table.insert(itemTable[itemId], setId)
         end
     end
 
@@ -2555,7 +2565,9 @@ xi.gear_sets.checkForGearSet = function(player)
         local setId   = xi.gear_sets.itemToSetId[equipId]
 
         if setId then
-            equippedSets[setId] = equippedSets[setId] and (equippedSets[setId] + 1) or 1
+            for _, v in ipairs(setId) do
+                equippedSets[v] = equippedSets[v] and (equippedSets[v] + 1) or 1
+            end
         end
     end
 
@@ -2568,11 +2580,7 @@ xi.gear_sets.checkForGearSet = function(player)
             local modTierIndex = math.min(setCount, maxEquippedReq) - minEquippedReq
 
             for _, modData in ipairs(gearSets[setId].mods) do
-                if (setId >= 47 and setId <= 53 and player:getEquipID(xi.slot.AMMO) == xi.items.VIRTUE_STONE) then
-                    player:addGearSetMod(setId, modData[1], modData[modTierIndex + 2])
-                elseif setId < 47 or setId > 53 then
-                    player:addGearSetMod(setId, modData[1], modData[modTierIndex + 2])
-                end
+                player:addGearSetMod(setId, modData[1], modData[modTierIndex + 2])
             end
         end
     end

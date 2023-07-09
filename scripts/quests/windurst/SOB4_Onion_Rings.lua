@@ -3,8 +3,6 @@
 --
 -- Kohlo-Lakolo, !pos -26.8 -6 190 240
 -----------------------------------
-require('scripts/globals/items')
-require("scripts/globals/keyitems")
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
 require('scripts/globals/titles')
@@ -26,7 +24,7 @@ end
 
 quest.reward =
 {
-    fame     = 40,
+    fame     = 10,
     fameArea = xi.quest.fame_area.WINDURST,
     title    = xi.title.STAR_ONION_BRIGADIER,
 }
@@ -41,8 +39,7 @@ quest.sections =
     {
         check = function(player, status, vars)
             return status == QUEST_AVAILABLE and
-                player:hasCompletedQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.INSPECTORS_GADGET) and
-                player:getFameLevel(xi.quest.fame_area.WINDURST) >= 3
+                player:hasCompletedQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.INSPECTORS_GADGET)
         end,
 
         [xi.zone.PORT_WINDURST] =

@@ -6,8 +6,6 @@
 -- Phairet : !pos -57 -2 -502 100
 -----------------------------------
 require('scripts/globals/npc_util')
-require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/quests')
 require('scripts/globals/titles')
 require('scripts/globals/zone')
@@ -89,7 +87,6 @@ quest.sections =
             onEventFinish =
             {
                 [525] = function(player, csid, option, npc)
-                    player:tradeComplete()
                     quest:complete(player)
                 end,
 

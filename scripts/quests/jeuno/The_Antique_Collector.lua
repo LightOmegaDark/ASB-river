@@ -4,8 +4,6 @@
 -- Log ID: 3, Quest ID: 25
 -- Imasuke : !pos -165 11 94 246
 -----------------------------------
-require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
 require('scripts/globals/titles')
@@ -20,9 +18,11 @@ local quest = Quest:new(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.THE_ANTIQUE_COL
 
 quest.reward =
 {
+    exp      = 2000,
     fame     = 30,
     fameArea = xi.quest.fame_area.JEUNO,
-    keyitem  = xi.ki.MAP_OF_DELKFUTTS_TOWER,
+    gil      = 2000,
+    keyItem  = xi.ki.MAP_OF_DELKFUTTS_TOWER,
     title    = xi.title.TRADER_OF_ANTIQUITIES,
 }
 

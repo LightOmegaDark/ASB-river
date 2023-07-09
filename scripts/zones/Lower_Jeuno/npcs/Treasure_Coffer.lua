@@ -5,10 +5,7 @@
 -- !pos 41.169 3.899 -51.005 245
 -----------------------------------
 local ID = require("scripts/zones/Lower_Jeuno/IDs")
-require("scripts/globals/items")
-require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")
-require("scripts/globals/settings")
 -----------------------------------
 local entity = {}
 
@@ -84,7 +81,7 @@ local prizes =
         { cutoff =  676, itemId =   790 }, -- Garnet
         { cutoff =  672, itemId =   808 }, -- Goshenite
         { cutoff =  684, itemId =   772 }, -- Green Rock
-        { cutoff =  775, itemId =   699 }, -- Oak Log
+        { cutoff =  775, itemId =   669 }, -- Oak Log
         { cutoff =  811, itemId =   792 }, -- Pearl
         { cutoff =  829, itemId =   788 }, -- Peridot
         { cutoff =  835, itemId =   738 }, -- Platinum Ore
@@ -242,7 +239,7 @@ local prizes =
         { cutoff =  667, itemId =   790 }, -- Garnet
         { cutoff =  709, itemId =   788 }, -- Peridot
         { cutoff =  751, itemId =  4113 }, -- Potion +1
-        { cutoff =  876, itemId =   699 }, -- Oak Log
+        { cutoff =  876, itemId =   669 }, -- Oak Log
         { cutoff =  918, itemId =   830 }, -- Rainbow Cloth
         { cutoff =  960, itemId =   769 }, -- Red Rock
         { cutoff = 1002, itemId =   798 }, -- Turquoise
@@ -361,7 +358,7 @@ local prizes =
         { cutoff = 770, itemId =  4145 }, -- Elixir
         { cutoff = 801, itemId =  4129 }, -- Ether +1
         { cutoff = 816, itemId =   808 }, -- Goshenite
-        { cutoff = 847, itemId =   699 }, -- Oak Log
+        { cutoff = 847, itemId =   669 }, -- Oak Log
         { cutoff = 852, itemId =   792 }, -- Pearl
         { cutoff = 862, itemId =   788 }, -- Peridot
         { cutoff = 871, itemId =  4113 }, -- Potion +1

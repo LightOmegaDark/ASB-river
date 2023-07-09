@@ -9,11 +9,8 @@
 -- Halver                : !pos 2 0.1 0.1 233
 -- Fountain of Kings     : !pos 567 18 -939 208
 -----------------------------------
-require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/missions')
 require('scripts/globals/npc_util')
-require('scripts/globals/settings')
 require('scripts/globals/interaction/mission')
 require('scripts/globals/zone')
 -----------------------------------
@@ -106,7 +103,7 @@ mission.sections =
                         -- This cutscene is blocking after the mission has been completed.  Check this
                         -- before allowing further gate guard interaction (Mission[0][20]Progress).  Required
                         -- final CS will set this to 0, and we should disallow on non-zero values
-                        mission:setVar(player, 'Progress', getMidnight())
+                        mission:setVar(player, 'Progress', os.time() + 60)
                         player:delKeyItem(xi.ki.DROPS_OF_AMNIO)
                     end
                 end,

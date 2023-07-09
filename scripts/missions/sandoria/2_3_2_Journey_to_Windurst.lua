@@ -7,8 +7,6 @@
 -- Mourices  : !pos -50.646 -0.501 -27.642 241
 -- Uu Zhoumo : !pos -179 16 155 145
 -----------------------------------
-require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/missions')
 require('scripts/globals/npc_util')
 require('scripts/globals/interaction/mission')
@@ -57,7 +55,9 @@ mission.sections =
                     local missionStatus = player:getMissionStatus(mission.areaId)
 
                     if missionStatus == 4 then
-                        return mission:progressEvent(238, 1, 1, 1, 1, xi.nation.SANDORIA)
+                        local needsSemihTrust = (not player:hasSpell(940) and not player:findItem(xi.items.CIPHER_OF_SEMIHS_ALTER_EGO)) and 1 or 0
+
+                        return mission:progressEvent(238, 1, 1, 1, 1, xi.nation.SANDORIA, 0, 0, needsSemihTrust)
                     elseif missionStatus == 5 then
                         return mission:event(240)
                     elseif missionStatus == 6 then
@@ -93,6 +93,13 @@ mission.sections =
                 [238] = function(player, csid, option, npc)
                     player:setMissionStatus(mission.areaId, 5)
                     npcUtil.giveKeyItem(player, xi.ki.SHIELD_OFFERING)
+
+                    if
+                        not player:hasSpell(940) and
+                        not player:findItem(xi.items.CIPHER_OF_SEMIHS_ALTER_EGO)
+                    then
+                        npcUtil.giveItem(player, xi.items.CIPHER_OF_SEMIHS_ALTER_EGO)
+                    end
                 end,
             },
         },

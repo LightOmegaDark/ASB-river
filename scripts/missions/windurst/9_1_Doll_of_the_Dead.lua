@@ -11,8 +11,6 @@
 -- Yoran-Oran        : !pos -109.987 -14 203.338 239
 -- Mandragora Warden : !pos 81.981 7.593 139.556 153
 require('scripts/globals/interaction/mission')
-require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/missions')
 require('scripts/globals/npc_util')
 require('scripts/globals/zone')
@@ -155,8 +153,6 @@ mission.sections =
                     if missionStatus == 4 or missionStatus == 5 then
                         player:messageText(npc, boyahdaTreeID.text.WARDEN_SPEECH)
                         return mission:messageSpecial(boyahdaTreeID.text.WARDEN_TRANSLATION)
-                    else
-                        return mission:progressEvent(10)
                     end
                 end,
             },
@@ -164,7 +160,6 @@ mission.sections =
             onEventFinish =
             {
                 [13] = function(player, csid, option, npc)
-                    player:tradeComplete()
                     player:setMissionStatus(mission.areaId, 6)
                     npcUtil.giveKeyItem(player, xi.ki.LETTER_FROM_ZONPA_ZIPPA)
                 end,

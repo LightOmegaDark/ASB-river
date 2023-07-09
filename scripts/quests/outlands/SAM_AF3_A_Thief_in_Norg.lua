@@ -7,11 +7,8 @@
 -- Phoochuchu      : !pos -4 -4 69 249
 -- _6i8 (Door)     : !pos 70 7 2 234
 -----------------------------------
-require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
-require('scripts/globals/settings')
 require('scripts/globals/titles')
 require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
@@ -114,7 +111,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         player:hasKeyItem(xi.ki.CHARRED_HELM) and
-                        npcUtil.tradeHasExactly(trade, xi.items.SPOOL_OF_GOLD_THREAD)
+                        npcUtil.tradeHasExactly(trade, xi.items.GOLD_THREAD)
                     then
                         return quest:progressEvent(162)
                     end
@@ -133,8 +130,8 @@ quest.sections =
                         return quest:progressEvent(160)
                     elseif questProgress == 8 then
                         return quest:progressEvent(161)
-                    elseif questProgress == 9 and quest:getVar(player, 'Option') < os.time() then
-                        return quest:progressEvent(164)
+                    elseif questProgress == 9 then
+                        return quest:progressEvent(quest:getMustZone(player) and 163 or 164)
                     end
                 end,
             },
@@ -149,7 +146,7 @@ quest.sections =
                     player:confirmTrade()
                     player:delKeyItem(xi.ki.CHARRED_HELM)
                     quest:setVar(player, 'Prog', 9)
-                    quest:setVar(player, 'Option', getMidnight())
+                    quest:setMustZone(player)
                 end,
 
                 [164] = function(player, csid, option, npc)

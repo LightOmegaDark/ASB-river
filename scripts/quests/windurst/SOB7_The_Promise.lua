@@ -3,8 +3,6 @@
 --
 -- Kohlo-Lakolo, !pos -26.8 -6 190 240
 -----------------------------------
-require('scripts/globals/items')
-require("scripts/globals/keyitems")
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
 require('scripts/globals/titles')
@@ -34,7 +32,7 @@ end
 
 quest.reward =
 {
-    fame     = 120,
+    fame     = 10,
     fameArea = xi.quest.fame_area.WINDURST,
     item     = xi.items.PROMISE_BADGE,
 }
@@ -204,16 +202,16 @@ quest.sections =
                     if player:hasKeyItem(xi.ki.INVISIBLE_MAN_STICKER) then
                         return quest:event(800)
                     elseif quest:getVar(player, 'Chamama') > 0 then
-                        return quest:event(798, 0, xi.items.CLUMP_OF_SHOALWEED, xi.ki.INVISIBLE_MAN_STICKER)
+                        return quest:event(798, 0, xi.items.SHOALWEED, xi.ki.INVISIBLE_MAN_STICKER)
                     else
-                        return quest:progressEvent(797, 0, xi.items.CLUMP_OF_SHOALWEED, xi.ki.INVISIBLE_MAN_STICKER)
+                        return quest:progressEvent(797, 0, xi.items.SHOALWEED, xi.ki.INVISIBLE_MAN_STICKER)
                     end
                 end,
 
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Chamama') == 1 and
-                        npcUtil.tradeHasExactly(trade, xi.items.CLUMP_OF_SHOALWEED) and
+                        npcUtil.tradeHasExactly(trade, xi.items.SHOALWEED) and
                         not player:hasKeyItem(xi.ki.INVISIBLE_MAN_STICKER)
                     then
                         return quest:progressEvent(799, 0, 0, xi.ki.INVISIBLE_MAN_STICKER)

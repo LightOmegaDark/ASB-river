@@ -5,19 +5,14 @@
 -- https://ffxiclopedia.wikia.com/wiki/Logging
 -- https://ffxiclopedia.wikia.com/wiki/Mining
 -----------------------------------
-require("scripts/globals/items")
-require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 require("scripts/globals/npc_util")
 require("scripts/globals/quests")
 require("scripts/globals/roe")
-require("scripts/globals/settings")
 require("scripts/globals/spell_data")
-require("scripts/globals/status")
 require("scripts/globals/zone")
 require("scripts/missions/amk/helpers")
 require("scripts/missions/wotg/helpers")
-require("scripts/globals/msg")
 -----------------------------------
 
 xi = xi or {}
@@ -36,7 +31,7 @@ xi.helm.type =
 -- (R) for retail-verified coordinates
 -----------------------------------
 
-xi.helm.helmInfo =
+local helmInfo =
 {
     [xi.helm.type.HARVESTING] =
     {
@@ -371,7 +366,7 @@ xi.helm.helmInfo =
                     { 1220, 17396 }, -- Little Worm
                     {  720,   897 }, -- Scorpion Claw
                     {  720,   896 }, -- Scorpion Shell
-                    {  420,  1616 }, -- Antlion Jaw
+                    {  420,  2503 }, -- Antlion Jaw
                     {  420,  1236 }, -- Cactus Stems
                     {  420,  1473 }, -- High Quality Scorpion Shell
                     {  420,   769 }, -- Colored Rock
@@ -380,13 +375,10 @@ xi.helm.helmInfo =
                 points =
                 {
                     { -559.629, -13.114,  -88.864 },
-                    { -560.463, -12.160,  -50.494 },
-                    { -539.946,  -4.582,   -9.527 },
                     { -328.481, -12.000,   68.200 },
-                    { -351.612, -11.919,   51.848 },
+                    { -343.760, -12.232,   66.061 },
                     { -375.399,  -3.264,  356.472 },
                     { -378.857,  -3.720,  342.842 },
-                    { -400.509,  -3.356,  343.399 },
                 },
             },
 
@@ -544,16 +536,10 @@ xi.helm.helmInfo =
 
                 points =
                 {
-                    { -218.855, -16.142, 286.809 },
-                    {   93.994,  -9.035, -55.871 },
-                    {   82.697,  -8.610,   7.324 },
-                    {  120.026,  -8.607,  -9.430 },
-                    { -176.225, -16.288, 294.007 },
-                    { -453.739,  -7.930,  74.015 },
-                    { -408.364,  -8.010,  64.173 },
-                    { -238.046, -15.981, 257.771 },
-                    { -428.247,  -8.431,  34.783 },
-                    { -218.855, -16.142, 286.809 },
+                    { -218.855, -16.142,  286.809 },
+                    { -212.218, -16.399,  316.257 },
+                    {   93.994,  -9.035,  -55.871 },
+                    {  120.026,  -8.607,   -9.430 },
                 },
             },
 
@@ -573,16 +559,9 @@ xi.helm.helmInfo =
 
                 points =
                 {
-                    {   29.643, -24.514,  361.756 },
-                    {  -29.950, -24.155,  495.225 },
-                    {  306.851,  23.677, -330.013 },
-                    {  285.760,  23.677, -328.804 },
-                    {  288.659,  23.677, -394.522 },
-                    {  -66.369, -24.960,  535.166 },
-                    {  -94.736, -24.929,  653.229 },
-                    { -170.298, -32.188,   94.226 },
-                    { -260.170, -32.656,  174.636 },
+                    { -323.737, -32.938,  203.954 },
                     { -288.729, -32.055,  140.837 },
+                    { -260.170, -32.656,  174.636 },
                     { -213.362, -32.315,  150.466 },
                 },
             },
@@ -1256,7 +1235,7 @@ xi.helm.helmInfo =
                     {  900,   644 }, -- Mythril Ore
                     {  900,   736 }, -- Silver Ore
                     {  800,   640 }, -- Copper Ore
-                    {  100,   738 }, -- Platinum Ore
+                    {  100,   738 }, -- Platium Ore
                 },
 
                 points =
@@ -1370,17 +1349,17 @@ xi.helm.helmInfo =
             {
                 drops =
                 {
-                    { 2710,   768 }, -- Flint Stone
-                    { 1440,   643 }, -- Iron Ore
-                    {  510,  1108 }, -- Sulfur
-                    {  110, 17316 }, -- Bomb Arm
-                    {  680,   928 }, -- Bomb Ash
-                    {  510,  1155 }, -- Iron Sand
-                    {  170,   646 }, -- Adaman Ore
-                    {  250,   645 }, -- Darksteel Ore
-                    { 1610,  2126 }, -- Orpiment
+                    { 3260,   768 }, -- Flint Stone
+                    { 1520,   643 }, -- Iron Ore
+                    {  430,  1108 }, -- Sulfur
+                    {  650, 17316 }, -- Bomb Arm
+                    {  870,   928 }, -- Bomb Ash
+                    { 1300,  1155 }, -- Iron Sand
+                    {  250,   646 }, -- Adaman Ore
+                    {  600,   645 }, -- Darksteel Ore
+                    { 1520,  2126 }, -- Orpiment
                     {  100,   739 }, -- Orichalcum Ore
-                    {  340,   769 }, -- Colored Rock
+                    {  220,   769 }, -- Colored Rock
                 },
 
                 points =
@@ -1491,7 +1470,7 @@ local function doMove(npc, x, y, z)
     end
 end
 
-local function movePoint(npc, zoneId, info)
+local function movePoint(player, npc, zoneId, info)
     local points = info.zone[zoneId].points
     local point  = points[math.random(1, #points)]
 
@@ -1505,22 +1484,21 @@ end
 
 xi.helm.initZone = function(zone, helmType)
     local zoneId = zone:getID()
-    local info   = xi.helm.helmInfo[helmType]
+    local info   = helmInfo[helmType]
     local npcs   = zones[zoneId].npc[info.id]
 
     for _, npcId in ipairs(npcs) do
         local npc = GetNPCByID(npcId)
         if npc then
             npc:setStatus(xi.status.NORMAL)
-            movePoint(npc, zoneId, info)
+            movePoint(nil, npc, zoneId, info)
         end
     end
 end
 
 xi.helm.onTrade = function(player, npc, trade, helmType, csid, func)
-    local info   = xi.helm.helmInfo[helmType]
+    local info   = helmInfo[helmType]
     local zoneId = player:getZoneID()
-    local lastTrade = player:getLocalVar("[HELM]Last_Trade")
 
     -- HELM should remove invisible
     player:delStatusEffect(xi.effect.INVISIBLE)
@@ -1531,68 +1509,49 @@ xi.helm.onTrade = function(player, npc, trade, helmType, csid, func)
         local broke = doesToolBreak(player, info) and 1 or 0
         local full  = (player:getFreeSlotsCount() == 0) and 1 or 0
 
-        if os.time() > lastTrade + 3 then
-            if csid then
-                player:startEvent(csid, item, broke, full)
+        if csid then
+            player:startEvent(csid, item, broke, full)
+        end
+
+        player:sendEmote(npc, info.animation, xi.emoteMode.MOTION)
+
+        -- WotG : The Price of Valor; Success does not award an item, but only KI.
+        if xi.wotg.helpers.helmTrade(player, helmType, broke) then
+            return
+        end
+
+        -- success! reward item and decrement number of remaining uses on the point
+        if item ~= 0 and full == 0 then
+            player:addItem(item)
+
+            local uses = (npc:getLocalVar("uses") - 1) % 4
+            npc:setLocalVar("uses", uses)
+
+            if uses == 0 then
+                movePoint(player, npc, zoneId, info)
             end
 
-            player:sendEmote(npc, info.animation, xi.emoteMode.MOTION, false)
+            player:triggerRoeEvent(xi.roe.triggers.helmSuccess, { ["skillType"] = helmType })
+        end
 
-            -- WotG : The Price of Valor; Success does not award an item, but only KI.
-            if xi.wotg.helpers.helmTrade(player, helmType, broke) then
-                return
-            end
+        -- quest stuff
+        if
+            helmType == xi.helm.type.HARVESTING and
+            player:getQuestStatus(xi.quest.log_id.AHT_URHGAN, xi.quest.id.ahtUrhgan.VANISHING_ACT) == QUEST_ACCEPTED and
+            not player:hasKeyItem(xi.ki.RAINBOW_BERRY) and
+            broke ~= 1 and
+            zoneId == xi.zone.WAJAOM_WOODLANDS
+        then
+            npcUtil.giveKeyItem(player, xi.ki.RAINBOW_BERRY)
+        end
 
-            -- success! reward item and decrement number of remaining uses on the point
-            if item ~= 0 and full == 0 then
-                player:addItem(item)
+        -- AMK04
+        if xi.settings.main.ENABLE_AMK == 1 then
+            xi.amk.helpers.helmTrade(player, helmType, broke)
+        end
 
-                local uses = (npc:getLocalVar("uses") - 1) % 4
-                npc:setLocalVar("uses", uses)
-                if uses == 0 then
-                    movePoint(npc, zoneId, info)
-                end
-
-                if
-                    xi.events and
-                    xi.events.egg_hunt and
-                    xi.events.egg_hunt.enabledCheck and
-                    player:getVar("[EGGHUNT]DAILY_HELM") < vanaDay()
-                then
-                    player:timer(3000, function(playerArg)
-                        if npcUtil.giveItem(playerArg, math.random(xi.items.A_EGG, xi.items.Z_EGG)) then
-                            playerArg:setVar("[EGGHUNT]DAILY_HELM", vanaDay())
-                            return
-                        end
-                    end)
-                end
-
-                player:triggerRoeEvent(xi.roe.triggers.helmSuccess, { ["skillType"] = helmType })
-            end
-
-            -- quests and missions
-            if
-                helmType == xi.helm.type.HARVESTING and
-                player:getQuestStatus(xi.quest.log_id.AHT_URHGAN, xi.quest.id.ahtUrhgan.VANISHING_ACT) == QUEST_ACCEPTED and
-                not player:hasKeyItem(xi.ki.RAINBOW_BERRY) and
-                broke ~= 1 and
-                zoneId == xi.zone.WAJAOM_WOODLANDS
-            then
-                npcUtil.giveKeyItem(player, xi.ki.RAINBOW_BERRY)
-            end
-
-            -- AMK04
-            if xi.settings.main.ENABLE_AMK == 1 then
-                xi.amk.helpers.helmTrade(player, helmType, broke)
-            end
-
-            if type(func) == "function" then
-                func(player)
-            end
-
-            player:setLocalVar("[HELM]Last_Trade", os.time())
-        else
-            player:messageBasic(xi.msg.basic.WAIT_LONGER, 0, 0)
+        if type(func) == "function" then
+            func(player)
         end
     else
         player:messageSpecial(zones[zoneId].text[info.message], info.tool)
@@ -1601,21 +1560,6 @@ end
 
 xi.helm.onTrigger = function(player, helmType)
     local zoneId = player:getZoneID()
-    local info = xi.helm.helmInfo[helmType]
+    local info = helmInfo[helmType]
     player:messageSpecial(zones[zoneId].text[info.message], info.tool)
-end
-
-xi.helm.movePoint = function(target, zoneId, helmType)
-    local info = xi.helm.helmInfo[helmType]
-    movePoint(target, zoneId, info)
-end
-
-xi.helm.doesToolBreak = function(player, helmType)
-    local info = xi.helm.helmInfo[helmType]
-    return doesToolBreak(player, info) and 1 or 0
-end
-
-xi.helm.pickItem = function(player, helmType)
-    local info = xi.helm.helmInfo[helmType]
-    return pickItem(player, info)
 end

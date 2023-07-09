@@ -3,12 +3,8 @@
 -- http://ffxiclopedia.wikia.com/wiki/Picking_your_Coffers_and_Chests
 -- http://ffxiclopedia.wikia.com/wiki/Treasure_Chest_and_Coffer_Guide
 -----------------------------------
-require("scripts/globals/items")
-require("scripts/globals/keyitems")
 require("scripts/globals/npc_util")
-require("scripts/globals/settings")
 require("scripts/globals/quests")
-require("scripts/globals/status")
 require("scripts/globals/zone")
 -----------------------------------
 
@@ -17,16 +13,16 @@ xi.treasure = xi.treasure or {}
 
 xi.treasure.type =
 {
-    CHEST   = 1,
-    COFFER  = 2,
+    CHEST  = 1,
+    COFFER = 2,
 }
 
 local keyType =
 {
-    ZONE_KEY      = 1,
-    THIEF_TOOLS   = 2,
-    SKELETON_KEY  = 3,
-    LIVING_KEY    = 4,
+    ZONE_KEY     = 1,
+    THIEF_TOOLS  = 2,
+    SKELETON_KEY = 3,
+    LIVING_KEY   = 4,
 }
 
 local thiefKeyInfo =
@@ -36,21 +32,6 @@ local thiefKeyInfo =
     [keyType.SKELETON_KEY] = { xi.items.SKELETON_KEY,        0.2  },
     [keyType.LIVING_KEY  ] = { xi.items.LIVING_KEY,          0.15 },
 }
-
-local function getIndexAtPosition(targetChest, typeId, zoneId)
-    local treasurePoints = xi.treasure.treasureInfo[typeId].zone[zoneId].points
-    local targetChestPos = targetChest:getPos()
-    for chestId, chestCoords in pairs(treasurePoints) do
-        if
-            math.abs(tonumber(chestCoords[1]) - tonumber(targetChestPos['x'])) < 1 and
-            math.abs(tonumber(chestCoords[3]) - tonumber(targetChestPos['z'])) < 1
-        then
-            return chestId
-        end
-    end
-
-    return 0
-end
 
 xi.treasure.treasureInfo =
 {
@@ -107,33 +88,16 @@ xi.treasure.treasureInfo =
             {
                 treasureLvl = 53,
                 key = 1061,
-                misc =
-                {
-                    {
-                        test = function(player)
-                            return player:getQuestStatus(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.PARADISE_SALVATION_AND_MAPS) == QUEST_ACCEPTED and
-                                not player:hasKeyItem(xi.ki.PIECE_OF_RIPPED_FLOORPLANS)
-                        end,
-
-                        code = function(player, npc)
-                            player:setCharVar(string.format("Quest[%s][%s]Chest", xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.PARADISE_SALVATION_AND_MAPS), getIndexAtPosition(npc, xi.treasure.type.CHEST, xi.zone.SACRARIUM))
-                            npcUtil.giveKeyItem(player, xi.ki.PIECE_OF_RIPPED_FLOORPLANS)
-                        end,
-                    },
-                },
                 points =
                 {
-                    -- These points are sequenced to align to the indeces required for the quest
-                    -- Paradise, Salvation, and Maps
-                    -- If you change the order or locations of these, the quest may not function as intended
-                    {  31.021, -2.000,   99.013, 190 }, -- (F-5)
-                    {  89.034, -2.000,   99.248, 190 }, -- (H-5)
-                    {  88.223, -2.000,  -36.017,   0 }, -- (H-9)
-                    { 177.600,  8.310,  100.000, 130 }, -- (J-6)
-                    { 179.709, -7.693,  -97.007, 192 }, -- (J-10)
-                    { 260.391,  0.000,   21.487,  60 }, -- (L-8)
-                    { 111.451, -2.000, -100.159,  65 }, -- (H-11)
-                    {   8.974, -2.179, -133.075, 190 }, -- (F-11)
+                    { 179.709,   -7.693,  -97.007, 192 },
+                    { 111.451,   -2.000, -100.159,  65 },
+                    {   8.974,   -2.179, -133.075, 190 },
+                    { 260.391,    0.000,   21.487,  60 },
+                    { 177.600,    8.310,  100.000, 130 },
+                    {  89.034,   -2.000,   99.248, 190 },
+                    {  88.223,   -2.000,  -36.017,   0 },
+                    {  31.021,   -2.000,   99.013, 190 },
                 },
                 gil = { 0.929, 5100, 9900 },
                 gem = { 0.071, 790, 799, 815, 788, 796 },
@@ -184,7 +148,7 @@ xi.treasure.treasureInfo =
                     {
                         test = function(player)
                             return player:getQuestStatus(xi.quest.log_id.BASTOK, xi.quest.id.bastok.FADED_PROMISES) == QUEST_ACCEPTED and
-                                player:getCharVar("Quest[1][73]Prog") == 2 and not player:hasKeyItem(xi.ki.DIARY_OF_MUKUNDA)
+                                player:getCharVar("FadedPromises") == 2 and not player:hasKeyItem(xi.ki.DIARY_OF_MUKUNDA)
                         end,
 
                         code = function(player)
@@ -292,7 +256,7 @@ xi.treasure.treasureInfo =
                     {
                         test = function(player)
                             return player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.SCATTERED_INTO_SHADOW) == QUEST_ACCEPTED and
-                                player:getCharVar("Quest[3][61]Prog") == 1 and not player:hasItem(xi.items.BEAST_COLLAR) -- BST AF2
+                                player:getCharVar("scatIntoShadowCS") == 1 and not player:hasItem(13121)
                         end,
 
                         code = function(player)
@@ -397,7 +361,7 @@ xi.treasure.treasureInfo =
 
                         code = function(player)
                             npcUtil.giveKeyItem(player, xi.ki.UN_MOMENT)
-                            player:incrementCharVar("Quest[1][62]Prog", 1)
+                            player:incrementCharVar("ATestOfTrueLoveProgress", 1)
                         end,
                     },
                 },
@@ -438,21 +402,13 @@ xi.treasure.treasureInfo =
 
                         code = function(player)
                             npcUtil.giveKeyItem(player, xi.ki.UN_MOMENT)
-                            player:incrementCharVar("Quest[1][62]Prog", 1)
+                            player:incrementCharVar("ATestOfTrueLoveProgress", 1)
                         end,
                     },
                 },
                 points =
                 {
-                    { -299.787,   -48.000,    24.873,    62 },
-                    { -344.353,   -48.000,   -19.696,     0 },
-                    {  -49.934,   -15.400,    72.736,   130 },
-                    {  -86.685,   -15.400,   113.154,   220 },
-                    {  -50.479,   -16.000,   -54.591,   126 },
-                    { -116.133,   -16.180,  -123.899,   31  },
-                    { -116.016,   -16.180,  -156.052,   205 },
-                    {  -89.897,     0.600,    86.614,   120 },
-                    {  -88.958,    -0.100,  -156.748,   129 },
+                    { -299.787, -48.000, 24.873, 62 },
                 },
                 gil = { 0.306, 5000, 10000 },
                 gem = { 0.204, 798, 790, 808, 788, 815, 796 },
@@ -474,7 +430,7 @@ xi.treasure.treasureInfo =
 
                         code = function(player)
                             npcUtil.giveKeyItem(player, xi.ki.LEPHEMERE)
-                            player:incrementCharVar("Quest[1][62]Prog", 1)
+                            player:incrementCharVar("ATestOfTrueLoveProgress", 1)
                         end,
                     },
                 },
@@ -517,8 +473,8 @@ xi.treasure.treasureInfo =
                     {  -56.994,    7.359,  155.155, 194 },
                     {  -40.195,   -0.008, -130.093, 193 },
                 },
-                gil =  { 0.474, 390, 1300 },
-                gem =  { 0.093, 814, 800, 809, 795, 807, 806 },
+                gil = { 0.474, 390, 1300 },
+                gem = { 0.093, 814, 800, 809, 795, 807, 806 },
                 item = { 0.433, 12799 },
             },
 
@@ -528,7 +484,7 @@ xi.treasure.treasureInfo =
                 key = 1028,
                 points =
                 {
-                    { -497.451,    3.407,  185.921, 254 },
+                    { -499.709,    3.262,  215.970, 254 },
                     { -117.128,    3.970,  134.104,  73 },
                     {  -60.745,    3.063,  295.362, 105 },
                     {  -62.183,    3.215,  416.434, 105 },
@@ -555,9 +511,7 @@ xi.treasure.treasureInfo =
                 key = 1029,
                 points =
                 {
-                    { -177.956,   -0.002, -220.058, 255 },
-                    { -267.640,   -0.002, -220.058, 125 },
-                    { -60.365,     8.035,  -55.641, 190 },
+                    { -177.956, -0.002, -220.058, 125 },
                 },
                 gil = { 0.459, 450, 1034 },
                 gem = { 0.109, 814, 800, 809, 795, 806 },
@@ -573,8 +527,8 @@ xi.treasure.treasureInfo =
                     {
                         test = function(player)
                             return player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.SIGNED_IN_BLOOD) == QUEST_ACCEPTED and
-                            xi.quest.getVar(player, xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.SIGNED_IN_BLOOD, 'Prog') == 2 and
-                            not player:hasKeyItem(xi.ki.TORN_OUT_PAGES)
+                                player:getCharVar("Quest[0][108]Prog") == 2 and
+                                not player:hasKeyItem(xi.ki.TORN_OUT_PAGES)
                         end,
 
                         code = function(player)
@@ -624,15 +578,7 @@ xi.treasure.treasureInfo =
                 key = 1029,
                 points =
                 {
-                    { -423.066,    0.000,  672.483, 250 },
-                    { -422.893,    0.000,  567.934, 125 },
-                    { -385.529,    -2.17,  718.492, 190 },
-                    { -474.874,    0.000,  770.246, 190 },
-                    { -210.128,    0.000,  658.485, 130 },
-                    { -468.907,    0.000,  -660.03, 125 },
-                    { -459.994,    0.000,  -611.05, 200 },
-                    { -509.053,    0.000,  -620.07, 130 },
-                    { -411.050,    0.000,  -620.06,   0 },
+                    { -423.066, 0.000, 672.483, 250 },
                 },
                 gil = { 0.459, 450, 1034 },
                 gem = { 0.109, 814, 800, 809, 795, 806 },
@@ -682,7 +628,7 @@ xi.treasure.treasureInfo =
                 },
                 points =
                 {
-                    {  -13.984,  -40.008,  -67.908, 245 },
+                    {  -14.130,  -39.999,  -85.554, 216 },
                     {   58.307,  -39.959,  -52.149, 128 },
                     {  141.517,  -41.565,   29.685, 204 },
                     {  154.561,  -41.685,  220.130,  62 },
@@ -764,7 +710,7 @@ xi.treasure.treasureInfo =
                     {  -36.474,    0.063,  -70.480,  94 },
                     {  260.698,   -1.274,   54.472, 135 },
                     {  125.956,   19.805,   10.593,  91 },
-                    {  -50.404,   20.000,    3.634,  50 },
+                    {  -54.923,   18.781,  -19.130,  33 },
                     {  -90.151,   15.670, -103.097, 143 },
                     { -130.046,   19.263,  -43.970, 241 },
                     {  -58.153,   20.000,  -62.085, 211 },
@@ -789,7 +735,7 @@ xi.treasure.treasureInfo =
                 points =
                 {
                     { -163.053,    0.000,  351.988, 128 },
-                    { -351.054,   13.954,  269.937, 124 },
+                    { -352.798,   15.602,  266.998, 124 },
                     {  -84.561,    5.269,  139.762,   7 },
                     {  -62.448,    0.000,   88.577, 128 },
                     { -122.826,    0.000,  112.010, 128 },
@@ -858,7 +804,7 @@ xi.treasure.treasureInfo =
 
                         code = function(player)
                             npcUtil.giveKeyItem(player, xi.ki.LANCIENNE)
-                            player:incrementCharVar("Quest[1][62]Prog", 1)
+                            player:incrementCharVar("ATestOfTrueLoveProgress", 1)
                         end,
                     },
                 },
@@ -906,7 +852,7 @@ xi.treasure.treasureInfo =
                     { -24.070,   16.841,   18.666, 190 },
                     { 140.090,   20.000,  -44.821,  60 },
                     {  94.145,   15.995,   71.251,  90 },
-                    { 134.130,   20.000,  107.904, 190 },
+                    { 140.432,   19.989,   84.637, 190 },
                 },
                 gil = { 0.927, 9800, 19180 },
                 gem = { 0.073, 791, 797, 784, 803, 805, 801, 802 },
@@ -920,13 +866,13 @@ xi.treasure.treasureInfo =
                 points =
                 {
                     { -306.824,  -23.999,  230.783, 155 },
-                    {  -63.751,  -24.000,  366.617, 173 },
+                    {  -98.092,  -24.000,  369.754, 173 },
                     { -149.167,  -40.200,  446.421,  52 },
                     {   75.417,  -24.000,  412.146,  73 },
                     {  285.520,   -2.600,  375.324, 105 },
                     {  454.220,  -40.200,   29.944,  66 },
                     {  378.977,   -8.000, -133.852,  80 },
-                    {  274.934,  -24.000, -256.526,  21 },
+                    {  295.992,  -24.000, -241.582,  21 },
                     {  128.749,  -34.000, -173.096, 110 },
                     { -128.639,  -34.000, -173.254,  22 },
                     { -377.675,  -40.200, -268.597, 230 },
@@ -982,13 +928,13 @@ xi.treasure.treasureInfo =
                 },
                 points =
                 {
-                    {  14.089,   -1.195, -210.520, 187 },
+                    {   9.376,   -1.345, -223.188, 187 },
                     { 106.335,   -0.829, -106.411, 148 },
                     {  60.765,   -0.333,  -93.267,  45 },
                     {  12.823,   -0.390, -144.714, 201 },
                     {  37.379,   -0.687, -146.255, 168 },
                     {  22.771,   -1.363, -130.966, 114 },
-                    {  24.619,   -0.236,  -90.076,  60 },
+                    {  17.613,   -1.386,  -91.632,  60 },
                     { -65.136,   -0.739, -142.362,  32 },
                     { -68.553,   -1.002, -186.570,  30 },
                     { -21.343,   -0.797, -177.934, 107 },
@@ -1022,9 +968,9 @@ xi.treasure.treasureInfo =
                     { -139.729,  -71.750,  -53.252,  63 },
                     { -100.197,  -72.511,  -13.141,  65 },
                 },
-                gil = { 0.752, 7320, 18000 },
+                gil = { 0.652, 7320, 18000 },
                 gem = { 0.044, 791, 801, 810, 784, 802, 797, 803, 805 },
-                item = { 0.204, 14670, 13548 },
+                item = { 0.304, 14670 },
             },
 
             [xi.zone.THE_BOYAHDA_TREE] = -- 153
@@ -1130,7 +1076,7 @@ xi.treasure.treasureInfo =
                 {
                     {
                         test = function(player)
-                            return player:getCharVar("Quest[0][92]Prog") == 3
+                            return player:getCharVar("UnderOathCS") == 3
                         end,
 
                         code = function(player)
@@ -1166,14 +1112,12 @@ xi.treasure.treasureInfo =
                 {
                     {
                         test = function(player)
-                            return player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.WILD_CARD) == QUEST_ACCEPTED and
-                                (xi.quest.getVar(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.WILD_CARD, 'Prog') == 2 or
-                                xi.quest.getVar(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.WILD_CARD, 'Prog') == 3) and
-                                not player:hasKeyItem(xi.ki.JOKER_CARD)
+                            return player:getCharVar("WildCard") == 2
                         end,
 
                         code = function(player)
                             npcUtil.giveKeyItem(player, xi.ki.JOKER_CARD)
+                            player:setCharVar("WildCard", 3)
                         end,
                     },
                 },
@@ -1213,7 +1157,7 @@ xi.treasure.treasureInfo =
                     {
                         test = function(player)
                             return player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.TRUE_WILL) == QUEST_ACCEPTED and
-                                player:getCharVar("Quest[5][145]Prog") == 2 and
+                                player:getCharVar("trueWillCS") == 2 and
                                 not player:hasKeyItem(xi.ki.LARGE_TRICK_BOX)
                         end,
 
@@ -1268,7 +1212,7 @@ xi.treasure.treasureInfo =
                 },
                 points =
                 {
-                    { -177.900,   20.973,  -92.774, 207 },
+                    { -184.862,   17.989, -108.860, 207 },
                     { -130.961,   29.207,   19.947,   4 },
                     { -106.972,   19.055,  -65.469, 114 },
                     { -168.173,   18.653,  -92.826,  35 },
@@ -1445,7 +1389,7 @@ xi.treasure.treasureInfo =
                 },
                 points =
                 {
-                    { 616.652,   -6.583, -690.018, 255 },
+                    { 613.598,   -6.057, -680.984, 255 },
                     { 540.553,  -16.920, -770.118, 192 },
                     { 429.401,  -16.890, -739.502, 255 },
                     { 495.848,  -10.863, -827.019, 194 },
@@ -1625,7 +1569,6 @@ xi.treasure.onTrade = function(player, npc, trade, chestType)
             not player:hasKeyItem(xi.ki.OLD_GAUNTLETS)
         then
             player:messageSpecial(msgBase)
-            player:delStatusEffectsByFlag(xi.effectFlag.DETECTABLE)
             npcUtil.giveKeyItem(player, xi.ki.OLD_GAUNTLETS)
             player:confirmTrade()
             moveChest(npc, zoneId, chestType)
@@ -1640,7 +1583,6 @@ xi.treasure.onTrade = function(player, npc, trade, chestType)
             not player:hasItem(info.af[mJob].reward)
         then
             player:messageSpecial(msgBase)
-            player:delStatusEffectsByFlag(xi.effectFlag.DETECTABLE)
             if npcUtil.giveItem(player, info.af[mJob].reward) then
                 player:confirmTrade()
                 moveChest(npc, zoneId, chestType)
@@ -1655,8 +1597,7 @@ xi.treasure.onTrade = function(player, npc, trade, chestType)
         for _, v in pairs(info.misc) do
             if v.test(player) then
                 player:messageSpecial(msgBase)
-                player:delStatusEffectsByFlag(xi.effectFlag.DETECTABLE)
-                v.code(player, npc)
+                v.code(player)
                 player:confirmTrade()
                 moveChest(npc, zoneId, chestType)
                 return
@@ -1667,7 +1608,6 @@ xi.treasure.onTrade = function(player, npc, trade, chestType)
     -- map
     if info.map and not player:hasKeyItem(info.map) then
         player:messageSpecial(msgBase)
-        player:delStatusEffectsByFlag(xi.effectFlag.DETECTABLE)
         npcUtil.giveKeyItem(player, info.map)
         player:confirmTrade()
         moveChest(npc, zoneId, chestType)
@@ -1677,14 +1617,9 @@ xi.treasure.onTrade = function(player, npc, trade, chestType)
     -- illusion: do not consume tool, and relocate chest after short delay
     if os.time() < illusionCooldown then
         player:messageSpecial(msgBase + 6)
-        player:PrintToPlayer("You discern that the illusion will remain for " .. tostring(math.floor(((illusionCooldown - os.time()) / 60))) .. " minutes.", xi.msg.channel.NS_SAY)
-        player:tradeComplete(false)
         moveChest(npc, zoneId, chestType)
         return
     end
-
-    -- All options from this point forward are considered a success, so remove detectable status effects
-    player:delStatusEffectsByFlag(xi.effectFlag.DETECTABLE)
 
     -- non-quest reward
     player:messageSpecial(msgBase)

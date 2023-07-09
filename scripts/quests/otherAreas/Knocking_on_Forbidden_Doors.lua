@@ -2,13 +2,10 @@
 -- Knocking on Forbidden Doors
 -----------------------------------
 -- Log ID: 4, Quest ID: 78
--- Enaremand       : !pos 95.962 -41 51.613
+-- Enaremand       : !pos
 -- Fyi_Chalmwoh    : !pos -39.273 -16.000 70.126 249
--- Alsha Spawn QM  : !pos -155.805 -15.692 644.617
 -- Mire Incense KI : 709
 -----------------------------------
-require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/mannequins')
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
@@ -17,6 +14,7 @@ require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 -----------------------------------
 local mhauraID = require('scripts/zones/Mhaura/IDs')
+local phomiunaID = require('scripts/zones/Phomiuna_Aqueducts/IDs')
 local misareauxID = require('scripts/zones/Misareaux_Coast/IDs')
 -----------------------------------
 
@@ -57,7 +55,7 @@ quest.sections =
             {
                 onTrigger = function(player, csid, option, npc)
                     if quest:getVar(player, 'Prog') == 0 then
-                        return quest:progressEvent(536)
+                        return quest:event(536)
                     end
                 end,
             },
@@ -75,11 +73,10 @@ quest.sections =
             ['Wooden_Ladder'] =
             {
                 onTrigger = function(player, npc)
-                    local ladderList = player:getZone():queryEntitiesByName("Wooden_Ladder")
                     if
                         quest:getVar(player, 'Prog') == 1 and
-                        npc:getID() == ladderList[4]:getID()
-                    then
+                        npc:getID() == phomiunaID.npc.LADDER_KNOCKING
+                    then -- Find a better way to identify exactly which ladder it is in case IDs shift
                         return quest:progressEvent(38, 27) -- Essentially chains the ladder cs with the actual quest cs
                     end
                 end,
@@ -125,7 +122,7 @@ quest.sections =
 
                     -- Clicking on the ??? after killing NM
                     elseif progressVar == 4 then
-                        return quest:progressEvent(558)
+                        return quest:event(558)
                     end
                 end,
             },
@@ -148,7 +145,7 @@ quest.sections =
                 [557] = function(player, csid, option, npc)
                     if
                         quest:getVar(player, 'Prog') == 3 and
-                        npcUtil.popFromQM(player, npc, misareauxID.mob.ALSHA, { claim = true, hide = 0 })
+                        npcUtil.popFromQM(player, npc, ID.mob.ALSHA, { claim = true, hide = 0 })
                     then
                         return quest:messageSpecial(misareauxID.text.FOUL_STENCH)
                     end
@@ -165,7 +162,7 @@ quest.sections =
         {
             ['Fyi_Chalmwoh'] =
             {
-                onTrigger = function(player, npc)
+                onTrigger = function(player, csid, option, npc)
                     if quest:getVar(player, 'Prog') == 5 then
                         return quest:progressEvent(321, { [0] = 704,
                             [1] = xi.mannequin.getMannequins(player),
@@ -178,51 +175,14 @@ quest.sections =
                 end,
             },
 
-            onEventUpdate =
-            {
-                [321] = function(player, csid, option, npc)
-                    if option == 0 then
-                        -- Purchase a mannequin
-                        local richEnough = 0
-                        if player:getGil() >= xi.mannequin.cost.POSE then
-                            richEnough = 1
-                        end
-
-                        player:updateEvent({ [0] = richEnough, -- Not sure if this is the legitimate use, but it works.
-                                             [1] = xi.mannequin.getMannequins(player),
-                                             [2] = option,
-                        })
-                    elseif
-                        option >= 11 and
-                        option <= 18
-                    then
-                        -- Pose a mannequin
-                        local race = option - 10 -- From 1 to 8, for consistency in lua
-                        player:updateEvent({ [0] = 1,
-                                             [1] = xi.mannequin.getMannequins(player),
-                                             [2] = option,
-                                             [3] = xi.mannequin.getMannequinPose(player, race),
-                        })
-                    end
-                end,
-            },
-
             onEventFinish =
             {
                 [321] = function(player, csid, option, npc)
-                    if
-                        option > 10 and
-                        player:delGil(xi.mannequin.cost.POSE)
-                    then
-                        -- Posing a mannequin
-                        local race = ((option - 11) % 8) + 1 -- 1 to 8 for lua consistency
-                        local pose = math.floor(option / 32) -- Same as rshift(5)
-                        xi.mannequin.setMannequinPose(player, race, pose)
-                    end
                     quest:complete(player)
                 end,
             },
-        },
+
+        }
     },
 
     -- Quest complete
@@ -236,13 +196,13 @@ quest.sections =
         {
             ['Fyi_Chalmwoh'] =
             {
-                onTrigger = function(player, npc)
+                onTrigger = function(player, csid, option, npc)
                     return quest:event(321, { [1] = xi.mannequin.getMannequins(player),
-                                              [2] = xi.mannequin.cost.PURCHASE,
-                                              [3] = xi.mannequin.cost.TRADE,
-                                              [4] = xi.mannequin.cost.POSE,
-                                              [5] = player:getGil(),
-                                              })
+                        [2] = xi.mannequin.cost.PURCHASE,
+                        [3] = xi.mannequin.cost.TRADE,
+                        [4] = xi.mannequin.cost.POSE,
+                        [5] = player:getGil(),
+                        })
                 end,
 
                 onTrade = function(player, npc, trade)
@@ -277,8 +237,8 @@ quest.sections =
                         end
 
                         player:updateEvent({ [0] = richEnough, -- Not sure if this is the legitimate use, but it works.
-                                             [1] = xi.mannequin.getMannequins(player),
-                                             [2] = option,
+                            [1] = xi.mannequin.getMannequins(player),
+                            [2] = option,
                         })
                     elseif
                         option >= 11 and
@@ -287,9 +247,9 @@ quest.sections =
                         -- Pose a mannequin
                         local race = option - 10 -- From 1 to 8, for consistency in lua
                         player:updateEvent({ [0] = 1,
-                                             [1] = xi.mannequin.getMannequins(player),
-                                             [2] = option,
-                                             [3] = xi.mannequin.getMannequinPose(player, race),
+                            [1] = xi.mannequin.getMannequins(player),
+                            [2] = option,
+                            [3] = xi.mannequin.getMannequinPose(player, race),
                         })
                     end
                 end,
@@ -325,7 +285,7 @@ quest.sections =
                     then
                         -- Posing a mannequin
                         local race = ((option - 11) % 8) + 1 -- 1 to 8 for lua consistency
-                        local pose = math.floor(option / 32) -- Same as rshift(5)
+                        local pose = math.floor(option / 32)
                         xi.mannequin.setMannequinPose(player, race, pose)
                     end
                 end,

@@ -6,8 +6,6 @@
 -- Amaura  : !pos -85 -6 89 230
 -----------------------------------
 require('scripts/globals/npc_util')
-require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/quests')
 require('scripts/globals/titles')
 require('scripts/globals/zone')
@@ -84,7 +82,7 @@ quest.sections =
                     if player:hasKeyItem(xi.ki.COLD_MEDICINE) then
                         return quest:progressEvent(614)
                     else
-                        return quest:message(northernSandoriaID.text.ABEAULE_DIALOG_HOME)
+                        return quest:messageText(northernSandoriaID.text.ABEAULE_DIALOG_HOME)
                     end
                 end,
             },
@@ -122,9 +120,9 @@ quest.sections =
                     then
                         return quest:progressEvent(636)
                     elseif hasFormula then
-                        return quest:message(southernSandoriaID.text.AMAURA_DIALOG_COMEBACK)
+                        return quest:messageText(southernSandoriaID.text.AMAURA_DIALOG_COMEBACK)
                     elseif hasColdMedicine then
-                        return quest:message(southernSandoriaID.text.AMAURA_DIALOG_DELIVER)
+                        return quest:messageText(southernSandoriaID.text.AMAURA_DIALOG_DELIVER)
                     end
                 end,
             },

@@ -3,8 +3,6 @@
 --
 -- Kohlo-Lakolo, !pos -26.8 -6 190 240
 -----------------------------------
-require('scripts/globals/items')
-require("scripts/globals/keyitems")
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
 require('scripts/globals/titles')
@@ -15,7 +13,7 @@ local quest = Quest:new(xi.quest.log_id.WINDURST, xi.quest.id.windurst.INSPECTOR
 
 quest.reward =
 {
-    fame     = 20,
+    fame     = 10,
     fameArea = xi.quest.fame_area.WINDURST,
     item     = xi.items.HEKO_OBI,
     title    = xi.title.FAKE_MOUSTACHED_INVESTIGATOR,
@@ -27,8 +25,7 @@ quest.sections =
     {
         check = function(player, status, vars)
             return status == QUEST_AVAILABLE and
-                player:hasCompletedQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.KNOW_ONES_ONIONS) and
-                player:getFameLevel(xi.quest.fame_area.WINDURST) >= 2
+                player:hasCompletedQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.KNOW_ONES_ONIONS)
         end,
 
         [xi.zone.PORT_WINDURST] =

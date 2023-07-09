@@ -11,8 +11,6 @@
 -- mannequin_legs  : !additem 1604
 -- mannequin_feet  : !additem 1605
 -----------------------------------
-require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
 require('scripts/globals/titles')
@@ -133,7 +131,7 @@ quest.sections =
                     player:confirmTrade()
 
                     quest:setVar(player, 'Prog', 3)
-                    quest:setVar(player, 'Wait', getMidnight())
+                    quest:setVar(player, 'Wait', os.time())
                 end,
             },
         },
@@ -150,7 +148,8 @@ quest.sections =
             ['Fyi_Chalmwoh'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, "Wait") < os.time() then
+                    local wait = quest:getVar(player, "Wait")
+                    if os.time() >= wait + 60 then
                         return quest:progressEvent(311)
                     else
                         return quest:event(310) -- Please wait

@@ -4,8 +4,6 @@
 -- Log ID: 1, Quest ID: 9
 -- Gudav : !pos -3.286 1.407 50.591 236
 -----------------------------------
-require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/quests')
 require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
@@ -15,6 +13,7 @@ local quest = Quest:new(xi.quest.log_id.BASTOK, xi.quest.id.bastok.A_FOREMANS_BE
 
 quest.reward =
 {
+    exp      = 2000,
     fame     = 60,
     fameArea = xi.quest.fame_area.BASTOK,
     keyItem  = xi.ki.MAP_OF_THE_GUSGEN_MINES,

@@ -1,37 +1,33 @@
 -----------------------------------
---  A Squires Test
---  NPC: Balasiel
---  !pos -136 -11 64 230
---  !addquest 0 10
+-- A Squire's Test
 -----------------------------------
-require('scripts/globals/items')
-require("scripts/globals/keyitems")
+-- Log ID: 0, Quest ID: 10
+-- Balasiel : !pos -136 -11 64 230
+-----------------------------------
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
-require("scripts/globals/status")
+require('scripts/globals/titles')
+require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 -----------------------------------
-local ID = require("scripts/zones/Southern_San_dOria/IDs")
+local southernSandoriaID = require('scripts/zones/Southern_San_dOria/IDs')
 -----------------------------------
 
-local quest = Quest:new(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.A_SQUIRE_S_TEST)
+local quest = Quest:new(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.A_SQUIRES_TEST)
 
 quest.reward =
 {
-    item     = xi.items.SPATHA,
     fame     = 30,
     fameArea = xi.quest.fame_area.SANDORIA,
+    item     = xi.items.SPATHA,
     title    = xi.title.KNIGHT_IN_TRAINING,
-
 }
 
 quest.sections =
 {
-    -- Section: Quest available.
     {
         check = function(player, status, vars)
-            return status == QUEST_AVAILABLE and
-                player:getMainLvl() >= 7
+            return status == QUEST_AVAILABLE
         end,
 
         [xi.zone.SOUTHERN_SAN_DORIA] =
@@ -39,10 +35,10 @@ quest.sections =
             ['Balasiel'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Refuse') == 1 then
-                        return quest:progressEvent(631)
-                    elseif quest:getVar(player, 'Prog') == 0 then
+                    if quest:getVar(player, 'Option') == 0 then
                         return quest:progressEvent(616)
+                    else
+                        return quest:progressEvent(631)
                     end
                 end,
             },
@@ -50,26 +46,22 @@ quest.sections =
             onEventFinish =
             {
                 [616] = function(player, csid, option, npc)
-                    if option == 1 then
-                        quest:setVar(player, 'Refuse', 1)
-                    elseif option == 0 then
+                    if option == 0 then
                         quest:begin(player)
-                        quest:setVar(player, 'Prog', 1)
+                    else
+                        quest:setVar(player, 'Option', 1)
                     end
                 end,
 
                 [631] = function(player, csid, option, npc)
                     if option == 0 then
                         quest:begin(player)
-                        quest:setVar(player, 'Refuse', 0)
-                        quest:setVar(player, 'Prog', 1)
                     end
                 end,
             },
         },
     },
 
-    -- Section: Quest accepted
     {
         check = function(player, status, vars)
             return status == QUEST_ACCEPTED
@@ -79,27 +71,21 @@ quest.sections =
         {
             ['Balasiel'] =
             {
-                onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 1 then
-                        return quest:messageSpecial(ID.text.REVIVAL_TREE_ROOT, xi.items.REVIVAL_TREE_ROOT)
-                    end
-                end,
-
                 onTrade = function(player, npc, trade)
-                    if
-                        quest:getVar(player, 'Prog') == 1 and
-                        npcUtil.tradeHasExactly(trade, xi.items.REVIVAL_TREE_ROOT)
-                    then
+                    if npcUtil.tradeHasExactly(trade, xi.items.REVIVAL_TREE_ROOT) then
                         return quest:progressEvent(617)
                     end
                 end,
+
+                onTrigger = quest:messageName(southernSandoriaID.text.GO_TO_KING_RANPERRES, xi.items.REVIVAL_TREE_ROOT),
             },
 
             onEventFinish =
             {
                 [617] = function(player, csid, option, npc)
-                    quest:complete(player)
-                    player:tradeComplete()
+                    if quest:complete(player) then
+                        player:confirmTrade()
+                    end
                 end,
             },
         },

@@ -5,8 +5,6 @@
 -- Thunder Hawk : !pos -58 -10 6 248
 -- Jail Door    : !pos 56 0.1 -23 147
 -----------------------------------
-require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
 require('scripts/globals/titles')
@@ -20,7 +18,8 @@ local quest = Quest:new(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.THE_
 
 quest.reward =
 {
-    gil      = 3000,
+    exp      = 2000,
+    gil      = 5000,
     fameArea = xi.quest.fame_area.SELBINA_RABAO,
     keyItem  = xi.ki.MAP_OF_THE_RANGUEMONT_PASS,
     title    = xi.title.HONORARY_CITIZEN_OF_SELBINA,

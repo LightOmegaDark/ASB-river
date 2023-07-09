@@ -10,11 +10,8 @@
 -- Door: Prince Royal's : !pos -38 -3 73 233
 -- Door: Great Hall     : !pos 0 -1 13 233
 -----------------------------------
-require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/missions')
 require('scripts/globals/npc_util')
-require('scripts/globals/settings')
 require('scripts/globals/interaction/mission')
 require('scripts/globals/zone')
 -----------------------------------
@@ -153,23 +150,9 @@ mission.sections =
                 end,
 
                 [7] = function(player, csid, option, npc)
+                    npcUtil.giveKeyItem(player, xi.ki.SHADOW_FRAGMENT)
                     player:setMissionStatus(mission.areaId, 4)
                     player:setPos(378, -12, -20, 125, 161)
-                end,
-            },
-        },
-
-        [xi.zone.CASTLE_ZVAHL_BAILEYS] =
-        {
-            afterZoneIn =
-            {
-                function(player)
-                    if
-                        player:getMissionStatus(mission.areaId) == 4 and
-                        not player:hasKeyItem(xi.ki.SHADOW_FRAGMENT)
-                    then
-                        npcUtil.giveKeyItem(player, xi.ki.SHADOW_FRAGMENT)
-                    end
                 end,
             },
         },

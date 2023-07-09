@@ -5,8 +5,6 @@
 -- Quelveuiat          : !pos -3.177 -22.750 -25.970 26
 -- qm_hard_days_knight : !pos -38.605 -9.022 -290.700 24
 -----------------------------------
-require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
 require('scripts/globals/titles')
@@ -59,8 +57,7 @@ quest.sections =
                     local questProgress = quest:getVar(player, 'Prog')
 
                     if questProgress == 0 then
-                        -- Additional Dialogue
-                        return quest:event(120)
+                        return quest:progressEvent(120)
                     elseif questProgress == 1 then
                         return quest:progressEvent(121)
                     end

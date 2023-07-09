@@ -7,8 +7,6 @@
 -- Melek     : !pos -80 -5 158 240
 -- Uu Zhoumo : !pos -179 16 155 145
 -----------------------------------
-require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/missions')
 require('scripts/globals/npc_util')
 require('scripts/globals/interaction/mission')
@@ -73,7 +71,15 @@ mission.sections =
                     local missionStatus = player:getMissionStatus(mission.areaId)
 
                     if missionStatus == 3 then
-                        return mission:progressEvent(239, 0, 0, 0, xi.nation.BASTOK)
+                        local needsSemihTrust = (not player:hasSpell(940) and not player:hasItem(xi.items.CIPHER_OF_SEMIHS_ALTER_EGO)) and 1 or 0
+                        local hasTrustQuest =
+                        (
+                            player:hasKeyItem(xi.ki.SAN_DORIA_TRUST_PERMIT) or
+                            player:hasKeyItem(xi.ki.BASTOK_TRUST_PERMIT) or
+                            player:hasKeyItem(xi.ki.WINDURST_TRUST_PERMIT)
+                        ) and 0 or 1
+
+                        return mission:progressEvent(239, 0, 0, 0, xi.nation.BASTOK, 0, hasTrustQuest, needsSemihTrust)
                     elseif missionStatus == 5 then
                         return mission:event(240)
                     elseif missionStatus == 6 then
@@ -109,6 +115,13 @@ mission.sections =
                 [239] = function(player, csid, option, npc)
                     player:setMissionStatus(mission.areaId, 4)
                     npcUtil.giveKeyItem(player, xi.ki.SWORD_OFFERING)
+
+                    if
+                        not player:hasSpell(940) and
+                        not player:hasItem(xi.items.CIPHER_OF_SEMIHS_ALTER_EGO)
+                    then
+                        npcUtil.giveItem(player, xi.items.CIPHER_OF_SEMIHS_ALTER_EGO)
+                    end
                 end,
             },
         },

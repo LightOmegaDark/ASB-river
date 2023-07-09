@@ -9,12 +9,9 @@
 -- Zokima-Rokima         : !pos 0 -16 124 239
 -- Vestal Chamber (_6q2) : !pos 0.1 -49 37 242
 -----------------------------------
-require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/missions')
 require('scripts/globals/npc_util')
 require('scripts/globals/titles')
-require('scripts/globals/settings')
 require('scripts/globals/interaction/mission')
 require('scripts/globals/zone')
 -----------------------------------
@@ -106,13 +103,8 @@ mission.sections =
 
             onEventFinish =
             {
-                [166] = function(player, csid, option, npc)
-                    handleAcceptMission(player, csid, option, npc)
-                end,
-
-                [190] = function(player, csid, option, npc)
-                    handleAcceptMission(player, csid, option, npc)
-                end,
+                [166] = handleAcceptMission,
+                [190] = handleAcceptMission,
             },
         },
     },

@@ -7,8 +7,6 @@
 -- Osker   : !pos -61.42 8.2 94.2 244
 -- _6t2    : !pos -88.2 -7.65 -168.8 245
 -----------------------------------
-require('scripts/globals/items')
-require('scripts/globals/keyitems')
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
 require('scripts/globals/titles')
@@ -17,16 +15,6 @@ require('scripts/globals/interaction/quest')
 -----------------------------------
 
 local quest = Quest:new(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.CHOCOBOS_WOUNDS)
-
-local function getCurrentTime()
-    -- Check if the day has changed
-    if xi.settings.main.ERA_CHOCOBOS_WOUNDS then
-        return VanadielUniqueDay()
-    end
-
-    -- Check if the hour has changed
-    return 24 * VanadielUniqueDay() + VanadielHour()
-end
 
 quest.reward =
 {
@@ -82,7 +70,7 @@ quest.sections =
                 onTrade   = quest:progressEvent(62),
             },
 
-            ['Osker']   = quest:progressEvent(62),
+            ['Osker'] = quest:progressEvent(62),
 
             onEventFinish =
             {
@@ -141,7 +129,7 @@ quest.sections =
                     if npcUtil.tradeHasExactly(trade, xi.items.BUNCH_OF_GYSAHL_GREENS) then
                         return quest:progressEvent(76)
                     elseif npcUtil.tradeHasExactly(trade, xi.items.CLUMP_OF_GAUSEBIT_WILDGRASS) then
-                        if getCurrentTime() > quest:getVar(player, 'Timer') then
+                        if quest:getVar(player, 'Timer') <= os.time() then
                             return quest:progressEvent(chocoboFeedTrades[quest:getVar(player, 'Prog')])
                         else
                             return quest:progressEvent(73)
@@ -164,20 +152,18 @@ quest.sections =
             onEventFinish =
             {
                 [57] = function(player, csid, option, npc)
-                    player:tradeComplete(false)
-                    quest:setVar(player, 'Timer', getCurrentTime())
+                    quest:setVar(player, 'Timer', os.time() + 45)
                     quest:setVar(player, 'Prog', 2)
                 end,
 
                 [58] = function(player, csid, option, npc)
-                    player:tradeComplete(false)
-                    quest:setVar(player, 'Timer', getCurrentTime())
+                    quest:setVar(player, 'Timer', os.time() + 45)
                     quest:setVar(player, 'Prog', 3)
                 end,
 
                 [59] = function(player, csid, option, npc)
                     player:confirmTrade()
-                    quest:setVar(player, 'Timer', getCurrentTime())
+                    quest:setVar(player, 'Timer', os.time() + 45)
                     quest:setVar(player, 'Prog', 4)
 
                     return quest:event(99)
@@ -185,13 +171,13 @@ quest.sections =
 
                 [60] = function(player, csid, option, npc)
                     player:confirmTrade()
-                    quest:setVar(player, 'Timer', getCurrentTime())
+                    quest:setVar(player, 'Timer', os.time() + 45)
                     quest:setVar(player, 'Prog', 5)
                 end,
 
                 [63] = function(player, csid, option, npc)
                     player:confirmTrade()
-                    quest:setVar(player, 'Timer', getCurrentTime())
+                    quest:setVar(player, 'Timer', os.time() + 45)
                     quest:setVar(player, 'Prog', 6)
                 end,
 
@@ -206,20 +192,13 @@ quest.sections =
 
     {
         check = function(player, status, vars)
-            return status == QUEST_COMPLETED
+            return status == QUEST_COMPLETED and
+                not player:hasCompletedQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.SAVE_MY_SON)
         end,
 
         [xi.zone.UPPER_JEUNO] =
         {
-            ['Brutus'] =
-            {
-                onTrigger = function(player, npc)
-                    if player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.SAVE_MY_SON) == QUEST_AVAILABLE then
-                        return quest:event(22)
-                    end
-                end,
-            },
-
+            ['Brutus']  = quest:event(22), -- Always used except for importantOnce() for Chocobo on the Loose (10094)
             ['Chocobo'] = quest:event(55),
             ['Osker']   = quest:event(55),
         },
