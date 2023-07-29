@@ -2300,14 +2300,16 @@ namespace battleutils
                 baseTp = CalculateBaseTP((int16)(delay * 60.0f / 1000.0f / ratio));
             }
 
+            int16 attackerTp = 0;
+
             if (giveTPtoAttacker)
             {
                 if (PAttacker->objtype == TYPE_PC && physicalAttackType == PHYSICAL_ATTACK_TYPE::ZANSHIN)
                 {
                     baseTp += ((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_IKISHOTEN, (CCharEntity*)PAttacker);
                 }
-
-                PAttacker->addTP((int16)(tpMultiplier * (baseTp * (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker)))))));
+                attackerTp = ((tpMultiplier * (baseTp * (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker)))))));
+                PAttacker->addTP(attackerTp);
             }
 
             if (giveTPtoVictim)
@@ -2327,9 +2329,9 @@ namespace battleutils
                 }
                 else
                 {
-                    PDefender->addTP((uint16)(tpMultiplier *
-                                              ((baseTp + 30) * sBlowMult *
-                                               (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); // subtle blow also reduces the "+30" on mob tp gain
+                    uint16 defenderTp = attackerTp * 1.25 * sBlowMult *
+                                         (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP)); // subtle blow also reduces the "+30" on mob tp gain
+                    PDefender->addTP(defenderTp);
                 }
             }
         }
@@ -2446,7 +2448,7 @@ namespace battleutils
             else
             {
                 PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
-                                         ((baseTp + 30) * sBlowMult *
+                                         (std::ceil(baseTp * 1.25) * sBlowMult *
                                           (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); // subtle blow also reduces the "+30" on mob tp gain
             }
         }
