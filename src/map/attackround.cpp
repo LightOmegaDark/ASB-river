@@ -176,6 +176,10 @@ bool CAttackRound::IsH2H()
     {
         return weapon->getSkillType() == SKILL_HAND_TO_HAND;
     }
+    else if ((m_attacker->objtype == TYPE_PET || m_attacker->objtype == TYPE_MOB) && (m_attacker->GetMJob() == JOB_MNK || m_attacker->GetSJob() == JOB_MNK))
+    {
+        return true;
+    }
     return false;
 }
 
