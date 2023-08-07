@@ -894,7 +894,7 @@ namespace zoneutils
         // clang-format on
 
         // IDs attached to xi.zone[name] need to be populated before NPCs and Mobs are loaded
-        luautils::PopulateIDLookups();
+        luautils::PopulateIDLookupsByZone();
 
         LoadNPCList();
         LoadMOBList();

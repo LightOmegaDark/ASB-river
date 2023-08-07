@@ -1,7 +1,7 @@
 -----------------------------------
--- Zone: Walk_of_Echoes_P1
+-- Zone: unknown (0)
 -----------------------------------
-local ID = require('scripts/zones/Walk_of_Echoes_P1/IDs')
+local ID = require('scripts/zones/unknown/IDs')
 -----------------------------------
 local zoneObject = {}
 
@@ -14,13 +14,10 @@ zoneObject.onZoneIn = function(player, prevZone)
     return cs
 end
 
-zoneObject.onTriggerAreaEnter = function(player, triggerArea)
+zoneObject.onEventUpdate = function(player, csid, option, npc)
 end
 
-zoneObject.onEventUpdate = function(player, csid, option)
-end
-
-zoneObject.onEventFinish = function(player, csid, option)
+zoneObject.onEventFinish = function(player, csid, option, npc)
 end
 
 return zoneObject
