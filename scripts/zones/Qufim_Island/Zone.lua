@@ -3,7 +3,6 @@
 -----------------------------------
 local ID = require('scripts/zones/Qufim_Island/IDs')
 require('scripts/globals/conquest')
-require('scripts/globals/zone')
 -----------------------------------
 local zoneObject = {}
 

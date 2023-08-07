@@ -1,6 +1,13 @@
 -- ----------------------------------
 -- Egg Hunt Egg-Stravaganza
--- ----------------------------------
+------------------------------------
+-- Southern San d'Oria !pos 56.195 1.999 -25.207 230
+-- Northern San d'Oria !pos -224.135 8.000 53.476 231
+-- Bastok Mines        !pos -33.600 -0.001 -110.000 234
+-- Bastok Markets      !pos -260.440 -12.021 -79.538 235
+-- Windurst Waters     !pos -55.470 -5.391 216.362 238
+-- Windurst Woods      !pos 104.823 -5.000 -55.745 241
+------------------------------------
 require("scripts/globals/utils")
 require("scripts/globals/npc_util")
 -- ----------------------------------

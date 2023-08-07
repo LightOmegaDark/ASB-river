@@ -7,7 +7,6 @@
 -- Nightflowers !gotoid 17293708
 -----------------------------------
 require('scripts/globals/quests')
-require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 
 local ID = require("scripts/zones/Qufim_Island/IDs")

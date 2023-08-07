@@ -8,7 +8,6 @@ require('scripts/globals/events/sunbreeze_festival')
 require('scripts/globals/conquest')
 require('scripts/globals/cutscenes')
 require('scripts/globals/chocobo')
-require('scripts/globals/zone')
 -----------------------------------
 local zoneObject = {}
 

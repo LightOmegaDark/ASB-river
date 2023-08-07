@@ -6,7 +6,6 @@
 -- Merchants Door !gotoid 17780840
 -----------------------------------
 require('scripts/globals/quests')
-require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 -----------------------------------
 local ID = require("scripts/zones/Upper_Jeuno/IDs")

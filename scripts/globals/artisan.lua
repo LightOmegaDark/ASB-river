@@ -3,7 +3,6 @@
 --  Artisan Moogles
 --
 -----------------------------------
-require('scripts/globals/zone')
 -----------------------------------
 
 xi = xi or {}

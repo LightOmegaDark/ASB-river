@@ -10,7 +10,7 @@
 -----------------------------------
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
-require('scripts/globals/zone')
+require('scripts/globals/titles')
 require('scripts/globals/interaction/quest')
 -----------------------------------
 local korrolokaID  = require("scripts/zones/Korroloka_Tunnel/IDs")
