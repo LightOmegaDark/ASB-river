@@ -7,7 +7,6 @@ require("scripts/globals/quests")
 require("scripts/globals/titles")
 require('scripts/globals/events/starlight_celebrations')
 -----------------------------------
-
 xi = xi or {}
 xi.moghouse = xi.moghouse or {}
 
