@@ -1049,12 +1049,6 @@ namespace petutils
             PPet->SetMLevel(PMaster->GetSLevel());
             PPet->SetSLevel(PMaster->GetSLevel());
         }
-        else if (HasItem(PChar, 14656) == True) && (petID == PETID_WATERSPIRIT) // Check if Player has Poseidon Ring & PetID == Water Spirit
-        {
-            ShowDebug("%s summoned WaterSpirit using PoseidonRing!", PMaster->GetName());
-            PPet->SetMLevel(mLvl);
-            PPet->SetSLevel(mLvl);
-        }
         else
         { // should never happen
             ShowDebug("%s summoned an avatar but is not SMN main or SMN sub! Please report. ", PMaster->GetName());
