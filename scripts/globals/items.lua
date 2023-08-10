@@ -3845,6 +3845,7 @@ xi.items =
     PROTEAN_RING                    = 14652,
     VARIABLE_RING                   = 14653,
     VENERER_RING                    = 14655,
+    POSEIDONS_RING                  = 14656,
     DUCAL_GUARDS_RING               = 14657,
     TELEPORT_RING_HOLLA             = 14661,
     TELEPORT_RING_DEM               = 14662,
