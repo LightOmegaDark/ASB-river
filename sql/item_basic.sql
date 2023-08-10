@@ -11985,7 +11985,7 @@ INSERT INTO `item_basic` VALUES (14652,0,'protean_ring','protean_ring',1,2052,0,
 INSERT INTO `item_basic` VALUES (14653,0,'variable_ring','variable_ring',1,2052,0,0,1229);
 INSERT INTO `item_basic` VALUES (14654,0,'poisona_ring','poisona_ring',1,3108,25,0,3965);
 INSERT INTO `item_basic` VALUES (14655,0,'venerer_ring','venerer_ring',1,34852,25,0,380);
-INSERT INTO `item_basic` VALUES (14656,0,'poseidons_ring','poseidons_ring',1,3108,25,0,3997);
+INSERT INTO `item_basic` VALUES (14656,0,'poseidons_ring','poseidons_ring',1,3108,25,0,45795);
 INSERT INTO `item_basic` VALUES (14657,0,'ducal_guards_ring','dcl.grd._ring',1,60480,0,0,1918);
 INSERT INTO `item_basic` VALUES (14658,0,'atlauas_ring','atlauas_ring',1,34820,25,0,11250);
 INSERT INTO `item_basic` VALUES (14659,0,'hercules_ring','hercules_ring',1,34820,25,0,11000);
