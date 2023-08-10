@@ -20,7 +20,7 @@ itemObject.onItemCheck = function(target, user)
 end
 
 itemObject.onItemUse = function(target)
-    xi.pet.spawnPet(target, xi.pet.id.WATER_SPIRIT);
+    xi.pet.spawnPet(target, xi.pet.id.WATER_SPIRIT)
 end
 
 return itemObject
