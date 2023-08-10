@@ -11945,7 +11945,7 @@ INSERT INTO `item_basic` VALUES (14612,0,'serenity_ring_+1','serenity_ring_+1',1
 INSERT INTO `item_basic` VALUES (14613,0,'vigor_ring_+1','vigor_ring_+1',1,2080,25,0,4150);
 INSERT INTO `item_basic` VALUES (14614,0,'mystic_ring_+1','mystic_ring_+1',1,2080,25,0,4150);
 INSERT INTO `item_basic` VALUES (14615,0,'allure_ring_+1','allure_ring_+1',1,2080,25,0,4238);
-INSERT INTO `item_basic` VALUES (14616,0,'triton_ring','triton_ring',1,2080,25,0,3997);
+INSERT INTO `item_basic` VALUES (14616,0,'triton_ring','triton_ring',1,2080,25,0,31450);
 INSERT INTO `item_basic` VALUES (14617,0,'nimble_ring_+1','nimble_ring_+1',1,2080,25,0,5533);
 INSERT INTO `item_basic` VALUES (14618,0,'triumph_ring_+1','triumph_ring_+1',1,2080,25,0,11592);
 INSERT INTO `item_basic` VALUES (14619,0,'omniscient_ring_+1','omn._ring_+1',1,2080,25,0,5533);

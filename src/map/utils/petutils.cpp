@@ -1022,10 +1022,10 @@ namespace petutils
 
     void CalculateAvatarStats(CBattleEntity* PMaster, CPetEntity* PPet)
     {
-        uint32 petID    = PPet->m_PetID;
-        Pet_t* PPetData = *std::find_if(g_PPetList.begin(), g_PPetList.end(), [petID](Pet_t* t)
-                                        { return t->PetID == petID; });
-        CCharEntity* PChar = static_cast<CCharEntity*>(PMaster);
+        uint32       petID    = PPet->m_PetID;
+        Pet_t*       PPetData = *std::find_if(g_PPetList.begin(), g_PPetList.end(), [petID](Pet_t* t)
+                                              { return t->PetID == petID; });
+        CCharEntity* PChar    = static_cast<CCharEntity*>(PMaster);
 
         uint8 mLvl = PMaster->GetMLevel();
 
