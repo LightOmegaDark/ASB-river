@@ -1049,9 +1049,8 @@ namespace petutils
             PPet->SetMLevel(PMaster->GetSLevel());
             PPet->SetSLevel(PMaster->GetSLevel());
         }
-        else if (HasItem(PChar, 14656) == True) && (petID == PETID_WATERSPIRIT) // Check if Player has Poseidon Ring & PetID == Water Spirit
+        else if ((charutils::HasItem(PChar, 14656) == true) && (petID == PETID_WATERSPIRIT)) // Check if Player has Poseidon Ring & PetID == Water Spirit
         {
-            ShowDebug("%s summoned WaterSpirit using PoseidonRing!", PMaster->GetName());
             PPet->SetMLevel(mLvl);
             PPet->SetSLevel(mLvl);
         }

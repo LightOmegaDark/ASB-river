@@ -26,7 +26,6 @@ itemObject.onItemUse = function(target)
     local playerLevel = target:getMainLvl()
     xi.pet.spawnPet(target, xi.pet.id.WATER_SPIRIT);
     local targetPet = target:getPet()
-    targetPet:setLevel(playerLevel);
 end
 
 return itemObject
