@@ -25,6 +25,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "common/sql.h"
 #include "conquest_system.h"
 
+#include "utils/zoneutils.h"
+
 ConquestData::ConquestData(std::unique_ptr<SqlConnection>& sql)
 : regionControls(std::vector<region_control_t>(19))
 , influences(std::vector<influence_t>(19))
@@ -87,6 +89,13 @@ int32 ConquestData::getInfluence(REGION_TYPE region, NATION_TYPE nation) const
 uint8 ConquestData::getRegionOwner(REGION_TYPE region) const
 {
     uint8 regionNum = static_cast<uint8>(region);
+
+    // Cities (including Jeuno/Tavnazia), Dynamis/Limbus, Lumoria (sea) are all "outside of own nation's control".
+    // Even if the character belongs to the nation.
+    if (zoneutils::IsAlwaysOutOfNationControl(region))
+    {
+        return 4;
+    }
 
     if (regionNum < regionControls.size())
     {
