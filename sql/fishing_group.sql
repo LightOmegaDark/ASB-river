@@ -1109,12 +1109,51 @@ INSERT INTO `fishing_group` VALUES (139,4469,900,190,6);
 INSERT INTO `fishing_group` VALUES (139,4472,1000,500,15);
 INSERT INTO `fishing_group` VALUES (139,5125,1000,500,15);
 INSERT INTO `fishing_group` VALUES (139,5126,1000,500,15);
--- Sunbreeze Festival (Goldfish)
+-- Sunbreeze Festival (Goldfish) West_Ronfaure - Knightwell
+INSERT INTO `fishing_group` VALUES (140,90,900,300,9);
+INSERT INTO `fishing_group` VALUES (140,688,500,200,6);
+INSERT INTO `fishing_group` VALUES (140,4401,1000,1000,36);
+INSERT INTO `fishing_group` VALUES (140,4402,750,260,5);
+INSERT INTO `fishing_group` VALUES (140,4469,900,190,6);
+INSERT INTO `fishing_group` VALUES (140,4472,1000,500,15);
+INSERT INTO `fishing_group` VALUES (140,14117,500,300,9);
 INSERT INTO `fishing_group` VALUES (140,4310,1000,9999,9999);
 INSERT INTO `fishing_group` VALUES (140,4311,450,9999,9999);
 INSERT INTO `fishing_group` VALUES (140,4312,350,9999,9999);
 INSERT INTO `fishing_group` VALUES (140,5714,300,9999,9999);
 INSERT INTO `fishing_group` VALUES (140,5715,250,9999,9999);
+-- Sunbreeze Festival (Goldfish) South_Gustaberg - Hot Springs
+INSERT INTO `fishing_group` VALUES (141,90,900,300,9);
+INSERT INTO `fishing_group` VALUES (141,12522,200,10,1);
+INSERT INTO `fishing_group` VALUES (141,13456,300,275,6);
+INSERT INTO `fishing_group` VALUES (141,14117,500,300,9);
+INSERT INTO `fishing_group` VALUES (141,14242,500,300,9);
+INSERT INTO `fishing_group` VALUES (141,4310,1000,9999,9999);
+INSERT INTO `fishing_group` VALUES (141,4311,450,9999,9999);
+INSERT INTO `fishing_group` VALUES (141,4312,350,9999,9999);
+INSERT INTO `fishing_group` VALUES (141,5714,300,9999,9999);
+INSERT INTO `fishing_group` VALUES (141,5715,250,9999,9999);
+-- Sunbreeze Festival (Goldfish) East_Sarutabaruta - Other Waterside (rivers)
+INSERT INTO `fishing_group` VALUES (142,4472,1000,500,15);
+INSERT INTO `fishing_group` VALUES (142,14242,500,300,9);
+INSERT INTO `fishing_group` VALUES (142,4310,1000,9999,9999);
+INSERT INTO `fishing_group` VALUES (142,4311,450,9999,9999);
+INSERT INTO `fishing_group` VALUES (142,4312,350,9999,9999);
+INSERT INTO `fishing_group` VALUES (142,5714,300,9999,9999);
+INSERT INTO `fishing_group` VALUES (142,5715,250,9999,9999);
+-- Sunbreeze Festival (Goldfish) Rabao - Whole Zone
+INSERT INTO `fishing_group` VALUES (143,90,900,300,9);
+INSERT INTO `fishing_group` VALUES (143,4291,1000,500,15);
+INSERT INTO `fishing_group` VALUES (143,4306,900,190,6);
+INSERT INTO `fishing_group` VALUES (143,4401,1000,1000,36);
+INSERT INTO `fishing_group` VALUES (143,4472,1000,500,15);
+INSERT INTO `fishing_group` VALUES (143,12522,200,10,1);
+INSERT INTO `fishing_group` VALUES (143,14117,500,300,9);
+INSERT INTO `fishing_group` VALUES (143,4310,1000,9999,9999);
+INSERT INTO `fishing_group` VALUES (143,4311,450,9999,9999);
+INSERT INTO `fishing_group` VALUES (143,4312,350,9999,9999);
+INSERT INTO `fishing_group` VALUES (143,5714,300,9999,9999);
+INSERT INTO `fishing_group` VALUES (143,5715,250,9999,9999);
 /*!40000 ALTER TABLE `fishing_group` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
