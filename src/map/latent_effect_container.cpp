@@ -1035,16 +1035,17 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
             auto hasSignet   = m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_SIGNET);
             auto hasSanction = m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_SANCTION);
             auto hasSigil    = m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_SIGIL);
+            auto regionAlwaysOutOfControl = zoneutils::IsAlwaysOutOfNationControl(region);
             switch (latentEffect.GetConditionsValue())
             {
                 case 0:
                     // under own nation's control
-                    expression = region < REGION_TYPE::WEST_AHT_URHGAN && conquest::GetRegionOwner(region) == m_POwner->profile.nation &&
+                    expression = region < REGION_TYPE::WEST_AHT_URHGAN && (!regionAlwaysOutOfControl || conquest::GetRegionOwner(region) == m_POwner->profile.nation) &&
                                  (hasSignet || hasSanction || hasSigil);
                     break;
                 case 1:
                     // outside of own nation's control
-                    expression = region < REGION_TYPE::WEST_AHT_URHGAN && (conquest::GetRegionOwner(region) == 4 || m_POwner->profile.nation != conquest::GetRegionOwner(region)) &&
+                    expression = region < REGION_TYPE::WEST_AHT_URHGAN && (regionAlwaysOutOfControl || m_POwner->profile.nation != conquest::GetRegionOwner(region)) &&
                                  (hasSignet || hasSanction || hasSigil);
                     break;
             }
