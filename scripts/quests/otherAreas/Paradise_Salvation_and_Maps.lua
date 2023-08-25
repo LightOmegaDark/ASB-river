@@ -7,7 +7,6 @@
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
 require('scripts/globals/treasure')
-require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 -----------------------------------
 local tavnaziaID = require('scripts/zones/Tavnazian_Safehold/IDs')

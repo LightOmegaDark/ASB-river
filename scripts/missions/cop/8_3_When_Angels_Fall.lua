@@ -11,7 +11,6 @@ require('scripts/globals/npc_util')
 require("scripts/globals/teleports")
 require('scripts/globals/titles')
 require('scripts/globals/utils')
-require('scripts/globals/zone')
 -----------------------------------
 
 local mission = Mission:new(xi.mission.log_id.COP, xi.mission.id.cop.WHEN_ANGELS_FALL)

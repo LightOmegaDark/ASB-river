@@ -9,7 +9,6 @@
 -----------------------------------
 require('scripts/globals/moghouse')
 require('scripts/globals/quests')
-require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 -----------------------------------
 local ID = require("scripts/zones/Misareaux_Coast/IDs")

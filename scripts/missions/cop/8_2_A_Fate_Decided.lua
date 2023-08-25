@@ -11,7 +11,6 @@ require('scripts/globals/npc_util')
 require("scripts/globals/teleports")
 require('scripts/globals/titles')
 require('scripts/globals/utils')
-require('scripts/globals/zone')
 -----------------------------------
 
 local mission = Mission:new(xi.mission.log_id.COP, xi.mission.id.cop.A_FATE_DECIDED)
@@ -58,8 +57,11 @@ mission.sections =
 
             ['_iyq'] = -- Cermet Portal
             {
-                onTrigger = function(player,npc)
-                    if mission:getVar(player, 'Status') == 1 and not GetMobByID(zones[npc:getZoneID()].mob.IXGHRAH):isSpawned() then
+                onTrigger = function(player, npc)
+                    if
+                        mission:getVar(player, 'Status') == 1 and
+                        not GetMobByID(zones[npc:getZoneID()].mob.IXGHRAH):isSpawned()
+                    then
                         return SpawnMob(zones[npc:getZoneID()].mob.IXGHRAH):updateClaim(player)
                     elseif mission:getVar(player, 'Status') == 2 then
                         return mission:progressEvent(3)
@@ -117,7 +119,7 @@ mission.sections =
 
             ['_iyq'] = -- Cermet Portal
             {
-                onTrigger = function(player,npc)
+                onTrigger = function(player, npc)
                     return mission:messageSpecial(zones[npc:getZoneID()].text.PORTAL_DOES_NOT_RESPOND)
                 end,
             },

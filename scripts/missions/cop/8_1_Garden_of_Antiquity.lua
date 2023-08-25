@@ -11,7 +11,6 @@ require('scripts/globals/npc_util')
 require("scripts/globals/teleports")
 require('scripts/globals/titles')
 require('scripts/globals/utils')
-require('scripts/globals/zone')
 -----------------------------------
 local altaieuID = require('scripts/zones/AlTaieu/IDs')
 local palaceID  = require('scripts/zones/Grand_Palace_of_HuXzoi/IDs')
@@ -33,14 +32,14 @@ local function rubiousCrystalOnTrigger(player, npc)
     local cVar           = antiquityVars[crystalOffset]
 
     -- check to see if all three aerns are killed for the tower
-    local thisFightDone  = mission:getVar(player, ruaernOffset) == 1 and
-                           mission:getVar(player, ruaernOffset + 1) == 1 and
-                           mission:getVar(player, ruaernOffset + 2) == 1
+    local thisFightDone = mission:getVar(player, ruaernOffset) == 1 and
+                            mission:getVar(player, ruaernOffset + 1) == 1 and
+                            mission:getVar(player, ruaernOffset + 2) == 1
     local thisCsAcquired = mission:getVar(player, cVar[2]) == 1
 
     -- spawn ru'aerns
     if not thisFightDone and not thisCsAcquired then
-        npcUtil.popFromQM(player, npc, { ruaernOffset, ruaernOffset + 1, ruaernOffset + 2 }, { hide = 0 } )
+        npcUtil.popFromQM(player, npc, { ruaernOffset, ruaernOffset + 1, ruaernOffset + 2 }, { hide = 0 })
         return mission:messageSpecial(altaieuID.text.OMINOUS_SHADOW)
 
     -- post-fight CS
@@ -75,12 +74,14 @@ local function checkTowerCsVars(player)
             status = status + 1
         end
     end
+
     if status == 3 then
         for _, cVar in pairs(antiquityVars) do
             mission:setVar(player, cVar[1], 0)
             mission:setVar(player, cVar[2], 0)
         end
     end
+
     return status
 end
 

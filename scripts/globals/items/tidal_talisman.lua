@@ -72,7 +72,10 @@ itemObject.onItemUse = function(target)
         pos = { -73, 0, 0, 252, 50 } -- player/s ends up at Aht Urahgan Whitegate
     end
 
-    if target:checkDistance(target:getXPos(), target:getYPos(), target:getZPos() <= 5) and not target:isInMogHouse() then -- I am within 5 yalms, teleport me.
+    if
+        target:checkDistance(target:getXPos(), target:getYPos(), target:getZPos() <= 5) and
+        not target:isInMogHouse()
+    then -- I am within 5 yalms, teleport me.
         if destZone == 0 or not target:hasVisitedZone(destZone) then
             return
         end

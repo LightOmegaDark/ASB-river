@@ -7,7 +7,6 @@ require('scripts/globals/chocobo_digging')
 require('scripts/globals/conquest')
 require('scripts/globals/helm')
 require('scripts/globals/barge')
-require('scripts/globals/zone')
 
 -----------------------------------
 local zoneObject = {}

@@ -4,7 +4,6 @@
 -- Log ID: 1, Quest ID: 82
 -----------------------------------
 require('scripts/globals/quests')
-require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 -----------------------------------
 local metalworksID = require('scripts/zones/Metalworks/IDs')

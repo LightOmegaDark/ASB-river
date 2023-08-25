@@ -3,7 +3,6 @@
 -- desc: Spawns a player's Adventuring Fellow if they have one.
 --       Primarily used for testing to bypass pearl cooldowns.
 -----------------------------------
-require("scripts/globals/zone")
 -----------------------------------
 
 cmdprops =

@@ -5,7 +5,6 @@
 -----------------------------------
 require('scripts/globals/quests')
 require('scripts/globals/npc_util')
-require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 -----------------------------------
 local ID = require("scripts/zones/Bhaflau_Thickets/IDs")

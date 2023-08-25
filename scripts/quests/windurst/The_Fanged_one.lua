@@ -7,7 +7,6 @@
 -- Keeping Old Sabertooth and Tiger Bones in separate lua's due to special functions.
 -----------------------------------
 require('scripts/globals/quests')
-require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 -----------------------------------
 local ID = require('scripts/zones/Windurst_Woods/IDs')

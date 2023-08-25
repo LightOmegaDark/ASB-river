@@ -7,7 +7,6 @@
 require('scripts/globals/interaction/quest')
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
-require('scripts/globals/zone')
 -----------------------------------
 local ID = require("scripts/zones/Northern_San_dOria/IDs")
 local ronfaureID = require("scripts/zones/East_Ronfaure/IDs")

@@ -2,8 +2,6 @@
 -- Area: Heaven's Tower
 --  NPC: Jatata
 -----------------------------------
-require("scripts/globals/zone")
------------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

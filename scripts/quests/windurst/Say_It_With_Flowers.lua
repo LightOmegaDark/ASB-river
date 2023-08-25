@@ -12,7 +12,6 @@
 require('scripts/globals/interaction/quest')
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
-require('scripts/globals/zone')
 -----------------------------------
 local windurstWatersIDs = require('scripts/zones/Windurst_Waters/IDs')
 local tahrongiID = require("scripts/zones/Tahrongi_Canyon/IDs")

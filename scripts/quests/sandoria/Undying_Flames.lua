@@ -5,7 +5,6 @@
 -- Pagisalis: !gotoid 17723424
 -----------------------------------
 require('scripts/globals/quests')
-require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 
 local quest = Quest:new(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.UNDYING_FLAMES)

@@ -6,7 +6,6 @@
 -- Alexius: !gotoid 17203813
 -----------------------------------
 require('scripts/globals/quests')
-require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 local ID = require("scripts/zones/Southern_San_dOria/IDs")
 local jugnerID = require("scripts/zones/Jugner_Forest/IDs")

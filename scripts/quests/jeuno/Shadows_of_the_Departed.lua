@@ -9,7 +9,6 @@ require('scripts/globals/common')
 require("scripts/globals/npc_util")
 require('scripts/globals/quests')
 require('scripts/globals/titles')
-require('scripts/globals/zone')
 -----------------------------------
 local ID = require('scripts/zones/RuLude_Gardens/IDs')
 local meaID = require('scripts/zones/Promyvion-Mea/IDs')

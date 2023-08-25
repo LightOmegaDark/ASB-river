@@ -8,7 +8,6 @@
 -- Tebhi: !pos -136 24 -21 151
 -----------------------------------
 require('scripts/globals/quests')
-require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 -----------------------------------
 local feiyinID = require("scripts/zones/FeiYin/IDs")

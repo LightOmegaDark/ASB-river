@@ -132,7 +132,7 @@ xi.confrontation.start = function(player, npc, mobIds, winFunc, loseFunc, params
     -- Generate lookup ID from spawn npc data
     local lookupKey = bit.rshift(npc:getID(), 16)
 
-     -- default params
+    -- default params
     if not params then
         params = {}
     end
@@ -152,8 +152,13 @@ xi.confrontation.start = function(player, npc, mobIds, winFunc, loseFunc, params
     mobIds = mobs
 
     --if no valid validPlayerFunc param then let all pass
-    if (not params.validPlayerFunc) or (type(params.validPlayerFunc) ~= "function") then
-        params.validPlayerFunc = function(member) return true end
+    if
+        not params.validPlayerFunc or
+        type(params.validPlayerFunc) ~= "function"
+    then
+        params.validPlayerFunc = function(member)
+            return true
+        end
     end
 
     -- Tag alliance members with the confrontation effect

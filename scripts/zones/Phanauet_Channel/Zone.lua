@@ -3,7 +3,6 @@
 -----------------------------------
 local ID = require('scripts/zones/Phanauet_Channel/IDs')
 require('scripts/globals/conquest')
-require('scripts/globals/zone')
 require('scripts/globals/barge')
 -----------------------------------
 local zoneObject = {}

@@ -7,7 +7,6 @@
 -- Sarcophagus !gotoid 17576394
 -----------------------------------
 require('scripts/globals/quests')
-require('scripts/globals/zone')
 require('scripts/globals/interaction/quest')
 -----------------------------------
 local eldiemeID = require("scripts/zones/The_Eldieme_Necropolis/IDs")

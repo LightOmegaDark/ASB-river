@@ -1,7 +1,6 @@
 -----------------------------------
 --      Xarcabard Era Module     --
 -----------------------------------
-require("scripts/globals/zone")
 require("scripts/globals/utils")
 require("scripts/globals/dynamis")
 -----------------------------------

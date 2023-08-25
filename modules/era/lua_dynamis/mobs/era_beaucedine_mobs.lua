@@ -2,7 +2,6 @@
 -- Angra Mainyu Era Module
 -----------------------------------
 require("scripts/globals/dynamis")
-require("scripts/globals/zone")
 -----------------------------------
 
 xi = xi or {}

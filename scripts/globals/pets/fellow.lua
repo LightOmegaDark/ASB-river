@@ -2,7 +2,6 @@
 --  Adventuring Fellow
 -----------------------------------
 require("scripts/globals/quests")
-require("scripts/globals/zone")
 require("scripts/globals/fellow_utils")
 -----------------------------------
 local entity = {}
