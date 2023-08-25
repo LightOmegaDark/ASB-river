@@ -9,7 +9,6 @@ require('scripts/globals/quests')
 require('scripts/globals/npc_util')
 require('scripts/globals/interaction/quest')
 require('scripts/globals/titles')
-require('scripts/globals/zone')
 -----------------------------------
 local ahtUrhganID = require('scripts/zones/Aht_Urhgan_Whitegate/IDs')
 local nashmauID = require('scripts/zones/Nashmau/IDs')
