@@ -96,8 +96,8 @@ local pTable =
     -- Misc.
     [xi.magic.spell.GODDESSS_HYMNUS   ] = { 1, xi.effect.HYMNUS,    xi.mod.AUGMENT_SONG_STAT, 0,                      0,                        0,                    1,   0,   1,   0,  0, false },
     [xi.magic.spell.SENTINELS_SCHERZO ] = { 1, xi.effect.SCHERZO,   xi.mod.AUGMENT_SONG_STAT, 0,                      0,                        0,                    1, 350,  45,   1, 10, false },
-    [xi.magic.spell.RAPTOR_MAZURKA    ] = { 1, xi.effect.MAZURKA,   xi.mod.AUGMENT_SONG_STAT, xi.mod.MAZURKA_EFFECT,  0,                        0,                   12,   0,  12,   0,  0, false },
-    [xi.magic.spell.CHOCOBO_MAZURKA   ] = { 1, xi.effect.MAZURKA,   xi.mod.AUGMENT_SONG_STAT, xi.mod.MAZURKA_EFFECT,  0,                        0,                   24,   0,  24,   0,  0, false },
+    [xi.magic.spell.RAPTOR_MAZURKA    ] = { 1, xi.effect.MAZURKA,   xi.mod.AUGMENT_SONG_STAT, 0,                      0,                        0,                   12,   0,  12,   0,  0, false },
+    [xi.magic.spell.CHOCOBO_MAZURKA   ] = { 1, xi.effect.MAZURKA,   xi.mod.AUGMENT_SONG_STAT, 0,                      0,                        0,                   24,   0,  24,   0,  0, false },
 
     -- Emnity Songs
     [xi.magic.spell.FOE_SIRVENTE      ] = { 1, xi.effect.SIRVENTE,  xi.mod.AUGMENT_SONG_STAT, 0,                      0,                        0,                   35,   0,  35,   1,  0, true  },
@@ -254,6 +254,12 @@ xi.spells.enhancing.calculateSongDuration = function(caster, target, spell, inst
 
     if caster:hasStatusEffect(xi.effect.TROUBADOUR) then
         duration = math.floor(duration * 2)
+    end
+
+    -- Additional duration from MAZURKA_MOD (+1 Mazurka: +10s)
+    local id = spell:getID();
+    if id == xi.magic.spell.CHOCOBO_MAZURKA or id == xi.magic.spell.RAPTOR_MAZURKA then
+        duration = math.floor(duration + ((caster:getMod(xi.mod.MAZURKA_EFFECT) * 10)))
     end
 
     -- Finish
