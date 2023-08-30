@@ -18,7 +18,7 @@ end
 
 zoneObject.onInitialize = function(zone)
     -- NM Persistence
-    if xi.settings.main.ENABLE_WOTG then
+    if xi.settings.main.ENABLE_WOTG == 1 then
         xi.mob.nmTODPersistCache(zone, ID.mob.HIGHLANDER_LIZARD)
         xi.mob.nmTODPersistCache(zone, ID.mob.GHILLIE_DHU)
     end

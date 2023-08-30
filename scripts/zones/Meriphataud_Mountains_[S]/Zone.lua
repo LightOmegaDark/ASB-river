@@ -29,7 +29,9 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onGameHour = function(zone)
-    local npc = GetNPCByID(ID.npc.INDESCRIPT_MARKINGS)
+    if xi.settings.main.ENABLE_WOTG == 1 then
+        local npc = GetNPCByID(ID.npc.INDESCRIPT_MARKINGS)
+    end
     local hour = VanadielHour()
 
     if npc then

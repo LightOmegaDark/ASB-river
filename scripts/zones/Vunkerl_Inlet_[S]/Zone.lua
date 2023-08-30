@@ -23,7 +23,9 @@ zoneObject.onZoneIn = function(player, prevZone)
 end
 
 zoneObject.onZoneWeatherChange = function(weather)
-    local npc = GetNPCByID(ID.npc.INDESCRIPT_MARKINGS) -- Indescript Markings
+    if xi.settings.main.ENABLE_WOTG == 1 then
+        local npc = GetNPCByID(ID.npc.INDESCRIPT_MARKINGS) -- Indescript Markings
+    end
 
     if npc ~= nil then
         if weather == xi.weather.FOG or weather == xi.weather.THUNDER then
@@ -35,7 +37,9 @@ zoneObject.onZoneWeatherChange = function(weather)
 end
 
 zoneObject.onGameHour = function(zone)
-    local npc = GetNPCByID(ID.npc.INDESCRIPT_MARKINGS) -- Indescript Markings
+    if xi.settings.main.ENABLE_WOTG == 1 then
+        local npc = GetNPCByID(ID.npc.INDESCRIPT_MARKINGS) -- Indescript Markings
+    end
 
     if npc ~= nil then
         if VanadielHour() == 16 then
