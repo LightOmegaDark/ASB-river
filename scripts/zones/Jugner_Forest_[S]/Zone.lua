@@ -9,10 +9,7 @@ require('scripts/globals/helm')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    if xi.settings.main.ENABLE_WOTG == 1 then
-        xi.helm.initZone(zone, xi.helm.type.LOGGING)
-    end
-
+    xi.helm.initZone(zone, xi.helm.type.LOGGING)
     xi.chocobo.initZone(zone)
     xi.voidwalker.zoneOnInit(zone)
 end

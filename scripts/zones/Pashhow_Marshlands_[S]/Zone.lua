@@ -29,24 +29,22 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onZoneWeatherChange = function(weather)
-    if xi.settings.main.ENABLE_WOTG == 1 then
-        local npc = GetNPCByID(ID.npc.INDESCRIPT_MARKINGS_OFFSET + 1) -- Indescript Markings (BOOTS)
+    local npc = GetNPCByID(ID.npc.INDESCRIPT_MARKINGS_OFFSET + 1) -- Indescript Markings (BOOTS)
 
-        if npc then
-            if weather == xi.weather.RAIN or weather == xi.weather.THUNDER then
-                npc:setStatus(xi.status.DISAPPEAR)
-            else
-                npc:setStatus(xi.status.NORMAL)
-            end
+    if npc then
+        if weather == xi.weather.RAIN or weather == xi.weather.THUNDER then
+            npc:setStatus(xi.status.DISAPPEAR)
+        else
+            npc:setStatus(xi.status.NORMAL)
         end
+    end
 
-        npc = GetNPCByID(ID.npc.INDESCRIPT_MARKINGS_OFFSET + 2) -- Indescript Markings (BODY)
-        if npc then
-            if weather == xi.weather.RAIN then
-                npc:setStatus(xi.status.DISAPPEAR)
-            else
-                npc:setStatus(xi.status.NORMAL)
-            end
+    npc = GetNPCByID(ID.npc.INDESCRIPT_MARKINGS_OFFSET + 2) -- Indescript Markings (BODY)
+    if npc then
+        if weather == xi.weather.RAIN then
+            npc:setStatus(xi.status.DISAPPEAR)
+        else
+            npc:setStatus(xi.status.NORMAL)
         end
     end
 end

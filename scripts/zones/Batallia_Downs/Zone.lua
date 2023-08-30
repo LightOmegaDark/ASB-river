@@ -33,17 +33,15 @@ zoneObject.onInitialize = function(zone)
     xi.mob.nmTODPersistCache(zone, ID.mob.AHTU)
     xi.mob.nmTODPersistCache(zone, ID.mob.WEEPING_WILLOW)
 
-    if xi.settings.main.ENABLE_ROV == 1 then
-        -- Prepare everything for Full Speed Ahead!
-        zones[xi.zone.BATALLIA_DOWNS].npc.BLUE_BEAM_BASE   = ID.npc.SYRILLIA + 1
-        zones[xi.zone.BATALLIA_DOWNS].npc.RAPTOR_FOOD_BASE = ID.npc.SYRILLIA + 9
+    -- Prepare everything for Full Speed Ahead!
+    zones[xi.zone.BATALLIA_DOWNS].npc.BLUE_BEAM_BASE   = ID.npc.SYRILLIA + 1
+    zones[xi.zone.BATALLIA_DOWNS].npc.RAPTOR_FOOD_BASE = ID.npc.SYRILLIA + 9
 
-        for i = 0, 7 do
-            registerRegionAroundNPC(zone, zones[xi.zone.BATALLIA_DOWNS].npc.RAPTOR_FOOD_BASE + i, i + 1)
-        end
-
-        registerRegionAroundNPC(zone, ID.npc.SYRILLIA, 9)
+    for i = 0, 7 do
+        registerRegionAroundNPC(zone, zones[xi.zone.BATALLIA_DOWNS].npc.RAPTOR_FOOD_BASE + i, i + 1)
     end
+
+    registerRegionAroundNPC(zone, ID.npc.SYRILLIA, 9)
 
     xi.voidwalker.zoneOnInit(zone)
 end

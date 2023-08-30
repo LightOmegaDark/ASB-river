@@ -9,10 +9,7 @@ require('scripts/globals/zone')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    if xi.settings.main.ENABLE_WOTG == 1 then
-        xi.helm.initZone(zone, xi.helm.type.MINING)
-    end
-
+    xi.helm.initZone(zone, xi.helm.type.MINING)
     xi.voidwalker.zoneOnInit(zone)
 end
 

@@ -7,9 +7,7 @@ require('scripts/globals/helm')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    if xi.settings.main.ENABLE_WOTG == 1 then
-        xi.helm.initZone(zone, xi.helm.type.HARVESTING)
-    end
+    xi.helm.initZone(zone, xi.helm.type.HARVESTING)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -30,9 +28,7 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onZoneWeatherChange = function(weather)
-    if xi.settings.main.ENABLE_WOTG == 1 then
-        local npc = GetNPCByID(ID.npc.INDESCRIPT_MARKINGS)
-    end
+    local npc = GetNPCByID(ID.npc.INDESCRIPT_MARKINGS)
 
     if npc ~= nil then
         if

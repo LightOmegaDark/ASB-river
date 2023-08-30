@@ -9,10 +9,7 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     zone:registerTriggerArea(1, -570, 20, -810, -487.3, 35, -740)
-
-    if xi.settings.main.ENABLE_ABYSSEA == 1 then
-        xi.helm.initZone(zone, xi.helm.type.HARVESTING)
-    end
+    xi.helm.initZone(zone, xi.helm.type.HARVESTING)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
