@@ -108,7 +108,7 @@ local loot =
         },
         {
             { itemid = 0,     droprate = 900 }, -- Nothing
-            { itemid = 14799, droprate = 100 }, -- Feyuh's Earring
+            { itemid = 14800, droprate = 100 }, -- Feyuh's Earring
         },
     },
 
