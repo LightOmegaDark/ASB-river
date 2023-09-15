@@ -18,7 +18,7 @@ entity.onMobDespawn = function(mob)
     end
 
     if mob:getID() == 17613052 then
-        local path =
+        local pathNodes =
         {
             [1] = { -168.000, 0, 170.000, 125 },
             [2] = { -168.000, 0, 150.000, 125 },

@@ -2,16 +2,20 @@
 -- Harvest Festivals
 -----------------------------------
 require("scripts/globals/utils")
+require("scripts/globals/npc_util")
 -----------------------------------
+xi = xi or {}
+xi.events = xi.events or {}
+xi.events.harvest = xi.events.harvest or {}
 
-function isHalloweenEnabled()
+xi.events.harvest.isHalloweenEnabled = function()
     local option = 0
     local month = tonumber(os.date("%m"))
     local day = tonumber(os.date("%d"))
 
     if
-        month == 10 and day >= 20 or
-        month == 11 and day == 1 or
+        month == 1 and day >= 20 or
+        month == 12 and day == 1 or
         xi.settings.main.HALLOWEEN_YEAR_ROUND ~= 0
     then
         -- According to wiki Harvest Fest is Oct 20 - Nov 1.
@@ -29,30 +33,33 @@ function isHalloweenEnabled()
     return option
 end
 
-local function halloweenItemsCheck(player)
+local halloweenItemsCheck = function(player)
     local headSlot = player:getEquipID(xi.slot.HEAD)
     local mainHand = player:getEquipID(xi.slot.MAIN)
     local reward = 0
 
     -- Normal Quality Rewards
-    local pumpkinHead = 13916
-    local pumpkinHead2 = 15176
-    local trickStaff = 17565
-    local trickStaff2 = 17587
+    local pumpkinHead =  xi.items.PUMPKIN_HEAD
+    local pumpkinHead2 = xi.items.PUMPKIN_HEAD_2
+    local trickStaff =   xi.items.TRICK_STAFF
+    local trickStaff2 =  xi.items.TRICK_STAFF_2
+    local pitchfork =    xi.items.PITCHFORK
 
-    local rewardList = { pumpkinHead, pumpkinHead2, trickStaff, trickStaff2 }
-
+    local rewardList = { pumpkinHead, pumpkinHead2, trickStaff, trickStaff2, pitchfork }
+    -- To Do: Move Pitchforks into seperate questline involving the bomb decorations in future events. --
     -- Checks for HQ Upgrade
     for ri = 1, #rewardList do
         if headSlot == rewardList[ri] or mainHand == rewardList[ri] then
-            if headSlot == pumpkinHead and not player:hasItem(13917) then
-                reward = 13917 -- Horror Head
-            elseif headSlot == pumpkinHead2 and not player:hasItem(15177) then
-                reward = 15177 -- Horror Head II
-            elseif mainHand == trickStaff and not player:hasItem(17566) then
-                reward =  17566 -- Treat Staff
-            elseif mainHand == trickStaff2 and not player:hasItem(17588) then
-                reward = 17588 -- Treat Staff II
+            if (headSlot == pumpkinHead and player:hasItem(xi.items.HORROR_HEAD) == false) then
+                reward = xi.items.HORROR_HEAD
+            elseif (headSlot == pumpkinHead2 and player:hasItem(xi.items.HORROR_HEAD_2) == false) then
+                reward = xi.items.HORROR_HEAD_2
+            elseif (mainHand == trickStaff and player:hasItem(xi.items.TREAT_STAFF) == false) then
+                reward = xi.items.TREAT_STAFF
+            elseif (mainHand == trickStaff2 and player:hasItem(xi.items.TREAT_STAFF_2) == false) then
+                reward = xi.items.TREAT_STAFF_2
+            elseif (mainHand == pitchfork and player:hasItem(xi.items.PITCHFORK_P1) == false) then
+                reward = xi.items.PITCHFORK_P1
             end
 
             return reward
@@ -76,11 +83,11 @@ local function halloweenItemsCheck(player)
     return reward
 end
 
-function onHalloweenTrade(player, trade, npc)
+xi.events.harvest.onHalloweenTrade = function(player, trade, npc)
     local zone = player:getZoneName()
     local ID = zones[player:getZoneID()]
 
-    local contentEnabled = isHalloweenEnabled()
+    local contentEnabled = xi.events.harvest.isHalloweenEnabled()
     local item = trade:getItemId()
     -----------------------------------
     -- 2005 edition
@@ -151,7 +158,6 @@ function onHalloweenTrade(player, trade, npc)
                     itemInList = itemInList - 32
                 end
 
-                local alreadyTradedChk = utils.mask.getBit(harvestFestTreats, itemInList)
                 if
                     itemReward ~= 0 and
                     player:getFreeSlotsCount() >= 1 and
@@ -159,11 +165,11 @@ function onHalloweenTrade(player, trade, npc)
                 then
                     -- Math.random added so you have 33% chance on getting item
 
-                    player:messageSpecial(ID.text.HERE_TAKE_THIS)
+                    player:messageSpecial(ID.text.THANK_YOU_TREAT)
                     player:addItem(itemReward)
                     player:messageSpecial(ID.text.ITEM_OBTAINED, itemReward)
 
-                elseif player:canUseMisc(xi.zoneMisc.COSTUME) and not alreadyTradedChk then
+                elseif player:canUseMisc(xi.zoneMisc.COSTUME) then
                 -- Other neat looking halloween type costumes
                 -- two dragon skins: @420/421
                 -- @422 dancing weapon
@@ -184,58 +190,58 @@ function onHalloweenTrade(player, trade, npc)
                     local ghost = 368
                     local hound = 365
                     local skeleton = 564
+                    local gob = math.random(484, 511)
+                    local gigas = math.random(707, 711)
+                    local demon = math.random(740, 756)
                     local darkStalker = math.random(531, 534)
 
-                    local halloweenCostumeList = { quadav, orc, yagudo, shade, ghost, hound, skeleton, darkStalker }
+                    local halloweenCostumeList = { quadav, orc, yagudo, shade, ghost, hound, skeleton, darkStalker, gob, gigas, demon }
 
                     local costumePicked = halloweenCostumeList[math.random(1, #halloweenCostumeList)] -- will randomly pick one of the costumes in the list
                     player:addStatusEffect(xi.effect.COSTUME, costumePicked, 0, 3600)
-
-                    -- pitchForkCostumeList defines the special costumes per zone that can trigger the pitch fork requirement
-                    -- zone, costumeID
-                    local pitchForkCostumeList =
-                    {
-                        234, shade, skeleton, -- Bastok mines
-                        235, hound, ghost,    -- Bastok Markets
-                        230, ghost, skeleton, -- Southern Sandoria
-                        231, hound, skeleton, -- Northern Sandoria
-                        241, ghost, shade,    -- Windurst Woods
-                        238, shade, hound     -- Windurst Woods
-                    }
-
-                    for zi = 1, #pitchForkCostumeList, 3 do
-                        if
-                            zone == pitchForkCostumeList[zi] and
-                            (
-                                costumePicked == pitchForkCostumeList[zi + 1] or
-                                zone == pitchForkCostumeList[zi] and
-                                costumePicked == pitchForkCostumeList[zi + 2]
-                            )
-                        then -- Gives special hint for pitch fork costume
-                            player:messageSpecial(ID.text.IF_YOU_WEAR_THIS)
-
-                        elseif zi == 16 then
-                            player:messageSpecial(ID.text.THANK_YOU_TREAT)
-                        end
-                    end
+                    player:messageSpecial(ID.text.TRICK_OR_TREAT)
                 else
                     player:messageSpecial(ID.text.THANK_YOU)
                 end
 
-                if not alreadyTradedChk then
-                    player:setCharVar(varName, utils.mask.setBit(harvestFestTreats, itemInList, true))
-                end
-
                 player:tradeComplete()
-
-                break
             end
         end
     end
 end
 
-function applyHalloweenNpcCostumes(zoneid)
-    if isHalloweenEnabled() ~= 0 then
+xi.events.harvest.applyHalloweenDecorations = function(zoneid)
+    if xi.events.harvest.isHalloweenEnabled() ~= 0 then
+        local decoration = zones[zoneid].npc.HALLOWEEN_DECORATIONS
+        if decoration then
+            for id, decoration in pairs(decoration) do
+                local npc = GetNPCByID(id)
+                if npc then
+                    npc:setStatus(xi.status.NORMAL)
+                    local npcstatus = npc:getStatus()
+                end
+            end
+        end
+    end
+end
+
+xi.events.harvest.applyHalloweenRoaming = function(zoneid)
+    if xi.events.harvest.isHalloweenEnabled() ~= 0 then
+        local roam = zones[zoneid].npc.HALLOWEEN_ROAMING
+        if roam then
+            for id, roam in pairs(roam) do
+                local npc = GetNPCByID(id)
+                if npc then
+                    npc:setStatus(xi.status.NORMAL)
+                    local npcstatus = npc:getStatus()
+                end
+            end
+        end
+    end
+end
+
+xi.events.harvest.applyHalloweenNpcCostumes = function(zoneid)
+    if xi.events.harvest.isHalloweenEnabled() ~= 0 then
         local skins = zones[zoneid].npc.HALLOWEEN_SKINS
         if skins then
             for id, skin in pairs(skins) do

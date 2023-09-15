@@ -13,7 +13,8 @@ require('scripts/globals/zone')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    applyHalloweenNpcCostumes(zone:getID())
+    xi.events.harvest.applyHalloweenDecorations(zone:getID())
+    xi.events.harvest.applyHalloweenNpcCostumes(zone:getID())
     xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
     xi.events.sunbreeze_festival.showDecorations(zone:getID())
     xi.events.sunbreeze_festival.showNPCs(zone:getID())

@@ -15,7 +15,8 @@ zoneObject.onInitialize = function(zone)
     -- Used for Windurst Mission 1-3
     zone:registerTriggerArea(1, 23, -12, -208, 31, -8, -197)
 
-    applyHalloweenNpcCostumes(zone:getID())
+    xi.events.harvest.applyHalloweenDecorations(zone:getID())
+    xi.events.harvest.applyHalloweenNpcCostumes(zone:getID())
     xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
 end
 
