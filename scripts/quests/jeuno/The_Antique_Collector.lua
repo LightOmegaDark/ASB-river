@@ -70,6 +70,10 @@ quest.sections =
                 [15] = function(player, csid, option, npc)
                     if quest:complete(player) then
                         player:confirmTrade()
+                        if not player:hasKeyItem(xi.ki.MAP_OF_DELKFUTTS_TOWER) then
+                            player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.MAP_OF_DELKFUTTS_TOWER)
+                            player:addKeyItem(xi.ki.MAP_OF_DELKFUTTS_TOWER)
+                        end
                     end
                 end,
             },
