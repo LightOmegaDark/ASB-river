@@ -6,62 +6,55 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[xi.zone.MAMOOK] =
-{
-    text =
-    {
-        NOTHING_HAPPENS               = 119,  -- Nothing happens...
-        ITEM_CANNOT_BE_OBTAINED       = 6384, -- You cannot obtain the <item>. Come back after sorting your inventory.
-        ITEM_OBTAINED                 = 6390, -- Obtained: <item>.
-        GIL_OBTAINED                  = 6391, -- Obtained <number> gil.
-        KEYITEM_OBTAINED              = 6393, -- Obtained key item: <keyitem>.
-        CARRIED_OVER_POINTS           = 7001, -- You have carried over <number> login point[/s].
-        LOGIN_CAMPAIGN_UNDERWAY       = 7002, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!
-        LOGIN_NUMBER                  = 7003, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
+zones[xi.zone.MAMOOK] = {
+    text = {
+        NOTHING_HAPPENS = 119, -- Nothing happens...
+        ITEM_CANNOT_BE_OBTAINED = 6384, -- You cannot obtain the <item>. Come back after sorting your inventory.
+        ITEM_OBTAINED = 6390, -- Obtained: <item>.
+        GIL_OBTAINED = 6391, -- Obtained <number> gil.
+        KEYITEM_OBTAINED = 6393, -- Obtained key item: <keyitem>.
+        CARRIED_OVER_POINTS = 7001, -- You have carried over <number> login point[/s].
+        LOGIN_CAMPAIGN_UNDERWAY = 7002, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!
+        LOGIN_NUMBER = 7003, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         MEMBERS_LEVELS_ARE_RESTRICTED = 7023, -- Your party is unable to participate because certain members' levels are restricted.
-        FISHING_MESSAGE_OFFSET        = 7057, -- You can't fish here.
-        LOGGING_IS_POSSIBLE_HERE      = 7542, -- Logging is possible here if you have <item>.
-        PARTY_MEMBERS_HAVE_FALLEN     = 7899, -- All party members have fallen in battle. Now leaving the battlefield.
-        THE_PARTY_WILL_BE_REMOVED     = 7906, -- If all party members' HP are still zero after # minute[/s], the party will be removed from the battlefield.
-        IMPENDING_BATTLE              = 8054, -- You feel the rush of impending battle!
-        KEYHOLE                       = 8118, -- There is a giant keyhole in the gate here. You can see smearings of black, silver, brown, and other colors around the keyhole.
-        KEYS_SHATTER                  = 8119, -- The <item> shatters...The <item> shatters...The <item> shatters...
-        GULOOL_ENGAGE                 = 8152, -- See it, can we? Yes, see it, we can. Mamool Ja, it is not. No scales, does it have. And so, the Imperial tongue, we speak?
-        GULOOL_DEAD                   = 8153, -- Dead, am I? And you? Dead as well, am I. Then finished, we are...
-        NUMEROUS_STRANDS              = 8651, -- Numerous strands of hair are scattered all over...
-        SICKLY_SWEET                  = 8653, -- A sickly sweet fragrance pervades the air...
-        DRAWS_NEAR                    = 8675, -- Something draws near!
-        COMMON_SENSE_SURVIVAL         = 9546, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        FISHING_MESSAGE_OFFSET = 7057, -- You can't fish here.
+        LOGGING_IS_POSSIBLE_HERE = 7542, -- Logging is possible here if you have <item>.
+        PARTY_MEMBERS_HAVE_FALLEN = 7899, -- All party members have fallen in battle. Now leaving the battlefield.
+        THE_PARTY_WILL_BE_REMOVED = 7906, -- If all party members' HP are still zero after # minute[/s], the party will be removed from the battlefield.
+        KEYHOLE = 8118, -- There is a giant keyhole in the gate here. You can see smearings of black, silver, brown, and other colors around the keyhole.
+        KEYS_SHATTER = 8119, -- The <item> shatters...The <item> shatters...The <item> shatters...
+        GULOOL_ENGAGE = 8152, -- See it, can we? Yes, see it, we can. Mamool Ja, it is not. No scales, does it have. And so, the Imperial tongue, we speak?
+        GULOOL_DEAD = 8153, -- Dead, am I? And you? Dead as well, am I. Then finished, we are...
+        IMPENDING_BATTLE = 8055, -- You feel the rush of impending battle!
+        NUMEROUS_STRANDS = 8652, -- Numerous strands of hair are scattered all over...
+        SICKLY_SWEET = 8654, -- A sickly sweet fragrance pervades the air...
+        DRAWS_NEAR = 8676, -- Something draws near!
+        COMMON_SENSE_SURVIVAL = 9547, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
-    mob =
-    {
-        ZIZZY_ZILLAH_PH =
-        {
-            [17043560]           = 17043554,
-            [17043561]           = 17043554,
-            [17043562]           = 17043554,
-            [17043563]           = 17043554,
-            [17043564]           = 17043554,
+    mob = {
+        ZIZZY_ZILLAH_PH = {
+            [17043560] = 17043554,
+            [17043561] = 17043554,
+            [17043562] = 17043554,
+            [17043563] = 17043554,
+            [17043564] = 17043554,
         },
-        FIREDANCE_MAGMAAL_JA_PH =
-        {
-            [17043773]           = 17043779, -- -201.522 17.209 -363.865
-            [17043774]           = 17043779, -- -206.458 17.525 -373.798
+        FIREDANCE_MAGMAAL_JA_PH = {
+            [17043773] = 17043779, -- -201.522 17.209 -363.865
+            [17043774] = 17043779, -- -206.458 17.525 -373.798
         },
-        GULOOL_JA_JA             = 17043875,
-        CHAMROSH                 = 17043887,
-        IRIRI_SAMARIRI           = 17043888,
-        POROGGO_CASANOVA         = 17043881,
-        MIKILULU                 = 17043882,
-        MIKIRURU                 = 17043883,
-        NIKILULU                 = 17043884,
-        MIKILURU                 = 17043885,
-        MIKIRULU                 = 17043886,
+        GULOOL_JA_JA = 17043875,
+        CHAMROSH = 17043887,
+        IRIRI_SAMARIRI = 17043888,
+        POROGGO_CASANOVA = 17043881,
+        MIKILULU = 17043882,
+        MIKIRURU = 17043883,
+        NIKILULU = 17043884,
+        MIKILURU = 17043885,
+        MIKIRULU = 17043886,
     },
-    npc =
-    {
-        LOGGING =
-        {
+    npc = {
+        LOGGING = {
             17044014,
             17044015,
             17044016,
