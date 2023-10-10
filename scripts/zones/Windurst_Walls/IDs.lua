@@ -30,6 +30,7 @@ zones[xi.zone.WINDURST_WALLS] =
         MOG_LOCKER_OFFSET              = 6823,  -- Your Mog Locker lease is valid until <timestamp>, kupo.
         ITEM_DELIVERY_DIALOG           = 6990,  -- We can deliver goods to your residence or to the residences of your friends.
         FISHING_MESSAGE_OFFSET         = 7086,  -- You can't fish here.
+        RECEIVE_BAYLD                  = 7184,  -- You receive <number> bayld!
         DOORS_SEALED_SHUT              = 7761,  -- The doors are firmly sealed shut.
         MOGHOUSE_EXIT                  = 8218,  -- You have learned your way through the back alleys of Windurst! Now you can exit to any area from your residence.
         SCAVNIX_SHOP_DIALOG            = 8702,  -- <Pshoooooowaaaaa> I'm goood Goblin from underwooorld.  I find lotshhh of gooodieshhh.  You want try shhhome chipshhh? Cheap for yooou.

@@ -26,6 +26,7 @@ zones[xi.zone.PORT_SAN_DORIA] =
         MOG_LOCKER_OFFSET              = 6612,  -- Your Mog Locker lease is valid until <timestamp>, kupo.
         CONQUEST_BASE                  = 7096,  -- Tallying conquest results...
         FISHING_MESSAGE_OFFSET         = 7255,  -- You can't fish here.
+        RECEIVE_BAYLD                  = 7353,  -- You receive <number> bayld!
         PICKPOCKET_AVANDALE            = 7409,  -- What? A pickpocket? Well, I did see a strange woman run to Northern San d'Oria. But I didn't see her steal anything.
         ANTRENEAU_READY_TO_EAT         = 7410,  -- All right, then! I am ready to eat!
         FLYER_ALREADY                  = 7588,  -- This person already has a flyer.
