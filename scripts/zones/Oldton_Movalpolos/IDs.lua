@@ -19,21 +19,12 @@ zones[xi.zone.OLDTON_MOVALPOLOS] =
         LOGIN_CAMPAIGN_UNDERWAY       = 7002, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!
         LOGIN_NUMBER                  = 7003, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         MEMBERS_LEVELS_ARE_RESTRICTED = 7023, -- Your party is unable to participate because certain members' levels are restricted.
-        CONQUEST_BASE                 = 7060, -- Tallying conquest results...
-        FISHING_MESSAGE_OFFSET        = 7579, -- You can't fish here.
-        NOTHING_OUT_OF_ORDINARY       = 7689, -- There is nothing out of the ordinary here.
-        MINING_IS_POSSIBLE_HERE       = 7710, -- Mining is possible here if you have <item>.
-        BRAKOBRIK_1                   = 7718, -- Stupid people. You don't getting what I'm saying.
-        BRAKOBRIK_2                   = 7722, -- Killing bombs. Bringing *item*
-        BRAKOBRIK_3                   = 7727, -- Good, good. You being smart. Very, very clever.
-        BRAKOBRIK_4                   = 7730, -- When Brakobrik realizes that you already possess the item he is trying to give you, he refuses to give you another one.
-        RAKOROK_DIALOGUE              = 7734, -- Nsy pipul. Gattohre! I bisynw!
-        ALTANA_DIE                    = 7736, -- Aaaltaaanaaa...Diiieee!!!
-        MONSTER_APPEARED              = 7749, -- A monster has appeared!
-        CHEST_UNLOCKED                = 7758, -- You unlock the chest!
-        RUSTY_IRON_BOX                = 8057, -- There is a rusty iron box with strange markings and a narrow slit on the lid.
-        RECOMMENDATION_LETTER         = 8058, -- You slip the recommendation letter through the opening on the lid of the box.
-        COMMON_SENSE_SURVIVAL         = 8116, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        CONQUEST_BASE                 = 7061, -- Tallying conquest results...
+        FISHING_MESSAGE_OFFSET        = 7580, -- You can't fish here.
+        MINING_IS_POSSIBLE_HERE       = 7711, -- Mining is possible here if you have <item>.
+        RAKOROK_DIALOGUE              = 7735, -- Nsy pipul. Gattohre! I bisynw!
+        CHEST_UNLOCKED                = 7759, -- You unlock the chest!
+        COMMON_SENSE_SURVIVAL         = 8117, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
     mob =
     {
