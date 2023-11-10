@@ -39,6 +39,7 @@ zones[xi.zone.CAEDARVA_MIRE] =
         AREA_FULL                     = 7472, -- This area is fully occupied. You were unable to enter.
         MEMBER_NO_REQS                = 7476, -- Not all of your party members meet the requirements for this objective. Unable to enter area.
         MEMBER_TOO_FAR                = 7480, -- One or more party members are too far away from the entrance. Unable to enter area.
+        BESIEGED_UPDATES_BASE         = 7515, -- The Mamool Ja Savages are on the move. Intercept their forces in the Wajaom Woodlands!
         JAZARAATS_HEADSTONE           = 7532, -- The name Sir Jazaraat is engraved on the headstone...
         SOMEONE_SLIPPED               = 7579, -- It looks like someone slipped here...
         HIDEOUS_BEAST                 = 7580, -- A hideous beast emerges from the depths of the swamp!
