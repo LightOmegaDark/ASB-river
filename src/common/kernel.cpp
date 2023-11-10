@@ -256,10 +256,7 @@ int main(int argc, char** argv)
             }
             else
             {
-#ifndef SIGKILL
-#define SIGKILL 9
-#endif // SIGKILL
-                std::raise(SIGKILL);
+                std::raise(SIGTERM);
             }
         });
         // clang-format on
