@@ -426,6 +426,11 @@ xi.dynamis.normalDynamicSpawn = function(oMob, oMobIndex, target)
                 end,
 
                 onMobEngaged = function(mobArg, mobTarget)
+                    if mobTarget:isPet() then
+                        local petOwner = mobTarget:getMaster()
+                        mobArg:updateEnmity(petOwner)
+                    end
+
                     xi.dynamis.mobOnEngaged(mobArg, mobTarget)
                 end,
 
@@ -742,7 +747,16 @@ xi.dynamis.nonStandardDynamicSpawn = function(mobIndex, oMob, forceLink, zoneID,
             mob:setMobMod(xi.mobMod.SUBLINK, xi.dynamis.SUBLINK_ID)
         end,
 
-        onMobEngaged = mobFunctions[mobMobType]["onMobEngaged"][1],
+        onMobEngaged = function(mob, mobTarget)
+            local specFunc = mobFunctions[mobMobType]["onMobEngaged"][1]
+            specFunc(mob)
+
+            if mobTarget:isPet() then
+                local petOwner = mobTarget:getMaster()
+                mob:updateEnmity(petOwner)
+            end
+        end,
+
         onMobFight = mobFunctions[mobMobType]["onMobFight"][1],
         onMobRoam =  mobFunctions[mobMobType]["onMobRoam"][1],
         onMobDeath = function(mob, player, optParams)
@@ -2128,7 +2142,16 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
             mob:setMobMod(xi.mobMod.SUBLINK, xi.dynamis.SUBLINK_ID)
         end,
 
-        onMobEngaged = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]["onMobEngaged"][1],
+        onMobEngaged = function(mob, mobTarget)
+            local specFunc = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]["onMobEngaged"][1]
+            specFunc(mob)
+
+            if mobTarget:isPet() then
+                local petOwner = mobTarget:getMaster()
+                mob:updateEnmity(petOwner)
+            end
+        end,
+
         onMobFight = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]["onMobFight"][1],
         onMobRoam = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]["onMobRoam"][1],
         onMobMagicPrepare = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]["onMobMagicPrepare"][1],
