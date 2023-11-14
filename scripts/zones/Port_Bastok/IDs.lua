@@ -8,6 +8,7 @@ zones = zones or {}
 
 zones[xi.zone.PORT_BASTOK] = {
     text = {
+        NOTHING_HAPPENS = 119, -- Nothing happens...
         ITEM_CANNOT_BE_OBTAINED = 6384, -- You cannot obtain the <item>. Come back after sorting your inventory.
         FULL_INVENTORY_AFTER_TRADE = 6388, -- You cannot obtain the <item>. Try trading again after sorting your inventory.
         ITEM_OBTAINED = 6390, -- Obtained: <item>.
@@ -15,6 +16,7 @@ zones[xi.zone.PORT_BASTOK] = {
         KEYITEM_OBTAINED = 6393, -- Obtained key item: <keyitem>.
         KEYITEM_LOST = 6394, -- Lost key item: <keyitem>.
         NOT_HAVE_ENOUGH_GIL = 6395, -- You do not have enough gil.
+        ITEM_RETURNED = 6402, -- The <item> is returned to you.
         CARRIED_OVER_POINTS = 6429, -- You have carried over <number> login point[/s].
         LOGIN_CAMPAIGN_UNDERWAY = 6430, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!
         LOGIN_NUMBER = 6431, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
@@ -76,7 +78,6 @@ zones[xi.zone.PORT_BASTOK] = {
         OBTAINED_GUILD_POINTS = 12692, -- Obtained: <number> guild points.
         OBTAINED_NUM_KEYITEMS = 13085, -- Obtained key item: <number> <keyitem>!
         NOT_ACQUAINTED = 13087, -- I'm sorry, but I don't believe we're acquainted. Please leave me be.
-        NOTHING_HAPPENS = 13238, -- Nothing happens...
     },
     mob = {},
     npc = {
