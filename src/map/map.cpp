@@ -83,20 +83,20 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 void* operator new(std::size_t count)
 {
     auto ptr = malloc(count);
-    TracyAlloc(ptr, count);
-    return ptr;
+TracyAlloc(ptr, count);
+return ptr;
 }
 
 void operator delete(void* ptr) noexcept
 {
     TracyFree(ptr);
-    free(ptr);
+free(ptr);
 }
 
 void operator delete(void* ptr, std::size_t count)
 {
     TracyFree(ptr);
-    free(ptr);
+free(ptr);
 }
 #endif // TRACY_ENABLE
 
@@ -427,6 +427,11 @@ void do_final(int code)
 
     CTaskMgr::delInstance();
     CVanaTime::delInstance();
+    // TODO: Look into and clarify relation of lifetime of objects and logging/profiling of destructors
+    // sql needs to be released here, `TracyZoneScope` macro in SqlConnection destructor depends on logging functionality being available
+    // but the logging is shutdown later down in this function
+    // Before this change, it was released by atexit handlers
+    sql.release();
 
     timer_final();
     socket_final();
