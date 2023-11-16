@@ -83,20 +83,20 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 void* operator new(std::size_t count)
 {
     auto ptr = malloc(count);
-TracyAlloc(ptr, count);
-return ptr;
+    TracyAlloc(ptr, count);
+    return ptr;
 }
 
 void operator delete(void* ptr) noexcept
 {
     TracyFree(ptr);
-free(ptr);
+    free(ptr);
 }
 
 void operator delete(void* ptr, std::size_t count)
 {
     TracyFree(ptr);
-free(ptr);
+    free(ptr);
 }
 #endif // TRACY_ENABLE
 
