@@ -12,6 +12,7 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
+    mob:setSpeed(80)
     xi.mix.jobSpecial.config(mob, {
         specials =
         {
