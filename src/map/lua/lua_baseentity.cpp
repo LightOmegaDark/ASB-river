@@ -12843,6 +12843,32 @@ uint16 CLuaBaseEntity::getAmmoDmg()
 }
 
 /************************************************************************
+ *  Function: getWeaponHitCount()
+ *  Purpose : Gets a number of attacks between 1 and maxAttacks for the MainHand weapon (for Occasionally Attacks X weapons)
+ *  Example : player:getWeaponHitCount()
+ *  Notes   : 
+ ************************************************************************/
+uint8 CLuaBaseEntity::getWeaponHitCount()
+{
+    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+
+    return static_cast<CBattleEntity*>(m_PBaseEntity)->GetMainWeaponHitCount();
+}
+
+/************************************************************************
+ *  Function: getOffhandHitCount()
+ *  Purpose : Gets a number of attacks between 1 and maxAttacks for the OffHand weapon (for Occasionally Attacks X weapons)
+ *  Example : player:getOffhandHitCount()
+ *  Notes   : 
+ ************************************************************************/
+uint8 CLuaBaseEntity::getOffhandHitCount()
+{
+    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+
+    return static_cast<CBattleEntity*>(m_PBaseEntity)->GetSubWeaponHitCount();
+}
+
+/************************************************************************
  *  Function: removeAmmo()
  *  Purpose : Expends one item in the ammo slot (arrow,bullet, etc)
  *  Example : player:removeAmmo()
@@ -12996,14 +13022,14 @@ auto CLuaBaseEntity::getWSSkillchainProp() -> std::tuple<uint8, uint8, uint8>
  ************************************************************************/
 
 int32 CLuaBaseEntity::takeWeaponskillDamage(CLuaBaseEntity* attacker, int32 damage, uint8 atkType, uint8 dmgType, uint8 slot, bool primary,
-                                            float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, bool isMagicWS)
+                                            float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, bool isMagicWS, bool isJump)
 {
     auto*       PChar      = static_cast<CCharEntity*>(attacker->m_PBaseEntity);
     ATTACK_TYPE attackType = static_cast<ATTACK_TYPE>(atkType);
     DAMAGE_TYPE damageType = static_cast<DAMAGE_TYPE>(dmgType);
 
     return battleutils::TakeWeaponskillDamage(PChar, static_cast<CBattleEntity*>(m_PBaseEntity), damage, attackType, damageType, slot,
-                                              primary, tpMultiplier, bonusTP, targetTPMultiplier, isMagicWS);
+                                              primary, tpMultiplier, bonusTP, targetTPMultiplier, isMagicWS, isJump);
 }
 
 /************************************************************************
@@ -17368,6 +17394,8 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("getRangedDmg", CLuaBaseEntity::getRangedDmg);
     SOL_REGISTER("getRangedDmgRank", CLuaBaseEntity::getRangedDmgRank);
     SOL_REGISTER("getAmmoDmg", CLuaBaseEntity::getAmmoDmg);
+    SOL_REGISTER("getWeaponHitCount", CLuaBaseEntity::getWeaponHitCount);
+    SOL_REGISTER("getOffhandHitCount", CLuaBaseEntity::getOffhandHitCount);
 
     SOL_REGISTER("removeAmmo", CLuaBaseEntity::removeAmmo);
 

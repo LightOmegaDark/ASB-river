@@ -506,11 +506,11 @@ struct apAction_t
     }
 };
 
-/************************************************************************
- *                                                                      *
- *  TP хранится то пому же принципу, что и skill, т.е. 6,4% = 64        *
- *                                                                      *
- ************************************************************************/
+/****************************************************************************
+ *                                                                          *
+ *  TP is stored according to the same principle as skill, i.e. 6.4% = 64   *
+ *                                                                          *
+ ****************************************************************************/
 
 struct health_t
 {
@@ -599,16 +599,18 @@ public:
     int32 GetMaxMP() const; // максимальное количество mp
     void  UpdateHealth();   // пересчет максимального количества hp и mp, а так же корректировка их текущих значений
 
-    int16  GetWeaponDelay(bool tp);       // returns delay of combined weapons
-    float  GetMeleeRange() const;         // returns the distance considered to be within melee range of the entity
-    int16  GetRangedWeaponDelay(bool tp); // returns delay of ranged weapon + ammo where applicable
-    int16  GetAmmoDelay();                // returns delay of ammo (for cooldown between shots)
-    uint16 GetMainWeaponDmg();            // returns total main hand DMG
-    uint16 GetSubWeaponDmg();             // returns total sub weapon DMG
-    uint16 GetRangedWeaponDmg();          // returns total ranged weapon DMG
-    uint16 GetMainWeaponRank();           // returns total main hand DMG Rank
-    uint16 GetSubWeaponRank();            // returns total sub weapon DMG Rank
-    uint16 GetRangedWeaponRank();         // returns total ranged weapon DMG Rank
+    int16  GetWeaponDelay(bool tp);         // returns delay of combined weapons
+    float  GetMeleeRange() const;           // returns the distance considered to be within melee range of the entity
+    int16  GetRangedWeaponDelay(bool tp);   // returns delay of ranged weapon + ammo where applicable
+    int16  GetAmmoDelay();                  // returns delay of ammo (for cooldown between shots)
+    uint16 GetMainWeaponDmg();              // returns total main hand DMG
+    uint16 GetSubWeaponDmg();               // returns total sub weapon DMG
+    uint16 GetRangedWeaponDmg();            // returns total ranged weapon DMG
+    uint16 GetMainWeaponRank();             // returns total main hand DMG Rank
+    uint16 GetSubWeaponRank();              // returns total sub weapon DMG Rank
+    uint16 GetRangedWeaponRank();           // returns total ranged weapon DMG Rank
+    uint8  GetMainWeaponHitCount();         // returns number of hits between 1 and maxHits for the main hand (for OAX)
+    uint8  GetSubWeaponHitCount();          // returns number of hits between 1 and maxHits for the off hand (for OAX)
 
     uint16 GetSkill(uint16 SkillID); // текущая величина умения (не максимальная, а ограниченная уровнем)
 
@@ -620,7 +622,7 @@ public:
     virtual int32 takeDamage(int32 amount, CBattleEntity* attacker = nullptr, ATTACK_TYPE attackType = ATTACK_TYPE::NONE,
                              DAMAGE_TYPE damageType = DAMAGE_TYPE::NONE);
 
-    int16 getMod(Mod modID); // величина модификатора
+    int16 getMod(Mod modID); // Modifier value
 
     bool CanRest();        // checks if able to heal
     bool Rest(float rate); // heal an amount of hp / mp
@@ -749,14 +751,14 @@ public:
     virtual void PostTick() override;
 
     health_t health;         // hp,mp,tp
-    stats_t  stats;          // атрибуты STR,DEX,VIT,AGI,INT,MND,CHR
-    skills_t WorkingSkills;  // структура всех доступных сущности умений, ограниченных уровнем
+    stats_t  stats;          // Attributes STR,DEX,VIT,AGI,INT,MND,CHR
+    skills_t WorkingSkills;  // The structure of all available skills that are limited to a level
     uint16   m_Immunity;     // Mob immunity
-    uint16   m_magicEvasion; // store this so it can be removed easily
-    bool     m_unkillable;   // entity is not able to die (probably until some action removes this flag)
+    uint16   m_magicEvasion; // Store this so it can be removed easily
+    bool     m_unkillable;   // Entity is not able to die (probably until some action removes this flag)
 
-    time_point charmTime; // to hold the time entity is charmed
-    bool       isCharmed; // is the battle entity charmed?
+    time_point charmTime; // To hold the time entity is charmed
+    bool       isCharmed; // Is the battle entity charmed?
 
     float           m_ModelRadius; // The radius of the entity model, for calculating the range of a physical attack
     ECOSYSTEM       m_EcoSystem;   // Entity eco system
@@ -764,16 +766,16 @@ public:
     bool            m_dualWield;   // True/false depending on if the entity is using two weapons
     DEATH_TYPE      m_DeathType;
 
-    TraitList_t TraitList; // список постянно активных способностей в виде указателей
+    TraitList_t TraitList; // List of Permanently Active Abilities in the Form of Pointers
 
-    EntityID_t m_OwnerID; // ID атакующей сущности (после смерти будет хранить ID сущности, нанесщей последний удар)
+    EntityID_t m_OwnerID; // ID of the attacking entity (will store the ID of the entity that struck the last blow upon death)
 
-    ActionList_t m_ActionList; // список совершенных действий за одну атаку (нужно будет написать структуру, включающую ActionList в которой будут категории
-                               // анимации и т.д.)
+    ActionList_t m_ActionList; // A list of actions performed in one attack (you will need to write a structure that includes an ActionList
+                               // in which there will be action info, animations, etc.)
 
-    CParty*         PParty;  // описание группы, в которой состоит сущность
-    CBattleEntity*  PPet;    // питомец сущности
-    CBattleEntity*  PMaster; // владелец/хозяин сущности (распространяется на все боевые сущности)
+    CParty*         PParty;  // The Party in which the Entity is a member of
+    CBattleEntity*  PPet;    // Entity's Pet
+    CBattleEntity*  PMaster; // Entity Owner/Host (Applies to all Combat Entities)
     CBattleEntity*  PLastAttacker;
     time_point      LastAttacked;
     battlehistory_t BattleHistory; // Stores info related to most recent combat actions taken towards this entity.
@@ -787,16 +789,16 @@ public:
     std::vector<int16> m_MSNonItemValues;        // Tracking movement speed from non-item sources
 
 private:
-    JOBTYPE m_mjob; // главная профессия
-    JOBTYPE m_sjob; // дополнительная профессия
-    uint8   m_mlvl; // ТЕКУЩИЙ уровень главной профессии
-    uint8   m_slvl; // ТЕКУЩИЙ уровень дополнительной профессии
+    JOBTYPE m_mjob; // Main Job
+    JOBTYPE m_sjob; // Sub Job
+    uint8   m_mlvl; // CURRENT Main Job Level
+    uint8   m_slvl; // Current Sub Job Level
 
     uint16     m_battleTarget{ 0 };
     time_point m_battleStartTime;
     uint16     m_battleID = 0; // Current battle the entity is participating in. Battle ID must match in order for entities to interact with each other.
 
-    std::unordered_map<Mod, int16, EnumClassHash>                                                m_modStat;     // массив модификаторов
+    std::unordered_map<Mod, int16, EnumClassHash>                                                m_modStat;     // Array of modifiers
     std::unordered_map<Mod, int16, EnumClassHash>                                                m_modStatSave; // saved state
     std::unordered_map<PetModType, std::unordered_map<Mod, int16, EnumClassHash>, EnumClassHash> m_petMod;
 };

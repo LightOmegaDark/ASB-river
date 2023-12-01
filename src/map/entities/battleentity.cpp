@@ -546,9 +546,29 @@ uint16 CBattleEntity::GetRangedWeaponRank()
     return 0;
 }
 
+uint8 CBattleEntity::GetMainWeaponHitCount()
+{
+    if (auto* weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]))
+    {
+        return weapon->getHitCount();
+    }
+
+    return 1;
+}
+
+uint8 CBattleEntity::GetSubWeaponHitCount()
+{
+    if (auto* weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_SUB]))
+    {
+        return weapon->getHitCount();
+    }
+
+    return 1;
+}
+
 /************************************************************************
  *                                                                       *
- *  Изменяем количество TP сущности                                      *
+ *  Entity TP manipulation                                               *
  *                                                                       *
  ************************************************************************/
 

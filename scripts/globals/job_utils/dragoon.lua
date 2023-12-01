@@ -46,6 +46,8 @@ local function getJumpWSParams(player, atkMultiplier, tpMultiplier, forceCrit)
         attackerTPMult = tpMultiplier,
         hitsHigh = true,
         isJump = true,
+
+        canUseOccAtkX = true,
     }
 
     if player:getMod(xi.mod.FORCE_JUMP_CRIT) > 0 or forceCrit then

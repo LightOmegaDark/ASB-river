@@ -207,6 +207,7 @@ local function getMultiAttacks(attacker, target, wsParams)
     local oaThriceRate = attacker:getMod(xi.mod.MYTHIC_OCC_ATT_THRICE)
     local oaTwiceRate  = attacker:getMod(xi.mod.MYTHIC_OCC_ATT_TWICE)
     local isJump       = wsParams.isJump or false
+    local canOAX       = wsParams.canUseOccAtkX or false
 
     if isJump then
         doubleRate = doubleRate + attacker:getMod(xi.mod.JUMP_DOUBLE_ATTACK)
@@ -250,7 +251,31 @@ local function getMultiAttacks(attacker, target, wsParams)
         end
     end
 
-    numHits = utils.clamp(numHits + bonusHits, 1, 8)
+    -- If this WS/Ability is capable of multi-striking from Occasionally Attacks X weapons, calculate now
+    -- Note: QA/TA/DA take precedence over OAX, so if they proc we skip.
+    local totalOAXHits = 0
+    if
+        canOAX and
+        bonusHits <= 0
+    then
+        local numMainHits = attacker:getWeaponHitCount()
+        -- Subtract 1 since the initial hit would have been calculated already; we just want additionals
+        numMainHits = utils.clamp(numMainHits - 1, 0, numMainHits)
+
+        local numOffHits = 0
+        if
+            attacker:getOffhandDmg() > 0
+        then
+            numOffHits = attacker:getOffhandHitCount()
+
+            -- Subtract 1 since the initial hit would have been calculated already; we just want additionals
+            numOffHits = utils.clamp(numOffHits - 1, 0, numOffHits)
+        end
+
+        totalOAXHits = numMainHits + numOffHits
+    end
+
+    numHits = utils.clamp(numHits + bonusHits + totalOAXHits, 1, 8)
 
     return numHits
 end
@@ -1070,11 +1095,12 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
 
     -- DA/TA/QA/OaT/Oa2-3 etc give full TP return per hit on Jumps
     if isJump then
-        attackerTPMult = attackerTPMult * (wsResults.tpHitsLanded + wsResults.extraHitsLanded)
+        wsResults.tpHitsLanded = wsResults.tpHitsLanded + wsResults.extraHitsLanded
         wsResults.extraHitsLanded = 0
     end
 
-    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded * attackerTPMult, (wsResults.extraHitsLanded * 10) + wsResults.bonusTP, targetTPMult, attack.damageType == xi.attackType.MAGICAL)
+    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded * attackerTPMult, (wsResults.extraHitsLanded * 10) + wsResults.bonusTP,
+                                              targetTPMult, attack.damageType == xi.attackType.MAGICAL, isJump)
     if wsResults.tpHitsLanded + wsResults.extraHitsLanded > 0 then
         if finaldmg >= 0 then
             action:param(defender:getID(), math.abs(finaldmg))

@@ -704,6 +704,8 @@ public:
     uint16 getRangedDmg();                                                                                                                  // Get ranged weapon DMG rating
     uint16 getRangedDmgRank();                                                                                                              // Get ranged weapond DMG rating used for calculating rank
     uint16 getAmmoDmg();                                                                                                                    // Get ammo DMG rating
+    uint8  getWeaponHitCount();                                                                                                             // Gets a number of attacks between 1 and maxAttacks for the MainHand weapon (for OAX)
+    uint8  getOffhandHitCount();                                                                                                            // Gets a number of attacks between 1 and maxAttacks for the OffHand weapon (for OAX)
 
     void removeAmmo();
 
@@ -714,7 +716,7 @@ public:
     auto   getWSSkillchainProp() -> std::tuple<uint8, uint8, uint8>; // returns weapon skill's skillchain properties (up to 3)
 
     int32 takeWeaponskillDamage(CLuaBaseEntity* attacker, int32 damage, uint8 atkType, uint8 dmgType, uint8 slot, bool primary,
-                                float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, bool isMagicWS = false);
+                                float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, bool isMagicWS = false, bool isJump = false);
 
     int32 takeSpellDamage(CLuaBaseEntity* caster, CLuaSpell* spell, int32 damage, uint8 atkType, uint8 dmgType);
     int32 takeSwipeLungeDamage(CLuaBaseEntity* caster, int32 damage, uint8 atkType, uint8 dmgType);

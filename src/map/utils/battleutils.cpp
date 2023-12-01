@@ -2370,7 +2370,7 @@ namespace battleutils
      ************************************************************************/
 
     int32 TakeWeaponskillDamage(CCharEntity* PAttacker, CBattleEntity* PDefender, int32 damage, ATTACK_TYPE attackType, DAMAGE_TYPE damageType, uint8 slot,
-                                bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, bool isMagicWS)
+                                bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, bool isMagicWS, bool isJump)
     {
         auto* weapon   = GetEntityWeapon(PAttacker, (SLOTTYPE)slot);
         bool  isRanged = (slot == SLOT_AMMO || slot == SLOT_RANGED);
@@ -2412,39 +2412,43 @@ namespace battleutils
             switch (PDefender->objtype)
             {
                 case TYPE_MOB:
+                {
                     // if the mob is charmed by player
                     if (PDefender->PMaster != nullptr && PDefender->PMaster->objtype == TYPE_PC)
                     {
-                        ((CPetEntity*)PDefender)
-                            ->loc.zone->UpdateEntityPacket(PDefender, ENTITY_UPDATE, UPDATE_COMBAT);
+                        ((CPetEntity*)PDefender)->loc.zone->UpdateEntityPacket(PDefender, ENTITY_UPDATE, UPDATE_COMBAT);
                     }
 
                     if (((CMobEntity*)PDefender)->m_HiPCLvl < PAttacker->GetMLevel())
                     {
                         ((CMobEntity*)PDefender)->m_HiPCLvl = PAttacker->GetMLevel();
                     }
-
-                    break;
+                }
+                break;
 
                 case TYPE_PET:
+                {
                     ((CPetEntity*)PDefender)->loc.zone->UpdateEntityPacket(PDefender, ENTITY_UPDATE, UPDATE_COMBAT);
-                    break;
+                }
+                break;
 
                 default:
-                    break;
+                break;
             }
 
-            // try to interrupt spell
+            // Try to interrupt spell
             PDefender->TryHitInterrupt(PAttacker);
 
             int16 baseTp = CalculateReturnedTPWS(PAttacker, isRanged, weapon);
 
-            // add tp to attacker
+            // Add tp to attacker
             if (primary)
-            // Calculate TP Return from WS
             {
-                standbyTp = bonusTP + ((int16)((tpMultiplier * baseTp) *
-                                               (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker))))));
+                // Calculate TP Return from WS
+                // * bonusTP are generally from additional WS hits after the first (e.g. 10 tp * numHits)
+                // * tpMultiplier is the number of main tpHits (usually the first hit)
+                // This is then scaled by any STORETP the attacker may have
+                standbyTp = bonusTP + ((int16)((tpMultiplier * baseTp) * (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker))))));
             }
 
             // account for attacker's subtle blow which reduces the baseTP gain for the defender
@@ -2452,19 +2456,23 @@ namespace battleutils
             float sBlow2    = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW_II), -50.0f, 50.0f);
             float sBlowMult = (100.0f - std::clamp(sBlow1 + sBlow2, -75.0f, 75.0f)) / 100.0f;
 
-            // mobs hit get basetp+30 whereas pcs hit get basetp/3
-            if (PDefender->objtype == TYPE_PC)
+            // Make sure the "WS" was not a Jump as they do not give any TP to the defender
+            if (!isJump)
             {
-                PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
-                                         ((baseTp / 3) * sBlowMult *
-                                          (1.0f + 0.01f * (float)((PDefender->getMod(Mod::STORETP) +
-                                                                   getStoreTPbonusFromMerit(PAttacker))))))); // yup store tp counts on hits taken too!
-            }
-            else
-            {
-                PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
-                                         ((baseTp + 30) * sBlowMult *
-                                          (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); // subtle blow also reduces the "+30" on mob tp gain
+                // Mobs hit get basetp+30 whereas pcs hit get basetp/3
+                if (PDefender->objtype == TYPE_PC)
+                {
+                    PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
+                                             ((baseTp / 3) * sBlowMult *
+                                              (1.0f + 0.01f * (float)((PDefender->getMod(Mod::STORETP) +
+                                                                       getStoreTPbonusFromMerit(PAttacker))))))); // yup store tp counts on hits taken too!
+                }
+                else
+                {
+                    PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
+                                             ((baseTp + 30) * sBlowMult *
+                                              (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); // subtle blow also reduces the "+30" on mob tp gain
+                }
             }
         }
         else if (PDefender->objtype == TYPE_MOB)
@@ -2480,19 +2488,24 @@ namespace battleutils
                 float sBlow1    = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW), -50.0f, 50.0f);
                 float sBlow2    = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW_II), -50.0f, 50.0f);
                 float sBlowMult = (100.0f - std::clamp(sBlow1 + sBlow2, -75.0f, 75.0f)) / 100.0f;
-                // mobs hit get basetp+30 whereas pcs hit get basetp/3
-                if (PDefender->objtype == TYPE_PC)
+
+                // Make sure the "WS" was not a Jump as they do not give any TP to the defender
+                if (!isJump)
                 {
-                    PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
-                                             ((baseTp / 3) * sBlowMult *
-                                              (1.0f + 0.01f * (float)((PDefender->getMod(Mod::STORETP) +
-                                                                       getStoreTPbonusFromMerit(PAttacker))))))); // yup store tp counts on hits taken too!
-                }
-                else
-                {
-                    PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
-                                             ((baseTp + 30) * sBlowMult *
-                                              (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); // subtle blow also reduces the "+30" on mob tp gain
+                    // Mobs hit get basetp+30 whereas pcs hit get basetp/3
+                    if (PDefender->objtype == TYPE_PC)
+                    {
+                        PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
+                                                 ((baseTp / 3) * sBlowMult *
+                                                  (1.0f + 0.01f * (float)((PDefender->getMod(Mod::STORETP) +
+                                                                           getStoreTPbonusFromMerit(PAttacker))))))); // yup store tp counts on hits taken too!
+                    }
+                    else
+                    {
+                        PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
+                                                 ((baseTp + 30) * sBlowMult *
+                                                  (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); // subtle blow also reduces the "+30" on mob tp gain
+                    }
                 }
             }
 
