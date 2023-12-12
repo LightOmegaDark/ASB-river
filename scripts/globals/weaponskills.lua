@@ -256,11 +256,11 @@ local function getMultiAttacks(attacker, target, wsParams)
     local totalOAXHits = 0
     if
         canOAX and
-        bonusHits <= 0
+        bonusHits == 0
     then
         local numMainHits = attacker:getWeaponHitCount()
         -- Subtract 1 since the initial hit would have been calculated already; we just want additionals
-        numMainHits = utils.clamp(numMainHits - 1, 0, numMainHits)
+        numMainHits = numMainHits - 1
 
         local numOffHits = 0
         if
@@ -269,7 +269,7 @@ local function getMultiAttacks(attacker, target, wsParams)
             numOffHits = attacker:getOffhandHitCount()
 
             -- Subtract 1 since the initial hit would have been calculated already; we just want additionals
-            numOffHits = utils.clamp(numOffHits - 1, 0, numOffHits)
+            numOffHits = numOffHits - 1
         end
 
         totalOAXHits = numMainHits + numOffHits
