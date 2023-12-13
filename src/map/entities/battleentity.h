@@ -599,18 +599,18 @@ public:
     int32 GetMaxMP() const; // максимальное количество mp
     void  UpdateHealth();   // пересчет максимального количества hp и mp, а так же корректировка их текущих значений
 
-    int16  GetWeaponDelay(bool tp);        // returns delay of combined weapons
-    float  GetMeleeRange() const;          // returns the distance considered to be within melee range of the entity
-    int16  GetRangedWeaponDelay(bool tp);  // returns delay of ranged weapon + ammo where applicable
-    int16  GetAmmoDelay();                 // returns delay of ammo (for cooldown between shots)
-    uint16 GetMainWeaponDmg();             // returns total main hand DMG
-    uint16 GetSubWeaponDmg();              // returns total sub weapon DMG
-    uint16 GetRangedWeaponDmg();           // returns total ranged weapon DMG
-    uint16 GetMainWeaponRank();            // returns total main hand DMG Rank
-    uint16 GetSubWeaponRank();             // returns total sub weapon DMG Rank
-    uint16 GetRangedWeaponRank();          // returns total ranged weapon DMG Rank
-    uint8  GetMainWeaponHitCount();        // returns number of hits between 1 and maxHits for the main hand (for OAX)
-    uint8  GetSubWeaponHitCount();         // returns number of hits between 1 and maxHits for the off hand (for OAX)
+    int16  GetWeaponDelay(bool tp);       // returns delay of combined weapons
+    float  GetMeleeRange() const;         // returns the distance considered to be within melee range of the entity
+    int16  GetRangedWeaponDelay(bool tp); // returns delay of ranged weapon + ammo where applicable
+    int16  GetAmmoDelay();                // returns delay of ammo (for cooldown between shots)
+    uint16 GetMainWeaponDmg();            // returns total main hand DMG
+    uint16 GetSubWeaponDmg();             // returns total sub weapon DMG
+    uint16 GetRangedWeaponDmg();          // returns total ranged weapon DMG
+    uint16 GetMainWeaponRank();           // returns total main hand DMG Rank
+    uint16 GetSubWeaponRank();            // returns total sub weapon DMG Rank
+    uint16 GetRangedWeaponRank();         // returns total ranged weapon DMG Rank
+    uint8  GetMainWeaponHitCount();       // returns number of hits between 1 and maxHits for the main hand (for OAX)
+    uint8  GetSubWeaponHitCount();        // returns number of hits between 1 and maxHits for the off hand (for OAX)
 
     uint16 GetSkill(uint16 SkillID); // текущая величина умения (не максимальная, а ограниченная уровнем)
 
@@ -754,11 +754,11 @@ public:
     stats_t  stats;          // атрибуты STR,DEX,VIT,AGI,INT,MND,CHR
     skills_t WorkingSkills;  // структура всех доступных сущности умений, ограниченных уровнем
     uint16   m_Immunity;     // Mob immunity
-    uint16   m_magicEvasion; // Store this so it can be removed easily
-    bool     m_unkillable;   // Entity is not able to die (probably until some action removes this flag)
+    uint16   m_magicEvasion; // store this so it can be removed easily
+    bool     m_unkillable;   // entity is not able to die (probably until some action removes this flag)
 
-    time_point charmTime; // To hold the time entity is charmed
-    bool       isCharmed; // Is the battle entity charmed?
+    time_point charmTime; // to hold the time entity is charmed
+    bool       isCharmed; // is the battle entity charmed?
 
     float           m_ModelRadius; // The radius of the entity model, for calculating the range of a physical attack
     ECOSYSTEM       m_EcoSystem;   // Entity eco system
