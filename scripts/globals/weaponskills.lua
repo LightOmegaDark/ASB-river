@@ -1097,10 +1097,13 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
     if isJump then
         wsResults.tpHitsLanded = wsResults.tpHitsLanded + wsResults.extraHitsLanded
         wsResults.extraHitsLanded = 0
+
+        -- Jumps do not feed the target TP
+        targetTPMult = 0
     end
 
     finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded * attackerTPMult, (wsResults.extraHitsLanded * 10) + wsResults.bonusTP,
-                                              targetTPMult, attack.damageType == xi.attackType.MAGICAL, isJump)
+                                              targetTPMult, attack.damageType == xi.attackType.MAGICAL)
     if wsResults.tpHitsLanded + wsResults.extraHitsLanded > 0 then
         if finaldmg >= 0 then
             action:param(defender:getID(), math.abs(finaldmg))

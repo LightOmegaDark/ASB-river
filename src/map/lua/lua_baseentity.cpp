@@ -12864,30 +12864,22 @@ uint16 CLuaBaseEntity::getAmmoDmg()
     return weapon->getDamage();
 }
 
-/************************************************************************
- *  Function: getWeaponHitCount()
- *  Purpose : Gets a number of attacks between 1 and maxAttacks for the MainHand weapon (for Occasionally Attacks X weapons)
- *  Example : player:getWeaponHitCount()
- *  Notes   : 
- ************************************************************************/
-uint8 CLuaBaseEntity::getWeaponHitCount()
+/******************************************************************************************
+ *  Function: getWeaponHitCount(false)
+ *  Purpose : Gets a number of attacks for the weapon (for Occasionally Attacks X weapons)
+ *  Example : int numMainHandHits = player->getWeaponHitCount(false)
+ *  Notes   : Value is between 1 and maxAttacks; pass in true to get the Offhand Weapon
+ ******************************************************************************************/
+uint8 CLuaBaseEntity::getWeaponHitCount(bool offHand)
 {
-    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+    if (m_PBaseEntity->objtype != TYPE_PC)
+    {
+        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->GetName());
 
-    return static_cast<CBattleEntity*>(m_PBaseEntity)->GetMainWeaponHitCount();
-}
+        return 0;
+    }
 
-/************************************************************************
- *  Function: getOffhandHitCount()
- *  Purpose : Gets a number of attacks between 1 and maxAttacks for the OffHand weapon (for Occasionally Attacks X weapons)
- *  Example : player:getOffhandHitCount()
- *  Notes   : 
- ************************************************************************/
-uint8 CLuaBaseEntity::getOffhandHitCount()
-{
-    XI_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
-
-    return static_cast<CBattleEntity*>(m_PBaseEntity)->GetSubWeaponHitCount();
+    return (offHand ? static_cast<CBattleEntity*>(m_PBaseEntity)->GetSubWeaponHitCount() : static_cast<CBattleEntity*>(m_PBaseEntity)->GetMainWeaponHitCount());
 }
 
 /************************************************************************
@@ -13044,14 +13036,14 @@ auto CLuaBaseEntity::getWSSkillchainProp() -> std::tuple<uint8, uint8, uint8>
  ************************************************************************/
 
 int32 CLuaBaseEntity::takeWeaponskillDamage(CLuaBaseEntity* attacker, int32 damage, uint8 atkType, uint8 dmgType, uint8 slot, bool primary,
-                                            float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, bool isMagicWS, bool isJump)
+                                            float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, bool isMagicWS)
 {
     auto*       PChar      = static_cast<CCharEntity*>(attacker->m_PBaseEntity);
     ATTACK_TYPE attackType = static_cast<ATTACK_TYPE>(atkType);
     DAMAGE_TYPE damageType = static_cast<DAMAGE_TYPE>(dmgType);
 
     return battleutils::TakeWeaponskillDamage(PChar, static_cast<CBattleEntity*>(m_PBaseEntity), damage, attackType, damageType, slot,
-                                              primary, tpMultiplier, bonusTP, targetTPMultiplier, isMagicWS, isJump);
+                                              primary, tpMultiplier, bonusTP, targetTPMultiplier, isMagicWS);
 }
 
 /************************************************************************
@@ -17418,7 +17410,6 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("getRangedDmgRank", CLuaBaseEntity::getRangedDmgRank);
     SOL_REGISTER("getAmmoDmg", CLuaBaseEntity::getAmmoDmg);
     SOL_REGISTER("getWeaponHitCount", CLuaBaseEntity::getWeaponHitCount);
-    SOL_REGISTER("getOffhandHitCount", CLuaBaseEntity::getOffhandHitCount);
 
     SOL_REGISTER("removeAmmo", CLuaBaseEntity::removeAmmo);
 

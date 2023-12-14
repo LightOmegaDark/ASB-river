@@ -553,7 +553,7 @@ uint8 CBattleEntity::GetMainWeaponHitCount()
         return weapon->getHitCount();
     }
 
-    return 1;
+    return 0;
 }
 
 uint8 CBattleEntity::GetSubWeaponHitCount()
@@ -563,7 +563,7 @@ uint8 CBattleEntity::GetSubWeaponHitCount()
         return weapon->getHitCount();
     }
 
-    return 1;
+    return 0;
 }
 
 /************************************************************************

@@ -2375,7 +2375,7 @@ namespace battleutils
      ************************************************************************/
 
     int32 TakeWeaponskillDamage(CCharEntity* PAttacker, CBattleEntity* PDefender, int32 damage, ATTACK_TYPE attackType, DAMAGE_TYPE damageType, uint8 slot,
-                                bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, bool isMagicWS, bool isJump)
+                                bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, bool isMagicWS)
     {
         auto* weapon   = GetEntityWeapon(PAttacker, (SLOTTYPE)slot);
         bool  isRanged = (slot == SLOT_AMMO || slot == SLOT_RANGED);
@@ -2461,23 +2461,19 @@ namespace battleutils
             float sBlow2    = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW_II), -50.0f, 50.0f);
             float sBlowMult = (100.0f - std::clamp(sBlow1 + sBlow2, -75.0f, 75.0f)) / 100.0f;
 
-            // Make sure the "WS" was not a Jump as they do not give any TP to the defender
-            if (!isJump)
+            // Mobs hit get basetp+30 whereas pcs hit get basetp/3
+            if (PDefender->objtype == TYPE_PC)
             {
-                // Mobs hit get basetp+30 whereas pcs hit get basetp/3
-                if (PDefender->objtype == TYPE_PC)
-                {
-                    PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
-                                             ((baseTp / 3) * sBlowMult *
-                                              (1.0f + 0.01f * (float)((PDefender->getMod(Mod::STORETP) +
-                                                                       getStoreTPbonusFromMerit(PAttacker))))))); // yup store tp counts on hits taken too!
-                }
-                else
-                {
-                    PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
-                                             ((baseTp + 30) * sBlowMult *
-                                              (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); // subtle blow also reduces the "+30" on mob tp gain
-                }
+                PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
+                                            ((baseTp / 3) * sBlowMult *
+                                            (1.0f + 0.01f * (float)((PDefender->getMod(Mod::STORETP) +
+                                                                    getStoreTPbonusFromMerit(PAttacker))))))); // yup store tp counts on hits taken too!
+            }
+            else
+            {
+                PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
+                                            ((baseTp + 30) * sBlowMult *
+                                            (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); // subtle blow also reduces the "+30" on mob tp gain
             }
         }
         else if (PDefender->objtype == TYPE_MOB)
@@ -2494,23 +2490,19 @@ namespace battleutils
                 float sBlow2    = std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW_II), -50.0f, 50.0f);
                 float sBlowMult = (100.0f - std::clamp(sBlow1 + sBlow2, -75.0f, 75.0f)) / 100.0f;
 
-                // Make sure the "WS" was not a Jump as they do not give any TP to the defender
-                if (!isJump)
+                // Mobs hit get basetp+30 whereas pcs hit get basetp/3
+                if (PDefender->objtype == TYPE_PC)
                 {
-                    // Mobs hit get basetp+30 whereas pcs hit get basetp/3
-                    if (PDefender->objtype == TYPE_PC)
-                    {
-                        PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
-                                                 ((baseTp / 3) * sBlowMult *
-                                                  (1.0f + 0.01f * (float)((PDefender->getMod(Mod::STORETP) +
-                                                                           getStoreTPbonusFromMerit(PAttacker))))))); // yup store tp counts on hits taken too!
-                    }
-                    else
-                    {
-                        PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
-                                                 ((baseTp + 30) * sBlowMult *
-                                                  (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); // subtle blow also reduces the "+30" on mob tp gain
-                    }
+                    PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
+                                                ((baseTp / 3) * sBlowMult *
+                                                (1.0f + 0.01f * (float)((PDefender->getMod(Mod::STORETP) +
+                                                                        getStoreTPbonusFromMerit(PAttacker))))))); // yup store tp counts on hits taken too!
+                }
+                else
+                {
+                    PDefender->addTP((int16)(tpMultiplier * targetTPMultiplier *
+                                                ((baseTp + 30) * sBlowMult *
+                                                (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); // subtle blow also reduces the "+30" on mob tp gain
                 }
             }
 
