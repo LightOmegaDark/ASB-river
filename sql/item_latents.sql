@@ -2220,6 +2220,11 @@ INSERT INTO `item_latents` VALUES (17212,26,20,37,5);
 INSERT INTO `item_latents` VALUES (17212,26,25,37,4);
 
 -- -------------------------------------------------------
+-- Z's Trident
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES (18101,8,12,6,1000);     -- STR+12 during WS
+
+-- -------------------------------------------------------
 -- Shigeto Bow
 -- -------------------------------------------------------
 INSERT INTO `item_latents` VALUES (18142,26,7,62,12);     -- RACC +7 for Samurai main job
