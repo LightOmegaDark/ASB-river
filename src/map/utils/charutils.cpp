@@ -3243,23 +3243,45 @@ namespace charutils
             if (MaxMSkill != 0)
             {
                 auto cap{ PChar->RealSkills.skill[i] / 10 >= MaxMSkill };
-                PChar->WorkingSkills.skill[i] = std::max<uint16>(0, cap ? skillBonus + MaxMSkill : skillBonus + PChar->RealSkills.skill[i] / 10);
                 if (cap)
                 {
+                    PChar->WorkingSkills.skill[i] = std::max<uint16>(0, skillBonus + MaxMSkill);
                     PChar->WorkingSkills.skill[i] |= 0x8000;
+                }
+                else
+                {
+                    int16 newSkillVal = skillBonus + PChar->RealSkills.skill[i] / 10;
+                    if (newSkillVal < 0)
+                    {
+                        newSkillVal = 0;
+                    }
+                    PChar->WorkingSkills.skill[i] = std::max<uint16>(0, newSkillVal);
                 }
             }
             else if (MaxSSkill != 0)
             {
                 auto cap{ PChar->RealSkills.skill[i] / 10 >= MaxSSkill };
-                PChar->WorkingSkills.skill[i] = std::max<uint16>(0, cap ? skillBonus + MaxSSkill : skillBonus + PChar->RealSkills.skill[i] / 10);
                 if (cap)
                 {
+                    PChar->WorkingSkills.skill[i] = std::max<uint16>(0, skillBonus + MaxSSkill);
                     PChar->WorkingSkills.skill[i] |= 0x8000;
+                }
+                else
+                {
+                    int16 newSkillVal = skillBonus + PChar->RealSkills.skill[i] / 10;
+                    if (newSkillVal < 0)
+                    {
+                        newSkillVal = 0;
+                    }
+                    PChar->WorkingSkills.skill[i] = std::max<uint16>(0, newSkillVal);
                 }
             }
             else
             {
+                if (skillBonus < 0)
+                {
+                    skillBonus = 0;
+                }
                 PChar->WorkingSkills.skill[i] = std::max<uint16>(0, skillBonus) | 0x8000;
             }
         }
