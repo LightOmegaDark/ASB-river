@@ -1156,12 +1156,10 @@ bool CLatentEffectContainer::ApplyLatentEffect(CLatentEffect& effect, bool expre
 {
     if (expression)
     {
-        ShowDebug(fmt::format("Applying latent effect: {}", effect.GetConditionsID() ));
         return effect.Activate();
     }
     else
     {
-        ShowDebug(fmt::format("NOT Applying latent effect: {}", effect.GetConditionsID() ));
         return effect.Deactivate();
     }
 }
