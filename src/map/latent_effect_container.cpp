@@ -167,7 +167,6 @@ void CLatentEffectContainer::CheckLatentsWS(bool isDuringWs)
     });
 }
 
-
 /************************************************************************
 *                                                                       *
  * Checks all latents that are affected by MP and activates them if     *
