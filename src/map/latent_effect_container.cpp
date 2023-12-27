@@ -150,6 +150,26 @@ void CLatentEffectContainer::CheckLatentsTP()
 
 /************************************************************************
 *                                                                       *
+* Checks all latents that are occur during WS and activates them        *
+*                                                                       *
+ ************************************************************************/
+void CLatentEffectContainer::CheckLatentsWS(bool isDuringWs)
+{
+    ProcessLatentEffects([this, isDuringWs](CLatentEffect& latentEffect) {
+        switch (latentEffect.GetConditionsID())
+        {
+            case LATENT::DURING_WS:
+                return ProcessLatentEffect(latentEffect, isDuringWs);
+            default:
+                break;
+        }
+        return false;
+    });
+}
+
+
+/************************************************************************
+*                                                                       *
  * Checks all latents that are affected by MP and activates them if     *
  * the conditions are met.                                              *
 *                                                                       *
@@ -649,7 +669,7 @@ void CLatentEffectContainer::ProcessLatentEffects(const std::function<bool(CLate
 
 // Processes a single CLatentEffect* and finds the expression to evaluate for
 // activation/deactivation and attempts to apply
-bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
+bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect, bool isDuringWs)
 {
     TracyZoneScoped;
     // Our default case un-finds our latent prevent us from toggling a latent we don't have programmed
@@ -1114,6 +1134,9 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
         case LATENT::CITIZEN_OF_NATION:
             expression = m_POwner->profile.nation == latentEffect.GetConditionsValue();
             break;
+        case LATENT::DURING_WS:
+            expression = isDuringWs;
+            break;
         default:
             latentFound = false;
             ShowWarning("Latent ID %d unhandled in ProcessLatentEffect", static_cast<uint16>(latentEffect.GetConditionsID()));
@@ -1133,10 +1156,12 @@ bool CLatentEffectContainer::ApplyLatentEffect(CLatentEffect& effect, bool expre
 {
     if (expression)
     {
+        ShowDebug(fmt::format("Applying latent effect: {}", effect.GetConditionsID() ));
         return effect.Activate();
     }
     else
     {
+        ShowDebug(fmt::format("NOT Applying latent effect: {}", effect.GetConditionsID() ));
         return effect.Deactivate();
     }
 }
