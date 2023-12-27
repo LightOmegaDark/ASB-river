@@ -2222,7 +2222,7 @@ INSERT INTO `item_latents` VALUES (17212,26,25,37,4);
 -- -------------------------------------------------------
 -- Z's Trident
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (18101,8,12,6,1000);     -- STR+12 during WS
+INSERT INTO `item_latents` VALUES (18101,8,12,41,0);     -- STR+12 during WS
 
 -- -------------------------------------------------------
 -- Shigeto Bow
