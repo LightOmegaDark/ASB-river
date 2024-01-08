@@ -72,10 +72,13 @@ namespace fishingutils
     std::map<uint16, rod_t*>                          FishingRods;
     std::map<uint16, bait_t*>                         FishingBaits;
     std::map<uint16, std::map<uint32, fishmob_t*>>    FishZoneMobList;       // zoneid, mobid, mob
+    std::map<uint16, std::map<uint32, fishchest_t*>>  FishZoneChestList;     // zoneid, chestid, chest
     std::map<uint16, std::map<uint8, fishingarea_t*>> FishingAreaList;       // zoneid, areaid, area
     std::map<uint16, std::map<uint8, uint16>>         FishingCatchLists;     // zoneid, areaid, groupid
     std::map<uint16, std::map<uint32, uint16>>        FishingGroups;         // groupid, fishid, rarity
     std::map<uint16, std::map<uint32, uint8>>         FishingBaitAffinities; // baitid, fishid, power
+
+    static const char* BRIG_CHART_PROG_VAR = "HQuest[BrigChartQuest]Prog";
 
     uint32 HandleFishingAction(CCharEntity* PChar, CBasicPacket data)
     {
@@ -1197,6 +1200,36 @@ namespace fishingutils
                 {
                     pool.push_back(mob.second);
                 }
+                else
+                {
+                    CMobEntity* PMob = dynamic_cast<CMobEntity*>(zoneutils::GetEntity(mob.first, TYPE_MOB));
+                    if (PMob != nullptr && PMob->GetLocalVar("catchable") == 1)
+                        pool.push_back(mob.second);
+                }
+            }
+        }
+
+        return pool;
+    }
+
+    std::vector<fishchest_t*> GetChestPool(uint16 zoneId)
+    {
+        std::vector<fishchest_t*> pool;
+
+        if (!FishZoneChestList[zoneId].empty())
+        {
+            for (auto chest : FishZoneChestList[zoneId])
+            {
+                if (!chest.second->questOnly)
+                {
+                    pool.push_back(chest.second);
+                }
+                else
+                {
+                    CNpcEntity* PChest = dynamic_cast<CNpcEntity*>(zoneutils::GetEntity(chest.first, TYPE_NPC));
+                    if (PChest != nullptr && PChest->GetLocalVar("catchable") == 1 && PChest->GetLocalVar("ownerID") == 0)
+                        pool.push_back(chest.second);
+                }
             }
         }
 
@@ -1414,7 +1447,8 @@ namespace fishingutils
                 return false;
             }
 
-            if (PChar->hookedFish->successtype != FISHINGSUCCESSTYPE_CATCHITEM)
+            // Items and Chests do not consume bait
+            if (PChar->hookedFish->successtype != FISHINGSUCCESSTYPE_CATCHITEM && PChar->hookedFish->successtype != FISHINGSUCCESSTYPE_CATCHCHEST)
             {
                 if (PBait->getQuantity() == 1)
                 {
@@ -1712,18 +1746,17 @@ namespace fishingutils
 
     int32 CatchChest(CCharEntity* PChar, uint32 NpcID, uint8 distance, int8 angle)
     {
-        /* Disabled catching Chests until further notice.
+        uint16       MessageOffset = GetMessageOffset(PChar->getZone());
+        CNpcEntity*  PChest        = dynamic_cast<CNpcEntity*>(zoneutils::GetEntity(NpcID, TYPE_NPC));
+        fishchest_t* chest         = FishZoneChestList[PChar->getZone()][NpcID];
 
-        uint16 MessageOffset = GetMessageOffset(PChar->getZone());
-        // @todo: get chest npc (i.e. jade etui)
-        CNpcEntity* Chest = dynamic_cast<CNpcEntity*>(zoneutils::GetEntity(NpcID, TYPE_NPC));
-
-        if (Chest == nullptr || (Chest != nullptr && Chest->GetLocalVar("catchable") == 0))
+        if (PChest == nullptr || chest == nullptr)
         {
             ShowError("Invalid NpcID %i for fished chest\n", NpcID);
             PChar->animation = ANIMATION_FISHING_STOP;
             PChar->updatemask |= UPDATE_HP;
             PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_LOST));
+
             return 0;
         }
 
@@ -1739,14 +1772,48 @@ namespace fishingutils
         m.z                = p.z + distance * (float)sin(Radians);
         m.rotation         = p.rotation; // getangle(m, p);
 
-        Chest->loc.p  = m; // This line is returning an error in CI, and I don't know how to fix it. Probably has to do with that "todo" above.
-        Chest->status = STATUS_TYPE::NORMAL;
-        Chest->SetLocalVar("owner", PChar->id);
-        Chest->updatemask |= UPDATE_COMBAT;
-        return 1;
-        */
+        uint16 modelID = 965;
+        switch (chest->modelIndex)
+        {
+            case 1:
+                modelID = 966;
+                break;
+            case 2:
+                modelID = 967;
+                break;
+            case 3:
+                modelID = 968;
+                break;
+            case 4:
+                modelID = 969;
+                break;
+        }
 
-        return 0; // Remove when catching chests is enabled.
+        PChest->loc.p = m;
+        PChest->SetModelId(modelID);
+        PChest->status       = STATUS_TYPE::NORMAL;
+        PChest->animation    = 0;
+        PChest->animationsub = 4;
+        PChest->loc.zone->PushPacket(PChest, CHAR_INRANGE, new CEntityAnimationPacket(PChest, PChest, "deru"));
+        PChest->SetLocalVar("ownerID", PChar->id);
+
+        if (chest->maxRespawn > chest->minRespawn)
+        {
+            PChest->SetLocalVar("respawnTime", xirand::GetRandomNumber<uint32>(chest->minRespawn, chest->maxRespawn));
+        }
+        else
+        {
+            PChest->SetLocalVar("respawnTime", chest->maxRespawn);
+        }
+
+        // Handle tracking Jade Etui order for the Brigand's Chart quest
+        int brigChartProg = PChar->getCharVar(BRIG_CHART_PROG_VAR);
+        if (!chest->required_charVar.empty() && chest->required_charVar.compare(BRIG_CHART_PROG_VAR) == 0 && brigChartProg >= 0)
+        {
+            PChar->setCharVar(BRIG_CHART_PROG_VAR, ++brigChartProg);
+        }
+
+        return 1;
     }
 
     /************************************************************************
@@ -2154,9 +2221,7 @@ namespace fishingutils
                     break;
                 case FISHINGCATCHTYPE_CHEST:
                     PChar->hookedFish->successtype = FISHINGSUCCESSTYPE_CATCHCHEST;
-
-                    // TODO: Below function is currently not implemented.
-                    // CatchChest(PChar, PChar->hookedFish->catchid, PChar->hookedFish->distance, PChar->hookedFish->angle);
+                    CatchChest(PChar, PChar->hookedFish->catchid, PChar->hookedFish->distance, PChar->hookedFish->angle);
                     break;
             }
         }
@@ -2164,18 +2229,36 @@ namespace fishingutils
 
     uint8 UnhookMob(CCharEntity* PChar, bool lost)
     {
-        if (PChar->hookedFish != nullptr && PChar->hookedFish->catchtype == FISHINGCATCHTYPE_MOB)
+        if (PChar->hookedFish != nullptr)
         {
-            CMobEntity* PMob = dynamic_cast<CMobEntity*>(zoneutils::GetEntity(PChar->hookedFish->catchid, TYPE_MOB));
-
-            if (PMob != nullptr)
+            switch (PChar->hookedFish->catchtype)
             {
-                PMob->SetLocalVar("hooked", 0);
-
-                if (lost && PChar->hookedFish->nm && PChar->hookedFish->nmFlags & FISHINGNM_RESET_RESPAWN_ON_FAIL)
+                case FISHINGCATCHTYPE_MOB:
                 {
-                    PMob->SetLocalVar("lastTOD", (uint32)time(nullptr));
+                    CMobEntity* PMob = dynamic_cast<CMobEntity*>(zoneutils::GetEntity(PChar->hookedFish->catchid, TYPE_MOB));
+
+                    if (PMob != nullptr)
+                    {
+                        PMob->SetLocalVar("hooked", 0);
+
+                        if (lost && PChar->hookedFish->nm && PChar->hookedFish->nmFlags & FISHINGNM_RESET_RESPAWN_ON_FAIL)
+                        {
+                            PMob->SetLocalVar("lastTOD", (uint32)time(nullptr));
+                        }
+                    }
                 }
+                break;
+
+                case FISHINGCATCHTYPE_CHEST:
+                {
+                    CNpcEntity* PChest = dynamic_cast<CNpcEntity*>(zoneutils::GetEntity(PChar->hookedFish->catchid, TYPE_NPC));
+
+                    if (PChest != nullptr)
+                    {
+                        PChest->SetLocalVar("lastCaught", (uint32)time(nullptr));
+                    }
+                }
+                break;
             }
         }
 
@@ -2225,6 +2308,8 @@ namespace fishingutils
         float  mobPoolMoonModifier  = MOONPATTERN_3(GetMoonPhase());
         float  noCatchMoonModifier  = MOONPATTERN_5(GetMoonPhase());
 
+        bool isBrigandsChartActive = PChar->getCharVar(BRIG_CHART_PROG_VAR) >= 1;
+
         if (zoneutils::GetZone(PChar->getZone())->GetType() <= ZONE_TYPE::CITY)
         {
             FishPoolWeight = (uint16)std::floor(15 * fishPoolMoonModifier);
@@ -2240,6 +2325,14 @@ namespace fishingutils
                 ItemPoolWeight = 500 + (uint16)std::floor(15 * itemPoolMoonModifier);
                 MobPoolWeight  = std::clamp(-150 + (uint16)std::floor(15 * mobPoolMoonModifier), 0, 65535);
                 NoCatchWeight  = 15 + (uint16)std::floor(20 * noCatchMoonModifier);
+            }
+            else if (isBrigandsChartActive)
+            { // During the Brigand's Chart quest, you have a 100% catch rate on either a chest (Jade Etui) or a mob (Puffer Pugil)
+                FishPoolWeight  = 0;
+                ItemPoolWeight  = 0;
+                MobPoolWeight   = 500 + (uint16)std::floor(15 * mobPoolMoonModifier);
+                ChestPoolWeight = 500;
+                NoCatchWeight   = 0;
             }
             else
             {
@@ -2262,24 +2355,25 @@ namespace fishingutils
         std::map<fishmob_t*, uint16> MobHookPool;
         fishmob_t*                   MobSelection = nullptr;
 
-        uint32 ChestSelection = 0;
-        int8   ChestAngle     = 0;
+        std::map<fishchest_t*, uint16> ChestHookPool;
+        fishchest_t*                   ChestSelection = nullptr;
+        int8                           ChestAngle     = 0;
 
         // Get Fish and Item Lists
-        std::map<fish_t*, uint16>                FishPool;
-        std::vector<fish_t*>                     ItemPool;
-        std::vector<fishmob_t*>                  MobPool;
-        std::map<uint32, std::map<uint16, int8>> ChestPool;
+        std::map<fish_t*, uint16> FishPool;
+        std::vector<fish_t*>      ItemPool;
+        std::vector<fishmob_t*>   MobPool;
+        std::vector<fishchest_t*> ChestPool;
 
         FishPool.clear();
         ItemPool.clear();
         MobPool.clear();
         ChestPool.clear();
 
-        FishPool = GetFishPool(PChar->getZone(), area->areaId, bait->baitID);
-        ItemPool = GetItemPool(PChar->getZone(), area->areaId);
-        MobPool  = GetMobPool(PChar->getZone());
-        ChestPool.clear();
+        FishPool  = GetFishPool(PChar->getZone(), area->areaId, bait->baitID);
+        ItemPool  = GetItemPool(PChar->getZone(), area->areaId);
+        MobPool   = GetMobPool(PChar->getZone());
+        ChestPool = GetChestPool(PChar->getZone());
 
         std::set<uint32> RemoveList;
         RemoveList.clear();
@@ -2288,7 +2382,7 @@ namespace fishingutils
         NoCatchList.clear();
 
         // Build Hookable Fish Pool
-        if (!FishPool.empty())
+        if (!FishPool.empty() && !isBrigandsChartActive)
         {
             uint16 maxChance = 0;
 
@@ -2320,7 +2414,7 @@ namespace fishingutils
         }
 
         // Build Hookable Item Pool
-        if (!ItemPool.empty() && rod != nullptr && rod->rodID != GOLDFISH_BASKET)
+        if (!ItemPool.empty() && rod != nullptr && rod->rodID != GOLDFISH_BASKET && !isBrigandsChartActive)
         {
             for (auto* item : ItemPool)
             {
@@ -2380,49 +2474,124 @@ namespace fishingutils
                 CMobEntity* PMob = dynamic_cast<CMobEntity*>(zoneutils::GetEntity(mob->mobId, TYPE_MOB));
                 if (PMob != nullptr && PMob->GetLocalVar("hooked") == 0 && !PMob->isAlive())
                 {
-                    if (mob->nm && (mob->areaId == 0 || mob->areaId == area->areaId) && ((mob->reqBaitId == 0 || mob->reqBaitId == bait->baitID) || (mob->altBaitId > 0 && mob->altBaitId == bait->baitID)))
+                    if (mob->areaId == 0 || mob->areaId == area->areaId)
                     {
-                        bool mobAdd = false;
-                        if (mob->quest < 255 && mob->log < 255)
+                        if (isBrigandsChartActive)
                         {
-                            if (charutils::getQuestStatus(PChar, mob->log, mob->quest) == QUEST_ACCEPTED)
+                            // Only spawn the 1 Puffer Pugil while Brigands Chart Quest is in progress
+                            if (mob->questOnly && mob->mobId == 17261040)
                             {
-                                mobAdd = true;
-                                MobPoolWeight += 1000;
+                                MobHookPool.insert(std::make_pair(mob, 100));
+                                MobPoolWeight += 500;
                             }
                         }
-                        else if (mob->rarity < 1000)
+                        else if (mob->nm && ((mob->reqBaitId == 0 || mob->reqBaitId == bait->baitID) || (mob->altBaitId > 0 && mob->altBaitId == bait->baitID)))
                         {
-                            uint16 randomizer = xirand::GetRandomNumber(1, 1000);
-                            randomizer -= std::clamp<uint16>((uint16)std::floor((1 - MOONPATTERN_2(GetMoonPhase())) * 100), 0, randomizer);
-                            if (randomizer <= mob->rarity)
+                            bool mobAdd = false;
+                            if (mob->quest < 255 && mob->log < 255)
+                            {
+                                if (charutils::getQuestStatus(PChar, mob->log, mob->quest) == QUEST_ACCEPTED)
+                                {
+                                    mobAdd = true;
+                                    MobPoolWeight += 1000;
+                                }
+                            }
+                            else if (mob->rarity < 1000)
+                            {
+                                uint16 randomizer = xirand::GetRandomNumber(1, 1000);
+                                randomizer -= std::clamp<uint16>((uint16)std::floor((1 - MOONPATTERN_2(GetMoonPhase())) * 100), 0, randomizer);
+                                if (randomizer <= mob->rarity)
+                                {
+                                    mobAdd = true;
+                                    MobPoolWeight += 50;
+                                }
+                            }
+                            else if (mob->maxRespawn > 0)
+                            {
+                                uint32 respawnTime = PMob->GetLocalVar("lastTOD") + PMob->GetLocalVar("respawnTime");
+                                if ((uint32)time(nullptr) > respawnTime)
+                                {
+                                    mobAdd = true;
+                                    MobPoolWeight += 50;
+                                }
+                            }
+                            else
                             {
                                 mobAdd = true;
-                                MobPoolWeight += 50;
                             }
-                        }
-                        else if (mob->maxRespawn > 0)
-                        {
-                            uint32 respawnTime = PMob->GetLocalVar("lastTOD") + PMob->GetLocalVar("respawnTime");
-                            if ((uint32)time(nullptr) > respawnTime)
-                            {
-                                mobAdd = true;
-                                MobPoolWeight += 50;
-                            }
-                        }
-                        else
-                        {
-                            mobAdd = true;
-                        }
 
-                        if (mobAdd)
+                            if (mobAdd)
+                            {
+                                MobHookPool.insert(std::make_pair(mob, 100));
+                            }
+                        }
+                        else if (!mob->nm)
                         {
                             MobHookPool.insert(std::make_pair(mob, 100));
                         }
                     }
-                    else if (!mob->nm && (mob->areaId == 0 || mob->areaId == area->areaId))
+                }
+            }
+        }
+
+        // Build Hookable Chest Pool
+        if (!ChestPool.empty() && rod != nullptr && rod->rodID != GOLDFISH_BASKET)
+        {
+            for (auto* chest : ChestPool)
+            {
+                if (RemoveList.count(chest->chestID) > 0)
+                {
+                    continue;
+                }
+
+                CNpcEntity* PChest = dynamic_cast<CNpcEntity*>(zoneutils::GetEntity(chest->chestID, TYPE_NPC));
+                if (PChest != nullptr)
+                {
+                    if ((chest->areaID == 0 || chest->areaID == area->areaId) &&
+                        (((chest->reqBaitId == 0 || chest->reqBaitId == bait->baitID) || (chest->altBaitId > 0 && chest->altBaitId == bait->baitID)) ||
+                         (!chest->reqKeyItem || charutils::hasKeyItem(PChar, chest->reqKeyItem))))
                     {
-                        MobHookPool.insert(std::make_pair(mob, 100));
+                        bool shouldAddChest = false;
+
+                        bool hasRespawnRestraint = false;
+                        if (chest->maxRespawn > 0)
+                        {
+                            uint32 respawnTime = PChest->GetLocalVar("lastCaught") + PChest->GetLocalVar("respawnTime");
+                            if ((uint32)time(nullptr) < respawnTime)
+                            {
+                                hasRespawnRestraint = true;
+                            }
+                        }
+
+                        if (!hasRespawnRestraint)
+                        {
+                            if (chest->questOnly)
+                            {
+                                if (!chest->required_charVar.empty() && (uint32)PChar->getCharVar(chest->required_charVar) == chest->required_charVarValue)
+                                {
+                                    shouldAddChest = true;
+                                    ChestPoolWeight += 1000;
+                                }
+                                else if (chest->quest < 255 && chest->log < 255)
+                                {
+                                    if (charutils::getQuestStatus(PChar, chest->log, chest->quest) == QUEST_ACCEPTED)
+                                    {
+                                        shouldAddChest = true;
+                                        ChestPoolWeight += 1000;
+                                    }
+                                }
+                            }
+                            else if (chest->maxRespawn > 0)
+                            {
+                                shouldAddChest = true;
+                                ChestPoolWeight += 50;
+                            }
+                        }
+
+                        if (shouldAddChest)
+                        {
+                            ChestHookPool.insert(std::make_pair(chest, 100));
+                        }
                     }
                 }
             }
@@ -2553,17 +2722,18 @@ namespace fishingutils
             MobPoolWeight = 0;
         }
 
-        if (!ChestPool.empty())
+        // Select chest
+        if (!ChestHookPool.empty())
         {
-            uint16 hookSelect = xirand::GetRandomNumber((uint16)ChestPool.size());
-            auto   chestItr   = ChestPool.begin();
+            uint16 hookSelect = xirand::GetRandomNumber((uint16)ChestHookPool.size());
+            auto   chestItr   = ChestHookPool.begin();
             std::advance(chestItr, hookSelect);
             ChestSelection = chestItr->first;
-            ChestAngle     = chestItr->second.begin()->second;
+            ChestAngle     = xirand::GetRandomNumber(0, 360);
         }
         else
         {
-            NoCatchWeight += ChestPoolWeight;
+            NoCatchWeight += ChestPoolWeight / 2;
             ChestPoolWeight = 0;
         }
 
@@ -2708,27 +2878,39 @@ namespace fishingutils
                 response->catchlevel = 0;
             }
         }
-        else if (ChestSelection > 0 && selector < ItemPoolWeight + FishPoolWeight + MobPoolWeight + ChestPoolWeight)
+        else if (ChestSelection != nullptr && selector < ItemPoolWeight + FishPoolWeight + MobPoolWeight + ChestPoolWeight)
         { // Hooked chest
-            response->hooked          = true;
-            response->catchid         = ChestSelection;
-            response->catchtype       = FISHINGCATCHTYPE_CHEST;
-            response->catchlevel      = 1;
-            response->catchdifficulty = 1;
-            response->catchsizeType   = FISHINGSIZETYPE_LARGE;
-            response->legendary       = 0;
-            response->count           = 1;
-            response->stamina         = CalculateStamina(-14, 1);
-            response->delay           = CalculateDelay(PChar, 10, response->catchsizeType, rod, 1);
-            response->regen           = CalculateRegen(fishingSkill, rod, (FISHINGCATCHTYPE)response->catchtype, response->catchsizeType, 1, false, false);
-            response->response        = CalculateMovement(PChar, 15, response->catchsizeType, rod, 1);
-            response->attackdmg       = CalculateAttack(false, 16, rod);
-            response->heal            = CalculateHeal(false, 16, rod);
-            response->timelimit       = CalculateHookTime(PChar, 0, 0, response->catchsizeType, rod, bait);
-            response->sense           = CalculateFishSense(PChar, response, fishingSkill, FISHINGCATCHTYPE_CHEST, FISHINGSIZETYPE_LARGE, 1, false, 1, 1, 1, rod);
-            response->angle           = ChestAngle;
-            response->hooksense       = FISHINGHOOKSENSETYPE_LARGE;
-            response->special         = CalculateLuckyTiming(PChar, fishingSkill, 16, FISHINGSIZETYPE_LARGE, rod, bait, false);
+            CNpcEntity* PChest = dynamic_cast<CNpcEntity*>(zoneutils::GetEntity(ChestSelection->chestID, TYPE_NPC));
+
+            if (PChest != nullptr)
+            {
+                response->hooked          = true;
+                response->catchid         = ChestSelection->chestID;
+                response->catchtype       = FISHINGCATCHTYPE_CHEST;
+                response->catchlevel      = 1;
+                response->catchdifficulty = ChestSelection->difficulty;
+                response->catchsizeType   = FISHINGSIZETYPE_LARGE;
+                response->legendary       = 0;
+                response->count           = 1;
+                response->stamina         = CalculateStamina(-14, 1);
+                response->delay           = CalculateDelay(PChar, ChestSelection->baseDelay, response->catchsizeType, rod, 1);
+                response->regen           = CalculateRegen(fishingSkill, rod, (FISHINGCATCHTYPE)response->catchtype, response->catchsizeType, 1, false, false);
+                response->response        = CalculateMovement(PChar, ChestSelection->baseMove, response->catchsizeType, rod, 1);
+                response->attackdmg       = CalculateAttack(false, ChestSelection->difficulty, rod);
+                response->heal            = CalculateHeal(false, ChestSelection->difficulty, rod);
+                response->timelimit       = CalculateHookTime(PChar, 0, 0, response->catchsizeType, rod, bait);
+                response->sense           = FISHINGSENSETYPE_GOOD; // CalculateFishSense(PChar, response, fishingSkill, FISHINGCATCHTYPE_CHEST, FISHINGSIZETYPE_LARGE, 1, false, 1, 1, 1, rod);
+                response->angle           = ChestAngle;
+                response->hooksense       = FISHINGHOOKSENSETYPE_LARGE;
+                response->special         = CalculateLuckyTiming(PChar, fishingSkill, 16, FISHINGSIZETYPE_LARGE, rod, bait, false);
+            }
+            else
+            {
+                response->hooked     = false;
+                response->catchid    = 0;
+                response->catchtype  = FISHINGCATCHTYPE_NONE;
+                response->catchlevel = 0;
+            }
         }
         else
         { // Hooked nothing
@@ -3327,6 +3509,63 @@ namespace fishingutils
         }
     }
 
+    void LoadFishChests()
+    {
+        const char* Query = "SELECT "
+                            "chestid, "              // 0
+                            "name, "                 // 1
+                            "model_index, "          // 2
+                            "quest_only, "           // 3
+                            "quest, "                // 4
+                            "log, "                  // 5
+                            "zoneid, "               // 6
+                            "areaid, "               // 7
+                            "min_respawn, "          // 8
+                            "max_respawn, "          // 9
+                            "difficulty, "           // 10
+                            "base_delay, "           // 11
+                            "base_move, "            // 12
+                            "required_baitid, "      // 13
+                            "alternative_baitid, "   // 14
+                            "required_keyitem, "     // 15
+                            "required_charVar, "     // 16
+                            "required_charVarValue " // 17
+                            "FROM fishing_chest "
+                            "WHERE disabled=0 "
+                            "ORDER BY chestid ASC";
+
+        int32 ret = sql->Query(Query);
+
+        if (ret != SQL_ERROR && sql->NumRows() != 0)
+        {
+            while (sql->NextRow() == SQL_SUCCESS)
+            {
+                fishchest_t* chest = new fishchest_t();
+
+                chest->chestID = sql->GetUIntData(0);
+                chest->chestName.insert(0, (const char*)sql->GetData(1));
+                chest->modelIndex = (uint8)sql->GetUIntData(2);
+                chest->questOnly  = ((uint8)sql->GetUIntData(3) == 1);
+                chest->quest      = (uint8)sql->GetUIntData(4);
+                chest->log        = (uint8)sql->GetUIntData(5);
+                chest->zoneID     = (uint16)sql->GetUIntData(6);
+                chest->areaID     = (uint8)sql->GetUIntData(7);
+                chest->minRespawn = (uint16)sql->GetUIntData(8);
+                chest->maxRespawn = (uint16)sql->GetUIntData(9);
+                chest->difficulty = (uint8)sql->GetUIntData(10);
+                chest->baseDelay  = (uint8)sql->GetUIntData(11);
+                chest->baseMove   = (uint8)sql->GetUIntData(12);
+                chest->reqBaitId  = (uint16)sql->GetUIntData(13);
+                chest->altBaitId  = (uint16)sql->GetUIntData(14);
+                chest->reqKeyItem = (uint16)sql->GetUIntData(15);
+                chest->required_charVar.insert(0, (const char*)sql->GetData(16));
+                chest->required_charVarValue = sql->GetUIntData(17);
+
+                FishZoneChestList[chest->zoneID][chest->chestID] = chest;
+            }
+        }
+    }
+
     void LoadFishingRods()
     {
         const char* Query = "SELECT "
@@ -3506,6 +3745,7 @@ namespace fishingutils
         LoadFishingMessages();
         LoadFishItems();
         LoadFishMobs();
+        LoadFishChests();
         LoadFishingRods();
         LoadFishingBaits();
         LoadFishingBaitAffinities();
