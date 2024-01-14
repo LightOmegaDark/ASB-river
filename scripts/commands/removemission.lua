@@ -1,6 +1,6 @@
 -----------------------------------
--- func: addmission <logID> <missionID> <player>
--- desc: Adds a mission to the GM or target players log.
+-- func: removemission <logID> <missionID> <player>
+-- desc: Removes a mission from the GM or target players log.
 -----------------------------------
 require("scripts/globals/missions")
 local logIdHelpers = require('scripts/globals/log_ids')
@@ -52,7 +52,7 @@ function onTrigger(player, logId, missionId, target)
         end
     end
 
-    -- add mission
+    -- remove mission
     targ:delMission(logId, missionId)
     player:PrintToPlayer(string.format("Removed %s mission %i from %s.", logName, missionId, targ:getName()))
     player:PrintToPlayer("NOTE! This does NOT clear or update ANY mission variables! ")
