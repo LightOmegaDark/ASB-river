@@ -97,39 +97,49 @@ xi.dynamis.onMobEngagedNightmareWorm = function(mob, target)
 end
 
 xi.dynamis.tavQMSpawnCheck = function(mob, zone, zoneID)
+    local timeExtensionOneSpawned = zone:getLocalVar("timeExtensionOneSpawned")
+    local timeExtensionTwoSpawned = zone:getLocalVar("timeExtensionTwoSpawned")
     local timeNPCOne = GetNPCByID(xi.dynamis.dynaInfoEra[zoneID].timeExtensions[1])
     local timeNPCTwo = GetNPCByID(xi.dynamis.dynaInfoEra[zoneID].timeExtensions[2])
     local req = 0
     local reqT = 0
 
-    for _, eye in pairs(firstEyes) do
-        if zone:getLocalVar(eye) == 1 then
-            req = req + 1
+    if timeExtensionOneSpawned == 0 then
+        for _, eye in pairs(firstEyes) do
+            if zone:getLocalVar(eye) == 1 then
+                req = req + 1
+            end
         end
-    end
 
-    if req == 1 and timeNPCOne:getStatus() ~= xi.status.NORMAL then
-        local chance = math.random(1, 2)
-        if chance == 2 then
+        if req == 1 and timeNPCOne:getStatus() ~= xi.status.NORMAL then
+            local chance = math.random(1, 2)
+            if chance == 2 then
+                timeNPCOne:setStatus(xi.status.NORMAL) -- Make visible
+                zone:setLocalVar("timeExtensionOneSpawned", 1)
+            end
+        elseif req == 2 and timeNPCOne:getStatus() ~= xi.status.NORMAL then
             timeNPCOne:setStatus(xi.status.NORMAL) -- Make visible
-        end
-    elseif req == 2 and timeNPCOne:getStatus() ~= xi.status.NORMAL then
-        timeNPCOne:setStatus(xi.status.NORMAL) -- Make visible
-    end
-
-    for _, eye in pairs(secondEyes) do
-        if zone:getLocalVar(eye) == 1 then
-            reqT = reqT + 1
+            zone:setLocalVar("timeExtensionOneSpawned", 1)
         end
     end
 
-    if reqT == 1 and timeNPCTwo:getStatus() ~= xi.status.NORMAL then
-        local chance = math.random(1, 2)
-        if chance == 2 then
+    if timeExtensionTwoSpawned == 0 then
+        for _, eye in pairs(secondEyes) do
+            if zone:getLocalVar(eye) == 1 then
+                reqT = reqT + 1
+            end
+        end
+
+        if reqT == 1 and timeNPCTwo:getStatus() ~= xi.status.NORMAL then
+            local chance = math.random(1, 2)
+            if chance == 2 then
+                timeNPCTwo:setStatus(xi.status.NORMAL) -- Make visible
+                zone:setLocalVar("timeExtensionTwoSpawned", 1)
+            end
+        elseif reqT == 2 and timeNPCTwo:getStatus() ~= xi.status.NORMAL then
             timeNPCTwo:setStatus(xi.status.NORMAL) -- Make visible
+            zone:setLocalVar("timeExtensionTwoSpawned", 1)
         end
-    elseif reqT == 2 and timeNPCTwo:getStatus() ~= xi.status.NORMAL then
-        timeNPCTwo:setStatus(xi.status.NORMAL) -- Make visible
     end
 end
 
@@ -392,6 +402,7 @@ xi.dynamis.onSpawnDiabolosShard = function(mob)
 end
 
 xi.dynamis.onMobFightDiabolosShard = function(mob, mobTarget)
+    --- if (distance(mobTarget, mob) < 5)
     mob:useMobAbility(1903)
 end
 

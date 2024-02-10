@@ -2144,7 +2144,6 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
             end },
 
             ["onMobWeaponSkill"] = { function(mobTarget, mob, skill)
-                xi.dynamis.onMobWeaponSkillDiabolosShard(mobTarget, mob, skill)
             end },
 
             ["onMobDeath"] = { function(mob, player, optParams)
@@ -2838,6 +2837,7 @@ xi.dynamis.setMobStats = function(mob)
 
         xi.dynamis.addParentListeners(mob)
 
+        mob:setMobMod(xi.mobMod.CHARMABLE, 0)
         -- Add Check After Calcs
         mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
     end
@@ -2862,6 +2862,8 @@ xi.dynamis.setNightmareStats = function(mob)
         else
             mob:setRoamFlags(xi.roamFlag.NONE)
         end
+
+        mob:setMobMod(xi.mobMod.CHARMABLE, 0)
     end
 end
 
@@ -2901,6 +2903,8 @@ xi.dynamis.setNMStats = function(mob)
         params.specials.skill.hpp = math.random(15, 25)
         xi.mix.jobSpecial.config(mob, params)
     end
+
+    mob:setMobMod(xi.mobMod.CHARMABLE, 0)
 end
 
 xi.dynamis.setStatueStats = function(mob, mobIndex)
@@ -2942,6 +2946,8 @@ xi.dynamis.setStatueStats = function(mob, mobIndex)
             mob:setLocalVar("eyeColor", xi.dynamis.eye.RED) -- Set Eyes if need be
         end
     end
+
+    mob:setMobMod(xi.mobMod.CHARMABLE, 0)
 end
 
 xi.dynamis.setMegaBossStats = function(mob)
@@ -2952,7 +2958,7 @@ xi.dynamis.setMegaBossStats = function(mob)
     mob:setMod(xi.mod.STR, -10)
     mob:setTrueDetection(true)
     xi.dynamis.setMDB(mob)
-
+    mob:setMobMod(xi.mobMod.CHARMABLE, 0)
     xi.dynamis.addParentListeners(mob)
 end
 
@@ -2964,10 +2970,10 @@ xi.dynamis.setPetStats = function(mob)
     mob:setMobType(xi.mobskills.mobType.BATTLEFIELD)
     mob:addStatusEffect(xi.effect.BATTLEFIELD, 1, 0, 0, true)
     mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
-    mob:setMobMod(xi.mobMod.CHARMABLE, 0)
     mob:setMobLevel(79)
     mob:setTrueDetection(true)
     xi.dynamis.setMDB(mob)
+    mob:setMobMod(xi.mobMod.CHARMABLE, 0)
 end
 
 xi.dynamis.setAnimatedWeaponStats = function(mob)
@@ -2983,7 +2989,7 @@ xi.dynamis.setAnimatedWeaponStats = function(mob)
     mob:setMod(xi.mod.LULLABYRES, 100)
     mob:setMod(xi.mod.SLEEPRES, 100)
     mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
-
+    mob:setMobMod(xi.mobMod.CHARMABLE, 0)
     xi.dynamis.addParentListeners(mob)
 end
 
