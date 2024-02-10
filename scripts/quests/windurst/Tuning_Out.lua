@@ -35,7 +35,7 @@ quest.sections =
     {
         check = function(player, status, vars)
             return (status == QUEST_AVAILABLE and
-                player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TUNING_IN) and
+                player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TUNING_IN) == QUEST_COMPLETED and
                 os.time() > player:getCharVar("tuningIn_date")) or
                 quest:getVar(player, 'Prog') == 1
         end,
@@ -118,7 +118,7 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if quest:getVar(player, 'Prog') == 6 then
-                        return quest:progressEvent(player:startEvent(206) )-- Declines request to speak to Kamui
+                        return quest:progressEvent(206) -- Declines request to speak to Kamui
                     elseif quest:getVar(player, 'Prog') == 7 then
                         return quest:event(208) -- Repeat hint for player to go to Beaucedine Glacier
                     end
@@ -129,7 +129,7 @@ quest.sections =
                         npcUtil.tradeHasExactly(trade, { xi.items.HABANEROS, xi.items.BLACK_CURRY, xi.items.MUTTON_TORTILLA }) and
                         quest:getVar(player, 'Prog', 6)
                     then
-                        player:progressEvent(207, 0, xi.items.HABANEROS) -- Receives spicy food, mentions only Habaneros
+                        return quest:progressEvent(207, 0, xi.items.HABANEROS) -- Receives spicy food, mentions only Habaneros
                     end
                 end,
             },
@@ -203,13 +203,10 @@ quest.sections =
                         quest:getVar(player, 'Prog') == 3 or 
                         quest:getVar(player, 'Prog') == 4
                     then
-                        if os.time() >= npc:getLocalVar("cooldown")
-                        then
-                            if quest:getVar(player, 'Prog') == 3
-                            then 
-                                player:startEvent(28)
-                            elseif quest:getVar(player, 'Prog') == 4
-                            then
+                        if os.time() >= npc:getLocalVar("cooldown") then
+                            if quest:getVar(player, 'Prog') == 3 then 
+                                quest:progressEvent(28)
+                            elseif quest:getVar(player, 'Prog') == 4 then
                                 npc:setLocalVar("QuestPlayer", player:getID())
                                 npc:setLocalVar("cooldown", os.time() + 900)
                                 npc:setLocalVar("NasusKilled", 0)
@@ -222,9 +219,8 @@ quest.sections =
                                 }, { claim = true, hide = 0 })
                                 return quest:messageSpecial(yuhtungaID.text.SWARM_APPEARED)
                             end
-                        elseif npc:getLocalVar("NasusKilled") == 1
-                        then
-                            player:startEvent(29)
+                        elseif npc:getLocalVar("NasusKilled") == 1 then
+                            quest:progressEvent(29)
                         else
                             return quest:messageSpecial(yuhtungaID.text.NOTHING_HAPPENS)
                         end
