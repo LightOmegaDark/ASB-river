@@ -12,19 +12,9 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local tuningOutProgress = player:getCharVar("TuningOut_Progress")
-
-    if tuningOutProgress == 1 then
-        player:startEvent(293) -- Ildy meets Jakoh to inquire about Shikaree Y
-    elseif tuningOutProgress == 2 then
-        player:startEvent(294) -- Mentions expedition that was talked about in CS 293
-    end
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if csid == 293 then
-        player:setCharVar("TuningOut_Progress", 2)
-    end
 end
 
 return entity
