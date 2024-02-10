@@ -35,13 +35,13 @@ quest.sections =
 
         [xi.zone.WINDURST_WATERS] =
         {
-            ['Leepe-Hoppe'] = 
+            ['Leepe-Hoppe'] =
             {
                 onTrigger = function(player, npc)
                     return quest:progressEvent(884, 0, xi.items.MAGICKED_STEEL, xi.items.SPRUCE_LUMBER, xi.items.EXTRA_FINE_FILE)
                 end,
             },
-            
+
             onEventFinish =
             {
                 [884] = function(player, csid, option, npc)
