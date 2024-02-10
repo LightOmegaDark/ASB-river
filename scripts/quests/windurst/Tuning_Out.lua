@@ -45,7 +45,7 @@ quest.sections =
             ['Leepe-Hoppe'] =
             {
                 onTrigger = function(player, npc)
-                    if (quest:getVar(player, 'Prog') == 1) then
+                    if quest:getVar(player, 'Prog') == 1 then
                         return quest:event(889) -- Reminder to go help Ildy in Kazham
                     else
                         return quest:progressEvent(888) -- Starting dialogue
@@ -73,9 +73,9 @@ quest.sections =
             ['Jakoh_Wahcondalo'] =
             {
                 onTrigger = function(player, npc)
-                    if (quest:getVar(player, 'Prog') == 1) then
+                    if quest:getVar(player, 'Prog') == 1 then
                         return quest:progressEvent(293) -- Ildy meets Jakoh to inquire about Shikaree Y
-                    elseif (quest:getVar(player, 'Prog') == 2) then
+                    elseif quest:getVar(player, 'Prog') == 2 then
                         return quest:event(294) -- Mentions expedition that was talked about in CS 293
                     end
                 end,
@@ -84,13 +84,13 @@ quest.sections =
             ['Romaa_Mihgo'] =
             {
                 onTrigger = function(player, npc)
-                    if (quest:getVar(player, 'Prog') == 2) then
+                    if quest:getVar(player, 'Prog') == 2 then
                         return quest:progressEvent(295) -- Ildy meets Romaa. Romaa tells player to go to waterfall
-                    elseif (quest:getVar(player, 'Prog') == 3 or quest:getVar(player, 'Prog') == 4) then
+                    elseif quest:getVar(player, 'Prog') == 3 or quest:getVar(player, 'Prog') == 4 then
                         return quest:event(296) -- Repeats hint to go to waterfall
-                    elseif (quest:getVar(player, 'Prog') == 5) then
+                    elseif quest:getVar(player, 'Prog' == 5) then
                         return quest:progressEvent(297, 0, xi.items.HABANEROS, xi.items.BLACK_CURRY, xi.items.MUTTON_TORTILLA) -- After fight with the Nasus. Mentions guard needs Habaneros, Black Curry, Mutton Tortilla
-                    elseif (quest:getVar(player, 'Prog') == 6) then
+                    elseif quest:getVar(player, 'Prog' == 6) then
                         return quest:event(298, 0, xi.items.HABANEROS, xi.items.BLACK_CURRY, xi.items.MUTTON_TORTILLA) -- Repeats guard need for Habaneros, Black Curry, Mutton Tortilla
                     end
                 end,
@@ -101,9 +101,11 @@ quest.sections =
                 [293] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 2)
                 end,
+
                 [295] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 3)
                 end,
+
                 [297] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 6)
                 end,
@@ -115,9 +117,9 @@ quest.sections =
             ['Comitiolus'] =
             {
                 onTrigger = function(player, npc)
-                    if (quest:getVar(player, 'Prog') == 6) then
+                    if quest:getVar(player, 'Prog') == 6 then
                         return quest:progressEvent(player:startEvent(206) )-- Declines request to speak to Kamui
-                    elseif (quest:getVar(player, 'Prog') == 7) then
+                    elseif quest:getVar(player, 'Prog') == 7 then
                         return quest:event(208) -- Repeat hint for player to go to Beaucedine Glacier
                     end
                 end,
@@ -146,9 +148,9 @@ quest.sections =
             ['Torino-Samarino'] =
             {
                 onTrigger = function(player, npc)
-                    if (quest:getVar(player, 'Prog') == 7) then
+                    if quest:getVar(player, 'Prog') == 7 then
                         return quest:progressEvent(207) -- Ildy meets up with Rhinostery peers
-                    elseif (quest:getVar(player, 'Prog') == 8) then
+                    elseif quest:getVar(player, 'Prog') == 8 then
                         return quest:event(208) -- Talks about Ildy being passionate about his work
                     end
                 end,
@@ -168,7 +170,7 @@ quest.sections =
             ['Leepe-Hoppe'] =
             {
                 onTrigger = function(player, npc)
-                    if (quest:getVar(player, 'Prog') == 8) then
+                    if quest:getVar(player, 'Prog') == 8 then
                         return quest:progressEvent(897) -- Finishing dialogue
                     end
                 end,
@@ -198,15 +200,15 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if
-                        (quest:getVar(player, 'Prog') == 3 or 
-                        quest:getVar(player, 'Prog') == 4)
+                        quest:getVar(player, 'Prog') == 3 or 
+                        quest:getVar(player, 'Prog') == 4
                     then
                         if os.time() >= npc:getLocalVar("cooldown")
                         then
-                            if (quest:getVar(player, 'Prog') == 3)
+                            if quest:getVar(player, 'Prog') == 3
                             then 
                                 player:startEvent(28)
-                            elseif (quest:getVar(player, 'Prog') == 4)
+                            elseif quest:getVar(player, 'Prog') == 4
                             then
                                 npc:setLocalVar("QuestPlayer", player:getID())
                                 npc:setLocalVar("cooldown", os.time() + 900)
@@ -252,11 +254,11 @@ quest.sections =
             {
                 [28] = function(player, csid, option, npc)
                     if not (
-                            GetMobByID(yuhtungaID.mob.NASUS_OFFSET):isAlive()
-                            or GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 1):isAlive()
-                            or GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 2):isAlive()
-                            or GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 3):isAlive()
-                            or GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 4):isAlive()
+                            GetMobByID(yuhtungaID.mob.NASUS_OFFSET):isAlive() or
+                            GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 1):isAlive() or
+                            GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 2):isAlive() or
+                            GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 3):isAlive() or
+                            GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 4):isAlive()
                         )
                     then
                         quest:setVar(player, 'Prog', 4)
@@ -273,6 +275,7 @@ quest.sections =
                         return quest:messageSpecial(yuhtungaID.text.SWARM_APPEARED)
                     end
                 end,
+
                 [29] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 5)
                 end,
