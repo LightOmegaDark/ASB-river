@@ -70,12 +70,6 @@ local function getFenrirRewardMask(player)
 end
 
 entity.onTrade = function(player, npc, trade)
-    if
-        npcUtil.tradeHasExactly(trade, { 1696, 1697, 1698 }) and -- Magicked Steel Ingot, Spruce Lumber, Extra-fine File
-        player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TUNING_IN) == QUEST_ACCEPTED
-    then
-        player:startEvent(886)
-    end
 end
 
 entity.onTrigger = function(player, npc)
@@ -85,16 +79,8 @@ entity.onTrigger = function(player, npc)
     local tuningOutWait = player:getCharVar("tuningIn_date")
     local turmoil = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TORAIMARAI_TURMOIL)
 
-    -- Tuning In
-    if
-        tuningIn == QUEST_AVAILABLE and
-        player:getFameLevel(xi.quest.fame_area.WINDURST) >= 4 and
-        (player:getCurrentMission(xi.mission.log_id.COP) >= xi.mission.id.cop.DISTANT_BELIEFS or player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.THE_LAST_VERSE))
-    then
-        player:startEvent(884, 0, 1696, 1697, 1698) -- Magicked Steel Ingot, Spruce Lumber, Extra-fine File
-
     -- Tuning Out
-    elseif
+    if
         tuningIn == QUEST_COMPLETED and
         tuningOut == QUEST_AVAILABLE and
         os.time() > tuningOutWait
@@ -148,8 +134,6 @@ entity.onTrigger = function(player, npc)
         else
             player:startEvent(847, 0, 1125) -- Having completed Moonlit Path, this will indefinitely replace his standard dialogue!
         end
-    elseif tuningIn == QUEST_ACCEPTED then
-        player:startEvent(885, 0, 1696, 1697, 1698) -- Reminder to bring Magicked Steel Ingot, Spruce Lumber, Extra-fine File
     elseif tuningOut == QUEST_ACCEPTED then
         player:startEvent(889) -- Reminder to go help Ildy in Kazham
     elseif turmoil == QUEST_ACCEPTED then
@@ -225,20 +209,6 @@ entity.onEventFinish = function(player, csid, option)
         end
     elseif csid == 848 then
         npcUtil.giveKeyItem(player, xi.ki.MOON_BAUBLE)
-
-    -- Tuning In
-    elseif csid == 884 then
-        player:addQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.TUNING_IN)
-
-    elseif
-        csid == 886 and
-        npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.TUNING_IN, {
-            gil = 4000,
-            title = xi.title.FINE_TUNER,
-        })
-    then
-        player:tradeComplete()
-        player:setCharVar("tuningIn_date", getMidnight())
 
     -- Tuning Out
     elseif csid == 888 then
