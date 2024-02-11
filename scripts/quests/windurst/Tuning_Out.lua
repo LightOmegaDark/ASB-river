@@ -125,7 +125,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if 
+                    if
                         npcUtil.tradeHasExactly(trade, { xi.items.HABANEROS, xi.items.BLACK_CURRY, xi.items.MUTTON_TORTILLA }) and
                         quest:getVar(player, 'Prog', 6)
                     then
@@ -190,7 +190,7 @@ quest.sections =
     {
         check = function(player, status, vars)
             return status == QUEST_ACCEPTED and
-                quest:getVar(player, 'Prog') == 3 or 
+                quest:getVar(player, 'Prog') == 3 or
                 quest:getVar(player, 'Prog') == 4
         end,
 
@@ -199,31 +199,26 @@ quest.sections =
             ['qm2'] =
             {
                 onTrigger = function(player, npc)
-                    if
-                        quest:getVar(player, 'Prog') == 3 or 
-                        quest:getVar(player, 'Prog') == 4
-                    then
-                        if os.time() >= npc:getLocalVar("cooldown") then
-                            if quest:getVar(player, 'Prog') == 3 then 
-                                quest:progressEvent(28)
-                            elseif quest:getVar(player, 'Prog') == 4 then
-                                npc:setLocalVar("QuestPlayer", player:getID())
-                                npc:setLocalVar("cooldown", os.time() + 900)
-                                npc:setLocalVar("NasusKilled", 0)
-                                npcUtil.popFromQM(player, npc, {
-                                    yuhtungaID.mob.NASUS_OFFSET,
-                                    yuhtungaID.mob.NASUS_OFFSET + 1,
-                                    yuhtungaID.mob.NASUS_OFFSET + 2,
-                                    yuhtungaID.mob.NASUS_OFFSET + 3,
-                                    yuhtungaID.mob.NASUS_OFFSET + 4
-                                }, { claim = true, hide = 0 })
-                                return quest:messageSpecial(yuhtungaID.text.SWARM_APPEARED)
-                            end
-                        elseif npc:getLocalVar("NasusKilled") == 1 then
-                            quest:progressEvent(29)
-                        else
-                            return quest:messageSpecial(yuhtungaID.text.NOTHING_HAPPENS)
+                    if os.time() >= npc:getLocalVar("cooldown") then
+                        if quest:getVar(player, 'Prog') == 3 then
+                            return quest:progressEvent(28)
+                        elseif quest:getVar(player, 'Prog') == 4 then
+                            npc:setLocalVar("QuestPlayer", player:getID())
+                            npc:setLocalVar("cooldown", os.time() + 900)
+                            npc:setLocalVar("NasusKilled", 0)
+                            npcUtil.popFromQM(player, npc, {
+                                yuhtungaID.mob.NASUS_OFFSET,
+                                yuhtungaID.mob.NASUS_OFFSET + 1,
+                                yuhtungaID.mob.NASUS_OFFSET + 2,
+                                yuhtungaID.mob.NASUS_OFFSET + 3,
+                                yuhtungaID.mob.NASUS_OFFSET + 4
+                            }, { claim = true, hide = 0 })
+                            return quest:messageSpecial(yuhtungaID.text.SWARM_APPEARED)
                         end
+                    elseif npc:getLocalVar("NasusKilled") == 1 then
+                        return quest:progressEvent(29)
+                    else
+                        return quest:messageSpecial(yuhtungaID.text.NOTHING_HAPPENS)
                     end
                 end,
             },
@@ -249,16 +244,15 @@ quest.sections =
             onEventFinish =
             {
                 [28] = function(player, csid, option, npc)
-                    if not (
-                            GetMobByID(yuhtungaID.mob.NASUS_OFFSET):isAlive() or
-                            GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 1):isAlive() or
-                            GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 2):isAlive() or
-                            GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 3):isAlive() or
-                            GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 4):isAlive()
-                        )
+                    if GetMobByID(yuhtungaID.mob.NASUS_OFFSET):isAlive() or
+                       GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 1):isAlive() or
+                       GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 2):isAlive() or
+                       GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 3):isAlive() or
+                       GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 4):isAlive()
                     then
+                    else 
                         quest:setVar(player, 'Prog', 4)
-                        npc:setLocalVar("QuestPlayer", player:getID()) 
+                        npc:setLocalVar("QuestPlayer", player:getID())
                         npc:setLocalVar("cooldown", os.time() + 900)
                         npc:setLocalVar("NasusKilled", 0)
                         npcUtil.popFromQM(player, npc, {
