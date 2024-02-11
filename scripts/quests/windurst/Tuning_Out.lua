@@ -244,12 +244,12 @@ quest.sections =
             onEventFinish =
             {
                 [28] = function(player, csid, option, npc)
-                    if 
-                    GetMobByID(yuhtungaID.mob.NASUS_OFFSET):isAlive() or
-                       GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 1):isAlive() or
-                       GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 2):isAlive() or
-                       GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 3):isAlive() or
-                       GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 4):isAlive()
+                    if
+                        GetMobByID(yuhtungaID.mob.NASUS_OFFSET):isAlive() or
+                        GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 1):isAlive() or
+                        GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 2):isAlive() or
+                        GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 3):isAlive() or
+                        GetMobByID(yuhtungaID.mob.NASUS_OFFSET + 4):isAlive()
                     then
                     else
                         quest:setVar(player, 'Prog', 4)
