@@ -66,6 +66,9 @@ quest.sections =
                     end
                 end,
             },
+            
+
+            ['Leepe-Hoppe'] = quest:event(790, 0, xi.ki.RHINOSTERY_CERTIFICATE),
 
             onEventFinish =
             {
