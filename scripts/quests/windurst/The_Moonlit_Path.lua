@@ -50,7 +50,10 @@ local function getFenrirRewardMask(player)
         rewardMask = rewardMask + 8
     end -- Fenrir's Earring
 
-    if player:findItem(xi.items.ANCIENTS_KEY) then
+    if
+        player:findItem(xi.items.ANCIENTS_KEY) or
+        player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.MAMA_MIA) == QUEST_COMPLETED
+    then
         rewardMask = rewardMask + 16
     end -- Ancient's Key
 
@@ -123,6 +126,7 @@ quest.sections =
                         then
                             availRewards = availRewards + 128 -- Mount Pact
                         end
+
                         return quest:progressEvent(846, 0, xi.items.FENRIRS_EARRING, xi.items.ANCIENTS_KEY, xi.items.CARBUNCLES_RUBY, availRewards, xi.items.FENRIRS_STONE, xi.items.FENRIRS_CAPE) -- Quest turn-in
                     elseif
                         player:hasKeyItem(xi.ki.WHISPER_OF_FLAMES) and
@@ -178,7 +182,7 @@ quest.sections =
                         npcUtil.giveKeyItem(player, xi.ki.FENRIR_WHISTLE) -- Pact as Mount
                     end
 
-                    if 
+                    if
                         player:getFreeSlotsCount() > 0 or
                         reward == 0
                     then
@@ -257,7 +261,7 @@ quest.sections =
                         npcUtil.giveKeyItem(player, xi.ki.FENRIR_WHISTLE) -- Pact as Mount
                     end
 
-                    if 
+                    if
                         player:getFreeSlotsCount() > 0 or
                         reward == 0
                     then

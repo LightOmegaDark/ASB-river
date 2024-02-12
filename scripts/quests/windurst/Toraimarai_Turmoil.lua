@@ -60,13 +60,13 @@ quest.sections =
                 onTrigger = function(player, npc)
                     return quest:event(786, 4500, xi.keyItem.RHINOSTERY_CERTIFICATE, xi.items.STARMITE_SHELL) -- Reminder text.
                 end,
+
                 onTrade = function(player, npc, trade)
                     if npcUtil.tradeHasExactly(trade, { { xi.items.STARMITE_SHELL, 3 } }) then
                         return quest:progressEvent(791)
                     end
                 end,
             },
-            
 
             ['Leepe-Hoppe'] = quest:event(790, 0, xi.ki.RHINOSTERY_CERTIFICATE),
 
@@ -94,6 +94,7 @@ quest.sections =
                 onTrigger = function(player, npc)
                     return quest:event(795, 4500, 0, xi.items.STARMITE_SHELL) --dialog for repeat
                 end,
+
                 onTrade = function(player, npc, trade)
                     if npcUtil.tradeHasExactly(trade, { { xi.items.STARMITE_SHELL, 3 } }) then
                         return quest:progressEvent(791)
