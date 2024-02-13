@@ -19,8 +19,8 @@ require('scripts/globals/npc_util')
 require('scripts/globals/quests')
 require('scripts/globals/titles')
 require('scripts/globals/zone')
- -----------------------------------
- local windurstWatersID  = require("scripts/zones/Windurst_Waters/IDs")
+-----------------------------------
+local windurstWatersID  = require("scripts/zones/Windurst_Waters/IDs")
 -----------------------------------
 
 local quest = Quest:new(xi.quest.log_id.WINDURST, xi.quest.id.windurst.NOTHING_MATTERS)
@@ -99,7 +99,8 @@ quest.sections =
                 end,
             },
 
-            ['Bonchacha'] = {
+            ['Bonchacha'] =
+            {
                 onTrigger = function(player, npc)
                     if quest:getVar(player, 'Prog') == 1 then
                         return quest:event(229) -- optional dialogue
@@ -107,7 +108,8 @@ quest.sections =
                 end
             },
 
-            ['Maan-Pokuun'] = {
+            ['Maan-Pokuun'] =
+            {
                 onTrigger = function(player, npc)
                     if quest:getVar(player, 'Prog') == 1 then
                         return quest:event(230) -- optional dialogue
@@ -124,7 +126,8 @@ quest.sections =
                 end,
             },
 
-            ['Yoran-Oran'] = {
+            ['Yoran-Oran'] =
+            {
                 onTrigger = function(player, npc)
                     if quest:getVar(player, 'Prog') == 1 then
                         return quest:progressEvent(232) -- optional dialogue
@@ -267,52 +270,52 @@ quest.sections =
 
                 [804] = function(player, csid, option, npc)
                     quest:setVarBit(player, 'Doors', 1)
-                    if (option == 100) then
+                    if option == 100 then
                         quest:setVar(player, 'correctProg', quest:getVar(player, 'correctProg') + 1)
                     end
                 end,
 
                 [805] = function(player, csid, option, npc)
                     quest:setVarBit(player, 'Doors', 2)
-                    if (option == 100) then
+                    if option == 100 then
                         quest:setVar(player, 'correctProg', quest:getVar(player, 'correctProg') + 1)
                     end
                 end,
 
                 [806] = function(player, csid, option, npc)
                     quest:setVarBit(player, 'Doors', 3)
-                    if (option == 100) then
+                    if option == 100 then
                         quest:setVar(player, 'correctProg', quest:getVar(player, 'correctProg') + 1)
                     end
                 end,
 
                 [811] = function(player, csid, option, npc)
                     quest:setVarBit(player, 'Doors', 4)
-                    if (option == 100) then
+                    if option == 100 then
                         quest:setVar(player, 'correctProg', quest:getVar(player, 'correctProg') + 1)
                     end
                 end,
 
                 [812] = function(player, csid, option, npc)
                     quest:setVarBit(player, 'Doors', 5)
-                    if (option == 100) then
+                    if option == 100 then
                         quest:setVar(player, 'correctProg', quest:getVar(player, 'correctProg') + 1)
                     end
                 end,
 
                 [813] = function(player, csid, option, npc)
                     quest:setVarBit(player, 'Doors', 6)
-                    if (option == 100) then
+                    if option == 100 then
                         quest:setVar(player, 'correctProg', quest:getVar(player, 'correctProg') + 1)
                     end
                 end,
 
                 [814] = function(player, csid, option, npc)
                     npcUtil.giveKeyItem(player, xi.ki.THESIS_ON_ALCHEMY)
+                    quest:setVar(player, 'Prog', 4)
                     if quest:getVar(player, 'correctProg') == 6 then -- if player answered 6 correctly reward with vile elixir
                         npcUtil.giveItem(player, xi.items.VILE_ELIXIR)
                     end
-                    quest:setVar(player, 'Prog', 4)
                 end,
             },
         }
