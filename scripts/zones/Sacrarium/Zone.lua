@@ -68,14 +68,40 @@ zoneObject.onEventFinish = function(player, csid, option)
 end
 
 zoneObject.onZoneWeatherChange = function(weather)
-    local elel = GetMobByID(ID.mob.ELEL)
+    local zone = GetZone(xi.zone.SACRARIUM)
+    -- Sets flag to check for Elel Spawn
     if
-        not elel:isSpawned() and os.time() > elel:getLocalVar("cooldown") and
-        (weather == xi.weather.GLOOM or weather == xi.weather.DARKNESS) and
-        (VanadielHour() < 4 or VanadielHour() >= 20)
+        weather == xi.weather.GLOOM or
+        weather == xi.weather.DARKNESS
     then
-        DisallowRespawn(elel:getID(), false)
-        elel:setRespawnTime(math.random(30, 150)) -- pop 30-150 sec after wind weather starts
+        zone:setLocalVar("NeedToCheckElel", 1)
+    else
+        zone:setLocalVar("NeedToCheckElel", 0)
+    end
+end
+
+zoneObject.onZoneTick = function(zone)
+    local elelre = GetServerVariable("\\[SPAWN\\]" .. tostring(ID.mob.ELEL))
+    if zone:getLocalVar("NeedToCheckElel") == 1 then
+        -- Do not spawn mob unless the following checks pass:
+        -- 1: GLOOM or DARKNESS Weather
+        -- 2: Game Time between 20:00 to 4:00
+        if os.time() > elelre then
+            local weather = zone:getWeather()
+            local elel = GetMobByID(ID.mob.ELEL)
+            if
+                not elel:isSpawned() and
+                (weather == xi.weather.GLOOM or
+                weather == xi.weather.DARKNESS) and
+                (VanadielHour() < 4 or
+                VanadielHour() >= 20)
+            then
+                -- Checks Passed, Spawn Elel
+                zone:setLocalVar("NeedToCheckElel", 0)
+                DisallowRespawn(ID.mob.ELEL, false)
+                SpawnMob(ID.mob.ELEL)
+            end
+        end
     end
 end
 
