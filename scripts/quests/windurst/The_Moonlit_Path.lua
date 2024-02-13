@@ -225,7 +225,7 @@ quest.sections =
                     elseif player:hasKeyItem(xi.ki.WHISPER_OF_THE_MOON) then -- Repeat turn-in
                         local availRewards = getFenrirRewardMask(player)
                         return quest:progressEvent(850, 0, xi.items.FENRIRS_EARRING, xi.items.ANCIENTS_KEY, xi.items.CARBUNCLES_RUBY, availRewards, xi.items.FENRIRS_STONE, xi.items.FENRIRS_CAPE)
-                    elseif os.time() < player:getCharVar("MoonlitPath_date") then --24 hours have passed, flag a new fight
+                    elseif os.time() > player:getCharVar("MoonlitPath_date") then --24 hours have passed, flag a new fight
                         return quest:event(848, 0, xi.items.CARBUNCLES_RUBY, xi.ki.MOON_BAUBLE)
                     else
                         return quest:event(847, 0, xi.items.CARBUNCLES_RUBY) -- Having completed Moonlit Path, this will indefinitely replace his standard dialogue!
