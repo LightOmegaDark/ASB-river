@@ -191,7 +191,7 @@ quest.sections =
                 end
             },
 
-            ['Door_Acolyte_Hostel'] = 
+            ['Door_Acolyte_Hostel'] =
             {
                 onTrigger = function(player, npc)
                     if quest:getVar(player, 'Prog') == 3 then
