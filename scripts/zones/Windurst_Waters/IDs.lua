@@ -57,6 +57,9 @@ zones[xi.zone.WINDURST_WATERS] =
         JOURILLE_CLOSED_DIALOG        = 8961,  -- Greetings! I am Jourille, your friendly neighborhood traveling merchant. I would most like to sell you something from Ronfaure right now, but I regret that I am waiting on my next shipment. Please call by later!
         YOU_SHOW_OFF_THE              = 9137,  -- You show off the <item>.
         CONQUEST                      = 9247,  -- You've earned conquest points!
+        KNOCKING                      = 10023, -- ...You try knocking, but there is no response.
+        HOSTEL_CHEAT                  = 10028, -- But that was a wong, wong time ago... Wait a minute. You anshered all the queshtions in QUIZ DE VANA'DIEW correctwy.
+        HOSTEL_PRIZE                  = 10029, -- You weren't cheat-sheetin' now, were you? Well, no matter. Here's your prize. You earned it.
         MERRYMAKER_DEFAULT            = 10110, -- ...
         TRICK_OR_TREAT                = 10196, -- Trick or treat...
         THANK_YOU_TREAT               = 10197, -- Thank you... And now for your treat...
@@ -142,6 +145,7 @@ zones[xi.zone.WINDURST_WATERS] =
             [17752310] = 17752310,  -- Goblin Merrymaker
             [17752311] = 17752311,  -- Goblin Merrymaker
         },
+        ACOLYTE_HOSTEL_DOOR_OFFSET = 17752275,
         LELEROON_GREEN_DOOR = 17752333,
     },
 }
