@@ -64,7 +64,7 @@ quest.sections =
                     if quest:getVar(player, 'Prog') == 1 then
                         return quest:progressEvent(600)
                     elseif quest:getVar(player, 'Prog') == 0 then
-                        return quest:messageSpecial(ID.text.ABIOLEGET_PEAS, xi.items.BLUE_PEAS, 70)
+                        return quest:messageName(ID.text.ABIOLEGET_PEAS, xi.items.BLUE_PEAS, 70)
                     end
                 end,
 
@@ -73,8 +73,6 @@ quest.sections =
                     local count = trade:getItemCount()
 
                     if gil == 70 and count == 1 then
-                        player:tradeComplete()
-                        npcUtil.giveItem(player, xi.items.BLUE_PEAS)
                         return quest:event(591)
                     end
                 end,
@@ -82,6 +80,11 @@ quest.sections =
 
             onEventFinish =
             {
+                [591] = function(player, csid, option, npc)
+                    player:tradeComplete()
+                    npcUtil.giveItem(player, xi.items.BLUE_PEAS)
+                end,
+
                 [600] = function(player, csid, option, npc)
                     if quest:complete(player) then
                         player:confirmTrade()
@@ -96,11 +99,11 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if quest:getVar(player, 'Prog') == 0 then
-                        return quest:messageSpecial(ronfaureID.text.NO_MORE_NO_LESS, xi.items.BLUE_PEAS)
+                        return quest:messageName(ronfaureID.text.NO_MORE_NO_LESS, xi.items.BLUE_PEAS)
                     elseif quest:getVar(player, 'Prog') == 1 then
-                        return quest:messageSpecial(ronfaureID.text.THANKS_TO_GODDESS)
+                        return quest:messageName(ronfaureID.text.THANKS_TO_GODDESS)
                     else
-                        return quest:messageSpecial(ronfaureID.text.NAME_IS_ANDELAIN)
+                        return quest:messageName(ronfaureID.text.NAME_IS_ANDELAIN)
                     end
                 end,
 
