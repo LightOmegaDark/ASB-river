@@ -78,7 +78,7 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if quest:getVar(player, 'Prog') == 1 then
-                        return quest:messageSpecial(ID.text.REVIVAL_TREE_ROOT, xi.items.REVIVAL_TREE_ROOT)
+                        return quest:messageName(ID.text.REVIVAL_TREE_ROOT, xi.items.REVIVAL_TREE_ROOT)
                     end
                 end,
 
@@ -87,7 +87,11 @@ quest.sections =
                         quest:getVar(player, 'Prog') == 1 and
                         npcUtil.tradeHasExactly(trade, xi.items.REVIVAL_TREE_ROOT)
                     then
-                        return quest:progressEvent(617)
+                        if player:getFreeSlotsCount() > 0 then -- confirm player has inventory space
+                            return quest:progressEvent(617)
+                        else
+                            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, xi.items.SPATHA)
+                        end
                     end
                 end,
             },
