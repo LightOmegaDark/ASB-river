@@ -7,6 +7,9 @@
 -- Beastmen's Banner : !pos 10 25 -50 148
 -----------------------------------
 -- !addquest 4 107
+-- !addItem 885 -- Turtle Shell
+-- !addItem 1637 -- Bugard Leather
+-- !addItem 15201 -- Quadav Barbut
 -----------------------------------
 require('scripts/globals/interaction/quest')
 require('scripts/globals/npc_util')
@@ -281,6 +284,12 @@ quest.sections =
             {
                 function(player, prevZone)
                     if
+                        pos.x >= 0 and
+                        pos.y >= 20 and
+                        pos.z >= 55 and
+                        pos.x <= 6 and
+                        pos.y <= 25 and
+                        pos.z <= 65 and
                         player:getCharVar('affableZone') == 1 and
                         player:hasEquipped(xi.items.DAVHUS_BARBUT)
                     then
