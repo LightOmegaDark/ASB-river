@@ -47,7 +47,7 @@ quest.sections =
             {
                 function(player, prevZone)
                     local pos = player:getPos()
-                    if 
+                    if
                         pos.x >= 0 and
                         pos.y >= 20 and
                         pos.z >= 55 and
@@ -88,7 +88,7 @@ quest.sections =
                         return quest:progressEvent(710) -- tells player what items are needed
                     elseif quest:getVar(player, 'Prog') == 2 then
                         return quest:progressEvent(711) -- reminder to get bugard leather and turtle shell or cancel quest
-                    elseif 
+                    elseif
                         quest:getVar(player, 'Prog') >= 3 and
                         quest:getVar(player, 'partsWait') ~= 0 -- player is currently waiting for parts
                     then
@@ -158,7 +158,7 @@ quest.sections =
                 end,
 
                 [715] = function(player, csid, option, npc)
-                    if 
+                    if
                         player:getFreeSlotsCount() > 0 and
                         not player:hasItem(xi.items.QUADAV_PARTS)
                     then
@@ -181,7 +181,7 @@ quest.sections =
             {
                 function(player, prevZone)
                     local pos = player:getPos()
-                    if 
+                    if
                         pos.x >= 0 and
                         pos.y >= 20 and
                         pos.z >= 55 and
@@ -283,6 +283,7 @@ quest.sections =
             onZoneIn =
             {
                 function(player, prevZone)
+                    local pos = player:getPos()
                     if
                         pos.x >= 0 and
                         pos.y >= 20 and
