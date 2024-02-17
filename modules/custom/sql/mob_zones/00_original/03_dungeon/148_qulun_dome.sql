@@ -23,10 +23,10 @@ REPLACE INTO `mob_spawn_points` (`mobid`, `spawnset`, `mobname`, `polutils_name`
     (17383441, 0 , 'Ruby_Quadav',              'Ruby Quadav',              5,   276.362,   42.624,    93.686,    127),
     (17383442, 0 , 'Diamond_Quadav',           'Diamond Quadav',           7,   277.93,    42.625,    96.177,    127),
     (17383443, 0 , 'ZaDha_Adamantking',        'Za\'Dha Adamantking',      8,   281,       43,        96,        127),
-    (17383444, 0 , 'Diamond_Quadav',           'Diamond Quadav',           7,   0,         0,         0,         0  ),
-    (17383445, 0 , 'MuZha_Infernoblade',       'Mu\'Zha Infernoblade',     9,   0,         0,         0,         0  ),
-    (17383446, 0 , 'HuRhe_Marrowgorger',       'Hu\'Rhe Marrowgorger',     10,  166.13,    -0.5,      -20.914,   127),
-    (17383447, 0 , 'DePha_Unscarred',          'De\'Pha Unscarred',        11,  0,         0,         0,         0  ),
-    (17383448, 0 , 'SoHyu_Quakemaker',         'So\'Hyu Quakemaker',       12,  0,         0,         0,         0  ),
-    (17383449, 0 , 'KaGhi_Trovetaker',         'Ka\'Ghi Trovetaker',       13,  0,         0,         0,         0  ),
-    (17383450, 0 , 'NoBhu_Unyielding',         'No\'Bhu Unyielding',       14,  0,         0,         0,         0  );
+    (17383444, 0 , 'Diamond_Quadav',           'Diamond Quadav',           7,   21,        25.75,    -43,        114),
+    (17383445, 0 , 'MuZha_Infernoblade',       'Mu\'Zha Infernoblade',     9,   21.5,      25.75,    -45.5,      118),
+    (17383446, 0 , 'HuRhe_Marrowgorger',       'Hu\'Rhe Marrowgorger',     10,  21.125,    25.5,     -47.5       122),
+    (17383447, 0 , 'DePha_Unscarred',          'De\'Pha Unscarred',        11,  20.5,      25.5,     -50,        128),
+    (17383448, 0 , 'SoHyu_Quakemaker',         'So\'Hyu Quakemaker',       12,  17.5,      25.5,     -39.5,      90 ),
+    (17383449, 0 , 'KaGhi_Trovetaker',         'Ka\'Ghi Trovetaker',       13,  14.25,     25.5,     -39,        86 ),
+    (17383450, 0 , 'NoBhu_Unyielding',         'No\'Bhu Unyielding',       14,  10.5,      25.25,    -38.75,     82 );
