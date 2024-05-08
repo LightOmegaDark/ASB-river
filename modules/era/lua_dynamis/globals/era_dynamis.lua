@@ -993,7 +993,7 @@ xi.dynamis.handleDynamis = function(zone)
             then
                 SetServerVariable(string.format("[DYNA]ZoneCooldown_%s", xi.dynamis.dynaIDLookup[zoneID].entryZone), os.time() + 90) -- Set a 90s timer for cleanup
             end
-            
+
             xi.dynamis.cleanupDynamis(zone) -- Runs cleanup function.
             return
         end
