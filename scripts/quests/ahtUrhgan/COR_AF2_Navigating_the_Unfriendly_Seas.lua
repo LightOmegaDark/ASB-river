@@ -3,18 +3,14 @@
 -- qm6 (H-10/Boat)  : !pos 468.767 -12.292 111.817 54
 -- Leypoint : !pos -200.027 -8.500 80.058 51
 -----------------------------------
-require('scripts/globals/quests')
-require('scripts/globals/npc_util')
-require('scripts/globals/interaction/quest')
------------------------------------
-local wajaomID = require("scripts/zones/Wajaom_Woodlands/IDs")
+local wajaomID = zones[xi.zone.WAJAOM_WOODLANDS]
 -----------------------------------
 
-local quest = Quest:new(xi.quest.log_id.AHT_URHGAN, xi.quest.id.ahtUrhgan.NAVIGATING_THE_UNFRIENDLY_SEAS)
+local quest = Quest:new(xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.NAVIGATING_THE_UNFRIENDLY_SEAS)
 
 quest.reward =
 {
-    item  = xi.items.CORSAIRS_CULOTTES,
+    item  = xi.item.CORSAIRS_CULOTTES,
 }
 
 quest.sections =
@@ -22,7 +18,7 @@ quest.sections =
     -- Section: Quest available
     {
         check = function(player, status, vars)
-            return status == QUEST_AVAILABLE and
+            return status == xi.questStatus.QUEST_AVAILABLE and
             player:getMainJob() == xi.job.COR and
             player:getMainLvl() >= xi.settings.main.AF2_QUEST_LEVEL and
             player:hasCompletedQuest(xi.quest.log_id.AHT_URHGAN, xi.quest.id.ahtUrhgan.EQUIPPED_FOR_ALL_OCCASIONS)
@@ -44,7 +40,7 @@ quest.sections =
     -- Section: Quest accepted
     {
         check = function(player, status, vars)
-            return status == QUEST_ACCEPTED
+            return status == xi.questStatus.QUEST_ACCEPTED
         end,
 
         [xi.zone.NASHMAU] =
@@ -53,7 +49,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.items.HYDROGAUGE) and
+                        npcUtil.tradeHasExactly(trade, xi.item.HYDROGAUGE) and
                         quest:getVar(player, 'Prog') == 0
                     then
                         return quest:progressEvent(283)
@@ -81,13 +77,13 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.items.HYDROGAUGE) and
+                        npcUtil.tradeHasExactly(trade, xi.item.HYDROGAUGE) and
                         quest:getVar(player, 'Prog') == 1
                     then
                         player:confirmTrade()
                         quest:setVar(player, 'Prog', 2)
                         quest:setVar(player, 'leypointTimer', getMidnight())
-                        return quest:messageSpecial(wajaomID.text.PLACE_HYDROGAUGE, xi.items.HYDROGAUGE)
+                        return quest:messageSpecial(wajaomID.text.PLACE_HYDROGAUGE, xi.item.HYDROGAUGE)
                     end
                 end,
 
@@ -101,7 +97,7 @@ quest.sections =
                         quest:getVar(player, 'leypointTimer') >= os.time() and
                         quest:getVar(player, 'Prog') == 2
                     then
-                        return quest:messageSpecial(wajaomID.text.ENIGMATIC_LIGHT, xi.items.HYDROGAUGE)
+                        return quest:messageSpecial(wajaomID.text.ENIGMATIC_LIGHT, xi.item.HYDROGAUGE)
                     else
                         return quest:messageSpecial(wajaomID.text.LEYPOINT)
                     end

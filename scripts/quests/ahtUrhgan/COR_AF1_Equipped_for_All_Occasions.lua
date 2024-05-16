@@ -7,18 +7,14 @@
 -- _5i0 (Iron Door) : !pos 247.735 18.499 -142.267 198
 -- Ratihb           : !pos 75.225 -6.000 -137.203 50
 -----------------------------------
-require('scripts/globals/npc_util')
-require('scripts/globals/quests')
-require('scripts/globals/interaction/quest')
------------------------------------
-local mazeID = require('scripts/zones/Maze_of_Shakhrami/IDs')
+local mazeID = zones[xi.zone.MAZE_OF_SHAKHRAMI]
 -----------------------------------
 
-local quest = Quest:new(xi.quest.log_id.AHT_URHGAN, xi.quest.id.ahtUrhgan.EQUIPPED_FOR_ALL_OCCASIONS)
+local quest = Quest:new(xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.EQUIPPED_FOR_ALL_OCCASIONS)
 
 quest.reward =
 {
-    item  = xi.items.TRUMP_GUN,
+    item  = xi.item.TRUMP_GUN,
 }
 
 quest.sections =
@@ -26,7 +22,7 @@ quest.sections =
     -- Section: Quest
     {
         check = function(player, status, vars)
-            return status == QUEST_AVAILABLE and
+            return status == xi.questStatus.QUEST_AVAILABLE and
                 player:getMainJob() == xi.job.COR and
                 player:getMainLvl() >= xi.settings.main.AF1_QUEST_LEVEL
         end,
@@ -53,7 +49,7 @@ quest.sections =
     -- Section: Quest accepted
     {
         check = function(player, status, vars)
-            return status == QUEST_ACCEPTED
+            return status == xi.questStatus.QUEST_ACCEPTED
         end,
 
         [xi.zone.MAZE_OF_SHAKHRAMI] =
