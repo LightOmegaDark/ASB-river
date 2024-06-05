@@ -5,7 +5,7 @@ require('scripts/globals/utils')
 -----------------------------------
 xi = xi or {}
 xi.job_utils = xi.job_utils or {}
-xi.job_utils.red_mage = xi.job_utils.red_mage or {}
+xi.job_utils.ranger = xi.job_utils.ranger or {}
 
 -----------------------------------
 -- Ability Check Functions
