@@ -173,13 +173,7 @@ xi.job_utils.ranger.useScavenge = function(player, target, ability)
         player:getZPos() > -85 and player:getZPos() < -75 and -- Z match
         math.random(1, 100) <= 50
     then
-        if player:getFreeSlotsCount() == 0 then
-            player:messageSpecial(zones[player:getZoneID()].text.ITEM_CANNOT_BE_OBTAINED, xi.item.OLD_EARRING)
-            return
-        else
-            player:addItem(xi.item.OLD_EARRING)
-            player:messageSpecial(zones[player:getZoneID()].text.ITEM_OBTAINED, xi.item.OLD_EARRING)
-        end
+		npcUtil.giveItem(player, xi.item.OLD_EARRING)
 
     else
         local bonuses        = (player:getMod(xi.mod.SCAVENGE_EFFECT) + player:getMerit(xi.merit.SCAVENGE_EFFECT)) / 100
