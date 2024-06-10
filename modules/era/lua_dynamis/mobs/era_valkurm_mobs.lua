@@ -143,7 +143,7 @@ xi.dynamis.onFightCirrate = function(mob, target)
     end
 
     if mob:getTP() >= 2000 and zone:getLocalVar("cirrate_tp") == 0 then
-        zone:getLocalVar("cirrate_tp", 1)
+        zone:setLocalVar("cirrate_tp", 1)
         for skill, chance in pairs(skills) do
             if rand <= itTotal + chance then
                 return mob:useMobAbility(skill)
@@ -159,14 +159,13 @@ end
 
 xi.dynamis.onWeaponskillPrepNantina = function(mob)
     local charm = math.random(1, 100)
+    print('inside ws prep | RNG: ' .. charm)
 
     if charm <= 10 then
         return 1619 -- Attractant
+    elseif mob:getHPP() > 25 then
+        return 1617
     else
-        if mob:getHPP() > 25 then
-            return 1617
-        else
-            return 1618
-        end
+        return 1618
     end
 end

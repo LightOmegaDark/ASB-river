@@ -401,15 +401,25 @@ end
 xi.dynamis.onSpawnDiabolosShard = function(mob)
     xi.dynamis.setMegaBossStats(mob)
     xi.dynamis.setDiabolosCommonTraits(mob)
+    mob:setLocalVar('usedTP', 0)  -- Set local var so we only use TP once
 end
 
 xi.dynamis.onMobFightDiabolosShard = function(mob, mobTarget)
-    --- if (distance(mobTarget, mob) < 5)
-    mob:useMobAbility(1903)
+    if -- If we havent used TP, and we have a target in range
+        mob:checkDistance(mobTarget) < mob:getAbilityDistance(1903) and
+        mob:getLocalVar('usedTP') == 0
+    then -- Use the TP Skill and then turn the flag on so we dont spam the WS
+        mob:useMobAbility(1903)
+        mob:setLocalVar('usedTP', 1)
+    end
 end
 
 xi.dynamis.onMobWeaponSkillDiabolosShard = function(target, mob, skill)
-    mob:setHP(0)
+    if mob:getLocalVar('usedTP') == 1 then -- If the WS flag was set
+        mob:queue(3000, function(mobArg)  -- Queue the action so it doesnt instantly despawn and interrupt the WS
+            mobArg:setHP(0) -- Kill off the add now that the WS has been used
+        end)
+    end
 end
 
 -- ToDo
