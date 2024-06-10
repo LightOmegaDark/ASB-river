@@ -164,22 +164,21 @@ end
 xi.job_utils.ranger.useScavenge = function(player, target, ability)
     -- RNG AF2 quest check
     local fireAndBrimstoneCS = player:getCharVar('fireAndBrimstone')
-    local oldEarring         = 1113 -- TODO: Use items file.
 
     if
-        player:getZoneID() == 151 and fireAndBrimstoneCS == 5 and-- zone + quest match
-        not player:hasItem(oldEarring) and -- make sure player doesn't already have the earring
+        player:getZoneID() == xi.zone.CASTLE_OZTROJA and fireAndBrimstoneCS == 5 and-- zone + quest match
+        not player:hasItem(xi.item.OLD_EARRING) and -- make sure player doesn't already have the earring
         player:getYPos() > -43 and player:getYPos() < -38 and -- Y match
         player:getXPos() > -85 and player:getXPos() < -73 and -- X match
         player:getZPos() > -85 and player:getZPos() < -75 and -- Z match
         math.random(1, 100) <= 50
     then
         if player:getFreeSlotsCount() == 0 then
-            player:messageSpecial(zones[player:getZoneID()].text.ITEM_CANNOT_BE_OBTAINED, oldEarring)
+            player:messageSpecial(zones[player:getZoneID()].text.ITEM_CANNOT_BE_OBTAINED, xi.item.OLD_EARRING)
             return
         else
-            player:addItem(oldEarring)
-            player:messageSpecial(zones[player:getZoneID()].text.ITEM_OBTAINED, oldEarring)
+            player:addItem(xi.item.OLD_EARRING)
+            player:messageSpecial(zones[player:getZoneID()].text.ITEM_OBTAINED, xi.item.OLD_EARRING)
         end
 
     else
