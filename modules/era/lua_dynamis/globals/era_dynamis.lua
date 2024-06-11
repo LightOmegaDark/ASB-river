@@ -38,28 +38,16 @@ xi.dynamis = xi.dynamis or {}
 -----------------------------------
 local dynamisSnapshotInterval = 30 -- Interval to save a snapshot of the instance
 local dynamisLastSnapshot = 0 -- Last snapshot time
-local dynamisTimelessHourglass = 4236
-local dynamisPerpetual = 4237
+local dynamisTimelessHourglass = xi.item.TIMELESS_HOURGLASS
+local dynamisPerpetual = xi.item.PERPETUAL_HOURGLASS
 local dynamisMinLvl = 65
 local dynamisReservationCancel = 180
 local dynamisReentryDays = 3
 local dynamisReentryHours = 71
 
-local gmFlags =
-{
-    GM          = 0x04000000,
-    GM_SENIOR   = 0x05000000,
-    GM_LEAD     = 0x06000000,
-    GM_PRODUCER = 0x07000000,
-    SENIOR      = 0x01000000, -- Do NOT set these flags. These are here to
-    LEAD        = 0x02000000, -- ensure all GM status is removed.
-}
-
 local function checkGM(player)
-    for _, flag in pairs(gmFlags) do
-        if player:checkNameFlags(flag) then
-            return true
-        end
+    if player:getVisibleGMLevel() > 0 then
+        return true
     end
 end
 
@@ -166,10 +154,10 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
         text = -- text for table lookup
         {
             -- ID Shift
-            INFORMATION_RECORDED = 7440, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
-            ANOTHER_GROUP = 7439, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
-            UNABLE_TO_CONNECT = 7437, -- Unable to connect.≺Prompt≻
-            CONNECTING_WITH_THE_SERVER = 7436, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            INFORMATION_RECORDED = 7444, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
+            ANOTHER_GROUP = 7443, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
+            UNABLE_TO_CONNECT = 7441, -- Unable to connect.≺Prompt≻
+            CONNECTING_WITH_THE_SERVER = 7440, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
         },
     },
     [xi.zone.TAVNAZIAN_SAFEHOLD] = -- zoneID for array lookup
@@ -1349,6 +1337,7 @@ end
 -----------------------------------
 
 xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
+    print('Test')
     local zoneID = npc:getZoneID()
     if
         not xi.dynamis.entryInfoEra[zoneID].enabled
@@ -1383,23 +1372,34 @@ xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
     if
         npcUtil.tradeHasExactly(trade, { dynamisTimelessHourglass }) -- Check for timeless hourglass to trade for perpetual hourglass to start instance
     then
+        print('Has Timeless')
         if dynamisTimeRemaining > 0 then -- Check if another group is present.
+            print('dynamisTimeRemaining > 0')
+
             player:messageSpecial(xi.dynamis.dynaIDLookup[zoneID].text.ANOTHER_GROUP, xi.dynamis.entryInfoEra[zoneID].csBit)
         elseif checkGM(player) then -- If no other group, if GM bypass lockout and start new dynamis.
+            print('Starting event for GM')
             player:startEvent(xi.dynamis.entryInfoEra[zoneID].csRegisterGlass, xi.dynamis.entryInfoEra[zoneID].csBit, entered == 1 and 0 or 1, dynamisReservationCancel, dynamisReentryDays, xi.dynamis.entryInfoEra[zoneID].maxCapacity, xi.ki.VIAL_OF_SHROUDED_SAND, dynamisTimelessHourglass, dynamisPerpetual)
         elseif lockedOut then -- Still in lockout period.
+            print('Player locked out')
+
             local span = os.time() - playerRes
             span = span / 60
             player:messageSpecial(zones[zoneID].text.YOU_CANNOT_ENTER_DYNAMIS, math.ceil(span), xi.dynamis.entryInfoEra[zoneID].csBit)
         elseif GetServerVariable(string.format('[DYNA]ZoneCooldown_%s', zoneID)) > os.time() then
+            print('Zone CD')
+
             player:messageSpecial(xi.dynamis.dynaIDLookup[zoneID].text.ANOTHER_GROUP, xi.dynamis.entryInfoEra[zoneID].csBit)
         else -- Proceed in starting new dynamis.
+            print('Starting new dynamis')
+
             SetServerVariable(string.format('[DYNA]ZoneCooldown_%s', zoneID), 0)
             player:startEvent(xi.dynamis.entryInfoEra[zoneID].csRegisterGlass, xi.dynamis.entryInfoEra[zoneID].csBit, entered == 1 and 0 or 1, dynamisReservationCancel, dynamisReentryDays, xi.dynamis.entryInfoEra[zoneID].maxCapacity, xi.ki.VIAL_OF_SHROUDED_SAND, dynamisTimelessHourglass, dynamisPerpetual)
         end
     elseif
         npcUtil.tradeHasExactly(trade, { dynamisPerpetual }) -- Check for perpetual hourglass to  enter instance
     then
+        print('asdas')
         local dynaCapacity = GetServerVariable(string.format('[DYNA]RegisteredPlayers_%s', xi.dynamis.dynaInfoEra[zoneID].dynaZone))
         if checkGM(player) then -- Don't register GMs.
             xi.dynamis.registerPlayer(player)

@@ -11,7 +11,6 @@ CREATE TABLE IF NOT EXISTS `dynamis_instances` (
   INDEX (`zoneid`, `charid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
 --
 -- Table: dynamis_participants
 -- Purpose: Tracks players who have registered for dynamis

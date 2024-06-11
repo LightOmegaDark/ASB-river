@@ -17,16 +17,16 @@
 #
 # init.txt:
 # ---------------------
-# | 
+# |
 # | renamer
-# | 
+# |
 # ---------------------
 #
 # Will load everything under the renamer folder.
 #
 # init.txt:
 # ---------------------
-# | 
+# |
 # | custom/cpp/custom_module.cpp
 # | custom/lua/claim_shield.lua
 # |
@@ -38,5 +38,25 @@
 
 #custom/commands/
 #custom/lua/test_npcs_in_gm_home.lua
-era
-#era/sql_dynamis
+
+#-----------------------
+#      General Lua
+#-----------------------
+era/lua/
+#-----------------------
+#      General C++
+#-----------------------
+era/cpp/
+#-----------------------
+#      General SQL
+#-----------------------
+era/sql
+#-----------------------
+#        Dynamis
+#-----------------------
+# This loads special due to requirements between globals
+era/lua_dynamis/globals/era_dynamis.lua
+era/lua_dynamis/globals/era_dynamis_spawning.lua
+era/lua_dynamis/mobskills/era_pet_skills.lua
+era/lua_dynamis/globals/era_dynamis_zones.lua
+era/sql_dynamis/

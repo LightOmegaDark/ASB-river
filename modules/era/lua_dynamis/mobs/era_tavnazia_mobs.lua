@@ -3,7 +3,7 @@
 -----------------------------------
 require('scripts/globals/utils')
 require('scripts/globals/dynamis')
-local ID = require('scripts/zones/Dynamis-Tavnazia/IDs')
+local ID = zones[xi.zone.DYNAMIS_TAVNAZIA]
 -----------------------------------
 xi = xi or {}
 xi.dynamis = xi.dynamis or {}
@@ -181,7 +181,7 @@ end
 
 xi.dynamis.onSpawnUmbralDiabolos = function(mob)
     mob:setAutoAttackEnabled(false)
-    mob:setMobType(xi.mobskills.mobType.BATTLEFIELD)
+    mob:setMobType(xi.mobType.BATTLEFIELD)
     mob:addStatusEffect(xi.effect.BATTLEFIELD, 1, 0, 0, true)
     mob:setMobMod(xi.mobMod.DETECTION, xi.detects.SIGHT)
     mob:setMobMod(xi.mobMod.ALWAYS_AGGRO, 1)

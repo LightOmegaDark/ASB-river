@@ -1,12 +1,12 @@
-----------------------------------------------------------------------------------------------------
---                                      Dynamis-San d'Oria                                        --
---              Primary Source of Information: https://enedin.be/dyna/html/zone/san.htm           --
---           Secondary Source of Information: http://www.dynamisbums.com/strategy/san.html        --
---                       NOTE: Please refer to instructions for setup.                            --
-----------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------
---                                      Instructions                                              --
-----------------------------------------------------------------------------------------------------
+-----------------------------------
+--                            Dynamis-San d'Oria
+--    Primary Source of Information: https://enedin.be/dyna/html/zone/san.htm
+-- Secondary Source of Information: http://www.dynamisbums.com/strategy/san.html
+--             NOTE: Please refer to instructions for setup.
+-----------------------------------
+-----------------------------------
+--  Instructions
+-----------------------------------
 -- CAUTION: Wherever a value is skipped insert nil.
 --
 -- 1. MobIndex information is derrived from the group ID used in Enedin.
@@ -20,7 +20,7 @@
 --
 -- 3. Setup wave spawning requirements. This is handled through a localvar set on the zone based on
 --    the onMobDeath() function of the NM. By default this will only be the MegaBoss.
---    xi.dynamis.mobList[zoneID].waveDefeatRequirements[2] = {zone:getLocalVar("MegaBoss_Killed") == 1}
+--    xi.dynamis.mobList[zoneID].waveDefeatRequirements[2] = {zone:getLocalVar('MegaBoss_Killed') == 1}
 --
 -- 4. Setup mob positions for spawns. This is only required for statues and mobs that do not spawn
 --    from a statue, NM, or nightmare mob.
@@ -30,10 +30,10 @@
 --    Mob type indicates spawning pattern used. Mob Name will replace the name dynamically.
 --    Mob Family is only required for beastmen NMs. Main Job is only required for beastmen NMs.
 --    NOTE: These should only be made for non-standard/zone specific mobs.
---    Statue Ex. xi.dynamis.mobList[zoneID][MobIndex].info = {"Statue", "Sergeant Tombstone", nil, nil, nil}
---    Nightmare Ex. xi.dynamis.mobList[zoneID][MobIndex].info = {"Nightmare", "Nightmare Scorpion", nil, nil, nil}
---    Non-beastman NM Ex. xi.dynamis.mobList[zoneID][MobIndex].info = {"NM", "Apocalyptic Beast", nil, nil, "Apocalyptic_Beast_killed"}
---    Beastmen NM Ex. xi.dynamis.mobList[zoneID][MobIndex].info = {"NM", "ElvaanSticker Bxafraff", "Orc", "DRG", "ElvaanSticker_Bxafraff_killed"}
+--    Statue Ex. xi.dynamis.mobList[zoneID][MobIndex].info = {'Statue', 'Sergeant Tombstone', nil, nil, nil}
+--    Nightmare Ex. xi.dynamis.mobList[zoneID][MobIndex].info = {'Nightmare', 'Nightmare Scorpion', nil, nil, nil}
+--    Non-beastman NM Ex. xi.dynamis.mobList[zoneID][MobIndex].info = {'NM', 'Apocalyptic Beast', nil, nil, 'Apocalyptic_Beast_killed'}
+--    Beastmen NM Ex. xi.dynamis.mobList[zoneID][MobIndex].info = {'NM', 'ElvaanSticker Bxafraff', 'Orc', 'DRG', 'ElvaanSticker_Bxafraff_killed'}
 --
 -- 6. xi.dynamis.mobList[zoneID][MobIndex].mobchildren is used to determine the number of each job to spawn.
 --    To spawn a certain job, just put in the number of that job in the order of the job list 1-15.
@@ -60,15 +60,15 @@
 -- 10. xi.dynamis.mobList[zoneID][MobIndex].timeExtension dictates the amount of time given for the TE.
 --    Ex. xi.dynamis.mobList[zoneID][MobIndex].timeExtension = 15
 --
-----------------------------------------------------------------------------------------------------
+-----------------------------------
 
-----------------------------------------------------------------------------------------------------
---                               Dependency Setup Section (IGNORE)                                --
-----------------------------------------------------------------------------------------------------
+-----------------------------------
+-- Dependency Setup Section (IGNORE)
+-----------------------------------
 local zoneID = xi.zone.DYNAMIS_SAN_DORIA
 local i = 1
-xi = xi or {} -- Ignore me I just set the global.
-xi.dynamis = xi.dynamis or {} -- Ignore me I just set the global.
+xi = xi or { } -- Ignore me I just set the global.
+xi.dynamis = xi.dynamis or { } -- Ignore me I just set the global.
 xi.dynamis.mobList = xi.dynamis.mobList or { } -- Ignore me I just set the global.
 xi.dynamis.mobList[zoneID] = { } -- Ignore me, I just start the table.
 xi.dynamis.mobList[zoneID].nmchildren = { }
@@ -80,197 +80,197 @@ while i <= 155 do
     i = i + 1
 end
 
-----------------------------------------------------------------------------------------------------
---                                  Setup of Parent Spawning                                      --
-----------------------------------------------------------------------------------------------------
-------------------------------------------
---               Mob Info               --
--- Note: Primarily used for mobs that   --
--- are NMs or parent mobs.              --
-------------------------------------------
---xi.dynamis.mobList[zoneID][MobIndex].info = {"Statue/NM/Nightmare", "Mob Name", "Family", "Main Job", "MobLocalVarName"}
+-----------------------------------
+-- Setup of Parent Spawning
+-----------------------------------
+-----------------------------------
+--               Mob Info
+-- Note: Primarily used for mobs that
+-- are NMs or parent mobs.
+-----------------------------------
+--xi.dynamis.mobList[zoneID][MobIndex].info = {'Statue/NM/Nightmare', 'Mob Name', 'Family', 'Main Job', 'MobLocalVarName'}
 
-xi.dynamis.mobList[zoneID][1  ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (001-O/S)
-xi.dynamis.mobList[zoneID][2  ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (002-O/S)
-xi.dynamis.mobList[zoneID][3  ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (003-O/S)
-xi.dynamis.mobList[zoneID][4  ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (004-O/S)
-xi.dynamis.mobList[zoneID][5  ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (005-O/S)
-xi.dynamis.mobList[zoneID][6  ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (006-O/W)(MP)
-xi.dynamis.mobList[zoneID][7  ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (007-O/S)(15)
-xi.dynamis.mobList[zoneID][8  ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (008-O/S)
-xi.dynamis.mobList[zoneID][9  ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (009-O/S)(15)
-xi.dynamis.mobList[zoneID][10 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (010-O/W)(MP)
-xi.dynamis.mobList[zoneID][11 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (011-O/S)
-xi.dynamis.mobList[zoneID][12 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (012-O/W)(HP)
-xi.dynamis.mobList[zoneID][13 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (013-O/S)
-xi.dynamis.mobList[zoneID][14 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (014-O/W)(MP)
-xi.dynamis.mobList[zoneID][15 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (015-O/W)(HP)
-xi.dynamis.mobList[zoneID][16 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (016-O/S)
-xi.dynamis.mobList[zoneID][17 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (017-O/S)
-xi.dynamis.mobList[zoneID][18 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (018-O/S)
-xi.dynamis.mobList[zoneID][19 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (019-O/S)
-xi.dynamis.mobList[zoneID][20 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (020-O/S)
-xi.dynamis.mobList[zoneID][21 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (021-O/S)
-xi.dynamis.mobList[zoneID][22 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (022-O/S)
-xi.dynamis.mobList[zoneID][23 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (023-O/S)
-xi.dynamis.mobList[zoneID][24 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (024-O/S)
-xi.dynamis.mobList[zoneID][25 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (025-O/S)
-xi.dynamis.mobList[zoneID][26 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (026-O/S)(25)
-xi.dynamis.mobList[zoneID][27 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (027-O/S)
-xi.dynamis.mobList[zoneID][28 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (028-O/S)
-xi.dynamis.mobList[zoneID][29 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (029-O/S)
-xi.dynamis.mobList[zoneID][30 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (030-O/S)
-xi.dynamis.mobList[zoneID][31 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (031-O/S)
-xi.dynamis.mobList[zoneID][32 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (032-O/W)(MP)
-xi.dynamis.mobList[zoneID][33 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (033-O/S)
-xi.dynamis.mobList[zoneID][34 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (034-O/W)(HP)
-xi.dynamis.mobList[zoneID][35 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (035-O/W)(MP)
-xi.dynamis.mobList[zoneID][36 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (036-O/S)
-xi.dynamis.mobList[zoneID][37 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (037-O/S)
-xi.dynamis.mobList[zoneID][38 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (038-O/W)(MP)
-xi.dynamis.mobList[zoneID][39 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (039-O/S)
-xi.dynamis.mobList[zoneID][40 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (040-O/S)
-xi.dynamis.mobList[zoneID][41 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (041-O/S)(30)
-xi.dynamis.mobList[zoneID][42 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (042-O/S)
-xi.dynamis.mobList[zoneID][43 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (043-O/S)
-xi.dynamis.mobList[zoneID][44 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (044-O/W)(HP)
-xi.dynamis.mobList[zoneID][45 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (045-O/S)
-xi.dynamis.mobList[zoneID][46 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (046-O/S)
-xi.dynamis.mobList[zoneID][47 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (047-O/W)(MP)
-xi.dynamis.mobList[zoneID][48 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (048-O/S)
-xi.dynamis.mobList[zoneID][49 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (049-O/S)
-xi.dynamis.mobList[zoneID][50 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (050-O/S)
-xi.dynamis.mobList[zoneID][51 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (051-O/S)
-xi.dynamis.mobList[zoneID][52 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (052-O/W)(HP)
-xi.dynamis.mobList[zoneID][53 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (053-O/S)
-xi.dynamis.mobList[zoneID][54 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (054-O/S)
-xi.dynamis.mobList[zoneID][55 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (055-O/S)
-xi.dynamis.mobList[zoneID][56 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (056-O/S)
-xi.dynamis.mobList[zoneID][57 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (057-O/S)
-xi.dynamis.mobList[zoneID][58 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (058-O/S)
-xi.dynamis.mobList[zoneID][59 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (059-O/W)(HP)
-xi.dynamis.mobList[zoneID][60 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (060-O/W)(MP)
-xi.dynamis.mobList[zoneID][61 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (061-O/S)
-xi.dynamis.mobList[zoneID][62 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (062-O/W)(MP)
-xi.dynamis.mobList[zoneID][63 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (063-O/S)
-xi.dynamis.mobList[zoneID][64 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (064-O/S)(25)
-xi.dynamis.mobList[zoneID][65 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (065-O/S)
-xi.dynamis.mobList[zoneID][66 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (066-O/S)
-xi.dynamis.mobList[zoneID][67 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (067-O/S)
-xi.dynamis.mobList[zoneID][68 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (068-O/S)
-xi.dynamis.mobList[zoneID][69 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (069-O/S)
-xi.dynamis.mobList[zoneID][70 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (070-O/W)(MP)
-xi.dynamis.mobList[zoneID][71 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (071-O/S)
-xi.dynamis.mobList[zoneID][72 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (072-O/W)(HP)
-xi.dynamis.mobList[zoneID][73 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (073-O/S)
-xi.dynamis.mobList[zoneID][74 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (074-O/W)(10)
-xi.dynamis.mobList[zoneID][75 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (075-O/S)
-xi.dynamis.mobList[zoneID][76 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (076-O/W)(MP)
-xi.dynamis.mobList[zoneID][77 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (077-O/S)
-xi.dynamis.mobList[zoneID][78 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (078-O/W)(HP)
-xi.dynamis.mobList[zoneID][79 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (079-O/W)(MP)
-xi.dynamis.mobList[zoneID][80 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (080-O/S)
-xi.dynamis.mobList[zoneID][81 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (081-O/W)(HP)
-xi.dynamis.mobList[zoneID][82 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (082-O/S)
-xi.dynamis.mobList[zoneID][83 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (083-O/W)(HP)
-xi.dynamis.mobList[zoneID][84 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (084-O/W)(MP)
-xi.dynamis.mobList[zoneID][85 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (085-O/W)(HP)
-xi.dynamis.mobList[zoneID][86 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (086-O/W)(MP)
-xi.dynamis.mobList[zoneID][87 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (087-O/S)
-xi.dynamis.mobList[zoneID][88 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (088-O/S)
-xi.dynamis.mobList[zoneID][89 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (089-O/S)
-xi.dynamis.mobList[zoneID][90 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (090-O/S)
-xi.dynamis.mobList[zoneID][91 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (091-O/W)(HP)
-xi.dynamis.mobList[zoneID][92 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (092-O/W)(MP)
-xi.dynamis.mobList[zoneID][93 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (093-O/S)
-xi.dynamis.mobList[zoneID][94 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (094-O/S)
-xi.dynamis.mobList[zoneID][95 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (095-O/S)
-xi.dynamis.mobList[zoneID][96 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (096-O/S)
-xi.dynamis.mobList[zoneID][97 ].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (097-O/W)(HP)
-xi.dynamis.mobList[zoneID][98 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (098-O/S)
-xi.dynamis.mobList[zoneID][99 ].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (099-O/S)
-xi.dynamis.mobList[zoneID][100].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (100-O/S)
-xi.dynamis.mobList[zoneID][101].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (101-O/S)
-xi.dynamis.mobList[zoneID][102].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (102-O/S)
-xi.dynamis.mobList[zoneID][103].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (103-O/W)(HP)
-xi.dynamis.mobList[zoneID][104].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (104-O/W)(HP)
-xi.dynamis.mobList[zoneID][105].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (105-O/S)
-xi.dynamis.mobList[zoneID][106].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (106-O/S)
-xi.dynamis.mobList[zoneID][107].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (107-O/W)(HP)
-xi.dynamis.mobList[zoneID][108].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (108-O/W)(MP)
-xi.dynamis.mobList[zoneID][110].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (110-O/W)(MP)
-xi.dynamis.mobList[zoneID][111].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (111-O/W)(MP)
-xi.dynamis.mobList[zoneID][112].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (112-O/S)
-xi.dynamis.mobList[zoneID][113].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (113-O/W)(HP)
-xi.dynamis.mobList[zoneID][114].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (114-O/S)
-xi.dynamis.mobList[zoneID][115].info = { "Statue", "Warchief Tombstone", nil, nil, nil } -- (115-O/W)(HP)
-xi.dynamis.mobList[zoneID][116].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (116-O/S)
-xi.dynamis.mobList[zoneID][117].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (117-O/S)
-xi.dynamis.mobList[zoneID][118].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (118-O/S)
-xi.dynamis.mobList[zoneID][119].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (119-O/S)
-xi.dynamis.mobList[zoneID][120].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (120-O/S)
-xi.dynamis.mobList[zoneID][121].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (121-O/S)
-xi.dynamis.mobList[zoneID][122].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (122-O/S)
-xi.dynamis.mobList[zoneID][123].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (123-O/S)
-xi.dynamis.mobList[zoneID][124].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (124-O/S)
-xi.dynamis.mobList[zoneID][125].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (125-O/S)
-xi.dynamis.mobList[zoneID][126].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (126-O/S)
-xi.dynamis.mobList[zoneID][127].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (127-O/S)
-xi.dynamis.mobList[zoneID][128].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (128-O/S)
-xi.dynamis.mobList[zoneID][129].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (129-O/S)
-xi.dynamis.mobList[zoneID][130].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (130-O/S)
-xi.dynamis.mobList[zoneID][131].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (131-O/S)
-xi.dynamis.mobList[zoneID][132].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (132-O/S)
-xi.dynamis.mobList[zoneID][133].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (133-O/S)
-xi.dynamis.mobList[zoneID][134].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (134-O/S)
-xi.dynamis.mobList[zoneID][135].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (135-O/S)
-xi.dynamis.mobList[zoneID][136].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (136-O/S)
-xi.dynamis.mobList[zoneID][137].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (137-O/S)
-xi.dynamis.mobList[zoneID][138].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (138-O/S)
-xi.dynamis.mobList[zoneID][139].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (139-O/S)
-xi.dynamis.mobList[zoneID][140].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (140-O/S)
-xi.dynamis.mobList[zoneID][141].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (141-O/S)
-xi.dynamis.mobList[zoneID][142].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (142-O/S)
-xi.dynamis.mobList[zoneID][143].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (143-O/S)
-xi.dynamis.mobList[zoneID][144].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (144-O/S)
-xi.dynamis.mobList[zoneID][145].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (145-O/S)
-xi.dynamis.mobList[zoneID][146].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (146-O/S)
-xi.dynamis.mobList[zoneID][147].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (147-O/S)
-xi.dynamis.mobList[zoneID][148].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (148-O/S)
-xi.dynamis.mobList[zoneID][149].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (149-O/S)
-xi.dynamis.mobList[zoneID][150].info = { "Statue", "Serjeant Tombstone", nil, nil, nil } -- (150-O/S)
+xi.dynamis.mobList[zoneID][1  ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (001-O/S)
+xi.dynamis.mobList[zoneID][2  ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (002-O/S)
+xi.dynamis.mobList[zoneID][3  ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (003-O/S)
+xi.dynamis.mobList[zoneID][4  ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (004-O/S)
+xi.dynamis.mobList[zoneID][5  ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (005-O/S)
+xi.dynamis.mobList[zoneID][6  ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (006-O/W)(MP)
+xi.dynamis.mobList[zoneID][7  ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (007-O/S)(15)
+xi.dynamis.mobList[zoneID][8  ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (008-O/S)
+xi.dynamis.mobList[zoneID][9  ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (009-O/S)(15)
+xi.dynamis.mobList[zoneID][10 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (010-O/W)(MP)
+xi.dynamis.mobList[zoneID][11 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (011-O/S)
+xi.dynamis.mobList[zoneID][12 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (012-O/W)(HP)
+xi.dynamis.mobList[zoneID][13 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (013-O/S)
+xi.dynamis.mobList[zoneID][14 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (014-O/W)(MP)
+xi.dynamis.mobList[zoneID][15 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (015-O/W)(HP)
+xi.dynamis.mobList[zoneID][16 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (016-O/S)
+xi.dynamis.mobList[zoneID][17 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (017-O/S)
+xi.dynamis.mobList[zoneID][18 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (018-O/S)
+xi.dynamis.mobList[zoneID][19 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (019-O/S)
+xi.dynamis.mobList[zoneID][20 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (020-O/S)
+xi.dynamis.mobList[zoneID][21 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (021-O/S)
+xi.dynamis.mobList[zoneID][22 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (022-O/S)
+xi.dynamis.mobList[zoneID][23 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (023-O/S)
+xi.dynamis.mobList[zoneID][24 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (024-O/S)
+xi.dynamis.mobList[zoneID][25 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (025-O/S)
+xi.dynamis.mobList[zoneID][26 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (026-O/S)(25)
+xi.dynamis.mobList[zoneID][27 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (027-O/S)
+xi.dynamis.mobList[zoneID][28 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (028-O/S)
+xi.dynamis.mobList[zoneID][29 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (029-O/S)
+xi.dynamis.mobList[zoneID][30 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (030-O/S)
+xi.dynamis.mobList[zoneID][31 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (031-O/S)
+xi.dynamis.mobList[zoneID][32 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (032-O/W)(MP)
+xi.dynamis.mobList[zoneID][33 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (033-O/S)
+xi.dynamis.mobList[zoneID][34 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (034-O/W)(HP)
+xi.dynamis.mobList[zoneID][35 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (035-O/W)(MP)
+xi.dynamis.mobList[zoneID][36 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (036-O/S)
+xi.dynamis.mobList[zoneID][37 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (037-O/S)
+xi.dynamis.mobList[zoneID][38 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (038-O/W)(MP)
+xi.dynamis.mobList[zoneID][39 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (039-O/S)
+xi.dynamis.mobList[zoneID][40 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (040-O/S)
+xi.dynamis.mobList[zoneID][41 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (041-O/S)(30)
+xi.dynamis.mobList[zoneID][42 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (042-O/S)
+xi.dynamis.mobList[zoneID][43 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (043-O/S)
+xi.dynamis.mobList[zoneID][44 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (044-O/W)(HP)
+xi.dynamis.mobList[zoneID][45 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (045-O/S)
+xi.dynamis.mobList[zoneID][46 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (046-O/S)
+xi.dynamis.mobList[zoneID][47 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (047-O/W)(MP)
+xi.dynamis.mobList[zoneID][48 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (048-O/S)
+xi.dynamis.mobList[zoneID][49 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (049-O/S)
+xi.dynamis.mobList[zoneID][50 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (050-O/S)
+xi.dynamis.mobList[zoneID][51 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (051-O/S)
+xi.dynamis.mobList[zoneID][52 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (052-O/W)(HP)
+xi.dynamis.mobList[zoneID][53 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (053-O/S)
+xi.dynamis.mobList[zoneID][54 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (054-O/S)
+xi.dynamis.mobList[zoneID][55 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (055-O/S)
+xi.dynamis.mobList[zoneID][56 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (056-O/S)
+xi.dynamis.mobList[zoneID][57 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (057-O/S)
+xi.dynamis.mobList[zoneID][58 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (058-O/S)
+xi.dynamis.mobList[zoneID][59 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (059-O/W)(HP)
+xi.dynamis.mobList[zoneID][60 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (060-O/W)(MP)
+xi.dynamis.mobList[zoneID][61 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (061-O/S)
+xi.dynamis.mobList[zoneID][62 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (062-O/W)(MP)
+xi.dynamis.mobList[zoneID][63 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (063-O/S)
+xi.dynamis.mobList[zoneID][64 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (064-O/S)(25)
+xi.dynamis.mobList[zoneID][65 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (065-O/S)
+xi.dynamis.mobList[zoneID][66 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (066-O/S)
+xi.dynamis.mobList[zoneID][67 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (067-O/S)
+xi.dynamis.mobList[zoneID][68 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (068-O/S)
+xi.dynamis.mobList[zoneID][69 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (069-O/S)
+xi.dynamis.mobList[zoneID][70 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (070-O/W)(MP)
+xi.dynamis.mobList[zoneID][71 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (071-O/S)
+xi.dynamis.mobList[zoneID][72 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (072-O/W)(HP)
+xi.dynamis.mobList[zoneID][73 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (073-O/S)
+xi.dynamis.mobList[zoneID][74 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (074-O/W)(10)
+xi.dynamis.mobList[zoneID][75 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (075-O/S)
+xi.dynamis.mobList[zoneID][76 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (076-O/W)(MP)
+xi.dynamis.mobList[zoneID][77 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (077-O/S)
+xi.dynamis.mobList[zoneID][78 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (078-O/W)(HP)
+xi.dynamis.mobList[zoneID][79 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (079-O/W)(MP)
+xi.dynamis.mobList[zoneID][80 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (080-O/S)
+xi.dynamis.mobList[zoneID][81 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (081-O/W)(HP)
+xi.dynamis.mobList[zoneID][82 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (082-O/S)
+xi.dynamis.mobList[zoneID][83 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (083-O/W)(HP)
+xi.dynamis.mobList[zoneID][84 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (084-O/W)(MP)
+xi.dynamis.mobList[zoneID][85 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (085-O/W)(HP)
+xi.dynamis.mobList[zoneID][86 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (086-O/W)(MP)
+xi.dynamis.mobList[zoneID][87 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (087-O/S)
+xi.dynamis.mobList[zoneID][88 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (088-O/S)
+xi.dynamis.mobList[zoneID][89 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (089-O/S)
+xi.dynamis.mobList[zoneID][90 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (090-O/S)
+xi.dynamis.mobList[zoneID][91 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (091-O/W)(HP)
+xi.dynamis.mobList[zoneID][92 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (092-O/W)(MP)
+xi.dynamis.mobList[zoneID][93 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (093-O/S)
+xi.dynamis.mobList[zoneID][94 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (094-O/S)
+xi.dynamis.mobList[zoneID][95 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (095-O/S)
+xi.dynamis.mobList[zoneID][96 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (096-O/S)
+xi.dynamis.mobList[zoneID][97 ].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (097-O/W)(HP)
+xi.dynamis.mobList[zoneID][98 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (098-O/S)
+xi.dynamis.mobList[zoneID][99 ].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (099-O/S)
+xi.dynamis.mobList[zoneID][100].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (100-O/S)
+xi.dynamis.mobList[zoneID][101].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (101-O/S)
+xi.dynamis.mobList[zoneID][102].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (102-O/S)
+xi.dynamis.mobList[zoneID][103].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (103-O/W)(HP)
+xi.dynamis.mobList[zoneID][104].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (104-O/W)(HP)
+xi.dynamis.mobList[zoneID][105].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (105-O/S)
+xi.dynamis.mobList[zoneID][106].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (106-O/S)
+xi.dynamis.mobList[zoneID][107].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (107-O/W)(HP)
+xi.dynamis.mobList[zoneID][108].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (108-O/W)(MP)
+xi.dynamis.mobList[zoneID][110].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (110-O/W)(MP)
+xi.dynamis.mobList[zoneID][111].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (111-O/W)(MP)
+xi.dynamis.mobList[zoneID][112].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (112-O/S)
+xi.dynamis.mobList[zoneID][113].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (113-O/W)(HP)
+xi.dynamis.mobList[zoneID][114].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (114-O/S)
+xi.dynamis.mobList[zoneID][115].info = { 'Statue', 'Warchief Tombstone', nil, nil, nil } -- (115-O/W)(HP)
+xi.dynamis.mobList[zoneID][116].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (116-O/S)
+xi.dynamis.mobList[zoneID][117].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (117-O/S)
+xi.dynamis.mobList[zoneID][118].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (118-O/S)
+xi.dynamis.mobList[zoneID][119].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (119-O/S)
+xi.dynamis.mobList[zoneID][120].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (120-O/S)
+xi.dynamis.mobList[zoneID][121].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (121-O/S)
+xi.dynamis.mobList[zoneID][122].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (122-O/S)
+xi.dynamis.mobList[zoneID][123].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (123-O/S)
+xi.dynamis.mobList[zoneID][124].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (124-O/S)
+xi.dynamis.mobList[zoneID][125].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (125-O/S)
+xi.dynamis.mobList[zoneID][126].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (126-O/S)
+xi.dynamis.mobList[zoneID][127].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (127-O/S)
+xi.dynamis.mobList[zoneID][128].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (128-O/S)
+xi.dynamis.mobList[zoneID][129].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (129-O/S)
+xi.dynamis.mobList[zoneID][130].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (130-O/S)
+xi.dynamis.mobList[zoneID][131].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (131-O/S)
+xi.dynamis.mobList[zoneID][132].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (132-O/S)
+xi.dynamis.mobList[zoneID][133].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (133-O/S)
+xi.dynamis.mobList[zoneID][134].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (134-O/S)
+xi.dynamis.mobList[zoneID][135].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (135-O/S)
+xi.dynamis.mobList[zoneID][136].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (136-O/S)
+xi.dynamis.mobList[zoneID][137].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (137-O/S)
+xi.dynamis.mobList[zoneID][138].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (138-O/S)
+xi.dynamis.mobList[zoneID][139].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (139-O/S)
+xi.dynamis.mobList[zoneID][140].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (140-O/S)
+xi.dynamis.mobList[zoneID][141].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (141-O/S)
+xi.dynamis.mobList[zoneID][142].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (142-O/S)
+xi.dynamis.mobList[zoneID][143].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (143-O/S)
+xi.dynamis.mobList[zoneID][144].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (144-O/S)
+xi.dynamis.mobList[zoneID][145].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (145-O/S)
+xi.dynamis.mobList[zoneID][146].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (146-O/S)
+xi.dynamis.mobList[zoneID][147].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (147-O/S)
+xi.dynamis.mobList[zoneID][148].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (148-O/S)
+xi.dynamis.mobList[zoneID][149].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (149-O/S)
+xi.dynamis.mobList[zoneID][150].info = { 'Statue', 'Serjeant Tombstone', nil, nil, nil } -- (150-O/S)
 
 -- NM's and Megaboss
-xi.dynamis.mobList[zoneID][109].info = { "NM", "Overlord's Tombstone",     nil,   nil,    "MegaBoss_Killed" } -- ( 109 ) Overlord's Tombstone
-xi.dynamis.mobList[zoneID][151].info = { "NM", "Wyrmgnasher Bjakdek",      "Orc", "DRG",  "Wyrmgnasher_Bjakdek_Killed" } -- DRG NM
-xi.dynamis.mobList[zoneID][152].info = { "NM", "Reapertongue Gadgquok",    "Orc", "SMN",  "Reapertongue_Gadgquok_Killed" } -- SMN NM
-xi.dynamis.mobList[zoneID][153].info = { "NM", "Voidstreaker Butchnotch",  "Orc", "NIN",  "Voidstreaker_Butchnotch_Killed" } -- NIN NM
-xi.dynamis.mobList[zoneID][154].info = { "NM", "Battlechoir Gitchfotch",   "Orc", "BRD",  nil } -- BRD NM
-xi.dynamis.mobList[zoneID][155].info = { "NM", "Soulsender Fugbrag",       "Orc", "BRD",  nil } -- BRD NM
+xi.dynamis.mobList[zoneID][109].info = { 'NM', 'Overlord\'s Tombstone',     nil,   nil,    'MegaBoss_Killed' } -- ( 109 ) Overlord's Tombstone
+xi.dynamis.mobList[zoneID][151].info = { 'NM', 'Wyrmgnasher Bjakdek',      'Orc', 'DRG',  'Wyrmgnasher_Bjakdek_Killed' } -- DRG NM
+xi.dynamis.mobList[zoneID][152].info = { 'NM', 'Reapertongue Gadgquok',    'Orc', 'SMN',  'Reapertongue_Gadgquok_Killed' } -- SMN NM
+xi.dynamis.mobList[zoneID][153].info = { 'NM', 'Voidstreaker Butchnotch',  'Orc', 'NIN',  'Voidstreaker_Butchnotch_Killed' } -- NIN NM
+xi.dynamis.mobList[zoneID][154].info = { 'NM', 'Battlechoir Gitchfotch',   'Orc', 'BRD',  nil } -- BRD NM
+xi.dynamis.mobList[zoneID][155].info = { 'NM', 'Soulsender Fugbrag',       'Orc', 'BRD',  nil } -- BRD NM
 
-----------------------------------------------------------------------------------------------------
---                                    Setup of Wave Spawning                                      --
-----------------------------------------------------------------------------------------------------
+-----------------------------------
+-- Setup of Wave Spawning
+-----------------------------------
 
----------------------------------------------
---           Wave Defeat Reqs.          --
---------------------------------------------
---xi.dynamis.mobList[zoneID].waveDefeatRequirements[2] = {zone:getLocalVar("MegaBoss_Killed") == 1}
+-----------------------------------
+--           Wave Defeat Reqs.
+-----------------------------------
+--xi.dynamis.mobList[zoneID].waveDefeatRequirements[2] = {zone:getLocalVar('MegaBoss_Killed') == 1}
 
 xi.dynamis.mobList[zoneID].waveDefeatRequirements =
 {
     { }, -- Do not touch this is wave 1
-    { "Voidstreaker_Butchnotch_Killed" },
-    { "MegaBoss_Killed" },
-    { "Wyrmgnasher_Bjakdek_Killed", "Reapertongue_Gadgquok_Killed" },
-    { "Wyrmgnasher_Bjakdek_Killed" },
-    { "Reapertongue_Gadgquok_Killed" }
+    { 'Voidstreaker_Butchnotch_Killed' },
+    { 'MegaBoss_Killed' },
+    { 'Wyrmgnasher_Bjakdek_Killed', 'Reapertongue_Gadgquok_Killed' },
+    { 'Wyrmgnasher_Bjakdek_Killed' },
+    { 'Reapertongue_Gadgquok_Killed' }
 }
 
-------------------------------------------
---            Wave Spawning             --
--- Note: Wave 1 spawns at start.        --
-------------------------------------------
+-----------------------------------
+--            Wave Spawning
+-- Note: Wave 1 spawns at start.
+-----------------------------------
 --xi.dynamis.mobList[zoneID][MobIndex].waves = { 1,nil,nil }
 
 -- Wave 1 Spawns on loading the zone
@@ -438,12 +438,12 @@ xi.dynamis.mobList[zoneID][6].wave =
     142     -- (142-O/S)  Serjeant Tombstone
 }
 
-----------------------------------------------------------------------------------------------------
---                                  Setup of Children Spawning                                    --
-----------------------------------------------------------------------------------------------------
-------------------------------------------
---          Normal Child Spawn          --
-------------------------------------------
+-----------------------------------
+-- Setup of Children Spawning
+-----------------------------------
+-----------------------------------
+-- Normal Child Spawn
+-----------------------------------
 -- xi.dynamis.mobList[zoneID][MobIndex].mobchildren = {#WAR, #MNK, #WHM, #BLM, #RDM, #THF, #PLD, #DRK, #BST, #BRD, #RNG, #SAM, #NIN, #DRG, #SMN}
 
 xi.dynamis.mobList[zoneID][1  ].mobchildren = { 2,   nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil  } -- 2 WAR
@@ -570,9 +570,9 @@ xi.dynamis.mobList[zoneID][146].mobchildren = { nil, nil, nil, nil, nil, nil,   
 xi.dynamis.mobList[zoneID][147].mobchildren = { nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,   2, } -- 2 SMN
 xi.dynamis.mobList[zoneID][149].mobchildren = { nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,   2, } -- 2 SMN
 
-------------------------------------------
---            NM Child Spawn            --
-------------------------------------------
+-----------------------------------
+-- NM Child Spawn
+-----------------------------------
 -- xi.dynamis.mobList[zoneID][MobIndex].nmchildren = {MobIndex(NM1), MobIndex(NM2), MobIndex(NM3)}
 -- boolean value = forceLink true/false
 
@@ -591,11 +591,11 @@ xi.dynamis.mobList[zoneID][152].nmchildren = { false, 61  }                     
 xi.dynamis.mobList[zoneID][93 ].nmchildren = { true,  153, 94, 95 }                            -- Manor NM Voidstreaker Butchnotch (NIN) as well as N/S manor pop statues
 xi.dynamis.mobList[zoneID][109].nmchildren = { true,  154, 155, 110, 111, 112, 113, 114, 115 } -- Megaboss spawns twin BRD NMs Battlechoir Gitchfotch and Soulsender Fugbrag and a bunch of statues
 
-------------------------------------------
---          Mob Position Info           --
--- Note: Must be setup for parent mobs, --
--- but is optional for children.        --
-------------------------------------------
+-----------------------------------
+--          Mob Position Info
+-- Note: Must be setup for parent mobs
+-- but is optional for children.
+-----------------------------------
 -- xi.dynamis.mobList[zoneID][MobIndex].pos = {xpos, ypos, zpos, rot}
 
 xi.dynamis.mobList[zoneID][1  ].pos = {  137.0790, -2.0000,  105.1504, 225   } -- Residential Area
@@ -749,12 +749,12 @@ xi.dynamis.mobList[zoneID][148].pos = {   -5.0312,  2.0000,  -11.8298, 51    } -
 xi.dynamis.mobList[zoneID][149].pos = {   23.8516,  2.0000,  -12.4577, 128   } -- W2 Victory Square Tent E
 xi.dynamis.mobList[zoneID][150].pos = {    5.0829,  2.0000,  -11.8420, 75    } -- W2 Victory Square Pop Bt
 
-----------------------------------------------------------------------------------------------------
---                                    Setup of Mob Functions                                      --
-----------------------------------------------------------------------------------------------------
-------------------------------------------
---             Patrol Paths             --
-------------------------------------------
+-----------------------------------
+-- Setup of Mob Functions
+-----------------------------------
+-----------------------------------
+-- Patrol Paths
+-----------------------------------
 -- xi.dynamis.mobList[zoneID][MobIndex].patrolPath = {xpos1,ypos1,zpos1, xpos2,ypos2,zpos2,  xpos3,ypos3,zpos3}
 
 xi.dynamis.mobList[zoneID].patrolPaths = { 2, 3, 4, 5, 8, 13, 14, 15, 16, 17, 18, 23, 25, 26, 27, 28, 29, 30, 37, 38, 39, 40, 41, 42, 43, 44,
@@ -826,9 +826,9 @@ xi.dynamis.mobList[zoneID][144].patrolPath = { { 118, 0, 71   }, {   112, 0, 78 
 xi.dynamis.mobList[zoneID][145].patrolPath = { { -212, -2, 96 }, { -229, -2, 98 } }
 xi.dynamis.mobList[zoneID][146].patrolPath = { { -200, -2, 87 }, { -193, -2, 69 } }
 
-------------------------------------------
---          Statue Eye Colors           --
-------------------------------------------
+-----------------------------------
+--          Statue Eye Colors
+-----------------------------------
 -- xi.dynamis.mobList[zoneID][MobIndex].eyes = xi.dynamis.eye.BLUE -- Flags for blue eyes. (HP)
 -- xi.dynamis.mobList[zoneID][MobIndex].eyes = xi.dynamis.eye.GREEN -- Flags for green eyes. (MP)
 
@@ -870,9 +870,9 @@ xi.dynamis.mobList[zoneID][111].eyes = xi.dynamis.eye.GREEN
 xi.dynamis.mobList[zoneID][113].eyes = xi.dynamis.eye.BLUE
 xi.dynamis.mobList[zoneID][115].eyes = xi.dynamis.eye.BLUE
 
-------------------------------------------
---        Time Extension Values         --
-------------------------------------------
+-----------------------------------
+--        Time Extension Values
+-----------------------------------
 -- xi.dynamis.mobList[zoneID][MobIndex].timeExtension = 15
 
 xi.dynamis.mobList[zoneID].timeExtensionList = { 7, 9, 26, 41, 64, 74, 153 }

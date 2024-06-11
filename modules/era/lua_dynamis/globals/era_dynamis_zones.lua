@@ -41,56 +41,56 @@ local startingZones =
 
 local currencyHaggle =
 {
-    1455,
-    1456,
-    1457
+    xi.item.ONE_BYNE_BILL,
+    xi.item.ONE_HUNDRED_BYNE_BILL,
+    xi.item.TEN_THOUSAND_BYNE_BILL
 }
 
 local currencyAntiqix =
 {
-    1449,
-    1450,
-    1451
+   xi.item.TUKUKU_WHITESHELL,
+   xi.item.LUNGO_NANGO_JADESHELL,
+   xi.item.RIMILALA_STRIPESHELL
 }
 
 local currencyLootblox =
 {
-    1452,
-    1453,
-    1454
+    xi.item.ORDELLE_BRONZEPIECE,
+    xi.item.MONTIONT_SILVERPIECE,
+    xi.item.RANPERRE_GOLDPIECE
 }
 
 local shopLootblox =
 {
-    5, 1295, -- Twincoon
-    6, 1466, -- Relic Iron
-    7, 1520, -- Goblin Grease
-    8, 1516, -- Griffon Hide
-    23, 1459, -- Griffon Leather
-    25, 883, -- Behemoth Horn
-    28, 1458, -- Mammoth Tusk
+    5,  xi.item.TWINCOON,
+    6,  xi.item.PILE_OF_RELIC_IRON,
+    7,  xi.item.JAR_OF_GOBLIN_GREASE,
+    8,  xi.item.GRIFFON_HIDE,
+    23, xi.item.SQUARE_OF_GRIFFON_LEATHER,
+    25, xi.item.BEHEMOTH_HORN,
+    28, xi.item.MAMMOTH_TUSK,
 }
 
 local shopHaggle =
 {
-    7, 1313, -- Siren's Hair
-    8, 1521, -- Slime Juice
-    9, 1469, -- Wootz Ore
-    12, 4246, -- Cantarella
-    20, 1468, -- Marksman's Oil
-    25, 1461, -- Wootz Ingot
-    33, 1460, -- Koh-I-Noor
+    7,  xi.item.LOCK_OF_SIRENS_HAIR,
+    8,  xi.item.VIAL_OF_SLIME_JUICE,
+    9,  xi.item.CHUNK_OF_WOOTZ_ORE,
+    12, xi.item.BOTTLE_OF_CANTARELLA,
+    20, xi.item.FLASK_OF_MARKSMANS_OIL,
+    25, xi.item.WOOTZ_INGOT,
+    33, xi.item.KOH_I_NOOR,
 }
 
 local shopAntiqix =
 {
-    7, 1312, -- Angel Skin
-    8, 1518, -- Colossal Skull
-    9, 1464, -- Lancewood Log
-    23, 1463, -- Chronos Tooth
-    24, 1467, -- Relic Steel
-    25, 1462, -- Lancewood Lumber
-    28, 658, -- Damascus Ingot
+    7,  xi.item.PIECE_OF_ANGEL_SKIN,
+    8,  xi.item.COLOSSAL_SKULL,
+    9,  xi.item.LANCEWOOD_LOG,
+    23, xi.item.CHRONOS_TOOTH,
+    24, xi.item.CHUNK_OF_RELIC_STEEL,
+    25, xi.item.PIECE_OF_LANCEWOOD_LUMBER,
+    28, xi.item.DAMASCUS_INGOT, -
 }
 
 local maps =
@@ -187,7 +187,7 @@ for _, npcEntry in pairs(hourglassVendors) do
             if
                 gil == xi.settings.main.TIMELESS_HOURGLASS_COST and
                 count == 1 and
-                not player:hasItem(xi.items.TIMELESS_HOURGLASS)
+                not player:hasItem(xi.item.TIMELESS_HOURGLASS)
             then
                 player:startEvent(eventId + 4)
             -- currency exchanges
@@ -227,7 +227,7 @@ for _, npcEntry in pairs(hourglassVendors) do
     m:addOverride(string.format('xi.zones.%s.npcs.%s.onTrigger', npcEntry[1], npcEntry[2]), function(player, npc)
         local eventId = npcEntry[5]
         if player:hasKeyItem(xi.ki.VIAL_OF_SHROUDED_SAND) then
-            player:startEvent(eventId + 3, npcEntry[3][1], xi.settings.main.CURRENCY_EXCHANGE_RATE, npcEntry[3][2], xi.settings.main.CURRENCY_EXCHANGE_RATE, npcEntry[3][3], xi.settings.main.TIMELESS_HOURGLASS_COST, xi.items.TIMELESS_HOURGLASS, xi.settings.main.TIMELESS_HOURGLASS_COST)
+            player:startEvent(eventId + 3, npcEntry[3][1], xi.settings.main.CURRENCY_EXCHANGE_RATE, npcEntry[3][2], xi.settings.main.CURRENCY_EXCHANGE_RATE, npcEntry[3][3], xi.settings.main.TIMELESS_HOURGLASS_COST, xi.item.TIMELESS_HOURGLASS, xi.settings.main.TIMELESS_HOURGLASS_COST)
         else
             player:startEvent(eventId)
         end
@@ -265,11 +265,11 @@ for _, npcEntry in pairs(hourglassVendors) do
         local eventId = npcEntry[5]
         if csid == eventId + 4 then -- Bought hourglass
             if player:getFreeSlotsCount() == 0 then
-                player:messageSpecial(zones[player:getZoneID()].text.ITEM_CANNOT_BE_OBTAINED, xi.items.TIMELESS_HOURGLASS)
+                player:messageSpecial(zones[player:getZoneID()].text.ITEM_CANNOT_BE_OBTAINED, xi.item.TIMELESS_HOURGLASS)
             else
                 player:tradeComplete()
-                player:addItem(xi.items.TIMELESS_HOURGLASS)
-                player:messageSpecial(zones[player:getZoneID()].text.ITEM_OBTAINED, xi.items.TIMELESS_HOURGLASS)
+                player:addItem(xi.item.TIMELESS_HOURGLASS)
+                player:messageSpecial(zones[player:getZoneID()].text.ITEM_OBTAINED, xi.item.TIMELESS_HOURGLASS)
             end
         elseif csid == eventId + 5 then -- Currency conversion to Singles
             if player:getFreeSlotsCount() == 0 then

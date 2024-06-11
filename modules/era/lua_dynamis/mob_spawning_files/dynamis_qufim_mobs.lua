@@ -1,12 +1,12 @@
-----------------------------------------------------------------------------------------------------
---                                      Dynamis-Qufim                                             --
---              Primary Source of Information: https://enedin.be/dyna/html/zone/quf.htm           --
---           Secondary Source of Information: http://www.dynamisbums.com/strategy/quf.html        --
---                       NOTE: Please refer to instructions for setup.                            --
-----------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------
---                                      Instructions                                              --
-----------------------------------------------------------------------------------------------------
+-----------------------------------
+--                            Dynamis-Qufim
+--    Primary Source of Information: https://enedin.be/dyna/html/zone/quf.htm
+-- Secondary Source of Information: http://www.dynamisbums.com/strategy/quf.html
+--             NOTE: Please refer to instructions for setup.
+-----------------------------------
+-----------------------------------
+-- Instructions
+-----------------------------------
 -- CAUTION: Wherever a value is skipped insert nil.
 --
 -- 1. MobIndex information is derrived from the group ID used in Enedin.
@@ -20,7 +20,7 @@
 --
 -- 3. Setup wave spawning requirements. This is handled through a localvar set on the zone based on
 --    the onMobDeath() function of the NM. By default this will only be the MegaBoss.
---    xi.dynamis.mobList[zoneID].waveDefeatRequirements[2] = {zone:getLocalVar("MegaBoss_Killed") == 1}
+--    xi.dynamis.mobList[zoneID].waveDefeatRequirements[2] = {zone:getLocalVar('MegaBoss_Killed') == 1}
 --
 -- 4. Setup mob positions for spawns. This is only required for statues and mobs that do not spawn
 --    from a statue, NM, or nightmare mob.
@@ -30,17 +30,17 @@
 --    Mob type indicates spawning pattern used. Mob Name will replace the name dynamically.
 --    Mob Family is only required for beastmen NMs. Main Job is only required for beastmen NMs.
 --    NOTE: These should only be made for non-standard/zone specific mobs.
---    Statue Ex. xi.dynamis.mobList[zoneID][MobIndex].info = {"Statue", "Sergeant Tombstone", nil, nil, nil}
---    Nightmare Ex. xi.dynamis.mobList[zoneID][MobIndex].info = {"Nightmare", "Nightmare Scorpion", nil, nil, nil}
---    Non-beastman NM Ex. xi.dynamis.mobList[zoneID][MobIndex].info = {"NM", "Apocalyptic Beast", nil, nil, "Apocalyptic_Beast_killed"}
---    Beastmen NM Ex. xi.dynamis.mobList[zoneID][MobIndex].info = {"NM", "ElvaanSticker Bxafraff", "Orc", "DRG", "ElvaanSticker_Bxafraff_killed"}
+--    Statue Ex. xi.dynamis.mobList[zoneID][MobIndex].info = { 'Statue', 'Sergeant Tombstone', nil, nil, nil }
+--    Nightmare Ex. xi.dynamis.mobList[zoneID][MobIndex].info = { 'Nightmare', 'Nightmare Scorpion', nil, nil, nil }
+--    Non-beastman NM Ex. xi.dynamis.mobList[zoneID][MobIndex].info = { 'NM', 'Apocalyptic Beast', nil, nil, 'Apocalyptic_Beast_killed' }
+--    Beastmen NM Ex. xi.dynamis.mobList[zoneID][MobIndex].info = { 'NM', 'ElvaanSticker Bxafraff', 'Orc', 'DRG', 'ElvaanSticker_Bxafraff_killed' }
 --
 -- 6. xi.dynamis.mobList[zoneID][MobIndex].mobchildren is used to determine the number of each job to spawn.
 --    To spawn a certain job, just put in the number of that job in the order of the job list 1-15.
 --    This system will automatically determine what family each of these jobs encode to.
 --    For Nightmare mob spawns, simply encode the number of children in xi.dynamis.mobList[zoneID][MobIndex].mobchildren[1] (aka #WAR).
 --    Ex. xi.dynamis.mobList[zoneID][MobIndex].mobchildren = {#WAR, #MNK, #WHM, #BLM, #RDM, #THF, #PLD, #DRK, #BST, #BRD, #RNG, #SAM, #NIN, #DRG, #SMN}
---    Ex. For 2 Wars: xi.dynamis.mobList[zoneID][MobIndex].mobchildren = {2, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil}
+--    Ex. For 2 Wars: xi.dynamis.mobList[zoneID][MobIndex].mobchildren = {2, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil }
 --
 -- 7.  xi.dynamis.mobList[zoneID][MobIndex].nmchildren is used to spawn specific NMs outlined in xi.dynamis.mobList[zoneID][MobIndex].info
 --     MobIndex is the index of the mob spawning the NM, MobIndex(NM) points to which NM in .info it should spawn.
@@ -60,15 +60,15 @@
 -- 10. xi.dynamis.mobList[zoneID][MobIndex].timeExtension dictates the amount of time given for the TE.
 --    Ex. xi.dynamis.mobList[zoneID][MobIndex].timeExtension = 15
 --
-----------------------------------------------------------------------------------------------------
+-----------------------------------
 
-----------------------------------------------------------------------------------------------------
---                               Dependency Setup Section (IGNORE)                                --
-----------------------------------------------------------------------------------------------------
+-----------------------------------
+-- Dependency Setup Section (IGNORE)
+-----------------------------------
 local zoneID = xi.zone.DYNAMIS_QUFIM
 local i = 1
-xi = xi or {} -- Ignore me I just set the global.
-xi.dynamis = xi.dynamis or {} -- Ignore me I just set the global.
+xi = xi or { } -- Ignore me I just set the global.
+xi.dynamis = xi.dynamis or { } -- Ignore me I just set the global.
 xi.dynamis.mobList = xi.dynamis.mobList or { } -- Ignore me I just set the global.
 xi.dynamis.mobList[zoneID] = { } -- Ignore me, I just start the table.
 xi.dynamis.mobList[zoneID].nmchildren = { }
@@ -76,343 +76,343 @@ xi.dynamis.mobList[zoneID].mobchildren = { }
 xi.dynamis.mobList[zoneID].maxWaves = 2 -- Put in number of max waves
 
 while i <= 279 do
-    table.insert(xi.dynamis.mobList[zoneID], i, { id = i})
+    table.insert(xi.dynamis.mobList[zoneID], i, { id = i })
     i = i + 1
 end
 
-----------------------------------------------------------------------------------------------------
---                                  Setup of Parent Spawning                                      --
-----------------------------------------------------------------------------------------------------
-------------------------------------------
---               Mob Info               --
--- Note: Primarily used for mobs that   --
--- are NMs or parent mobs.              --
-------------------------------------------
---xi.dynamis.mobList[zoneID][MobIndex].info = {"Statue/NM/Nightmare", "Mob Name", "Family", "Main Job", "MobLocalVarName"}
+-----------------------------------
+-- Setup of Parent Spawning
+-----------------------------------
+-----------------------------------
+--               Mob Info
+-- Note: Primarily used for mobs that
+-- are NMs or parent mobs.
+-----------------------------------
+--xi.dynamis.mobList[zoneID][MobIndex].info = { 'Statue/NM/Nightmare', 'Mob Name', 'Family', 'Main Job', 'MobLocalVarName'}
 
 -- Sea Monk NM Area
-xi.dynamis.mobList[zoneID][1  ].info = {"Statue", "Adamantking Effigy", "Quadav", nil, nil}     -- (001-Q)
-xi.dynamis.mobList[zoneID][2  ].info = {"Statue", "Adamantking Effigy", "Quadav", nil, nil}     -- (002-Q)
--- Southwest AreaStatue"Quadav"
-xi.dynamis.mobList[zoneID][3  ].info = {"Statue", "Adamantking Effigy", "Quadav", nil, nil}     -- (003-Q)
-xi.dynamis.mobList[zoneID][4  ].info = {"Statue", "Adamantking Effigy", "Quadav", nil, nil}     -- (004-Q)
-xi.dynamis.mobList[zoneID][5  ].info = {"Statue", "Adamantking Effigy", "Quadav", nil, nil}     -- (005-Q)
-xi.dynamis.mobList[zoneID][6  ].info = {"Statue", "Adamantking Effigy", "Quadav", nil, nil}     -- (006-Q)
-xi.dynamis.mobList[zoneID][7  ].info = {"Statue", "Adamantking Effigy", "Quadav", nil, nil}     -- (007-Q)
-xi.dynamis.mobList[zoneID][8  ].info = {"Statue", "Manifest Icon", "Yagudo", nil, nil}          -- (008-Y)
-xi.dynamis.mobList[zoneID][9  ].info = {"Statue", "Manifest Icon", "Yagudo", nil, nil}          -- (009-Y)
-xi.dynamis.mobList[zoneID][10 ].info = {"Statue", "Manifest Icon", "Yagudo", nil, nil}          -- (010-Y)
-xi.dynamis.mobList[zoneID][11 ].info = {"Statue", "Manifest Icon", "Yagudo", nil, nil}          -- (011-Y)
-xi.dynamis.mobList[zoneID][12 ].info = {"Statue", "Manifest Icon", "Yagudo", nil, nil}          -- (012-Y)
-xi.dynamis.mobList[zoneID][13 ].info = {"Statue", "Manifest Icon", "Yagudo", nil, nil}          -- (013-Y)
-xi.dynamis.mobList[zoneID][14 ].info = {"Statue", "Manifest Icon", "Yagudo", nil, nil}          -- (014-Y)
-xi.dynamis.mobList[zoneID][15 ].info = {"Statue", "Manifest Icon", "Yagudo", nil, nil}          -- (015-Y)
+xi.dynamis.mobList[zoneID][1  ].info = { 'Statue', 'Adamantking Effigy', 'Quadav', nil, nil }     -- (001-Q)
+xi.dynamis.mobList[zoneID][2  ].info = { 'Statue', 'Adamantking Effigy', 'Quadav', nil, nil }     -- (002-Q)
+-- Southwest AreaStatue'Quadav'
+xi.dynamis.mobList[zoneID][3  ].info = { 'Statue', 'Adamantking Effigy', 'Quadav', nil, nil }     -- (003-Q)
+xi.dynamis.mobList[zoneID][4  ].info = { 'Statue', 'Adamantking Effigy', 'Quadav', nil, nil }     -- (004-Q)
+xi.dynamis.mobList[zoneID][5  ].info = { 'Statue', 'Adamantking Effigy', 'Quadav', nil, nil }     -- (005-Q)
+xi.dynamis.mobList[zoneID][6  ].info = { 'Statue', 'Adamantking Effigy', 'Quadav', nil, nil }     -- (006-Q)
+xi.dynamis.mobList[zoneID][7  ].info = { 'Statue', 'Adamantking Effigy', 'Quadav', nil, nil }     -- (007-Q)
+xi.dynamis.mobList[zoneID][8  ].info = { 'Statue', 'Manifest Icon', 'Yagudo', nil, nil }          -- (008-Y)
+xi.dynamis.mobList[zoneID][9  ].info = { 'Statue', 'Manifest Icon', 'Yagudo', nil, nil }          -- (009-Y)
+xi.dynamis.mobList[zoneID][10 ].info = { 'Statue', 'Manifest Icon', 'Yagudo', nil, nil }          -- (010-Y)
+xi.dynamis.mobList[zoneID][11 ].info = { 'Statue', 'Manifest Icon', 'Yagudo', nil, nil }          -- (011-Y)
+xi.dynamis.mobList[zoneID][12 ].info = { 'Statue', 'Manifest Icon', 'Yagudo', nil, nil }          -- (012-Y)
+xi.dynamis.mobList[zoneID][13 ].info = { 'Statue', 'Manifest Icon', 'Yagudo', nil, nil }          -- (013-Y)
+xi.dynamis.mobList[zoneID][14 ].info = { 'Statue', 'Manifest Icon', 'Yagudo', nil, nil }          -- (014-Y)
+xi.dynamis.mobList[zoneID][15 ].info = { 'Statue', 'Manifest Icon', 'Yagudo', nil, nil }          -- (015-Y)
 -- Northeast Area
-xi.dynamis.mobList[zoneID][16 ].info = {"Statue", "Serjeant Tombstone", "Orc", nil, nil}        -- (016-O)
-xi.dynamis.mobList[zoneID][17 ].info = {"Statue", "Serjeant Tombstone", "Orc", nil, nil}        -- (017-O)
-xi.dynamis.mobList[zoneID][18 ].info = {"Statue", "Serjeant Tombstone", "Orc", nil, nil}        -- (018-O)
-xi.dynamis.mobList[zoneID][19 ].info = {"Statue", "Serjeant Tombstone", "Orc", nil, nil}        -- (019-O)
-xi.dynamis.mobList[zoneID][20 ].info = {"Statue", "Serjeant Tombstone", "Orc", nil, nil}        -- (020-O)
-xi.dynamis.mobList[zoneID][21 ].info = {"Statue", "Serjeant Tombstone", "Orc", nil, nil}        -- (021-O)
-xi.dynamis.mobList[zoneID][22 ].info = {"Statue", "Serjeant Tombstone", "Orc", nil, nil}        -- (022-O)
-xi.dynamis.mobList[zoneID][23 ].info = {"Statue", "Serjeant Tombstone", "Orc", nil, nil}        -- (023-O)
-xi.dynamis.mobList[zoneID][24 ].info = {"Statue", "Serjeant Tombstone", "Orc", nil, nil}        -- (024-O)
-xi.dynamis.mobList[zoneID][25 ].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}         -- (025-G)
-xi.dynamis.mobList[zoneID][26 ].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}         -- (026-G)
+xi.dynamis.mobList[zoneID][16 ].info = { 'Statue', 'Serjeant Tombstone', 'Orc', nil, nil }        -- (016-O)
+xi.dynamis.mobList[zoneID][17 ].info = { 'Statue', 'Serjeant Tombstone', 'Orc', nil, nil }        -- (017-O)
+xi.dynamis.mobList[zoneID][18 ].info = { 'Statue', 'Serjeant Tombstone', 'Orc', nil, nil }        -- (018-O)
+xi.dynamis.mobList[zoneID][19 ].info = { 'Statue', 'Serjeant Tombstone', 'Orc', nil, nil }        -- (019-O)
+xi.dynamis.mobList[zoneID][20 ].info = { 'Statue', 'Serjeant Tombstone', 'Orc', nil, nil }        -- (020-O)
+xi.dynamis.mobList[zoneID][21 ].info = { 'Statue', 'Serjeant Tombstone', 'Orc', nil, nil }        -- (021-O)
+xi.dynamis.mobList[zoneID][22 ].info = { 'Statue', 'Serjeant Tombstone', 'Orc', nil, nil }        -- (022-O)
+xi.dynamis.mobList[zoneID][23 ].info = { 'Statue', 'Serjeant Tombstone', 'Orc', nil, nil }        -- (023-O)
+xi.dynamis.mobList[zoneID][24 ].info = { 'Statue', 'Serjeant Tombstone', 'Orc', nil, nil }        -- (024-O)
+xi.dynamis.mobList[zoneID][25 ].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }         -- (025-G)
+xi.dynamis.mobList[zoneID][26 ].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }         -- (026-G)
 -- Boss Area
-xi.dynamis.mobList[zoneID][27 ].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}         -- (027-G)
-xi.dynamis.mobList[zoneID][28 ].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}         -- (028-G)
-xi.dynamis.mobList[zoneID][29 ].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}         -- (029-G)
-xi.dynamis.mobList[zoneID][30 ].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}         -- (030-G)
-xi.dynamis.mobList[zoneID][31 ].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}         -- (031-G)
+xi.dynamis.mobList[zoneID][27 ].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }         -- (027-G)
+xi.dynamis.mobList[zoneID][28 ].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }         -- (028-G)
+xi.dynamis.mobList[zoneID][29 ].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }         -- (029-G)
+xi.dynamis.mobList[zoneID][30 ].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }         -- (030-G)
+xi.dynamis.mobList[zoneID][31 ].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }         -- (031-G)
 -- Golem NM Area
-xi.dynamis.mobList[zoneID][32 ].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}         -- (032-G)
-xi.dynamis.mobList[zoneID][33 ].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}         -- (033-G)
-xi.dynamis.mobList[zoneID][34 ].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}         -- (034-G)
-xi.dynamis.mobList[zoneID][35 ].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}         -- (035-G)
+xi.dynamis.mobList[zoneID][32 ].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }         -- (032-G)
+xi.dynamis.mobList[zoneID][33 ].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }         -- (033-G)
+xi.dynamis.mobList[zoneID][34 ].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }         -- (034-G)
+xi.dynamis.mobList[zoneID][35 ].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }         -- (035-G)
 -- Giant Bat NM Area
-xi.dynamis.mobList[zoneID][36 ].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}         -- (036-G)
-xi.dynamis.mobList[zoneID][37 ].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}         -- (037-G)
-xi.dynamis.mobList[zoneID][38 ].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}         -- (038-G)
-xi.dynamis.mobList[zoneID][39 ].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}         -- (039-G)
+xi.dynamis.mobList[zoneID][36 ].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }         -- (036-G)
+xi.dynamis.mobList[zoneID][37 ].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }         -- (037-G)
+xi.dynamis.mobList[zoneID][38 ].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }         -- (038-G)
+xi.dynamis.mobList[zoneID][39 ].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }         -- (039-G)
 -- Sea Monk NM Area
-xi.dynamis.mobList[zoneID][43 ].info = {"Elemental", "Water Elemental", nil, nil, "water_killed"}       -- (043) (Reduces Antaeus' resistance to water)
-xi.dynamis.mobList[zoneID][40 ].info = {"NM", "Scolopendra", nil, nil, "scolopendra_killed"}            -- (040) (Reduces Antaeus' HP regeneration rate)
+xi.dynamis.mobList[zoneID][43 ].info = { 'Elemental', 'Water Elemental', nil, nil, 'water_killed' }       -- (043) (Reduces Antaeus' resistance to water)
+xi.dynamis.mobList[zoneID][40 ].info = { 'NM', 'Scolopendra', nil, nil, 'scolopendra_killed' }            -- (040) (Reduces Antaeus' HP regeneration rate)
 -- Southwest Area
-xi.dynamis.mobList[zoneID][44 ].info = {"Elemental", "Fire Elemental", nil, nil, "fire_killed"}         -- (044) (Reduces Antaeus' resistance to fire)
+xi.dynamis.mobList[zoneID][44 ].info = { 'Elemental', 'Fire Elemental', nil, nil, 'fire_killed' }         -- (044) (Reduces Antaeus' resistance to fire)
 -- Giant Bat Area
-xi.dynamis.mobList[zoneID][45 ].info = {"Elemental", "Thunder Elemental", nil, nil, "thunder_killed"}   -- (045) (Reduces Antaeus' resistance to thunder)
-xi.dynamis.mobList[zoneID][41 ].info = {"NM", "Stringes", nil, nil, "stringes_killed"}                  -- (041) (Reduces Antaeus' physical attack damage)
+xi.dynamis.mobList[zoneID][45 ].info = { 'Elemental', 'Thunder Elemental', nil, nil, 'thunder_killed' }   -- (045) (Reduces Antaeus' resistance to thunder)
+xi.dynamis.mobList[zoneID][41 ].info = { 'NM', 'Stringes', nil, nil, 'stringes_killed' }                  -- (041) (Reduces Antaeus' physical attack damage)
 -- Northeast Area
-xi.dynamis.mobList[zoneID][46 ].info = {"Elemental", "Air Elemental", nil, nil, "air_killed"}           -- (046) (Reduces Antaeus' resistance to wind)
-xi.dynamis.mobList[zoneID][47 ].info = {"Elemental", "Light Elemental", nil, nil, "light_killed"}       -- (047) (Reduces Antaeus' resistance to light)
+xi.dynamis.mobList[zoneID][46 ].info = { 'Elemental', 'Air Elemental', nil, nil, 'air_killed' }           -- (046) (Reduces Antaeus' resistance to wind)
+xi.dynamis.mobList[zoneID][47 ].info = { 'Elemental', 'Light Elemental', nil, nil, 'light_killed' }       -- (047) (Reduces Antaeus' resistance to light)
 -- Boss Area
-xi.dynamis.mobList[zoneID][48 ].info = {"Elemental", "Ice Elemental", nil, nil, "ice_killed"}           -- (048) (Reduces Antaeus' resistance to ice)
-xi.dynamis.mobList[zoneID][64 ].info = {"NM", "Antaeus", nil, nil, "MegaBoss_Killed"}                   -- (064) (Spawns 065-138)
+xi.dynamis.mobList[zoneID][48 ].info = { 'Elemental', 'Ice Elemental', nil, nil, 'ice_killed' }           -- (048) (Reduces Antaeus' resistance to ice)
+xi.dynamis.mobList[zoneID][64 ].info = { 'NM', 'Antaeus', nil, nil, 'MegaBoss_killed' }                   -- (064) (Spawns 065-138)
 -- Golem NM Area
-xi.dynamis.mobList[zoneID][49 ].info = {"Elemental", "Earth Elemental", nil, nil, "earth_killed"}       -- (049) (Reduces Antaeus' resistance to earth)
-xi.dynamis.mobList[zoneID][50 ].info = {"Elemental", "Dark Elemental", nil, nil, "dark_killed"}         -- (050) (Reduces Antaeus' resistance to dark)
-xi.dynamis.mobList[zoneID][42 ].info = {"NM", "Suttung", nil, nil, "suttung_killed"}                    -- (042) (Reduces Antaeus' magic damage resistance)
+xi.dynamis.mobList[zoneID][49 ].info = { 'Elemental', 'Earth Elemental', nil, nil, 'earth_killed' }       -- (049) (Reduces Antaeus' resistance to earth)
+xi.dynamis.mobList[zoneID][50 ].info = { 'Elemental', 'Dark Elemental', nil, nil, 'dark_killed' }         -- (050) (Reduces Antaeus' resistance to dark)
+xi.dynamis.mobList[zoneID][42 ].info = { 'NM', 'Suttung', nil, nil, 'suttung_killed' }                    -- (042) (Reduces Antaeus' magic damage resistance)
 -- Nightmare Stirge
-xi.dynamis.mobList[zoneID][51 ].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  -- 051-Nightmare Stirge (×4)
-xi.dynamis.mobList[zoneID][244].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][245].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][246].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][52 ].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  -- 052-Nightmare Stirge (×4)
-xi.dynamis.mobList[zoneID][247].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][248].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][249].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][53 ].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  -- 053-Nightmare Stirge (×4)
-xi.dynamis.mobList[zoneID][250].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][251].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][252].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][62 ].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  -- 062-Nightmare Stirge (×3)
-xi.dynamis.mobList[zoneID][253].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][254].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][63 ].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  -- 063-Nightmare Stirge (×4)
-xi.dynamis.mobList[zoneID][255].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][256].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][257].info = {"Nightmare", "Nightmare Stirge", nil, nil, nil}  --
+xi.dynamis.mobList[zoneID][51 ].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  -- 051-Nightmare Stirge (×4)
+xi.dynamis.mobList[zoneID][244].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][245].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][246].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][52 ].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  -- 052-Nightmare Stirge (×4)
+xi.dynamis.mobList[zoneID][247].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][248].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][249].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][53 ].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  -- 053-Nightmare Stirge (×4)
+xi.dynamis.mobList[zoneID][250].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][251].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][252].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][62 ].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  -- 062-Nightmare Stirge (×3)
+xi.dynamis.mobList[zoneID][253].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][254].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][63 ].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  -- 063-Nightmare Stirge (×4)
+xi.dynamis.mobList[zoneID][255].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][256].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][257].info = { 'Nightmare', 'Nightmare Stirge', nil, nil, nil }  --
 -- Nightmare Roc
-xi.dynamis.mobList[zoneID][58 ].info = {"Nightmare", "Nightmare Roc", nil, nil, nil}     -- 058-Nightmare Roc (×3)
-xi.dynamis.mobList[zoneID][258].info = {"Nightmare", "Nightmare Roc", nil, nil, nil}     --
-xi.dynamis.mobList[zoneID][259].info = {"Nightmare", "Nightmare Roc", nil, nil, nil}     --
-xi.dynamis.mobList[zoneID][61 ].info = {"Nightmare", "Nightmare Roc", nil, nil, nil}     -- 061-Nightmare Roc (×3)
-xi.dynamis.mobList[zoneID][260].info = {"Nightmare", "Nightmare Roc", nil, nil, nil}     --
-xi.dynamis.mobList[zoneID][261].info = {"Nightmare", "Nightmare Roc", nil, nil, nil}     --
+xi.dynamis.mobList[zoneID][58 ].info = { 'Nightmare', 'Nightmare Roc', nil, nil, nil }     -- 058-Nightmare Roc (×3)
+xi.dynamis.mobList[zoneID][258].info = { 'Nightmare', 'Nightmare Roc', nil, nil, nil }     --
+xi.dynamis.mobList[zoneID][259].info = { 'Nightmare', 'Nightmare Roc', nil, nil, nil }     --
+xi.dynamis.mobList[zoneID][61 ].info = { 'Nightmare', 'Nightmare Roc', nil, nil, nil }     -- 061-Nightmare Roc (×3)
+xi.dynamis.mobList[zoneID][260].info = { 'Nightmare', 'Nightmare Roc', nil, nil, nil }     --
+xi.dynamis.mobList[zoneID][261].info = { 'Nightmare', 'Nightmare Roc', nil, nil, nil }     --
 -- Nightmare Snoll
-xi.dynamis.mobList[zoneID][54 ].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   -- 054-Nightmare Snoll (×4)
-xi.dynamis.mobList[zoneID][262].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][263].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][264].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][55 ].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   -- 055-Nightmare Snoll (×4)
-xi.dynamis.mobList[zoneID][265].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][266].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][267].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][56 ].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   -- 056-Nightmare Snoll (×4)
-xi.dynamis.mobList[zoneID][268].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][269].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][270].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][57 ].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   -- 057-Nightmare Snoll (×4)
-xi.dynamis.mobList[zoneID][271].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][272].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][273].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][59 ].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   -- 059-Nightmare Snoll (×4)
-xi.dynamis.mobList[zoneID][274].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][275].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][276].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][60 ].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   -- 060-Nightmare Snoll (×4)
-xi.dynamis.mobList[zoneID][277].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][278].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][279].info = {"Nightmare", "Nightmare Snoll", nil, nil, nil}   --
+xi.dynamis.mobList[zoneID][54 ].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   -- 054-Nightmare Snoll (×4)
+xi.dynamis.mobList[zoneID][262].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][263].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][264].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][55 ].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   -- 055-Nightmare Snoll (×4)
+xi.dynamis.mobList[zoneID][265].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][266].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][267].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][56 ].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   -- 056-Nightmare Snoll (×4)
+xi.dynamis.mobList[zoneID][268].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][269].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][270].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][57 ].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   -- 057-Nightmare Snoll (×4)
+xi.dynamis.mobList[zoneID][271].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][272].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][273].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][59 ].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   -- 059-Nightmare Snoll (×4)
+xi.dynamis.mobList[zoneID][274].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][275].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][276].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][60 ].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   -- 060-Nightmare Snoll (×4)
+xi.dynamis.mobList[zoneID][277].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][278].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][279].info = { 'Nightmare', 'Nightmare Snoll', nil, nil, nil }   --
 -- Southwest Area
-xi.dynamis.mobList[zoneID][65].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}   -- (065-G)
-xi.dynamis.mobList[zoneID][66].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}   -- (066-G)
-xi.dynamis.mobList[zoneID][67].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}   -- (067-G)
-xi.dynamis.mobList[zoneID][68].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}   -- (068-G)
+xi.dynamis.mobList[zoneID][65].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }   -- (065-G)
+xi.dynamis.mobList[zoneID][66].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }   -- (066-G)
+xi.dynamis.mobList[zoneID][67].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }   -- (067-G)
+xi.dynamis.mobList[zoneID][68].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }   -- (068-G)
 -- Northeast Area
-xi.dynamis.mobList[zoneID][69].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}   -- (069-G)
-xi.dynamis.mobList[zoneID][70].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}   -- (070-G)
+xi.dynamis.mobList[zoneID][69].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }   -- (069-G)
+xi.dynamis.mobList[zoneID][70].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }   -- (070-G)
 -- Central Area
-xi.dynamis.mobList[zoneID][71].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}   -- (071-G)
-xi.dynamis.mobList[zoneID][72].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}   -- (072-G)
-xi.dynamis.mobList[zoneID][73].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}   -- (073-G)
-xi.dynamis.mobList[zoneID][74].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}   -- (074-G)
-xi.dynamis.mobList[zoneID][75].info = {"Statue", "Goblin Replica", "Goblin", nil, nil}   -- (075-G)
+xi.dynamis.mobList[zoneID][71].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }   -- (071-G)
+xi.dynamis.mobList[zoneID][72].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }   -- (072-G)
+xi.dynamis.mobList[zoneID][73].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }   -- (073-G)
+xi.dynamis.mobList[zoneID][74].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }   -- (074-G)
+xi.dynamis.mobList[zoneID][75].info = { 'Statue', 'Goblin Replica', 'Goblin', nil, nil }   -- (075-G)
 -- Nightmare Weapon
-xi.dynamis.mobList[zoneID][76 ].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  -- 076-Nightmare Weapon (×3)
-xi.dynamis.mobList[zoneID][139].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][140].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][77 ].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  -- 077-Nightmare Weapon (×3)
-xi.dynamis.mobList[zoneID][141].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][142].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][78 ].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  -- 078-Nightmare Weapon (×3)
-xi.dynamis.mobList[zoneID][143].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][144].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][79 ].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  -- 079-Nightmare Weapon (×3)
-xi.dynamis.mobList[zoneID][145].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][146].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][80 ].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  -- 080-Nightmare Weapon (×3)
-xi.dynamis.mobList[zoneID][147].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][148].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][81 ].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  -- 081-Nightmare Weapon (×3)
-xi.dynamis.mobList[zoneID][149].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][150].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][82 ].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  -- 082-Nightmare Weapon (×3)
-xi.dynamis.mobList[zoneID][151].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][152].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][83 ].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  -- 083-Nightmare Weapon (×3)
-xi.dynamis.mobList[zoneID][153].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][154].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][84 ].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  -- 084-Nightmare Weapon (×3)
-xi.dynamis.mobList[zoneID][155].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][156].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][85 ].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  -- 085-Nightmare Weapon (×3)
-xi.dynamis.mobList[zoneID][157].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][158].info = {"Nightmare", "Nightmare Weapon", nil, nil, nil}  --
+xi.dynamis.mobList[zoneID][76 ].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  -- 076-Nightmare Weapon (×3)
+xi.dynamis.mobList[zoneID][139].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][140].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][77 ].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  -- 077-Nightmare Weapon (×3)
+xi.dynamis.mobList[zoneID][141].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][142].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][78 ].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  -- 078-Nightmare Weapon (×3)
+xi.dynamis.mobList[zoneID][143].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][144].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][79 ].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  -- 079-Nightmare Weapon (×3)
+xi.dynamis.mobList[zoneID][145].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][146].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][80 ].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  -- 080-Nightmare Weapon (×3)
+xi.dynamis.mobList[zoneID][147].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][148].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][81 ].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  -- 081-Nightmare Weapon (×3)
+xi.dynamis.mobList[zoneID][149].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][150].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][82 ].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  -- 082-Nightmare Weapon (×3)
+xi.dynamis.mobList[zoneID][151].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][152].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][83 ].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  -- 083-Nightmare Weapon (×3)
+xi.dynamis.mobList[zoneID][153].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][154].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][84 ].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  -- 084-Nightmare Weapon (×3)
+xi.dynamis.mobList[zoneID][155].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][156].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][85 ].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  -- 085-Nightmare Weapon (×3)
+xi.dynamis.mobList[zoneID][157].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][158].info = { 'Nightmare', 'Nightmare Weapon', nil, nil, nil }  --
 -- Nightmare Kraken
-xi.dynamis.mobList[zoneID][86 ].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  -- 086-Nightmare Kraken (×2)
-xi.dynamis.mobList[zoneID][159].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][87 ].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  -- 087-Nightmare Kraken (×2)
-xi.dynamis.mobList[zoneID][160].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][88 ].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  -- 088-Nightmare Kraken (×2)
-xi.dynamis.mobList[zoneID][161].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][89 ].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  -- 089-Nightmare Kraken (×2)
-xi.dynamis.mobList[zoneID][162].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][90 ].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  -- 090-Nightmare Kraken (×2)
-xi.dynamis.mobList[zoneID][163].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][91 ].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  -- 091-Nightmare Kraken (×2)
-xi.dynamis.mobList[zoneID][164].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][92 ].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  -- 092-Nightmare Kraken (×2)
-xi.dynamis.mobList[zoneID][165].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][93 ].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  -- 093-Nightmare Kraken (×2)
-xi.dynamis.mobList[zoneID][166].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][94 ].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  -- 094-Nightmare Kraken (×2)
-xi.dynamis.mobList[zoneID][167].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][95 ].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  -- 095-Nightmare Kraken (×2)
-xi.dynamis.mobList[zoneID][168].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][96 ].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  -- 096-Nightmare Kraken (×2)
-xi.dynamis.mobList[zoneID][169].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][97 ].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  -- 097-Nightmare Kraken (×2)
-xi.dynamis.mobList[zoneID][170].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][98 ].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  -- 098-Nightmare Kraken (×3)
-xi.dynamis.mobList[zoneID][171].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][172].info = {"Nightmare", "Nightmare Kraken", nil, nil, nil}  --
+xi.dynamis.mobList[zoneID][86 ].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  -- 086-Nightmare Kraken (×2)
+xi.dynamis.mobList[zoneID][159].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][87 ].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  -- 087-Nightmare Kraken (×2)
+xi.dynamis.mobList[zoneID][160].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][88 ].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  -- 088-Nightmare Kraken (×2)
+xi.dynamis.mobList[zoneID][161].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][89 ].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  -- 089-Nightmare Kraken (×2)
+xi.dynamis.mobList[zoneID][162].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][90 ].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  -- 090-Nightmare Kraken (×2)
+xi.dynamis.mobList[zoneID][163].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][91 ].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  -- 091-Nightmare Kraken (×2)
+xi.dynamis.mobList[zoneID][164].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][92 ].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  -- 092-Nightmare Kraken (×2)
+xi.dynamis.mobList[zoneID][165].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][93 ].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  -- 093-Nightmare Kraken (×2)
+xi.dynamis.mobList[zoneID][166].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][94 ].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  -- 094-Nightmare Kraken (×2)
+xi.dynamis.mobList[zoneID][167].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][95 ].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  -- 095-Nightmare Kraken (×2)
+xi.dynamis.mobList[zoneID][168].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][96 ].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  -- 096-Nightmare Kraken (×2)
+xi.dynamis.mobList[zoneID][169].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][97 ].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  -- 097-Nightmare Kraken (×2)
+xi.dynamis.mobList[zoneID][170].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][98 ].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  -- 098-Nightmare Kraken (×3)
+xi.dynamis.mobList[zoneID][171].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][172].info = { 'Nightmare', 'Nightmare Kraken', nil, nil, nil }  --
 -- Nightmare Tiger
-xi.dynamis.mobList[zoneID][99 ].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   -- 099-Nightmare Tiger (×4)
-xi.dynamis.mobList[zoneID][173].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][174].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][175].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][100].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   -- 100-Nightmare Tiger (×4)
-xi.dynamis.mobList[zoneID][176].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][177].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][178].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][101].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   -- 101-Nightmare Tiger (×4)
-xi.dynamis.mobList[zoneID][179].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][180].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][181].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][102].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   -- 102-Nightmare Tiger (×5)
-xi.dynamis.mobList[zoneID][182].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][183].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][184].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][185].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][103].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   -- 103-Nightmare Tiger (×5)
-xi.dynamis.mobList[zoneID][186].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][187].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][188].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][189].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][104].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   -- 104-Nightmare Tiger (×5)
-xi.dynamis.mobList[zoneID][190].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][191].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][192].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][193].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][105].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   -- 105-Nightmare Tiger (×5)
-xi.dynamis.mobList[zoneID][194].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][195].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][196].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
-xi.dynamis.mobList[zoneID][197].info = {"Nightmare", "Nightmare Tiger", nil, nil, nil}   --
+xi.dynamis.mobList[zoneID][99 ].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   -- 099-Nightmare Tiger (×4)
+xi.dynamis.mobList[zoneID][173].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][174].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][175].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][100].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   -- 100-Nightmare Tiger (×4)
+xi.dynamis.mobList[zoneID][176].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][177].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][178].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][101].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   -- 101-Nightmare Tiger (×4)
+xi.dynamis.mobList[zoneID][179].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][180].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][181].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][102].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   -- 102-Nightmare Tiger (×5)
+xi.dynamis.mobList[zoneID][182].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][183].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][184].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][185].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][103].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   -- 103-Nightmare Tiger (×5)
+xi.dynamis.mobList[zoneID][186].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][187].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][188].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][189].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][104].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   -- 104-Nightmare Tiger (×5)
+xi.dynamis.mobList[zoneID][190].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][191].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][192].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][193].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][105].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   -- 105-Nightmare Tiger (×5)
+xi.dynamis.mobList[zoneID][194].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][195].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][196].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
+xi.dynamis.mobList[zoneID][197].info = { 'Nightmare', 'Nightmare Tiger', nil, nil, nil }   --
 -- Nightmare Raptor
-xi.dynamis.mobList[zoneID][106].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  -- 106-Nightmare Raptor (×2)
-xi.dynamis.mobList[zoneID][198].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][107].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  -- 107-Nightmare Raptor (×2)
-xi.dynamis.mobList[zoneID][199].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][108].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  -- 108-Nightmare Raptor (×2)
-xi.dynamis.mobList[zoneID][200].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][109].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  -- 109-Nightmare Raptor (×2)
-xi.dynamis.mobList[zoneID][201].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][110].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  -- 110-Nightmare Raptor (×2)
-xi.dynamis.mobList[zoneID][202].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][111].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  -- 111-Nightmare Raptor (×2)
-xi.dynamis.mobList[zoneID][203].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][112].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  -- 112-Nightmare Raptor (×2)
-xi.dynamis.mobList[zoneID][204].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][113].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  -- 113-Nightmare Raptor (×2)
-xi.dynamis.mobList[zoneID][205].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][114].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  -- 114-Nightmare Raptor (×2)
-xi.dynamis.mobList[zoneID][206].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][115].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  -- 115-Nightmare Raptor (×2)
-xi.dynamis.mobList[zoneID][207].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][116].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  -- 116-Nightmare Raptor (×2)
-xi.dynamis.mobList[zoneID][208].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][117].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  -- 117-Nightmare Raptor (×2)
-xi.dynamis.mobList[zoneID][209].info = {"Nightmare", "Nightmare Raptor", nil, nil, nil}  --
+xi.dynamis.mobList[zoneID][106].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  -- 106-Nightmare Raptor (×2)
+xi.dynamis.mobList[zoneID][198].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][107].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  -- 107-Nightmare Raptor (×2)
+xi.dynamis.mobList[zoneID][199].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][108].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  -- 108-Nightmare Raptor (×2)
+xi.dynamis.mobList[zoneID][200].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][109].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  -- 109-Nightmare Raptor (×2)
+xi.dynamis.mobList[zoneID][201].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][110].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  -- 110-Nightmare Raptor (×2)
+xi.dynamis.mobList[zoneID][202].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][111].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  -- 111-Nightmare Raptor (×2)
+xi.dynamis.mobList[zoneID][203].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][112].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  -- 112-Nightmare Raptor (×2)
+xi.dynamis.mobList[zoneID][204].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][113].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  -- 113-Nightmare Raptor (×2)
+xi.dynamis.mobList[zoneID][205].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][114].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  -- 114-Nightmare Raptor (×2)
+xi.dynamis.mobList[zoneID][206].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][115].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  -- 115-Nightmare Raptor (×2)
+xi.dynamis.mobList[zoneID][207].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][116].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  -- 116-Nightmare Raptor (×2)
+xi.dynamis.mobList[zoneID][208].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][117].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  -- 117-Nightmare Raptor (×2)
+xi.dynamis.mobList[zoneID][209].info = { 'Nightmare', 'Nightmare Raptor', nil, nil, nil }  --
 --Nightmare Diremite
-xi.dynamis.mobList[zoneID][118].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} -- 118-Nightmare Diremite (×2)
-xi.dynamis.mobList[zoneID][210].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} --
-xi.dynamis.mobList[zoneID][119].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} -- 119-Nightmare Diremite (×2)
-xi.dynamis.mobList[zoneID][211].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} --
-xi.dynamis.mobList[zoneID][120].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} -- 120-Nightmare Diremite (×2)
-xi.dynamis.mobList[zoneID][212].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} --
-xi.dynamis.mobList[zoneID][121].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} -- 121-Nightmare Diremite (×2)
-xi.dynamis.mobList[zoneID][213].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} --
-xi.dynamis.mobList[zoneID][122].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} -- 122-Nightmare Diremite (×2)
-xi.dynamis.mobList[zoneID][214].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} --
-xi.dynamis.mobList[zoneID][123].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} -- 123-Nightmare Diremite (×2)
-xi.dynamis.mobList[zoneID][215].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} --
-xi.dynamis.mobList[zoneID][124].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} -- 124-Nightmare Diremite (×2)
-xi.dynamis.mobList[zoneID][216].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} --
-xi.dynamis.mobList[zoneID][125].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} -- 125-Nightmare Diremite (×2)
-xi.dynamis.mobList[zoneID][217].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} --
-xi.dynamis.mobList[zoneID][126].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} -- 126-Nightmare Diremite (×2)
-xi.dynamis.mobList[zoneID][218].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} --
-xi.dynamis.mobList[zoneID][127].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} -- 127-Nightmare Diremite (×2)
-xi.dynamis.mobList[zoneID][219].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} --
-xi.dynamis.mobList[zoneID][128].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} -- 128-Nightmare Diremite (×2)
-xi.dynamis.mobList[zoneID][220].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} --
-xi.dynamis.mobList[zoneID][129].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} -- 129-Nightmare Diremite (×2)
-xi.dynamis.mobList[zoneID][221].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} --
-xi.dynamis.mobList[zoneID][130].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} -- 130-Nightmare Diremite (×2)
-xi.dynamis.mobList[zoneID][222].info = {"Nightmare", "Nightmare Diremite", nil, nil, nil} --
+xi.dynamis.mobList[zoneID][118].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } -- 118-Nightmare Diremite (×2)
+xi.dynamis.mobList[zoneID][210].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } --
+xi.dynamis.mobList[zoneID][119].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } -- 119-Nightmare Diremite (×2)
+xi.dynamis.mobList[zoneID][211].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } --
+xi.dynamis.mobList[zoneID][120].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } -- 120-Nightmare Diremite (×2)
+xi.dynamis.mobList[zoneID][212].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } --
+xi.dynamis.mobList[zoneID][121].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } -- 121-Nightmare Diremite (×2)
+xi.dynamis.mobList[zoneID][213].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } --
+xi.dynamis.mobList[zoneID][122].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } -- 122-Nightmare Diremite (×2)
+xi.dynamis.mobList[zoneID][214].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } --
+xi.dynamis.mobList[zoneID][123].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } -- 123-Nightmare Diremite (×2)
+xi.dynamis.mobList[zoneID][215].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } --
+xi.dynamis.mobList[zoneID][124].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } -- 124-Nightmare Diremite (×2)
+xi.dynamis.mobList[zoneID][216].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } --
+xi.dynamis.mobList[zoneID][125].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } -- 125-Nightmare Diremite (×2)
+xi.dynamis.mobList[zoneID][217].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } --
+xi.dynamis.mobList[zoneID][126].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } -- 126-Nightmare Diremite (×2)
+xi.dynamis.mobList[zoneID][218].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } --
+xi.dynamis.mobList[zoneID][127].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } -- 127-Nightmare Diremite (×2)
+xi.dynamis.mobList[zoneID][219].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } --
+xi.dynamis.mobList[zoneID][128].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } -- 128-Nightmare Diremite (×2)
+xi.dynamis.mobList[zoneID][220].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } --
+xi.dynamis.mobList[zoneID][129].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } -- 129-Nightmare Diremite (×2)
+xi.dynamis.mobList[zoneID][221].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } --
+xi.dynamis.mobList[zoneID][130].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } -- 130-Nightmare Diremite (×2)
+xi.dynamis.mobList[zoneID][222].info = { 'Nightmare', 'Nightmare Diremite', nil, nil, nil } --
 -- Nightmare Gaylas
-xi.dynamis.mobList[zoneID][131].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  -- 131-Nightmare Gaylas (×3)
-xi.dynamis.mobList[zoneID][223].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][224].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][132].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  -- 132-Nightmare Gaylas (×3)
-xi.dynamis.mobList[zoneID][225].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][226].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][133].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  -- 133-Nightmare Gaylas (×3)
-xi.dynamis.mobList[zoneID][227].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][228].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][134].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  -- 134-Nightmare Gaylas (×4)
-xi.dynamis.mobList[zoneID][229].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][230].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][231].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][135].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  -- 135-Nightmare Gaylas (×4)
-xi.dynamis.mobList[zoneID][232].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][233].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][234].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][136].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  -- 136-Nightmare Gaylas (×4)
-xi.dynamis.mobList[zoneID][235].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][236].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][237].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][137].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  -- 137-Nightmare Gaylas (×4)
-xi.dynamis.mobList[zoneID][238].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][239].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][240].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][138].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  -- 138-Nightmare Gaylas (×4)
-xi.dynamis.mobList[zoneID][241].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][242].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
-xi.dynamis.mobList[zoneID][243].info = {"Nightmare", "Nightmare Gaylas", nil, nil, nil}  --
+xi.dynamis.mobList[zoneID][131].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  -- 131-Nightmare Gaylas (×3)
+xi.dynamis.mobList[zoneID][223].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][224].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][132].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  -- 132-Nightmare Gaylas (×3)
+xi.dynamis.mobList[zoneID][225].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][226].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][133].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  -- 133-Nightmare Gaylas (×3)
+xi.dynamis.mobList[zoneID][227].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][228].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][134].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  -- 134-Nightmare Gaylas (×4)
+xi.dynamis.mobList[zoneID][229].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][230].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][231].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][135].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  -- 135-Nightmare Gaylas (×4)
+xi.dynamis.mobList[zoneID][232].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][233].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][234].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][136].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  -- 136-Nightmare Gaylas (×4)
+xi.dynamis.mobList[zoneID][235].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][236].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][237].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][137].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  -- 137-Nightmare Gaylas (×4)
+xi.dynamis.mobList[zoneID][238].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][239].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][240].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][138].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  -- 138-Nightmare Gaylas (×4)
+xi.dynamis.mobList[zoneID][241].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][242].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
+xi.dynamis.mobList[zoneID][243].info = { 'Nightmare', 'Nightmare Gaylas', nil, nil, nil }  --
 
-----------------------------------------------------------------------------------------------------
---                                    Setup of Wave Spawning                                      --
-----------------------------------------------------------------------------------------------------
+-----------------------------------
+-- Setup of Wave Spawning
+-----------------------------------
 
----------------------------------------------
---           Wave Defeat Reqs.          --
---------------------------------------------
---xi.dynamis.mobList[zoneID].waveDefeatRequirements[2] = {zone:getLocalVar("MegaBoss_Killed") == 1}
+-----------------------------------
+--           Wave Defeat Reqs.
+-----------------------------------
+--xi.dynamis.mobList[zoneID].waveDefeatRequirements[2] = {zone:getLocalVar('MegaBoss_Killed') == 1}
 
 xi.dynamis.mobList[zoneID].waveDefeatRequirements =
 {
-    {}, -- Do not touch this is wave 1
-    {"MegaBoss_Killed"} -- Spawns Nightmare Mobs
+    { }, -- Do not touch this is wave 1
+    { 'MegaBoss_killed' } -- Spawns Nightmare Mobs
 }
 
-------------------------------------------
---            Wave Spawning             --
--- Note: Wave 1 spawns at start.        --
-------------------------------------------
+-----------------------------------
+--            Wave Spawning
+-- Note: Wave 1 spawns at start.
+-----------------------------------
 --xi.dynamis.mobList[zoneID].wave# = { MobIndex#1, MobIndex#2, MobIndex#3 }
 
 xi.dynamis.mobList[zoneID][1].wave =
@@ -563,12 +563,12 @@ xi.dynamis.mobList[zoneID][2].wave =
     75   --  (075-G) Goblin Replica
 }
 
-----------------------------------------------------------------------------------------------------
---                                  Setup of Children Spawning                                    --
-----------------------------------------------------------------------------------------------------
-------------------------------------------
---          Normal Child Spawn          --
-------------------------------------------
+-----------------------------------
+-- Setup of Children Spawning
+-----------------------------------
+-----------------------------------
+--          Normal Child Spawn
+-----------------------------------
 -- xi.dynamis.mobList[zoneID][MobIndex].mobchildren = {#WAR, #MNK, #WHM, #BLM, #RDM, #THF, #PLD, #DRK, #BST, #BRD, #RNG, #SAM, #NIN, #DRG, #SMN}
 
 -- Boss Area
@@ -620,9 +620,9 @@ xi.dynamis.mobList[zoneID][68 ].mobchildren = { nil, nil,   1, nil, nil, nil,   
 xi.dynamis.mobList[zoneID][69 ].mobchildren = { nil, nil, nil, nil, nil,   1, nil, nil, nil,   1, nil,   1, nil,   1, nil  }    -- 1 THF  1 BRD  1 SAM  1 DRG
 xi.dynamis.mobList[zoneID][70 ].mobchildren = {   1, nil, nil,   1,   1, nil, nil, nil, nil, nil, nil, nil,   1, nil, nil  }    -- 1 WAR  1 BLM  1 RDM  1 NIN
 
-------------------------------------------
---            NM Child Spawn            --
-------------------------------------------
+-----------------------------------
+--            NM Child Spawn
+-----------------------------------
 -- xi.dynamis.mobList[zoneID][MobIndex].nmchildren = {MobIndex(NM1), MobIndex(NM2), MobIndex(NM3)}
 -- boolean value = forceLink true/false
 
@@ -706,11 +706,11 @@ xi.dynamis.mobList[zoneID][136].nmchildren = { true, 235, 236, 237         } -- 
 xi.dynamis.mobList[zoneID][137].nmchildren = { true, 238, 239, 240         } -- ( 137 ) Nightmare Gaylas (×4)
 xi.dynamis.mobList[zoneID][138].nmchildren = { true, 241, 242, 243         } -- ( 138 ) Nightmare Gaylas (×4)
 
-------------------------------------------
---          Mob Position Info           --
--- Note: Must be setup for parent mobs, --
--- but is optional for children.        --
-------------------------------------------
+-----------------------------------
+--          Mob Position Info
+-- Note: Must be setup for parent mobs,
+-- but is optional for children.
+-----------------------------------
 -- xi.dynamis.mobList[zoneID][MobIndex].pos = {xpos, ypos, zpos, rot}
 
 -- Statues Wave 1 and Wave 2
@@ -719,7 +719,7 @@ xi.dynamis.mobList[zoneID][2  ].pos = { -249.283, -19.988, 45.831, 6    } -- (00
 xi.dynamis.mobList[zoneID][3  ].pos = { -207.631, -19.944, 106.263, 28  } -- (003-Q) Adamantking Effigy
 xi.dynamis.mobList[zoneID][4  ].pos = { -193.663, -19.635, 131.329, 68  } -- (004-Q) Adamantking Effigy
 xi.dynamis.mobList[zoneID][5  ].pos = { -205.758, -20.089, 162.879, 203 } -- (005-Q) Adamantking Effigy
-xi.dynamis.mobList[zoneID][6  ].pos = { -118.681, -20.019, 195.651, 27   } -- (006-Q) Adamantking Effigy
+xi.dynamis.mobList[zoneID][6  ].pos = { -118.681, -20.019, 195.651, 27  } -- (006-Q) Adamantking Effigy
 xi.dynamis.mobList[zoneID][7  ].pos = { -116.667, -19.829, 207.454, 48  } -- (007-Q) Adamantking Effigy
 xi.dynamis.mobList[zoneID][8  ].pos = { -1.307, -19.138, -17.269, 129   } -- (008-Y) Manifest Icon
 xi.dynamis.mobList[zoneID][9  ].pos = { 13.437, -20.824, -21.301, 128   } -- (009-Y) Manifest Icon
@@ -773,7 +773,7 @@ xi.dynamis.mobList[zoneID][63 ].pos = { 153.181, 20.601, -370.837, 193  } -- ( 0
 xi.dynamis.mobList[zoneID][63 ].pos = { 153.181, 20.601, -370.837, 193  } -- ( 063 ) Nightmare Stirge (×4)
 xi.dynamis.mobList[zoneID][61 ].pos = { 153.580, -19.718, -20.217, 128  } -- ( 061 ) Nightmare Roc (×3)
 xi.dynamis.mobList[zoneID][58 ].pos = { -221.369, -19.805, 437.399, 56  } -- ( 058 ) Nightmare Roc (×3)
-xi.dynamis.mobList[zoneID][54 ].pos = { -136.073, -20.377, 344.4214, 102} -- ( 054 ) Nightmare Snoll (×4)
+xi.dynamis.mobList[zoneID][54 ].pos = { -136.073, -20.377, 344.421, 102 } -- ( 054 ) Nightmare Snoll (×4)
 xi.dynamis.mobList[zoneID][55 ].pos = { -132.776, -19.527, 320.005, 118 } -- ( 055 ) Nightmare Snoll (×4)
 xi.dynamis.mobList[zoneID][56 ].pos = { -156.819, -20.000, 362.471, 98  } -- ( 056 ) Nightmare Snoll (×4)
 xi.dynamis.mobList[zoneID][57 ].pos = { -157.837, -19.317, 334.877, 115 } -- ( 057 ) Nightmare Snoll (×4)
@@ -856,18 +856,18 @@ xi.dynamis.mobList[zoneID][136].pos = { 162.382, 20.186, -194.457, 241  } -- ( 1
 xi.dynamis.mobList[zoneID][137].pos = { 153.565, 20.512, -214.524, 219  } -- ( 137 ) Nightmare Gaylas (×4)
 xi.dynamis.mobList[zoneID][138].pos = { 165.904, 20.263, -235.467, 209  } -- ( 138 ) Nightmare Gaylas (×4)
 
-----------------------------------------------------------------------------------------------------
---                                    Setup of Mob Functions                                      --
-----------------------------------------------------------------------------------------------------
-------------------------------------------
---             Patrol Paths             --
-------------------------------------------
+-----------------------------------
+-- Setup of Mob Functions
+-----------------------------------
+-----------------------------------
+-- Patrol Paths
+-----------------------------------
 -- xi.dynamis.mobList[zoneID][MobIndex].patrolPath = {xpos1,ypos1,zpos1, xpos2,ypos2,zpos2,  xpos3,ypos3,zpos3}
 xi.dynamis.mobList[zoneID].patrolPaths = { }
 
-------------------------------------------
---          Statue Eye Colors           --
-------------------------------------------
+-----------------------------------
+-- Statue Eye Colors
+-----------------------------------
 -- xi.dynamis.mobList[zoneID][MobIndex].eyes = xi.dynamis.eye.BLUE -- Flags for blue eyes. (HP)
 -- xi.dynamis.mobList[zoneID][MobIndex].eyes = xi.dynamis.eye.GREEN -- Flags for green eyes. (MP)
 
@@ -878,10 +878,10 @@ xi.dynamis.mobList[zoneID][34].eyes = xi.dynamis.eye.BLUE
 xi.dynamis.mobList[zoneID][35].eyes = xi.dynamis.eye.GREEN
 xi.dynamis.mobList[zoneID][72].eyes = xi.dynamis.eye.BLUE
 
-------------------------------------------
---        Time Extension Values         --
-------------------------------------------
+-----------------------------------
+-- Time Extension Values
+-----------------------------------
 -- xi.dynamis.mobList[zoneID][MobIndex].timeExtension = 15
 
-xi.dynamis.mobList[zoneID].timeExtensionList = {64}
+xi.dynamis.mobList[zoneID].timeExtensionList = { 64 }
 xi.dynamis.mobList[zoneID][64].timeExtension = 60
