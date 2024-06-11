@@ -513,75 +513,79 @@ xi.dynamis.nonStandardDynamicSpawn = function(mobIndex, oMob, forceLink, zoneID,
         -- 8 - flags
         ['Statue'] =
         {
-            ['Vanguard Eye'] = { 'Vanguard Eye' , 163, 134, 1144, 1100, 4 }, -- Vanguard Eye (VEye)
-            ['Prototype Eye'] = { 'Prototype Eye' , 61, 42, 1144, 1100, 4 }, -- Prototype Eye (PEye)
-            ['Goblin Statue'] = { 'Goblin Statue' , 158, 134, 1144, 1, 92 }, -- Goblin Statue (GStat)
-            ['Goblin Replica'] = { 'Goblin Replica' , 157, 134, 1144, 1, 92 }, -- Goblin Statue (GRStat)
-            ['Statue Prototype'] = { 'Stat. Prototype' , 36, 42, 1144, 1, 92 }, -- Goblin Statue (GPStat)
-            ['Serjeant Tombstone'] = { 'Serj. Tombstone' , 89, 134, 2201, 1100, 93 }, -- Orc Statue (OStat)
-            ['Warchief Tombstone'] = { 'War. Tombstone' , 90, 134, 2201, 1100, 93 }, -- Orc Statue (OWStat)
-            ['Tombstone Prototype'] = { 'Tomb. Prototype' , 20, 42, 2201, 1100, 93 }, -- Orc Statue (TPStat)
-            ['Adamantking Effigy'] = { 'Adamantking Eff' , 55, 134, 20, 0, 94 }, -- Quadav Statue (QStat)
-            ['Adamantking Image'] = { 'Adamantking Img' , 56, 134, 20, 0, 94 }, -- Quadav Statue (QIStat)
-            ['Effigy Prototype'] = { 'Eff. Prototype' , 9, 42, 20, 0, 94 }, -- Quadav Statue (QPStat)
-            ['Avatar Idol'] = { 'Avatar Idol' , 124, 134, 195, 1100, 95 }, -- Yagudo Statue (YStat)
-            ['Manifest Icon'] = { 'Manifest Icon' , 68, 39, 195, 1100, 95 }, -- Yagudo Statue (YMStat)
-            ['Avatar Icon'] = { 'Avatar Icon' , 123, 134, 195, 1100, 95 }, -- Yagudo Statue (AIStat)
-            ['Icon Prototype'] = { 'Icon Prototype' , 32, 42, 195, 1100, 95 }, -- Yagudo Statue (YPStat)
+            ['Vanguard Eye']         = { 'Vanguard Eye' ,      163, 134, 1144, 1100,  4 },   -- Vanguard Eye (VEye)
+            ['Prototype Eye']        = { 'Prototype Eye' ,     61,  42,  1144, 1100,  4 },   -- Prototype Eye (PEye)
+            ['Goblin Statue']        = { 'Goblin Statue' ,     158, 134, 1144, 1,    92 },  -- Goblin Statue (GStat)
+            ['Goblin Replica']       = { 'Goblin Replica' ,    157, 134, 1144, 1,    92 },  -- Goblin Statue (GRStat)
+            ['Statue Prototype']     = { 'Stat. Prototype' ,   36,  42,  1144, 1,    92 },  -- Goblin Statue (GPStat)
+            ['Serjeant Tombstone']   = { 'Serj. Tombstone' ,   89,  134, 2201, 1100, 93 },  -- Orc Statue (OStat)
+            ['Warchief Tombstone']   = { 'War. Tombstone' ,    90,  134, 2201, 1100, 93 },  -- Orc Statue (OWStat)
+            ['Tombstone Prototype']  = { 'Tomb. Prototype' ,   20,  42,  2201, 1100, 93 },  -- Orc Statue (TPStat)
+            ['Adamantking Effigy']   = { 'Adamantking Eff' ,   55,  134, 20,   0,    94 },  -- Quadav Statue (QStat)
+            ['Adamantking Image']    = { 'Adamantking Img' ,   56,  134, 20,   0,    94 },  -- Quadav Statue (QIStat)
+            ['Effigy Prototype']     = { 'Eff. Prototype' ,    9,   42,  20,   0,    94 },  -- Quadav Statue (QPStat)
+            ['Avatar Idol']          = { 'Avatar Idol' ,       124, 134, 195,  1100, 95 },  -- Yagudo Statue (YStat)
+            ['Manifest Icon']        = { 'Manifest Icon' ,     68,  39,  195,  1100, 95 },  -- Yagudo Statue (YMStat)
+            ['Avatar Icon']          = { 'Avatar Icon' ,       123, 134, 195,  1100, 95 },  -- Yagudo Statue (AIStat)
+            ['Icon Prototype']       = { 'Icon Prototype' ,    32,  42,  195,  1100, 95 },  -- Yagudo Statue (YPStat)
         },
+
         ['Nightmare'] =
         {
-            ['Nightmare Bunny'] = { 'N. Bunny' , 97, 40, 1789, 0, 206 }, -- NBun
-            ['Nightmare Cockatrice'] = { 'N. Cockatrice' , 19, 174, 1805, 0, 70 }, -- NCoc
-            ['Nightmare Crab'] = { 'N. Crab' , 93, 40, 1791, 0, 77 }, -- NCra
-            ['Nightmare Crawler'] = { 'N. Crawler' , 99, 40, 1798, 0, 79 }, -- Ncra
-            ['Nightmare Dhalmel'] = { 'N. Dhalmel' , 94, 40, 2796, 0, 80 }, -- NDha
-            ['Nightmare Eft'] = { 'N. Eft' , 101, 40, 2795, 0, 98 }, -- NEft
-            ['Nightmare Mandragora'] = { 'N. Mandragora' , 98, 40, 1789, 0, 178 }, -- NMan
-            ['Nightmare Raven'] = { 'N. Raven' , 100, 40, 1788, 0, 55 }, -- NRav
-            ['Nightmare Scorpion'] = { 'N. Scorpion' , 96, 40, 1787, 0, 217 }, -- NSco
-            ['Nightmare Urganite'] = { 'N. Urganite' , 95, 40, 1785, 0, 251 }, -- NUrg
-            ['Nightmare Cluster'] = { 'N. Cluster' , 40, 42, 1786, 0, 4076, nil, 135 }, -- NClu
-            ['Nightmare Hornet'] = { 'N. Hornet' , 10, 42, 1795, 0, 4075, nil, 135 }, -- NHor
-            ['Nightmare Leech'] = { 'N. Leech' , 41, 42, 1796, 0, 4079, nil, 135 }, -- NLee
-            ['Nightmare Makara'] = { 'N. Makara' , 34, 42, 1797, 0, 4078, nil, 135 }, -- NMak
-            ['Nightmare Taurus'] = { 'N. Taurus' , 33, 42, 2854, 0, 4080 }, -- NTau
-            ['Nightmare Bugard'] = { 'N. Bugard' , 6, 42, 1795, 0, 4077 }, -- NBug
-            ['Nightmare Hippogryph'] = { 'N. Hippogryph' , 2, 39, 1792, 0, 141 }, -- NHip
-            ['Nightmare Manticore'] = { 'N. Manticore' , 3, 39, 1799, 0, 179 }, -- NMat
-            ['Nightmare Sabotender'] = { 'N. Sabotender' , 11, 39, 1792, 0, 212 }, -- NSab
-            ['Nightmare Sheep'] = { 'N. Sheep' , 13, 39, 1794, 0, 226 }, -- NShe
-            ['Nightmare Fly'] = { 'N. Fly' , 4, 39, 1794, 0, 113 }, -- NFly
-            ['Nightmare Gaylas'] = { 'N. Gaylas' , 80, 41, 1793, 0, 47 }, -- NGay
-            ['Nightmare Kraken'] = { 'N. Kraken' , 75, 41, 1793, 0, 218 }, -- NKra
-            ['Nightmare Raptor'] = { 'N. Raptor' , 84, 41, 1793, 0, 210 }, -- NRap
-            ['Nightmare Roc'] = { 'N. Roc' , 83, 41, 1793, 0, 125 }, -- NRoc
-            ['Nightmare Snoll'] = { 'N. Snoll' , 86, 41, 1803, 0, 232 }, -- NSno
-            ['Nightmare Diremite'] = { 'N. Diremite' , 82, 41, 1790, 0, 81 }, -- NDir
-            ['Nightmare Stirge'] = { 'N. Stirge' , 78, 41, 1804, 0, 46 }, -- NSti
-            ['Nightmare Tiger'] = { 'N. Tiger' , 81, 41, 1804, 0, 242 }, -- NTig
-            ['Nightmare Weapon'] = { 'N. Weapon' , 77, 41, 1804, 0, 110 }, -- NWea
+            ['Nightmare Bunny']      = { 'N. Bunny' ,          97,  40,  1789, 0,  206            },  -- NBun
+            ['Nightmare Cockatrice'] = { 'N. Cockatrice' ,     19,  174, 1805, 0,  70             },   -- NCoc
+            ['Nightmare Crab']       = { 'N. Crab' ,           93,  40,  1791, 0,  77             },   -- NCra
+            ['Nightmare Crawler']    = { 'N. Crawler' ,        99,  40,  1798, 0,  79             },   -- Ncra
+            ['Nightmare Dhalmel']    = { 'N. Dhalmel' ,        94,  40,  2796, 0,  80             },   -- NDha
+            ['Nightmare Eft']        = { 'N. Eft' ,            101, 40,  2795, 0,  98             },   -- NEft
+            ['Nightmare Mandragora'] = { 'N. Mandragora' ,     98,  40,  1789, 0,  178            },  -- NMan
+            ['Nightmare Raven']      = { 'N. Raven' ,          100, 40,  1788, 0,  55             },   -- NRav
+            ['Nightmare Scorpion']   = { 'N. Scorpion' ,       96,  40,  1787, 0,  217            },  -- NSco
+            ['Nightmare Urganite']   = { 'N. Urganite' ,       95,  40,  1785, 0,  251            },  -- NUrg
+            ['Nightmare Cluster']    = { 'N. Cluster' ,        40,  42,  1786, 0,  4076, nil, 135 }, -- NClu
+            ['Nightmare Hornet']     = { 'N. Hornet' ,         10,  42,  1795, 0,  4075, nil, 135 }, -- NHor
+            ['Nightmare Leech']      = { 'N. Leech' ,          41,  42,  1796, 0,  4079, nil, 135 }, -- NLee
+            ['Nightmare Makara']     = { 'N. Makara' ,         34,  42,  1797, 0,  4078, nil, 135 }, -- NMak
+            ['Nightmare Taurus']     = { 'N. Taurus' ,         33,  42,  2854, 0,  4080           }, -- NTau
+            ['Nightmare Bugard']     = { 'N. Bugard' ,         6,   42,  1795, 0,  4077           }, -- NBug
+            ['Nightmare Hippogryph'] = { 'N. Hippogryph' ,     2,   39,  1792, 0,  141            },  -- NHip
+            ['Nightmare Manticore']  = { 'N. Manticore' ,      3,   39,  1799, 0,  179            },  -- NMat
+            ['Nightmare Sabotender'] = { 'N. Sabotender' ,     11,  39,  1792, 0,  212            },  -- NSab
+            ['Nightmare Sheep']      = { 'N. Sheep' ,          13,  39,  1794, 0,  226            },  -- NShe
+            ['Nightmare Fly']        = { 'N. Fly' ,            4,   39,  1794, 0,  113            },  -- NFly
+            ['Nightmare Gaylas']     = { 'N. Gaylas' ,         80,  41,  1793, 0,  47             },   -- NGay
+            ['Nightmare Kraken']     = { 'N. Kraken' ,         75,  41,  1793, 0,  218            },  -- NKra
+            ['Nightmare Raptor']     = { 'N. Raptor' ,         84,  41,  1793, 0,  210            },  -- NRap
+            ['Nightmare Roc']        = { 'N. Roc' ,            83,  41,  1793, 0,  125            },  -- NRoc
+            ['Nightmare Snoll']      = { 'N. Snoll' ,          86,  41,  1803, 0,  232            },  -- NSno
+            ['Nightmare Diremite']   = { 'N. Diremite' ,       82,  41,  1790, 0,  81             },   -- NDir
+            ['Nightmare Stirge']     = { 'N. Stirge' ,         78,  41,  1804, 0,  46             },   -- NSti
+            ['Nightmare Tiger']      = { 'N. Tiger' ,          81,  41,  1804, 0,  242            },  -- NTig
+            ['Nightmare Weapon']     = { 'N. Weapon' ,         77,  41,  1804, 0,  110            },  -- NWea
         },
+
         ['Elemental'] =
         {
-            ['Fire Elemental'] = { 'Fire Ele.', 14, 38, 0, 17, 0 }, -- FEle
-            ['Water Elemental'] = { 'Water Ele.', 17, 38, 0, 15, 0 }, -- WEle
-            ['Thunder Elemental'] = { 'Thunder Ele.', 18, 38, 0, 16, 0 }, -- TEle
-            ['Earth Elemental'] = { 'Earth Ele.', 13, 38, 0, 13, 0 }, -- EEle
-            ['Air Elemental'] = { 'Air Ele.', 11, 38, 0, 12, 0 }, -- AEle
-            ['Ice Elemental'] = { 'Ice Ele.', 15, 38, 0, 14, 0 }, -- IEle
-            ['Light Elemental'] = { 'Light Ele.', 16, 38, 0, 19, 0 }, -- LEle
-            ['Dark Elemental'] = { 'Dark Ele.', 12, 38, 0, 18, 0 }, -- DEle
+            ['Fire Elemental']       = { 'Fire Ele.' ,         14,  38,  0,    17,  0 },   -- FEle
+            ['Water Elemental']      = { 'Water Ele.' ,        17,  38,  0,    15,  0 },   -- WEle
+            ['Thunder Elemental']    = { 'Thunder Ele.' ,      18,  38,  0,    16,  0 },   -- TEle
+            ['Earth Elemental']      = { 'Earth Ele.' ,        13,  38,  0,    13,  0 },   -- EEle
+            ['Air Elemental']        = { 'Air Ele.' ,          11,  38,  0,    12,  0 },   -- AEle
+            ['Ice Elemental']        = { 'Ice Ele.' ,          15,  38,  0,    14,  0 },   -- IEle
+            ['Light Elemental']      = { 'Light Ele.' ,        16,  38,  0,    19,  0 },   -- LEle
+            ['Dark Elemental']       = { 'Dark Ele.' ,         12,  38,  0,    18,  0 },   -- DEle
         },
+
         ['Beastmen'] =
         {
-            ['Vanguard Vindicator'] = { 'V. Vindicator', 19, 134, 2558, 0, 337 }, -- QWAR (Bastok)
-            ['Vanguard Constable'] = { 'V. Constable', 29, 134, 2558, 1, 337 }, -- QWHM (Bastok)
-            ['Vanguard Militant'] = { 'V. Militant', 25, 134, 2558, 0, 337 }, -- QMNK (Bastok)
+            ['Vanguard Vindicator']  = { 'V. Vindicator' ,     19,  134, 2558, 0,    337 }, -- QWAR (Bastok)
+            ['Vanguard Constable']   = { 'V. Constable' ,      29,  134, 2558, 1,    337 }, -- QWHM (Bastok)
+            ['Vanguard Militant']    = { 'V. Militant' ,       25,  134, 2558, 0,    337 }, -- QMNK (Bastok)
         },
+
         ['Other'] =
         {
-            ['Vanguard Dragon'] = { 'V. Dragon', 70, 135, 2559, 0, 87 }, -- VDra
+            ['Vanguard Dragon']      = { 'V. Dragon' ,         70,  135, 2559, 0,    87 },  -- VDra
         },
     }
     -- superlinking is used to make sure dyna-xarc statue triplets with NMs will link
@@ -857,264 +861,288 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
         -- Below use used to lookup Beastmen NMs
         -- Goblin
         -- Dynamis - Beaucedine (Done)
-        ['Ascetox Ratgums'] = { 'A.Ratgums', 143, 134, 176, 1100, 5013, 'Beastmen' }, -- Asce (BLM)
-        ['Bordox Kittyback'] = { 'B.Kittyback', 146, 134, 176, 0, 5013, 'Beastmen' }, -- Bord (THF)
-        ['Brewnix Bittypupils'] = { 'B.Bittypupils', 142, 134, 176, 1, 5013, 'Beastmen' }, -- Brew (WHM)
-        ['Draklix Scalecrust'] = { 'D.Scalecrust', 149, 134, 176, 0, 5013, 'Beastmen' }, -- Drak (DRG)
-        ['Droprix Granitepalms'] = { 'D.Granitepalms', 139, 134, 176, 0, 5013, 'Beastmen' }, -- Drop (MNK)
-        ['Gibberox Pimplebeak'] = { 'G.Pimplebeak', 144, 134, 176, 3, 5013, 'Beastmen' }, -- Gibb (RDM)
-        ['Moltenox Stubthumbs'] = { 'M.Stubthunmbs', 136, 134, 176, 0, 5013, 'Beastmen' }, -- Molt (WAR)
-        ['Morblox Chubbychin'] = { 'M.Chubbychin', 153, 134, 176, 0, 5013, 'Beastmen' }, -- Morb (SMN)
-        ['Routsix Rubbertendon'] = { 'R.Rubbertendon', 151, 134, 176, 0, 5013, 'Beastmen' }, -- Rout (BST)
-        ['Ruffbix Jumbolobes'] = { 'R.Jumbolobes', 148, 134, 176, 4, 5013, 'Beastmen' }, -- Ruff (PLD)
-        ['Shisox Widebrow'] = { 'S.Widebrow', 156, 134, 176, 0, 5013, 'Beastmen' }, -- Shis (SAM)
-        ['Slinkix Trufflesniff'] = { 'S.Trufflesniff', 155, 134, 176, 0, 5013, 'Beastmen' }, -- Slin (RNG)
-        ['Swypestix Tigershins'] = { 'S.Tigershins', 145, 134, 176, 7, 5013, 'Beastmen' }, -- Swyp (NIN)
-        ['Tocktix Thinlids'] = { 'T.Thinlids', 150, 134, 176, 5, 5013, 'Beastmen' }, -- Tock (DRK)
-        ['Whistix Toadthroat'] = { 'W.Toadthroat', 154, 134, 176, 6, 5013, 'Beastmen' }, -- Whis (BRD)
+        ['Ascetox Ratgums']          = { 'A.Ratgums',       143, 134, 176, 1100, 5013, 'Beastmen' }, -- Asce (BLM)
+        ['Bordox Kittyback']         = { 'B.Kittyback',     146, 134, 176, 0,    5013, 'Beastmen' }, -- Bord (THF)
+        ['Brewnix Bittypupils']      = { 'B.Bittypupils',   142, 134, 176, 1,    5013, 'Beastmen' }, -- Brew (WHM)
+        ['Draklix Scalecrust']       = { 'D.Scalecrust',    149, 134, 176, 0,    5013, 'Beastmen' }, -- Drak (DRG)
+        ['Droprix Granitepalms']     = { 'D.Granitepalms',  139, 134, 176, 0,    5013, 'Beastmen' }, -- Drop (MNK)
+        ['Gibberox Pimplebeak']      = { 'G.Pimplebeak',    144, 134, 176, 3,    5013, 'Beastmen' }, -- Gibb (RDM)
+        ['Moltenox Stubthumbs']      = { 'M.Stubthunmbs',   136, 134, 176, 0,    5013, 'Beastmen' }, -- Molt (WAR)
+        ['Morblox Chubbychin']       = { 'M.Chubbychin',    153, 134, 176, 0,    5013, 'Beastmen' }, -- Morb (SMN)
+        ['Routsix Rubbertendon']     = { 'R.Rubbertendon',  151, 134, 176, 0,    5013, 'Beastmen' }, -- Rout (BST)
+        ['Ruffbix Jumbolobes']       = { 'R.Jumbolobes',    148, 134, 176, 4,    5013, 'Beastmen' }, -- Ruff (PLD)
+        ['Shisox Widebrow']          = { 'S.Widebrow',      156, 134, 176, 0,    5013, 'Beastmen' }, -- Shis (SAM)
+        ['Slinkix Trufflesniff']     = { 'S.Trufflesniff',  155, 134, 176, 0,    5013, 'Beastmen' }, -- Slin (RNG)
+        ['Swypestix Tigershins']     = { 'S.Tigershins',    145, 134, 176, 7,    5013, 'Beastmen' }, -- Swyp (NIN)
+        ['Tocktix Thinlids']         = { 'T.Thinlids',      150, 134, 176, 5,    5013, 'Beastmen' }, -- Tock (DRK)
+        ['Whistix Toadthroat']       = { 'W.Toadthroat',    154, 134, 176, 6,    5013, 'Beastmen' }, -- Whis (BRD)
+
         -- Dynamis - Buburimu (Done)
-        ['Gosspix Blabberlips'] = { 'G.Blabberlips', 24, 40, 2667, 3, 5013, 'Beastmen' }, -- Goss (RDM)
-        ['Shamblix Rottenheart'] = { 'S.Rottenheart', 16, 40, 2667, 5, 5013, 'Beastmen' }, -- Sham (DRK)
-        ['Woodnix Shrillwhistle'] = { 'W.Shrillwhistle', 6, 40, 2667, 0, 5013, 'Beastmen' }, -- Wood (BST)
+        ['Gosspix Blabberlips']      = { 'G.Blabberlips',   24,  40,  2667, 3,    5013, 'Beastmen' }, -- Goss (RDM)
+        ['Shamblix Rottenheart']     = { 'S.Rottenheart',   16,  40,  2667, 5,    5013, 'Beastmen' }, -- Sham (DRK)
+        ['Woodnix Shrillwhistle']    = { 'W.Shrillwhistle', 6,   40,  2667, 0,    5013, 'Beastmen' }, -- Wood (BST)
+
         -- Dynamis - Jeuno (Done)
-        ['Bandrix Rockjaw'] = { 'B.Rockjaw', 32, 188, 143, 0, 5013, 'Beastmen' }, -- Band (THF)
-        ['Buffrix Eargone'] = { 'B.Eargone', 33, 188, 143, 4, 5013, 'Beastmen' }, -- Buff (PLD)
-        ['Cloktix Longnail'] = { 'C.Longnail', 51, 188, 143, 5, 5013, 'Beastmen' }, -- Cloc (DRK)
-        ['Elixmix Hooknose'] = { 'E.Hooknose', 31, 188, 143, 1, 5013, 'Beastmen' }, -- Elix (WHM)
-        ['Gabblox Magpietongue'] = { 'G.Magpietongue', 11, 188, 143, 3, 5013, 'Beastmen' }, -- Gabb (RDM)
-        ['Hermitrix Toothrot'] = { 'H.Toothrot', 27, 188, 143, 1100, 5013, 'Beastmen' }, -- Herm (BLM)
-        ['Humnox Drumbelly'] = { 'H.Drumbelly', 34, 188, 143, 6, 5013, 'Beastmen' }, -- Humn (BRD)
-        ['Lurklox Dhalmelneck'] = { 'L.Dhalmelneck', 36, 188, 143, 0, 5013, 'Beastmen' }, -- Lurk (RNG)
-        ['Morgmox Moldnoggin'] = { 'M.Moldnoggin', 29, 188, 143, 0, 5013, 'Beastmen' }, -- Morg (SMN)
-        ['Sparkspox Sweatbrow'] = { 'S.Sweatbrow', 30, 188, 143, 0, 5013, 'Beastmen' }, -- Spar (WAR)
-        ['Ticktox Beadyeyes'] = { 'T.Beadyeyes', 35, 188, 143, 5, 5013, 'Beastmen' }, -- Tick (DRK)
-        ['Trailblix Goatmug'] = { 'T.Goatmug', 37, 188, 143, 0, 5013, 'Beastmen' }, -- Trai (BST)
-        ['Tufflix Loglimbs'] = { 'T.Loglimbs', 21, 188, 143, 4, 5013, 'Beastmen' }, -- Tuff (PLD)
-        ['Wyrmwix Snakespecs'] = { 'W.Snakespecs', 28, 188, 143, 0, 5013, 'Beastmen' }, -- Snak (DRG)
-        ['Karashix Swollenskull'] = { 'K.Swollenskull', 39, 188, 143, 0, 5013, 'Beastmen' }, -- Kara (SAM)
-        ['Kikklix Longlegs'] = { 'K.Longlegs', 38, 188, 143, 0, 5013, 'Beastmen' }, -- Kikk (MNK)
-        ['Rutrix Hamgams'] = { 'R.Hamgams', 40, 188, 143, 0, 5013, 'Beastmen' }, -- Rutr (BST)
-        ['Snypestix Eaglebeak'] = { 'S.Eaglebeak', 41, 188, 143, 7, 5013, 'Beastmen' }, -- Snyp (NIN)
-        ['Mortilox Wartpaws'] = { 'M.Wartpaws', 52, 188, 143, 0, 5013, 'Beastmen' }, -- Mort (SMN)
-        ['Jabkix Pigeonpecs'] = { 'J.Pigeonpecs', 24, 188, 143, 0, 5013, 'Beastmen' }, -- Jabk (MNK)
-        ['Smeltix Thickhide'] = { 'S.Thickhide', 23, 188, 143, 0, 5013, 'Beastmen' }, -- Smel (WAR)
-        ['Wasabix Callusdigit'] = { 'W.Callusdigit', 25, 188, 143, 0, 5013, 'Beastmen' }, -- Wasa (SAM)
-        ['Anvilix Sootwrists'] = { 'A.Sootwrists', 42, 188, 143, 0, 5013, 'Beastmen' }, -- Anvi (WAR)
-        ['Blazox Boneybod'] = { 'B.Boneybod', 49, 188, 143, 0, 5013, 'Beastmen' }, -- Blaz (BST)
-        ['Bootrix Jaggedelbow'] = { 'B.Jaggedelbow', 43, 188, 143, 0, 5013, 'Beastmen' }, -- Boot (MNK)
-        ['Distilix Stickytoes'] = { 'D.Stickytoes', 45, 188, 143, 1, 5013, 'Beastmen' }, -- Dist (WHM)
-        ['Eremix Snottynostril'] = { 'E.Snottynostril', 46, 188, 143, 1100, 5013, 'Beastmen' }, -- Erem (BLM)
-        ['Jabbrox Grannyguise'] = { 'J.Grannyguise', 47, 188, 143, 3, 5013, 'Beastmen' }, -- Jabb (RDM)
-        ['Mobpix Mucousmouth'] = { 'M.Mucousmouth', 44, 188, 143, 0, 5013, 'Beastmen' }, -- Mobp (THF)
-        ['Prowlox Barrelbelly'] = { 'P.Barrelbelly', 50, 188, 143, 0, 5013, 'Beastmen' }, -- Prow (RNG)
-        ['Scruffix Shaggychest'] = { 'S.Shaggychest', 48, 188, 143, 4, 5013, 'Beastmen' }, -- Scru (PLD)
-        ['Slystix Megapeepers'] = { 'S.Megapeepers', 53, 188, 143, 7, 5013, 'Beastmen' }, -- Slys (NIN)
-        ['Tymexox Ninefingers'] = { 'T.Ninefingers', 54, 188, 143, 5, 5013, 'Beastmen' }, -- Tyme (DRK)
+        ['Bandrix Rockjaw']          = { 'B.Rockjaw',       32,  188, 143,  0,    5013, 'Beastmen' }, -- Band (THF)
+        ['Buffrix Eargone']          = { 'B.Eargone',       33,  188, 143,  4,    5013, 'Beastmen' }, -- Buff (PLD)
+        ['Cloktix Longnail']         = { 'C.Longnail',      51,  188, 143,  5,    5013, 'Beastmen' }, -- Cloc (DRK)
+        ['Elixmix Hooknose']         = { 'E.Hooknose',      31,  188, 143,  1,    5013, 'Beastmen' }, -- Elix (WHM)
+        ['Gabblox Magpietongue']     = { 'G.Magpietongue',  11,  188, 143,  3,    5013, 'Beastmen' }, -- Gabb (RDM)
+        ['Hermitrix Toothrot']       = { 'H.Toothrot',      27,  188, 143,  1100, 5013, 'Beastmen' }, -- Herm (BLM)
+        ['Humnox Drumbelly']         = { 'H.Drumbelly',     34,  188, 143,  6,    5013, 'Beastmen' }, -- Humn (BRD)
+        ['Lurklox Dhalmelneck']      = { 'L.Dhalmelneck',   36,  188, 143,  0,    5013, 'Beastmen' }, -- Lurk (RNG)
+        ['Morgmox Moldnoggin']       = { 'M.Moldnoggin',    29,  188, 143,  0,    5013, 'Beastmen' }, -- Morg (SMN)
+        ['Sparkspox Sweatbrow']      = { 'S.Sweatbrow',     30,  188, 143,  0,    5013, 'Beastmen' }, -- Spar (WAR)
+        ['Ticktox Beadyeyes']        = { 'T.Beadyeyes',     35,  188, 143,  5,    5013, 'Beastmen' }, -- Tick (DRK)
+        ['Trailblix Goatmug']        = { 'T.Goatmug',       37,  188, 143,  0,    5013, 'Beastmen' }, -- Trai (BST)
+        ['Tufflix Loglimbs']         = { 'T.Loglimbs',      21,  188, 143,  4,    5013, 'Beastmen' }, -- Tuff (PLD)
+        ['Wyrmwix Snakespecs']       = { 'W.Snakespecs',    28,  188, 143,  0,    5013, 'Beastmen' }, -- Snak (DRG)
+        ['Karashix Swollenskull']    = { 'K.Swollenskull',  39,  188, 143,  0,    5013, 'Beastmen' }, -- Kara (SAM)
+        ['Kikklix Longlegs']         = { 'K.Longlegs',      38,  188, 143,  0,    5013, 'Beastmen' }, -- Kikk (MNK)
+        ['Rutrix Hamgams']           = { 'R.Hamgams',       40,  188, 143,  0,    5013, 'Beastmen' }, -- Rutr (BST)
+        ['Snypestix Eaglebeak']      = { 'S.Eaglebeak',     41,  188, 143,  7,    5013, 'Beastmen' }, -- Snyp (NIN)
+        ['Mortilox Wartpaws']        = { 'M.Wartpaws',      52,  188, 143,  0,    5013, 'Beastmen' }, -- Mort (SMN)
+        ['Jabkix Pigeonpecs']        = { 'J.Pigeonpecs',    24,  188, 143,  0,    5013, 'Beastmen' }, -- Jabk (MNK)
+        ['Smeltix Thickhide']        = { 'S.Thickhide',     23,  188, 143,  0,    5013, 'Beastmen' }, -- Smel (WAR)
+        ['Wasabix Callusdigit']      = { 'W.Callusdigit',   25,  188, 143,  0,    5013, 'Beastmen' }, -- Wasa (SAM)
+        ['Anvilix Sootwrists']       = { 'A.Sootwrists',    42,  188, 143,  0,    5013, 'Beastmen' }, -- Anvi (WAR)
+        ['Blazox Boneybod']          = { 'B.Boneybod',      49,  188, 143,  0,    5013, 'Beastmen' }, -- Blaz (BST)
+        ['Bootrix Jaggedelbow']      = { 'B.Jaggedelbow',   43,  188, 143,  0,    5013, 'Beastmen' }, -- Boot (MNK)
+        ['Distilix Stickytoes']      = { 'D.Stickytoes',    45,  188, 143,  1,    5013, 'Beastmen' }, -- Dist (WHM)
+        ['Eremix Snottynostril']     = { 'E.Snottynostril', 46,  188, 143,  1100, 5013, 'Beastmen' }, -- Erem (BLM)
+        ['Jabbrox Grannyguise']      = { 'J.Grannyguise',   47,  188, 143,  3,    5013, 'Beastmen' }, -- Jabb (RDM)
+        ['Mobpix Mucousmouth']       = { 'M.Mucousmouth',   44,  188, 143,  0,    5013, 'Beastmen' }, -- Mobp (THF)
+        ['Prowlox Barrelbelly']      = { 'P.Barrelbelly',   50,  188, 143,  0,    5013, 'Beastmen' }, -- Prow (RNG)
+        ['Scruffix Shaggychest']     = { 'S.Shaggychest',   48,  188, 143,  4,    5013, 'Beastmen' }, -- Scru (PLD)
+        ['Slystix Megapeepers']      = { 'S.Megapeepers',   53,  188, 143,  7,    5013, 'Beastmen' }, -- Slys (NIN)
+        ['Tymexox Ninefingers']      = { 'T.Ninefingers',   54,  188, 143,  5,    5013, 'Beastmen' }, -- Tyme (DRK)
+
         -- Orc
         -- Dynamis - Beaucedine (Done)
-        ['Cobraclaw Buchzvotch'] = { 'C.Buchzvotch', 65, 134, 493, 0, 5012, 'Beastmen' }, -- CBuc (MNK)
-        ['Deathcaller Bidfbid'] = { 'D.Bidfbid', 73, 134, 493, 0, 5012, 'Beastmen' }, -- DBid (SMN)
-        ['Drakefeast Wubmfub'] = { 'D.Wubmfub', 88, 134, 493, 0, 5012, 'Beastmen' }, -- DWub (DRG)
-        ['Elvaanlopper Grokdok'] = { 'E.Grokdok', 82, 134, 493, 0, 5012, 'Beastmen' }, -- EGro (RNG)
-        ['Galkarider Retzpratz'] = { 'G.Retzpratz', 71, 134, 493, 0, 5012, 'Beastmen' }, -- GRet (RNG)
-        ['Heavymail Djidzbad'] = { 'H.Djidzbad', 80, 134, 493, 4, 5012, 'Beastmen' }, -- HDji (PLD)
-        ['Humegutter Adzjbadj'] = { 'H.Adzjbadj', 60, 134, 493, 0, 5012, 'Beastmen' }, -- HAbz (WAR)
-        ['Jeunoraider Gepkzip'] = { 'J.Gepkzip', 63, 134, 493, 7, 5012, 'Beastmen' }, -- JGep (NIN)
-        ['Lockbuster Zapdjipp'] = { 'L.Zapdjipp', 79, 134, 493, 0, 5012, 'Beastmen' }, -- LZap (THF)
-        ['Mithraslaver Debhabob'] = { 'M.Debhabob', 85, 134, 493, 0, 5012, 'Beastmen' }, -- MDeb (BST)
-        ['Skinmask Ugghfogg'] = { 'S.Ugghfogg', 83, 134, 493, 5, 5012, 'Beastmen' }, -- SUgg (DRK)
-        ['Spinalsucker Galflmall'] = { 'S.Galflmall', 73, 134, 493, 3, 5012, 'Beastmen' }, -- SGal (RDM)
-        ['Taruroaster Biggsjig'] = { 'T.Biggsjig', 84, 134, 493, 1100, 5012, 'Beastmen' }, -- TBig (BLM)
-        ['Ultrasonic Zeknajak'] = { 'U.Zeknajak', 87, 134, 493, 6, 5012, 'Beastmen' }, -- UZek (BRD)
-        ['Wraithdancer Gidbnod'] = { 'W.Gidbnod', 63, 134, 493, 1, 5012, 'Beastmen' }, -- WGid (WHM)
+        ['Cobraclaw Buchzvotch']     = { 'C.Buchzvotch',    65,  134, 493,  0,    5012, 'Beastmen' }, -- CBuc (MNK)
+        ['Deathcaller Bidfbid']      = { 'D.Bidfbid',       73,  134, 493,  0,    5012, 'Beastmen' }, -- DBid (SMN)
+        ['Drakefeast Wubmfub']       = { 'D.Wubmfub',       88,  134, 493,  0,    5012, 'Beastmen' }, -- DWub (DRG)
+        ['Elvaanlopper Grokdok']     = { 'E.Grokdok',       82,  134, 493,  0,    5012, 'Beastmen' }, -- EGro (RNG)
+        ['Galkarider Retzpratz']     = { 'G.Retzpratz',     71,  134, 493,  0,    5012, 'Beastmen' }, -- GRet (RNG)
+        ['Heavymail Djidzbad']       = { 'H.Djidzbad',      80,  134, 493,  4,    5012, 'Beastmen' }, -- HDji (PLD)
+        ['Humegutter Adzjbadj']      = { 'H.Adzjbadj',      60,  134, 493,  0,    5012, 'Beastmen' }, -- HAbz (WAR)
+        ['Jeunoraider Gepkzip']      = { 'J.Gepkzip',       63,  134, 493,  7,    5012, 'Beastmen' }, -- JGep (NIN)
+        ['Lockbuster Zapdjipp']      = { 'L.Zapdjipp',      79,  134, 493,  0,    5012, 'Beastmen' }, -- LZap (THF)
+        ['Mithraslaver Debhabob']    = { 'M.Debhabob',      85,  134, 493,  0,    5012, 'Beastmen' }, -- MDeb (BST)
+        ['Skinmask Ugghfogg']        = { 'S.Ugghfogg',      83,  134, 493,  5,    5012, 'Beastmen' }, -- SUgg (DRK)
+        ['Spinalsucker Galflmall']   = { 'S.Galflmall',     73,  134, 493,  3,    5012, 'Beastmen' }, -- SGal (RDM)
+        ['Taruroaster Biggsjig']     = { 'T.Biggsjig',      84,  134, 493,  1100, 5012, 'Beastmen' }, -- TBig (BLM)
+        ['Ultrasonic Zeknajak']      = { 'U.Zeknajak',      87,  134, 493,  6,    5012, 'Beastmen' }, -- UZek (BRD)
+        ['Wraithdancer Gidbnod']     = { 'W.Gidbnod',       63,  134, 493,  1,    5012, 'Beastmen' }, -- WGid (WHM)
+
         -- Dynamis Buburimu (Done)
-        ['Elvaansticker Bxafraff'] = { 'E.Bxafraff', 35, 40, 760, 0, 5012, 'Beastmen' }, -- Elva (DRG)
-        ['Flamecaller Zoeqdoq'] = { 'F.Zoeqdoq', 34, 40, 760, 1100, 5012, 'Beastmen' }, -- Flam (BLM)
-        ['Hamfist Gukhbuk'] = { 'H.Gukhbuk', 46, 40, 760, 0, 5012, 'Beastmen' }, -- Hamf (MNK)
-        ['Lyncean Juwgneg'] = { 'L.Juvgneg', 47, 40, 760, 0, 5012, 'Beastmen' }, -- Lync (RNG)
+        ['Elvaansticker Bxafraff']   = { 'E.Bxafraff',      35,  40,  760,  0,    5012, 'Beastmen' }, -- Elva (DRG)
+        ['Flamecaller Zoeqdoq']      = { 'F.Zoeqdoq',       34,  40,  760,  1100, 5012, 'Beastmen' }, -- Flam (BLM)
+        ['Hamfist Gukhbuk']          = { 'H.Gukhbuk',       46,  40,  760,  0,    5012, 'Beastmen' }, -- Hamf (MNK)
+        ['Lyncean Juwgneg']          = { 'L.Juvgneg',       47,  40,  760,  0,    5012, 'Beastmen' }, -- Lync (RNG)
+
         -- Dynamis - San d'Oria (Done)
-        ['Wyrmgnasher Bjakdek'] = { 'W.Bjakdek', 25, 185, 3111, 0, 5012, 'Beastmen' }, -- WyrB (DRG)
-        ['Reapertongue Gadgquok'] = { 'R.Gadgquok', 23, 185, 3111, 0, 5012, 'Beastmen' }, -- ReaG (SMN)
-        ['Voidstreaker Butchnotch'] = { 'V.Butchnotch', 26, 185, 3111, 7, 5012, 'Beastmen' }, -- VoiB (NIN)
-        ['Battlechoir Gitchfotch'] = { 'B.Gitchfotch', 2, 185, 3111, 6, 5012, 'Beastmen' }, -- BatG (BRD)
-        ['Soulsender Fugbrag'] = { 'S.Fugbrag', 3, 185, 3111, 6, 5012, 'Beastmen' }, -- SouF (BRD)
+        ['Wyrmgnasher Bjakdek']      = { 'W.Bjakdek',       25,  185, 3111, 0,    5012, 'Beastmen' }, -- WyrB (DRG)
+        ['Reapertongue Gadgquok']    = { 'R.Gadgquok',      23,  185, 3111, 0,    5012, 'Beastmen' }, -- ReaG (SMN)
+        ['Voidstreaker Butchnotch']  = { 'V.Butchnotch',    26,  185, 3111, 7,    5012, 'Beastmen' }, -- VoiB (NIN)
+        ['Battlechoir Gitchfotch']   = { 'B.Gitchfotch',    2,   185, 3111, 6,    5012, 'Beastmen' }, -- BatG (BRD)
+        ['Soulsender Fugbrag']       = { 'S.Fugbrag',       3,   185, 3111, 6,    5012, 'Beastmen' }, -- SouF (BRD)
+
         -- Quadav
         -- Dynamis - Beaucedine (Done)
-        ['Be\'Zhe Keeprazer'] = { 'B.Keeprazer', 53, 134, 261, 0, 5011, 'Beastmen' }, -- BeZh (SMN)
-        ['De\'Bho Pyrohand'] = { 'D.Pyrohand', 43, 134, 261, 1100, 5011, 'Beastmen' }, --DeBh (BLM)
-        ['Ga\'Fho Venomtouch'] = { 'G.Venomtouch', 39, 134, 261, 3, 5011, 'Beastmen' }, -- GaFh (WHM)
-        ['Go\'Tyo Magenapper'] = { 'G.Magenapper', 44, 134, 261, 0, 5011, 'Beastmen' }, -- GoTy (DRG)
-        ['Gu\'Khu Dukesniper'] = { 'G.Dukesniper', 50, 134, 261, 0, 5011, 'Beastmen' }, -- GuKh (RNG)
-        ['Gu\'Nha Wallstormer'] = { 'G.Wallstormer', 24, 134, 261, 0, 5011, 'Beastmen' }, -- Guha (WAR)
-        ['Ji\'Fhu Infiltrator'] = { 'J.Infiltrator', 37, 134, 261, 0, 5011, 'Beastmen' }, -- JiFh (THF)
-        ['Ji\'Khu Towercleaver'] = { 'J.Towercleaver', 51, 134, 261, 0, 5011, 'Beastmen' }, -- JiKh (SAM)
-        ['Mi\'Rhe Whisperblade'] = { 'M.Whisperblade', 52, 134, 261, 7, 5011, 'Beastmen' }, -- MiRh (NIN)
-        ['Mu\'Gha Legionkiller'] = { 'M.Legionkiller', 47, 134, 261, 4, 5011, 'Beastmen' }, -- MuGh (PLD)
-        ['Na\'Hya Floodmaker'] = { 'N.Floodmaker', 28, 134, 261, 3, 5011, 'Beastmen' }, -- NaHy (RDM)
-        ['Nu\'Bhi Spiraleye'] = { 'N.Spiraleye', 41, 134, 261, 6, 5011, 'Beastmen' }, -- NuBh (BRD)
-        ['So\'Gho Adderhandler'] = { 'S.Adderhandler', 48, 134, 261, 0, 5011, 'Beastmen' }, -- SoGh (BST)
-        ['So\'Zho Metalbender'] = { 'S.Metalbender', 46, 134, 261, 0, 5011, 'Beastmen' }, -- SoZh (MNK)
-        ['Ta\'Hyu Gallanthunter'] = { 'T.Gallanthunter', 40, 134, 261, 5, 5011, 'Beastmen' }, -- TaHy (DRK)
+        ['Be\'Zhe Keeprazer']        = { 'B.Keeprazer',     53,  134, 261,  0,    5011, 'Beastmen' }, -- BeZh (SMN)
+        ['De\'Bho Pyrohand']         = { 'D.Pyrohand',      43,  134, 261,  1100, 5011, 'Beastmen' }, --DeBh (BLM)
+        ['Ga\'Fho Venomtouch']       = { 'G.Venomtouch',    39,  134, 261,  3,    5011, 'Beastmen' }, -- GaFh (WHM)
+        ['Go\'Tyo Magenapper']       = { 'G.Magenapper',    44,  134, 261,  0,    5011, 'Beastmen' }, -- GoTy (DRG)
+        ['Gu\'Khu Dukesniper']       = { 'G.Dukesniper',    50,  134, 261,  0,    5011, 'Beastmen' }, -- GuKh (RNG)
+        ['Gu\'Nha Wallstormer']      = { 'G.Wallstormer',   24,  134, 261,  0,    5011, 'Beastmen' }, -- Guha (WAR)
+        ['Ji\'Fhu Infiltrator']      = { 'J.Infiltrator',   37,  134, 261,  0,    5011, 'Beastmen' }, -- JiFh (THF)
+        ['Ji\'Khu Towercleaver']     = { 'J.Towercleaver',  51,  134, 261,  0,    5011, 'Beastmen' }, -- JiKh (SAM)
+        ['Mi\'Rhe Whisperblade']     = { 'M.Whisperblade',  52,  134, 261,  7,    5011, 'Beastmen' }, -- MiRh (NIN)
+        ['Mu\'Gha Legionkiller']     = { 'M.Legionkiller',  47,  134, 261,  4,    5011, 'Beastmen' }, -- MuGh (PLD)
+        ['Na\'Hya Floodmaker']       = { 'N.Floodmaker',    28,  134, 261,  3,    5011, 'Beastmen' }, -- NaHy (RDM)
+        ['Nu\'Bhi Spiraleye']        = { 'N.Spiraleye',     41,  134, 261,  6,    5011, 'Beastmen' }, -- NuBh (BRD)
+        ['So\'Gho Adderhandler']     = { 'S.Adderhandler',  48,  134, 261,  0,    5011, 'Beastmen' }, -- SoGh (BST)
+        ['So\'Zho Metalbender']      = { 'S.Metalbender',   46,  134, 261,  0,    5011, 'Beastmen' }, -- SoZh (MNK)
+        ['Ta\'Hyu Gallanthunter']    = { 'T.Gallanthunter', 40,  134, 261,  5,    5011, 'Beastmen' }, -- TaHy (DRK)
+
         -- Dynamis Buburimu (Done)
-        ['Gi\'Bhe Flesheater'] = { 'G.Flesheater', 57, 40, 2901, 1, 5011, 'Beastmen' }, -- GiBh (WHM)
-        ['Qu\'Pho Bloodspiller'] = { 'Q.Bloodspiller', 56, 40, 2901, 0, 5011, 'Beastmen' }, -- QuPh (WAR)
-        ['Te\'Zha Ironclad'] = { 'T.Ironclad', 69, 40, 2901, 4, 5011, 'Beastmen' }, -- TeZh (PLD)
-        ['Va\'Rhu Bodysnatcher'] = { 'V.Bodysnatcher', 68, 40, 2901, 0, 5011, 'Beastmen' }, -- VaRh (THF)
+        ['Gi\'Bhe Flesheater']       = { 'G.Flesheater',    57,  40,  2901, 1,    5011, 'Beastmen' }, -- GiBh (WHM)
+        ['Qu\'Pho Bloodspiller']     = { 'Q.Bloodspiller',  56,  40,  2901, 0,    5011, 'Beastmen' }, -- QuPh (WAR)
+        ['Te\'Zha Ironclad']         = { 'T.Ironclad',      69,  40,  2901, 4,    5011, 'Beastmen' }, -- TeZh (PLD)
+        ['Va\'Rhu Bodysnatcher']     = { 'V.Bodysnatcher',  68,  40,  2901, 0,    5011, 'Beastmen' }, -- VaRh (THF)
+
         -- Dynamis - Bastok (Done)
-        ['Aa\'Nyu Dismantler'] = { 'A.Dismantler', 40, 134, 2907, 5, 5011, 'Beastmen' }, -- AaNy (DRK)
-        ['Gu\'Nhi Noondozer'] = { 'G.Noondozer', 53, 134, 2907, 0, 5011, 'Beastmen' }, -- GuNh (SMN)
-        ['Be\'Ebo Tortoisedriver'] = { 'B.Tortoisedriver', 48, 134, 2907, 0, 5011, 'Beastmen' }, -- BeEb (BST)
-        ['Gi\'Pha Manameister'] = { 'G.Manameister', 43, 134, 2907, 1100, 5011, 'Beastmen' }, -- GiPh (BLM)
-        ['Ko\'Dho Cannonball'] = { 'K.Cannonball', 46, 134, 2907, 0, 5011, 'Beastmen' }, -- KoDh (MNK)
-        ['Ze\'Vho Fallsplitter'] = { 'Z.Fallsplitter', 40, 134, 2907, 5, 5011, 'Beastmen' }, -- ZeVh (DRK)
-        ['Effigy Shield PLD'] = { 'Effigy Shield', 30, 134, 2907, 4, 5011, 'Beastmen' }, -- EPLD (PLD)
-        ['Effigy Shield NIN'] = { 'Effigy Shield', 32, 134, 2907, 7, 5011, 'Beastmen' }, -- ENIN (NIN)
-        ['Effigy Shield BRD'] = { 'Effigy Shield', 23, 134, 2907, 6, 5011, 'Beastmen' }, -- EBRD (BRD)
-        ['Effigy Shield DRK'] = { 'Effigy Shield', 38, 134, 2907, 5, 5011, 'Beastmen' }, -- EDRK (DRK)
-        ['Effigy Shield SAM'] = { 'Effigy Shield', 31, 134, 2907, 0, 5011, 'Beastmen' }, -- ESAM (SAM)
+        ['Aa\'Nyu Dismantler']       = { 'A.Dismantler',    40,  134, 2907, 5,    5011, 'Beastmen' }, -- AaNy (DRK)
+        ['Gu\'Nhi Noondozer']        = { 'G.Noondozer',     53,  134, 2907, 0,    5011, 'Beastmen' }, -- GuNh (SMN)
+        ['Be\'Ebo Tortoisedriver']   = { 'B.Tortoisedriver',48,  134, 2907, 0,    5011, 'Beastmen' }, -- BeEb (BST)
+        ['Gi\'Pha Manameister']      = { 'G.Manameister',   43,  134, 2907, 1100, 5011, 'Beastmen' }, -- GiPh (BLM)
+        ['Ko\'Dho Cannonball']       = { 'K.Cannonball',    46,  134, 2907, 0,    5011, 'Beastmen' }, -- KoDh (MNK)
+        ['Ze\'Vho Fallsplitter']     = { 'Z.Fallsplitter',  40,  134, 2907, 5,    5011, 'Beastmen' }, -- ZeVh (DRK)
+        ['Effigy Shield PLD']        = { 'Effigy Shield',   30,  134, 2907, 4,    5011, 'Beastmen' }, -- EPLD (PLD)
+        ['Effigy Shield NIN']        = { 'Effigy Shield',   32,  134, 2907, 7,    5011, 'Beastmen' }, -- ENIN (NIN)
+        ['Effigy Shield BRD']        = { 'Effigy Shield',   23,  134, 2907, 6,    5011, 'Beastmen' }, -- EBRD (BRD)
+        ['Effigy Shield DRK']        = { 'Effigy Shield',   38,  134, 2907, 5,    5011, 'Beastmen' }, -- EDRK (DRK)
+        ['Effigy Shield SAM']        = { 'Effigy Shield',   31,  134, 2907, 0,    5011, 'Beastmen' }, -- ESAM (SAM)
+
         -- Yagudo
         -- Dynamis - Beaucedine (Done)
-        ['Bhuu Wjato the Firepool'] = { 'B.Firepool', 106, 134, 265, 1100, 5014, 'Beastmen' }, -- Bhuu (BLM)
-        ['Caa Xaza the Madpiercer'] = { 'C.Madpiercer', 107, 134, 265, 3, 5014, 'Beastmen' }, -- CaaX (RDM)
-        ['Foo Peku the Bloodcloak'] = { 'F.Bloodcloak', 94, 134, 265, 0, 5014, 'Beastmen' }, -- FooP (WAR)
-        ['Guu Waji the Preacher'] = { 'G.Preacher', 113, 134, 265, 4, 5014, 'Beastmen' }, -- GuuW (PLD)
-        ['Hee Mida the Meticulous'] = { 'H.Meticulous', 120, 134, 265, 0, 5014, 'Beastmen' }, -- HeeM (RNG)
-        ['Knii Hoqo the Bisector'] = { 'K.Bisector', 121, 134, 265, 0, 5014, 'Beastmen' }, -- Knii (SAM)
-        ['Koo Saxu the Everfast'] = { 'K.Everfast', 102, 134, 265, 1, 5014, 'Beastmen' }, -- KooS (WHM)
-        ['Kuu Xuka the Nimble'] = { 'K.Nimble', 115, 134, 265, 7, 5014, 'Beastmen' }, -- KuuX (NIN)
-        ['Maa Zaua the Wyrmkeeper'] = { 'M.Wyrmkeeper', 109, 134, 265, 0, 5014, 'Beastmen' }, -- MaaZ (DRG)
-        ['Nee Huxa the Judgemental'] = { 'N.Judgemental', 114, 134, 265, 5, 5014, 'Beastmen' }, -- NeeH (DRK)
-        ['Puu Timu the Phantasmal'] = { 'P.Phantasmal', 122, 134, 265, 0, 5014, 'Beastmen' }, -- PuuT (SMN)
-        ['Ryy Qihi the Idolrobber'] = { 'R.Idolrobber', 110, 134, 265, 0, 5014, 'Beastmen' }, -- RyyQ (THF)
-        ['Soo Jopo the Fiendking'] = { 'S.Fiendking', 116, 134, 265, 0, 5014, 'Beastmen' }, -- SooJ (BST)
-        ['Xaa Chau the Roctalon'] = { 'X.Roctalon', 97, 134, 265, 0, 5014, 'Beastmen' }, -- XaaC (MNK)
-        ['Xhoo Fuza the Sublime'] = { 'X.Sublime', 119, 134, 265, 6, 5014, 'Beastmen' }, -- Xhoo (BRD)
+        ['Bhuu Wjato the Firepool']  = { 'B.Firepool',      106, 134, 265, 1100, 5014, 'Beastmen' }, -- Bhuu (BLM)
+        ['Caa Xaza the Madpiercer']  = { 'C.Madpiercer',    107, 134, 265, 3,    5014, 'Beastmen' }, -- CaaX (RDM)
+        ['Foo Peku the Bloodcloak']  = { 'F.Bloodcloak',    94,  134, 265, 0,    5014, 'Beastmen' }, -- FooP (WAR)
+        ['Guu Waji the Preacher']    = { 'G.Preacher',      113, 134, 265, 4,    5014, 'Beastmen' }, -- GuuW (PLD)
+        ['Hee Mida the Meticulous']  = { 'H.Meticulous',    120, 134, 265, 0,    5014, 'Beastmen' }, -- HeeM (RNG)
+        ['Knii Hoqo the Bisector']   = { 'K.Bisector',      121, 134, 265, 0,    5014, 'Beastmen' }, -- Knii (SAM)
+        ['Koo Saxu the Everfast']    = { 'K.Everfast',      102, 134, 265, 1,    5014, 'Beastmen' }, -- KooS (WHM)
+        ['Kuu Xuka the Nimble']      = { 'K.Nimble',        115, 134, 265, 7,    5014, 'Beastmen' }, -- KuuX (NIN)
+        ['Maa Zaua the Wyrmkeeper']  = { 'M.Wyrmkeeper',    109, 134, 265, 0,    5014, 'Beastmen' }, -- MaaZ (DRG)
+        ['Nee Huxa the Judgemental'] = { 'N.Judgemental',   114, 134, 265, 5,    5014, 'Beastmen' }, -- NeeH (DRK)
+        ['Puu Timu the Phantasmal']  = { 'P.Phantasmal',    122, 134, 265, 0,    5014, 'Beastmen' }, -- PuuT (SMN)
+        ['Ryy Qihi the Idolrobber']  = { 'R.Idolrobber',    110, 134, 265, 0,    5014, 'Beastmen' }, -- RyyQ (THF)
+        ['Soo Jopo the Fiendking']   = { 'S.Fiendking',     116, 134, 265, 0,    5014, 'Beastmen' }, -- SooJ (BST)
+        ['Xaa Chau the Roctalon']    = { 'X.Roctalon',      97,  134, 265, 0,    5014, 'Beastmen' }, -- XaaC (MNK)
+        ['Xhoo Fuza the Sublime']    = { 'X.Sublime',       119, 134, 265, 6,    5014, 'Beastmen' }, -- Xhoo (BRD)
+
         -- Dynamis - Buburimu (Done)
-        ['Baa Dava the Bibliopage'] = { 'B.Bibliopage', 24, 187, 2085, 0, 5014, 'Beastmen' }, -- BaaD (SMN)
-        ['Doo Peku the Fleetfoot'] = { 'D.Fleetfoot', 115, 134, 2085, 7, 5014, 'Beastmen' }, -- DooP (NIN)
-        ['Koo Rahi the Levinblade'] = { 'K.Levinblade', 121, 134, 2085, 0, 5014, 'Beastmen' }, -- KooR (SAM)
-        ['Ree Nata the Melomanic'] = { 'R.Melomanic', 119, 134, 2085, 6, 5014, 'Beastmen' }, -- ReeN (BRD)
+        ['Baa Dava the Bibliopage']  = { 'B.Bibliopage',    24,  187, 2085, 0,   5014, 'Beastmen' }, -- BaaD (SMN)
+        ['Doo Peku the Fleetfoot']   = { 'D.Fleetfoot',     115, 134, 2085, 7,   5014, 'Beastmen' }, -- DooP (NIN)
+        ['Koo Rahi the Levinblade']  = { 'K.Levinblade',    121, 134, 2085, 0,   5014, 'Beastmen' }, -- KooR (SAM)
+        ['Ree Nata the Melomanic']   = { 'R.Melomanic',     119, 134, 2085, 6,   5014, 'Beastmen' }, -- ReeN (BRD)
+
         -- Dynamis - Windurst (Done)
-        ['Xoo Kaza the Solemn'] = { 'X.Solemn', 27, 187, 1560, 1100, 5014, 'Beastmen' }, -- XooK (BLM)
-        ['Haa Pevi the Stentorian'] = { 'H.Stentorian', 24, 187, 1560, 0, 5014, 'Beastmen' }, -- HaaP (SMN)
-        ['Wuu Qoho the Razorclaw'] = { 'W.Razorclaw', 26, 187, 1560, 0, 5014, 'Beastmen' }, -- WuuQ (MNK)
-        ['Loo Hepe the Eyepiercer'] = { 'L.Eyepiercer', 25, 187, 1560, 3, 5014, 'Beastmen' }, -- LooH (RDM)
-        ['Muu Febi the Steadfast'] = { 'Muu.Steadfast', 3, 187, 1560, 4, 5014, 'Beastmen' }, -- MuuF (PLD)
-        ['Maa Febi the Steadfast'] = { 'Maa.Steadfast', 2, 187, 1560, 4, 5014, 'Beastmen' }, -- MaaF (PLD)
+        ['Xoo Kaza the Solemn']      = { 'X.Solemn',        27,  187, 1560, 1100, 5014, 'Beastmen' }, -- XooK (BLM)
+        ['Haa Pevi the Stentorian']  = { 'H.Stentorian',    24,  187, 1560, 0,    5014, 'Beastmen' }, -- HaaP (SMN)
+        ['Wuu Qoho the Razorclaw']   = { 'W.Razorclaw',     26,  187, 1560, 0,    5014, 'Beastmen' }, -- WuuQ (MNK)
+        ['Loo Hepe the Eyepiercer']  = { 'L.Eyepiercer',    25,  187, 1560, 3,    5014, 'Beastmen' }, -- LooH (RDM)
+        ['Muu Febi the Steadfast']   = { 'Muu.Steadfast',   3,   187, 1560, 4,    5014, 'Beastmen' }, -- MuuF (PLD)
+        ['Maa Febi the Steadfast']   = { 'Maa.Steadfast',   2,   187, 1560, 4,    5014, 'Beastmen' }, -- MaaF (PLD)
+
         -- Kindred
         -- Dynamis - Xarcabard (Done)
-        ['Count Zaebos'] = { 'C.Zaebos', 51, 135, 521, 0, 358, 'XarcNM' }, -- Zaeb (WAR)
-        ['Duke Berith'] = { 'D.Berith', 47, 135, 714, 3, 358, 'XarcNM' }, -- Beri (RDM)
-        ['Marquis Decarabia'] = { 'M.Decarabia', 21, 135, 1626, 6, 358, 'XarcNM' }, -- Deca (BRD)
-        ['Duke Gomory'] = { 'D.Gomory', 39, 135, 715, 0, 358, 'XarcNM' }, -- Gomo (MNK)
-        ['Marquis Andras'] = { 'M.Andras', 54, 135, 1624, 0, 358, 'XarcNM' }, -- Andr (BST)
-        ['Prince Seere'] = { 'P.Seere', 43, 135, 2021, 1, 358, 'XarcNM' }, -- Seer (WHM)
-        ['Duke Scox'] = { 'D.Scox', 57, 135, 717, 5, 358, 'XarcNM' }, -- Scox (DRK)
-        ['Marquis Gamygyn'] = { 'M.Gamygyn', 65, 135, 1628, 7, 358, 'XarcNM' }, -- Gamy (NIN)
-        ['Marquis Orias'] = { 'M.Orias', 46, 135, 1630, 1100, 358, 'XarcNM' }, -- Oria (BLM)
-        ['Count Raum'] = { 'C.Raum', 42, 135, 519, 0, 358, 'XarcNM' }, --  Raum (THF)
-        ['Marquis Nebiros'] = { 'M.Nebiros', 67, 135, 1629, 0, 358, 'XarcNM' }, -- Nebi (SMN)
-        ['Marquis Sabnak'] = { 'M.Sabnak', 49, 135, 1631, 4, 358, 'XarcNM' }, -- Sabn (PLD)
-        ['Count Vine'] = { 'C.Vine', 62, 135, 520, 0, 358, 'XarcNM' }, -- Vine (SAM)
-        ['King Zagan'] = { 'K.Zagan', 60, 135, 1452, 0, 358, 'XarcNM' }, -- Zaga (DRG)
-        ['Marquis Cimeries'] = { 'M.Cimeries', 56, 135, 1625, 0, 358, 'XarcNM' }, -- Cime (RNG)
+        ['Count Zaebos']             = { 'C.Zaebos',        51,  135, 521,  0,    358,  'XarcNM' },   -- Zaeb (WAR)
+        ['Duke Berith']              = { 'D.Berith',        47,  135, 714,  3,    358,  'XarcNM' },   -- Beri (RDM)
+        ['Marquis Decarabia']        = { 'M.Decarabia',     21,  135, 1626, 6,    358,  'XarcNM' },   -- Deca (BRD)
+        ['Duke Gomory']              = { 'D.Gomory',        39,  135, 715,  0,    358,  'XarcNM' },   -- Gomo (MNK)
+        ['Marquis Andras']           = { 'M.Andras',        54,  135, 1624, 0,    358,  'XarcNM' },   -- Andr (BST)
+        ['Prince Seere']             = { 'P.Seere',         43,  135, 2021, 1,    358,  'XarcNM' },   -- Seer (WHM)
+        ['Duke Scox']                = { 'D.Scox',          57,  135, 717,  5,    358,  'XarcNM' },   -- Scox (DRK)
+        ['Marquis Gamygyn']          = { 'M.Gamygyn',       65,  135, 1628, 7,    358,  'XarcNM' },   -- Gamy (NIN)
+        ['Marquis Orias']            = { 'M.Orias',         46,  135, 1630, 1100, 358,  'XarcNM' },   -- Oria (BLM)
+        ['Count Raum']               = { 'C.Raum',          42,  135, 519,  0,    358,  'XarcNM' },   --  Raum (THF)
+        ['Marquis Nebiros']          = { 'M.Nebiros',       67,  135, 1629, 0,    358,  'XarcNM' },   -- Nebi (SMN)
+        ['Marquis Sabnak']           = { 'M.Sabnak',        49,  135, 1631, 4,    358,  'XarcNM' },   -- Sabn (PLD)
+        ['Count Vine']               = { 'C.Vine',          62,  135, 520,  0,    358,  'XarcNM' },   -- Vine (SAM)
+        ['King Zagan']               = { 'K.Zagan',         60,  135, 1452, 0,    358,  'XarcNM' },   -- Zaga (DRG)
+        ['Marquis Cimeries']         = { 'M.Cimeries',      56,  135, 1625, 0,    358,  'XarcNM' },   -- Cime (RNG)
+
         -- Hydra
         -- Dynamis - Beaucedine (Done)
-        ['Dagourmarche'] = { 'Dagourmarche', 10, 134, 559, 0, 359, 'Dagourmarche' }, -- Dago (DRG/BST/SMN)
-        ['Goublefaupe'] = { 'Goublefaupe', 6, 134, 1211, 1101, 359, 'Goublefaupe' }, -- Goub (WAR/PLD/RDM)
-        ['Mildaunegeux'] = { 'Mildaunegeux', 8, 134, 1672, 7, 359, 'Mildaunegeux' }, -- Mild (MNK/THF/NIN)
-        ['Quiebitiel'] = { 'Quiebitiel', 7, 134, 2066, 1102, 359, 'Quiebitiel' }, -- Quie (WHM/BLM/BRD)
-        ['Velosareon'] = { 'Velosareon', 9, 134, 2574, 5, 359, 'Velosareon' }, -- Velo (RNG/SAM/DRK)
+        ['Dagourmarche']             = { 'Dagourmarche',    10,  134, 559,  0,    359,  'Dagourmarche' }, -- Dago (DRG/BST/SMN)
+        ['Goublefaupe']              = { 'Goublefaupe',     6,   134, 1211, 1101, 359,  'Goublefaupe'  },  -- Goub (WAR/PLD/RDM)
+        ['Mildaunegeux']             = { 'Mildaunegeux',    8,   134, 1672, 7,    359,  'Mildaunegeux' }, -- Mild (MNK/THF/NIN)
+        ['Quiebitiel']               = { 'Quiebitiel',      7,   134, 2066, 1102, 359,  'Quiebitiel'   },   -- Quie (WHM/BLM/BRD)
+        ['Velosareon']               = { 'Velosareon',      9,   134, 2574, 5,    359,  'Velosareon'   },   -- Velo (RNG/SAM/DRK)
+
         -- Below is used to lookup non-beastmen NMs.
         -- Dynamis - Bastok (Done)
-        ['Gu\'Dha Effigy'] = { 'Gu\'Dha Effigy', 1, 186, 2906, 0, 94, 'Statue Megaboss' }, -- BMb (Bastok Megaboss)
+        ['Gu\'Dha Effigy']           = { 'Gu\'Dha Effigy',  1,   186, 2906, 0,    94,   'Statue Megaboss' }, -- BMb (Bastok Megaboss)
+
         -- Dynamis - Jeuno (Done)
-        ['Goblin Golem'] = { 'Goblin Golem', 1, 188, 1085, 47, 92, 'Statue Megaboss' }, -- JMb
+        ['Goblin Golem']             = { 'Goblin Golem',    1,   188, 1085, 47,   92,   'Statue Megaboss' }, -- JMb
+
         -- Dynamis - San d'Oria (Done)
-        ['Overlord\'s Tombstone'] = { 'O. Tombstone', 1, 185, 1967, 49, 93, 'Statue Megaboss' }, -- SMb
+        ['Overlord\'s Tombstone']    = { 'O. Tombstone',    1,   185, 1967, 49,   93,   'Statue Megaboss' }, -- SMb
+
         -- Dynamis - Windurst (Done)
-        ['Tzee Xicu Manifest'] = { 'Tzee Xicu Mani.', 1, 187, 2510, 50, 95, 'Statue Megaboss' }, -- WMb
+        ['Tzee Xicu Manifest']       = { 'Tzee Xicu Mani.', 1,   187, 2510, 50,   95,   'Statue Megaboss' }, -- WMb
+
         -- Dynamis - Xarcabard Non-Beastmen (Done)
-        ['Animated Hammer'] = { 'A.Hammer', 81, 135, 3248, 0, 9, 'Animated Weapon' }, -- AHam
-        ['Animated Staff'] = { 'A.Staff', 87, 135, 3249, 0, 23, 'Animated Weapon' }, -- ASta
-        ['Animated Longsword'] = { 'A.Longsword', 84, 135, 3240, 0, 24, 'Animated Weapon' }, -- ALon
-        ['Animated Tabar'] = { 'A.Tabar', 88, 135, 3242, 0, 8, 'Animated Weapon' }, -- ATab
-        ['Animated Great Axe'] = { 'A.Great Axe', 80, 135, 3243, 0, 12, 'Animated Weapon' }, -- AGre
-        ['Animated Claymore'] = { 'A.Claymore', 78, 135, 3241, 0, 14, 'Animated Weapon' }, -- ACla
-        ['Animated Spear'] = { 'A.Spear', 86, 135, 3245, 0, 19, 'Animated Weapon' }, -- ASpe
-        ['Animated Scythe'] = { 'A.Scythe', 85, 135, 3244, 0, 20, 'Animated Weapon' }, -- AScy
-        ['Animated Kunai'] = { 'A.Kunai', 83, 135, 3246, 0, 17, 'Animated Weapon' }, -- AKun
-        ['Animated Tachi'] = { 'A.Tachi', 89, 135, 3247, 0, 13, 'Animated Weapon' }, -- ATac
-        ['Animated Dagger'] = { 'A.Dagger', 79, 135, 3239, 0, 11, 'Animated Weapon' }, -- ADag
-        ['Animated Knuckles'] = { 'A.Knuckles', 82, 135, 3238, 0, 15, 'Animated Weapon' }, -- AKnu
-        ['Animated Longbow'] = { 'A.Longbow', 11, 135, 3250, 0, 7, 'Animated Weapon' }, -- Alon
-        ['Animated Gun'] = { 'A.Gun', 12, 135, 3252, 0, 18, 'Animated Weapon' }, -- AGun
-        ['Animated Horn'] = { 'A.Horn', 13, 135, 3251, 0, 16, 'Animated Weapon' }, -- AHor
-        ['Animated Shield'] = { 'A.Shield', 14, 135, 3253, 0, 21, 'Animated Weapon' }, -- AShi
-        ['Satellite Hammer'] = { 'S.Hammer', 81, 135, 0, 0, 9, 'Satellite Weapon', 5251 }, -- SHam
-        ['Satellite Staff'] = { 'S.Staff', 87, 135, 0, 0, 23, 'Satellite Weapon', 5251 }, -- SSta
-        ['Satellite Longsword'] = { 'S.Longsword', 84, 135, 0, 0, 24, 'Satellite Weapon', 5763 }, -- SLon
-        ['Satellite Tabar'] = { 'S.Tabar', 88, 135, 0, 0, 8, 'Satellite Weapon', 5251 }, -- STab
-        ['Satellite Great Axe'] = { 'S.Great Axe', 80, 135, 0, 0, 12, 'Satellite Weapon', 5763 }, -- SGre
-        ['Satellite Claymore'] = { 'S.Claymore', 78, 135, 0, 0, 14, 'Satellite Weapon', 5763 }, -- SCla
-        ['Satellite Spear'] = { 'S.Spear', 86, 135, 0, 0, 19, 'Satellite Weapon', 5251 }, -- SSpe
-        ['Satellite Scythe'] = { 'S.Scythe', 85, 135, 0, 0, 20, 'Satellite Weapon', 5763 }, -- SScy
-        ['Satellite Kunai'] = { 'S.Kunai', 83, 135, 0, 0, 17, 'Satellite Weapon', 5251 }, -- SKun
-        ['Satellite Tachi'] = { 'S.Tachi', 89, 135, 0, 0, 13, 'Satellite Weapon', 5251 }, -- STac
-        ['Satellite Dagger'] = { 'S.Dagger', 79, 135, 0, 0, 11, 'Satellite Weapon', 5763 }, -- SDag
-        ['Satellite Knuckles'] = { 'S.Knuckles', 82, 135, 0, 0, 15, 'Satellite Weapon', 5251 }, -- SKnu
-        ['Satellite Longbow'] = { 'S.Longbow', 11, 135, 0, 0, 7, 'Satellite Weapon', 5251 }, -- Slon
-        ['Satellite Gun'] = { 'S.Gun', 12, 135, 0, 0, 18, 'Satellite Weapon', 5251 }, -- SGun
-        ['Satellite Horn'] = { 'S.Horn', 13, 135, 0, 0, 16, 'Satellite Weapon', 5763 }, -- SHor
-        ['Satellite Shield'] = { 'S.Shield', 14, 135, 0, 0, 21, 'Satellite Weapon', 5251 }, -- SShi
-        ['Ying'] = { 'Ying', 2, 135, 0, 0, 87, 'Ying', 159 }, -- Ying
-        ['Yang'] = { 'Yang', 3, 135, 0, 0, 87, 'Yang', 159 }, -- Yang
-        ['Dynamis Lord'] = { 'Dynamis Lord', 1, 135, 730, 86, 361, 'Dynamis Lord', 135 }, -- DL
+        ['Animated Hammer']          = { 'A.Hammer',        81,  135, 3248, 0,    9,    'Animated Weapon'        }, -- AHam
+        ['Animated Staff']           = { 'A.Staff',         87,  135, 3249, 0,    23,   'Animated Weapon'        }, -- ASta
+        ['Animated Longsword']       = { 'A.Longsword',     84,  135, 3240, 0,    24,   'Animated Weapon'        }, -- ALon
+        ['Animated Tabar']           = { 'A.Tabar',         88,  135, 3242, 0,    8,    'Animated Weapon'        }, -- ATab
+        ['Animated Great Axe']       = { 'A.Great Axe',     80,  135, 3243, 0,    12,   'Animated Weapon'        }, -- AGre
+        ['Animated Claymore']        = { 'A.Claymore',      78,  135, 3241, 0,    14,   'Animated Weapon'        }, -- ACla
+        ['Animated Spear']           = { 'A.Spear',         86,  135, 3245, 0,    19,   'Animated Weapon'        }, -- ASpe
+        ['Animated Scythe']          = { 'A.Scythe',        85,  135, 3244, 0,    20,   'Animated Weapon'        }, -- AScy
+        ['Animated Kunai']           = { 'A.Kunai',         83,  135, 3246, 0,    17,   'Animated Weapon'        }, -- AKun
+        ['Animated Tachi']           = { 'A.Tachi',         89,  135, 3247, 0,    13,   'Animated Weapon'        }, -- ATac
+        ['Animated Dagger']          = { 'A.Dagger',        79,  135, 3239, 0,    11,   'Animated Weapon'        }, -- ADag
+        ['Animated Knuckles']        = { 'A.Knuckles',      82,  135, 3238, 0,    15,   'Animated Weapon'        }, -- AKnu
+        ['Animated Longbow']         = { 'A.Longbow',       11,  135, 3250, 0,    7,    'Animated Weapon'        }, -- Alon
+        ['Animated Gun']             = { 'A.Gun',           12,  135, 3252, 0,    18,   'Animated Weapon'        }, -- AGun
+        ['Animated Horn']            = { 'A.Horn',          13,  135, 3251, 0,    16,   'Animated Weapon'        }, -- AHor
+        ['Animated Shield']          = { 'A.Shield',        14,  135, 3253, 0,    21,   'Animated Weapon'        }, -- AShi
+        ['Satellite Hammer']         = { 'S.Hammer',        81,  135, 0,    0,    9,    'Satellite Weapon', 5251 }, -- SHam
+        ['Satellite Staff']          = { 'S.Staff',         87,  135, 0,    0,    23,   'Satellite Weapon', 5251 }, -- SSta
+        ['Satellite Longsword']      = { 'S.Longsword',     84,  135, 0,    0,    24,   'Satellite Weapon', 5763 }, -- SLon
+        ['Satellite Tabar']          = { 'S.Tabar',         88,  135, 0,    0,    8,    'Satellite Weapon', 5251 }, -- STab
+        ['Satellite Great Axe']      = { 'S.Great Axe',     80,  135, 0,    0,    12,   'Satellite Weapon', 5763 }, -- SGre
+        ['Satellite Claymore']       = { 'S.Claymore',      78,  135, 0,    0,    14,   'Satellite Weapon', 5763 }, -- SCla
+        ['Satellite Spear']          = { 'S.Spear',         86,  135, 0,    0,    19,   'Satellite Weapon', 5251 }, -- SSpe
+        ['Satellite Scythe']         = { 'S.Scythe',        85,  135, 0,    0,    20,   'Satellite Weapon', 5763 }, -- SScy
+        ['Satellite Kunai']          = { 'S.Kunai',         83,  135, 0,    0,    17,   'Satellite Weapon', 5251 }, -- SKun
+        ['Satellite Tachi']          = { 'S.Tachi',         89,  135, 0,    0,    13,   'Satellite Weapon', 5251 }, -- STac
+        ['Satellite Dagger']         = { 'S.Dagger',        79,  135, 0,    0,    11,   'Satellite Weapon', 5763 }, -- SDag
+        ['Satellite Knuckles']       = { 'S.Knuckles',      82,  135, 0,    0,    15,   'Satellite Weapon', 5251 }, -- SKnu
+        ['Satellite Longbow']        = { 'S.Longbow',       11,  135, 0,    0,    7,    'Satellite Weapon', 5251 }, -- Slon
+        ['Satellite Gun']            = { 'S.Gun',           12,  135, 0,    0,    18,   'Satellite Weapon', 5251 }, -- SGun
+        ['Satellite Horn']           = { 'S.Horn',          13,  135, 0,    0,    16,   'Satellite Weapon', 5763 }, -- SHor
+        ['Satellite Shield']         = { 'S.Shield',        14,  135, 0,    0,    21,   'Satellite Weapon', 5251 }, -- SShi
+        ['Ying']                     = { 'Ying',            2,   135, 0,    0,    87,   'Ying', 159              }, -- Ying
+        ['Yang']                     = { 'Yang',            3,   135, 0,    0,    87,   'Yang', 159              }, -- Yang
+        ['Dynamis Lord']             = { 'Dynamis Lord',    1,   135, 730,  86,   361,  'Dynamis Lord', 135      }, -- DL
+
         -- Dynamis - Beaucedine Non-Beastmen (Done)
-        ['Angra Mainyu'] = { 'Angra Mainyu', 1, 134, 3207, 1100, 4, 'Angra Mainyu' }, -- Angr
-        ['Fire Pukis'] = { 'Fire Pukis', 2, 135, 0, 0, 87, 'Pukis' }, -- FPuk
-        ['Wind Pukis'] = { 'Wind Pukis', 2, 135, 0, 0, 87, 'Pukis' }, -- WPuk
-        ['Petro Pukis'] = { 'Petro Pukis', 2, 135, 0, 0, 87, 'Pukis' }, -- PPuk
-        ['Poison Pukis'] = { 'Poison Pukis', 2, 135, 0, 0, 87, 'Pukis' }, -- pPuk
-        ['Dynamis Statue'] = { 'D. Statue' , 199, 134, 1144, 1, 92, 'Enabled Auto Attack' }, -- Dynamis Statue (DynS)
-        ['Dynamis Tombstone'] = { 'D. Tombstone' , 201, 134, 2201, 1100, 93, 'Enabled Auto Attack' }, -- Dynamis Tombstone (DynT)
-        ['Dynamis Effigy'] = { 'D. Effigy' , 200, 134, 20, 0, 94, 'Enabled Auto Attack' }, -- Dynamis Effigy (DynE)
-        ['Dynamis Icon'] = { 'D. Icon' , 198, 134, 195, 1100, 95, 'Enabled Auto Attack' }, -- Dynamis Icon (DynI)
+        ['Angra Mainyu']             = { 'Angra Mainyu',    1,   134, 3207, 1100,  4,    'Angra Mainyu'        }, -- Angr
+        ['Fire Pukis']               = { 'Fire Pukis',      2,   135, 0,     0,    87,   'Pukis'               }, -- FPuk
+        ['Wind Pukis']               = { 'Wind Pukis',      2,   135, 0,     0,    87,   'Pukis'               }, -- WPuk
+        ['Petro Pukis']              = { 'Petro Pukis',     2,   135, 0,     0,    87,   'Pukis'               }, -- PPuk
+        ['Poison Pukis']             = { 'Poison Pukis',    2,   135, 0,     0,    87,   'Pukis'               }, -- pPuk
+        ['Dynamis Statue']           = { 'D. Statue' ,      199, 134, 1144,  1,    92,   'Enabled Auto Attack' }, -- Dynamis Statue (DynS)
+        ['Dynamis Tombstone']        = { 'D. Tombstone' ,   201, 134, 2201,  1100, 93,   'Enabled Auto Attack' }, -- Dynamis Tombstone (DynT)
+        ['Dynamis Effigy']           = { 'D. Effigy' ,      200, 134, 20,    0,    94,   'Enabled Auto Attack' }, -- Dynamis Effigy (DynE)
+        ['Dynamis Icon']             = { 'D. Icon' ,        198, 134, 195,   1100, 95,   'Enabled Auto Attack' }, -- Dynamis Icon (DynI)
+
         -- Dynamis - Buburimu Non-Beastmen (Done)
-        ['Aitvaras'] = { 'Aitvaras', 105, 40, 230, 0, 5008, 'Buburimu Dragon' }, -- Aitv
-        ['Alklha'] = { 'Alklha', 105, 40, 230, 0, 5006, 'Buburimu Dragon' }, -- Alkl
-        ['Barong'] = { 'Barong', 105, 40, 230, 0, 5004, 'Buburimu Dragon' }, -- Baro
-        ['Basilic'] = { 'Basilic', 105, 40, 230, 0, 5007, 'Buburimu Dragon' }, -- Basi
-        ['Jurik'] = { 'Jurik', 105, 40, 230, 0, 5003, 'Buburimu Dragon' }, -- Juri
-        ['Koschei'] = { 'Koschei', 105, 40, 230, 0, 5009, 'Buburimu Dragon' }, -- Kosc
-        ['Stihi'] = { 'Stihi', 105, 40, 230, 0, 1101, 'Buburimu Dragon' }, -- Stih
-        ['Stollenwurm'] = { 'Stollenwurm', 105, 40, 230, 0, 5010, 'Buburimu Dragon' }, -- Stol
-        ['Tarasca'] = { 'Tarasca', 105, 40, 230, 0, 5005, 'Buburimu Dragon' }, -- Tara
-        ['Vishap'] = { 'Vishap', 105, 40, 230, 0, 1102, 'Buburimu Dragon' }, -- Vish
-        ['Apocalyptic Beast'] = { 'Apoc. Beast', 1, 40, 146, 0, 0, 'Apocalyptic Beast' }, -- Apoc
+        ['Aitvaras']                 = { 'Aitvaras',        105, 40,  230, 0,    5008, 'Buburimu Dragon'   }, -- Aitv
+        ['Alklha']                   = { 'Alklha',          105, 40,  230, 0,    5006, 'Buburimu Dragon'   }, -- Alkl
+        ['Barong']                   = { 'Barong',          105, 40,  230, 0,    5004, 'Buburimu Dragon'   }, -- Baro
+        ['Basilic']                  = { 'Basilic',         105, 40,  230, 0,    5007, 'Buburimu Dragon'   }, -- Basi
+        ['Jurik']                    = { 'Jurik',           105, 40,  230, 0,    5003, 'Buburimu Dragon'   }, -- Juri
+        ['Koschei']                  = { 'Koschei',         105, 40,  230, 0,    5009, 'Buburimu Dragon'   }, -- Kosc
+        ['Stihi']                    = { 'Stihi',           105, 40,  230, 0,    1101, 'Buburimu Dragon'   }, -- Stih
+        ['Stollenwurm']              = { 'Stollenwurm',     105, 40,  230, 0,    5010, 'Buburimu Dragon'   }, -- Stol
+        ['Tarasca']                  = { 'Tarasca',         105, 40,  230, 0,    5005, 'Buburimu Dragon'   }, -- Tara
+        ['Vishap']                   = { 'Vishap',          105, 40,  230, 0,    1102, 'Buburimu Dragon'   }, -- Vish
+        ['Apocalyptic Beast']        = { 'Apoc. Beast',     1,   40,  146, 0,    0,    'Apocalyptic Beast' }, -- Apoc
+
         -- Dynamis - Valkurm (Done)
-        ['Dragontrap_1'] = { 'Dragontrap', 63, 77, 2910, 0, 114, 'No Auto Attack' }, -- Drat
-        ['Dragontrap_2'] = { 'Dragontrap', 63, 77, 2910, 0, 114, 'No Auto Attack' }, -- Drat
-        ['Dragontrap_3'] = { 'Dragontrap', 63, 77, 2910, 0, 114, 'No Auto Attack' }, -- Drat
-        ['Fairy Ring'] = { 'Fairy Ring', 10, 39, 2910, 0, 116, 'Fairy Ring' }, -- FaiR
-        ['Nant\'ina'] = { 'Nant\'ina', 8, 39, 2910, 0, 1100, 'Nant\'ina' }, -- Nant
-        ['Stcemqestcint'] = { 'Stcemqestcint', 6, 39, 2910, 0, 245, 'No Auto Attack' }, -- Stce
-        ['Nightmare Morbol'] = { 'N. Morbol', 33, 85, 0, 0, 186, 'Nightmare Morbol' }, -- NMor
-        ['Cirrate Christelle'] = { 'C. Christelle', 1, 39, 472, 0, 0, 'Cirrate Christelle' }, -- Cirr
+        ['Dragontrap_1']             = { 'Dragontrap',      63,  77,  2910, 0,    114,  'No Auto Attack'     }, -- Drat
+        ['Dragontrap_2']             = { 'Dragontrap',      63,  77,  2910, 0,    114,  'No Auto Attack'     }, -- Drat
+        ['Dragontrap_3']             = { 'Dragontrap',      63,  77,  2910, 0,    114,  'No Auto Attack'     }, -- Drat
+        ['Fairy Ring']               = { 'Fairy Ring',      10,  39,  2910, 0,    116,  'Fairy Ring'         }, -- FaiR
+        ['Nant\'ina']                = { 'Nant\'ina',       8,   39,  2910, 0,    1100, 'Nant\'ina'          }, -- Nant
+        ['Stcemqestcint']            = { 'Stcemqestcint',   6,   39,  2910, 0,    245,  'No Auto Attack'     }, -- Stce
+        ['Nightmare Morbol']         = { 'N. Morbol',       33,  85,  0,    0,    186,  'Nightmare Morbol'   }, -- NMor
+        ['Cirrate Christelle']       = { 'C. Christelle',   1,   39,  472,  0,    0,    'Cirrate Christelle' }, -- Cirr
+
         -- Dynamis - Qufim Non-Beastmen (Done)
-        ['Scolopendra'] = { 'Scolopendra', 76, 41, 3131, 0, 218, 'Enabled Auto Attack' }, -- Scol
-        ['Suttung'] = { 'Suttung', 85, 41, 3131, 0, 135, 'Enabled Auto Attack' }, -- Sutt
-        ['Stringes'] = { 'Stringes', 79, 41, 3131, 0, 46, 'Enabled Auto Attack' }, -- Stri
-        ['Antaeus'] = { 'Antaeus', 1, 41, 112, 0, 126, 'Antaeus' }, -- Anta
+        ['Scolopendra']              = { 'Scolopendra',     76,  41,  3131, 0,    218,  'Enabled Auto Attack' }, -- Scol
+        ['Suttung']                  = { 'Suttung',         85,  41,  3131, 0,    135,  'Enabled Auto Attack' }, -- Sutt
+        ['Stringes']                 = { 'Stringes',        79,  41,  3131, 0,    46,   'Enabled Auto Attack' }, -- Stri
+        ['Antaeus']                  = { 'Antaeus',         1,   41,  112,  0,    126,  'Antaeus'             }, -- Anta
+
         -- Dynamis - Tavnazia Non-Beastmen
-        ['Nightmare Antlion'] = { 'N. Antlion' , 64, 42, 0, 0, 4074, 'Nightmare Antlion' }, -- NAnt
-        ['Nightmare Worm'] = { 'N. Worm' , 7, 42, 1807, 5075, 4081, 'Nightmare Worm' }, -- NWor
-        ['Umbral Diabolos'] = { 'U. Diabolos', 4, 42, 0, nil, nil, 'Umbral Diabolos' }, -- Umb
-        ['Diabolos Club'] = { 'D. Club', 4, 42, 0, 108, 4084, 'Diabolos Club' }, -- DiaC
-        ['Diabolos Diamond'] = { 'D. Diamond', 3, 42, 0, 107, 4082, 'Diabolos Diamond' }, -- DiaD
-        ['Diabolos Heart'] = { 'D. Heart', 2, 42, 0, 106, 4086, 'Diabolos Heart' }, -- DiaH
-        ['Diabolos Spade'] = { 'D. Spade', 1, 42, 0, nil, 4085, 'Diabolos Spade' }, -- DiaS
-        ['Diabolos Shard'] = { 'D. Shard', 5, 42, 0, nil, 4087, 'Diabolos Shard' }, -- DiaSh
+        ['Nightmare Antlion']        = { 'N. Antlion' ,     64,  42,  0,    0,    4074, 'Nightmare Antlion' }, -- NAnt
+        ['Nightmare Worm']           = { 'N. Worm' ,        7,   42,  1807, 5075, 4081, 'Nightmare Worm'    }, -- NWor
+        ['Umbral Diabolos']          = { 'U. Diabolos',     4,   42,  0,    nil,  nil,  'Umbral Diabolos'   }, -- Umb
+        ['Diabolos Club']            = { 'D. Club',         4,   42,  0,    108,  4084, 'Diabolos Club'     }, -- DiaC
+        ['Diabolos Diamond']         = { 'D. Diamond',      3,   42,  0,    107,  4082, 'Diabolos Diamond'  }, -- DiaD
+        ['Diabolos Heart']           = { 'D. Heart',        2,   42,  0,    106,  4086, 'Diabolos Heart'    }, -- DiaH
+        ['Diabolos Spade']           = { 'D. Spade',        1,   42,  0,    nil,  4085, 'Diabolos Spade'    }, -- DiaS
+        ['Diabolos Shard']           = { 'D. Shard',        5,   42,  0,    nil,  4087, 'Diabolos Shard'    }, -- DiaSh
+
     }
     xi.dynamis.nmFunctions =
     {
@@ -2309,7 +2337,7 @@ xi.dynamis.spawnDynamicPet = function(target, oMob, mobJob)
                 [false] = { 'V. Scorpion', 22, 134, 0, 53, 217 }, -- Normal Quadav BST (VSco)
                 [true] = -- Quadav NM
                 {
-                    ['So\'Gho Adderhandler'] = { 'V. Scorpion', 22, 134, 0, 53, 217 }, -- NM Quadav BST (VSco)
+                    ['So\'Gho Adderhandler']   = { 'V. Scorpion', 22, 134, 0, 53, 217 }, -- NM Quadav BST (VSco)
                     ['Be\'Ebo Tortoisedriver'] = { 'V. Scorpion', 22, 134, 0, 53, 217 }, -- NM Quadav BST (VSco)
                 },
             },
@@ -2341,12 +2369,12 @@ xi.dynamis.spawnDynamicPet = function(target, oMob, mobJob)
             {
                 [true] = -- Goblin NM
                 {
-                    ['Trailblix Goatmug'] = { 'V. Slime' , 130, 134, 0, 54, 229 }, -- NM Goblin BST (VSlime)
-                    ['Rutrix Hamgams'] = { 'V. Slime' , 130, 134, 0, 54, 229 }, -- NM Goblin BST (VSlime)
-                    ['Blazox Boneybod'] = { 'V. Slime', 130, 134, 0, 54, 229 }, -- NM Goblin BST (VSlime)
-                    ['Routsix Rubbertendon'] = { 'V. Slime' , 130, 134, 0, 54, 229 }, -- NM Goblin BST (VSlime)
-                    ['Blazax Boneybad'] = { 'V. Slime' , 130, 134, 0, 54, 229 }, -- NM Goblin BST (VSlime)
-                    ['Woodnix Shrillwhistle'] = { 'W. Slime' , 7, 40, 0, 54, 229 }, -- NM Goblin BST (WSSlime)
+                    ['Trailblix Goatmug']       = { 'V. Slime', 130, 134, 0, 54, 229 }, -- NM Goblin BST (VSlime)
+                    ['Rutrix Hamgams']          = { 'V. Slime', 130, 134, 0, 54, 229 }, -- NM Goblin BST (VSlime)
+                    ['Blazox Boneybod']         = { 'V. Slime', 130, 134, 0, 54, 229 }, -- NM Goblin BST (VSlime)
+                    ['Routsix Rubbertendon']    = { 'V. Slime', 130, 134, 0, 54, 229 }, -- NM Goblin BST (VSlime)
+                    ['Blazax Boneybad']         = { 'V. Slime', 130, 134, 0, 54, 229 }, -- NM Goblin BST (VSlime)
+                    ['Woodnix Shrillwhistle']   = { 'W. Slime', 7,   40,  0, 54, 229 }, -- NM Goblin BST (WSSlime)
                 },
             },
         },
@@ -2361,9 +2389,9 @@ xi.dynamis.spawnDynamicPet = function(target, oMob, mobJob)
                 [false] = { 'V. Wyvern', 27, 134, 0, 0, 714 },
                 [true] =
                 {
-                    ['Elvaansticker Bxafraff'] = { 'V. Wyvern', 27, 134, 0, 0, 714 }, -- Normal Vanguard's Wyvern (Vwyv)
-                    ['Wyrmgnasher Bjakdek'] = { 'V. Wyvern', 27, 134, 0, 0, 714 }, -- Normal Vanguard's Wyvern (Vwyv)
-                    ['Drakefeast Wubmfub'] = { 'V. Wyvern', 27, 134, 0, 0, 714 }, -- Normal Vanguard's Wyvern (Vwyv)
+                    ['Elvaansticker Bxafraff']  = { 'V. Wyvern', 27, 134, 0, 0, 714 }, -- Normal Vanguard's Wyvern (Vwyv)
+                    ['Wyrmgnasher Bjakdek']     = { 'V. Wyvern', 27, 134, 0, 0, 714 }, -- Normal Vanguard's Wyvern (Vwyv)
+                    ['Drakefeast Wubmfub']      = { 'V. Wyvern', 27, 134, 0, 0, 714 }, -- Normal Vanguard's Wyvern (Vwyv)
                 },
             },
             [337] = -- Quadav Family
@@ -2426,8 +2454,8 @@ xi.dynamis.spawnDynamicPet = function(target, oMob, mobJob)
                 [false] = { 'V. Avatar' , 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
                 [true] = -- Orc NM
                 {
-                    ['Deathcaller Bidfbid'] = { 'V. Avatar' , 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
-                    ['Reapertongue Gadgquok'] = { 'V. Avatar' , 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
+                    ['Deathcaller Bidfbid']     = { 'V. Avatar', 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
+                    ['Reapertongue Gadgquok']   = { 'V. Avatar', 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
                 },
             },
             [337] = -- Quadav Family
@@ -2461,8 +2489,8 @@ xi.dynamis.spawnDynamicPet = function(target, oMob, mobJob)
                 [true] = -- Yagudo NM
                 {
                     ['Baa Dava the Bibliophage'] = { 'V. Avatar' , 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
-                    ['Puu Timu the Phantasmal'] = { 'V. Avatar' , 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
-                    ['Haa Pevi the Stentorian'] = { 'V. Avatar' , 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
+                    ['Puu Timu the Phantasmal']  = { 'V. Avatar' , 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
+                    ['Haa Pevi the Stentorian']  = { 'V. Avatar' , 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
                 },
             },
             [87] = -- Dragon Family
@@ -2478,7 +2506,7 @@ xi.dynamis.spawnDynamicPet = function(target, oMob, mobJob)
                 {
                     ['Morblox Chubbychin'] = { 'V. Avatar' , 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
                     ['Morgmox Moldnoggin'] = { 'V. Avatar' , 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
-                    ['Mortilox Wartpaws'] = { 'V. Avatar' , 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
+                    ['Mortilox Wartpaws']  = { 'V. Avatar' , 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
                 },
             },
         },

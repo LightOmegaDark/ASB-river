@@ -48,9 +48,9 @@ local currencyHaggle =
 
 local currencyAntiqix =
 {
-   xi.item.TUKUKU_WHITESHELL,
-   xi.item.LUNGO_NANGO_JADESHELL,
-   xi.item.RIMILALA_STRIPESHELL
+    xi.item.TUKUKU_WHITESHELL,
+    xi.item.LUNGO_NANGO_JADESHELL,
+    xi.item.RIMILALA_STRIPESHELL
 }
 
 local currencyLootblox =
@@ -90,7 +90,7 @@ local shopAntiqix =
     23, xi.item.CHRONOS_TOOTH,
     24, xi.item.CHUNK_OF_RELIC_STEEL,
     25, xi.item.PIECE_OF_LANCEWOOD_LUMBER,
-    28, xi.item.DAMASCUS_INGOT, -
+    28, xi.item.DAMASCUS_INGOT,
 }
 
 local maps =
