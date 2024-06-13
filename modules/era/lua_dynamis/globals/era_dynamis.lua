@@ -22,6 +22,9 @@ require('modules/era/lua_dynamis/mob_spawning_files/dynamis_san_d_oria_mobs')
 require('modules/era/lua_dynamis/mob_spawning_files/dynamis_valkurm_mobs')
 require('modules/era/lua_dynamis/mob_spawning_files/dynamis_windurst_mobs')
 require('modules/era/lua_dynamis/mob_spawning_files/dynamis_xarcabard_mobs')
+
+require('modules/era/lua_dynamis/zone_files/dynamis_sandoria')
+
 -----------------------------------
 --   Module Affected Scripts     --
 -----------------------------------
@@ -36,14 +39,14 @@ xi.dynamis = xi.dynamis or {}
 -----------------------------------
 --   Global Dynamis Variables    --
 -----------------------------------
-local dynamisSnapshotInterval = 30 -- Interval to save a snapshot of the instance
-local dynamisLastSnapshot = 0 -- Last snapshot time
-local dynamisTimelessHourglass = xi.item.TIMELESS_HOURGLASS
-local dynamisPerpetual = xi.item.PERPETUAL_HOURGLASS
-local dynamisMinLvl = 65
-local dynamisReservationCancel = 180
-local dynamisReentryDays = 3
-local dynamisReentryHours = 71
+local dynamisSnapshotInterval   = 30 -- Interval to save a snapshot of the instance
+local dynamisLastSnapshot       = 0 -- Last snapshot time
+local dynamisTimelessHourglass  = xi.item.TIMELESS_HOURGLASS
+local dynamisPerpetual          = xi.item.PERPETUAL_HOURGLASS
+local dynamisMinLvl             = 65
+local dynamisReservationCancel  = 180
+local dynamisReentryDays        = 3
+local dynamisReentryHours       = 71
 
 local function checkGM(player)
     if player:getVisibleGMLevel() > 0 then
@@ -82,10 +85,10 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
     -- {
     --     text = -- text for table lookup
     --     {
-    --         INFORMATION_RECORDED = , -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
-    --         ANOTHER_GROUP = , -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
-    --         UNABLE_TO_CONNECT = , -- Unable to connect.≺Prompt≻
-    --         CONNECTING_WITH_THE_SERVER = , -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+    --         CONNECTING_WITH_THE_SERVER   = , -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+    --         UNABLE_TO_CONNECT            = , -- Unable to connect.≺Prompt≻
+    --         ANOTHER_GROUP                = , -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
+    --         INFORMATION_RECORDED         = , -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
     --     },
     -- },
 
@@ -94,10 +97,10 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
         text = -- text for table lookup
         {
             -- ID Shift
-            INFORMATION_RECORDED = 11751, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
-            ANOTHER_GROUP = 11750, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
-            UNABLE_TO_CONNECT = 11748, -- Unable to connect.≺Prompt≻
-            CONNECTING_WITH_THE_SERVER = 11747, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            CONNECTING_WITH_THE_SERVER  = 11751, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            UNABLE_TO_CONNECT           = 11752, -- Unable to connect.≺Prompt≻
+            ANOTHER_GROUP               = 11754, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
+            INFORMATION_RECORDED        = 11755, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
         },
     },
 
@@ -106,10 +109,10 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
         text = -- text for table lookup
         {
             -- ID Shift
-            INFORMATION_RECORDED = 7869, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
-            ANOTHER_GROUP = 7868, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
-            UNABLE_TO_CONNECT = 7866, -- Unable to connect.≺Prompt≻
-            CONNECTING_WITH_THE_SERVER = 7865, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            CONNECTING_WITH_THE_SERVER  = 7870, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            UNABLE_TO_CONNECT           = 7871, -- Unable to connect.≺Prompt≻
+            ANOTHER_GROUP               = 7873, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
+            INFORMATION_RECORDED        = 7874, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
         },
     },
 
@@ -118,10 +121,10 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
         text = -- text for table lookup
         {
             -- ID Shift
-            INFORMATION_RECORDED = 7894, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
-            ANOTHER_GROUP = 7893, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
-            UNABLE_TO_CONNECT = 7891, -- Unable to connect.≺Prompt≻
-            CONNECTING_WITH_THE_SERVER = 7890, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            CONNECTING_WITH_THE_SERVER  = 7895, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            UNABLE_TO_CONNECT           = 7896, -- Unable to connect.≺Prompt≻
+            ANOTHER_GROUP               = 7898, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
+            INFORMATION_RECORDED        = 7899, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
         },
     },
 
@@ -130,10 +133,10 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
         text = -- text for table lookup
         {
             -- ID Shift
-            INFORMATION_RECORDED = 7852, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
-            ANOTHER_GROUP = 7851, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
-            UNABLE_TO_CONNECT = 7849, -- Unable to connect.≺Prompt≻
-            CONNECTING_WITH_THE_SERVER = 7848, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            CONNECTING_WITH_THE_SERVER  = 7853, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            UNABLE_TO_CONNECT           = 7854, -- Unable to connect.≺Prompt≻
+            ANOTHER_GROUP               = 7856, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
+            INFORMATION_RECORDED        = 7857, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
         },
     },
 
@@ -142,10 +145,10 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
         text = -- text for table lookup
         {
             -- ID Shift
-            INFORMATION_RECORDED = 11235, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
-            ANOTHER_GROUP = 11234, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
-            UNABLE_TO_CONNECT = 11232, -- Unable to connect.≺Prompt≻
-            CONNECTING_WITH_THE_SERVER = 11231, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            CONNECTING_WITH_THE_SERVER  = 11235, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            UNABLE_TO_CONNECT           = 11236, -- Unable to connect.≺Prompt≻
+            ANOTHER_GROUP               = 11238, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
+            INFORMATION_RECORDED        = 11239, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
         },
     },
 
@@ -154,10 +157,10 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
         text = -- text for table lookup
         {
             -- ID Shift
-            INFORMATION_RECORDED = 7444, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
-            ANOTHER_GROUP = 7443, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
-            UNABLE_TO_CONNECT = 7441, -- Unable to connect.≺Prompt≻
-            CONNECTING_WITH_THE_SERVER = 7440, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            CONNECTING_WITH_THE_SERVER  = 7440, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            UNABLE_TO_CONNECT           = 7441, -- Unable to connect.≺Prompt≻
+            ANOTHER_GROUP               = 7443, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
+            INFORMATION_RECORDED        = 7444, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
         },
     },
     [xi.zone.TAVNAZIAN_SAFEHOLD] = -- zoneID for array lookup
@@ -165,10 +168,10 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
         text = -- text for table lookup
         {
             -- ID Shift
-            INFORMATION_RECORDED = 11835, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
-            ANOTHER_GROUP = 11834, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
-            UNABLE_TO_CONNECT = 11832, -- Unable to connect.≺Prompt≻
-            CONNECTING_WITH_THE_SERVER = 11831, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            CONNECTING_WITH_THE_SERVER  = 11835, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            UNABLE_TO_CONNECT           = 11836, -- Unable to connect.≺Prompt≻
+            ANOTHER_GROUP               = 11838, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
+            INFORMATION_RECORDED        = 11839, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
         },
     },
     [xi.zone.VALKURM_DUNES] = -- zoneID for array lookup
@@ -176,10 +179,10 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
         text = -- text for table lookup
         {
             -- ID Shift
-            INFORMATION_RECORDED = 7868, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
-            ANOTHER_GROUP = 7867, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
-            UNABLE_TO_CONNECT = 7865, -- Unable to connect.≺Prompt≻
-            CONNECTING_WITH_THE_SERVER = 7864, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            CONNECTING_WITH_THE_SERVER  = 7869, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            UNABLE_TO_CONNECT           = 7870, -- Unable to connect.≺Prompt≻
+            ANOTHER_GROUP               = 7872, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
+            INFORMATION_RECORDED        = 7873, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
         },
     },
     [xi.zone.WINDURST_WALLS] = -- zoneID for array lookup
@@ -198,29 +201,20 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
         text = -- text for table lookup
         {
             -- ID Shift
-            INFORMATION_RECORDED = 7849, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
-            ANOTHER_GROUP = 7848, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
-            UNABLE_TO_CONNECT = 7846, -- Unable to connect.≺Prompt≻
-            CONNECTING_WITH_THE_SERVER = 7845, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            CONNECTING_WITH_THE_SERVER  = 7850, -- Connecting with server. Please wait.≺Possible Special Code: 00≻
+            UNABLE_TO_CONNECT           = 7851, -- Unable to connect.≺Prompt≻
+            ANOTHER_GROUP               = 7853, -- Another group of player characters is currently occupying Dynamis - ≺Multiple Choice (Parameter 0)≻[Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia].≺Prompt≻
+            INFORMATION_RECORDED        = 7854, -- The time and destination for your foray into Dynamis has been recorded on your <itemID>.
         },
     },
     ---------------------------------------------
     --              Dynamis Zones             --
     ---------------------------------------------
-    -- [zone] = -- zoneID for array lookup
-    -- {
-    --     text = -- text for table lookup
-    --     {
-    --         NO_LONGER_HAVE_CLEARANCE = 7061,
-    --     },
-    --     entryZone = -- for tracking/setting cooldown for cleanup script
-    -- },
-
     [xi.zone.DYNAMIS_BASTOK] = -- zoneID for array lookup
     {
         text = -- text for table lookup
         {
-            NO_LONGER_HAVE_CLEARANCE = 7064, -- ID Shift
+            NO_LONGER_HAVE_CLEARANCE = 7068, -- ---== WARNING ==---- You no longer have clearance to remain in Dynamis. You will be transported out in ≺Numeric Parameter 1≻ ≺Singular/Plural Choice (Parameter 1)≻[second/seconds].≺Prompt≻
         },
         entryZone = xi.zone.BASTOK_MINES,
     },
@@ -229,7 +223,7 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
     {
         text = -- text for table lookup
         {
-            NO_LONGER_HAVE_CLEARANCE = 7164, -- ID Shift
+            NO_LONGER_HAVE_CLEARANCE = 7168, -- ---== WARNING ==---- You no longer have clearance to remain in Dynamis. You will be transported out in ≺Numeric Parameter 1≻ ≺Singular/Plural Choice (Parameter 1)≻[second/seconds].≺Prompt≻
         },
         entryZone = xi.zone.BEAUCEDINE_GLACIER,
     },
@@ -237,7 +231,7 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
     {
         text = -- text for table lookup
         {
-            NO_LONGER_HAVE_CLEARANCE = 7323, -- ID Shift
+            NO_LONGER_HAVE_CLEARANCE = 7327, -- ---== WARNING ==---- You no longer have clearance to remain in Dynamis. You will be transported out in ≺Numeric Parameter 1≻ ≺Singular/Plural Choice (Parameter 1)≻[second/seconds].≺Prompt≻
         },
         entryZone = xi.zone.BUBURIMU_PENINSULA,
     },
@@ -245,7 +239,7 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
     {
         text = -- text for table lookup
         {
-            NO_LONGER_HAVE_CLEARANCE = 7064, -- ID Shift
+            NO_LONGER_HAVE_CLEARANCE = 7068, -- ---== WARNING ==---- You no longer have clearance to remain in Dynamis. You will be transported out in ≺Numeric Parameter 1≻ ≺Singular/Plural Choice (Parameter 1)≻[second/seconds].≺Prompt≻
         },
         entryZone = xi.zone.RULUDE_GARDENS,
     },
@@ -253,7 +247,7 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
     {
         text = -- text for table lookup
         {
-            NO_LONGER_HAVE_CLEARANCE = 7323, -- ID Shift
+            NO_LONGER_HAVE_CLEARANCE = 7327, -- ---== WARNING ==---- You no longer have clearance to remain in Dynamis. You will be transported out in ≺Numeric Parameter 1≻ ≺Singular/Plural Choice (Parameter 1)≻[second/seconds].≺Prompt≻
         },
         entryZone = xi.zone.QUFIM_ISLAND,
     },
@@ -261,7 +255,7 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
     {
         text = -- text for table lookup
         {
-            NO_LONGER_HAVE_CLEARANCE = 7064, -- ID Shift
+            NO_LONGER_HAVE_CLEARANCE = 7068, -- ---== WARNING ==---- You no longer have clearance to remain in Dynamis. You will be transported out in ≺Numeric Parameter 1≻ ≺Singular/Plural Choice (Parameter 1)≻[second/seconds].≺Prompt≻
         },
         entryZone = xi.zone.SOUTHERN_SAN_DORIA,
     },
@@ -269,7 +263,7 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
     {
         text = -- text for table lookup
         {
-            NO_LONGER_HAVE_CLEARANCE = 7323, -- ID Shift
+            NO_LONGER_HAVE_CLEARANCE = 7327, -- ---== WARNING ==---- You no longer have clearance to remain in Dynamis. You will be transported out in ≺Numeric Parameter 1≻ ≺Singular/Plural Choice (Parameter 1)≻[second/seconds].≺Prompt≻
         },
         entryZone = xi.zone.TAVNAZIAN_SAFEHOLD,
     },
@@ -277,7 +271,7 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
     {
         text = -- text for table lookup
         {
-            NO_LONGER_HAVE_CLEARANCE = 7323, -- ID Shift
+            NO_LONGER_HAVE_CLEARANCE = 7327, -- ---== WARNING ==---- You no longer have clearance to remain in Dynamis. You will be transported out in ≺Numeric Parameter 1≻ ≺Singular/Plural Choice (Parameter 1)≻[second/seconds].≺Prompt≻
         },
         entryZone = xi.zone.VALKURM_DUNES,
     },
@@ -285,7 +279,7 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
     {
         text = -- text for table lookup
         {
-            NO_LONGER_HAVE_CLEARANCE = 7064, -- ID Shift
+            NO_LONGER_HAVE_CLEARANCE = 7068, -- ---== WARNING ==---- You no longer have clearance to remain in Dynamis. You will be transported out in ≺Numeric Parameter 1≻ ≺Singular/Plural Choice (Parameter 1)≻[second/seconds].≺Prompt≻
         },
         entryZone = xi.zone.WINDURST_WALLS,
     },
@@ -293,7 +287,7 @@ xi.dynamis.dynaIDLookup = -- Used to check for different IDs based on zoneID. Re
     {
         text = -- text for table lookup
         {
-            NO_LONGER_HAVE_CLEARANCE = 7064, -- ID Shift
+            NO_LONGER_HAVE_CLEARANCE = 7068, -- ---== WARNING ==---- You no longer have clearance to remain in Dynamis. You will be transported out in ≺Numeric Parameter 1≻ ≺Singular/Plural Choice (Parameter 1)≻[second/seconds].≺Prompt≻
         },
         vars = -- Global Var Table Cleanup
         {
@@ -538,7 +532,7 @@ xi.dynamis.entryInfoEra =
         updatedRoam = Boolean for using LimitBreak statue roaming paths.
     }
 --]]
-
+local dynaSand = zonesCustom[xi.zone.DYNAMIS_SAN_DORIA]
 xi.dynamis.dynaInfoEra =
 {
     [xi.zone.DYNAMIS_SAN_DORIA] =
@@ -548,7 +542,8 @@ xi.dynamis.dynaInfoEra =
         hasSeenWinCSVar = 'DynaSandoria_HasSeenWinCS',
         winKI = xi.ki.HYDRA_CORPS_COMMAND_SCEPTER,
         winTitle = xi.title.DYNAMIS_SAN_DORIA_INTERLOPER,
-        winQM = 17535224, -- ID Shift
+        -- winQM = 17535224, -- ID Shift
+        winQM = dynaSand.npcASB.WIN_KI,
         entryPos = { 161.838, -2.000, 161.673, 93, xi.zone.DYNAMIS_SAN_DORIA },
         ejectPos = { 161.000, -2.000, 161.000, 94, xi.zone.SOUTHERN_SAN_DORIA },
         specifiedChildren = true,

@@ -55,6 +55,7 @@ era/sql
 #        Dynamis
 #-----------------------
 # This loads special due to requirements between globals
+era/lua_dynamis/zone_files/dynamis_sandoria.lua
 era/lua_dynamis/globals/era_dynamis.lua
 era/lua_dynamis/globals/era_dynamis_spawning.lua
 era/lua_dynamis/mobskills/era_pet_skills.lua
