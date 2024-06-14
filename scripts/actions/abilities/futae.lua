@@ -8,11 +8,11 @@
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
-    return 0, 0
+    xi.job_utils.ninja.checkFutae(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    target:addStatusEffect(xi.effect.FUTAE, 0, 0, 60)
+    xi.job_utils.ninja.useFutae(player, target, ability)
 end
 
 return abilityObject

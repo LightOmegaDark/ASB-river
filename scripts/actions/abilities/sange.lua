@@ -8,13 +8,11 @@
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
-    return 0, 0
+    xi.job_utils.ninja.checkSange(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    local potency = player:getMerit(xi.merit.SANGE)-1
-
-    player:addStatusEffect(xi.effect.SANGE, potency * 25, 0, 60)
+    xi.job_utils.ninja.useSange(player, target, ability)
 end
 
 return abilityObject
