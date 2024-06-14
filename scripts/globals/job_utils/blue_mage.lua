@@ -1,8 +1,6 @@
 -----------------------------------
 -- Blue Mage Job Utilities
 -----------------------------------
-require('scripts/globals/ability')
-require('scripts/globals/jobpoints')
 require('scripts/globals/utils')
 -----------------------------------
 xi = xi or {}
