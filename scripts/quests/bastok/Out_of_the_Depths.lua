@@ -16,9 +16,6 @@ local ID = require('scripts/zones/Bastok_Markets/IDs')
 -----------------------------------
 local quest = Quest:new(xi.quest.log_id.BASTOK, xi.quest.id.bastok.OUT_OF_THE_DEPTHS)
 
-local currentProg = quest:getVar(player, 'Prog')
-local maxProg = 6 --prevents repeatable aspects of quest from overflowing and blocking progression
-
 quest.reward =
 {
     fame = 80,
@@ -89,6 +86,8 @@ quest.sections =
                 end,
 
                 [309] = function(player, csid, option, npc)
+                    local currentProg = quest:getVar(player, 'Prog')
+                    local maxProg = 6 --prevents repeatable aspects of quest from overflowing and blocking progression
                     if option == 1 then
                         npcUtil.giveCurrency(player, 'gil', 100)
                         player:delKeyItem(xi.ki.DUSTY_TOME)
