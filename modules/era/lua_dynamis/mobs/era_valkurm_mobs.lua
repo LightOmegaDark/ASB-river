@@ -54,51 +54,36 @@ xi.dynamis.nightmareFlyCheck = function(zone)
     end
 end
 
+local checkCirrateSkills =
+{
+    -- stcemqestcint_killed is only a drain and tp change for the same skill ID
+    -- Var check           weak, strong
+    { 'dragontrap1_killed',    1608, 1609 },
+    { 'nanatina_killed',       1606, 1607 },
+    { 'fairy_ring_killed',     1604, 1605 },
+    { 'stcemqestcint_killed',  1611, 1611 },
+}
+
 xi.dynamis.onSpawnCirrate = function(mob)
-    xi.dynamis.cirrateBuffs =
-    {
-        { { 'dragontrap1_killed', 'dragontrap2_killed', 'dragontrap3_killed' }, 'putridbreathcap', 3, 'dragon_killed', nil, 1609 },
-        { { 'fairy_ring_killed' }, 'miasmicbreathpower', 30, 'fairy_killed', 40, 1605 },
-        { { 'nanatina_killed' }, 'fragrantbreathduration', 30, 'nana_killed', nil, 1607 },
-        { { 'stcemqestcint_killed' }, 'vampiriclashpower', 1, 'stcem_killed', nil, 1611 },
-    }
-    xi.dynamis.cirrateSkills = -- All chance values are the max value they will go until.
-    {
-        --  [skillID] = {chance, 'Mob's Name'},
-        [1607] = 20, -- Fragrant Breath
-        [1605] = 20, -- Miasmic Breath
-        [1609] = 20, -- Putrid Breath
-        [1611] = 20, -- Vampiric Lash
-        [1610] = 20, -- Extremely Bad Breath
-    }
-
-    mob:addListener('WEAPONSKILL_STATE_EXIT', 'CIRRATE_WEAPONSKILL_STATE_EXIT', function(mobA)
-        mobA:getZone():setLocalVar('cirrate_tp', 0)
-        mobA:setTP(0)
-    end)
-
     mob:setRoamFlags(xi.roamFlag.SCRIPTED)
     xi.dynamis.setMegaBossStats(mob)
     -- Set Mods
-    mob:setSpeed(140)
-    mob:addMod(xi.mod.REGAIN, 1250)
-    mob:setAutoAttackEnabled(false)
-end
-
-xi.dynamis.onSpawnFairy = function(mob)
-    mob:setSpeed(140)
-    xi.dynamis.onSpawnNoAuto(mob)
-end
-
-xi.dynamis.onEngageMorbol = function(mob, target)
-    local cirrate = GetMobByID(mob:getLocalVar('ParentID'))
-    if cirrate then
-        mob:setSpeed(cirrate:getSpeed())
-    end
+    mob:addImmunity(xi.immunity.SLEEP)
+    mob:addImmunity(xi.immunity.LIGHT_SLEEP)
+    mob:addImmunity(xi.immunity.DARK_SLEEP)
+    mob:addImmunity(xi.immunity.BIND)
+    mob:addImmunity(xi.immunity.GRAVITY)
+    mob:addImmunity(xi.immunity.SILENCE)
+    mob:addImmunity(xi.immunity.TERROR)
+    mob:setSpeed(150)
+    mob:setMobMod(xi.mobMod.WEAPON_BONUS, 50)
+    mob:setMobMod(xi.mobMod.NO_STANDBACK, 1)
+    mob:setMobSkillAttack(6505) -- use its skill list as its auto attack
 end
 
 xi.dynamis.onEngagedCirrate = function(mob, target)
     local zoneID = mob:getZoneID()
+    local zone = mob:getZone()
     local flytrapKills = checkFlytrapKills(mob)
     local morbolKills = checkMorbolKills(mob)
     if
@@ -110,62 +95,120 @@ xi.dynamis.onEngagedCirrate = function(mob, target)
         xi.dynamis.nmDynamicSpawn(289, 24, true, zoneID, target, mob)
         xi.dynamis.nmDynamicSpawn(290, 24, true, zoneID, target, mob)
     end
+
+    if zone:getLocalVar('fairy_ring_killed') == 1 then
+        mob:setSpeed(60)
+    end
 end
 
 xi.dynamis.onFightCirrate = function(mob, target)
-    local zone = mob:getZone()
-    local buffs = xi.dynamis.cirrateBuffs
-    local skills = xi.dynamis.cirrateSkills
-    local itTotal = 0
-    local total = skills[1607] + skills[1605] + skills[1609] + skills[1611] + skills[1610]
-    local rand = math.random(1, total)
-
-    if #buffs > 0 then
-        local selection = math.random(1, #buffs)
-        local count = 0
-        for _, var in pairs(buffs[selection][1]) do
-            if zone:getLocalVar(var) == 1 then
-                count = count + 1
-            end
-        end
-
-        if count > 0 then
-            mob:setLocalVar(buffs[selection][2], buffs[selection][3])
-            zone:setLocalVar(buffs[selection][4], 1)
-            if buffs[selection][5] ~= nil then
-                mob:setSpeed(buffs[selection][5])
-            end
-
-            xi.dynamis.cirrateSkills[buffs[selection][6]] = 12  -- Updates first entry to 12 if the mob is dead.
-            table.remove(buffs, selection)
-        end
-    end
-
-    if mob:getTP() >= 2000 and zone:getLocalVar('cirrate_tp') == 0 then
-        zone:getLocalVar('cirrate_tp', 1)
-        for skill, chance in pairs(skills) do
-            if rand <= itTotal + chance then
-                return mob:useMobAbility(skill)
-            else
-                itTotal = itTotal + chance
-            end
-        end
-    end
 end
 
 xi.dynamis.onWeaponskillPrepCirrate = function(mob)
+    -- Check for extremely_bad_breath first
+    local chanceForKO = math.random(100)
+    local inverseHPCheck = (100 - mob:getHPP()) / 5
+    inverseHPCheck = utils.clamp(inverseHPCheck, 1, 5)
+
+    if chanceForKO < inverseHPCheck then
+        return 1610 -- extremely_bad_breath
+    end
+
+    local cirrateWeaponskills = { }
+
+    for var, abilities in pairs(checkCirrateSkills) do
+        if mob:getZone():getLocalVar(abilities[1]) ~= 1 then
+            table.insert(cirrateWeaponskills, abilities[3]) -- If they are not dead use stronger
+        else
+            table.insert(cirrateWeaponskills, abilities[2]) -- If they are dead use weaker versions
+        end
+    end
+
+    return cirrateWeaponskills[math.random(1, #cirrateWeaponskills)]
+end
+
+xi.dynamis.onSpawnFairy = function(mob)
+    xi.dynamis.setNMStats(mob)
+    mob:setMobSkillAttack(6503) -- use mephitic spare as its auto attack
+    -- mob:setDelay(6000) -- use mephitic spare as its auto attack
+    mob:setRoamFlags(xi.roamFlag.NONE)
+    mob:setSpeed(70)
+    mob:addImmunity(xi.immunity.SLEEP)
+    mob:addImmunity(xi.immunity.LIGHT_SLEEP)
+    mob:addImmunity(xi.immunity.DARK_SLEEP)
+    mob:addImmunity(xi.immunity.TERROR)
+end
+
+xi.dynamis.onSpawnDragontrap = function(mob)
+    xi.dynamis.setNMStats(mob)
+    mob:setRoamFlags(xi.roamFlag.NONE)
+    mob:setMod(xi.mod.REGAIN, 500)
+    mob:setSpeed(60)
+    mob:setDelay(2000)
+    mob:addImmunity(xi.immunity.SLEEP)
+    mob:addImmunity(xi.immunity.LIGHT_SLEEP)
+    mob:addImmunity(xi.immunity.DARK_SLEEP)
+    mob:addImmunity(xi.immunity.TERROR)
+    mob:addImmunity(xi.immunity.BIND)
+    mob:addImmunity(xi.immunity.GRAVITY)
+    mob:setMobFlags(7) -- Sets double size
+end
+
+xi.dynamis.onSpawnDragontrapChild = function(mob)
+    xi.dynamis.setNMStats(mob)
+    mob:setRoamFlags(xi.roamFlag.NONE)
+    mob:setMod(xi.mod.REGAIN, 500)
+    mob:setSpeed(60)
+    mob:setDelay(2000)
+    mob:addImmunity(xi.immunity.TERROR)
+    mob:addImmunity(xi.immunity.BIND)
+    mob:addImmunity(xi.immunity.GRAVITY)
+
+    mob:setMod(xi.mod.MAGIC_NULL, 100)    -- Takes no magic damage
+end
+
+xi.dynamis.onEngageMorbol = function(mob, target)
+    mob:addImmunity(xi.immunity.DARK_SLEEP) -- Testimony says immune to dark sleep
+    mob:addImmunity(xi.immunity.GRAVITY)
+    mob:addImmunity(xi.immunity.BIND)
+
+    local cirrate = GetMobByID(mob:getLocalVar('ParentID'))
+    if cirrate then
+        mob:setSpeed(cirrate:getSpeed())
+    end
+end
+
+xi.dynamis.onSpawnStcemqestcint = function(mob)
+    xi.dynamis.setNMStats(mob)
+    mob:addImmunity(xi.immunity.SLEEP)
+    mob:addImmunity(xi.immunity.LIGHT_SLEEP)
+    mob:addImmunity(xi.immunity.DARK_SLEEP)
+    mob:setRoamFlags(xi.roamFlag.NONE)
+    mob:setMobSkillAttack(6504) -- use gouging_branch as its auto attack
+end
+
+xi.dynamis.onSpawnNantina = function(mob)
+    xi.dynamis.setNMStats(mob)
+    mob:addImmunity(xi.immunity.SLEEP)
+    mob:addImmunity(xi.immunity.LIGHT_SLEEP)
+    mob:addImmunity(xi.immunity.DARK_SLEEP)
+    mob:addImmunity(xi.immunity.TERROR)
+    mob:setRoamFlags(xi.roamFlag.NONE)
+    mob:setMobSkillAttack(6508) -- use skill list as auto
+    mob:setLocalVar('nantina_skill_count', 0)
 end
 
 xi.dynamis.onWeaponskillPrepNantina = function(mob)
-    local charm = math.random(1, 100)
-
-    if charm <= 10 then
-        return 1619 -- Attractant
+    -- Blow x9 > Uppercut x3 > Attract
+    local skillCount = mob:getLocalVar('nantina_skill_count')
+    if skillCount < 9 then
+        mob:setLocalVar('nantina_skill_count', skillCount + 1)
+        return 1617 -- blow
+    elseif skillCount < 12 then
+        mob:setLocalVar('nantina_skill_count', skillCount + 1)
+        return 1618 -- uppercut
     else
-        if mob:getHPP() > 25 then
-            return 1617
-        else
-            return 1618
-        end
+        mob:setLocalVar('nantina_skill_count', 0)
+        return 1619 -- attractant
     end
 end

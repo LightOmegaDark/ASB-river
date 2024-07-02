@@ -89,7 +89,7 @@ xi.dynamis.onSpawnNightmareAntlion = function(mob)
     xi.dynamis.setNMStats(mob)
 end
 
-xi.dynamis.onMobEngagedNightmareWorm = function(mob, target)
+xi.dynamis.onMobEngageNightmareWorm = function(mob, target)
     mob:setAnimationSub(0)
     mob:hideName(false)
     mob:setUntargetable(false)
@@ -142,52 +142,56 @@ xi.dynamis.tavQMSpawnCheck = function(mob, zone, zoneID)
     end
 end
 
-xi.dynamis.antlionDeath = function(mob)
-    local zone = mob:getZone()
-    local worm = zone:getLocalVar('wormDeath')
-    local mobIndex = zone:getLocalVar(string.format('MobIndex_%s', mob:getID()))
+xi.dynamis.antlionDeath = function(mob, player, optParams)
+    if optParams.isKiller then
+        local zone = mob:getZone()
+        local worm = zone:getLocalVar('wormDeath')
+        local mobIndex = zone:getLocalVar(string.format('MobIndex_%s', mob:getID()))
 
-    zone:setLocalVar('antlionDeath', 1)
+        zone:setLocalVar('antlionDeath', 1)
 
-    if worm == 1 then
-        for _, playerEntity in pairs(zone:getPlayers()) do
-            if  playerEntity:hasStatusEffect(xi.effect.SJ_RESTRICTION) then -- Does player have SJ restriction?
-                playerEntity:delStatusEffect(xi.effect.SJ_RESTRICTION) -- Remove SJ restriction
+        if worm == 1 then
+            for _, playerEntity in pairs(zone:getPlayers()) do
+                if  playerEntity:hasStatusEffect(xi.effect.SJ_RESTRICTION) then -- Does player have SJ restriction?
+                    playerEntity:delStatusEffect(xi.effect.SJ_RESTRICTION) -- Remove SJ restriction
+                end
             end
+
+            zone:setLocalVar('SJUnlock', 1)
         end
 
-        zone:setLocalVar('SJUnlock', 1)
+        xi.dynamis.addTimeToDynamis(zone, mobIndex) -- Add Time
     end
-
-    xi.dynamis.addTimeToDynamis(zone, mobIndex) -- Add Time
 end
 
-xi.dynamis.wormDeath = function(mob)
-    local zone = mob:getZone()
-    local antlion = zone:getLocalVar('antlionDeath')
+xi.dynamis.wormDeath = function(mob, player, optParams)
+    if optParams.isKiller then
+        local zone = mob:getZone()
+        local antlion = zone:getLocalVar('antlionDeath')
 
-    zone:setLocalVar('wormDeath', 1)
+        zone:setLocalVar('wormDeath', 1)
 
-    if antlion == 1 then
-        for _, playerEntity in pairs(zone:getPlayers()) do
-            if  playerEntity:hasStatusEffect(xi.effect.SJ_RESTRICTION) then -- Does player have SJ restriction?
-                playerEntity:delStatusEffect(xi.effect.SJ_RESTRICTION) -- Remove SJ restriction
+        if antlion == 1 then
+            for _, playerEntity in pairs(zone:getPlayers()) do
+                if  playerEntity:hasStatusEffect(xi.effect.SJ_RESTRICTION) then -- Does player have SJ restriction?
+                    playerEntity:delStatusEffect(xi.effect.SJ_RESTRICTION) -- Remove SJ restriction
+                end
             end
-        end
 
-        zone:setLocalVar('SJUnlock', 1)
+            zone:setLocalVar('SJUnlock', 1)
+        end
     end
 end
 
 xi.dynamis.onSpawnUmbralDiabolos = function(mob)
     mob:setAutoAttackEnabled(false)
-    mob:setMobType(xi.mobType.BATTLEFIELD)
+    mob:setMobType(xi.mobskills.mobType.BATTLEFIELD)
     mob:addStatusEffect(xi.effect.BATTLEFIELD, 1, 0, 0, true)
     mob:setMobMod(xi.mobMod.DETECTION, xi.detects.SIGHT)
     mob:setMobMod(xi.mobMod.ALWAYS_AGGRO, 1)
 end
 
-xi.dynamis.onMobEngagedUmbralDiabolos = function(mob, target)
+xi.dynamis.onMobEngageUmbralDiabolos = function(mob, target)
     local zoneID = mob:getZoneID()
     local zone = mob:getZone()
 
@@ -400,15 +404,25 @@ end
 xi.dynamis.onSpawnDiabolosShard = function(mob)
     xi.dynamis.setMegaBossStats(mob)
     xi.dynamis.setDiabolosCommonTraits(mob)
+    mob:setLocalVar('usedTP', 0)  -- Set local var so we only use TP once
 end
 
 xi.dynamis.onMobFightDiabolosShard = function(mob, mobTarget)
-    --- if (distance(mobTarget, mob) < 5)
-    mob:useMobAbility(1903)
+    if -- If we havent used TP, and we have a target in range
+        mob:checkDistance(mobTarget) < mob:getAbilityDistance(1903) and
+        mob:getLocalVar('usedTP') == 0
+    then -- Use the TP Skill and then turn the flag on so we dont spam the WS
+        mob:useMobAbility(1903)
+        mob:setLocalVar('usedTP', 1)
+    end
 end
 
 xi.dynamis.onMobWeaponSkillDiabolosShard = function(target, mob, skill)
-    mob:setHP(0)
+    if mob:getLocalVar('usedTP') == 1 then -- If the WS flag was set
+        mob:queue(3000, function(mobArg)  -- Queue the action so it doesnt instantly despawn and interrupt the WS
+            mobArg:setHP(0) -- Kill off the add now that the WS has been used
+        end)
+    end
 end
 
 -- ToDo
@@ -480,11 +494,14 @@ xi.dynamis.mobOnDeathDiabolos = function(mob, player, optParams)
             end
         end
 
+        -- Loot Updates for adding Custom Drops to Diabolos
+        mob:setMobMod(xi.mobMod.NO_DROPS, 0)
+
         xi.dynamis.megaBossOnDeath(mob, player, optParams)
     end
 end
 
-xi.dynamis.onMobEngagedDiabolos = function(mob, mobTarget)
+xi.dynamis.onMobEngageDiabolos = function(mob, mobTarget)
     local zone = mob:getZone()
     mob:setLocalVar('hasEngaged', 1)
     if mob:getID() == zone:getLocalVar('DiabolosClub') then

@@ -6,6 +6,7 @@ require('scripts/globals/dynamis')
 xi = xi or {}
 xi.dynamis = xi.dynamis or {}
 
+-- This function is needed because we dont have a way to set a constant order for job_specials
 local function apocRemoveAdditionalEffects(mob)
     local statusEffects =
     {
@@ -32,206 +33,189 @@ local function apocRemoveAdditionalEffects(mob)
     mob:clearActionQueue()
 end
 
+local apocSpellList =
+{
+    -- Manafont
+    {
+        xi.magic.spell.FIRAGA_III,
+        xi.magic.spell.BLIZZAGA_III,
+        xi.magic.spell.AEROGA_III,
+        xi.magic.spell.STONEGA_III,
+        xi.magic.spell.THUNDAGA_III,
+        xi.magic.spell.WATERGA_III
+    },
+    -- Chainspell
+    {
+        xi.magic.spell.BLINDGA,
+        xi.magic.spell.PARALYGA,
+        xi.magic.spell.BINDGA,
+        xi.magic.spell.BREAKGA,
+        xi.magic.spell.SLEEPGA_II,
+        xi.magic.spell.DEATH
+    },
+    -- Soul Voice
+    {
+        xi.magic.spell.HORDE_LULLABY,
+        xi.magic.spell.MASSACRE_ELEGY,
+        xi.magic.spell.MAGIC_FINALE,
+        xi.magic.spell.VALOR_MINUET_IV,
+        xi.magic.spell.VICTORY_MARCH,
+        xi.magic.spell.BLADE_MADRIGAL
+    },
+}
+
+local apocAbilities = -- Setup 2hr Lockouts
+{
+    { 'bloodspiller_killed' , xi.jsa.MIGHTY_STRIKES },  -- WAR
+    { 'hamfist_killed'      , xi.jsa.HUNDRED_FISTS    },-- MNK
+    { 'flesheater_killed'   , xi.jsa.BENEDICTION   },   -- WHM
+    { 'flamecaller_killed'  , xi.jsa.MANAFONT },        -- BLM
+    { 'gosspix_killed'      , xi.jsa.CHAINSPELL     },  -- RDM
+    { 'bodysnatcher_killed' , xi.jsa.PERFECT_DODGE  },  -- THF
+    { 'ironclad_killed'     , xi.jsa.INVINCIBLE },      -- PLD
+    { 'shamblix_killed'     , xi.jsa.BLOOD_WEAPON },    -- DRK
+    { 'woodnix_killed'      , 710 },                    -- BST
+    { 'melomanic_killed'    , xi.jsa.SOUL_VOICE },      -- BRD
+    { 'lyncean_killed'      , xi.jsa.EES_GOBLIN },      -- RNG
+    { 'levinblade_killed'   , xi.jsa.MEIKYO_SHISUI },   -- SAM
+    { 'fleetfoot_killed'    , xi.jsa.MIJIN_GAKURE   },  -- NIN
+    { 'elvaansticker_killed', xi.jsa.CALL_WYVERN    },  -- DRG
+    { 'bibliopage_killed'   , xi.jsa.ASTRAL_FLOW    },  -- SMN
+}
+
+local apocWeaponskillLockouts =
+{
+    { 'stihi_killed',       642 }, -- Flame Breath
+    { 'vishap_killed',      643 }, -- Poison Breath
+    { 'jurik_killed',       644 }, -- Wind Breath
+    { 'barong_killed',      645 }, -- Body Slam
+    { 'tarasca_killed',     646 }, -- Heavy Stomp
+    { 'alklha_killed',      647 }, -- Chaos Blade
+    { 'basilic_killed',     648 }, -- Petro Eyes
+    { 'aitvaras_killed',    649 }, -- Voidsong
+    { 'koschei_killed',     650 }, -- Thornsong
+    { 'stollenwurm_killed', 651 }, -- Lodesong
+}
+
 xi.dynamis.onSpawnApoc = function(mob)
     local zone = mob:getZone()
     xi.dynamis.setMegaBossStats(mob)
     -- Set Mods
-    mob:setMod(xi.mod.GRAVITYRES, 100)
-    mob:setMod(xi.mod.BINDRES, 50)
-    mob:setMod(xi.mod.STUNRES, 80)
-    mob:setMod(xi.mod.REFRESH, 500)
-    mob:setMod(xi.mod.SILENCERES, 100)
-    mob:setMod(xi.mod.BLINDRES, 100)
-    mob:setMod(xi.mod.PARALYZERES, 50)
-    mob:setMod(xi.mod.SLOWRES, 50)
-    mob:setMod(xi.mod.SLEEPRES, 100)
-    mob:setMod(xi.mod.LULLABYRES, 100)
+    mob:addImmunity(xi.immunity.GRAVITY)
+    mob:addImmunity(xi.immunity.TERROR)
+    mob:addImmunity(xi.immunity.SILENCE)
+    mob:addImmunity(xi.immunity.SLEEP)
+    mob:addImmunity(xi.immunity.LIGHT_SLEEP)
+    mob:addImmunity(xi.immunity.DARK_SLEEP)
+    mob:setMod(xi.mod.DARK_EEM, 5) -- Lowest EEM tier for max resist
+    mob:setMod(xi.mod.STUNRES, 10)
+    mob:setMod(xi.mod.BINDRES, 20)
+    mob:setMod(xi.mod.REGAIN, 50)  -- 'minor level of regain'
+    mob:setMod(xi.mod.REFRESH, 250)
     mob:setMod(xi.mod.MACC, 200)
     mob:setMod(xi.mod.MATT, 50)
-    mob:setMod(xi.mod.FASTCAST, 5)
-    mob:setRoamFlags(xi.roamFlag.NONE)
-    mob:setMobMod(xi.mobMod.ROAM_DISTANCE, 1000) -- See you in Narnia!
-    mob:setMobMod(xi.mobMod.ROAM_COOL, 1)
+    mob:setMod(xi.mod.FASTCAST, 50)
+    mob:setSpeed(78) -- 98% movement speed (It happens to also be 98) (78 to match 'era' movement speed)
+    mob:setMobMod(xi.mobMod.WEAPON_BONUS, 60)
+    mob:setMobMod(xi.mobMod.MAGIC_COOL, 15)
+
+    mob:setDelay(2000)
+    -- TODO: Set pathing for apoc beast
     mob:setBehaviour(xi.behavior.NO_TURN, 1)
     -- Make it so we can reference arbitrary mob
     zone:setLocalVar('Apocalyptic_Beast', mob:getID())
-    mob:setLocalVar('Apoc_Beast', 1)
-    xi.dynamis.apoc2hrlist = -- Setup fresh 2hr list each time
-    {
-        { xi.jsa.MIGHTY_STRIKES, 'MIGHTY_STRIKES', 'self' },
-        { xi.jsa.HUNDRED_FISTS, 'HUNDRED_FISTS', 'self' },
-        { xi.jsa.BENEDICTION, 'BENEDICTION', 'self' },
-        { xi.jsa.MANAFONT, 'MANAFONT', 'self' },
-        { xi.jsa.CHAINSPELL, 'CHAINSPELL', 'self' },
-        { xi.jsa.PERFECT_DODGE, 'PERFECT_DODGE', 'self' },
-        { xi.jsa.INVINCIBLE, 'INVINCIBLE', 'self' },
-        { xi.jsa.BLOOD_WEAPON, 'BLOOD_WEAPON', 'self' },
-        { 710, 'CHARM', 'target' },
-        { xi.jsa.SOUL_VOICE, 'SOUL_VOICE', 'self' },
-        { xi.jsa.EES_GOBLIN, 'EAGLE_EYE_SHOT', 'target' },
-        { xi.jsa.MEIKYO_SHISUI, 'MEIKYO_SHISUI', 'self' },
-        { xi.jsa.MIJIN_GAKURE, 'MIJIN_GAKURE', 'self' },
-        { xi.jsa.CALL_WYVERN, 'CALL_WYVERN', 'self' },
-        { xi.jsa.ASTRAL_FLOW, 'ASTRAL_FLOW', 'self' },
-    }
-
-    xi.dynamis.apocLockouts2hr = -- Setup 2hr Lockouts
-    {
-        { 1, 0, 'bloodspiller_killed', 'MIGHTY_STRIKES' },
-        { 1, 0, 'hamfist_killed', 'HUNDRED_FISTS' },
-        { 1, 0, 'flesheater_killed', 'BENEDICTION' },
-        { 1, 0, 'flamecaller_killed', 'MANAFONT' },
-        { 1, 0, 'gosspix_killed', 'CHAINSPELL' },
-        { 1, 0, 'bodysnatcher_killed', 'PERFECT_DODGE' },
-        { 1, 0, 'ironclad_killed', 'INVINCIBLE' },
-        { 1, 0, 'shamblix_killed', 'BLOOD_WEAPON' },
-        { 1, 0, 'woodnix_killed', 'CHARM' },
-        { 1, 0, 'melomanic_killed', 'SOUL_VOICE' },
-        { 1, 0, 'lyncean_killed', 'EAGLE_EYE_SHOT' },
-        { 1, 0, 'levinblade_killed', 'MEIKYO_SHISUI' },
-        { 1, 0, 'fleetfoot_killed', 'MIJIN_GAKURE' },
-        { 1, 0, 'elvaansticker_killed', 'CALL_WYVERN' },
-        { 1, 0, 'bibliopage_killed', 'ASTRAL_FLOW' },
-    }
-
-    xi.dynamis.apocLockouts =
-    {
-        [1] = { 'stihi_killed', 642 }, -- Flame Breath
-        [2] = { 'vishap_killed', 643 }, -- Poison Breath
-        [3] = { 'jurik_killed', 644 }, -- Wind Breath
-        [4] = { 'barong_killed', 645 }, -- Body Slam
-        [5] = { 'tarasca_killed', 646 }, -- Heavy Stomp
-        [6] = { 'alklha_killed', 647 }, -- Chaos Blade
-        [7] = { 'basilic_killed', 648 }, -- Petro Eyes
-        [8] = { 'aitvaras_killed', 649 }, -- Voidsong
-        [9] = { 'koschei_killed', 650 }, -- Thornsong
-        [10] = { 'stollenwurm_killed', 651 }, -- Lodesong
-    }
-
-    mob:addListener('WEAPONSKILL_STATE_EXIT', 'APOC_WEAPONSKILL_STATE_EXIT', function(mobA, target, skill)
-        if mobA:hasStatusEffect(xi.effect.HYSTERIA) then
-            mobA:delStatusEffectSilent(xi.effect.HYSTERIA)
-        end
-    end)
-
-    for _, val in pairs(xi.dynamis.apocLockouts2hr) do
-        mob:setLocalVar(val[4], val[2])
-    end
 end
 
-xi.dynamis.onSpawnNoAuto = function(mob)
+xi.dynamis.onSpawnBubuDragon = function(mob)
     xi.dynamis.setNMStats(mob)
     mob:setAutoAttackEnabled(false)
-    mob:addMod(xi.mod.REGAIN, 1250)
     mob:setRoamFlags(xi.roamFlag.NONE)
-    if mob:getFamily() == 87 then
-        mob:setBehaviour(xi.behavior.NO_TURN, 1)
+
+    mob:addImmunity(xi.immunity.GRAVITY)
+    mob:addImmunity(xi.immunity.TERROR)
+    mob:addImmunity(xi.immunity.SLEEP)
+    mob:addImmunity(xi.immunity.SILENCE)
+    mob:setMod(xi.mod.REGAIN, 1000)
+    mob:setSpeed(60) -- 34% movement speed
+    mob:setBehaviour(xi.behavior.NO_TURN, 1)
+
+    -- This dragon is apparently insane according to the wiki
+    -- Values are approximated based on era accounts
+    if mob:getName() == 'DE_Aitvaras' then
+        mob:setMobMod(xi.mobMod.WEAPON_BONUS, 150)
+        mob:setMod(xi.mod.ATT, 550)
+        mob:setMod(xi.mod.UDMGMAGIC, -4000) -- Capture shows reduced magic damage (estimated)
     end
 end
 
 xi.dynamis.onEngagedApoc = function(mob, target)
-    local next2hr = os.time() + math.random(45, 75)
+    local next2hr = os.time() + 5 -- Use 5 seconds after engage
     mob:setLocalVar('next2hrTime', next2hr)
-end
 
-xi.dynamis.onFightApoc = function(mob, target)
-    if mob:getLocalVar('ResetTP') ~= 0 then
-        mob:setTP(0)
-        mob:setLocalVar('ResetTP', 0)
-    end
-
-    for _, val in pairs(xi.dynamis.apocLockouts2hr) do
-        if mob:getZone():getLocalVar(val[3]) == 1 then
-            mob:setLocalVar(val[4], val[1])
+    local apocTwoHourLockout = { }
+    for var, abilities in pairs(apocAbilities) do
+        if mob:getZone():getLocalVar(abilities[1]) ~= 1 then
+            table.insert(apocTwoHourLockout, abilities[2])
         end
     end
 
+    xi.dynamis.apoc2hrlist = { }
+    xi.dynamis.apoc2hrlist = apocTwoHourLockout
+end
+
+xi.dynamis.onFightApoc = function(mob, target)
     if
         mob:getLocalVar('next2hrTime') <= os.time() and
         #xi.dynamis.apoc2hrlist > 0
     then
-        local abilityChoice = math.random(1, #xi.dynamis.apoc2hrlist)
-        local next2hr = os.time() + math.random(45, 75)
-        local target2 = mob
+        local abilityChoice = mob:getLocalVar('ability_number') + 1 -- lua starts at 1 so add 1 and increment after ability is used
+        local next2hr = os.time() + math.random(30, 45)
 
-        if mob:getLocalVar(xi.dynamis.apoc2hrlist[abilityChoice][2]) == 1 then
-            mob:addStatusEffect(xi.effect.HYSTERIA, 1, 3, 5)
+        if  abilityChoice > #xi.dynamis.apoc2hrlist then
+            mob:setLocalVar('ability_number', 0)
         end
 
-        if
-            xi.dynamis.apoc2hrlist[abilityChoice][3] and
-            xi.dynamis.apoc2hrlist[abilityChoice][3] == 'target'
-        then
-            target2 = target
-        end
-
-        apocRemoveAdditionalEffects(mob)
-        mob:useMobAbility(xi.dynamis.apoc2hrlist[abilityChoice][1], target2)
-        table.remove(xi.dynamis.apoc2hrlist, abilityChoice)
-
-        mob:setLocalVar('next2hrTime', next2hr)
+        apocRemoveAdditionalEffects(mob)                         -- Must remove the effect before applying a new one otherwise you get chainspell + manafont spamming -ga 3s
+        mob:useMobAbility(xi.dynamis.apoc2hrlist[abilityChoice]) -- Use the mobs two hour
+        mob:setLocalVar('ability_number', abilityChoice)         -- Set the next ability var
+        mob:setLocalVar('next2hrTime', next2hr)                  -- Set the cooldown of the two hour
     end
 
     if
-        (mob:hasStatusEffect(xi.effect.MANAFONT) or
+        mob:hasStatusEffect(xi.effect.MANAFONT) or
         mob:hasStatusEffect(xi.effect.CHAINSPELL) or
-        mob:hasStatusEffect(xi.effect.SOUL_VOICE)) and
-        mob:getLocalVar('nextCast') <= os.time()
+        mob:hasStatusEffect(xi.effect.SOUL_VOICE)
     then
-        mob:setLocalVar('nextCast', os.time() + 4)
-        mob:setAutoAttackEnabled(false)
-        mob:setMobAbilityEnabled(false)
-        local spell = nil
+        mob:setMagicCastingEnabled(true)
+    else
+        mob:setMagicCastingEnabled(false)
+    end
+end
 
-        if mob:getStatus() ~= xi.action.MAGIC_CASTING then
-            if mob:hasStatusEffect(xi.effect.MANAFONT) then
-                if mob:hasStatusEffect(xi.effect.CHAINSPELL) then
-                    mob:delStatusEffectSilent(xi.effect.CHAINSPELL)
-                end
+-- Picks the spell list based on two hour effect
+xi.dynamis.apocMagicPrepare = function(mob, mobTarget, spellId)
+    local chosenSpellList = { }
+    if mob:hasStatusEffect(xi.effect.MANAFONT) then -- First 2hr
+        chosenSpellList = apocSpellList[1]
+    elseif mob:hasStatusEffect(xi.effect.CHAINSPELL) then -- Second 2hr
+        chosenSpellList = apocSpellList[2]
+    elseif mob:hasStatusEffect(xi.effect.SOUL_VOICE) then -- Third 2hr
+        chosenSpellList = apocSpellList[3]
+    end
 
-                if mob:hasStatusEffect(xi.effect.SOUL_VOICE) then
-                    mob:delStatusEffect(xi.effect.SOUL_VOICE)
-                end
+    return chosenSpellList[math.random(1, #chosenSpellList)] -- Return random spell in the list
+end
 
-                local manafontspells = { xi.magic.spell.FIRAGA_III, xi.magic.spell.BLIZZAGA_III, xi.magic.spell.AEROGA_III, xi.magic.spell.STONEGA_III, xi.magic.spell.THUNDAGA_III, xi.magic.spell.WATERA_III }
-                spell = manafontspells[math.random(1, #manafontspells)]
-            elseif mob:hasStatusEffect(xi.effect.CHAINSPELL) then
-                local chainspellspells = { xi.magic.spell.BLINDGA, xi.magic.spell.PARALYGA, xi.magic.spell.BINDGA, xi.magic.spell.BREAKGA, xi.magic.spell.SLEEPGA_II, xi.magic.spell.DEATH }
-                spell = chainspellspells[math.random(1, #chainspellspells)]
-            elseif mob:hasStatusEffect(xi.effect.SOUL_VOICE) then
-                local buffsongs = { { xi.magic.spell.VALOR_MINUET_IV, mob }, { xi.magic.spell.VICTORY_MARCH } }
-                local soulvoicesongs = { { xi.magic.spell.HORDE_LULLABY, target }, { xi.magic.spell.FOE_REQUIEM_IV, target }, { xi.magic.spell.CARNAGE_ELEGY, target }, { xi.magic.spell.FOE_LULLABY, target } }
-                local buffEnfeeb = math.random(1, 4)
-                local choice = 0
-                if buffEnfeeb == 1 then
-                    choice = math.random(1, #buffsongs)
-                    spell = buffsongs[choice][1]
-                    target = buffsongs[choice][2]
-                else
-                    choice = math.random(1, #soulvoicesongs)
-                    spell = soulvoicesongs[choice][1]
-                    target = soulvoicesongs[choice][2]
-                end
-            end
+xi.dynamis.apocWeaponSkillPrepare = function(mob, mobTarget)
+    local apocWeaponskills = { }
 
-            if spell then
-                mob:castSpell(spell, target)
-            end
+    for var, abilities in pairs(apocWeaponskillLockouts) do
+        if mob:getZone():getLocalVar(abilities[1]) ~= 1 then
+            table.insert(apocWeaponskills, abilities[2])
         end
     end
 
-    if mob:getTP() >= 1000 then
-        if #xi.dynamis.apocLockouts > 0 then
-            local abilityChoice = math.random(1, #xi.dynamis.apocLockouts)
-            if mob:getZone():getLocalVar(xi.dynamis.apocLockouts[abilityChoice][1]) == 0 then
-                local ability = xi.dynamis.apocLockouts[abilityChoice][2]
-                mob:setLocalVar('ResetTP', 1)
-                mob:useMobAbility(ability)
-            else
-                table.remove(xi.dynamis.apocLockouts, abilityChoice)
-            end
-        end
-    end
+    return apocWeaponskills[math.random(1, #apocWeaponskills)]
 end
 
 xi.dynamis.onFightDragon = function(mob, target)

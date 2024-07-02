@@ -406,15 +406,16 @@ xi.dynamis.normalDynamicSpawn = function(oMob, oMobIndex, target)
         end
 
         while (indexJob <= indexEndJob) and (nameObj ~= nil) do
-            local mobArg = zone:insertDynamicEntity({
-                objtype = xi.objType.MOB,
-                name = nameObj[job][1],
-                x = oMob:getXPos() + math.random() * 6 - 3,
-                y = oMob:getYPos() - 0.3,
-                z = oMob:getZPos() + math.random() * 6 - 3,
-                rotation = oMob:getRotPos(),
-                groupId = nameObj[job][2],
+            local mobArg    = zone:insertDynamicEntity({
+                objtype     = xi.objType.MOB,
+                name        = nameObj[job][1],
+                x           = oMob:getXPos() + math.random() * 6 - 3,
+                y           = oMob:getYPos() - 0.3,
+                z           = oMob:getZPos() + math.random() * 6 - 3,
+                rotation    = oMob:getRotPos(),
+                groupId     = nameObj[job][2],
                 groupZoneId = nameObj[job][3],
+
                 onMobSpawn = function(mobArg)
                     xi.dynamis.setMobStats(mobArg)
 
@@ -430,8 +431,13 @@ xi.dynamis.normalDynamicSpawn = function(oMob, oMobIndex, target)
                     mobArg:setMobMod(xi.mobMod.SUBLINK, xi.dynamis.SUBLINK_ID)
                 end,
 
-                onMobEngaged = function(mobArg, mobTarget)
-                    xi.dynamis.mobOnEngaged(mobArg, mobTarget)
+                onMobEngage = function(mobArg, mobTarget)
+                    if mobTarget:isPet() then
+                        local petOwner = mobTarget:getMaster()
+                        mobArg:updateEnmity(petOwner)
+                    end
+
+                    xi.dynamis.mobOnEngage(mobArg, mobTarget)
                 end,
 
                 onMobRoam = function(mobArg)
@@ -445,10 +451,10 @@ xi.dynamis.normalDynamicSpawn = function(oMob, oMobIndex, target)
                     xi.dynamis.mobOnDespawn(mob)
                 end,
 
-                releaseIdOnDisappear = true,
-                spawnSet = 3,
+                releaseIdOnDisappear  = true,
+                spawnSet              = 3,
                 specialSpawnAnimation = spawnAnim,
-                entityFlags = nameObj[job][6],
+                entityFlags           = nameObj[job][6],
                 mixins =
                 {
                     require('scripts/mixins/job_special'),
@@ -506,86 +512,86 @@ xi.dynamis.nonStandardDynamicSpawn = function(mobIndex, oMob, forceLink, zoneID,
         -- 1 - name
         -- 2 - groupId
         -- 3 - groupZoneId
-        -- 4 - dropId
-        -- 5 - spellList
-        -- 6 - skillList
-        -- 7 - Type of mob
-        -- 8 - flags
+        -- 4 - spellList
+        -- 5 - skillList
+        -- 6 - Type of mob
+        -- 7 - flags
         ['Statue'] =
         {
-            ['Vanguard Eye']         = { 'Vanguard Eye' ,      163, 134, 1144, 1100,  4 },   -- Vanguard Eye (VEye)
-            ['Prototype Eye']        = { 'Prototype Eye' ,     61,  42,  1144, 1100,  4 },   -- Prototype Eye (PEye)
-            ['Goblin Statue']        = { 'Goblin Statue' ,     158, 134, 1144, 1,    92 },  -- Goblin Statue (GStat)
-            ['Goblin Replica']       = { 'Goblin Replica' ,    157, 134, 1144, 1,    92 },  -- Goblin Statue (GRStat)
-            ['Statue Prototype']     = { 'Stat. Prototype' ,   36,  42,  1144, 1,    92 },  -- Goblin Statue (GPStat)
-            ['Serjeant Tombstone']   = { 'Serj. Tombstone' ,   89,  134, 2201, 1100, 93 },  -- Orc Statue (OStat)
-            ['Warchief Tombstone']   = { 'War. Tombstone' ,    90,  134, 2201, 1100, 93 },  -- Orc Statue (OWStat)
-            ['Tombstone Prototype']  = { 'Tomb. Prototype' ,   20,  42,  2201, 1100, 93 },  -- Orc Statue (TPStat)
-            ['Adamantking Effigy']   = { 'Adamantking Eff' ,   55,  134, 20,   0,    94 },  -- Quadav Statue (QStat)
-            ['Adamantking Image']    = { 'Adamantking Img' ,   56,  134, 20,   0,    94 },  -- Quadav Statue (QIStat)
-            ['Effigy Prototype']     = { 'Eff. Prototype' ,    9,   42,  20,   0,    94 },  -- Quadav Statue (QPStat)
-            ['Avatar Idol']          = { 'Avatar Idol' ,       124, 134, 195,  1100, 95 },  -- Yagudo Statue (YStat)
-            ['Manifest Icon']        = { 'Manifest Icon' ,     68,  39,  195,  1100, 95 },  -- Yagudo Statue (YMStat)
-            ['Avatar Icon']          = { 'Avatar Icon' ,       123, 134, 195,  1100, 95 },  -- Yagudo Statue (AIStat)
-            ['Icon Prototype']       = { 'Icon Prototype' ,    32,  42,  195,  1100, 95 },  -- Yagudo Statue (YPStat)
+            ['Vanguard Eye']         = { 'Vanguard Eye' ,      163, 134, 1100,  4 }, -- Vanguard Eye (VEye)
+            ['Prototype Eye']        = { 'Prototype Eye' ,     61,  42,  1100,  4 }, -- Prototype Eye (PEye)
+            ['Goblin Statue']        = { 'Goblin Statue' ,     158, 134, 1,    92 }, -- Goblin Statue (GStat)
+            ['Goblin Replica']       = { 'Goblin Replica' ,    157, 134, 1,    92 }, -- Goblin Statue (GRStat)
+            ['Statue Prototype']     = { 'Stat. Prototype' ,   36,  42,  1,    92 }, -- Goblin Statue (GPStat)
+            ['Serjeant Tombstone']   = { 'Serj. Tombstone' ,   89,  134, 1100, 93 }, -- Orc Statue (OStat)
+            ['Warchief Tombstone']   = { 'War. Tombstone' ,    90,  134, 1100, 93 }, -- Orc Statue (OWStat)
+            ['Tombstone Prototype']  = { 'Tomb. Prototype' ,   20,  42,  1100, 93 }, -- Orc Statue (TPStat)
+            ['Adamantking Effigy']   = { 'Adamantking Eff' ,   55,  134, 0,    94 }, -- Quadav Statue (QStat)
+            ['Adamantking Image']    = { 'Adamantking Img' ,   56,  134, 0,    94 }, -- Quadav Statue (QIStat)
+            ['Effigy Prototype']     = { 'Eff. Prototype' ,    9,   42,  0,    94 }, -- Quadav Statue (QPStat)
+            ['Avatar Idol']          = { 'Avatar Idol' ,       124, 134, 1100, 95 }, -- Yagudo Statue (YStat)
+            ['Manifest Icon']        = { 'Manifest Icon' ,     68,  39,  1100, 95 }, -- Yagudo Statue (YMStat)
+            ['Avatar Icon']          = { 'Avatar Icon' ,       123, 134, 1100, 95 }, -- Yagudo Statue (AIStat)
+            ['Icon Prototype']       = { 'Icon Prototype' ,    32,  42,  1100, 95 }, -- Yagudo Statue (YPStat)
         },
-
         ['Nightmare'] =
         {
-            ['Nightmare Bunny']      = { 'N. Bunny' ,          97,  40,  1789, 0,  206            },  -- NBun
-            ['Nightmare Cockatrice'] = { 'N. Cockatrice' ,     19,  174, 1805, 0,  70             },   -- NCoc
-            ['Nightmare Crab']       = { 'N. Crab' ,           93,  40,  1791, 0,  77             },   -- NCra
-            ['Nightmare Crawler']    = { 'N. Crawler' ,        99,  40,  1798, 0,  79             },   -- Ncra
-            ['Nightmare Dhalmel']    = { 'N. Dhalmel' ,        94,  40,  2796, 0,  80             },   -- NDha
-            ['Nightmare Eft']        = { 'N. Eft' ,            101, 40,  2795, 0,  98             },   -- NEft
-            ['Nightmare Mandragora'] = { 'N. Mandragora' ,     98,  40,  1789, 0,  178            },  -- NMan
-            ['Nightmare Raven']      = { 'N. Raven' ,          100, 40,  1788, 0,  55             },   -- NRav
-            ['Nightmare Scorpion']   = { 'N. Scorpion' ,       96,  40,  1787, 0,  217            },  -- NSco
-            ['Nightmare Urganite']   = { 'N. Urganite' ,       95,  40,  1785, 0,  251            },  -- NUrg
-            ['Nightmare Cluster']    = { 'N. Cluster' ,        40,  42,  1786, 0,  4076, nil, 135 }, -- NClu
-            ['Nightmare Hornet']     = { 'N. Hornet' ,         10,  42,  1795, 0,  4075, nil, 135 }, -- NHor
-            ['Nightmare Leech']      = { 'N. Leech' ,          41,  42,  1796, 0,  4079, nil, 135 }, -- NLee
-            ['Nightmare Makara']     = { 'N. Makara' ,         34,  42,  1797, 0,  4078, nil, 135 }, -- NMak
-            ['Nightmare Taurus']     = { 'N. Taurus' ,         33,  42,  2854, 0,  4080           }, -- NTau
-            ['Nightmare Bugard']     = { 'N. Bugard' ,         6,   42,  1795, 0,  4077           }, -- NBug
-            ['Nightmare Hippogryph'] = { 'N. Hippogryph' ,     2,   39,  1792, 0,  141            },  -- NHip
-            ['Nightmare Manticore']  = { 'N. Manticore' ,      3,   39,  1799, 0,  179            },  -- NMat
-            ['Nightmare Sabotender'] = { 'N. Sabotender' ,     11,  39,  1792, 0,  212            },  -- NSab
-            ['Nightmare Sheep']      = { 'N. Sheep' ,          13,  39,  1794, 0,  226            },  -- NShe
-            ['Nightmare Fly']        = { 'N. Fly' ,            4,   39,  1794, 0,  113            },  -- NFly
-            ['Nightmare Gaylas']     = { 'N. Gaylas' ,         80,  41,  1793, 0,  47             },   -- NGay
-            ['Nightmare Kraken']     = { 'N. Kraken' ,         75,  41,  1793, 0,  218            },  -- NKra
-            ['Nightmare Raptor']     = { 'N. Raptor' ,         84,  41,  1793, 0,  210            },  -- NRap
-            ['Nightmare Roc']        = { 'N. Roc' ,            83,  41,  1793, 0,  125            },  -- NRoc
-            ['Nightmare Snoll']      = { 'N. Snoll' ,          86,  41,  1803, 0,  232            },  -- NSno
-            ['Nightmare Diremite']   = { 'N. Diremite' ,       82,  41,  1790, 0,  81             },   -- NDir
-            ['Nightmare Stirge']     = { 'N. Stirge' ,         78,  41,  1804, 0,  46             },   -- NSti
-            ['Nightmare Tiger']      = { 'N. Tiger' ,          81,  41,  1804, 0,  242            },  -- NTig
-            ['Nightmare Weapon']     = { 'N. Weapon' ,         77,  41,  1804, 0,  110            },  -- NWea
+            -- Buburimu
+            ['Nightmare Crab']       = { 'N. Crab' ,           93,  40,  0,  77             }, -- NCra
+            ['Nightmare Dhalmel']    = { 'N. Dhalmel' ,        94,  40,  0,  80             }, -- NDha
+            ['Nightmare Urganite']   = { 'N. Urganite' ,       95,  40,  0,  251            }, -- NUrg
+            ['Nightmare Bunny']      = { 'N. Bunny' ,          97,  40,  0,  206            }, -- NBun
+            ['Nightmare Scorpion']   = { 'N. Scorpion' ,       96,  40,  0,  217            }, -- NSco
+            ['Nightmare Cockatrice'] = { 'N. Cockatrice' ,     19,  174, 0,  70             }, -- NCoc
+            ['Nightmare Crawler']    = { 'N. Crawler' ,        99,  40,  0,  79             }, -- Ncra
+            ['Nightmare Eft']        = { 'N. Eft' ,            101, 40,  0,  98             }, -- NEft
+            ['Nightmare Mandragora'] = { 'N. Mandragora' ,     98,  40,  0,  178            }, -- NMan
+            ['Nightmare Raven']      = { 'N. Raven' ,          100, 40,  0,  55             }, -- NRav
+            -- Tavnazia
+            ['Nightmare Cluster']    = { 'N. Cluster' ,        40,  42,  0,  4076, nil, 135 }, -- NClu
+            ['Nightmare Hornet']     = { 'N. Hornet' ,         10,  42,  0,  4075, nil, 135 }, -- NHor
+            ['Nightmare Leech']      = { 'N. Leech' ,          41,  42,  0,  4079, nil, 135 }, -- NLee
+            ['Nightmare Makara']     = { 'N. Makara' ,         34,  42,  0,  4078, nil, 135 }, -- NMak
+            ['Nightmare Taurus']     = { 'N. Taurus' ,         33,  42,  0,  4080           }, -- NTau
+            ['Nightmare Bugard']     = { 'N. Bugard' ,         6,   42,  0,  4077           }, -- NBug
+            -- Valk
+            ['Nightmare Hippogryph'] = { 'N. Hippogryph' ,     2,   39,  0,  141            }, -- NHip
+            ['Nightmare Manticore']  = { 'N. Manticore' ,      3,   39,  0,  179            }, -- NMat
+            ['Nightmare Sabotender'] = { 'N. Sabotender' ,     11,  39,  0,  212            }, -- NSab
+            ['Nightmare Sheep']      = { 'N. Sheep' ,          13,  39,  0,  226            }, -- NShe
+            ['Nightmare Fly']        = { 'N. Fly' ,            4,   39,  0,  113            }, -- NFly
+            -- Qufim
+            ['Nightmare Gaylas']     = { 'N. Gaylas' ,         80,  41,  0,  47             }, -- NGay
+            ['Nightmare Kraken']     = { 'N. Kraken' ,         75,  41,  0,  218            }, -- NKra
+            ['Nightmare Raptor']     = { 'N. Raptor' ,         84,  41,  0,  210            }, -- NRap
+            ['Nightmare Roc']        = { 'N. Roc' ,            83,  41,  0,  125            }, -- NRoc
+            ['Nightmare Snoll']      = { 'N. Snoll' ,          86,  41,  0,  232            }, -- NSno
+            ['Nightmare Diremite']   = { 'N. Diremite' ,       82,  41,  0,  81             }, -- NDir
+            ['Nightmare Stirge']     = { 'N. Stirge' ,         78,  41,  0,  46             }, -- NSti
+            ['Nightmare Tiger']      = { 'N. Tiger' ,          81,  41,  0,  242            }, -- NTig
+            ['Nightmare Weapon']     = { 'N. Weapon' ,         77,  41,  0,  110            }, -- NWea
         },
-
         ['Elemental'] =
         {
-            ['Fire Elemental']       = { 'Fire Ele.' ,         14,  38,  0,    17,  0 },   -- FEle
-            ['Water Elemental']      = { 'Water Ele.' ,        17,  38,  0,    15,  0 },   -- WEle
-            ['Thunder Elemental']    = { 'Thunder Ele.' ,      18,  38,  0,    16,  0 },   -- TEle
-            ['Earth Elemental']      = { 'Earth Ele.' ,        13,  38,  0,    13,  0 },   -- EEle
-            ['Air Elemental']        = { 'Air Ele.' ,          11,  38,  0,    12,  0 },   -- AEle
-            ['Ice Elemental']        = { 'Ice Ele.' ,          15,  38,  0,    14,  0 },   -- IEle
-            ['Light Elemental']      = { 'Light Ele.' ,        16,  38,  0,    19,  0 },   -- LEle
-            ['Dark Elemental']       = { 'Dark Ele.' ,         12,  38,  0,    18,  0 },   -- DEle
+            ['Fire Elemental']       = { 'Fire Ele.' ,         14,  38,   17,  0 }, -- FEle
+            ['Water Elemental']      = { 'Water Ele.' ,        17,  38,   15,  0 }, -- WEle
+            ['Thunder Elemental']    = { 'Thunder Ele.' ,      18,  38,   16,  0 }, -- TEle
+            ['Earth Elemental']      = { 'Earth Ele.' ,        13,  38,   13,  0 }, -- EEle
+            ['Air Elemental']        = { 'Air Ele.' ,          11,  38,   12,  0 }, -- AEle
+            ['Ice Elemental']        = { 'Ice Ele.' ,          15,  38,   14,  0 }, -- IEle
+            ['Light Elemental']      = { 'Light Ele.' ,        16,  38,   19,  0 }, -- LEle
+            ['Dark Elemental']       = { 'Dark Ele.' ,         12,  38,   18,  0 }, -- DEle
         },
-
         ['Beastmen'] =
         {
-            ['Vanguard Vindicator']  = { 'V. Vindicator' ,     19,  134, 2558, 0,    337 }, -- QWAR (Bastok)
-            ['Vanguard Constable']   = { 'V. Constable' ,      29,  134, 2558, 1,    337 }, -- QWHM (Bastok)
-            ['Vanguard Militant']    = { 'V. Militant' ,       25,  134, 2558, 0,    337 }, -- QMNK (Bastok)
+            -- Bastok Time Extentions
+            ['Vanguard Vindicator']  = { 'V. Vindicator' ,     19,  134,  0,    337 }, -- QWAR (Bastok)
+            ['Vanguard Constable']   = { 'V. Constable' ,      29,  134,  1,    337 }, -- QWHM (Bastok)
+            ['Vanguard Militant']    = { 'V. Militant' ,       25,  134,  0,    337 }, -- QMNK (Bastok)
         },
-
         ['Other'] =
         {
-            ['Vanguard Dragon']      = { 'V. Dragon' ,         70,  135, 2559, 0,    87 },  -- VDra
+            ['Vanguard Dragon']      = { 'V. Dragon' ,         70,  135,  0,    87 },  -- VDra
         },
     }
     -- superlinking is used to make sure dyna-xarc statue triplets with NMs will link
@@ -620,14 +626,19 @@ xi.dynamis.nonStandardDynamicSpawn = function(mobIndex, oMob, forceLink, zoneID,
                 end
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
-                xi.dynamis.statueOnFight(mob, mobTarget)
             end },
 
             ['onMobRoam'] = { function(mob)
+            end },
+
+            ['onMobDeath'] = { function(mob, player, optParams)
+                -- special function to handle blue or green eye dyna mobs
+                -- healing on death
+                xi.dynamis.blueOrGreenEyeStatueOnDeath(mob)
             end },
 
             ['mixins'] = {  }
@@ -638,7 +649,7 @@ xi.dynamis.nonStandardDynamicSpawn = function(mobIndex, oMob, forceLink, zoneID,
                 xi.dynamis.setNightmareStats(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob)
@@ -655,8 +666,8 @@ xi.dynamis.nonStandardDynamicSpawn = function(mobIndex, oMob, forceLink, zoneID,
                 xi.dynamis.setMobStats(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
-                xi.dynamis.mobOnEngaged(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
+                xi.dynamis.mobOnEngage(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob)
@@ -671,15 +682,20 @@ xi.dynamis.nonStandardDynamicSpawn = function(mobIndex, oMob, forceLink, zoneID,
         {
             ['onMobSpawn'] = { function(mob)
                 xi.dynamis.setNightmareStats(mob)
+                xi.dynamis.elementals(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob)
             end },
 
             ['onMobRoam'] = { function(mob)
+            end },
+
+            ['onMobDeath'] = { function(mob, player, optParams)
+                xi.dynamis.mobOnDeath(mob, player, optParams)
             end },
 
             ['mixins'] = {  }
@@ -691,8 +707,8 @@ xi.dynamis.nonStandardDynamicSpawn = function(mobIndex, oMob, forceLink, zoneID,
                 mob:addImmunity(xi.immunity.SLEEP)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
-                xi.dynamis.mobOnEngaged(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
+                xi.dynamis.mobOnEngage(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob)
@@ -708,42 +724,135 @@ xi.dynamis.nonStandardDynamicSpawn = function(mobIndex, oMob, forceLink, zoneID,
     {
         [xi.zone.DYNAMIS_XARCABARD] =
         {
-            [4]  = 6000, -- Eye
-            [92] = 6000, -- Goblin
-            [93] = 6001, -- Orc
-            [94] = 6002, -- Quadav
-            [95] = 6003, -- Yagudo
+            ['Vanguard Eye']        = 7505,
+            ['Serjeant Tombstone']  = 7506, -- Orc Statues
+            ['Tombstone Prototype'] = 7506, -- Orc Statues
+            ['Effigy Prototype']    = 7507, -- Quadav Statues
+            ['Icon Prototype']      = 7508, -- Yagudo Statues
+            ['Statue Prototype']    = 7509, -- Goblin
+            ['Vanguard Dragon']     = 2559,
         },
         [xi.zone.DYNAMIS_BEAUCEDINE] =
         {
-            [4]  = 6000, -- Eye
-            [92] = 6000, -- Goblin
-            [93] = 6001, -- Orc
-            [94] = 6002, -- Quadav
-            [95] = 6003, -- Yagudo
+            ['Vanguard Eye']        = 7500,
+            ['Serjeant Tombstone']  = 7501, -- Orc Statues
+            ['Adamantking Effigy']  = 7502, -- Quadav Statues
+            ['Avatar Icon']         = 7503, -- Yagudo Statues
+            ['Goblin Statue']       = 7504,
+            ['Goblin Replica']      = 7504,
+        },
+        [xi.zone.DYNAMIS_VALKURM] =
+        {
+            ['Goblin Replica']      = 7510,
+            ['Adamantking Effigy']  = 7511, -- Quadav Statues
+            ['Serjeant Tombstone']  = 7512, -- Orc Statues
+            ['Manifest Icon']       = 7513, -- Yagudo Statues
+
+            ['Nightmare Hippogryph'] = 1792,
+            ['Nightmare Manticore']  = 1799,
+            ['Nightmare Sabotender'] = 1792,
+            ['Nightmare Sheep']      = 1794,
+            ['Nightmare Fly']        = 1794,
+        },
+        [xi.zone.DYNAMIS_TAVNAZIA] =
+        {
+            ['Vanguard Eye']        = 7514,
+            ['Nightmare Cluster']   = 1786,
+            ['Nightmare Hornet']    = 1795,
+            ['Nightmare Leech']     = 1796,
+            ['Nightmare Makara']    = 1797,
+            ['Nightmare Taurus']    = 2854,
+            ['Nightmare Bugard']    = 1795,
+        },
+        [xi.zone.DYNAMIS_BUBURIMU] =
+        {
+            ['Goblin Replica']       = 7515,
+            ['Manifest Icon']        = 7520,
+            ['Serjeant Tombstone']   = 7521,
+            ['Adamantking Effigy']   = 7522,
+            ['Nightmare Crab']       = 1791,
+            ['Nightmare Dhalmel']    = 2796,
+            ['Nightmare Urganite']   = 1785,
+            ['Nightmare Bunny']      = 1789,
+            ['Nightmare Scorpion']   = 1787,
+            ['Nightmare Cockatrice'] = 1805,
+            ['Nightmare Crawler']    = 1798,
+            ['Nightmare Eft']        = 2795,
+            ['Nightmare Mandragora'] = 1789,
+            ['Nightmare Raven']      = 1788,
+        },
+        [xi.zone.DYNAMIS_QUFIM] =
+        {
+            ['Goblin Replica']      = 7516,
+            ['Adamantking Effigy']  = 7517,
+            ['Manifest Icon']       = 7518,
+            ['Serjeant Tombstone']  = 7519,
+            ['Nightmare Gaylas']    = 1793,
+            ['Nightmare Kraken']    = 1793,
+            ['Nightmare Raptor']    = 1793,
+            ['Nightmare Roc']       = 1793,
+            ['Nightmare Snoll']     = 1803,
+            ['Nightmare Diremite']  = 1790,
+            ['Nightmare Stirge']    = 1804,
+            ['Nightmare Tiger']     = 1804,
+            ['Nightmare Weapon']    = 1804,
+            ['Fire Elemental']      = 0, -- No drops for elementals
+            ['Water Elemental']     = 0,
+            ['Thunder Elemental']   = 0,
+            ['Earth Elemental']     = 0,
+            ['Air Elemental']       = 0,
+            ['Ice Elemental']       = 0,
+            ['Light Elemental']     = 0,
+            ['Dark Elemental']      = 0,
+        },
+        [xi.zone.DYNAMIS_JEUNO] =
+        {
+            ['Goblin Replica']  = 1144,
+        },
+        [xi.zone.DYNAMIS_SAN_DORIA] =
+        {
+            ['Serjeant Tombstone'] = 2201,
+            ['Warchief Tombstone'] = 2201,
+        },
+        [xi.zone.DYNAMIS_WINDURST] =
+        {
+            ['Avatar Idol']   = 195,
+            ['Avatar Icon']   = 195,
+            ['Manifest Icon'] = 195,
+        },
+        [xi.zone.DYNAMIS_BASTOK] =
+        {
+            ['Adamantking Effigy']  = 20,
+            ['Vanguard Vindicator'] = 2558,
+            ['Vanguard Constable']  = 2558,
+            ['Vanguard Militant']   = 2558,
         },
     }
 
-    local dropList = nonStandardLookup[mobMobType][mobName][4]
+    local dropList = dropLists[zoneID][mobName] -- Assign new droplist
     local flags = 0
     if
         zoneID == xi.zone.DYNAMIS_TAVNAZIA and
         oMob == nil
     then
-        if nonStandardLookup[mobMobType][mobName][8] ~= nil then
-            flags = nonStandardLookup[mobMobType][mobName][8]
+        if nonStandardLookup[mobMobType][mobName][7] ~= nil then
+            flags = nonStandardLookup[mobMobType][mobName][7]
         end
     end
 
     local mob = zone:insertDynamicEntity({
-        objtype = xi.objType.MOB,
-        name = nonStandardLookup[mobMobType][mobName][1],
-        x = xPos,
-        y = yPos,
-        z = zPos,
-        rotation = rPos,
-        groupId = nonStandardLookup[mobMobType][mobName][2],
+        objtype     = xi.objType.MOB,
+        name        = nonStandardLookup[mobMobType][mobName][1],
+        x           = xPos,
+        y           = yPos,
+        z           = zPos,
+        rotation    = rPos,
+        groupId     = nonStandardLookup[mobMobType][mobName][2],
         groupZoneId = nonStandardLookup[mobMobType][mobName][3],
+
+        onMobFight  = mobFunctions[mobMobType]['onMobFight'][1],
+        onMobRoam   = mobFunctions[mobMobType]['onMobRoam'][1],
+
         onMobSpawn = function(mob)
             local specFunc = mobFunctions[mobMobType]['onMobSpawn'][1]
             specFunc(mob)
@@ -751,10 +860,23 @@ xi.dynamis.nonStandardDynamicSpawn = function(mobIndex, oMob, forceLink, zoneID,
             mob:setMobMod(xi.mobMod.SUBLINK, xi.dynamis.SUBLINK_ID)
         end,
 
-        onMobEngaged = mobFunctions[mobMobType]['onMobEngaged'][1],
-        onMobFight = mobFunctions[mobMobType]['onMobFight'][1],
-        onMobRoam =  mobFunctions[mobMobType]['onMobRoam'][1],
+        onMobEngage = function(mob, mobTarget)
+            local specFunc = mobFunctions[mobMobType]['onMobEngage'][1]
+            specFunc(mob)
+
+            if mobTarget:isPet() then
+                local petOwner = mobTarget:getMaster()
+                mob:updateEnmity(petOwner)
+            end
+        end,
+
         onMobDeath = function(mob, player, optParams)
+            -- if the mob type has own special death function then call that as well
+            if mobFunctions[mobMobType]['onMobDeath'] then
+                local mobDeathFunc = mobFunctions[mobMobType]['onMobDeath'][1]
+                mobDeathFunc(mob)
+            end
+
             xi.dynamis.mobOnDeath(mob, player, optParams)
         end,
 
@@ -762,11 +884,11 @@ xi.dynamis.nonStandardDynamicSpawn = function(mobIndex, oMob, forceLink, zoneID,
             xi.dynamis.mobOnDespawn(mob)
         end,
 
-        releaseIdOnDisappear = true,
-        spawnSet = 3,
-        specialSpawnAnimation = oMob ~= nil,
-        entityFlags = flags,
-        mixins = mobFunctions[mobMobType]['mixins'],
+        releaseIdOnDisappear    = true,
+        spawnSet                = 3,
+        specialSpawnAnimation   = oMob ~= nil,
+        entityFlags             = flags,
+        mixins                  = mobFunctions[mobMobType]['mixins'],
     })
     mob:setSpawn(xPos, yPos, zPos, rPos)
     mob:spawn()
@@ -775,26 +897,23 @@ xi.dynamis.nonStandardDynamicSpawn = function(mobIndex, oMob, forceLink, zoneID,
 
     xi.dynamis.generatePath(mob, mobIndex)
 
-    if dropLists[zoneID] and dropLists[zoneID][mob:getFamily()] then
-        dropList = dropLists[zoneID][mob:getFamily()]
-    end
-
+    -- Assign droplists
     mob:setDropID(dropList)
 
-    if nonStandardLookup[mobMobType][mobName][5] ~= nil then -- If SpellList ~= nil set SpellList
-        mob:setSpellList(nonStandardLookup[mobMobType][mobName][5])
+    if nonStandardLookup[mobMobType][mobName][4] ~= nil then -- If SpellList ~= nil set SpellList
+        mob:setSpellList(nonStandardLookup[mobMobType][mobName][4])
     end
 
-    if nonStandardLookup[mobMobType][mobName][6] ~= nil then -- If SkillList ~= nil set SkillList
-        mob:setMobMod(xi.mobMod.SKILL_LIST, nonStandardLookup[mobMobType][mobName][6])
+    if nonStandardLookup[mobMobType][mobName][5] ~= nil then -- If SkillList ~= nil set SkillList
+        mob:setMobMod(xi.mobMod.SKILL_LIST, nonStandardLookup[mobMobType][mobName][5])
     end
 
-    if nonStandardLookup[mobMobType][mobName][7] ~= nil then -- If Floor
-        mob:setLocalVar('Floor', nonStandardLookup[mobMobType][mobName][7])
+    if nonStandardLookup[mobMobType][mobName][6] ~= nil then -- If Floor
+        mob:setLocalVar('Floor', nonStandardLookup[mobMobType][mobName][6])
     end
 
-    if xi.dynamis.mobList[zoneID][mobIndex].info[5] ~= nil then
-        zone:setLocalVar(string.format('%s', xi.dynamis.mobList[zoneID][mobIndex].info[5]), 0)
+    if xi.dynamis.mobList[zoneID][mobIndex].info[4] ~= nil then
+        zone:setLocalVar(string.format('%s', xi.dynamis.mobList[zoneID][mobIndex].info[4]), 0)
         mob:setLocalVar('hasMobVar', 1)
     end
 
@@ -973,17 +1092,17 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
         ['Va\'Rhu Bodysnatcher']     = { 'V.Bodysnatcher',  68,  40,  2901, 0,    5011, 'Beastmen' }, -- VaRh (THF)
 
         -- Dynamis - Bastok (Done)
-        ['Aa\'Nyu Dismantler']       = { 'A.Dismantler',    40,  134, 2907, 5,    5011, 'Beastmen' }, -- AaNy (DRK)
-        ['Gu\'Nhi Noondozer']        = { 'G.Noondozer',     53,  134, 2907, 0,    5011, 'Beastmen' }, -- GuNh (SMN)
-        ['Be\'Ebo Tortoisedriver']   = { 'B.Tortoisedriver',48,  134, 2907, 0,    5011, 'Beastmen' }, -- BeEb (BST)
-        ['Gi\'Pha Manameister']      = { 'G.Manameister',   43,  134, 2907, 1100, 5011, 'Beastmen' }, -- GiPh (BLM)
-        ['Ko\'Dho Cannonball']       = { 'K.Cannonball',    46,  134, 2907, 0,    5011, 'Beastmen' }, -- KoDh (MNK)
-        ['Ze\'Vho Fallsplitter']     = { 'Z.Fallsplitter',  40,  134, 2907, 5,    5011, 'Beastmen' }, -- ZeVh (DRK)
-        ['Effigy Shield PLD']        = { 'Effigy Shield',   30,  134, 2907, 4,    5011, 'Beastmen' }, -- EPLD (PLD)
-        ['Effigy Shield NIN']        = { 'Effigy Shield',   32,  134, 2907, 7,    5011, 'Beastmen' }, -- ENIN (NIN)
-        ['Effigy Shield BRD']        = { 'Effigy Shield',   23,  134, 2907, 6,    5011, 'Beastmen' }, -- EBRD (BRD)
-        ['Effigy Shield DRK']        = { 'Effigy Shield',   38,  134, 2907, 5,    5011, 'Beastmen' }, -- EDRK (DRK)
-        ['Effigy Shield SAM']        = { 'Effigy Shield',   31,  134, 2907, 0,    5011, 'Beastmen' }, -- ESAM (SAM)
+        ['Aa\'Nyu Dismantler']       = { 'A.Dismantler',     40,  134, 2907, 5,    5011, 'Beastmen' }, -- AaNy (DRK)
+        ['Gu\'Nhi Noondozer']        = { 'G.Noondozer',      53,  134, 2907, 0,    5011, 'Beastmen' }, -- GuNh (SMN)
+        ['Be\'Ebo Tortoisedriver']   = { 'B.Tortoisedriver', 48,  134, 2907, 0,    5011, 'Beastmen' }, -- BeEb (BST)
+        ['Gi\'Pha Manameister']      = { 'G.Manameister',    43,  134, 2907, 1100, 5011, 'Beastmen' }, -- GiPh (BLM)
+        ['Ko\'Dho Cannonball']       = { 'K.Cannonball',     46,  134, 2907, 0,    5011, 'Beastmen' }, -- KoDh (MNK)
+        ['Ze\'Vho Fallsplitter']     = { 'Z.Fallsplitter',   40,  134, 2907, 5,    5011, 'Beastmen' }, -- ZeVh (DRK)
+        ['Effigy Shield PLD']        = { 'Effigy Shield',    30,  134, 2907, 4,    5011, 'Beastmen' }, -- EPLD (PLD)
+        ['Effigy Shield NIN']        = { 'Effigy Shield',    32,  134, 2907, 7,    5011, 'Beastmen' }, -- ENIN (NIN)
+        ['Effigy Shield BRD']        = { 'Effigy Shield',    23,  134, 2907, 6,    5011, 'Beastmen' }, -- EBRD (BRD)
+        ['Effigy Shield DRK']        = { 'Effigy Shield',    38,  134, 2907, 5,    5011, 'Beastmen' }, -- EDRK (DRK)
+        ['Effigy Shield SAM']        = { 'Effigy Shield',    31,  134, 2907, 0,    5011, 'Beastmen' }, -- ESAM (SAM)
 
         -- Yagudo
         -- Dynamis - Beaucedine (Done)
@@ -1105,22 +1224,22 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
         ['Dynamis Icon']             = { 'D. Icon' ,        198, 134, 195,   1100, 95,   'Enabled Auto Attack' }, -- Dynamis Icon (DynI)
 
         -- Dynamis - Buburimu Non-Beastmen (Done)
-        ['Aitvaras']                 = { 'Aitvaras',        105, 40,  230, 0,    5008, 'Buburimu Dragon'   }, -- Aitv
-        ['Alklha']                   = { 'Alklha',          105, 40,  230, 0,    5006, 'Buburimu Dragon'   }, -- Alkl
-        ['Barong']                   = { 'Barong',          105, 40,  230, 0,    5004, 'Buburimu Dragon'   }, -- Baro
-        ['Basilic']                  = { 'Basilic',         105, 40,  230, 0,    5007, 'Buburimu Dragon'   }, -- Basi
-        ['Jurik']                    = { 'Jurik',           105, 40,  230, 0,    5003, 'Buburimu Dragon'   }, -- Juri
-        ['Koschei']                  = { 'Koschei',         105, 40,  230, 0,    5009, 'Buburimu Dragon'   }, -- Kosc
-        ['Stihi']                    = { 'Stihi',           105, 40,  230, 0,    1101, 'Buburimu Dragon'   }, -- Stih
-        ['Stollenwurm']              = { 'Stollenwurm',     105, 40,  230, 0,    5010, 'Buburimu Dragon'   }, -- Stol
-        ['Tarasca']                  = { 'Tarasca',         105, 40,  230, 0,    5005, 'Buburimu Dragon'   }, -- Tara
-        ['Vishap']                   = { 'Vishap',          105, 40,  230, 0,    1102, 'Buburimu Dragon'   }, -- Vish
-        ['Apocalyptic Beast']        = { 'Apoc. Beast',     1,   40,  146, 0,    0,    'Apocalyptic Beast' }, -- Apoc
+        ['Aitvaras']                 = { 'Aitvaras',        105, 40,  230,      0, 5008, 'Buburimu Dragon'   }, -- Aitv
+        ['Alklha']                   = { 'Alklha',          104, 40,  230,      0, 5006, 'Buburimu Dragon'   }, -- Alkl
+        ['Barong']                   = { 'Barong',          103, 40,  230,      0, 5004, 'Buburimu Dragon'   }, -- Baro
+        ['Basilic']                  = { 'Basilic',         105, 40,  230,      0, 5007, 'Buburimu Dragon'   }, -- Basi
+        ['Jurik']                    = { 'Jurik',           105, 40,  230,      0, 5003, 'Buburimu Dragon'   }, -- Juri
+        ['Koschei']                  = { 'Koschei',         105, 40,  230,      0, 5009, 'Buburimu Dragon'   }, -- Kosc
+        ['Stihi']                    = { 'Stihi',           102, 40,  230,      0, 1101, 'Buburimu Dragon'   }, -- Stih
+        ['Stollenwurm']              = { 'Stollenwurm',     105, 40,  230,      0, 5010, 'Buburimu Dragon'   }, -- Stol
+        ['Tarasca']                  = { 'Tarasca',         105, 40,  230,      0, 5005, 'Buburimu Dragon'   }, -- Tara
+        ['Vishap']                   = { 'Vishap',          105, 40,  230,      0, 1102, 'Buburimu Dragon'   }, -- Vish
+        ['Apocalyptic Beast']        = { 'Apoc. Beast',     1,   40,  146,      2, 87,   'Apocalyptic Beast' }, -- Apoc
 
         -- Dynamis - Valkurm (Done)
-        ['Dragontrap_1']             = { 'Dragontrap',      63,  77,  2910, 0,    114,  'No Auto Attack'     }, -- Drat
-        ['Dragontrap_2']             = { 'Dragontrap',      63,  77,  2910, 0,    114,  'No Auto Attack'     }, -- Drat
-        ['Dragontrap_3']             = { 'Dragontrap',      63,  77,  2910, 0,    114,  'No Auto Attack'     }, -- Drat
+        ['Dragontrap_1']             = { 'Dragontrap',     200,  39,  2910, 0,    114,  'Dragontrap'         }, -- Drat
+        ['Dragontrap_2']             = { 'Dragontrap',     201,  39,  2910, 0,    114,  'Dragontrap_child'   }, -- Drat
+        ['Dragontrap_3']             = { 'Dragontrap',     201,  39,  2910, 0,    114,  'Dragontrap_child'   }, -- Drat
         ['Fairy Ring']               = { 'Fairy Ring',      10,  39,  2910, 0,    116,  'Fairy Ring'         }, -- FaiR
         ['Nant\'ina']                = { 'Nant\'ina',       8,   39,  2910, 0,    1100, 'Nant\'ina'          }, -- Nant
         ['Stcemqestcint']            = { 'Stcemqestcint',   6,   39,  2910, 0,    245,  'No Auto Attack'     }, -- Stce
@@ -1128,10 +1247,10 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
         ['Cirrate Christelle']       = { 'C. Christelle',   1,   39,  472,  0,    0,    'Cirrate Christelle' }, -- Cirr
 
         -- Dynamis - Qufim Non-Beastmen (Done)
-        ['Scolopendra']              = { 'Scolopendra',     76,  41,  3131, 0,    218,  'Enabled Auto Attack' }, -- Scol
-        ['Suttung']                  = { 'Suttung',         85,  41,  3131, 0,    135,  'Enabled Auto Attack' }, -- Sutt
-        ['Stringes']                 = { 'Stringes',        79,  41,  3131, 0,    46,   'Enabled Auto Attack' }, -- Stri
-        ['Antaeus']                  = { 'Antaeus',         1,   41,  112,  0,    126,  'Antaeus'             }, -- Anta
+        ['Scolopendra']              = { 'Scolopendra',     76,  41,  3131, 0,    6502, 'Scolopendra'        }, -- Scol
+        ['Suttung']                  = { 'Suttung',         85,  41,  3131, 0,    6500, 'Suttung'            }, -- Sutt
+        ['Stringes']                 = { 'Stringes',        79,  41,  3131, 0,    6501, 'Stringes'           }, -- Stri
+        ['Antaeus']                  = { 'Antaeus',         1,   41,  112,  0,    6506, 'Antaeus'            }, -- Anta
 
         -- Dynamis - Tavnazia Non-Beastmen
         ['Nightmare Antlion']        = { 'N. Antlion' ,     64,  42,  0,    0,    4074, 'Nightmare Antlion' }, -- NAnt
@@ -1152,8 +1271,8 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.setNMStats(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
-                xi.dynamis.mobOnEngaged(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
+                xi.dynamis.mobOnEngage(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob)
@@ -1187,8 +1306,8 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 end
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
-                xi.dynamis.mobOnEngaged(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
+                xi.dynamis.mobOnEngage(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob)
@@ -1218,7 +1337,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.setMegaBossStats(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob)
@@ -1248,7 +1367,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnAngra(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
                 xi.dynamis.onEngagedAngra(mob, mobTarget)
             end },
 
@@ -1282,7 +1401,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnDagour(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
                 xi.dynamis.onEngagedDagour(mob, mobTarget)
             end },
 
@@ -1318,7 +1437,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnGouble(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -1348,7 +1467,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnMildaun(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -1382,7 +1501,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnQuieb(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -1416,7 +1535,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnVelosar(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -1447,7 +1566,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnApoc(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
                 xi.dynamis.onEngagedApoc(mob, mobTarget)
             end },
 
@@ -1459,9 +1578,11 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
             end },
 
             ['onMobMagicPrepare'] = { function(mob, mobTarget, spellId)
+                return xi.dynamis.apocMagicPrepare(mob, mobTarget, spellId)
             end },
 
             ['onMobWeaponSkillPrepare'] = { function(mob, mobTarget)
+                return xi.dynamis.apocWeaponSkillPrepare(mob, mobTarget)
             end },
 
             ['onMobWeaponSkill'] = { function(mob, mobTarget, skill)
@@ -1479,7 +1600,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnAntaeus(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
                 xi.dynamis.onEngagedAntaeus(mob, mobTarget)
             end },
 
@@ -1503,7 +1624,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.megaBossOnDeath(mobArg, player, optParams)
             end },
 
-            ['mixins'] = {   },
+            ['mixins'] = { require('scripts/mixins/job_special'), },
         },
         ['Cirrate Christelle'] =
         {
@@ -1511,7 +1632,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnCirrate(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
                 xi.dynamis.onEngagedCirrate(mob, mobTarget)
             end },
 
@@ -1526,7 +1647,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
             end },
 
             ['onMobWeaponSkillPrepare'] = { function(mob)
-                xi.dynamis.onWeaponskillPrepCirrate(mob)
+                return xi.dynamis.onWeaponskillPrepCirrate(mob)
             end },
 
             ['onMobWeaponSkill'] = { function(mob)
@@ -1544,7 +1665,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnFairy(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -1571,10 +1692,10 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
         ['Nant\'ina'] =
         {
             ['onMobSpawn'] = { function(mob)
-                xi.dynamis.onSpawnNoAuto(mob)
+                xi.dynamis.onSpawnNantina(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -1587,7 +1708,97 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
             end },
 
             ['onMobWeaponSkillPrepare'] = { function(mob)
-                xi.dynamis.onWeaponskillPrepNantina(mob)
+                return xi.dynamis.onWeaponskillPrepNantina(mob)
+            end },
+
+            ['onMobWeaponSkill'] = { function(mob)
+            end },
+
+            ['onMobDeath'] = { function(mob, player, optParams)
+                xi.dynamis.mobOnDeath(mob, player, optParams)
+            end },
+
+            ['mixins'] = {   },
+        },
+        ['Dragontrap'] =
+        {
+            ['onMobSpawn'] = { function(mob)
+                xi.dynamis.onSpawnDragontrap(mob)
+            end },
+
+            ['onMobEngage'] = { function(mob, mobTarget)
+            end },
+
+            ['onMobFight'] = { function(mob, mobTarget)
+            end },
+
+            ['onMobRoam'] = { function(mob)
+            end },
+
+            ['onMobMagicPrepare'] = { function(mob, mobTarget, spellId)
+            end },
+
+            ['onMobWeaponSkillPrepare'] = { function(mob)
+            end },
+
+            ['onMobWeaponSkill'] = { function(mob)
+            end },
+
+            ['onMobDeath'] = { function(mob, player, optParams)
+                xi.dynamis.mobOnDeath(mob, player, optParams)
+            end },
+
+            ['mixins'] = {   },
+        },
+        ['Dragontrap_child'] =
+        {
+            ['onMobSpawn'] = { function(mob)
+                xi.dynamis.onSpawnDragontrapChild(mob)
+            end },
+
+            ['onMobEngage'] = { function(mob, mobTarget)
+            end },
+
+            ['onMobFight'] = { function(mob, mobTarget)
+            end },
+
+            ['onMobRoam'] = { function(mob)
+            end },
+
+            ['onMobMagicPrepare'] = { function(mob, mobTarget, spellId)
+            end },
+
+            ['onMobWeaponSkillPrepare'] = { function(mob)
+            end },
+
+            ['onMobWeaponSkill'] = { function(mob)
+            end },
+
+            ['onMobDeath'] = { function(mob, player, optParams)
+                xi.dynamis.mobOnDeath(mob, player, optParams)
+            end },
+
+            ['mixins'] = {   },
+        },
+        ['Stcemqestcint'] =
+        {
+            ['onMobSpawn'] = { function(mob)
+                xi.dynamis.onSpawnStcemqestcint(mob)
+            end },
+
+            ['onMobEngage'] = { function(mob, mobTarget)
+            end },
+
+            ['onMobFight'] = { function(mob, mobTarget)
+            end },
+
+            ['onMobRoam'] = { function(mob)
+            end },
+
+            ['onMobMagicPrepare'] = { function(mob, mobTarget, spellId)
+            end },
+
+            ['onMobWeaponSkillPrepare'] = { function(mob)
             end },
 
             ['onMobWeaponSkill'] = { function(mob)
@@ -1605,7 +1816,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.setNMStats(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
                 xi.dynamis.onEngageMorbol(mob, mobTarget)
             end },
 
@@ -1636,7 +1847,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnDynaLord(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
                 xi.dynamis.onEngagedDynaLord(mob, mobTarget)
             end },
 
@@ -1672,7 +1883,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnYing(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -1704,7 +1915,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnYang(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -1736,7 +1947,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnAnimated(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
                 xi.dynamis.onEngagedAnimated(mob, mobTarget)
             end },
 
@@ -1769,7 +1980,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnSatellite(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
                 xi.dynamis.onEngageSatellite(mob, mobTarget)
             end },
 
@@ -1798,10 +2009,10 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
         ['Buburimu Dragon'] =
         {
             ['onMobSpawn'] = { function(mob)
-                xi.dynamis.onSpawnNoAuto(mob)
+                xi.dynamis.onSpawnBubuDragon(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -1827,43 +2038,13 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
 
             ['mixins'] = {   },
         },
-        ['No Auto Attack'] =
-        {
-            ['onMobSpawn'] = { function(mob)
-                xi.dynamis.onSpawnNoAuto(mob)
-            end },
-
-            ['onMobEngaged'] = { function(mob, mobTarget)
-            end },
-
-            ['onMobFight'] = { function(mob, mobTarget)
-            end },
-
-            ['onMobRoam'] = { function(mob)
-            end },
-
-            ['onMobMagicPrepare'] = { function(mob, mobTarget, spellId)
-            end },
-
-            ['onMobWeaponSkillPrepare'] = { function(mob)
-            end },
-
-            ['onMobWeaponSkill'] = { function(mob)
-            end },
-
-            ['onMobDeath'] = { function(mob, player, optParams)
-                xi.dynamis.mobOnDeath(mob, player, optParams)
-            end },
-
-            ['mixins'] = {   },
-        },
         ['Enabled Auto Attack'] =
         {
             ['onMobSpawn'] = { function(mob)
                 xi.dynamis.setNMStats(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -1894,7 +2075,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 mob:addImmunity(xi.immunity.SLEEP)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -1924,8 +2105,8 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnNightmareWorm(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
-                xi.dynamis.onMobEngagedNightmareWorm(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
+                xi.dynamis.onMobEngageNightmareWorm(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -1956,7 +2137,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnNightmareAntlion(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -1986,8 +2167,8 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnUmbralDiabolos(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
-                xi.dynamis.onMobEngagedUmbralDiabolos(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
+                xi.dynamis.onMobEngageUmbralDiabolos(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -2017,8 +2198,8 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnDiabolosClub(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
-                xi.dynamis.onMobEngagedDiabolos(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
+                xi.dynamis.onMobEngageDiabolos(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -2050,8 +2231,8 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnDiabolosHeart(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
-                xi.dynamis.onMobEngagedDiabolos(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
+                xi.dynamis.onMobEngageDiabolos(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -2084,8 +2265,8 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnDiabolosSpade(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
-                xi.dynamis.onMobEngagedDiabolos(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
+                xi.dynamis.onMobEngageDiabolos(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -2118,8 +2299,8 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnDiabolosDiamond(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
-                xi.dynamis.onMobEngagedDiabolos(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
+                xi.dynamis.onMobEngageDiabolos(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -2152,7 +2333,7 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
                 xi.dynamis.onSpawnDiabolosShard(mob)
             end },
 
-            ['onMobEngaged'] = { function(mob, mobTarget)
+            ['onMobEngage'] = { function(mob, mobTarget)
             end },
 
             ['onMobFight'] = { function(mob, mobTarget)
@@ -2169,6 +2350,97 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
             end },
 
             ['onMobWeaponSkill'] = { function(mobTarget, mob, skill)
+                xi.dynamis.onMobWeaponSkillDiabolosShard(mobTarget, mob, skill)
+            end },
+
+            ['onMobDeath'] = { function(mob, player, optParams)
+                xi.dynamis.mobOnDeath(mob, player, optParams)
+            end },
+
+            ['mixins'] = {   },
+        },
+        ['Scolopendra'] = -- Kraken
+        {
+            ['onMobSpawn'] = { function(mob)
+                xi.dynamis.onSpawnScolopendra(mob)
+            end },
+
+            ['onMobEngage'] = { function(mob, mobTarget)
+            end },
+
+            ['onMobFight'] = { function(mob, mobTarget)
+            end },
+
+            ['onMobRoam'] = { function(mob)
+            end },
+
+            ['onMobMagicPrepare'] = { function(mob, mobTarget, spellId)
+            end },
+
+            ['onMobWeaponSkillPrepare'] = { function(mob)
+            end },
+
+            ['onMobWeaponSkill'] = { function(mob)
+            end },
+
+            ['onMobDeath'] = { function(mob, player, optParams)
+                xi.dynamis.mobOnDeath(mob, player, optParams)
+            end },
+
+            ['mixins'] = {   },
+        },
+        ['Suttung'] = -- Golem
+        {
+            ['onMobSpawn'] = { function(mob)
+                xi.dynamis.onSpawnSuttung(mob)
+            end },
+
+            ['onMobEngage'] = { function(mob, mobTarget)
+            end },
+
+            ['onMobFight'] = { function(mob, mobTarget)
+            end },
+
+            ['onMobRoam'] = { function(mob)
+            end },
+
+            ['onMobMagicPrepare'] = { function(mob, mobTarget, spellId)
+            end },
+
+            ['onMobWeaponSkillPrepare'] = { function(mob)
+            end },
+
+            ['onMobWeaponSkill'] = { function(mob)
+            end },
+
+            ['onMobDeath'] = { function(mob, player, optParams)
+                xi.dynamis.mobOnDeath(mob, player, optParams)
+            end },
+
+            ['mixins'] = {   },
+        },
+        ['Stringes'] = -- Bat
+        {
+            ['onMobSpawn'] = { function(mob)
+                xi.dynamis.onSpawnStringes(mob)
+            end },
+
+            ['onMobEngage'] = { function(mob, mobTarget)
+            end },
+
+            ['onMobFight'] = { function(mob, mobTarget)
+            end },
+
+            ['onMobRoam'] = { function(mob)
+            end },
+
+            ['onMobMagicPrepare'] = { function(mob, mobTarget, spellId)
+            end },
+
+            ['onMobWeaponSkillPrepare'] = { function(mob)
+            end },
+
+            ['onMobWeaponSkill'] = { function(mob)
             end },
 
             ['onMobDeath'] = { function(mob, player, optParams)
@@ -2184,13 +2456,13 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
     end
 
     local mob = zone:insertDynamicEntity({
-        objtype = xi.objType.MOB,
-        name = xi.dynamis.nmInfoLookup[mobName][1],
-        x = xPos,
-        y = yPos,
-        z = zPos,
-        rotation = rPos,
-        groupId = xi.dynamis.nmInfoLookup[mobName][2],
+        objtype     = xi.objType.MOB,
+        name        = xi.dynamis.nmInfoLookup[mobName][1],
+        x           = xPos,
+        y           = yPos,
+        z           = zPos,
+        rotation    = rPos,
+        groupId     = xi.dynamis.nmInfoLookup[mobName][2],
         groupZoneId = xi.dynamis.nmInfoLookup[mobName][3],
         -- certain NMs need onMobInitialize functions to set mob mods (as dynamic mobs do not get pool mob mods)
         onMobInitialize = function(mob)
@@ -2208,13 +2480,21 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
             mob:setMobMod(xi.mobMod.SUBLINK, xi.dynamis.SUBLINK_ID)
         end,
 
-        onMobEngaged = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]['onMobEngaged'][1],
-        onMobFight = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]['onMobFight'][1],
-        onMobRoam = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]['onMobRoam'][1],
-        onMobMagicPrepare = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]['onMobMagicPrepare'][1],
+        onMobEngage = function(mob, mobTarget)
+            local specFunc = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]['onMobEngage'][1]
+            specFunc(mob)
+            if mobTarget:isPet() then
+                local petOwner = mobTarget:getMaster()
+                mob:updateEnmity(petOwner)
+            end
+        end,
+
+        onMobFight              = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]['onMobFight'][1],
+        onMobRoam               = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]['onMobRoam'][1],
+        onMobMagicPrepare       = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]['onMobMagicPrepare'][1],
         onMobWeaponSkillPrepare = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]['onMobWeaponSkillPrepare'][1],
-        onMobWeaponSkill = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]['onMobWeaponSkill'][1],
-        onMobDeath = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]['onMobDeath'][1],
+        onMobWeaponSkill        = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]['onMobWeaponSkill'][1],
+        onMobDeath              = xi.dynamis.nmFunctions[xi.dynamis.nmInfoLookup[mobName][7]]['onMobDeath'][1],
         onMobDespawn = function(mob)
             xi.dynamis.mobOnDespawn(mob)
         end,
@@ -2281,13 +2561,13 @@ xi.dynamis.nmDynamicSpawn = function(mobIndex, oMobIndex, forceLink, zoneID, tar
 end
 
 xi.dynamis.spawnDynamicPet = function(target, oMob, mobJob)
-    local mobFamily = oMob:getFamily()
-    local zoneID = oMob:getZoneID()
-    local oMobIndex = oMob:getZone():getLocalVar(string.format('MobIndex_%s', oMob:getID()))
-    local isNM = false
-    local mobName = oMob:getName()
-    local zone = oMob:getZone()
-    local functionLookup = 'Normal'
+    local mobFamily         = oMob:getFamily()
+    local zoneID            = oMob:getZoneID()
+    local oMobIndex         = oMob:getZone():getLocalVar(string.format('MobIndex_%s', oMob:getID()))
+    local isNM              = false
+    local mobName           = oMob:getName()
+    local zone              = oMob:getZone()
+    local functionLookup    = 'Normal'
     if oMobIndex ~= 0 then
         if xi.dynamis.mobList[zoneID][oMobIndex].info[1] == 'NM' then
             isNM = true
@@ -2451,8 +2731,9 @@ xi.dynamis.spawnDynamicPet = function(target, oMob, mobJob)
             },
             [334] = -- Orc Family
             {
+                -- { Name, groupId, groupZoneId, Droplist, SpellList, SkillList }
                 [false] = { 'V. Avatar' , 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
-                [true] = -- Orc NM
+                [true] = -- Orc NMD
                 {
                     ['Deathcaller Bidfbid']     = { 'V. Avatar', 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
                     ['Reapertongue Gadgquok']   = { 'V. Avatar', 36, 134, 0, 0, 34 }, -- Vanguard's Avatar (VAva)
@@ -2517,16 +2798,25 @@ xi.dynamis.spawnDynamicPet = function(target, oMob, mobJob)
         {
             ['Apocalyptic Beast'] =
             {
+                ['onMobInitialize'] = { function(mob, mobTarget)
+                end },
+
                 ['onMobFight'] = { function(mob, mobTarget)
                 end },
 
                 ['onMobRoam'] = { function(mob)
                 end },
 
+                ['onMobEngage'] = { function(mob)
+                end },
+
                 ['mixins'] = { require('scripts/mixins/families/avatar'), },
             },
             ['Dagourmarche'] =
             {
+                ['onMobInitialize'] = { function(mob, mobTarget)
+                end },
+
                 ['onMobFight'] = { function(mob, mobTarget)
                     xi.dynamis.onFightMultiPet(mob, mobTarget)
                 end },
@@ -2535,23 +2825,35 @@ xi.dynamis.spawnDynamicPet = function(target, oMob, mobJob)
                     xi.dynamis.onRoamMultiPet(mob)
                 end },
 
+                ['onMobEngage'] = { function(mob)
+                end },
+
                 ['mixins'] = { require('scripts/mixins/families/avatar'), },
             },
             ['Normal'] =
             {
+                ['onMobInitialize'] = { function(mob, mobTarget)
+                end },
+
                 ['onMobFight'] = { function(mob, mobTarget)
                 end },
 
                 ['onMobRoam'] = { function(mob)
                 end },
 
-                ['mixins'] = { require('scripts/mixins/families/avatar_persist'), },
+                ['onMobEngage'] = { function(mob)
+                end },
+
+                ['mixins'] = {  },
             },
         },
         [xi.job.BST] =
         {
             ['Dagourmarche'] =
             {
+                ['onMobInitialize'] = { function(mob, mobTarget)
+                end },
+
                 ['onMobFight'] = { function(mob, mobTarget)
                     xi.dynamis.onFightMultiPet(mob, mobTarget)
                 end },
@@ -2560,14 +2862,23 @@ xi.dynamis.spawnDynamicPet = function(target, oMob, mobJob)
                     xi.dynamis.onRoamMultiPet(mob)
                 end },
 
+                ['onMobEngage'] = { function(mob)
+                end },
+
                 ['mixins'] = {   },
             },
             ['Normal'] =
             {
+                ['onMobInitialize'] = { function(mob, mobTarget)
+                end },
+
                 ['onMobFight'] = { function(mob, mobTarget)
                 end },
 
                 ['onMobRoam'] = { function(mob)
+                end },
+
+                ['onMobEngage'] = { function(mob)
                 end },
 
                 ['mixins'] = {   },
@@ -2577,6 +2888,9 @@ xi.dynamis.spawnDynamicPet = function(target, oMob, mobJob)
         {
             ['Apocalyptic Beast'] =
             {
+                ['onMobInitialize'] = { function(mob, mobTarget)
+                end },
+
                 ['onMobFight'] = { function(mob, mobTarget)
                     xi.dynamis.onFightApocDRG(mob, mobTarget)
                 end },
@@ -2585,10 +2899,16 @@ xi.dynamis.spawnDynamicPet = function(target, oMob, mobJob)
                     xi.dynamis.onRoamApocDRG(mob)
                 end },
 
+                ['onMobEngage'] = { function(mob)
+                end },
+
                 ['mixins'] = {   },
             },
             ['Dagourmarche'] =
             {
+                ['onMobInitialize'] = { function(mob, mobTarget)
+                end },
+
                 ['onMobFight'] = { function(mob, mobTarget)
                     xi.dynamis.onFightMultiPet(mob, mobTarget)
                 end },
@@ -2597,14 +2917,23 @@ xi.dynamis.spawnDynamicPet = function(target, oMob, mobJob)
                     xi.dynamis.onRoamMultiPet(mob)
                 end },
 
+                ['onMobEngage'] = { function(mob)
+                end },
+
                 ['mixins'] = {   },
             },
             ['Normal'] =
             {
+                ['onMobInitialize'] = { function(mob, mobTarget)
+                end },
+
                 ['onMobFight'] = { function(mob, mobTarget)
                 end },
 
                 ['onMobRoam'] = { function(mob)
+                end },
+
+                ['onMobEngage'] = { function(mob)
                 end },
 
                 ['mixins'] = {   },
@@ -2626,23 +2955,25 @@ xi.dynamis.spawnDynamicPet = function(target, oMob, mobJob)
     end
 
     local mob = zone:insertDynamicEntity({
-        objtype = xi.objType.MOB,
-        name = nameObj[1],
-        x = oMob:getXPos(),
-        y = oMob:getYPos(),
-        z = oMob:getXPos(),
-        rotation = oMob:getRotPos(),
-        groupId = nameObj[2],
+        objtype     = xi.objType.MOB,
+        name        = nameObj[1],
+        x           = oMob:getXPos(),
+        y           = oMob:getYPos(),
+        z           = oMob:getXPos(),
+        rotation    = oMob:getRotPos(),
+        groupId     = nameObj[2],
         groupZoneId = nameObj[3],
-        onMobSpawn = function(mob)
+        onMobSpawn = function(mob, oMob)
             xi.dynamis.setPetStats(mob)
             -- set all dyna mobs to same sublink so for example statues link when seeing normal mobs
             mob:setMobMod(xi.mobMod.SUBLINK, xi.dynamis.SUBLINK_ID)
         end,
 
-        onMobFight = petFunctions[mobJob][functionLookup]['onMobFight'][1],
-        onMobRoam = petFunctions[mobJob][functionLookup]['onMobRoam'][1],
-        onMobDeath = function(mob, player, optParams)
+        onMobInitialize = petFunctions[mobJob][functionLookup]['onMobInitialize'][1],
+        onMobFight      = petFunctions[mobJob][functionLookup]['onMobFight'][1],
+        onMobRoam       = petFunctions[mobJob][functionLookup]['onMobRoam'][1],
+        onMobEngage     = petFunctions[mobJob][functionLookup]['onMobEngage'][1],
+        onMobDeath      = function(mob, player, optParams)
             xi.dynamis.onPetDeath(mob)
         end,
 
@@ -2650,9 +2981,9 @@ xi.dynamis.spawnDynamicPet = function(target, oMob, mobJob)
             xi.dynamis.mobOnDespawn(mob)
         end,
 
-        releaseIdOnDisappear = true,
-        spawnSet = 3,
-        specialSpawnAnimation = oMob ~= nil,
+        releaseIdOnDisappear    = true,
+        spawnSet                = 3,
+        specialSpawnAnimation   = oMob ~= nil,
         mixins = petFunctions[mobJob][functionLookup]['mixins'],
     })
     mob:setSpawn(oMob:getXPos() + math.random() * 6-3, oMob:getYPos() - 0.3, oMob:getZPos() + math.random() * 6 - 3, oMob:getRotPos())
@@ -2674,7 +3005,6 @@ end
 -----------------------------------
 --    Dynamis Mob Pathing/Roam   --
 -----------------------------------
-
 xi.dynamis.generatePath = function(mob, mobIndex) -- Handle pathing.
     local zoneID = mob:getZoneID()
     if
@@ -2686,7 +3016,7 @@ xi.dynamis.generatePath = function(mob, mobIndex) -- Handle pathing.
         local second = table[2]
         local pathNodes =
         {
-            { x = first[1], y = first[2], z = first[3], wait = 1000 },
+            { x = first[1],  y = first[2],  z = first[3],  wait = 1000 },
             { x = second[1], y = second[2], z = second[3], wait = 1000 }
         }
         mob:pathThrough(pathNodes, xi.path.flag.PATROL)
@@ -2712,189 +3042,9 @@ xi.dynamis.setSpecialSkill = function(mob)
     end
 end
 
-local familyEES =
-{
-    [  3] = xi.jsa.EES_AERN,    -- Aern
-    [ 25] = xi.jsa.EES_ANTICA,  -- Antica
-    [115] = xi.jsa.EES_SHADE,   -- Fomor
-    [126] = xi.jsa.EES_GIGA,    -- Gigas
-    [127] = xi.jsa.EES_GIGA,    -- Gigas
-    [128] = xi.jsa.EES_GIGA,    -- Gigas
-    [129] = xi.jsa.EES_GIGA,    -- Gigas
-    [130] = xi.jsa.EES_GIGA,    -- Gigas
-    [133] = xi.jsa.EES_GOBLIN,  -- Goblin
-    [169] = xi.jsa.EES_KINDRED, -- Kindred
-    [171] = xi.jsa.EES_LAMIA,   -- Lamiae
-    [182] = xi.jsa.EES_MERROW,  -- Merrow
-    [184] = xi.jsa.EES_GOBLIN,  -- Moblin
-    [189] = xi.jsa.EES_ORC,     -- Orc
-    [200] = xi.jsa.EES_QUADAV,  -- Quadav
-    [201] = xi.jsa.EES_QUADAV,  -- Quadav
-    [202] = xi.jsa.EES_QUADAV,  -- Quadav
-    [221] = xi.jsa.EES_SHADE,   -- Shadow
-    [222] = xi.jsa.EES_SHADE,   -- Shadow
-    [223] = xi.jsa.EES_SHADE,   -- Shadow
-    [246] = xi.jsa.EES_TROLL,   -- Troll
-    [270] = xi.jsa.EES_YAGUDO,  -- Yagudo
-    [327] = xi.jsa.EES_GOBLIN,  -- Goblin
-    [328] = xi.jsa.EES_GIGA,    -- Gigas
-    [334] = xi.jsa.EES_ORC,     -- OrcNM
-    [335] = xi.jsa.EES_MAAT,    -- Maat
-    [337] = xi.jsa.EES_QUADAV,  -- QuadavNM
-    [358] = xi.jsa.EES_KINDRED, -- Kindred
-    [359] = xi.jsa.EES_SHADE,   -- Fomor
-    [360] = xi.jsa.EES_YAGUDO,  -- YagudoNM
-    [373] = xi.jsa.EES_GOBLIN,  -- Goblin_Armored
-}
-
-xi.dynamis.setMobStats = function(mob)
-    if mob ~= nil then
-        mob:setMobType(xi.mobType.BATTLEFIELD)
-        mob:addStatusEffect(xi.effect.BATTLEFIELD, 1, 0, 0, true)
-        xi.dynamis.setSpecialSkill(mob)
-        mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
-        local job = mob:getMainJob()
-
-        mob:setTrueDetection(true)
-
-        if mob:getFamily() == 359 then -- If Hydra
-            mob:setMobLevel(math.random(80, 82))
-        elseif mob:getFamily() == 358 then -- If Kindred
-            mob:setMobLevel(math.random(77, 80))
-        else
-            mob:setMobLevel(math.random(77, 78))
-        end
-
-        if job == xi.job.WAR then
-            local params = {  }
-            params.specials = {  }
-            params.specials.skill = {  }
-            params.specials.skill.id = xi.jsa.MIGHTY_STRIKES
-            params.specials.skill.hpp = math.random(55, 80)
-            xi.mix.jobSpecial.config(mob, params)
-        elseif job == xi.job.MNK then
-            local params = {  }
-            params.specials = {  }
-            params.specials.skill = {  }
-            params.specials.skill.id = xi.jsa.HUNDRED_FISTS
-            params.specials.skill.hpp = math.random(55, 70)
-            xi.mix.jobSpecial.config(mob, params)
-        elseif job == xi.job.WHM then
-            local params = {  }
-            params.specials = {  }
-            params.specials.skill = {  }
-            params.specials.skill.id = xi.jsa.BENEDICTION
-            params.specials.skill.hpp = math.random(40, 60)
-            xi.mix.jobSpecial.config(mob, params)
-        elseif job == xi.job.BLM then
-            local params = {  }
-            params.specials = {  }
-            params.specials.skill = {  }
-            params.specials.skill.id = xi.jsa.MANAFONT
-            params.specials.skill.hpp = math.random(55, 80)
-            xi.mix.jobSpecial.config(mob, params)
-        elseif job == xi.job.RDM then
-            local params = {  }
-            params.specials = {  }
-            params.specials.skill = {  }
-            params.specials.skill.id = xi.jsa.CHAINSPELL
-            params.specials.skill.hpp = math.random(55, 80)
-            xi.mix.jobSpecial.config(mob, params)
-        elseif job == xi.job.THF then
-            local params = {  }
-            params.specials = {  }
-            params.specials.skill = {  }
-            params.specials.skill.id = xi.jsa.PERFECT_DODGE
-            params.specials.skill.hpp = math.random(55, 75)
-            xi.mix.jobSpecial.config(mob, params)
-        elseif job == xi.job.PLD then
-            local params = {  }
-            params.specials = {  }
-            params.specials.skill = {  }
-            params.specials.skill.id = xi.jsa.INVINCIBLE
-            params.specials.skill.hpp = math.random(55, 75)
-            xi.mix.jobSpecial.config(mob, params)
-        elseif job == xi.job.DRK then
-            local params = {  }
-            params.specials = {  }
-            params.specials.skill = {  }
-            params.specials.skill.id = xi.jsa.BLOOD_WEAPON
-            params.specials.skill.hpp = math.random(55, 75)
-            xi.mix.jobSpecial.config(mob, params)
-        elseif job == xi.job.BST then
-        elseif job == xi.job.BRD then
-            local params = {  }
-            params.specials = {  }
-            params.specials.skill = {  }
-            params.specials.skill.id = xi.jsa.SOUL_VOICE
-            params.specials.skill.hpp = math.random(55, 80)
-            xi.mix.jobSpecial.config(mob, params)
-        elseif job == xi.job.RNG then
-            local params = {  }
-            params.specials = {  }
-            params.specials.skill = {  }
-            params.specials.skill.id = familyEES[mob:getFamily()]
-            params.specials.skill.hpp = math.random(55, 75)
-            xi.mix.jobSpecial.config(mob, params)
-        elseif job == xi.job.SAM then
-            local params = {  }
-            params.specials = {  }
-            params.specials.skill = {  }
-            params.specials.skill.id = xi.jsa.MEIKYO_SHISUI
-            params.specials.skill.hpp = math.random(55, 80)
-            xi.mix.jobSpecial.config(mob, params)
-        elseif job == xi.job.NIN then
-            local params = {  }
-            params.specials = {  }
-            params.specials.skill = {  }
-            params.specials.skill.id = xi.jsa.MIJIN_GAKURE
-            params.specials.skill.hpp = math.random(25, 35)
-            xi.mix.jobSpecial.config(mob, params)
-        elseif job == xi.job.DRG then
-            local params = {  }
-            params.specials = {  }
-            params.specials.skill = {  }
-            params.specials.skill.id = xi.jsa.CALL_WYVERN
-            params.specials.skill.hpp = 100
-            xi.mix.jobSpecial.config(mob, params)
-        elseif job == xi.job.SMN then
-        end
-
-        xi.dynamis.addParentListeners(mob)
-
-        mob:setMobMod(xi.mobMod.CHARMABLE, 0)
-        -- Add Check After Calcs
-        mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
-    end
-end
-
-xi.dynamis.setNightmareStats = function(mob)
-    if mob then
-        mob:setMobType(xi.mobType.BATTLEFIELD)
-        mob:addStatusEffect(xi.effect.BATTLEFIELD, 1, 0, 0, true)
-        xi.dynamis.setSpecialSkill(mob)
-        mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
-        mob:setMobLevel(math.random(78, 80))
-        mob:setTrueDetection(true)
-
-        xi.dynamis.addParentListeners(mob)
-
-        -- Add Check After Calcs
-        mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
-
-        if mob:getZone():getID() == xi.zone.DYNAMIS_TAVNAZIA then
-            mob:setRoamFlags(xi.roamFlag.SCRIPTED)
-        else
-            mob:setRoamFlags(xi.roamFlag.NONE)
-        end
-
-        mob:setMobMod(xi.mobMod.CHARMABLE, 0)
-    end
-end
-
 local mdbValues =
 {
-    [93] = 162, -- Orc Statue
+    [93]  = 162, -- Orc Statue
     [193] = 100, -- Wyvern
     [229] = 100, -- Hecteyes
     [334] = 100, -- Orc
@@ -2908,37 +3058,92 @@ xi.dynamis.setMDB = function(mob)
     end
 end
 
-xi.dynamis.setNMStats = function(mob)
+xi.dynamis.setJob2Hr = function(mob)
+    local job2hr =
+    {
+        [xi.job.WAR] = xi.jsa.MIGHTY_STRIKES,
+        [xi.job.MNK] = xi.jsa.HUNDRED_FISTS,
+        [xi.job.WHM] = xi.jsa.BENEDICTION,
+        [xi.job.BLM] = xi.jsa.MANAFONT,
+        [xi.job.RDM] = xi.jsa.CHAINSPELL,
+        [xi.job.THF] = xi.jsa.PERFECT_DODGE,
+        [xi.job.PLD] = xi.jsa.INVINCIBLE,
+        [xi.job.DRK] = xi.jsa.BLOOD_WEAPON,
+        -- [xi.job.BST] = xi.jsa.FAMILIAR,
+        [xi.job.BRD] = xi.jsa.SOUL_VOICE,
+        [xi.job.SAM] = xi.jsa.MEIKYO_SHISUI,
+        [xi.job.NIN] = xi.jsa.MIJIN_GAKURE,
+        [xi.job.DRG] = xi.jsa.CALL_WYVERN,
+        [xi.job.SMN] = xi.jsa.ASTRAL_FLOW,
+        [xi.job.BLU] = xi.jsa.AZURE_LORE,
+    }
+
     local job = mob:getMainJob()
-    mob:setMobType(xi.mobType.BATTLEFIELD)
-    mob:addStatusEffect(xi.effect.BATTLEFIELD, 1, 0, 0, true)
-    xi.dynamis.setSpecialSkill(mob)
-    mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
-    mob:setMobLevel(math.random(80, 82))
-    mob:setTrueDetection(true)
-    xi.dynamis.setMDB(mob)
 
-    xi.dynamis.addParentListeners(mob)
-
-    if job == xi.job.NIN then
-        local params = {  }
-        params.specials = {  }
-        params.specials.skill = {  }
-        params.specials.skill.id = xi.jsa.MIJIN_GAKURE
-        params.specials.skill.hpp = math.random(15, 25)
-        xi.mix.jobSpecial.config(mob, params)
+    if job == xi.job.DRG then
+        xi.mix.jobSpecial.config(mob, {
+            specials =
+            {
+                { id = job2hr[job], hpp = 100 }
+            }
+        })
+    elseif job == job2hr[job] then
+        xi.mix.jobSpecial.config(mob, {
+            specials =
+            {
+                { id = job2hr[job], hpp = math.random(20, 70) }
+            }
+        })
     end
+end
 
-    mob:setMobMod(xi.mobMod.CHARMABLE, 0)
+xi.dynamis.setMobStats = function(mob)
+    if mob ~= nil then
+        xi.dynamis.setSpecialSkill(mob)
+
+        if mob:getFamily() == 359 then -- If Hydra
+            mob:setMobLevel(math.random(80, 82))
+        elseif mob:getFamily() == 358 then -- If Kindred
+            mob:setMobLevel(math.random(77, 80))
+        else
+            mob:setMobLevel(math.random(77, 78))
+        end
+
+        xi.dynamis.addParentListeners(mob)
+        xi.dynamis.generalStats(mob)
+        xi.dynamis.setJob2Hr(mob)
+    end
+end
+
+xi.dynamis.setNightmareStats = function(mob)
+    if mob then
+        mob:setMobLevel(math.random(78, 80))
+
+        if mob:getZone():getID() == xi.zone.DYNAMIS_TAVNAZIA then
+            mob:setRoamFlags(xi.roamFlag.SCRIPTED)
+        else
+            mob:setRoamFlags(xi.roamFlag.NONE)
+        end
+
+        xi.dynamis.setSpecialSkill(mob)
+        xi.dynamis.addParentListeners(mob)
+        xi.dynamis.generalStats(mob)
+    end
+end
+
+xi.dynamis.setNMStats = function(mob)
+    mob:setMobLevel(math.random(80, 82))
+    xi.dynamis.setSpecialSkill(mob)
+    xi.dynamis.setMDB(mob)
+    xi.dynamis.addParentListeners(mob)
+    xi.dynamis.setJob2Hr(mob)
+    xi.dynamis.generalStats(mob)
 end
 
 xi.dynamis.setStatueStats = function(mob, mobIndex)
     local zoneID = mob:getZoneID()
     local eyes = xi.dynamis.mobList[zoneID][mobIndex].eyes
     mob:setRoamFlags(xi.roamFlag.SCRIPTED)
-    mob:setMobType(xi.mobType.BATTLEFIELD)
-    mob:addStatusEffect(xi.effect.BATTLEFIELD, 1, 0, 0, true)
-    mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
     mob:setMobLevel(math.random(82, 84))
     mob:setMod(xi.mod.DMG, -5000)
     -- if an eye then does not have slow movement speed and has lower HP in xarc
@@ -2952,39 +3157,28 @@ xi.dynamis.setStatueStats = function(mob, mobIndex)
         mob:setSpeed(20)
     end
 
-    mob:setTrueDetection(true)
     -- Disabling WHM job trait mods because their job is set to WHM in the DB.
     mob:setMod(xi.mod.REGEN, 0)
     mob:setMod(xi.mod.MPHEAL, 0)
-    mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
 
     xi.dynamis.setMDB(mob)
     xi.dynamis.addParentListeners(mob)
+    xi.dynamis.generalStats(mob)
 
     if mob:getFamily() >= 92 and mob:getFamily() <= 95 then -- If statue
         if eyes ~= nil then
             mob:setLocalVar('eyeColor', eyes) -- Set Eyes if need be
-            if eyes >= 2 then -- If HP or MP restore statue
-                mob:setUnkillable(true) -- Set Unkillable as we will use skills then kill.
-            end
         else
             mob:setLocalVar('eyeColor', xi.dynamis.eye.RED) -- Set Eyes if need be
         end
     end
-
-    mob:setMobMod(xi.mobMod.CHARMABLE, 0)
 end
 
 xi.dynamis.setMegaBossStats = function(mob)
-    mob:setMobType(xi.mobType.BATTLEFIELD)
-    mob:addStatusEffect(xi.effect.BATTLEFIELD, 1, 0, 0, true)
-    mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
     mob:setMobLevel(88)
-    mob:setMod(xi.mod.STR, -10)
-    mob:setTrueDetection(true)
     xi.dynamis.setMDB(mob)
-    mob:setMobMod(xi.mobMod.CHARMABLE, 0)
     xi.dynamis.addParentListeners(mob)
+    xi.dynamis.generalStats(mob)
 end
 
 xi.dynamis.setPetStats = function(mob)
@@ -2992,30 +3186,30 @@ xi.dynamis.setPetStats = function(mob)
         mob:setModelId(math.random(793, 798)) -- Ifrit -> Ramuh
     end
 
-    mob:setMobType(xi.mobType.BATTLEFIELD)
-    mob:addStatusEffect(xi.effect.BATTLEFIELD, 1, 0, 0, true)
-    mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
     mob:setMobLevel(79)
-    mob:setTrueDetection(true)
     xi.dynamis.setMDB(mob)
-    mob:setMobMod(xi.mobMod.CHARMABLE, 0)
+    xi.dynamis.generalStats(mob)
 end
 
 xi.dynamis.setAnimatedWeaponStats = function(mob)
-    mob:setMobType(xi.mobType.BATTLEFIELD)
-    mob:addStatusEffect(xi.effect.BATTLEFIELD, 1, 0, 0, true)
-    mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
     mob:setMobMod(xi.mobMod.NO_MOVE, 0)
     mob:setMobMod(xi.mobMod.HP_HEAL_CHANCE, 90)
     mob:setMod(xi.mod.STUNRES, 75)
-    mob:setMod(xi.mod.PARALYZERES, 100)
-    mob:setMod(xi.mod.SLOWRES, 100)
-    mob:setMod(xi.mod.SILENCERES, 100)
-    mob:setMod(xi.mod.LULLABYRES, 100)
-    mob:setMod(xi.mod.SLEEPRES, 100)
-    mob:setMobMod(xi.mobMod.CHECK_AS_NM, 2)
-    mob:setMobMod(xi.mobMod.CHARMABLE, 0)
+    mob:addImmunity(xi.immunity.LIGHT_SLEEP)
+    mob:addImmunity(xi.immunity.DARK_SLEEP)
+    mob:addImmunity(xi.immunity.PARALYZE)
+    mob:addImmunity(xi.immunity.SLOW)
+    mob:addImmunity(xi.immunity.SILENCE)
     xi.dynamis.addParentListeners(mob)
+    xi.dynamis.generalStats(mob)
+end
+
+xi.dynamis.generalStats = function(mob)
+    mob:setMobType(xi.mobType.BATTLEFIELD)
+    mob:addStatusEffect(xi.effect.BATTLEFIELD, 1, 0, 0, true)
+    mob:setTrueDetection(true)
+    mob:setMobMod(xi.mobMod.CHARMABLE, 0)
+    mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
 end
 
 xi.dynamis.teleport = function(mob, hideDuration)
@@ -3065,7 +3259,6 @@ end
 -----------------------------------
 --        Dynamis Mob Death      --
 -----------------------------------
-
 xi.dynamis.mobOnDeath = function(mob, player, optParams)
     local zoneID = mob:getZoneID()
     local zone = mob:getZone()
@@ -3083,6 +3276,26 @@ xi.dynamis.mobOnDeath = function(mob, player, optParams)
             end
         end
 
+        -- Check if a wave needs to spawn
+        for waveNumber, wave in pairs(xi.dynamis.mobList[zoneID].waveDefeatRequirements) do
+            local check = 0
+            local totalMobsNeededForWave = 0
+            local waveSpawned = zone:getLocalVar(string.format('Wave_%i_Spawned', waveNumber))
+            for waveNum, var in pairs(wave) do
+                check = check + zone:getLocalVar(string.format('%s', var))
+                totalMobsNeededForWave = totalMobsNeededForWave + 1
+            end
+
+            if
+                check == totalMobsNeededForWave and
+                waveSpawned ~= 1 and
+                waveNumber ~= 1
+            then
+                xi.dynamis.spawnWave(zone, zoneID, waveNumber) -- If not spawn
+            end
+        end
+
+        -- Handle Dynamis time extentions
         if mobIndex ~= 0 and mobIndex ~= nil then
             xi.dynamis.addTimeToDynamis(zone, mobIndex) -- Add Time
         end
@@ -3144,49 +3357,48 @@ end)
 -----------------------------------
 --    Dynamis Statue Functions   --
 -----------------------------------
-
-xi.dynamis.statueOnFight = function(mob, target)
-    if mob:getHP() == 1 then -- If my HP = 1
-        if mob:getAnimationSub() > 1 then -- I am an HP statue
-            if mob:hasStatusEffect(xi.effect.REGEN) then
-                mob:delStatusEffect(xi.effect.REGEN)
-                mob:setHP(1)
-            end
-
-            if mob:getLocalVar('reset') ~= 1 then
-                mob:setLocalVar('reset', 1)
-                mob:addStatusEffect(xi.effect.STUN, 1, 0, 10)
-                mob:setUntargetable(true)
-                mob:setMagicCastingEnabled(false)
-                mob:setAutoAttackEnabled(false)
-                mob:setMobAbilityEnabled(false)
-
-                mob:timer(1000, function(mobArg) -- Allows stun to tick
-                    mobArg:setTP(0)
-                    mobArg:setMobAbilityEnabled(true)
-                    mobArg:delStatusEffectSilent(xi.effect.STUN) -- Remove stun so we can do skill.
-                    if mobArg:getAnimationSub() == 2 then
-                        mobArg:useMobAbility(1124) -- Use Recover HP
-                    elseif mobArg:getAnimationSub() == 3 then
-                        mobArg:useMobAbility(1125) -- Use Recover MP
-                    end
-                end)
-
-                mob:timer(5000, function(mobArg)
-                    if mobArg:isAlive() then
-                        mobArg:setUnkillable(false)
-                        mobArg:setHP(0)
-                    end
-                end)
+xi.dynamis.blueOrGreenEyeStatueOnDeath = function(mob, player)
+    if
+        (mob:getLocalVar('eyeColor') == xi.dynamis.eye.GREEN or
+        mob:getLocalVar('eyeColor') == xi.dynamis.eye.BLUE) and
+        -- only heal players once (not for each player)
+        mob:getLocalVar('healedPlayers') == 0
+    then
+        for _, member in pairs(mob:getZone():getPlayers()) do
+            if
+                member ~= nil and
+                member:isAlive() and
+                mob:checkDistance(member) <= 25.0
+            then
+                if mob:getLocalVar('eyeColor') == xi.dynamis.eye.BLUE then
+                    local hp = member:getMaxHP() - member:getHP()
+                    member:addHP(hp)
+                    member:wakeUp()
+                    -- this only sends the message to the specific player (thus others in range will not know)
+                    member:messageBasic(xi.msg.basic.AOE_REGAIN_HP, 0, hp)
+                    -- TODO: improve injectActionPacket to allow AoE type messages so we can use it here
+                    -- inject action packet so players see the animation and the message
+                    -- mob:injectActionPacket(member:getID(), 11, 772, 0x10, 0x08, xi.msg.basic.AOE_REGAIN_HP, 1124, hp)
+                else
+                    local mp = member:getMaxMP() - member:getMP()
+                    member:addMP(mp)
+                    -- this only sends the message to the specific player (thus others in range will not know)
+                    member:messageBasic(xi.msg.basic.AOE_REGAIN_MP, 0, mp)
+                    -- TODO: improve injectActionPacket to allow AoE type messages so we can use it here
+                    -- inject action packet so players see the animation and the message
+                    -- mob:injectActionPacket(member:getID(), 11, 773, 0x10, 0x08, xi.msg.basic.AOE_REGAIN_MP, 1125, mp)
+                end
             end
         end
+
+        mob:setLocalVar('healedPlayers', 1)
     end
 end
 
 -----------------------------------
 --     Dynamis Pet Spawning      --
 -----------------------------------
-xi.dynamis.mobOnEngaged = function(mob, target)
+xi.dynamis.mobOnEngage = function(mob, target)
     if  mob:getLocalVar('SpawnedPets') == 0 then
         mob:setLocalVar('SpawnedPets', 1)
         if  mob:getMainJob() == xi.job.BST or mob:getMainJob() == xi.job.SMN then
@@ -3197,8 +3409,8 @@ xi.dynamis.mobOnEngaged = function(mob, target)
 
             mob:addStatusEffectEx(xi.effect.BIND, xi.effect.BIND, 1, 3, 6, 0, 0, 0, xi.effectFlag.NO_LOSS_MESSAGE)
             mob:timer(3000, function(mobArg)
-                if mob:isAlive() then
-                    xi.dynamis.spawnDynamicPet(target, mob, mobArg:getMainJob())
+                if mobArg:isAlive() then
+                    xi.dynamis.spawnDynamicPet(target, mobArg, mobArg:getMainJob())
                     mobArg:entityAnimationPacket('shsm')
                     mobArg:setAutoAttackEnabled(true)
                     mobArg:setMagicCastingEnabled(true)

@@ -150,10 +150,10 @@ xi.dynamis.mobList[zoneID][12 ].info = { 'Statue', 'Serjeant Tombstone', 'Orc', 
 xi.dynamis.mobList[zoneID][13 ].info = { 'Statue', 'Serjeant Tombstone', 'Orc',    nil, nil } -- (013-O)
 xi.dynamis.mobList[zoneID][14 ].info = { 'Statue', 'Serjeant Tombstone', 'Orc',    nil, nil } -- (014-O)
 -- Goobbue NM Area
-xi.dynamis.mobList[zoneID][16 ].info = { 'Statue', 'Adamantking Effigy',  'Quadav', nil, nil } -- (016-Q)
-xi.dynamis.mobList[zoneID][17 ].info = { 'Statue', 'Adamantking Effigy',  'Quadav', nil, nil } -- (017-Q)
-xi.dynamis.mobList[zoneID][18 ].info = { 'Statue', 'Adamantking Effigy',  'Quadav', nil, nil } -- (018-Q)
-xi.dynamis.mobList[zoneID][19 ].info = { 'Statue', 'Adamantking Effigy',  'Quadav', nil, nil } -- (019-Q)
+xi.dynamis.mobList[zoneID][16 ].info = { 'Statue', 'Adamantking Effigy', 'Quadav', nil, nil } -- (016-Q)
+xi.dynamis.mobList[zoneID][17 ].info = { 'Statue', 'Adamantking Effigy', 'Quadav', nil, nil } -- (017-Q)
+xi.dynamis.mobList[zoneID][18 ].info = { 'Statue', 'Adamantking Effigy', 'Quadav', nil, nil } -- (018-Q)
+xi.dynamis.mobList[zoneID][19 ].info = { 'Statue', 'Adamantking Effigy', 'Quadav', nil, nil } -- (019-Q)
 
 -- Wave 2 Manticore Sands and Goobubue NM Area
 -- Nightmare Mobs + NMs Based on https://enedin.be/dyna/html/zone/frame_val2.htm

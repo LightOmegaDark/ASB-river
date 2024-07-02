@@ -24,21 +24,21 @@ LOCK TABLES `mob_droplist`       WRITE,
 -- ---------------------------------
 --           Droplists           --
 -- ---------------------------------
---            Megaboss           --
+--  Megaboss - Gudha Effigy
 DELETE FROM `mob_droplist` WHERE dropid = "2906"; -- Delete Droplist 2906
 REPLACE INTO `mob_droplist` VALUES (2906,0,0,1000,749,@UNCOMMON); -- Mythril Beastcoin
 REPLACE INTO `mob_droplist` VALUES (2906,0,0,1000,748,@UNCOMMON); -- Gold Beastcoin
-REPLACE INTO `mob_droplist` VALUES (2906,0,0,1000,1474,@COMMON); -- Infinity Core
-REPLACE INTO `mob_droplist` VALUES (2906,0,0,1000,1455,@COMMON); -- Byne Bill 1
-REPLACE INTO `mob_droplist` VALUES (2906,0,0,1000,1455,@COMMON); -- Byne Bill 2
-REPLACE INTO `mob_droplist` VALUES (2906,0,0,1000,1456,@COMMON); -- Hundred Byne Bill
---            Statues            --
+REPLACE INTO `mob_droplist` VALUES (2906,0,0,1000,1474,@COMMON);  -- Infinity Core
+REPLACE INTO `mob_droplist` VALUES (2906,0,0,1000,1455,@COMMON);  -- Byne Bill 1
+REPLACE INTO `mob_droplist` VALUES (2906,0,0,1000,1455,@COMMON);  -- Byne Bill 2
+REPLACE INTO `mob_droplist` VALUES (2906,0,0,1000,1456,@COMMON);  -- Hundred Byne Bill
+-- Statues - Adamantking Effigy
 DELETE FROM `mob_droplist` WHERE dropid = "20"; -- Delete
 REPLACE INTO `mob_droplist` VALUES (20,0,0,1000,749,@RARE); -- Mythril Beastcoin
 REPLACE INTO `mob_droplist` VALUES (20,0,0,1000,748,@RARE); -- Gold Beastcoin
 REPLACE INTO `mob_droplist` VALUES (20,0,0,1000,1474,@UNCOMMON); -- Infinity Core
 REPLACE INTO `mob_droplist` VALUES (20,0,0,1000,1456,@VRARE); -- Hundred Byne Bill
---              NMs              --
+-- NMs
 DELETE FROM `mob_droplist` WHERE dropid = "2907"; -- Delete
 REPLACE INTO `mob_droplist` VALUES (2907,1,1,@UNCOMMON,15133,91); -- MNK Feet
 REPLACE INTO `mob_droplist` VALUES (2907,1,1,@UNCOMMON,15120,91); -- BLM Legs
@@ -375,20 +375,25 @@ DELETE FROM `mob_droplist` WHERE dropid = "2561"; -- Eyes
 REPLACE INTO `mob_droplist` VALUES (2561,1,1,@VRARE,1456,333); -- Hundred Byne
 REPLACE INTO `mob_droplist` VALUES (2561,1,1,@VRARE,1450,333); -- Jadeshell
 REPLACE INTO `mob_droplist` VALUES (2561,1,1,@VRARE,1453,334); -- Montinont Silverpiece
-DELETE FROM `mob_droplist` WHERE dropid = "6000"; -- Vanguard Eyes
-REPLACE INTO `mob_droplist` VALUES (6000,1,1,@VRARE,1456,333); -- Hundred Byne
-REPLACE INTO `mob_droplist` VALUES (6000,1,1,@VRARE,1450,333); -- Jadeshell
-REPLACE INTO `mob_droplist` VALUES (6000,1,1,@VRARE,1453,334); -- Montinont Silverpiece
-REPLACE INTO `mob_droplist` VALUES (6000,0,0,1000,4248,@UNCOMMON); -- Ginurva's Battle Theory
-DELETE FROM `mob_droplist` WHERE dropid = "6001"; -- Orc Statues
-REPLACE INTO `mob_droplist` VALUES (6001,0,0,1000,1453,@VRARE); -- Montinont Silverpiece
-REPLACE INTO `mob_droplist` VALUES (6001,0,0,1000,4248,@UNCOMMON); -- Ginurva's Battle Theory
-DELETE FROM `mob_droplist` WHERE dropid = "6002"; -- Quadav Statues
-REPLACE INTO `mob_droplist` VALUES (6002,0,0,1000,1456,@VRARE); -- Hundred Byne
-REPLACE INTO `mob_droplist` VALUES (6002,0,0,1000,4248,@UNCOMMON); -- Ginurva's Battle Theory
-DELETE FROM `mob_droplist` WHERE dropid = "6003"; -- Yagudo Statues
-REPLACE INTO `mob_droplist` VALUES (6003,0,0,1000,1450,@VRARE); -- Jadeshell
-REPLACE INTO `mob_droplist` VALUES (6003,0,0,1000,4248,@UNCOMMON); -- Ginurva's Battle Theory
+DELETE FROM `mob_droplist` WHERE dropid = "7500"; -- Vanguard Eyes
+REPLACE INTO `mob_droplist` VALUES (7500,1,1,@VRARE,1456,333); -- Hundred Byne
+REPLACE INTO `mob_droplist` VALUES (7500,1,1,@VRARE,1450,333); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (7500,1,1,@VRARE,1453,334); -- Montinont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (7500,0,0,1000,4248,@UNCOMMON); -- Ginurva's Battle Theory
+DELETE FROM `mob_droplist` WHERE dropid = "7501"; -- Orc Statues
+REPLACE INTO `mob_droplist` VALUES (7501,0,0,1000,1453,@VRARE); -- Montinont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (7501,0,0,1000,4248,@UNCOMMON); -- Ginurva's Battle Theory
+DELETE FROM `mob_droplist` WHERE dropid = "7502"; -- Quadav Statues
+REPLACE INTO `mob_droplist` VALUES (7502,0,0,1000,1456,@VRARE); -- Hundred Byne
+REPLACE INTO `mob_droplist` VALUES (7502,0,0,1000,4248,@UNCOMMON); -- Ginurva's Battle Theory
+DELETE FROM `mob_droplist` WHERE dropid = "7503"; -- Yagudo Statues
+REPLACE INTO `mob_droplist` VALUES (7503,0,0,1000,1450,@VRARE); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (7503,0,0,1000,4248,@UNCOMMON); -- Ginurva's Battle Theory
+DELETE FROM `mob_droplist` WHERE dropid = "7504"; -- Goblin Statues
+REPLACE INTO `mob_droplist` VALUES (7504,1,1,@VRARE,1456,333); -- Hundred Byne
+REPLACE INTO `mob_droplist` VALUES (7504,1,1,@VRARE,1450,333); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (7504,1,1,@VRARE,1453,334); -- Montinont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (7504,0,0,1000,4248,@UNCOMMON); -- Ginurva's Battle Theory
 --              NMs              --
 DELETE FROM `mob_droplist` WHERE dropid = "176"; -- Goblin NM
 REPLACE INTO `mob_droplist` VALUES (176,1,1,@UNCOMMON,15117,66); -- WAR Legs
@@ -711,6 +716,27 @@ REPLACE INTO `mob_droplist` VALUES (730,1,1,@ALWAYS,1456,333); -- Hundred Byne
 REPLACE INTO `mob_droplist` VALUES (730,1,1,@ALWAYS,1450,333); -- Jadeshell
 REPLACE INTO `mob_droplist` VALUES (730,1,1,@ALWAYS,1453,334); -- Montiont Silverpiece
 REPLACE INTO `mob_droplist` VALUES (730,0,0,1000,4249,@VCOMMON); -- Schultz's Strategems
+-- Statues
+DELETE FROM `mob_droplist` WHERE dropid = "7505"; -- Vanguard Eyes
+REPLACE INTO `mob_droplist` VALUES (7505,1,1,@VRARE,1456,333); -- Hundred Byne
+REPLACE INTO `mob_droplist` VALUES (7505,1,1,@VRARE,1450,333); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (7505,1,1,@VRARE,1453,334); -- Montinont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (7505,0,0,1000,4248,@UNCOMMON); -- Ginurva's Battle Theory
+DELETE FROM `mob_droplist` WHERE dropid = "7506"; -- Orc Statues - Tombstone Prototype
+REPLACE INTO `mob_droplist` VALUES (7506,0,0,1000,1453,@VRARE); -- Montinont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (7506,0,0,1000,4248,@UNCOMMON); -- Ginurva's Battle Theory
+DELETE FROM `mob_droplist` WHERE dropid = "7507"; -- Quadav Statues - Effigy Prototype
+REPLACE INTO `mob_droplist` VALUES (7507,0,0,1000,1456,@VRARE); -- Hundred Byne
+REPLACE INTO `mob_droplist` VALUES (7507,0,0,1000,4248,@UNCOMMON); -- Ginurva's Battle Theory
+DELETE FROM `mob_droplist` WHERE dropid = "7508"; -- Yagudo Statues
+REPLACE INTO `mob_droplist` VALUES (7508,0,0,1000,1450,@VRARE); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (7508,0,0,1000,4248,@UNCOMMON); -- Ginurva's Battle Theory
+DELETE FROM `mob_droplist` WHERE dropid = "7509"; -- Goblin Statues - Statue Prototype
+REPLACE INTO `mob_droplist` VALUES (7509,1,1,@VRARE,1456,333); -- Hundred Byne
+REPLACE INTO `mob_droplist` VALUES (7509,1,1,@VRARE,1450,333); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (7509,1,1,@VRARE,1453,334); -- Montinont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (7509,0,0,1000,4248,@UNCOMMON); -- Ginurva's Battle Theory
+
 --              NMs              --
 DELETE FROM `mob_droplist` WHERE dropid = "521"; -- Count Zaebos
 REPLACE INTO `mob_droplist` VALUES (521,0,0,1000,15087,@UNCOMMON); -- WAR Body
@@ -896,6 +922,35 @@ DELETE FROM `mob_droplist` WHERE dropid = "472"; -- Cirrate Christelle
 REPLACE INTO `mob_droplist` VALUES (472,0,0,1000,1456,@VRARE); -- Hundred Byne
 REPLACE INTO `mob_droplist` VALUES (472,0,0,1000,1450,@VRARE); -- Jadeshell
 REPLACE INTO `mob_droplist` VALUES (472,0,0,1000,1453,@VRARE); -- Montiont Silverpiece
+-- Statues
+-- Goblin Replica
+DELETE FROM `mob_droplist` WHERE dropid = "7510"; -- Delete
+REPLACE INTO `mob_droplist` VALUES (7510,0,0,1000,749,@RARE); -- Mythril Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7510,0,0,1000,748,@RARE); -- Gold Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7510,0,0,1000,1474,@UNCOMMON); -- Infinity Core
+REPLACE INTO `mob_droplist` VALUES (7510,0,0,1000,1470,@RARE); -- Sparkling Stone
+REPLACE INTO `mob_droplist` VALUES (7510,1,1,@VRARE,1456,333); -- Hundred Byne
+REPLACE INTO `mob_droplist` VALUES (7510,1,1,@VRARE,1450,333); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (7510,1,1,@VRARE,1453,334); -- Montinont Silverpiece
+-- Manifest Icon
+DELETE FROM `mob_droplist` WHERE dropid = "7513"; -- Delete
+REPLACE INTO `mob_droplist` VALUES (7513,0,0,1000,749,@RARE); -- Mythril Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7513,0,0,1000,748,@RARE); -- Gold Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7513,0,0,1000,1474,@UNCOMMON); -- Infinity Core
+REPLACE INTO `mob_droplist` VALUES (7513,0,0,1000,1450,@VRARE); -- Jadeshell
+-- Serjeant Tombstone
+DELETE FROM `mob_droplist` WHERE dropid = "7512"; -- Delete
+REPLACE INTO `mob_droplist` VALUES (7512,0,0,1000,749,@RARE); -- Mythril Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7512,0,0,1000,748,@RARE); -- Gold Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7512,0,0,1000,1474,@UNCOMMON); -- Infinity Core
+REPLACE INTO `mob_droplist` VALUES (7512,0,0,1000,1453,@VRARE); -- Montiont Silverpiece
+-- Adamantking Effigy
+DELETE FROM `mob_droplist` WHERE dropid = "7511"; -- Delete
+REPLACE INTO `mob_droplist` VALUES (7511,0,0,1000,749,@RARE); -- Mythril Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7511,0,0,1000,748,@RARE); -- Gold Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7511,0,0,1000,1474,@UNCOMMON); -- Infinity Core
+REPLACE INTO `mob_droplist` VALUES (7511,0,0,1000,1456,@VRARE); -- Hundred Byne Bill
+
 --              NMs              --
 DELETE FROM `mob_droplist` WHERE dropid = "2910"; -- NMs
 REPLACE INTO `mob_droplist` VALUES (2910,1,1,@UNCOMMON,2033,66);  -- WAR -1 Head
@@ -1135,8 +1190,8 @@ REPLACE INTO `mob_droplist` VALUES (1799,2,0,1000,1449,0); -- Whiteshell
 --           Nant`ina             --
 -- Use Skill List 1214
 REPLACE INTO `mob_skill_lists` VALUES ('Nantina',5000,1617);
-REPLACE INTO `mob_skill_lists` VALUES ('Nantina',5000,1618);
-REPLACE INTO `mob_skill_lists` VALUES ('Nantina',5000,1619);
+-- REPLACE INTO `mob_skill_lists` VALUES ('Nantina',5000,1618);
+-- REPLACE INTO `mob_skill_lists` VALUES ('Nantina',5000,1619);
 --         Stcemqestcint          --
 -- Use Skill List 245
 -- --------------------------------------------------------------------
@@ -1150,6 +1205,34 @@ DELETE FROM `mob_droplist` WHERE dropid = "146"; -- Apocalyptic Beast
 REPLACE INTO `mob_droplist` VALUES (146,0,0,1000,1456,@VRARE); -- Hundred Byne
 REPLACE INTO `mob_droplist` VALUES (146,0,0,1000,1450,@VRARE); -- Jadeshell
 REPLACE INTO `mob_droplist` VALUES (146,0,0,1000,1453,@VRARE); -- Montiont Silverpiece
+-- Statues/Eyes
+-- Goblin Replica
+DELETE FROM `mob_droplist` WHERE dropid = "7515"; -- Delete
+REPLACE INTO `mob_droplist` VALUES (7515,0,0,1000,749,@RARE); -- Mythril Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7515,0,0,1000,748,@RARE); -- Gold Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7515,0,0,1000,1474,@UNCOMMON); -- Infinity Core
+REPLACE INTO `mob_droplist` VALUES (7515,0,0,1000,1470,@RARE); -- Sparkling Stone
+REPLACE INTO `mob_droplist` VALUES (7515,1,1,@VRARE,1456,333); -- Hundred Byne
+REPLACE INTO `mob_droplist` VALUES (7515,1,1,@VRARE,1450,333); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (7515,1,1,@VRARE,1453,334); -- Montinont Silverpiece
+-- Manifest Icon
+DELETE FROM `mob_droplist` WHERE dropid = "7520"; -- Delete
+REPLACE INTO `mob_droplist` VALUES (7520,0,0,1000,749,@RARE); -- Mythril Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7520,0,0,1000,748,@RARE); -- Gold Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7520,0,0,1000,1474,@UNCOMMON); -- Infinity Core
+REPLACE INTO `mob_droplist` VALUES (7520,0,0,1000,1450,@VRARE); -- Jadeshell
+-- Serjeant Tombstone
+DELETE FROM `mob_droplist` WHERE dropid = "7521"; -- Delete
+REPLACE INTO `mob_droplist` VALUES (7521,0,0,1000,749,@RARE); -- Mythril Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7521,0,0,1000,748,@RARE); -- Gold Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7521,0,0,1000,1474,@UNCOMMON); -- Infinity Core
+REPLACE INTO `mob_droplist` VALUES (7521,0,0,1000,1453,@VRARE); -- Montiont Silverpiece
+-- Adamantking Effigy
+DELETE FROM `mob_droplist` WHERE dropid = "7522"; -- Delete
+REPLACE INTO `mob_droplist` VALUES (7522,0,0,1000,749,@RARE); -- Mythril Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7522,0,0,1000,748,@RARE); -- Gold Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7522,0,0,1000,1474,@UNCOMMON); -- Infinity Core
+REPLACE INTO `mob_droplist` VALUES (7522,0,0,1000,1456,@VRARE); -- Hundred Byne Bill
 --              NMs              --
 DELETE FROM `mob_droplist` WHERE dropid = "230"; -- NMs
 REPLACE INTO `mob_droplist` VALUES (230,1,1,@UNCOMMON,2035,66);  -- WAR -1 Hands
@@ -1649,6 +1732,34 @@ DELETE FROM `mob_droplist` WHERE dropid = "112"; -- Antaeus
 REPLACE INTO `mob_droplist` VALUES (112,0,0,1000,1456,@VRARE); -- Hundred Byne
 REPLACE INTO `mob_droplist` VALUES (112,0,0,1000,1450,@VRARE); -- Jadeshell
 REPLACE INTO `mob_droplist` VALUES (112,0,0,1000,1453,@VRARE); -- Montiont Silverpiece
+-- Statues
+-- Goblin Replica
+DELETE FROM `mob_droplist` WHERE dropid = "7516"; -- Delete
+REPLACE INTO `mob_droplist` VALUES (7516,0,0,1000,749,@RARE);      -- Mythril Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7516,0,0,1000,748,@RARE);      -- Gold Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7516,0,0,1000,1474,@UNCOMMON); -- Infinity Core
+REPLACE INTO `mob_droplist` VALUES (7516,0,0,1000,1470,@RARE);     -- Sparkling Stone
+REPLACE INTO `mob_droplist` VALUES (7516,1,1,@VRARE,1456,333);     -- Hundred Byne
+REPLACE INTO `mob_droplist` VALUES (7516,1,1,@VRARE,1450,333);     -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (7516,1,1,@VRARE,1453,334);     -- Montinont Silverpiece
+-- Adamantking Effigy
+DELETE FROM `mob_droplist` WHERE dropid = "7517"; -- Delete
+REPLACE INTO `mob_droplist` VALUES (7517,0,0,1000,749,@RARE);      -- Mythril Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7517,0,0,1000,748,@RARE);      -- Gold Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7517,0,0,1000,1474,@UNCOMMON); -- Infinity Core
+REPLACE INTO `mob_droplist` VALUES (7517,0,0,1000,1456,@VRARE);    -- Hundred Byne Bill
+-- Manifest Icon
+DELETE FROM `mob_droplist` WHERE dropid = "7518"; -- Delete
+REPLACE INTO `mob_droplist` VALUES (7518,0,0,1000,749,@RARE); -- Mythril Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7518,0,0,1000,748,@RARE); -- Gold Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7518,0,0,1000,1474,@UNCOMMON); -- Infinity Core
+REPLACE INTO `mob_droplist` VALUES (7518,0,0,1000,1450,@VRARE); -- Jadeshell
+-- Sejeant Tombstone
+DELETE FROM `mob_droplist` WHERE dropid = "7519"; -- Delete
+REPLACE INTO `mob_droplist` VALUES (7519,0,0,1000,749,@RARE); -- Mythril Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7519,0,0,1000,748,@RARE); -- Gold Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7519,0,0,1000,1474,@UNCOMMON); -- Infinity Core
+REPLACE INTO `mob_droplist` VALUES (7519,0,0,1000,1453,@VRARE); -- Montiont Silverpiece
 --              NMs              --
 DELETE FROM `mob_droplist` WHERE dropid = "3131"; -- NMs
 REPLACE INTO `mob_droplist` VALUES (3131,1,1,@UNCOMMON,2037,66);  -- WAR -1 Feet
@@ -2138,7 +2249,15 @@ REPLACE INTO `mob_droplist` VALUES (1441,2,0,1000,1449,0); -- Whiteshell (Steal)
 REPLACE INTO `mob_droplist` VALUES (1441,2,0,1000,1452,0); -- Bronzepiece (Steal)
 
 --             Eyes           --
--- These use the same drop table as Dyna Beac -> 2561
+-- Vanguard Eye
+DELETE FROM `mob_droplist` WHERE dropid = "7514"; -- Delete
+REPLACE INTO `mob_droplist` VALUES (7514,0,0,1000,749,@RARE); -- Mythril Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7514,0,0,1000,748,@RARE); -- Gold Beastcoin
+REPLACE INTO `mob_droplist` VALUES (7514,0,0,1000,1474,@UNCOMMON); -- Infinity Core
+REPLACE INTO `mob_droplist` VALUES (7514,0,0,1000,1470,@RARE); -- Sparkling Stone
+REPLACE INTO `mob_droplist` VALUES (7514,1,1,@VRARE,1456,333); -- Hundred Byne
+REPLACE INTO `mob_droplist` VALUES (7514,1,1,@VRARE,1450,333); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (7514,1,1,@VRARE,1453,334); -- Montinont Silverpiece
 
 --           Megaboss            --
 
@@ -2497,28 +2616,165 @@ DELETE FROM mob_skills WHERE mob_skill_id = "1146"; -- Hecatomb Wave (RNG/NIN)
 REPLACE INTO mob_skills VALUES (1146,304,'hecatomb_wave',0,25.0,2000,1500,4,0,0,0,0,0,0);
 DELETE FROM mob_skills WHERE mob_skill_id = "1123"; -- Hecatomb Wave (RNG/NIN)
 REPLACE INTO mob_skills VALUES (1123,355,'ore_toss',0,25.0,2000,1500,4,0,0,0,0,0,0);
+
+-- Suttung
+REPLACE INTO `mob_skills` VALUES (1648,418,'crystal_shield',0,7.0,2000,1500,1,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1649,419,'heavy_strike',0,7.0,2000,1500,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1650,420,'ice_break',1,12.0,2000,1000,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1651,1395,'thunder_break',1,12.0,2000,1500,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1652,422,'crystal_rain',1,12.0,2000,1500,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1653,423,'crystal_weapon_fire',0,15.0,2000,1500,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1654,424,'crystal_weapon_stone',0,15.0,2000,1500,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1655,425,'crystal_weapon_water',0,15.0,2000,1500,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1656,426,'crystal_weapon_wind',0,15.0,2000,1500,4,0,0,0,0,0,0);
+
+-- Stringes
+INSERT INTO `mob_skills` VALUES (1662,136,'ultrasonics',1,16.0,2000,1000,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (1663,138,'blood_drain',0,7.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (1664,337,'subsonics',1,12.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (1665,338,'marrow_drain',0,7.0,2000,1500,4,0,0,0,0,0,0);
+
+-- Scolopendra
+REPLACE INTO `mob_skills` VALUES (1671,202,'ink_jet_alt',0,12.0,2000,1500,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1672 ,203,'hard_membrane',0,7.0,2000,1500,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1673 ,204,'cross_attack',0,7.0,2000,1500,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1674 ,205,'regeneration',0,7.0,2000,1500,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1675 ,206,'maelstrom',1,15.0,2000,1500,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1676 ,207,'whirlwind',1,15.0,2000,1500,4,0,0,0,0,0,0);
+
+-- Antaeus
+UPDATE `mob_skills` SET `mob_skill_distance` = 16.5 WHERE `mob_skill_id` = 1636; -- trebuchet distance increase
+REPLACE INTO `mob_skills` VALUES (1637,410,'power_attack',0,10.0,2000,1000,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1638,406,'lightning_roar',4,20.0,2000,1500,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1639,408,'impact_roar',4,17.5,2000,1000,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1640,409,'grand_slam',1,20.0,2000,1500,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1641,23,'eagle_eye_shot',0,7.0,2000,1500,4,2,0,0,0,0,0);
+
+-- Fairy Ring
+REPLACE INTO `mob_skills` VALUES (1620,59,'mephitic_spore',4,12.5,2000,0,4,0,0,0,0,0,0);
+REPLACE INTO `mob_skills` VALUES (1621,52,'frogkick',0,7.0,2000,1500,4,0,0,0,0,0,0);
+
+-- Nantina (inside era_dyna_sql.sql)
+
+-- Stcemqestcint
+REPLACE INTO `mob_skills` VALUES (1612,72,'gouging_branch',4,13.0,2000,0,4,0,0,0,0,0,0);
+
+-- Cirrate (These are already in era_dyna_sql.sql but they will be completely removed once rebase is done)
+DELETE FROM mob_skills WHERE mob_skill_id = "1604"; -- Miasmic Breath 1
+DELETE FROM mob_skills WHERE mob_skill_id = "1605"; -- Miasmic Breath 2
+REPLACE INTO mob_skills VALUES (1604,63,'miasmic_breath',4,17.5,2000,1500,4,0,0,0,0,0,0); -- Distances are wrong until new column is added
+REPLACE INTO mob_skills VALUES (1605,63,'miasmic_breath',4,17.5,2000,1500,4,0,0,0,0,0,0); -- Distances are wrong until new column is added
+DELETE FROM mob_skills WHERE mob_skill_id = "1606"; -- Fragrant Breath 1
+DELETE FROM mob_skills WHERE mob_skill_id = "1607"; -- Fragrant Breath 2
+REPLACE INTO mob_skills VALUES (1606,63,'fragrant_breath',4,10.0,2000,1500,4,0,0,0,0,0,0); -- Distances are wrong until new column is added
+REPLACE INTO mob_skills VALUES (1607,63,'fragrant_breath',4,17.5,2000,1500,4,0,0,0,0,0,0); -- Distances are wrong until new column is added
+DELETE FROM mob_skills WHERE mob_skill_id = "1608"; -- Putrid Breath 1
+DELETE FROM mob_skills WHERE mob_skill_id = "1609"; -- Putrid Breath 2
+REPLACE INTO mob_skills VALUES (1608,63,'putrid_breath',4,10.0,2000,1500,4,0,0,0,0,0,0); -- Distances are wrong until new column is added
+REPLACE INTO mob_skills VALUES (1609,63,'putrid_breath',4,20.0,2000,1500,4,0,0,0,0,0,0); -- Distances are wrong until new column is added
+DELETE FROM mob_skills WHERE mob_skill_id = "1610"; -- Extremely Bad Breath
+REPLACE INTO mob_skills VALUES (1610,63,'extremely_bad_breath',1,15.0,2000,1500,4,0,0,0,0,0,0); -- Distances are wrong until new column is added
+DELETE FROM mob_skills WHERE mob_skill_id = "1611"; -- Vampiric Lash
+REPLACE INTO mob_skills VALUES (1611,61,'vampiric_lash',0,15.0,2000,1500,4,0,0,0,0,0,0); -- Distances are wrong until new column is added
+
+-- Nantina
+DELETE FROM mob_skills WHERE mob_skill_id = "1617"; -- Blow
+REPLACE INTO mob_skills VALUES (1617,325,'blow',0,12.0,2000,1000,4,0,0,0,0,0,0);
+DELETE FROM mob_skills WHERE mob_skill_id = "1618"; -- Uppercut
+REPLACE INTO mob_skills VALUES (1618,328,'uppercut',0,12.0,2000,1000,4,0,0,0,0,0,0);
+DELETE FROM mob_skills WHERE mob_skill_id = "1619"; -- Attractant
+REPLACE INTO mob_skills VALUES (1619,331,'attractant',1,12.0,2000,1000,4,0,0,0,0,0,0);
 -- --------------------------------------------------------------------
 --                         Add Missing Mobs                         --
 -- --------------------------------------------------------------------
-REPLACE INTO mob_groups (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (198,1153,134,'Dynamis_Icon',600,128,3209,9000,8000,80,82,0);
-REPLACE INTO mob_groups (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (199,1155,134,'Dynamis_Statue',600,128,3208,9000,8000,80,82,0);
-REPLACE INTO mob_groups (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (200,1152,134,'Dynamis_Effigy',600,128,3211,9000,8000,80,82,0);
-REPLACE INTO mob_groups (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (201,1156,134,'Dynamis_Tombstone',600,128,3210,9000,8000,82,82,0);
+REPLACE INTO `mob_groups` (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (198,1153,134,'Dynamis_Icon',600,128,3209,9000,8000,80,82,0);
+REPLACE INTO `mob_groups` (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (199,1155,134,'Dynamis_Statue',600,128,3208,9000,8000,80,82,0);
+REPLACE INTO `mob_groups` (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (200,1152,134,'Dynamis_Effigy',600,128,3211,9000,8000,80,82,0);
+REPLACE INTO `mob_groups` (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (201,1156,134,'Dynamis_Tombstone',600,128,3210,9000,8000,82,82,0);
 -- --------------------------------------------------------------------
 --                            Fix Mob MP                            --
 -- --------------------------------------------------------------------
-DELETE FROM mob_groups WHERE name = "Goublefaupe";
-REPLACE INTO mob_groups (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (6,1774,134,'Goublefaupe',0,128,2574,17000,17000,81,83,0);
-DELETE FROM mob_groups WHERE name = "Quiebitiel";
-REPLACE INTO mob_groups (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (7,3289,134,'Quiebitiel',0,128,2066,17000,17000,81,83,0);
-DELETE FROM mob_groups WHERE name = "Mildaunegeux";
-REPLACE INTO mob_groups (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (8,2660,134,'Mildaunegeux',0,128,2574,17000,0,81,83,0);
-DELETE FROM mob_groups WHERE name = "Velosareon";
-REPLACE INTO mob_groups (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (9,4219,134,'Velosareon',0,128,2574,17000,17000,81,83,0);
-DELETE FROM mob_groups WHERE name = "Dagourmarche";
-REPLACE INTO mob_groups (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (10,892,134,'Dagourmarche',0,128,2066,17000,0,81,83,0);
-DELETE FROM mob_groups WHERE name = "Apocalyptic_Beast";
-REPLACE INTO mob_groups (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (1,198,40,'Apocalyptic_Beast',0,128,146,27000,27000,85,85,0);
+DELETE FROM `mob_groups` WHERE name = "Goublefaupe";
+REPLACE INTO `mob_groups` (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (6,1774,134,'Goublefaupe',0,128,2574,17000,17000,81,83,0);
+DELETE FROM `mob_groups` WHERE name = "Quiebitiel";
+REPLACE INTO `mob_groups` (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (7,3289,134,'Quiebitiel',0,128,2066,17000,17000,81,83,0);
+DELETE FROM `mob_groups` WHERE name = "Mildaunegeux";
+REPLACE INTO `mob_groups` (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (8,2660,134,'Mildaunegeux',0,128,2574,17000,0,81,83,0);
+DELETE FROM `mob_groups` WHERE name = "Velosareon";
+REPLACE INTO `mob_groups` (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (9,4219,134,'Velosareon',0,128,2574,17000,17000,81,83,0);
+DELETE FROM `mob_groups` WHERE name = "Dagourmarche";
+REPLACE INTO `mob_groups` (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (10,892,134,'Dagourmarche',0,128,2066,17000,0,81,83,0);
+DELETE FROM `mob_groups` WHERE name = "Apocalyptic_Beast";
+REPLACE INTO `mob_groups` (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (1,198,40,'Apocalyptic_Beast',0,128,146,35000,35000,85,85,0);
+REPLACE INTO `mob_groups` (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (200,1375,39,'Dragontrap',0,128,2910,15000,0,80,80,0);
+REPLACE INTO `mob_groups` (`groupid`, `poolid`, `zoneid`, `name`, `respawntime`, `spawntype`, `dropid`, `HP`, `MP`, `minLevel`, `maxLevel`, `allegiance`) VALUES (201,1375,39,'Dragontrap_child',0,128,2910,15000,0,80,80,0);
+UPDATE `mob_groups` SET HP = 20000 WHERE name = "Scolopendra" and zoneid = 41;
+UPDATE `mob_groups` SET HP = 13500 WHERE name = "Suttung" and zoneid = 41;
+UPDATE `mob_groups` SET HP = 13000 WHERE name = "Stringes" and zoneid = 41;
+
+UPDATE `mob_pools` SET mJob = 1, sJob = 1 WHERE name = "Scolopendra" and poolid = 3502;
+UPDATE `mob_pools` SET mJob = 11, sJob = 1, cmbSkill = 4 WHERE name = "Antaeus" and poolid = 162; -- RNG/WAR
+
+-- -----------------------------------
+-- Skill Lists
+-- -----------------------------------
+
+-- Suttung
+INSERT INTO `mob_skill_lists` VALUE ('Suttung', 6500, 1648); -- crystal_shield
+INSERT INTO `mob_skill_lists` VALUE ('Suttung', 6500, 1649); -- heavy_strike
+INSERT INTO `mob_skill_lists` VALUE ('Suttung', 6500, 1650); -- ice_break
+INSERT INTO `mob_skill_lists` VALUE ('Suttung', 6500, 1651); -- thunder_break
+INSERT INTO `mob_skill_lists` VALUE ('Suttung', 6500, 1652); -- crystal_rain
+INSERT INTO `mob_skill_lists` VALUE ('Suttung', 6500, 1653); -- crystal_weapon_fire
+INSERT INTO `mob_skill_lists` VALUE ('Suttung', 6500, 1654); -- crystal_weapon_stone
+INSERT INTO `mob_skill_lists` VALUE ('Suttung', 6500, 1655); -- crystal_weapon_water
+INSERT INTO `mob_skill_lists` VALUE ('Suttung', 6500, 1656); -- crystal_weapon_wind
+
+-- Stringes
+INSERT INTO `mob_skill_lists` VALUE ('Stringes', 6501, 1662); -- ultrasonics
+INSERT INTO `mob_skill_lists` VALUE ('Stringes', 6501, 1663); -- blood_drain
+INSERT INTO `mob_skill_lists` VALUE ('Stringes', 6501, 1664); -- subsonics
+INSERT INTO `mob_skill_lists` VALUE ('Stringes', 6501, 1665); -- marrow_drain
+
+-- Scolopendra
+INSERT INTO `mob_skill_lists` VALUE ('Scolopendra', 6502, 1671); -- ink_jet_alt
+INSERT INTO `mob_skill_lists` VALUE ('Scolopendra', 6502, 1672); -- hard_membrane
+INSERT INTO `mob_skill_lists` VALUE ('Scolopendra', 6502, 1673); -- cross_attack
+INSERT INTO `mob_skill_lists` VALUE ('Scolopendra', 6502, 1674); -- regeneration
+INSERT INTO `mob_skill_lists` VALUE ('Scolopendra', 6502, 1675); -- maelstrom
+INSERT INTO `mob_skill_lists` VALUE ('Scolopendra', 6502, 1676); -- whirlwind
+
+-- Fairy Ring
+INSERT INTO `mob_skill_lists` VALUE ('Fairy_Ring', 6503, 1620); -- mephitic_spore
+
+-- Stcemqestcint
+INSERT INTO `mob_skill_lists` VALUE ('Stcemqestcint', 6504, 1612); -- gouging_branch
+
+-- Cirrate Christelle
+-- These IDs are the more powerful ones
+INSERT INTO `mob_skill_lists` VALUES ('Cirrate_Christelle',6505,1605); -- miasmic_breath
+INSERT INTO `mob_skill_lists` VALUES ('Cirrate_Christelle',6505,1607); -- fragrant_breath
+INSERT INTO `mob_skill_lists` VALUES ('Cirrate_Christelle',6505,1609); -- putrid_breath
+INSERT INTO `mob_skill_lists` VALUES ('Cirrate_Christelle',6505,1611); -- vampiric_lash
+
+-- Antaeus
+INSERT INTO `mob_skill_lists` VALUES ('Antaeus',6506,1637); -- power_attack
+INSERT INTO `mob_skill_lists` VALUES ('Antaeus',6506,1638); -- lightning_roar
+INSERT INTO `mob_skill_lists` VALUES ('Antaeus',6506,1639); -- impact_roar
+INSERT INTO `mob_skill_lists` VALUES ('Antaeus',6506,1640); -- grand_slam
+INSERT INTO `mob_skill_lists` VALUES ('Antaeus',6506,1641); -- eagle_eye_shot
+
+-- Antaeus Ranged
+INSERT INTO `mob_skill_lists` VALUES ('Antaeus_range',6507,1636); -- trebuchet
+
+-- Fairy Ring TP Moves
+INSERT INTO `mob_skill_lists` VALUE ('Fairy_Ring', 6507, 310); -- Queasyshroom
+INSERT INTO `mob_skill_lists` VALUE ('Fairy_Ring', 6507, 311); -- Numbshroom
+INSERT INTO `mob_skill_lists` VALUE ('Fairy_Ring', 6507, 314); -- Silence Gas
+INSERT INTO `mob_skill_lists` VALUE ('Fairy_Ring', 6507, 315); -- Dark Spore
+INSERT INTO `mob_skill_lists` VALUE ('Fairy_Ring', 6507, 1621); -- Frogkick
+
+INSERT INTO `mob_skill_lists` VALUE ('Nantina_one', 6508, 1617); -- blow
 -- --------------------------------------------------------------------
 --                     Zone Misc Modifications                      --
 -- --------------------------------------------------------------------

@@ -394,139 +394,139 @@ xi.dynamis.mobList[zoneID].waveDefeatRequirements =
 
 xi.dynamis.mobList[zoneID][1].wave =
 {
-    1  , -- (001-D)  Avatar Icon
-    2  , -- (002-D)  Avatar Icon
-    3  , -- (003-D)  Avatar Icon
-    4  , -- (004-D)  Avatar Icon
-    5  , -- (005-G)  Avatar Icon
-    6  , -- (006-D)  Manifest Icon
-    7  , -- (007-D)  Avatar Icon
-    8  , -- (008-D)  Manifest Icon
-    9  , -- (009-D)  Avatar Icon
-    10 , -- (010-O)  Avatar Icon
-    11 , -- (011-D)  Avatar Icon
-    12 , -- (012-Q)  Manifest Icon
-    13 , -- (013-D)  Avatar Icon
-    14 , -- (014-D)  Avatar Icon
-    15 , -- (015-D)  Avatar Icon
-    16 , -- (016-D)  Avatar Icon
-    17 , -- (017-D)  Manifest Icon
-    18 , -- (018-D)  Avatar Icon
-    19 , -- (019-D)  Manifest Icon
-    20 , -- (020-D)  Avatar Icon
-    21 , -- (021-D)  Avatar Icon
-    22 , -- (022-D)  Avatar Icon
-    23 , -- (023-D)  Avatar Icon
-    24 , -- (024-D)  Manifest Icon
-    25 , -- (025-D)  Manifest Icon
-    26 , -- (026-D)  Avatar Icon
-    27 , -- (027-D)  Avatar Icon
-    28 , -- (028-D)  Avatar Icon
-    29 , -- (029-D)  Manifest Icon
-    30 , -- (030-D)  Manifest Icon
-    31 , -- (031-D)  Avatar Icon
-    32 , -- (032-D)  Avatar Icon
-    33 , -- (033-D)  Manifest Icon
-    34 , -- (034-D)  Avatar Icon
-    35 , -- (035-D)  Avatar Icon
-    39 , -- (039-D)  Avatar Icon
-    44 , -- (044-D)  Avatar Icon
-    45 , -- (045-D)  Manifest Icon
-    46 , -- (046-D)  Avatar Idol
-    47 , -- (047-D)  Avatar Icon
-    48 , -- (048-D)  Avatar Icon
-    49 , -- (049-D)  Avatar Icon
-    50 , -- (050-D)  Avatar Icon
-    51 , -- (051-D)  Manifest Icon
-    52 , -- (052-Y)  Avatar Icon
-    53 , -- (053-D)  Avatar Icon
-    54 , -- (054-D)  Avatar Icon
-    55 , -- (055-D)  Avatar Icon
-    56 , -- (056-D)  Manifest Icon
-    57 , -- (057-D)  Manifest Icon
-    58 , -- (058-D)  Avatar Icon
-    59 , -- (059-D)  Avatar Icon
-    61 , -- (061-D)  Avatar Icon
-    62 , -- (062-D)  Avatar Icon
-    63 , -- (063-D)  Avatar Icon
-    64 , -- (064-D)  Avatar Icon
-    65 , -- (065-D)  Avatar Icon
-    66 , -- (066-D)  Avatar Icon
-    67 , -- (067-D)  Avatar Icon
-    68 , -- (068-D)  Avatar Icon
-    69 , -- (069-D)  Avatar Icon
-    70 , -- (070-D)  Avatar Icon
-    71 , -- (071-D)  Avatar Icon
-    72 , -- (072-D)  Manifest Icon
-    73 , -- (073-Y)  Avatar Icon
-    74 , -- (074-D)  Manifest Icon
-    75 , -- (075-D)  Avatar Icon
-    76 , -- (076-D)  Avatar Icon
-    77 , -- (077-O)  Manifest Icon
-    78 , -- (078-D)  Avatar Icon
-    79 , -- (079-D)  Avatar Icon
-    80 , -- (080-D)  Manifest Icon
-    81 , -- (081-D)  Avatar Icon
-    82 , -- (082-D)  Avatar Icon
-    83 , -- (083-D)  Manifest Icon
-    84 , -- (084-D)  Avatar Idol
-    85 , -- (085-D)  Avatar Icon
-    86 , -- (086-D)  Manifest Icon
-    87 , -- (087-D)  Avatar Icon
-    88 , -- (088-D)  Manifest Icon
-    89 , -- (089-D)  Avatar Icon
-    90 , -- (090-D)  Avatar Icon
-    91 , -- (091-D)  Avatar Icon
-    92 , -- (092-D)  Avatar Icon
-    93 , -- (093-D)  Avatar Idol
-    94 , -- (094-D)  Manifest Icon
-    95 , -- (095-D)  Manifest Icon
-    96 , -- (096-D)  Manifest Icon
-    97 , -- (097-D)  Avatar Icon
-    98 , -- (098-D)  Avatar Icon
-    99 , -- (099-D)  Avatar Icon
-    100, -- (100-D)  Manifest Icon
-    101, -- (101-D)  Avatar Icon
-    102, -- (102-D)  Avatar Icon
-    103, -- (103-D)  Avatar Icon
-    104, -- (104-D)  Avatar Icon
-    105, -- (105-D)  Avatar Icon
-    106, -- (106-D)  Avatar Icon
-    107, -- (107-D)  Avatar Icon
-    108, -- (108-D)  Avatar Icon
-    109, -- (109-D)  Avatar Icon
-    110, -- (110-D)  Manifest Icon
-    111, -- (111-D)  Manifest Icon
-    112, -- (112-Q)  Avatar Icon
-    113, -- (113-D)  Avatar Icon
-    114, -- (114-D)  Avatar Icon
-    115, -- (115-D)  Avatar Icon
-    116, -- (116-D)  Manifest Idol
-    117, -- (117-D)  Manifest Icon
-    118, -- (118-D)  Manifest Icon
-    119, -- (119-D)  Avatar Icon
-    120, -- (120-D)  Avatar Icon
-    121, -- (121-D)  #N/A
-    122, -- (122-D)  Avatar Icon
-    123, -- (123-D)  Avatar Icon
-    124, -- (124-D)  Avatar Icon
-    125, -- (125-D)  Avatar Icon
-    126, -- (126-D)  Manifest Icon
-    127, -- (127-D)  Manifest Icon
-    128, -- (128-D)  Avatar Icon
-    129, -- (129-D)  Avatar Icon
-    130, -- (130-D)  Avatar Icon
-    131, -- (131-D)  Manifest Icon
-    132, -- (132-D)  Avatar Icon
-    133, -- (133-D)  Manifest Icon
-    134, -- (134-D)  Avatar Icon
-    135, -- (135-D)  Avatar Icon
-    136, -- (136-D)  Manifest Icon
-    137, -- (137-D)  Manifest Icon
-    138, -- (138-D)  Manifest Icon
-    139, -- (139-D)  Manifest Icon
-    140, -- (140-D)  Avatar Icon
-    141  -- (141-D)  Avatar Icon
+    1  , -- (001-D)  Vanguard Eye
+    2  , -- (002-D)  Vanguard Eye
+    3  , -- (003-D)  Vanguard Eye
+    4  , -- (004-D)  Vanguard Eye
+    5  , -- (005-G)  Statue Prototype
+    6  , -- (006-D)  Vanguard Eye
+    7  , -- (007-D)  Vanguard Eye
+    8  , -- (008-D)  Vanguard Eye
+    9  , -- (009-D)  Vanguard Eye
+    10 , -- (010-O)  Tombstone Prototype
+    11 , -- (011-D)  Vanguard Eye
+    12 , -- (012-Q)  Effigy Prototype
+    13 , -- (013-D)  Vanguard Eye
+    14 , -- (014-D)  Vanguard Eye
+    15 , -- (015-D)  Vanguard Eye
+    16 , -- (016-D)  Vanguard Eye
+    17 , -- (017-D)  Vanguard Eye
+    18 , -- (018-D)  Vanguard Eye
+    19 , -- (019-D)  Vanguard Eye
+    20 , -- (020-D)  Vanguard Eye
+    21 , -- (021-D)  Vanguard Eye
+    22 , -- (022-D)  Vanguard Eye
+    23 , -- (023-D)  Vanguard Eye
+    24 , -- (024-D)  Vanguard Eye
+    25 , -- (025-D)  Vanguard Eye
+    26 , -- (026-D)  Vanguard Eye
+    27 , -- (027-D)  Vanguard Eye
+    28 , -- (028-D)  Vanguard Eye
+    29 , -- (029-D)  Vanguard Eye
+    30 , -- (030-D)  Vanguard Eye
+    31 , -- (031-D)  Vanguard Eye
+    32 , -- (032-D)  Vanguard Eye
+    33 , -- (033-D)  Vanguard Eye
+    34 , -- (034-D)  Vanguard Eye
+    35 , -- (035-D)  Vanguard Eye
+    39 , -- (039-D)  Vanguard Eye
+    44 , -- (044-D)  Vanguard Eye
+    45 , -- (045-D)  Vanguard Eye
+    46 , -- (046-D)  Vanguard Eye
+    47 , -- (047-D)  Vanguard Eye
+    48 , -- (048-D)  Vanguard Eye
+    49 , -- (049-D)  Vanguard Eye
+    50 , -- (050-D)  Vanguard Eye
+    51 , -- (051-D)  Vanguard Eye
+    52 , -- (052-Y)  Icon Prototype
+    53 , -- (053-D)  Vanguard Eye
+    54 , -- (054-D)  Vanguard Eye
+    55 , -- (055-D)  Vanguard Eye
+    56 , -- (056-D)  Vanguard Eye
+    57 , -- (057-D)  Vanguard Eye
+    58 , -- (058-D)  Vanguard Eye
+    59 , -- (059-D)  Vanguard Eye
+    61 , -- (061-D)  Vanguard Eye
+    62 , -- (062-D)  Vanguard Eye
+    63 , -- (063-D)  Vanguard Eye
+    64 , -- (064-D)  Vanguard Eye
+    65 , -- (065-D)  Vanguard Eye
+    66 , -- (066-D)  Vanguard Eye
+    67 , -- (067-D)  Vanguard Eye
+    68 , -- (068-D)  Vanguard Eye
+    69 , -- (069-D)  Vanguard Eye
+    70 , -- (070-D)  Vanguard Eye
+    71 , -- (071-D)  Vanguard Eye
+    72 , -- (072-D)  Vanguard Eye
+    73 , -- (073-Y)  Icon Prototype
+    74 , -- (074-D)  Vanguard Eye
+    75 , -- (075-D)  Vanguard Eye
+    76 , -- (076-D)  Vanguard Eye
+    77 , -- (077-O)  Tombstone Prototype
+    78 , -- (078-D)  Vanguard Eye
+    79 , -- (079-D)  Vanguard Eye
+    80 , -- (080-D)  Vanguard Eye
+    81 , -- (081-D)  Vanguard Eye
+    82 , -- (082-D)  Vanguard Eye
+    83 , -- (083-D)  Vanguard Eye
+    84 , -- (084-D)  Vanguard Eye
+    85 , -- (085-D)  Vanguard Eye
+    86 , -- (086-D)  Vanguard Eye
+    87 , -- (087-D)  Vanguard Eye
+    88 , -- (088-D)  Vanguard Eye
+    89 , -- (089-D)  Vanguard Eye
+    90 , -- (090-D)  Vanguard Eye
+    91 , -- (091-D)  Vanguard Eye
+    92 , -- (092-D)  Vanguard Eye
+    93 , -- (093-D)  Vanguard Eye
+    94 , -- (094-D)  Vanguard Eye
+    95 , -- (095-D)  Vanguard Eye
+    96 , -- (096-D)  Vanguard Eye
+    97 , -- (097-D)  Vanguard Eye
+    98 , -- (098-D)  Vanguard Eye
+    99 , -- (099-D)  Vanguard Eye
+    100, -- (100-D)  Vanguard Eye
+    101, -- (101-D)  Vanguard Eye
+    102, -- (102-D)  Vanguard Eye
+    103, -- (103-D)  Vanguard Eye
+    104, -- (104-D)  Vanguard Eye
+    105, -- (105-D)  Vanguard Eye
+    106, -- (106-D)  Vanguard Eye
+    107, -- (107-D)  Vanguard Eye
+    108, -- (108-D)  Vanguard Eye
+    109, -- (109-D)  Vanguard Eye
+    110, -- (110-D)  Vanguard Eye
+    111, -- (111-D)  Vanguard Eye
+    112, -- (112-Q)  Effigy Prototype
+    113, -- (113-D)  Vanguard Eye
+    114, -- (114-D)  Vanguard Eye
+    115, -- (115-D)  Vanguard Eye
+    116, -- (116-D)  Vanguard Eye
+    117, -- (117-D)  Vanguard Eye
+    118, -- (118-D)  Vanguard Eye
+    119, -- (119-D)  Vanguard Eye
+    120, -- (120-D)  Vanguard Eye
+    121, -- (121-D)  Vanguard Eye
+    122, -- (122-D)  Vanguard Eye
+    123, -- (123-D)  Vanguard Eye
+    124, -- (124-D)  Vanguard Eye
+    125, -- (125-D)  Vanguard Eye
+    126, -- (126-D)  Vanguard Eye
+    127, -- (127-D)  Vanguard Eye
+    128, -- (128-D)  Vanguard Eye
+    129, -- (129-D)  Vanguard Eye
+    130, -- (130-D)  Vanguard Eye
+    131, -- (131-D)  Vanguard Eye
+    132, -- (132-D)  Vanguard Eye
+    133, -- (133-D)  Vanguard Eye
+    134, -- (134-D)  Vanguard Eye
+    135, -- (135-D)  Vanguard Eye
+    136, -- (136-D)  Vanguard Eye
+    137, -- (137-D)  Vanguard Eye
+    138, -- (138-D)  Vanguard Eye
+    139, -- (139-D)  Vanguard Eye
+    140, -- (140-D)  Vanguard Eye
+    141  -- (141-D)  Vanguard Eye
 }
 
 xi.dynamis.mobList[zoneID][2].wave =
@@ -541,14 +541,14 @@ xi.dynamis.mobList[zoneID][3].wave =
 
 xi.dynamis.mobList[zoneID][4].wave =
 {
-    142, -- (142-Q)  Avatar Icon
-    143, -- (143-G)  Avatar Icon
-    144, -- (144-D)  Avatar Icon
-    145, -- (145-D)  Avatar Icon
-    146, -- (146-D)  Avatar Icon
-    147, -- (147-D)  Avatar Icon
-    148, -- (148-D)  Avatar Icon
-    149, -- (149-D)  Avatar Icon
+    142, -- (142-Q) Effigy Prototype
+    143, -- (143-G) Statue Prototype
+    144, -- (144-D) Vanguard Eye
+    145, -- (145-D) Vanguard Eye
+    146, -- (146-D) Vanguard Eye
+    147, -- (147-D) Vanguard Eye
+    148, -- (148-D) Vanguard Eye
+    149, -- (149-D) Vanguard Eye
     151, -- Animated Hammer
     152, -- Animated Dagger
     153, -- Animated Shield
