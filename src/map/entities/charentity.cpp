@@ -1962,10 +1962,10 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     // Handle Camouflage effects
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_CAMOUFLAGE, 0))
     {
-        int16 retainChance     = 40; // Estimate base ~30% chance to keep Camouflage on a ranged attack
-        uint8 rotAllowance     = 25; // Allow for some slight variance in direction faced to be "behind" or "beside" the mob
+        int16 retainChance = 40; // Estimate base ~30% chance to keep Camouflage on a ranged attack
+        uint8 rotAllowance = 25; // Allow for some slight variance in direction faced to be "behind" or "beside" the mob
         float distanceToTarget = distance(this->loc.p, PTarget->loc.p);
-        float meleeRange       = PTarget->GetMeleeRange();
+        float meleeRange = PTarget->GetMeleeRange();
 
         if (behind(this->loc.p, PTarget->loc.p, rotAllowance))
         {
