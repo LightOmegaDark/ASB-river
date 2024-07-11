@@ -1962,21 +1962,41 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     // Handle Camouflage effects
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_CAMOUFLAGE, 0))
     {
-        int16 retainChance;
-        uint8 rotAllowance = 25; // Allow for some slight variance in direction faced to be "behind" or "beside" the mob
+        int16 retainChance     = 40; // Estimate base ~30% chance to keep Camouflage on a ranged attack
+        uint8 rotAllowance     = 25; // Allow for some slight variance in direction faced to be "behind" or "beside" the mob
         float distanceToTarget = distance(this->loc.p, PTarget->loc.p);
+        float meleeRange       = PTarget->GetMeleeRange();
 
         if (behind(this->loc.p, PTarget->loc.p, rotAllowance))
         {
-            // We're behind the mob, so it's guaranteed to stay up.
-            retainChance = 100;
+            // Max melee distance + .6 = safe
+            // Max melee distance + (.1~.5) = chance of deactivation
+            // Under max melee distance = certain deactivation
+            if (distanceToTarget > meleeRange + .6)
+            {
+                retainChance = 100;
+            }
+            else if (distanceToTarget > meleeRange + .1)
+            {
+                retainChance += 1.6 * distanceToTarget;
+            }
+            else
+            {
+                retainChance = 0;
+            }
         }
         else if (beside(this->loc.p, PTarget->loc.p, rotAllowance))
         {
-            // We're beside the mob, if we're 4.6'+ away it's guaranteed to stay up
-            if (distanceToTarget >= 4.6)
+            // Max melee distance + 5 yalms = safe
+            // (Max melee distance + 3.3) + (0.0~1.6) = chance of deactivation
+            // Under Max melee distance + 3.3 = certain deactivation
+            if (distanceToTarget > meleeRange + 5)
             {
                 retainChance = 100;
+            }
+            else if (distanceToTarget > meleeRange + 3.3)
+            {
+                retainChance += 1.6 * distanceToTarget;
             }
             else
             {
@@ -1985,17 +2005,16 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         }
         else
         {
-            // We're in front of the mob
-            // [13.5-25] Always retains effect
-            // (9-13.5) Has a chance to break effect
-            // [0-9] Breaks Effect
-            if (distanceToTarget >= 13.5)
+            // Max melee distance + 8.1 yalms = safe
+            // (Max melee distance + 7.1) + (0.0~.99) = chance of deactivation
+            // Under Max melee distance + 7.1 = certain deactivation
+            if (distanceToTarget > meleeRange + 8.1)
             {
                 retainChance = 100;
             }
-            else if (distanceToTarget > 9)
+            else if (distanceToTarget > meleeRange + 7.1)
             {
-                retainChance = 40 + (1.6 * distanceToTarget); // Further distance from target = less chance of detection
+                retainChance += 1.6 * distanceToTarget;
             }
             else
             {
