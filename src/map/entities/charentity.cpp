@@ -1962,15 +1962,45 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     // Handle Camouflage effects
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_CAMOUFLAGE, 0))
     {
-        int16 retainChance = 40; // Estimate base ~30% chance to keep Camouflage on a ranged attack
-        uint8 rotAllowance = 25; // Allow for some slight variance in direction faced to be "behind" the mob
-
-        retainChance += (1.6 * distance(this->loc.p, PTarget->loc.p)); // Further distance from target = less chance of detection
+        int16 retainChance;
+        uint8 rotAllowance = 25; // Allow for some slight variance in direction faced to be "behind" or "beside" the mob
+        float distanceToTarget = distance(this->loc.p, PTarget->loc.p);
 
         if (behind(this->loc.p, PTarget->loc.p, rotAllowance))
         {
             // We're behind the mob, so it's guaranteed to stay up.
             retainChance = 100;
+        }
+        else if (beside(this->loc.p, PTarget->loc.p, rotAllowance))
+        {
+            // We're beside the mob, if we're 4.6'+ away it's guaranteed to stay up
+            if (distanceToTarget >= 4.6)
+            {
+                retainChance = 100;
+            }
+            else
+            {
+                retainChance = 0;
+            }
+        }
+        else
+        {
+            // We're in front of the mob
+            // [13.5-25] Always retains effect
+            // (9-13.5) Has a chance to break effect
+            // [0-9] Breaks Effect
+            if (distanceToTarget >= 13.5)
+            {
+                retainChance = 100;
+            }
+            else if (distanceToTarget > 9)
+            {
+                retainChance = 40 + (1.6 * distanceToTarget); // Further distance from target = less chance of detection
+            }
+            else
+            {
+                retainChance = 0;
+            }
         }
 
         if (xirand::GetRandomNumber(100) > retainChance)
