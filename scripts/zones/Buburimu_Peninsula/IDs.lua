@@ -24,7 +24,7 @@ zones[xi.zone.BUBURIMU_PENINSULA] =
         CONQUEST_BASE                  = 7095,  -- Tallying conquest results...
         BEASTMEN_BANNER                = 7176,  -- There is a beastmen's banner.
         FIVEOFSPADES_DIALOG            = 7254,  -- GiMmefIvE! FiVe isA cArdIanOF WiN-DuRst! FIvEiS OnpA-tRol!
-        FISHING_MESSAGE_OFFSET         = 7260,  -- You can't fish here.
+        FISHING_MESSAGE_OFFSET         = 7261,  -- You can't fish here.
         DIG_THROW_AWAY                 = 7273,  -- You dig up <item>, but your inventory is full. You regretfully throw the <item> away.
         FIND_NOTHING                   = 7275,  -- You dig and you dig, but find nothing.
         AMK_DIGGING_OFFSET             = 7341,  -- You spot some familiar footprints. You are convinced that your moogle friend has been digging in the immediate vicinity.
@@ -39,6 +39,10 @@ zones[xi.zone.BUBURIMU_PENINSULA] =
         LOGGING_IS_POSSIBLE_HERE       = 7407,  -- Logging is possible here if you have <item>.
         CONQUEST                       = 7423,  -- You've earned conquest points!
         GARRISON_BASE                  = 7792,  -- Hm? What is this? %? How do I know this is not some [San d'Orian/Bastokan/Windurstian] trick?
+        ALLIANCE_NOT_ALLOWED           = 7859,  -- Nothing happens. You must dissolve your alliance.
+        QM1_BRIGANDS_CHART_DEFAULT     = 7837,  -- It seems that long ago, a ship sank near here. If you find any vestige of the wreck and return it to the sea, it would appease the spirits of the dead.
+        QM1_RETURN_BRIGANDS_CHART      = 7838,  -- You return the [X] to the sea. (NOTE: Pass the Brigand's Chart ID as a param - 1873)
+        BC_MY_RING                     = 7844,  -- My [X]... (NOTE: Pass the Penguin Ring ID as a param - 15556)
         YOU_CANNOT_ENTER_DYNAMIS       = 7898,  -- You cannot enter Dynamis - [Dummy/San d'Oria/Bastok/Windurst/Jeuno/Beaucedine/Xarcabard/Valkurm/Buburimu/Qufim/Tavnazia] for <number> [day/days] (Vana'diel time).
         PLAYERS_HAVE_NOT_REACHED_LEVEL = 7900,  -- Players who have not reached level <number> are prohibited from entering Dynamis.
         DYNA_NPC_DEFAULT_MESSAGE       = 8022,  -- There is a strange symbol drawn here. A haunting chill sweeps through you as you gaze upon it...
@@ -62,9 +66,15 @@ zones[xi.zone.BUBURIMU_PENINSULA] =
         {
             [17261002] = 17261003, -- 442.901 19.500 109.075
         },
+        PUFFER_PUGIL   = 17261040, -- Fished up during Brigand's Chart event
     },
     npc =
     {
+        JADE_ETUI_01    = 17261035,
+        JADE_ETUI_02    = 17261036,
+        JADE_ETUI_03    = 17261037,
+        JADE_ETUI_04    = 17261038,
+        JADE_ETUI_05    = 17261039,
         OVERSEER_BASE   = 17261150, -- Bonbavour_RK in npc_list
         SIGNPOST_OFFSET = 17261165,
         LOGGING =
@@ -76,6 +86,9 @@ zones[xi.zone.BUBURIMU_PENINSULA] =
             17261179,
             17261180,
         },
+        QM1                            = 17261187, -- Brigand's Chart Quest ???
+        BRIGAND_CHART_HUME             = 17261188,
+        BRIGAND_CHART_SHIMMERING_POINT = 17261189,
     },
 }
 

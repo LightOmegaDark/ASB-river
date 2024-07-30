@@ -317,6 +317,48 @@ struct fishmob_t
     }
 };
 
+struct fishchest_t
+{
+    uint32      chestID;               // Chest ID, corrolates to NPC ID
+    std::string chestName;             // Chest Name
+    uint8       modelIndex;            // Model Index for the chest [0 = 965 (Blue), 1 = 966 (Brown w/Gold), 2 = 967 (Brown w/Silver), 3 = 968 (Red), 4 = 969 (Gold)]
+    bool        questOnly;             // Only fishable during quest?
+    uint8       quest;                 // Quest ID
+    uint8       log;                   // Log ID
+    uint16      zoneID;                // Chest zoneID
+    uint8       areaID;                // Can this chest only be fished up from a certain area?
+    uint16      minRespawn;            // Minimum amount of time before chest can be hooked again
+    uint16      maxRespawn;            // Maximum amount of time before chest can be hooked again
+    uint8       difficulty;            // 'Difficulty' of chest, used for most hook/rod calculations
+    uint8       baseDelay;             // Base hook arrow delay
+    uint8       baseMove;              // Base hook movement
+    uint16      reqBaitId;             // Required bait
+    uint16      altBaitId;             // Alternative required bait
+    uint16      reqKeyItem;            // Required key item
+    std::string required_charVar;      // Character Var that must exist for the chest to be fishable
+    uint32      required_charVarValue; // The value of the Required Character Var needed
+
+    fishchest_t()
+    {
+        chestID               = 0;
+        modelIndex            = 0;
+        questOnly             = false;
+        quest                 = 0;
+        log                   = 0;
+        zoneID                = 0;
+        areaID                = 0;
+        minRespawn            = 0;
+        maxRespawn            = 0;
+        difficulty            = 0;
+        baseDelay             = 0;
+        baseMove              = 0;
+        reqBaitId             = 0;
+        altBaitId             = 0;
+        reqKeyItem            = 0;
+        required_charVarValue = 0;
+    }
+};
+
 struct fishmob_modifiers_t
 {
     uint8 regenBonus;
@@ -984,6 +1026,7 @@ namespace fishingutils
     std::map<fish_t*, uint16> GetFishPool(uint16 zoneID, uint8 areaID, uint16 BaitID);
     std::vector<fish_t*>      GetItemPool(uint16 zoneID, uint8 areaID);
     std::vector<fishmob_t*>   GetMobPool(uint16 zoneId);
+    std::vector<fishchest_t*> GetChestPool(uint16 zoneId);
     uint16                    GetMessageOffset(uint16 ZoneID);
     bool                      IsFish(CItem* fish);
     fish_t*                   GetFish(uint32 fishId);
@@ -1033,6 +1076,7 @@ namespace fishingutils
     void LoadFishingAreas();
     void LoadFishItems();
     void LoadFishMobs();
+    void LoadFishChests();
     void LoadFishingRods();
     void LoadFishingBaits();
     void LoadFishingBaitAffinities();
