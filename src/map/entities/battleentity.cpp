@@ -803,12 +803,24 @@ uint16 CBattleEntity::RATT(uint8 skill, float distance, uint16 bonusSkill)
         return 0;
     }
 
-    int32 ATT = 8 + GetSkill(skill == 48 ? 0 : skill) + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + STR() / 2;
+    int32 ATT = 8 + GetSkill(skill == 48 ? 0 : skill) + bonusSkill;
+    ATT += std::clamp((int32)stats.STR, 0, 999) / 2;
 
     if ((this->objtype == TYPE_PC) || (this->objtype == TYPE_PET && this->PMaster->objtype == TYPE_PC && ((CPetEntity*)this)->getPetType() == PET_TYPE::AUTOMATON)) // PC or PC Automaton
     {
         ATT = int32((float)ATT * battleutils::GetRangedDistanceCorrection(this, distance, true));
     }
+
+    if (stats.STR + m_modStat[Mod::STR] > STR())
+    {
+        ATT += std::max<int16>((999 - stats.STR) / 2, 0);
+    }
+    else
+    {
+        ATT += m_modStat[Mod::STR] / 2;
+    }
+
+    ATT += m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this);
 
     return std::clamp(ATT + (ATT * m_modStat[Mod::RATTP] / 100) + std::min<int16>((ATT * m_modStat[Mod::FOOD_RATTP] / 100), m_modStat[Mod::FOOD_RATT_CAP]), 0, 65535);
 }
@@ -845,9 +857,7 @@ uint16 CBattleEntity::RACC(uint8 skill, float distance, uint16 bonusSkill)
         acc = (int16)(200 + (skill_level - 200) * 0.9);
     }
 
-    acc += getMod(Mod::RACC);
-    acc += battleutils::GetRangedAccuracyBonuses(this);
-    acc += AGI() / 2;
+    acc += std::clamp((int32)stats.AGI, 0, 999) / 2;
 
     if ((this->objtype == TYPE_PC) || (this->objtype == TYPE_PET && this->PMaster->objtype == TYPE_PC && ((CPetEntity*)this)->getPetType() == PET_TYPE::AUTOMATON)) // PC or PC Automaton
     {
@@ -856,6 +866,18 @@ uint16 CBattleEntity::RACC(uint8 skill, float distance, uint16 bonusSkill)
             acc = int16((float)acc * battleutils::GetRangedDistanceCorrection(this, distance, false));
         }
     }
+
+    if (stats.AGI + m_modStat[Mod::AGI] > AGI())
+    {
+        acc += std::max<int16>((999 - stats.AGI) / 2, 0);
+    }
+    else
+    {
+        acc += m_modStat[Mod::AGI] / 2;
+    }
+
+    acc += getMod(Mod::RACC);
+    acc += battleutils::GetRangedAccuracyBonuses(this);
 
     return std::clamp(acc + std::min<int16>(((100 + getMod(Mod::FOOD_RACCP) * acc) / 100), getMod(Mod::FOOD_RACC_CAP)), 0, 65535);
 }
