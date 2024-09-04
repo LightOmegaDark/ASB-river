@@ -167,7 +167,7 @@ quest.sections =
             ['Tressia'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Option') >= 1 then
+                    if quest:getVar(player, 'Option') == 1 then
                         return quest:progressEvent(562)
                     end
                 end,
@@ -184,7 +184,7 @@ quest.sections =
             ['qm1_in_search_of_truth'] =
             {
                 onTrigger = function(player, npc)
-                    if not player:hasKeyItem(xi.ki.SHADED_CRUSE) and not quest:getVar(player, 'Option') == 0 then
+                    if not player:hasKeyItem(xi.ki.SHADED_CRUSE) and quest:getVar(player, 'Option') >= 0 then
                         player:addKeyItem(xi.ki.SHADED_CRUSE)
                         return quest:messageSpecial(ID.text.CRUSE_ON_THE_GROUND, xi.ki.SHADED_CRUSE)
                     else
