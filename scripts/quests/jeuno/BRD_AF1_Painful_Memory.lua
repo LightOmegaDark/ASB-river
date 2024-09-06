@@ -95,9 +95,9 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if
+                        quest:getVar(player, 'nmKilled') == 0 and
                         player:hasKeyItem(xi.ki.MERTAIRES_BRACELET) and
-                        npcUtil.popFromQM(player, npc, ID.mob.TROS, { claim = true, hide = 0 }) and
-                        quest:getVar(player, 'nmKilled') == 0
+                        npcUtil.popFromQM(player, npc, ID.mob.TROS, { claim = true, hide = 0 })
                     then
                         return quest:messageSpecial(ID.text.SENSE_OF_FOREBODING)
                     elseif
