@@ -33,8 +33,12 @@ mission.sections =
                         return mission:progressEvent(15, 136, 300, 200, 100, 0, 9306122, 0, 0)
                     elseif missionStatus == 1 then
                         local zoneObj    = player:getZone()
-                        local mobHalphas = zoneObj:queryEntitiesByName('Count_Halphas')[1]
 
+                        if not zoneObj then
+                            return
+                        end
+
+                        local mobHalphas = zoneObj:queryEntitiesByName('Count_Halphas')[1]
                         if not mobHalphas:isSpawned() then
                             SpawnMob(mobHalphas:getID()):updateClaim(player)
 
@@ -61,14 +65,11 @@ mission.sections =
                 end,
             },
 
-            onZoneIn =
-            {
-                function(player, prevZone)
-                    if mission:getVar(player, 'Status') == 3 then
-                        return 30
-                    end
-                end,
-            },
+            onZoneIn = function(player, prevZone)
+                if mission:getVar(player, 'Status') == 3 then
+                    return 30
+                end
+            end,
 
             onEventFinish =
             {
